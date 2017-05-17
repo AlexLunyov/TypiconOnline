@@ -98,7 +98,8 @@ namespace TypiconOnline.Domain.Typicon
         {
             //определяем год
             //??? если дата до 7 января - смотрим прошлый год
-            int year = date.Year;//(date.DayOfYear > 7) ? date.Year : date.Year - 1;
+            //int year = date.Year;
+            int year = GetYearKey(date);
 
             ModifiedYear modifiedYear = ModifiedYears.FirstOrDefault(m => m.Year == year);
 
@@ -109,10 +110,10 @@ namespace TypiconOnline.Domain.Typicon
 
                 ModifiedYears.Add(modifiedYear);
 
-                DateTime indexDate = new DateTime(year, 1, 1);
+                DateTime indexDate = new DateTime(year, 9, 1);
 
-                //формируем список дней для изменения до 31 августа будущего года
-                DateTime endDate = new DateTime(year + 1, 1, 1);
+                //формируем список дней для изменения до 7 января будущего года
+                DateTime endDate = new DateTime(year + 1, 9, 1);
                 while (indexDate != endDate)
                 {
                     //Menology
@@ -175,25 +176,43 @@ namespace TypiconOnline.Domain.Typicon
         }
 
         /// <summary>
+        /// Метод определяет ключ для хранения измененных дней
+        /// Если дата до 1 сентября - смотрим прошлый год
+        /// Год начинается с началом Индикта, как в церковном календаре
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        private int GetYearKey(DateTime date)
+        {
+            return (date.Month >= 9) ? date.Year : date.Year - 1;
+            //return (date.DayOfYear > 7) ? date.Year : date.Year - 1;
+        }
+
+        /// <summary>
         /// Добавляет измененное правило.
         /// Вызывается из метода Execute класса ModificationsRuleHandler
         /// </summary>
         /// <param name="request"></param>
         internal void AddModifiedRule(ModificationsRuleRequest request)
         {
-            ModifiedYear year = ModifiedYears.FirstOrDefault(m => m.Year == request.Date.Year);
+            //определяем год
+            //??? если дата до 7 января - смотрим прошлый год
+            //int year = date.Year;
+            int year = GetYearKey(request.Date);
 
-            if (year == null)
+            ModifiedYear modifiedYear = ModifiedYears.FirstOrDefault(m => m.Year == year);
+
+            if (modifiedYear == null)
             {
-                year = new ModifiedYear() { Year = request.Date.Year };
-                ModifiedYears.Add(year);
+                modifiedYear = new ModifiedYear() { Year = year };
+                ModifiedYears.Add(modifiedYear);
             }
 
             //ModifiedRule
 
             if (request.Caller is MenologyRule)
             {
-                year.ModifiedRules.Add(new ModifiedMenologyRule()
+                modifiedYear.ModifiedRules.Add(new ModifiedMenologyRule()
                 {
                     Date = request.Date,
                     RuleEntity = (MenologyRule)request.Caller,
@@ -206,7 +225,7 @@ namespace TypiconOnline.Domain.Typicon
 
             if (request.Caller is TriodionRule)
             {
-                year.ModifiedRules.Add(new ModifiedTriodionRule()
+                modifiedYear.ModifiedRules.Add(new ModifiedTriodionRule()
                 {
                     Date = request.Date,
                     RuleEntity = (TriodionRule)request.Caller,
