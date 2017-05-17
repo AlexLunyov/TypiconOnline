@@ -9,67 +9,35 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class Notice : RuleContainer, ICustomInterpreted
+    public class Service : Notice
     {
-        private string _name;
-        private ItemBoolean _isDayBefore = new ItemBoolean();
-        private string _additionalName;
+        private ItemTime _time = new ItemTime();
 
-        public Notice(XmlNode node) : base(node)
+        public Service(XmlNode node) : base(node)
         {
             if (node.Attributes.Count > 0)
             {
-                XmlAttribute attr = node.Attributes[RuleConstants.ServiceNameAttrName];
+                XmlAttribute attr = node.Attributes[RuleConstants.ServiceTimeAttrName];
                 if (attr != null)
                 {
-                    _name = attr.Value;
-                }
-
-                attr = node.Attributes[RuleConstants.ServiceIsDayBeforeAttrName];
-                if (attr != null)
-                {
-                    _isDayBefore = new ItemBoolean(attr.Value);
-                }
-
-                attr = node.Attributes[RuleConstants.ServiceAdditionalNameAttrName];
-                if (attr != null)
-                {
-                    _additionalName = attr.Value;
+                    _time = new ItemTime(attr.Value);
                 }
             }
         }
 
-        #region Properties
-
-        public string Name
+        public ItemTime Time
         {
             get
             {
-                return _name;
+                return _time;
             }
         }
-        public ItemBoolean IsDayBefore
-        {
-            get
-            {
-                return _isDayBefore;
-            }
-        }
-        public string AdditionalName
-        {
-            get
-            {
-                return _additionalName;
-            }
-        }
-
-        #endregion
 
         public override void Interpret(DateTime date, IRuleHandler handler)
         {
             if (IsValid && handler.IsAuthorized<Notice>())
             {
-                handler.Execute(this);
+                //handler.Execute(this);
 
                 base.Interpret(date, handler);
 
@@ -79,26 +47,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void Validate()
         {
-            if (string.IsNullOrEmpty(_name))
+            if (!_time.IsValid)
             {
-                AddBrokenConstraint(ServiceBusinessConstraint.NameReqiured, ElementName);
-            }
-
-            if (!_isDayBefore.IsValid)
-            {
-                AddBrokenConstraint(ServiceBusinessConstraint.IsDayBeforeTypeMismatch, ElementName);
-            }
-
-            foreach (RuleElement element in ChildElements)
-            {
-                //добавляем ломаные правила к родителю
-                if (!element.IsValid)
-                {
-                    foreach (BusinessConstraint brokenRule in element.GetBrokenConstraints())
-                    {
-                        AddBrokenConstraint(brokenRule, ElementName + "." + brokenRule.ConstraintPath);
-                    }
-                }
+                AddBrokenConstraint(ServiceBusinessConstraint.TimeTypeMismatch, ElementName);
             }
         }
     }

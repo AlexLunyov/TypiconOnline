@@ -71,9 +71,9 @@
     <Compile Include="Rules\Handlers\ModificationsRuleRequest.cs" />
     <Compile Include="Rules\Handlers\RuleHandlerRequest.cs" />
     <Compile Include="Rules\Handlers\ScheduleHandler.cs" />
-    <Compile Include="Rules\Schedule\Notice.cs" />
-    <Compile Include="Rules\Schedule\ServiceBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\Service.cs" />
+    <Compile Include="Rules\Schedule\ServiceBusinessConstraint.cs" />
+    <Compile Include="Rules\Schedule\Notice.cs" />
     <Compile Include="Typicon\Modifications\ModifiedRule.cs" />
     <Compile Include="Typicon\Modifications\ModifiedMenologyRule.cs" />
     <Compile Include="Typicon\Modifications\ModifiedTriodionRule.cs" />
