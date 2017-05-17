@@ -25,9 +25,16 @@ namespace TypiconOnline.Domain.Days
         /// <returns>Если поля Date или DateB пустые, вовращает пустое (минимальное) значение</returns>
         public DateTime GetCurrentDate(int year)
         {
-            if (IsValid && !Date.IsEmpty && !DateB.IsEmpty)
+            if (IsValid) //&& /*!Date.IsEmpty && */!DateB.IsEmpty)
             {
-                return (DateTime.IsLeapYear(year)) ? new DateTime(year, DateB.Month, DateB.Day) : new DateTime(year, Date.Month, Date.Day);
+                if (DateTime.IsLeapYear(year))
+                {
+                    return new DateTime(year, DateB.Month, DateB.Day);
+                }
+                else
+                {
+                    return (!Date.IsEmpty) ? new DateTime(year, Date.Month, Date.Day) : DateTime.MinValue;
+                }
             }
             
             return DateTime.MinValue;

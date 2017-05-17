@@ -215,8 +215,8 @@ namespace ScheduleForm
                 return;
             }
 
-            try
-            {
+            //try
+            //{
                 GetScheduleWeekRequest weekRequest = new GetScheduleWeekRequest()
                 {
                     Date = SelectedDate,
@@ -238,21 +238,21 @@ namespace ScheduleForm
                     textBoxResult.AppendText(day.Name + Environment.NewLine);
                     foreach(RuleElement element in day.Schedule.ChildElements)
                     {
-                        if (element is Notice)
-                        {
-                            textBoxResult.AppendText((element as Notice).Name + " " + (element as Notice).AdditionalName + Environment.NewLine);
-                        }
                         if (element is Service)
                         {
                             textBoxResult.AppendText((element as Service).Time + " " + (element as Service).Name + " " + (element as Service).AdditionalName + Environment.NewLine);
                         }
+                        else if (element is Notice)
+                        {
+                            textBoxResult.AppendText((element as Notice).Name + " " + (element as Notice).AdditionalName + Environment.NewLine);
+                        }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         private string GetFileName(DateTime date)

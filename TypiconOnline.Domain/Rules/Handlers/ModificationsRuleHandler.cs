@@ -29,14 +29,16 @@ namespace TypiconOnline.Domain.Rules.Handlers
             {
                 int priority = (element as DayModification).Priority.Value;
 
+                TypiconRule seniorTypiconRule = Rules[0];
+
                 if (priority == 0)
                 {
-                    priority = SeniorTypiconRule.Template.Priority;
+                    priority = seniorTypiconRule.Template.Priority;
                 }
 
                 ModificationsRuleRequest request = new ModificationsRuleRequest()
                 {
-                    Caller = SeniorTypiconRule,
+                    Caller = seniorTypiconRule,
                     Date = (element as DayModification).MoveDateCalculated,
                     Priority = priority,
                     ShortName = (element as DayModification).ShortName,
@@ -44,7 +46,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
                     IsLastName = (element as DayModification).IsLastName.Value
                 };
 
-                TypiconEntity typiconEntity = SeniorTypiconRule.Owner;//Folder.GetOwner();
+                TypiconEntity typiconEntity = seniorTypiconRule.Owner;//Folder.GetOwner();
 
                 typiconEntity.AddModifiedRule(request);
             }
