@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{bae9253f-1aaa-4456-96fd-dc444b824ee7}</ProjectGuid>
+    <ArchitectureToolsVersion>2.0.0.0</ArchitectureToolsVersion>
+    <Name>TypiconOnline.Modeling</Name>
+    <RootNamespace>ModelingProjectScheduleHandling</RootNamespace>
+    <ValidateArchitecture>
+    </ValidateArchitecture>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
+  <ItemGroup>
+    <Content Include="Calendar.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Calendar.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Calendar.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="MenologyDay.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="MenologyDay.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>MenologyDay.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="ModelDefinition\Package1_1852.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package2_1852.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package_1842.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package_1852.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package_2138.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Packages.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Packages.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Packages.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Rules.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Rules.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Rules.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Typicon.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Typicon.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Typicon.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="UMLClassDiagramRules.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="UMLClassDiagramRules.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>UMLClassDiagramRules.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="UMLComponentDiagram1.componentdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="UMLComponentDiagram1.componentdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>UMLComponentDiagram1.componentdiagram</DependentUpon>
+    </Content>
+    <Content Include="User.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="User.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>User.classdiagram</DependentUpon>
+    </Content>
+    <Folder Include="ModelDefinition\" />
+    <Content Include="ModelDefinition\ModelingProjectScheduleHandling.uml">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TypiconOnlineLayers.layerdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Validate Include="TypiconOnlineLayers.layerdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>TypiconOnlineLayers.layerdiagram</DependentUpon>
+    </Validate>
+    <Validate Include="TypiconOnlineLayers.layerdiagram.suppressions">
+      <SubType>Content</SubType>
+      <DependentUpon>TypiconOnlineLayers.layerdiagram</DependentUpon>
+    </Validate>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure.Common\TypiconOnline.Infrastructure.Common.csproj">
+      <Name>TypiconOnline.Infrastructure.Common</Name>
+      <Project>{1f2f3f15-a8cf-4ab7-8603-fb0309eaf8c7}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TypiconMigrationTool\TypiconMigrationTool.csproj">
+      <Name>TypiconMigrationTool</Name>
+      <Project>{d24bad9a-329f-4d25-9419-f4df45b4ffbe}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TypiconOnline.Domain\TypiconOnline.Domain.csproj">
+      <Name>TypiconOnline.Domain</Name>
+      <Project>{823205b3-c0db-428d-9038-a03382d881d5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TypiconOnline.Repository.EF\TypiconOnline.Repository.EF.csproj">
+      <Name>TypiconOnline.Repository.EF</Name>
+      <Project>{f5d4fd91-e0f6-4162-b3de-a3ec6ac9a9d7}</Project>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

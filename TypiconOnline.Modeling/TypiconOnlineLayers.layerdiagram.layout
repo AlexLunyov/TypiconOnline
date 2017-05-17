@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerDiagram dslVersion="1.0.0.0" Id="5257e486-e0e2-4a1f-9474-869b40ce57e3" absoluteBounds="0, 0, 11, 8.5" name="TypiconOnlineLayers">
+  <layerModelMoniker Id="0c8dc02c-388e-4d4b-9c6e-0ab8922b5da1" />
+  <nestedChildShapes>
+    <layerShape Id="e1e77aca-0af3-4cff-a331-6ac9ea6372af" absoluteBounds="3, 0.875, 2, 0.75" customColor="161, 199, 231">
+      <layerMoniker Id="20fe11fb-082a-4c23-a723-bbca841e8638" />
+    </layerShape>
+    <layerShape Id="02465876-7954-42a7-baaf-cfd905c4c3b3" absoluteBounds="3, 2, 2, 0.75" customColor="LightGreen">
+      <layerMoniker Id="4f0c922d-653e-48d1-8e48-0fc272f311cf" />
+    </layerShape>
+    <layerShape Id="1693728e-395b-40db-8cbe-2f87d05cf32c" absoluteBounds="3, 3.25, 2, 0.75" customColor="255, 255, 128">
+      <layerMoniker Id="cf0e5fb6-545e-4191-943b-f870efbb59c0" />
+    </layerShape>
+    <dependencyConnector edgePoints="[(4 : 2.75); (4 : 3.25)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="113, 111, 110">
+      <dependencyFromLayerToLayerMoniker Id="cc0329aa-8e19-403a-983c-fb845efaee9a" />
+      <relativeChildShapes />
+      <nodes>
+        <layerShapeMoniker Id="02465876-7954-42a7-baaf-cfd905c4c3b3" />
+        <layerShapeMoniker Id="1693728e-395b-40db-8cbe-2f87d05cf32c" />
+      </nodes>
+    </dependencyConnector>
+    <dependencyConnector edgePoints="[(4 : 1.625); (4 : 2)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="113, 111, 110">
+      <dependencyFromLayerToLayerMoniker Id="29e9a4a2-1269-44a9-8fab-9f780cbdc3bb" />
+      <relativeChildShapes />
+      <nodes>
+        <layerShapeMoniker Id="e1e77aca-0af3-4cff-a331-6ac9ea6372af" />
+        <layerShapeMoniker Id="02465876-7954-42a7-baaf-cfd905c4c3b3" />
+      </nodes>
+    </dependencyConnector>
+  </nestedChildShapes>
+</layerDiagram>

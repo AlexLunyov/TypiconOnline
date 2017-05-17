@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<schedule>
+  <weeks>
+    <week>
+      <name>Седмица 4-ая по Пятидесятнице</name>
+      <days>
+        <day>
+          <name>Мц. Акили́ны. Свт. Трифи́ллия, еп. Левкуси́и Ки́прской.</name>
+          <date>26 июня 2017 г.</date>
+          <sign>1</sign>
+          <signdescription>Без знака</signdescription>
+          <dayofweek>ПОНЕДЕЛЬНИК</dayofweek>
+          <services>
+            <service>
+              <time>06.00</time>
+              <name>Полуношница. Утреня. Часы.</name>
+            </service>
+            <service>
+              <time>08.00</time>
+              <name>Божественная литургия.</name>
+            </service>
+            <service>
+              <time>17.30</time>
+              <name>9-й час.  Вечерня. Малое повечерие.</name>
+            </service>
+          </services>
+        </day>
+        <day>
+          <name>Прп. Мефо́дия, игумена Пе́шношского.</name>
+          <date>27 июня 2017 г.</date>
+          <sign>3</sign>
+          <signdescription>Славословная</signdescription>
+          <dayofweek>ВТОРНИК</dayofweek>
+          <services>
+            <service>
+              <time>06.00</time>
+              <name>Полуношница. Утреня. Часы.</name>
+            </service>
+            <service>
+              <time>08.00</time>
+              <name>Божественная литургия.</name>
+            </service>
+            <service>
+              <time>17.30</time>
+              <name>9-й час.  Вечерня. Малое повечерие.</name>
+            </service>
+          </services>
+        </day>
+        <day>
+          <name>Свт. Ио́ны, митр. Московского и всея России, чудотворца.</name>
+          <date>28 июня 2017 г.</date>
+          <sign>3</sign>
+          <signdescription>Славословная</signdescription>
+          <dayofweek>СРЕДА</dayofweek>
+          <services>
+            <service>
+              <time>06.00</time>
+              <name>Полуношница. Утреня. Часы.</name>
+            </service>
+            <service>
+              <time>08.00</time>
+              <name>Божественная литургия.</name>
+            </service>
+            <service>
+              <time>17.30</time>
+              <name>9-й час.  Вечерня. Малое повечерие.</name>
+            </service>
+          </services>
+        </day>
+        <day>
+          <name>Прп. Ти́хона Калу́жского.</name>
+          <date>29 июня 2017 г.</date>
+          <sign>2</sign>
+          <signdescription>Шестеричная</signdescription>
+          <dayofweek>ЧЕТВЕРГ</dayofweek>
+          <services>
+            <service>
+              <time>06.00</time>
+              <name>Полуношница. Утреня. Часы.</name>
+            </service>
+            <service>
+              <time>08.00</time>
+              <name>Божественная литургия.</name>
+            </service>
+            <service>
+              <time>17.30</time>
+              <name>9-й час.  Вечерня. Малое повечерие.</name>
+            </service>
+          </services>
+        </day>
+        <day>
+          <name>Мчч. Ману́ила, Саве́ла и Исма́ила.</name>
+          <date>30 июня 2017 г.</date>
+          <sign>1</sign>
+          <signdescription>Без знака</signdescription>
+          <dayofweek>ПЯТНИЦА</dayofweek>
+          <services>
+            <service>
+              <time>06.00</time>
+              <name>Полуношница. Утреня. Часы.</name>
+            </service>
+            <service>
+              <time>08.00</time>
+              <name>Божественная литургия.</name>
+            </service>
+            <service>
+              <time>17.30</time>
+              <name>9-й час.  Вечерня. Малое повечерие.</name>
+            </service>
+          </services>
+        </day>
+        <day>
+          <name>Боголюбской иконы Божией Матери.</name>
+          <date>01 июля 2017 г.</date>
+          <sign>3</sign>
+          <signdescription>Славословная</signdescription>
+          <dayofweek>СУББОТА</dayofweek>
+          <services>
+            <service>
+              <time>06.00</time>
+              <name>Полуношница. Утреня. Часы.</name>
+            </service>
+            <service>
+              <time>08.00</time>
+              <name>Божественная литургия.</name>
+            </service>
+            <service>
+              <time>16.00</time>
+              <name>Всенощное бдение.</name>
+            </service>
+          </services>
+        </day>
+        <day>
+          <name>Свт. Иоанна Максимо́вича, архиеп. Шанха́йского и Сан-Франци́сского.</name>
+          <date>02 июля 2017 г.</date>
+          <sign>3</sign>
+          <signdescription>Славословная</signdescription>
+          <dayofweek>ВОСКРЕСЕНЬЕ</dayofweek>
+          <services>
+            <service>
+              <time>08.40</time>
+              <name>Часы 3-й и 6-й.</name>
+            </service>
+            <service>
+              <time>09.00</time>
+              <name>Божественная литургия.</name>
+            </service>
+            <service>
+              <time>17.30</time>
+              <name>9-й час.  Вечерня. Малое повечерие.</name>
+            </service>
+          </services>
+        </day>
+      </days>
+    </week>
+  </weeks>
+</schedule>

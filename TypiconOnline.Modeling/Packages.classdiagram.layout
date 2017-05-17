@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Packages">
+  <logicalClassDesignerModelMoniker Id="c2d2c436-86da-4847-999a-f869aa87a529" />
+  <nestedChildShapes>
+    <packageShape Id="8f885a0c-0d4e-4e88-bb50-8fb5078e5d98" absoluteBounds="2.125, 0.875, 3.875, 3.375" customColor="255, 249, 230" hideQualifiedName="false">
+      <packageMoniker Id="52a35263-dd03-4bc1-ae97-658fed27b05c" LastKnownName="TypiconOnline" />
+      <nestedChildShapes>
+        <packageShape Id="6f069102-771b-4bf5-8df5-3a9a2c64d248" absoluteBounds="2.25, 1.25, 3.625, 2.875" customColor="255, 249, 230" hideQualifiedName="false">
+          <packageMoniker Id="b4a4427f-bcf0-4f22-b9b5-d94826986677" LastKnownName="Domain" />
+          <nestedChildShapes>
+            <packageShape Id="ad93fd5e-c68f-4024-8ffd-4542fd188c31" absoluteBounds="2.375, 1.625, 3.375, 2.375" customColor="255, 249, 230" hideQualifiedName="false">
+              <packageMoniker Id="fa7f3168-afb4-43b4-842a-656873004fe9" LastKnownName="Calendar" />
+            </packageShape>
+          </nestedChildShapes>
+        </packageShape>
+      </nestedChildShapes>
+    </packageShape>
+  </nestedChildShapes>
+</logicalClassDesignerDiagram>

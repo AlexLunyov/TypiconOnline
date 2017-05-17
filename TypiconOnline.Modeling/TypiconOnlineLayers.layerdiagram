@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="0c8dc02c-388e-4d4b-9c6e-0ab8922b5da1" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <layers>
+    <layer Id="20fe11fb-082a-4c23-a723-bbca841e8638" name="Ui&#xD;&#xA;">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="29e9a4a2-1269-44a9-8fab-9f780cbdc3bb" direction="Bidirectional">
+          <layerMoniker Id="4f0c922d-653e-48d1-8e48-0fc272f311cf" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <references>
+        <reference Id="0dbad196-2484-4d38-a13d-d5d12880b443" name="TypiconMigrationTool">
+          <ArtifactNode Label="TypiconMigrationTool" Category="CodeSchema_Project" Id="(Assembly=&quot;$(PersonalUri)/Visual Studio 2015/Projects/TypiconOnline/TypiconMigrationTool/TypiconMigrationTool.csproj&quot;)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=TypiconMigrationTool)" Label="TypiconMigrationTool.exe" Category="CodeSchema_Assembly">
+            <Category Ref="FileSystem.Category.FileOfType.exe" />
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="4f0c922d-653e-48d1-8e48-0fc272f311cf" name="Domain&#xD;&#xA;">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="cc0329aa-8e19-403a-983c-fb845efaee9a" direction="Bidirectional">
+          <layerMoniker Id="cf0e5fb6-545e-4191-943b-f870efbb59c0" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <references>
+        <reference Id="96f31400-36d5-4e9a-88f4-ce1696362a76" name="TypiconOnline.Infrastructure.Common">
+          <ArtifactNode Label="TypiconOnline.Infrastructure.Common" Category="CodeSchema_Project" Id="(Assembly=&quot;$(PersonalUri)/Visual Studio 2015/Projects/TypiconOnline/Infrastructure.Common/TypiconOnline.Infrastructure.Common.csproj&quot;)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=TypiconOnline.Infrastructure.Common)" Label="TypiconOnline.Infrastructure.Common.dll" Category="CodeSchema_Assembly">
+            <Category Ref="FileSystem.Category.FileOfType.dll" />
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="37b76f6c-f733-4454-9618-289cf8ab88c0" name="TypiconOnline.Domain">
+          <ArtifactNode Label="TypiconOnline.Domain" Category="CodeSchema_Project" Id="(Assembly=&quot;$(PersonalUri)/Visual Studio 2015/Projects/TypiconOnline/TypiconOnline.Domain/TypiconOnline.Domain.csproj&quot;)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=TypiconOnline.Domain)" Label="TypiconOnline.Domain.dll" Category="CodeSchema_Assembly">
+            <Category Ref="FileSystem.Category.FileOfType.dll" />
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="cf0e5fb6-545e-4191-943b-f870efbb59c0" name="Data&#xD;&#xA;">
+      <references>
+        <reference Id="b3783c56-ede7-4dc5-9f0f-a19ba8be3180" name="TypiconOnline.Repository.EF">
+          <ArtifactNode Label="TypiconOnline.Repository.EF" Category="CodeSchema_Project" Id="(Assembly=&quot;$(PersonalUri)/Visual Studio 2015/Projects/TypiconOnline/TypiconOnline.Repository.EF/TypiconOnline.Repository.EF.csproj&quot;)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=TypiconOnline.Repository.EF)" Label="TypiconOnline.Repository.EF.dll" Category="CodeSchema_Assembly">
+            <Category Ref="FileSystem.Category.FileOfType.dll" />
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+  </layers>
+</layerModel>
