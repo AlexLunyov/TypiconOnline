@@ -61,7 +61,7 @@ namespace TypiconOnline.Repository.EF.Tests
             EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
             TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
-            ModifiedRule modifiedDay = typiconEntity.GetModifiedRule(new DateTime(2017, 10, 28));
+            List<ModifiedRule> modifiedDays = typiconEntity.GetModifiedRules(new DateTime(2017, 10, 28));
 
             _unitOfWork.Commit();
 
@@ -141,9 +141,9 @@ namespace TypiconOnline.Repository.EF.Tests
                 Template = sign,
             });
 
-            ModifiedRule modifiedDay = typiconEntity.GetModifiedRule(new DateTime(2038, 4, 5));
+            List<ModifiedRule> modifiedDays = typiconEntity.GetModifiedRules(new DateTime(2038, 4, 5));
 
-            Assert.IsNotNull(modifiedDay);
+            Assert.IsNotNull(modifiedDays);
         }
     }
 }

@@ -41,58 +41,45 @@ namespace TypiconOnline.Domain.Services
 
             ScheduleDay scheduleDay = new ScheduleDay();
 
+            TypiconRule seniorTypiconRule = handlerRequest.Rules[0];
+
             //задаем имя дню
-            if (handlerRequest.SeniorTypiconRule is MenologyRule)
+
+            if (handlerRequest.Rules.Count > 1)
             {
-                scheduleDay.Name = (handlerRequest.SeniorTypiconRule as MenologyRule).Day.Name;
-
-                if (handlerRequest.AdditionModifiedRule != null)
+                for (int i = 1; i < handlerRequest.Rules.Count; i++)
                 {
-                    //добавляем в начало ModifiedRule, помеченное как AsAddition
-
-                    scheduleDay.Name = (handlerRequest.AdditionModifiedRule as ModifiedMenologyRule).RuleEntity.Day.Name 
-                        + scheduleDay.Name;
+                    scheduleDay.Name += " " + handlerRequest.Rules[i].Name;
                 }
 
-                if (handlerRequest.JuniorTypiconRule != null)
-                {
-                    //если в измененном дне указано, чтобы ставить в конец  - исполняем
-                    scheduleDay.Name = (handlerRequest.PutSeniorRuleNameToEnd) ?
-                        (handlerRequest.JuniorTypiconRule as TriodionRule).Day.Name + " " + scheduleDay.Name :
-                        scheduleDay.Name + " " + (handlerRequest.JuniorTypiconRule as TriodionRule).Day.Name;
-                }
-                else if (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday)
-                {
-                    //Если Триоди нет и воскресенье, находим название Недели из Октоиха
-                    //и добавляем название Недели в начало Name
-
-                    //Если имеется короткое название, то добавляем только его
-
-                    scheduleDay.Name = string.IsNullOrEmpty(handlerRequest.ShortName) ?
-                        BookStorage.Oktoikh.GetSundayName(inputRequest.Date) + " " + scheduleDay.Name :
-                        BookStorage.Oktoikh.GetSundayName(inputRequest.Date, handlerRequest.ShortName);
-
-                    //жестко задаем воскресный день
-                    handlerRequest.SeniorTypiconRule.Template = inputRequest.TypiconEntity.TemplateSunday;
-                }
+                scheduleDay.Name = (handlerRequest.PutSeniorRuleNameToEnd) ?
+                    scheduleDay.Name + " " + seniorTypiconRule.Name :
+                    seniorTypiconRule.Name + " " + scheduleDay.Name;
+            }
+            else
+            {
+                scheduleDay.Name = seniorTypiconRule.Name;
             }
 
-            if (handlerRequest.SeniorTypiconRule is TriodionRule)
+            if ((seniorTypiconRule is MenologyRule) && (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday))
             {
-                scheduleDay.Name = (handlerRequest.SeniorTypiconRule as TriodionRule).Day.Name;
+                //Если Триоди нет и воскресенье, находим название Недели из Октоиха
+                //и добавляем название Недели в начало Name
 
-                if (handlerRequest.JuniorTypiconRule != null)
-                {
-                    scheduleDay.Name += " " + (handlerRequest.JuniorTypiconRule as MenologyRule).Day.Name;
-                }
+                //Если имеется короткое название, то добавляем только его
+
+                scheduleDay.Name = string.IsNullOrEmpty(handlerRequest.ShortName) ?
+                    BookStorage.Oktoikh.GetSundayName(inputRequest.Date) + " " + scheduleDay.Name :
+                    BookStorage.Oktoikh.GetSundayName(inputRequest.Date, handlerRequest.ShortName);
+
+                //жестко задаем воскресный день
+                seniorTypiconRule.Template = inputRequest.TypiconEntity.TemplateSunday;
             }
 
             scheduleDay.Date = inputRequest.Date;
 
-            
-
             //наполняем
-            handlerRequest.SeniorTypiconRule.Rule.Interpret(inputRequest.Date, inputRequest.RuleHandler);
+            seniorTypiconRule.Rule.Interpret(inputRequest.Date, inputRequest.RuleHandler);
 
             RuleContainer container = inputRequest.RuleHandler.GetResult();
 
@@ -100,7 +87,6 @@ namespace TypiconOnline.Domain.Services
             {
                 scheduleDay.Schedule.ChildElements.AddRange(container.ChildElements);
             }
-
 
             if (inputMode == HandlingMode.AstronimicDay)
             {
@@ -111,19 +97,20 @@ namespace TypiconOnline.Domain.Services
 
                 handlerRequest = ComposeRuleHandlerRequest(inputRequest);
 
-                if ((handlerRequest.SeniorTypiconRule is MenologyRule) &&
-                    (handlerRequest.JuniorTypiconRule == null) &&
+                seniorTypiconRule = handlerRequest.Rules[0];
+
+                if ((seniorTypiconRule is MenologyRule) &&
                     (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday))
                 {
                     //если нет Триоди и воскресенье
                     //жестко задаем воскресный день
-                    handlerRequest.SeniorTypiconRule.Template = inputRequest.TypiconEntity.TemplateSunday;
+                    seniorTypiconRule.Template = inputRequest.TypiconEntity.TemplateSunday;
                 }
 
                 inputRequest.RuleHandler.Initialize(handlerRequest);
 
                 //наполняем
-                handlerRequest.SeniorTypiconRule.Rule.Interpret(inputRequest.Date, inputRequest.RuleHandler);
+                seniorTypiconRule.Rule.Interpret(inputRequest.Date, inputRequest.RuleHandler);
 
                 container = inputRequest.RuleHandler.GetResult();
 
@@ -150,17 +137,15 @@ namespace TypiconOnline.Domain.Services
 
         /// <summary>
         /// Формирует запрос для дальнейшей обработки: главную и второстепенную службу, HandlingMode
+        /// 1.	Находим связанные правила для введенной даты
+        /// 2.	Делаем фильтрацию
+        /// 3.	Из оставшихся выбираем главную службу и второстепенную
         /// </summary>
         /// <param name="inputRequest"></param>
         /// <returns></returns>
         private RuleHandlerRequest ComposeRuleHandlerRequest(GetScheduleDayRequest inputRequest)
         {
             //находим MenologyRule
-
-            //MenologyRule menologyRule = (MenologyRule)inputRequest.TypiconEntity.RulesFolder.
-            //    FindRule(c => ((c is MenologyRule) && ((c as MenologyRule).Day.GetCurrentDate(inputRequest.Date.Year) == inputRequest.Date)));
-
-            //MenologyRule menologyRule = inputRequest.TypiconEntity.RulesFolder.FindMenologyRule(inputRequest.Date);
 
             MenologyRule menologyRule = inputRequest.TypiconEntity.GetMenologyRule(inputRequest.Date);
 
@@ -173,11 +158,6 @@ namespace TypiconOnline.Domain.Services
 
             int daysFromEaster = inputRequest.Date.Subtract(easterDate).Days;
 
-            //TriodionRule triodionRule = (TriodionRule)inputRequest.TypiconEntity.RulesFolder.
-            //    FindRule(c => ((c is TriodionRule) && ((c as TriodionRule).Day.DaysFromEaster == daysFromEaster)));
-
-            //TriodionRule triodionRule = inputRequest.TypiconEntity.RulesFolder.FindTriodionRule(daysFromEaster);
-
             TriodionRule triodionRule = inputRequest.TypiconEntity.GetTriodionRule(daysFromEaster);
 
             //находим ModifiedRule
@@ -185,23 +165,49 @@ namespace TypiconOnline.Domain.Services
             ModifiedMenologyRule modMenologyRule = null;
             ModifiedTriodionRule modTriodionRule = null;
 
-            ModifiedRule modAbstractRule = inputRequest.TypiconEntity.GetModifiedRule(inputRequest.Date);
+            List<ModifiedRule> modAbstractRules = inputRequest.TypiconEntity.GetModifiedRules(inputRequest.Date);
 
             //создаем выходной объект
             RuleHandlerRequest outputRequest = new RuleHandlerRequest() { Mode = inputRequest.Mode };
 
-            if (modAbstractRule != null)
+            //рассматриваем полученные измененные правила
+            if (modAbstractRules != null && modAbstractRules.Count > 0)
             {
-                outputRequest.PutSeniorRuleNameToEnd = modAbstractRule.IsLastName;
-                outputRequest.ShortName = modAbstractRule.ShortName;
+                bool isNotAddition = modAbstractRules.TrueForAll(c => !c.AsAddition);
+
+                //сортируем по приоитету, если измененных правил больше одного
+                if (modAbstractRules.Count > 1)
+                {
+                    modAbstractRules.Sort(delegate (ModifiedRule x, ModifiedRule y)
+                    {
+                        return x.Priority.CompareTo(y.Priority);
+                    });
+                }
+
+                //выбираем измененное правило, максимальное по приоритету
+                ModifiedRule abstrRule = modAbstractRules[0];
+
+                //считаем, что в списке правила только Минейные или Триодные
+                
+                if (abstrRule is ModifiedMenologyRule)
+                {
+                    if (isNotAddition)
+                    {
+                        modMenologyRule = abstrRule as ModifiedMenologyRule;
+                    }
+                }
+
+                if (abstrRule is ModifiedTriodionRule)
+                {
+                    if (isNotAddition)
+                    {
+                        modTriodionRule = abstrRule as ModifiedTriodionRule;
+                    }
+                }
+
+                outputRequest.PutSeniorRuleNameToEnd = abstrRule.IsLastName;
+                outputRequest.ShortName = abstrRule.ShortName;
             }
-
-            if ((modAbstractRule != null) && (modAbstractRule is ModifiedMenologyRule))
-                modMenologyRule = modAbstractRule as ModifiedMenologyRule;
-
-            if ((modAbstractRule != null) && (modAbstractRule is ModifiedTriodionRule))
-                modTriodionRule = modAbstractRule as ModifiedTriodionRule;
-
 
             //определяем приоритет и находим, какие объекты будем обрабатывать
 
@@ -228,46 +234,61 @@ namespace TypiconOnline.Domain.Services
             {
                 case 1:
                 case 0:
-                    //senior Triodion, junior Menology 
-                    outputRequest.SeniorTypiconRule = (modTriodionRule != null) ? modTriodionRule.RuleEntity : triodionRule;
-                    outputRequest.JuniorTypiconRule = (modMenologyRule != null) ? modMenologyRule.RuleEntity : menologyRule;
+                    //senior Triodion, junior Menology
+                    if (modTriodionRule == null)
+                    {
+                        outputRequest.Rules.Add(triodionRule);
+                    }
+                    if (modMenologyRule == null)
+                    {
+                        outputRequest.Rules.Add(menologyRule);
+                    }
                     break;
                 case -1:
                     //senior Menology, junior Triodion
-                    outputRequest.SeniorTypiconRule = (modMenologyRule != null) ? modMenologyRule.RuleEntity : menologyRule; 
-                    outputRequest.JuniorTypiconRule = (modTriodionRule != null) ? modTriodionRule.RuleEntity : triodionRule;
+                    if (modMenologyRule == null)
+                    {
+                        outputRequest.Rules.Add(menologyRule);
+                    }
+                    if (modTriodionRule == null)
+                    {
+                        outputRequest.Rules.Add(triodionRule);
+                    }
                     break;
                 default:
                     if (result < -1)
                     {
                         //только Минея
-                        if (modMenologyRule != null)
+                        if (modMenologyRule == null)
                         {
-                            if (modMenologyRule.AsAddition)
-                            {
-                                outputRequest.SeniorTypiconRule = modMenologyRule.ru;
-                                outputRequest.JuniorTypiconRule = menologyRule;
-                            }
-                            else
-                            {
-                                outputRequest.SeniorTypiconRule = modMenologyRule.RuleEntity;
-                            }
+                            outputRequest.Rules.Add(menologyRule);
                         }
-                        else
-                        {
-                            outputRequest.SeniorTypiconRule = menologyRule;
-                        }
-                        //outputRequest.SeniorTypiconRule = ((modMenologyRule != null) && (!modMenologyRule.AsAddition)) 
-                        //    ? modMenologyRule.RuleEntity : menologyRule;
-                        outputRequest.JuniorTypiconRule = null;
                     }
                     else
                     {
                         //только Триодь
-                        outputRequest.SeniorTypiconRule = (modTriodionRule != null) ? modTriodionRule.RuleEntity : triodionRule;
-                        outputRequest.JuniorTypiconRule = null;
+                        if (modTriodionRule == null)
+                        {
+                            outputRequest.Rules.Add(triodionRule);
+                        }
                     }
                     break;
+            }
+
+            //добавляем все измененные правила
+            if (modAbstractRules != null)
+            {
+                modAbstractRules.ForEach(c =>
+                {
+                    if (c is ModifiedTriodionRule)
+                    {
+                        outputRequest.Rules.Add((c as ModifiedTriodionRule).RuleEntity);
+                    }
+                    else
+                    {
+                        outputRequest.Rules.Add((c as ModifiedMenologyRule).RuleEntity);
+                    }
+                });
             }
 
             return outputRequest;

@@ -89,7 +89,12 @@ namespace TypiconOnline.Domain.Typicon
 
         #region ModifiedRules methods
 
-        public ModifiedRule GetModifiedRule(DateTime date)
+        /// <summary>
+        /// Возвращает список измененных правил для конкретной даты
+        /// </summary>
+        /// <param name="date">Конкретная дата</param>
+        /// <returns></returns>
+        public List<ModifiedRule> GetModifiedRules(DateTime date)
         {
             //определяем год
             //??? если дата до 7 января - смотрим прошлый год
@@ -113,9 +118,6 @@ namespace TypiconOnline.Domain.Typicon
                     //Menology
 
                     //находим правило для конкретного дня Минеи
-                    //MenologyRule menologyRule = (MenologyRule) RulesFolder.FindRule(c => ((c is MenologyRule) && 
-                    //                            (((MenologyRule)c).Day.GetCurrentDate(indexDate.Year) == indexDate)));
-
                     MenologyRule menologyRule = GetMenologyRule(indexDate);
 
                     if (menologyRule == null)
@@ -129,9 +131,6 @@ namespace TypiconOnline.Domain.Typicon
                 //теперь обрабатываем переходящие минейные праздники
                 //у них не должны быть определены даты. так их и найдем
 
-                //RulesFolder.FindAllRules(c => ((c is MenologyRule) &&
-                //                              ((c as MenologyRule).Day.Date.IsEmpty) &&
-                //                              ((c as MenologyRule).Day.DateB.IsEmpty))).
                 MenologyRules.FindAll(c => (c.Day.Date.IsEmpty && c.Day.DateB.IsEmpty)).
                     ForEach(a =>
                     {
@@ -141,47 +140,27 @@ namespace TypiconOnline.Domain.Typicon
                         InterpretMenologyRule(a, date.AddYears(1));
                     });
 
-                //List<RuleEntity> movableRules = RulesFolder.FindAllRules(c => ((c is MenologyRule) &&
-                //                              ((c as MenologyRule).Day.Date.IsEmpty) &&
-                //                              ((c as MenologyRule).Day.DateB.IsEmpty)));
-
-                //if (movableRules != null)
-                //{
-                //    foreach (MenologyRule mRule in movableRules)
-                //    {
-                //        InterpretMenologyRule(mRule, date);
-                //    }
-                //}
-
                 //Triodion
 
                 //найти текущую Пасху
                 //Для каждого правила выполнять interpret(), где date = текущая Пасха. AddDays(Day.DaysFromEaster)
+                DateTime easter = EasterStorage.Instance.GetCurrentEaster(indexDate.Year);
 
-                EasterItem easterItem = EasterStorage.Instance.EasterDays.Find(c => c.Date.Year == indexDate.Year);
-
-                //EasterItem easterItem = new EasterItem()
-                //{
-                //    Date = BypassHandler.Instance.GetCurrentEaster(2017)
-                //};
-
-
-                //RulesFolder.FindAllRules(t => t is TriodionRule).
                 TriodionRules.
                     ForEach(a =>
                     {
                         if (a.Rule != null)
                         {
                             ModificationsRuleHandler handler = new ModificationsRuleHandler(
-                                new RuleHandlerRequest() { SeniorTypiconRule = a as TriodionRule } );
+                                new RuleHandlerRequest(a));
 
-                            int i = (a as TriodionRule).Day.DaysFromEaster;
-                            a.Rule.Interpret(easterItem.Date.AddDays(i), handler);
+                            int i = a.Day.DaysFromEaster;
+                            a.Rule.Interpret(easter.AddDays(i), handler);
                         }
                     });
             }
 
-            return modifiedYear.ModifiedRules.FirstOrDefault(d => d.Date == date);
+            return modifiedYear.ModifiedRules.FindAll(d => d.Date == date);
         }
 
         private void InterpretMenologyRule(MenologyRule menologyRule, DateTime date)
@@ -189,23 +168,17 @@ namespace TypiconOnline.Domain.Typicon
             if (menologyRule != null)
             {
                 ModificationsRuleHandler handler = new ModificationsRuleHandler(
-                    new RuleHandlerRequest() { SeniorTypiconRule = menologyRule });
+                    new RuleHandlerRequest(menologyRule));
                 //выполняем его
                 menologyRule.Rule.Interpret(date, handler);
             }
         }
 
-        //public void ClearModifiedRules()
-        //{
-        //    //TODO: не работает
-        //    foreach (ModifiedYear year in ModifiedYears)
-        //    {
-        //        year.ModifiedRules.Clear();
-        //        year.TypiconEntity = null;
-        //    }
-        //    ModifiedYears.Clear();
-        //}
-
+        /// <summary>
+        /// Добавляет измененное правило.
+        /// Вызывается из метода Execute класса ModificationsRuleHandler
+        /// </summary>
+        /// <param name="request"></param>
         internal void AddModifiedRule(ModificationsRuleRequest request)
         {
             ModifiedYear year = ModifiedYears.FirstOrDefault(m => m.Year == request.Date.Year);

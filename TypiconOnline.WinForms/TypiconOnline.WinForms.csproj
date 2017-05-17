@@ -120,18 +120,6 @@
     <Compile Include="FormPassword.Designer.cs">
       <DependentUpon>FormPassword.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormTest.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormTest.Designer.cs">
-      <DependentUpon>FormTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterByContainer.cs" />
@@ -143,13 +131,6 @@
     </Compile>
     <EmbeddedResource Include="FormPassword.resx">
       <DependentUpon>FormPassword.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormTest.resx">
-      <DependentUpon>FormTest.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -188,10 +169,6 @@
     <ProjectReference Include="..\..\..\_Samples\abrudtkuhl-WordPressSharp-31d7200\src\WordPressSharp\WordPressSharp.csproj">
       <Project>{7a938355-0b6b-48b7-97fb-c0c09015307b}</Project>
       <Name>WordPressSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ScheduleSolution\ScheduleHandler\ScheduleHandling.csproj">
-      <Project>{13a65bca-6e1f-4866-835c-3b58a2368c82}</Project>
-      <Name>ScheduleHandling</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infrastructure.Common\TypiconOnline.Infrastructure.Common.csproj">
       <Project>{1F2F3F15-A8CF-4AB7-8603-FB0309EAF8C7}</Project>

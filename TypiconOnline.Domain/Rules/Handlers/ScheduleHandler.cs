@@ -27,15 +27,15 @@ namespace TypiconOnline.Domain.Rules.Handlers
             if ((element is Service) || (element is Notice))
             {
                 if ((Mode == HandlingMode.All) ||
-                    ((Mode == HandlingMode.DayBefore) && ((element as Service).IsDayBefore.Value)) ||
-                    ((Mode == HandlingMode.ThisDay) && (!(element as Service).IsDayBefore.Value)))
+                    ((Mode == HandlingMode.DayBefore) && ((element as Notice).IsDayBefore.Value)) ||
+                    ((Mode == HandlingMode.ThisDay) && (!(element as Notice).IsDayBefore.Value)))
                 {
                     if (_executingResult == null)
                     {
                         _executingResult = new ExecContainer();
                     }
 
-                    _executingResult.ChildElements.Add(element as Service);
+                    _executingResult.ChildElements.Add(element as Notice);
                 }
             }
         }

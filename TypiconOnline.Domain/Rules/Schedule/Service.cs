@@ -9,24 +9,17 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class Service : RuleContainer, ICustomInterpreted
+    public class Notice : RuleContainer, ICustomInterpreted
     {
-        private ItemTime _time = new ItemTime();
         private string _name;
         private ItemBoolean _isDayBefore = new ItemBoolean();
         private string _additionalName;
 
-        public Service(XmlNode node) : base(node)
+        public Notice(XmlNode node) : base(node)
         {
             if (node.Attributes.Count > 0)
             {
-                XmlAttribute attr = node.Attributes[RuleConstants.ServiceTimeAttrName];
-                if (attr != null)
-                {
-                    _time = new ItemTime(attr.Value);
-                }
-
-                attr = node.Attributes[RuleConstants.ServiceNameAttrName];
+                XmlAttribute attr = node.Attributes[RuleConstants.ServiceNameAttrName];
                 if (attr != null)
                 {
                     _name = attr.Value;
@@ -48,13 +41,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         #region Properties
 
-        public ItemTime Time
-        {
-            get
-            {
-                return _time;
-            }
-        }
         public string Name
         {
             get
@@ -81,7 +67,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         public override void Interpret(DateTime date, IRuleHandler handler)
         {
-            if (IsValid && handler.IsAuthorized<Service>())
+            if (IsValid && handler.IsAuthorized<Notice>())
             {
                 handler.Execute(this);
 
@@ -93,11 +79,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void Validate()
         {
-            if (!_time.IsValid)
-            {
-                AddBrokenConstraint(ServiceBusinessConstraint.TimeTypeMismatch, ElementName);
-            }
-
             if (string.IsNullOrEmpty(_name))
             {
                 AddBrokenConstraint(ServiceBusinessConstraint.NameReqiured, ElementName);

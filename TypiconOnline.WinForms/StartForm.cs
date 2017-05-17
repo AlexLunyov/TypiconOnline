@@ -15,6 +15,7 @@ using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Easter;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.Domain.Rules;
 
 namespace ScheduleForm
 {
@@ -216,8 +217,6 @@ namespace ScheduleForm
 
             try
             {
-                //_sh.GetScheduleWeekXML(SelectedDate);
-
                 GetScheduleWeekRequest weekRequest = new GetScheduleWeekRequest()
                 {
                     Date = SelectedDate,
@@ -237,82 +236,18 @@ namespace ScheduleForm
                     textBoxResult.AppendText("--------------------------" + Environment.NewLine);
                     textBoxResult.AppendText(day.Date.ToShortDateString() + Environment.NewLine);
                     textBoxResult.AppendText(day.Name + Environment.NewLine);
-                    foreach(Service service in day.Schedule.ChildElements)
+                    foreach(RuleElement element in day.Schedule.ChildElements)
                     {
-                        textBoxResult.AppendText(service.Time + " " + service.Name + " " + service.AdditionalName + Environment.NewLine);
+                        if (element is Notice)
+                        {
+                            textBoxResult.AppendText((element as Notice).Name + " " + (element as Notice).AdditionalName + Environment.NewLine);
+                        }
+                        if (element is Service)
+                        {
+                            textBoxResult.AppendText((element as Service).Time + " " + (element as Service).Name + " " + (element as Service).AdditionalName + Environment.NewLine);
+                        }
                     }
                 }
-
-                //string messageString = "";
-
-                //if (checkBoxTxt.Checked)
-                //{
-                //    string fileOutputName = GetFileName(_selectedDate) + ".txt";
-
-                //    if (System.IO.File.Exists(fileOutputName))
-                //        System.IO.File.Delete(fileOutputName);
-
-                //    //заполняем шаблон
-                //    string txtResult = _sh.FillTextTemplate(fileOutputName);
-
-                //    messageString += "Текстовая версия была успешно сохранена. ";
-
-                //    if (checkBoxWordpress.Checked)
-                //    {
-                //        using (FormPassword testDialog = new FormPassword())
-                //        {
-                //            // Show testDialog as a modal dialog and determine if DialogResult = OK.
-                //            if (testDialog.ShowDialog(this) == DialogResult.OK)
-                //            {
-                //                if (testDialog.textBoxPassword.Text == Properties.Settings.Default.PasswordToPostWordpress)
-                //                {
-                //                    DateTime datePub = _selectedDate.AddDays(-8).AddHours(17).AddMinutes(30);
-
-                //                    PostToWordPress(_sh.GetWeekName(_selectedDate, false), txtResult, datePub);
-
-                //                    messageString += "\nЗапись размещена на сайте. Дата публикации - " + datePub.ToString("hh:mm dd MMMM yyyy года.");
-                //                }
-                //                else
-                //                {
-                //                    // Read the contents of testDialog's TextBox.
-                //                    MessageBox.Show("Неверный пароль. Расписание не было опубликовано на сайте.", "Ошибка", 
-                //                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                //                }
-                //            }
-                //        }
-                //    }
-                //}
-
-                //if (checkBoxDocx.Checked)
-                //{
-                //    if (textBoxTemplatePath.Text == "")
-                //    {
-                //        MessageBox.Show("Определите файл docx шаблона.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //        return;
-                //    }
-
-                //    string fileTemplateName = textBoxTemplatePath.Text;
-                //    string fileOutputName = GetFileName(_selectedDate) + ".docx";
-
-                //    if (System.IO.File.Exists(fileOutputName))
-                //        System.IO.File.Delete(fileOutputName);
-                //    System.IO.File.Copy(fileTemplateName, fileOutputName);
-
-                //    _sh.FillDocxTemplate(fileOutputName);
-
-                //    messageString += "\nПечатная версия была успешно сохранена. ";
-
-                //    FillDateCaptions();
-
-                //    if (checkBoxIsDocxOpen.Checked)
-                //    {
-                //        System.Diagnostics.Process proc = new System.Diagnostics.Process();
-                //        proc.StartInfo.FileName = fileOutputName;
-                //        proc.StartInfo.UseShellExecute = true;
-                //        proc.Start();
-                //    }
-                //}
-                //MessageBox.Show(messageString, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

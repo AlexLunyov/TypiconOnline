@@ -12,6 +12,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         protected List<Type> AuthorizedTypes;
         private TypiconRule _seniorTypiconRule;
         private TypiconRule _juniorTypiconRule;
+        private List<TypiconRule> _rules;
         private HandlingMode _mode;
 
         public RuleHandlerBase() { }
@@ -42,6 +43,17 @@ namespace TypiconOnline.Domain.Rules.Handlers
             }
         }
 
+        /// <summary>
+        /// Список правил для обработки, отсортированный по приоритету
+        /// </summary>
+        public List<TypiconRule> Rules
+        {
+            get
+            {
+                return _rules;
+            }
+        }
+
         #endregion
 
         public abstract void Execute(ICustomInterpreted element);
@@ -53,9 +65,10 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
         public virtual void Initialize(RuleHandlerRequest request)
         {
-            _seniorTypiconRule = request.SeniorTypiconRule;
-            _juniorTypiconRule = request.JuniorTypiconRule;
+            //_seniorTypiconRule = request.SeniorTypiconRule;
+            //_juniorTypiconRule = request.JuniorTypiconRule;
             _mode = request.Mode;
+            _rules = request.Rules;
         }
 
         public abstract RuleContainer GetResult();
