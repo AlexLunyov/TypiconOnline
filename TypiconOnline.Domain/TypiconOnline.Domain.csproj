@@ -58,7 +58,6 @@
     <Compile Include="ItemTypes\ItemTimeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemTime.cs" />
     <Compile Include="Rules\Expressions\GetDayOfWeek.cs" />
-    <Compile Include="Rules\Expressions\DayOfWeekExpression.cs" />
     <Compile Include="Rules\Handlers\BypassHandler.cs" />
     <Compile Include="Rules\Handlers\IRuleHandler.cs" />
     <Compile Include="ICustomInterpreted.cs" />

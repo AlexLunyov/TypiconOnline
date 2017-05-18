@@ -7,9 +7,12 @@ using TypiconOnline.Infrastructure.Common.Domain;
 namespace TypiconOnline.Domain.Rules.Expressions
 {
     /// <summary>
+    /// Элемент содержит описание дня недели
     /// Возвращает день недели у абстрактной даты
     /// 
     /// Примеры
+    /// <dayofweek>воскресенье</dayofweek>
+    /// 
     /// <getdayofweek><date>--01-04</date></getdayofweek>
     /// <getdayofweek><getclosestday dayofweek="saturday" weekcount="-2"><date>--11-08</date></getclosestday></getdayofweek>
     /// </summary>
@@ -19,9 +22,15 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         public GetDayOfWeek(XmlNode node) : base(node)
         {
-            if (node.HasChildNodes)
+            if (node.HasChildNodes && (node.FirstChild.NodeType != XmlNodeType.Text))
             {
                 _childDateExp = Factories.RuleFactory.CreateDateExpression(node.FirstChild);
+            }
+            else
+            {
+                _valueExpression = new ItemDayOfWeek(node.InnerText);
+
+                _valueCalculated = (_valueExpression as ItemDayOfWeek).Value;
             }
         }
 
@@ -31,7 +40,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
             get
             {
-                return typeof(ItemDayOfWeek);
+                return typeof(DayOfWeek);
             }
         }
 
@@ -41,7 +50,10 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
             if (_childDateExp == null)
             {
-                AddBrokenConstraint(GetClosestDayBusinessConstraint.DateRequired, ElementName);
+                if ((_valueExpression == null) || (!(_valueExpression as ItemDayOfWeek).IsValid))
+                {
+                    AddBrokenConstraint(GetClosestDayBusinessConstraint.DateRequired, ElementName);
+                }
             }
             else
             {
@@ -60,9 +72,12 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
             if (IsValid)
             {
-                _childDateExp.Interpret(date, handler);
+                if (_childDateExp != null)
+                {
+                    _childDateExp.Interpret(date, handler);
 
-                _valueCalculated = new ItemDayOfWeek(((DateTime)_childDateExp.ValueCalculated).DayOfWeek);
+                    _valueCalculated = ((DateTime)_childDateExp.ValueCalculated).DayOfWeek;
+                }
             }
         }
     }

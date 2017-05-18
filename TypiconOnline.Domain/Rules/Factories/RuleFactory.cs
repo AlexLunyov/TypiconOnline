@@ -25,6 +25,10 @@ namespace TypiconOnline.Domain.Rules.Factories
                 case RuleConstants.GetClosestDayNodeName:
                     outputEl = new GetClosestDay(node);
                     break;
+                case RuleConstants.GetDayOfWeekNodeName:
+                    outputEl = new GetDayOfWeek(node);
+                    break;
+
             }
             return outputEl;
         }

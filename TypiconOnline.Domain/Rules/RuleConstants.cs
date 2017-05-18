@@ -44,6 +44,8 @@ namespace TypiconOnline.Domain.Rules
 
         public const string NoticeNodeName = "notice";
 
+        public const string GetDayOfWeekNodeName = "getdayofweek";
+
         //правила для распознавания времени и дат
         public const string ItemTimeParsing = "HH.mm";
         public const string ItemDateParsing = "--MM-dd";

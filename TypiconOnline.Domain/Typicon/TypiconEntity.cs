@@ -58,13 +58,19 @@ namespace TypiconOnline.Domain.Typicon
             }
         }
 
+        private Sign _templateSunday;
+
         public Sign TemplateSunday
         {
             get
             {
                 //TODO: реализовать покрасивей
                 //должен быть добавлен признак IsTemplateSunday в Sign
-                return Signs.Find(c => c.Number == 6);
+                if (_templateSunday == null)
+                {
+                    _templateSunday = Signs.Find(c => c.Number == 6);
+                }
+                return _templateSunday;
             }
         }
 

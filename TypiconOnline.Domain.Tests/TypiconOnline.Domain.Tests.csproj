@@ -60,6 +60,7 @@
     <Compile Include="Rules\Expressions\DateTests.cs" />
     <Compile Include="Rules\Expressions\DaysFromEasterTest.cs" />
     <Compile Include="Rules\Expressions\GetClosestDayTest.cs" />
+    <Compile Include="Rules\Expressions\GetDayOfWeekTest.cs" />
     <Compile Include="Rules\Expressions\IntTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\Schedule\NoticeTest.cs" />

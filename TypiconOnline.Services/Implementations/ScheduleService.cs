@@ -51,12 +51,15 @@ namespace TypiconOnline.Domain.Services
                 {
                     scheduleDay.Name += " " + handlerRequest.Rules[i].Name;
                 }
-
-                scheduleDay.Name = (handlerRequest.PutSeniorRuleNameToEnd) ?
-                    scheduleDay.Name + " " + seniorTypiconRule.Name :
-                    seniorTypiconRule.Name + " " + scheduleDay.Name;
+                //Если имеется короткое название, то будем добавлять только его
+                if (string.IsNullOrEmpty(handlerRequest.ShortName))
+                {
+                    scheduleDay.Name = (handlerRequest.PutSeniorRuleNameToEnd) ?
+                        scheduleDay.Name + " " + seniorTypiconRule.Name :
+                        seniorTypiconRule.Name + " " + scheduleDay.Name;
+                }
             }
-            else
+            else if (string.IsNullOrEmpty(handlerRequest.ShortName))
             {
                 scheduleDay.Name = seniorTypiconRule.Name;
             }
@@ -68,12 +71,14 @@ namespace TypiconOnline.Domain.Services
 
                 //Если имеется короткое название, то добавляем только его
 
-                scheduleDay.Name = string.IsNullOrEmpty(handlerRequest.ShortName) ?
-                    BookStorage.Oktoikh.GetSundayName(inputRequest.Date) + " " + scheduleDay.Name :
-                    BookStorage.Oktoikh.GetSundayName(inputRequest.Date, handlerRequest.ShortName);
+                scheduleDay.Name = /*string.IsNullOrEmpty(handlerRequest.ShortName) ?
+                    BookStorage.Oktoikh.GetSundayName(inputRequest.Date) + " " + scheduleDay.Name :*/
+                    BookStorage.Oktoikh.GetSundayName(inputRequest.Date, handlerRequest.ShortName) + " " + scheduleDay.Name;
 
                 //жестко задаем воскресный день
-                seniorTypiconRule.Template = inputRequest.TypiconEntity.TemplateSunday;
+                //seniorTypiconRule.Template = inputRequest.TypiconEntity.TemplateSunday;
+                handlerRequest.Rules.Insert(0, inputRequest.TypiconEntity.TemplateSunday);
+                seniorTypiconRule = inputRequest.TypiconEntity.TemplateSunday;
             }
 
             scheduleDay.Date = inputRequest.Date;
@@ -104,7 +109,10 @@ namespace TypiconOnline.Domain.Services
                 {
                     //если нет Триоди и воскресенье
                     //жестко задаем воскресный день
-                    seniorTypiconRule.Template = inputRequest.TypiconEntity.TemplateSunday;
+                    //seniorTypiconRule.Template = inputRequest.TypiconEntity.TemplateSunday;
+
+                    handlerRequest.Rules.Insert(0, inputRequest.TypiconEntity.TemplateSunday);
+                    seniorTypiconRule = inputRequest.TypiconEntity.TemplateSunday;
                 }
 
                 inputRequest.RuleHandler.Initialize(handlerRequest);
