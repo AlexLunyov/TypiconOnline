@@ -92,7 +92,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         #region Methods
 
-        public override void Interpret(DateTime date, IRuleHandler settings)
+        protected override void InnerInterpret(DateTime date, IRuleHandler settings)
         {
             if (IsValid)
             {

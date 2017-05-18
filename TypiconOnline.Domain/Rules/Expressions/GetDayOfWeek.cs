@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Xml;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Expressions
 {
@@ -17,6 +19,10 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         public GetDayOfWeek(XmlNode node) : base(node)
         {
+            if (node.HasChildNodes)
+            {
+                _childDateExp = Factories.RuleFactory.CreateDateExpression(node.FirstChild);
+            }
         }
 
         #region Properties
@@ -33,7 +39,31 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override void Validate()
         {
-            throw new NotImplementedException();
+            if (_childDateExp == null)
+            {
+                AddBrokenConstraint(GetClosestDayBusinessConstraint.DateRequired, ElementName);
+            }
+            else
+            {
+                //добавляем ломаные правила к родителю
+                if (!_childDateExp.IsValid)
+                {
+                    foreach (BusinessConstraint brokenConstraint in _childDateExp.GetBrokenConstraints())
+                    {
+                        AddBrokenConstraint(brokenConstraint, ElementName + "." + brokenConstraint.ConstraintPath);
+                    }
+                }
+            }
+        }
+
+        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        {
+            if (IsValid)
+            {
+                _childDateExp.Interpret(date, handler);
+
+                _valueCalculated = new ItemDayOfWeek(((DateTime)_childDateExp.ValueCalculated).DayOfWeek);
+            }
         }
     }
 }

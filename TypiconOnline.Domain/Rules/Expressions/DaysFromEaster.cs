@@ -28,7 +28,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
             }
         }
 
-        public override void Interpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
             if (IsValid)
             {
@@ -45,8 +45,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
                 _valueCalculated = ((DateTime)_childDateExp.ValueCalculated).Subtract(easterDate).Days;
                 _valueExpression = new ItemInt((int)_valueCalculated);
-
-                _isInterpreted = true;
             }
         }
 

@@ -35,7 +35,7 @@ namespace TypiconOnline.Domain.Rules
 
                 foreach (XmlNode childNode in xmlNode.ChildNodes)
                 {
-                    RuleElement element = Factories.RuleFactory.CreateExecutable(childNode);
+                    RuleElement element = Factories.RuleFactory.CreateElement(childNode);
                     ChildElements.Add(element);
                 }
             }
@@ -47,12 +47,12 @@ namespace TypiconOnline.Domain.Rules
 
         public virtual List<RuleElement> ChildElements { get; set; }
 
-        
+
         #endregion
 
         #region Methods
 
-        public override void Interpret(DateTime date, IRuleHandler settings)
+        protected override void InnerInterpret(DateTime date, IRuleHandler settings)
         {
             if (IsValid)
             {
@@ -60,8 +60,6 @@ namespace TypiconOnline.Domain.Rules
                 {
                     el.Interpret(date, settings);
                 }
-
-                _isInterpreted = true;
             }
         }
 

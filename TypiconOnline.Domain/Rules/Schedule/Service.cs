@@ -9,9 +9,12 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class Service : Notice
+    public class Service : RuleContainer, ICustomInterpreted
     {
         private ItemTime _time = new ItemTime();
+        private string _name;
+        private ItemBoolean _isDayBefore = new ItemBoolean();
+        private string _additionalName;
 
         public Service(XmlNode node) : base(node)
         {
@@ -22,8 +25,28 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 {
                     _time = new ItemTime(attr.Value);
                 }
+
+                attr = node.Attributes[RuleConstants.ServiceNameAttrName];
+                if (attr != null)
+                {
+                    _name = attr.Value;
+                }
+
+                attr = node.Attributes[RuleConstants.ServiceIsDayBeforeAttrName];
+                if (attr != null)
+                {
+                    _isDayBefore = new ItemBoolean(attr.Value);
+                }
+
+                attr = node.Attributes[RuleConstants.ServiceAdditionalNameAttrName];
+                if (attr != null)
+                {
+                    _additionalName = attr.Value;
+                }
             }
         }
+
+        #region Properties
 
         public ItemTime Time
         {
@@ -32,16 +55,37 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 return _time;
             }
         }
-
-        public override void Interpret(DateTime date, IRuleHandler handler)
+        public string Name
         {
-            if (IsValid && handler.IsAuthorized<Notice>())
+            get
             {
-                //handler.Execute(this);
+                return _name;
+            }
+        }
+        public ItemBoolean IsDayBefore
+        {
+            get
+            {
+                return _isDayBefore;
+            }
+        }
+        public string AdditionalName
+        {
+            get
+            {
+                return _additionalName;
+            }
+        }
 
-                base.Interpret(date, handler);
+        #endregion
 
-                _isInterpreted = true;
+        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        {
+            if (IsValid && handler.IsAuthorized<Service>())
+            {
+                handler.Execute(this);
+
+                base.InnerInterpret(date, handler);
             }
         }
 
@@ -50,6 +94,28 @@ namespace TypiconOnline.Domain.Rules.Schedule
             if (!_time.IsValid)
             {
                 AddBrokenConstraint(ServiceBusinessConstraint.TimeTypeMismatch, ElementName);
+            }
+
+            if (string.IsNullOrEmpty(_name))
+            {
+                AddBrokenConstraint(ServiceBusinessConstraint.NameReqiured, ElementName);
+            }
+
+            if (!_isDayBefore.IsValid)
+            {
+                AddBrokenConstraint(ServiceBusinessConstraint.IsDayBeforeTypeMismatch, ElementName);
+            }
+
+            foreach (RuleElement element in ChildElements)
+            {
+                //добавляем ломаные правила к родителю
+                if (!element.IsValid)
+                {
+                    foreach (BusinessConstraint brokenRule in element.GetBrokenConstraints())
+                    {
+                        AddBrokenConstraint(brokenRule, ElementName + "." + brokenRule.ConstraintPath);
+                    }
+                }
             }
         }
     }

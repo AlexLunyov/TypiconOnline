@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Expressions
@@ -34,6 +35,11 @@ namespace TypiconOnline.Domain.Rules.Expressions
             int.TryParse(valNode.InnerText, out i);
 
             _valueCalculated = i;
+        }
+
+        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        {
+            //ничего
         }
 
 

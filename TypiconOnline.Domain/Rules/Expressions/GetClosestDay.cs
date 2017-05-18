@@ -69,11 +69,11 @@ namespace TypiconOnline.Domain.Rules.Expressions
             }
         }
 
-        public override void Interpret(DateTime date, IRuleHandler settings)
+        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
             if (IsValid)
             {
-                _childDateExp.Interpret(date, settings);
+                _childDateExp.Interpret(date, handler);
 
                 if (WeekCount.Value != 0)
                 {
@@ -118,8 +118,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
                     _valueCalculated = (forward < backward) ? ((DateTime)_childDateExp.ValueCalculated).AddDays(forward) :
                                                               ((DateTime)_childDateExp.ValueCalculated).AddDays(backward * -1);
                 }
-
-                _isInterpreted = true;
             }
         }
 

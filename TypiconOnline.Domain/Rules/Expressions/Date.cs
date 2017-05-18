@@ -49,14 +49,12 @@ namespace TypiconOnline.Domain.Rules.Expressions
             }
         }
 
-        public override void Interpret(DateTime date, IRuleHandler settings)
+        protected override void InnerInterpret(DateTime date, IRuleHandler settings)
         {
             if (IsValid)
             {
                 //из вводимой даты берем только год
                 _valueCalculated = new DateTime(date.Year, ((ItemDate)_valueExpression).Month, ((ItemDate)_valueExpression).Day);
-
-                _isInterpreted = true;
             }
         }
 

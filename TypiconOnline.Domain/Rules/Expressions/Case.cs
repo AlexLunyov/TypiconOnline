@@ -91,7 +91,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
             return false;
         }
 
-        public override void Interpret(DateTime date, IRuleHandler settings)
+        protected override void InnerInterpret(DateTime date, IRuleHandler settings)
         {
             if (IsValid)
             {
@@ -99,8 +99,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
                 {
                     valueElement.Interpret(date, settings);
                 }
-
-                _isInterpreted = true;
             }
         }
 

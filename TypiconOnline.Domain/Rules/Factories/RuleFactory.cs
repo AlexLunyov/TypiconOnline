@@ -46,7 +46,23 @@ namespace TypiconOnline.Domain.Rules.Factories
             return outputEl;
         }
 
-        public static RuleExecutable CreateExecutable(XmlNode node)
+        public static RuleElement CreateElement(XmlNode node)
+        {
+            RuleElement outputEl = CreateExecutable(node);
+
+            if (outputEl == null)
+            {
+                switch (node.Name)
+                {
+                    case RuleConstants.NoticeNodeName:
+                        outputEl = new Notice(node);
+                        break;
+                }
+            }
+            return outputEl;
+        }
+
+        public static RuleElement CreateExecutable(XmlNode node)
         {
             RuleExecutable outputEl = CreateRuleContainer(node);
 
@@ -75,9 +91,6 @@ namespace TypiconOnline.Domain.Rules.Factories
                 {
                     case RuleConstants.ServiceNodeName:
                         outputEl = new Service(node);
-                        break;
-                    case RuleConstants.NoticeNodeName:
-                        outputEl = new Notice(node);
                         break;
                 }
             }
