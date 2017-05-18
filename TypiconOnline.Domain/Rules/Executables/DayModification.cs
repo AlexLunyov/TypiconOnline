@@ -198,7 +198,12 @@ namespace TypiconOnline.Domain.Rules.Executables
                     _moveDateCalculated = date.AddDays(DayMoveCount.Value);
                 }
 
-                handler.Execute(this);
+                ////Добавляем DayModification только если года у date и _moveDateCalculated совпадают
+                //if (_moveDateCalculated.Year == date.Year)
+                //{
+                    handler.Execute(this);
+                //}
+                
 
                 //if (handler.Caller != null)
                 //{

@@ -13,6 +13,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
     /// </summary>
     public class ModificationsRuleHandler : RuleHandlerBase
     {
+        private readonly int _yearToModify;
+
         public ModificationsRuleHandler(RuleHandlerRequest request)// : base(request)
         {
             Initialize(request);
@@ -23,9 +25,15 @@ namespace TypiconOnline.Domain.Rules.Handlers
             };
         }
 
+        public ModificationsRuleHandler(RuleHandlerRequest request, int year) : this(request)
+        {
+            _yearToModify = year;
+        }
+
         public override void Execute(ICustomInterpreted element)
         {
-            if (element is DayModification)
+            if ((element is DayModification) 
+                && ((element as DayModification).MoveDateCalculated.Year == _yearToModify))
             {
                 int priority = (element as DayModification).Priority.Value;
 

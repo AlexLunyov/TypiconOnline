@@ -174,6 +174,7 @@ namespace TypiconOnline.Domain.Services
             if (modAbstractRules != null && modAbstractRules.Count > 0)
             {
                 bool isNotAddition = modAbstractRules.TrueForAll(c => !c.AsAddition);
+                bool isLastName = !modAbstractRules.TrueForAll(c => !c.IsLastName);
 
                 //сортируем по приоитету, если измененных правил больше одного
                 if (modAbstractRules.Count > 1)
@@ -205,7 +206,7 @@ namespace TypiconOnline.Domain.Services
                     }
                 }
 
-                outputRequest.PutSeniorRuleNameToEnd = abstrRule.IsLastName;
+                outputRequest.PutSeniorRuleNameToEnd = isLastName;
                 outputRequest.ShortName = abstrRule.ShortName;
             }
 
