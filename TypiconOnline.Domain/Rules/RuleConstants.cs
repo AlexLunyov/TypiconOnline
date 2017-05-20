@@ -15,8 +15,7 @@ namespace TypiconOnline.Domain.Rules
         public const string ConditionNodeName = "condition";
 
         public const string DayModificationNodeName = "daymodification";
-        public const string ServiceSignAttrName = "servicesign";
-        public const string CustomNameAttrName = "customname";
+        public const string ShortNameAttrName = "shortname";
         public const string IsLastNameAttrName = "islastname";
         public const string AsAdditionAttrName = "asaddition";
         public const string DayMoveAttrName = "daymove";
@@ -45,6 +44,8 @@ namespace TypiconOnline.Domain.Rules
         public const string NoticeNodeName = "notice";
 
         public const string GetDayOfWeekNodeName = "getdayofweek";
+
+        public const string DateByDaysFromEasterNodeName = "datebydaysfromeaster"; 
 
         //правила для распознавания времени и дат
         public const string ItemTimeParsing = "HH.mm";

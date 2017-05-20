@@ -32,11 +32,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
             if (IsValid)
             {
-                //заглушка
-                //_valueExpression = new ItemInt(0);
-                //_valueCalculated = 0;
-
-                //TODO: вернуть правильную обработку!
                 DateTime easterDate = EasterStorage.Instance.GetCurrentEaster(date.Year);
 
                 _childDateExp.Interpret(date, handler);

@@ -25,8 +25,6 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 
             DayModification element = new DayModification(xmlDoc.FirstChild);
 
-            Assert.AreEqual(6, element.ServiceSign.Value);
-
             Assert.AreEqual(0, element.DayMoveCount.Value);
         }
 

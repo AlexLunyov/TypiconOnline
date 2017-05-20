@@ -9,7 +9,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon.Modifications
 {
-    public abstract class ModifiedRule : EntityBase<int>, IAggregateRoot
+    public abstract class ModifiedRule : EntityBase<int>, IAggregateRoot, IComparable<ModifiedRule>
     {
         public DateTime Date { get; set; }
         //public DayType Day { get; set; }
@@ -25,6 +25,20 @@ namespace TypiconOnline.Domain.Typicon.Modifications
         protected override void Validate()
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Сравнение идет по свойству Priority, чем меньше целочисленное значение, тем выше приоритет
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public int CompareTo(ModifiedRule other)
+        {
+            if (Priority < other.Priority)
+                return -1;
+            else if (other.Priority == Priority)
+                return 0;
+            else return 1;
         }
     }
 }

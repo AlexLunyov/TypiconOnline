@@ -57,6 +57,7 @@
     <Compile Include="Rules\Executables\CaseTest.cs" />
     <Compile Include="Rules\Executables\DayModificationTest.cs" />
     <Compile Include="Rules\Executables\SwitchTest.cs" />
+    <Compile Include="Rules\Expressions\DateByDaysFromEasterTest.cs" />
     <Compile Include="Rules\Expressions\DateTests.cs" />
     <Compile Include="Rules\Expressions\DaysFromEasterTest.cs" />
     <Compile Include="Rules\Expressions\GetClosestDayTest.cs" />

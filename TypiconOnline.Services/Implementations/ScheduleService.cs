@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Services;
 using TypiconOnline.Domain.Books;
@@ -185,19 +186,19 @@ namespace TypiconOnline.Domain.Services
                 bool isLastName = !modAbstractRules.TrueForAll(c => !c.IsLastName);
 
                 //сортируем по приоитету, если измененных правил больше одного
-                if (modAbstractRules.Count > 1)
-                {
-                    modAbstractRules.Sort(delegate (ModifiedRule x, ModifiedRule y)
-                    {
-                        return x.Priority.CompareTo(y.Priority);
-                    });
-                }
+                //if (modAbstractRules.Count > 1)
+                //{
+                //    modAbstractRules.Sort(delegate (ModifiedRule x, ModifiedRule y)
+                //    {
+                //        return x.Priority.CompareTo(y.Priority);
+                //    });
+                //}
 
                 //выбираем измененное правило, максимальное по приоритету
-                ModifiedRule abstrRule = modAbstractRules[0];
+                ModifiedRule abstrRule = modAbstractRules.Min();
 
                 //считаем, что в списке правила только Минейные или Триодные
-                
+
                 if (abstrRule is ModifiedMenologyRule)
                 {
                     if (isNotAddition)
@@ -246,22 +247,30 @@ namespace TypiconOnline.Domain.Services
                     //senior Triodion, junior Menology
                     if (modTriodionRule == null)
                     {
-                        outputRequest.Rules.Add(triodionRule);
+                        //outputRequest.Rules.Add(triodionRule);
+
+                        AddFakeModRule(modAbstractRules, triodionRule);
                     }
                     if (modMenologyRule == null)
                     {
-                        outputRequest.Rules.Add(menologyRule);
+                        //outputRequest.Rules.Add(menologyRule);
+
+                        AddFakeModRule(modAbstractRules, menologyRule);
                     }
                     break;
                 case -1:
                     //senior Menology, junior Triodion
                     if (modMenologyRule == null)
                     {
-                        outputRequest.Rules.Add(menologyRule);
+                        //outputRequest.Rules.Add(menologyRule);
+
+                        AddFakeModRule(modAbstractRules, menologyRule);
                     }
                     if (modTriodionRule == null)
                     {
-                        outputRequest.Rules.Add(triodionRule);
+                        //outputRequest.Rules.Add(triodionRule);
+
+                        AddFakeModRule(modAbstractRules, triodionRule);
                     }
                     break;
                 default:
@@ -270,7 +279,9 @@ namespace TypiconOnline.Domain.Services
                         //только Минея
                         if (modMenologyRule == null)
                         {
-                            outputRequest.Rules.Add(menologyRule);
+                            //outputRequest.Rules.Add(menologyRule);
+
+                            AddFakeModRule(modAbstractRules, menologyRule);
                         }
                     }
                     else
@@ -278,7 +289,9 @@ namespace TypiconOnline.Domain.Services
                         //только Триодь
                         if (modTriodionRule == null)
                         {
-                            outputRequest.Rules.Add(triodionRule);
+                            //outputRequest.Rules.Add(triodionRule);
+
+                            AddFakeModRule(modAbstractRules, triodionRule);
                         }
                     }
                     break;
@@ -287,6 +300,8 @@ namespace TypiconOnline.Domain.Services
             //добавляем все измененные правила
             if (modAbstractRules != null)
             {
+                modAbstractRules.Sort();
+
                 modAbstractRules.ForEach(c =>
                 {
                     if (c is ModifiedTriodionRule)
@@ -300,7 +315,53 @@ namespace TypiconOnline.Domain.Services
                 });
             }
 
+            //сортируем по приоитету, если правил больше одного
+
+            //TODO: это бессмысленно, потому как приоритет измененных правил потерялся
+            //if (outputRequest.Rules.Count > 1)
+            //{
+            //    outputRequest.Rules.Sort(delegate (TypiconRule x, TypiconRule y)
+            //    {
+            //        return x.Template.Priority.CompareTo(y.Template.Priority);
+            //    });
+            //}
+
             return outputRequest;
+        }
+
+        /// <summary>
+        /// Метод добавляет в modAbstractRules подложный ModifiedRule, содержащий typiconRule и его приоритет
+        /// Испольуется для дальнейшей сортировки списка выходных правил метода ComposeRuleHandlerRequest
+        /// </summary>
+        /// <param name="modAbstractRules">список измененных правил</param>
+        /// <param name="typiconRule"></param>
+        private void AddFakeModRule(List<ModifiedRule> modAbstractRules, TypiconRule typiconRule)
+        {
+            if (modAbstractRules == null)
+            {
+                modAbstractRules = new List<ModifiedRule>();
+            }
+
+            ModifiedRule modRule = null;
+
+            if (typiconRule is TriodionRule)
+            {
+                modRule = new ModifiedTriodionRule()
+                {
+                    Priority = typiconRule.Template.Priority,
+                    RuleEntity = typiconRule as TriodionRule
+                };
+            }
+            else
+            {
+                modRule = new ModifiedMenologyRule()
+                {
+                    Priority = typiconRule.Template.Priority,
+                    RuleEntity = typiconRule as MenologyRule
+                };
+            }
+
+            modAbstractRules.Add(modRule);
         }
 
         public GetScheduleWeekResponse GetScheduleWeek(GetScheduleWeekRequest request)

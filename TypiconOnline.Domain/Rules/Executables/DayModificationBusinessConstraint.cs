@@ -10,7 +10,6 @@ namespace TypiconOnline.Domain.Rules.Executables
 {
     public class DayModificationBusinessConstraint
     {
-        public static readonly BusinessConstraint ServicesSignRequired = new BusinessConstraint("Должен быть определен знак службы.");
         public static readonly BusinessConstraint ServicesSignTypeMismatch = new BusinessConstraint("Значение знака службы должно быть целочисленным.");
         public static readonly BusinessConstraint IsLastNameTypeMismatch = new BusinessConstraint("Значение должно быть логическим.");
         public static readonly BusinessConstraint DayMoveTypeMismatch = new BusinessConstraint("Значение количества дней для переноса должно быть целочисленным.");

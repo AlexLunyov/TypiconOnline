@@ -57,6 +57,8 @@
     <Compile Include="Books\Oktoikh\OktoikhGlas.cs" />
     <Compile Include="ItemTypes\ItemTimeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemTime.cs" />
+    <Compile Include="Rules\Expressions\DateByDaysFromEasterBusinessConstraint.cs" />
+    <Compile Include="Rules\Expressions\DateByDaysFromEaster.cs" />
     <Compile Include="Rules\Expressions\GetDayOfWeek.cs" />
     <Compile Include="Rules\Handlers\BypassHandler.cs" />
     <Compile Include="Rules\Handlers\IRuleHandler.cs" />

@@ -8,8 +8,8 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Expressions
 {
-    public class DateByDaysFromEasterBusinessConstraint
+    public class DateBusinessConstraint
     {
-        public static readonly BusinessConstraint IntAbsense = new BusinessConstraint("Отсутствует определение числа.");
+        public static readonly BusinessConstraint DateTypeMismatch = new BusinessConstraint("Неверный формат даты.");
     }
 }

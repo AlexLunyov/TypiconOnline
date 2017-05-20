@@ -18,7 +18,6 @@ namespace TypiconOnline.Domain.Rules.Executables
 
     public class DayModification : RuleExecutable, ICustomInterpreted
     {
-        private ItemInt _serviceSign;
         private string _shortName;
         private ItemBoolean _isLastName;
         private ItemBoolean _asAddition;
@@ -31,19 +30,9 @@ namespace TypiconOnline.Domain.Rules.Executables
         {
             if (node.Attributes != null)
             {
-                string _attrString = "";
-                XmlAttribute attr = node.Attributes[RuleConstants.ServiceSignAttrName];
+                string _attrString = "false";
 
-                if (attr != null)
-                {
-                    _attrString = attr.Value;
-                }
-
-                _serviceSign = new ItemInt(_attrString);
-
-                _attrString = "false";
-
-                attr = node.Attributes[RuleConstants.CustomNameAttrName];
+                XmlAttribute attr = node.Attributes[RuleConstants.ShortNameAttrName];
 
                 if (attr != null)
                 {
@@ -99,14 +88,6 @@ namespace TypiconOnline.Domain.Rules.Executables
         }
 
         #region Properties
-
-        public ItemInt ServiceSign
-        {
-            get
-            {
-                return _serviceSign;
-            }
-        }
 
         public ItemInt DayMoveCount
         {
@@ -194,11 +175,6 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         protected override void Validate()
         {
-            if (!_serviceSign.IsValid)
-            {
-                AddBrokenConstraint(DayModificationBusinessConstraint.ServicesSignRequired, ElementName);
-            }
-
             if (!_isLastName.IsValid)
             {
                 AddBrokenConstraint(DayModificationBusinessConstraint.IsLastNameTypeMismatch, ElementName);

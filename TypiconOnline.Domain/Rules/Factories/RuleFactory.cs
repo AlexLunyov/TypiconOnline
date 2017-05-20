@@ -10,25 +10,36 @@ namespace TypiconOnline.Domain.Rules.Factories
     {
         public static RuleExpression CreateExpression(XmlNode node)
         {
-            RuleExpression outputEl = null;
+            RuleExpression outputEl = CreateDateExpression(node);
+
+            if (outputEl == null)
+            {
+                outputEl = CreateIntExpression(node);
+            }
+
+            if (outputEl == null)
+            {
+                switch (node.Name)
+                {
+                    case RuleConstants.GetDayOfWeekNodeName:
+                        outputEl = new GetDayOfWeek(node);
+                        break;
+                }
+            }
+            return outputEl;
+        }
+
+        public static IntExpression CreateIntExpression(XmlNode node)
+        {
+            IntExpression outputEl = null;
             switch (node.Name)
             {
                 case RuleConstants.DaysFromEasterNodeName:
                     outputEl = new DaysFromEaster(node);
                     break;
-                case RuleConstants.DateNodeName:
-                    outputEl = new Date(node);
-                    break;
                 case RuleConstants.IntNodeName:
                     outputEl = new Int(node);
                     break;
-                case RuleConstants.GetClosestDayNodeName:
-                    outputEl = new GetClosestDay(node);
-                    break;
-                case RuleConstants.GetDayOfWeekNodeName:
-                    outputEl = new GetDayOfWeek(node);
-                    break;
-
             }
             return outputEl;
         }
