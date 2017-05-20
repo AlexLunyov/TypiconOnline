@@ -20,6 +20,7 @@ namespace TypiconOnline.Domain.Rules
         public const string AsAdditionAttrName = "asaddition";
         public const string DayMoveAttrName = "daymove";
         public const string PriorityAttrName = "priority";
+        public const string UseFullNameAttrName = "usefullname"; 
 
         public const string DaysFromEasterNodeName = "daysfromeaster";
         public const string DateNodeName = "date";
@@ -44,6 +45,7 @@ namespace TypiconOnline.Domain.Rules
         public const string NoticeNodeName = "notice";
 
         public const string GetDayOfWeekNodeName = "getdayofweek";
+        public const string GetDayOfWeekAttrName = "name";
 
         public const string DateByDaysFromEasterNodeName = "datebydaysfromeaster"; 
 

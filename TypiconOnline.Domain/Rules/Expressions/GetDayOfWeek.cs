@@ -20,18 +20,26 @@ namespace TypiconOnline.Domain.Rules.Expressions
     {
         private DateExpression _childDateExp;
 
+        private ItemDayOfWeek _name;
+
         public GetDayOfWeek(XmlNode node) : base(node)
         {
-            if (node.HasChildNodes && (node.FirstChild.NodeType != XmlNodeType.Text))
+            XmlAttribute attr = node.Attributes[RuleConstants.GetDayOfWeekAttrName];
+            if (attr != null)
+            {
+                _name = new ItemDayOfWeek(attr.Value);
+            }
+
+            if (node.HasChildNodes)
             {
                 _childDateExp = Factories.RuleFactory.CreateDateExpression(node.FirstChild);
             }
-            else
-            {
-                _valueExpression = new ItemDayOfWeek(node.InnerText);
+            //else
+            //{
+            //    _valueExpression = new ItemDayOfWeek(node.InnerText);
 
-                _valueCalculated = (_valueExpression as ItemDayOfWeek).Value;
-            }
+            //    _valueCalculated = (_valueExpression as ItemDayOfWeek).Value;
+            //}
         }
 
         #region Properties
@@ -48,22 +56,27 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override void Validate()
         {
-            if (_childDateExp == null)
+            if ((_name == null) && (_childDateExp == null))
             {
-                if ((_valueExpression == null) || (!(_valueExpression as ItemDayOfWeek).IsValid))
-                {
-                    AddBrokenConstraint(GetClosestDayBusinessConstraint.DateRequired, ElementName);
-                }
+                AddBrokenConstraint(GetDayOfWeekBusinessConstraint.TermsRequired, ElementName);
             }
-            else
+
+            if ((_name != null) && (_childDateExp != null))
             {
-                //добавляем ломаные правила к родителю
-                if (!_childDateExp.IsValid)
+                AddBrokenConstraint(GetDayOfWeekBusinessConstraint.TermsTooMuch, ElementName);
+            }
+
+            if ((_name != null) && (!_name.IsValid))
+            {
+                AddBrokenConstraint(GetDayOfWeekBusinessConstraint.DayOfWeekWrongDefinition, ElementName);
+            }
+
+            //добавляем ломаные правила к родителю
+            if ((_childDateExp != null) && !_childDateExp.IsValid)
+            {
+                foreach (BusinessConstraint brokenConstraint in _childDateExp.GetBrokenConstraints())
                 {
-                    foreach (BusinessConstraint brokenConstraint in _childDateExp.GetBrokenConstraints())
-                    {
-                        AddBrokenConstraint(brokenConstraint, ElementName + "." + brokenConstraint.ConstraintPath);
-                    }
+                    AddBrokenConstraint(brokenConstraint, ElementName + "." + brokenConstraint.ConstraintPath);
                 }
             }
         }
@@ -77,6 +90,10 @@ namespace TypiconOnline.Domain.Rules.Expressions
                     _childDateExp.Interpret(date, handler);
 
                     _valueCalculated = ((DateTime)_childDateExp.ValueCalculated).DayOfWeek;
+                }
+                else
+                {
+                    _valueCalculated = _name.Value;
                 }
             }
         }

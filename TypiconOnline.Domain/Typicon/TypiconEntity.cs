@@ -202,7 +202,8 @@ namespace TypiconOnline.Domain.Typicon
                     Priority = request.Priority,
                     IsLastName = request.IsLastName,
                     AsAddition = request.AsAddition,
-                    ShortName = request.ShortName
+                    ShortName = request.ShortName,
+                    UseFullName = request.UseFullName
                 });
             }
 

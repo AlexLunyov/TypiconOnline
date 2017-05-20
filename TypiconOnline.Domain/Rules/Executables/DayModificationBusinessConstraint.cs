@@ -12,6 +12,7 @@ namespace TypiconOnline.Domain.Rules.Executables
     {
         public static readonly BusinessConstraint ServicesSignTypeMismatch = new BusinessConstraint("Значение знака службы должно быть целочисленным.");
         public static readonly BusinessConstraint IsLastNameTypeMismatch = new BusinessConstraint("Значение должно быть логическим.");
+        public static readonly BusinessConstraint UseFullNameTypeMismatch = new BusinessConstraint("Значение должно быть логическим."); 
         public static readonly BusinessConstraint DayMoveTypeMismatch = new BusinessConstraint("Значение количества дней для переноса должно быть целочисленным.");
         public static readonly BusinessConstraint DateDoubleDefinition = new BusinessConstraint("Не может быть одновременно определены два параметра перемещения дня: количество дней для переноса и конкретная дата.");
         public static readonly BusinessConstraint DateAbsense = new BusinessConstraint("Отсутствует определение даты.");

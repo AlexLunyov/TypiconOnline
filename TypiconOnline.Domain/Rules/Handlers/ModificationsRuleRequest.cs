@@ -15,5 +15,6 @@ namespace TypiconOnline.Domain.Rules.Handlers
         public bool IsLastName;
         public string ShortName;
         public bool AsAddition;
+        public bool UseFullName;
     }
 }

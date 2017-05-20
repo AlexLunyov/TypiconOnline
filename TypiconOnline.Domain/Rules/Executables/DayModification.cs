@@ -21,6 +21,7 @@ namespace TypiconOnline.Domain.Rules.Executables
         private string _shortName;
         private ItemBoolean _isLastName;
         private ItemBoolean _asAddition;
+        private ItemBoolean _useFullName;
         private ItemInt _dayMoveCount;
         private DateTime _moveDateCalculated;
         private ItemInt _priority;
@@ -60,6 +61,17 @@ namespace TypiconOnline.Domain.Rules.Executables
                 }
 
                 _asAddition = new ItemBoolean(_attrString);
+
+                _attrString = "true";
+
+                attr = node.Attributes[RuleConstants.UseFullNameAttrName];
+
+                if (attr != null)
+                {
+                    _attrString = attr.Value;
+                }
+
+                _useFullName = new ItemBoolean(_attrString);
 
                 attr = node.Attributes[RuleConstants.DayMoveAttrName];
 
@@ -129,6 +141,14 @@ namespace TypiconOnline.Domain.Rules.Executables
             }
         }
 
+        public ItemBoolean UseFullName
+        {
+            get
+            {
+                return _useFullName;
+            }
+        }
+
         public ItemDate MoveDateExpression
         {
             get
@@ -183,6 +203,11 @@ namespace TypiconOnline.Domain.Rules.Executables
             if (!_asAddition.IsValid)
             {
                 AddBrokenConstraint(DayModificationBusinessConstraint.IsLastNameTypeMismatch, ElementName);
+            }
+
+            if (!_useFullName.IsValid)
+            {
+                AddBrokenConstraint(DayModificationBusinessConstraint.UseFullNameTypeMismatch, ElementName);
             }
 
 

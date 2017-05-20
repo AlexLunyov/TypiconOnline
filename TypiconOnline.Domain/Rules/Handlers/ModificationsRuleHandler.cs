@@ -51,7 +51,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
                     Priority = priority,
                     ShortName = (element as DayModification).ShortName,
                     AsAddition = (element as DayModification).AsAddition.Value,
-                    IsLastName = (element as DayModification).IsLastName.Value
+                    IsLastName = (element as DayModification).IsLastName.Value,
+                    UseFullName = (element as DayModification).UseFullName.Value
                 };
 
                 TypiconEntity typiconEntity = seniorTypiconRule.Owner;//Folder.GetOwner();

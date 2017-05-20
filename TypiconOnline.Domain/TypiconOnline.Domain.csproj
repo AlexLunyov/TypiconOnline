@@ -59,6 +59,7 @@
     <Compile Include="ItemTypes\ItemTime.cs" />
     <Compile Include="Rules\Expressions\DateByDaysFromEasterBusinessConstraint.cs" />
     <Compile Include="Rules\Expressions\DateByDaysFromEaster.cs" />
+    <Compile Include="Rules\Expressions\GetClosestDayBusinessConstraint.cs" />
     <Compile Include="Rules\Expressions\GetDayOfWeek.cs" />
     <Compile Include="Rules\Handlers\BypassHandler.cs" />
     <Compile Include="Rules\Handlers\IRuleHandler.cs" />
@@ -106,7 +107,7 @@
     <Compile Include="Rules\Executables\RuleExecutable.cs" />
     <Compile Include="Rules\Executables\Switch.cs" />
     <Compile Include="Rules\Expressions\Case.cs" />
-    <Compile Include="Rules\Expressions\GetClosestDayBusinessConstraint.cs" />
+    <Compile Include="Rules\Expressions\GetDayOfWeekBusinessConstraint.cs" />
     <Compile Include="Rules\Expressions\IntBusinessConstraint.cs" />
     <Compile Include="Rules\Expressions\DaysFromEasterBusinessConstraint.cs" />
     <Compile Include="Rules\Expressions\DateBusinessConstraint.cs" />

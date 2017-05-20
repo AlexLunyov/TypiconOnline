@@ -20,6 +20,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         public HandlingMode Mode;
         public bool PutSeniorRuleNameToEnd = false;
         public string ShortName;
+        public bool UseFullName = true;
 
         public RuleHandlerRequest()
         {

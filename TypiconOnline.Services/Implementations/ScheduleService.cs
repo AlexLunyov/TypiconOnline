@@ -53,14 +53,14 @@ namespace TypiconOnline.Domain.Services
                     scheduleDay.Name += " " + handlerRequest.Rules[i].Name;
                 }
                 //Если имеется короткое название, то будем добавлять только его
-                if (string.IsNullOrEmpty(handlerRequest.ShortName))
+                if (handlerRequest.UseFullName)//(string.IsNullOrEmpty(handlerRequest.ShortName))
                 {
                     scheduleDay.Name = (handlerRequest.PutSeniorRuleNameToEnd) ?
                         scheduleDay.Name + " " + seniorTypiconRule.Name :
                         seniorTypiconRule.Name + " " + scheduleDay.Name;
                 }
             }
-            else if (string.IsNullOrEmpty(handlerRequest.ShortName))
+            else if (handlerRequest.UseFullName)//(string.IsNullOrEmpty(handlerRequest.ShortName))
             {
                 scheduleDay.Name = seniorTypiconRule.Name;
             }
@@ -217,6 +217,7 @@ namespace TypiconOnline.Domain.Services
 
                 outputRequest.PutSeniorRuleNameToEnd = isLastName;
                 outputRequest.ShortName = abstrRule.ShortName;
+                outputRequest.UseFullName = abstrRule.UseFullName;
             }
 
             //определяем приоритет и находим, какие объекты будем обрабатывать

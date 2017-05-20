@@ -22,6 +22,8 @@ namespace TypiconOnline.Domain.Typicon.Modifications
 
         public bool AsAddition { get; set; }
 
+        public bool UseFullName { get; set; }
+
         protected override void Validate()
         {
             throw new NotImplementedException();
@@ -34,9 +36,10 @@ namespace TypiconOnline.Domain.Typicon.Modifications
         /// <returns></returns>
         public int CompareTo(ModifiedRule other)
         {
-            if (Priority < other.Priority)
+            if ((Priority < other.Priority) || 
+                ((Priority == other.Priority) && ((this is ModifiedTriodionRule) && (other is ModifiedMenologyRule))))
                 return -1;
-            else if (other.Priority == Priority)
+            else if ((other.Priority == Priority) && !((this is ModifiedMenologyRule) && (other is ModifiedTriodionRule)))
                 return 0;
             else return 1;
         }
