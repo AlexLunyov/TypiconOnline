@@ -64,7 +64,7 @@ namespace TypiconMigrationTool
 
             while (true)
             {
-                Console.WriteLine("Введите число дней от Пасхи для дня Благовещения");
+                Console.WriteLine("Введите число дней от Пасхи для дня 40 мучеников.");//Благовещения");
                 string line = Console.ReadLine();
 
                 int daysFromEaster;
@@ -72,12 +72,14 @@ namespace TypiconMigrationTool
                 if (int.TryParse(line, out daysFromEaster))
                 {
                     Random random = new Random();
-                    DateTime blgvDate = new DateTime(random.Next(2000, 2200), 04, 07);
+
+                    DateTime blgvDate = new DateTime(random.Next(2000, 2200), 03, 22);//04, 07);
                     DateTime fakeEaster = blgvDate.AddDays(daysFromEaster*-1);
 
                     List<EasterItem> easters = new List<EasterItem>()
                     {
-                        new EasterItem() { Date = fakeEaster }
+                        new EasterItem() { Date = fakeEaster },
+                        new EasterItem() { Date = fakeEaster.AddYears(1) }
                     };
 
                     EasterStorage.Instance.EasterDays = easters;
@@ -87,7 +89,7 @@ namespace TypiconMigrationTool
                     if (day != null)
                     {
                         StringBuilder stringBuilder = new StringBuilder();
-                        stringBuilder.AppendLine(day.Date.ToShortDateString());
+                        stringBuilder.AppendLine(day.Date.ToShortDateString() + " " + day.Date.ToString("dddd").ToUpper());
                         stringBuilder.AppendLine(day.Name);
                         foreach (Service service in day.Schedule.ChildElements)
                         {

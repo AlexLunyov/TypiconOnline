@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.Days
             {
                 if (DateTime.IsLeapYear(year))
                 {
-                    return new DateTime(year, DateB.Month, DateB.Day);
+                    return (!DateB.IsEmpty) ? new DateTime(year, DateB.Month, DateB.Day) : DateTime.MinValue;
                 }
                 else
                 {

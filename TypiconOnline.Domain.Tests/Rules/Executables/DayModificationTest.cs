@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using TypiconOnline.Domain.Easter;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Repository.EF;
 
 namespace TypiconOnline.Domain.Tests.Rules.Executables
 {
@@ -147,6 +149,38 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
             DayModification element = new DayModification(xmlDoc.FirstChild);
 
             Assert.IsFalse(element.IsValid);
+        }
+
+        [Test]
+        public void DayModification_DateBydaysFromEaster()
+        {
+            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+
+            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+
+            string xmlString = @"<daymodification><datebydaysfromeaster><int>-43</int></datebydaysfromeaster></daymodification>";
+
+            XmlDocument xmlDoc = new XmlDocument();
+
+            xmlDoc.LoadXml(xmlString);
+
+            DayModification element = new DayModification(xmlDoc.FirstChild);
+
+            Assert.IsTrue(element.IsValid);
+        }
+
+        [Test]
+        public void DayModification_UseFullNameTest()
+        {
+            string xmlString = @"<daymodification daymove = ""0"" priority=""3""/>";
+
+            XmlDocument xmlDoc = new XmlDocument();
+
+            xmlDoc.LoadXml(xmlString);
+
+            DayModification element = new DayModification(xmlDoc.FirstChild);
+
+            Assert.IsTrue(element.UseFullName.Value);
         }
     }
 }

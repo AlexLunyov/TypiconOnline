@@ -55,6 +55,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxBaseUrl = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.buttonRulePathSettings = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBoxRulePath = new System.Windows.Forms.TextBox();
             this.buttonTemplatePath = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxTemplatePath = new System.Windows.Forms.TextBox();
@@ -62,13 +65,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxFilePath = new System.Windows.Forms.TextBox();
             this.tabAdminPage = new System.Windows.Forms.TabPage();
+            this.btnReloadRules = new System.Windows.Forms.Button();
             this.btnClearModifiedYears = new System.Windows.Forms.Button();
             this.folderBrowserDialogSettings = new System.Windows.Forms.FolderBrowserDialog();
             this.templateFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.btnReloadRules = new System.Windows.Forms.Button();
-            this.buttonRulePathSettings = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBoxRulePath = new System.Windows.Forms.TextBox();
+            this.tabPageTesting = new System.Windows.Forms.TabPage();
+            this.dateTimePickerTesting = new System.Windows.Forms.DateTimePicker();
+            this.textBoxTesting = new System.Windows.Forms.TextBox();
+            this.btnTest40mart = new System.Windows.Forms.Button();
             this.tabControlMain.SuspendLayout();
             this.tabPageMain.SuspendLayout();
             this.panelTest.SuspendLayout();
@@ -80,6 +84,7 @@
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabAdminPage.SuspendLayout();
+            this.tabPageTesting.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlMain
@@ -87,6 +92,7 @@
             this.tabControlMain.Controls.Add(this.tabPageMain);
             this.tabControlMain.Controls.Add(this.tabPagesSettings);
             this.tabControlMain.Controls.Add(this.tabAdminPage);
+            this.tabControlMain.Controls.Add(this.tabPageTesting);
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
             this.tabControlMain.Margin = new System.Windows.Forms.Padding(4);
@@ -411,6 +417,36 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Файлы";
             // 
+            // buttonRulePathSettings
+            // 
+            this.buttonRulePathSettings.Location = new System.Drawing.Point(671, 48);
+            this.buttonRulePathSettings.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonRulePathSettings.Name = "buttonRulePathSettings";
+            this.buttonRulePathSettings.Size = new System.Drawing.Size(35, 28);
+            this.buttonRulePathSettings.TabIndex = 8;
+            this.buttonRulePathSettings.Text = "...";
+            this.buttonRulePathSettings.UseVisualStyleBackColor = true;
+            this.buttonRulePathSettings.Click += new System.EventHandler(this.buttonRulePathSettings_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(371, 24);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(120, 17);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "Путь к Правилам";
+            // 
+            // textBoxRulePath
+            // 
+            this.textBoxRulePath.Location = new System.Drawing.Point(371, 49);
+            this.textBoxRulePath.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxRulePath.Name = "textBoxRulePath";
+            this.textBoxRulePath.ReadOnly = true;
+            this.textBoxRulePath.Size = new System.Drawing.Size(291, 22);
+            this.textBoxRulePath.TabIndex = 6;
+            // 
             // buttonTemplatePath
             // 
             this.buttonTemplatePath.Location = new System.Drawing.Point(308, 106);
@@ -485,6 +521,16 @@
             this.tabAdminPage.UseVisualStyleBackColor = true;
             this.tabAdminPage.Enter += new System.EventHandler(this.tabAdminPage_Enter);
             // 
+            // btnReloadRules
+            // 
+            this.btnReloadRules.Location = new System.Drawing.Point(18, 62);
+            this.btnReloadRules.Name = "btnReloadRules";
+            this.btnReloadRules.Size = new System.Drawing.Size(195, 28);
+            this.btnReloadRules.TabIndex = 1;
+            this.btnReloadRules.Text = "Reload Rules";
+            this.btnReloadRules.UseVisualStyleBackColor = true;
+            this.btnReloadRules.Click += new System.EventHandler(this.btnReloadRules_Click);
+            // 
             // btnClearModifiedYears
             // 
             this.btnClearModifiedYears.Location = new System.Drawing.Point(18, 16);
@@ -499,45 +545,47 @@
             // 
             this.templateFileDialog.Filter = "Docx файлы | *.docx";
             // 
-            // btnReloadRules
+            // tabPageTesting
             // 
-            this.btnReloadRules.Location = new System.Drawing.Point(18, 62);
-            this.btnReloadRules.Name = "btnReloadRules";
-            this.btnReloadRules.Size = new System.Drawing.Size(195, 28);
-            this.btnReloadRules.TabIndex = 1;
-            this.btnReloadRules.Text = "Reload Rules";
-            this.btnReloadRules.UseVisualStyleBackColor = true;
-            this.btnReloadRules.Click += new System.EventHandler(this.btnReloadRules_Click);
+            this.tabPageTesting.Controls.Add(this.btnTest40mart);
+            this.tabPageTesting.Controls.Add(this.textBoxTesting);
+            this.tabPageTesting.Controls.Add(this.dateTimePickerTesting);
+            this.tabPageTesting.Location = new System.Drawing.Point(4, 25);
+            this.tabPageTesting.Name = "tabPageTesting";
+            this.tabPageTesting.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageTesting.Size = new System.Drawing.Size(963, 458);
+            this.tabPageTesting.TabIndex = 3;
+            this.tabPageTesting.Text = "Тестирование";
+            this.tabPageTesting.UseVisualStyleBackColor = true;
             // 
-            // buttonRulePathSettings
+            // dateTimePickerTesting
             // 
-            this.buttonRulePathSettings.Location = new System.Drawing.Point(671, 48);
-            this.buttonRulePathSettings.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonRulePathSettings.Name = "buttonRulePathSettings";
-            this.buttonRulePathSettings.Size = new System.Drawing.Size(35, 28);
-            this.buttonRulePathSettings.TabIndex = 8;
-            this.buttonRulePathSettings.Text = "...";
-            this.buttonRulePathSettings.UseVisualStyleBackColor = true;
-            this.buttonRulePathSettings.Click += new System.EventHandler(this.buttonRulePathSettings_Click);
+            this.dateTimePickerTesting.Location = new System.Drawing.Point(31, 19);
+            this.dateTimePickerTesting.Name = "dateTimePickerTesting";
+            this.dateTimePickerTesting.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePickerTesting.TabIndex = 0;
+            this.dateTimePickerTesting.ValueChanged += new System.EventHandler(this.dateTimePickerTesting_ValueChanged);
             // 
-            // label6
+            // textBoxTesting
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(371, 24);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(120, 17);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "Путь к Правилам";
+            this.textBoxTesting.Dock = System.Windows.Forms.DockStyle.Right;
+            this.textBoxTesting.Location = new System.Drawing.Point(273, 3);
+            this.textBoxTesting.Multiline = true;
+            this.textBoxTesting.Name = "textBoxTesting";
+            this.textBoxTesting.ReadOnly = true;
+            this.textBoxTesting.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxTesting.Size = new System.Drawing.Size(687, 452);
+            this.textBoxTesting.TabIndex = 1;
             // 
-            // textBoxRulePath
+            // btnTest40mart
             // 
-            this.textBoxRulePath.Location = new System.Drawing.Point(371, 49);
-            this.textBoxRulePath.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxRulePath.Name = "textBoxRulePath";
-            this.textBoxRulePath.ReadOnly = true;
-            this.textBoxRulePath.Size = new System.Drawing.Size(291, 22);
-            this.textBoxRulePath.TabIndex = 6;
+            this.btnTest40mart.Location = new System.Drawing.Point(31, 56);
+            this.btnTest40mart.Name = "btnTest40mart";
+            this.btnTest40mart.Size = new System.Drawing.Size(200, 23);
+            this.btnTest40mart.TabIndex = 2;
+            this.btnTest40mart.Text = "все Пасхи";
+            this.btnTest40mart.UseVisualStyleBackColor = true;
+            this.btnTest40mart.Click += new System.EventHandler(this.btnTest40mart_Click);
             // 
             // StartForm
             // 
@@ -569,6 +617,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabAdminPage.ResumeLayout(false);
+            this.tabPageTesting.ResumeLayout(false);
+            this.tabPageTesting.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -616,5 +666,9 @@
         private System.Windows.Forms.Button buttonRulePathSettings;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBoxRulePath;
+        private System.Windows.Forms.TabPage tabPageTesting;
+        private System.Windows.Forms.TextBox textBoxTesting;
+        private System.Windows.Forms.DateTimePicker dateTimePickerTesting;
+        private System.Windows.Forms.Button btnTest40mart;
     }
 }

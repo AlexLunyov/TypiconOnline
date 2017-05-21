@@ -50,13 +50,13 @@ namespace TypiconOnline.Domain.Services
             {
                 for (int i = 1; i < handlerRequest.Rules.Count; i++)
                 {
-                    scheduleDay.Name += " " + handlerRequest.Rules[i].Name;
+                    scheduleDay.Name += handlerRequest.Rules[i].Name + " ";
                 }
                 //Если имеется короткое название, то будем добавлять только его
-                if (handlerRequest.UseFullName)//(string.IsNullOrEmpty(handlerRequest.ShortName))
+                if (handlerRequest.UseFullName && !string.IsNullOrEmpty(seniorTypiconRule.Name))//(string.IsNullOrEmpty(handlerRequest.ShortName))
                 {
                     scheduleDay.Name = (handlerRequest.PutSeniorRuleNameToEnd) ?
-                        scheduleDay.Name + " " + seniorTypiconRule.Name :
+                        scheduleDay.Name + seniorTypiconRule.Name :
                         seniorTypiconRule.Name + " " + scheduleDay.Name;
                 }
             }
@@ -65,7 +65,8 @@ namespace TypiconOnline.Domain.Services
                 scheduleDay.Name = seniorTypiconRule.Name;
             }
 
-            if ((seniorTypiconRule is MenologyRule) && (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday))
+            if ((seniorTypiconRule is MenologyRule) && (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday)
+                && (seniorTypiconRule.Template.Priority > 1))
             {
                 //Если Триоди нет и воскресенье, находим название Недели из Октоиха
                 //и добавляем название Недели в начало Name
@@ -362,7 +363,9 @@ namespace TypiconOnline.Domain.Services
                 };
             }
 
-            modAbstractRules.Add(modRule);
+            modAbstractRules.Insert(0, modRule);
+
+            //modAbstractRules.Add(modRule);
         }
 
         public GetScheduleWeekResponse GetScheduleWeek(GetScheduleWeekRequest request)

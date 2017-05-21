@@ -146,7 +146,7 @@ namespace TypiconOnline.Domain.Typicon
 
                 //найти текущую Пасху
                 //Для каждого правила выполнять interpret(), где date = текущая Пасха. AddDays(Day.DaysFromEaster)
-                DateTime easter = EasterStorage.Instance.GetCurrentEaster(indexDate.Year);
+                DateTime easter = EasterStorage.Instance.GetCurrentEaster(date.Year);
 
                 TriodionRules.
                     ForEach(a =>
@@ -215,8 +215,9 @@ namespace TypiconOnline.Domain.Typicon
                     RuleEntity = (TriodionRule)request.Caller,
                     Priority = request.Priority,
                     IsLastName = request.IsLastName,
+                    AsAddition = request.AsAddition,
                     ShortName = request.ShortName,
-                    AsAddition = request.AsAddition
+                    UseFullName = request.UseFullName
                 });
             }
         }
@@ -226,7 +227,7 @@ namespace TypiconOnline.Domain.Typicon
 
         public MenologyRule GetMenologyRule(DateTime date)
         {
-            return MenologyRules.FirstOrDefault(c => c.Day.GetCurrentDate(date.Year) == date);
+            return MenologyRules.FirstOrDefault(c => c.Day.GetCurrentDate(date.Year).Date == date.Date);
         }
 
         public TriodionRule GetTriodionRule(int daysFromEaster)

@@ -351,5 +351,54 @@ namespace ScheduleForm
                 textBoxRulePath.Text = folderBrowserDialogSettings.SelectedPath;
             }
         }
+
+        private void dateTimePickerTesting_ValueChanged(object sender, EventArgs e)
+        {
+            GetScheduleDayRequest dayRequest = new GetScheduleDayRequest()
+            {
+                Date = dateTimePickerTesting.Value,
+                TypiconEntity = _typiconEntity,
+                Mode = HandlingMode.AstronimicDay,
+                RuleHandler = new ScheduleHandler()
+            };
+
+            GetScheduleDayResponse dayResponse = _scheduleService.GetScheduleDay(dayRequest);
+
+            _unitOfWork.Commit();
+
+            textBoxTesting.Clear();
+
+            DateTime easter = EasterStorage.Instance.GetCurrentEaster(dateTimePickerTesting.Value.Year);
+
+            int daysFromEaster = dateTimePickerTesting.Value.Subtract(easter).Days;
+
+            textBoxTesting.AppendText(dayResponse.Day.Date.ToShortDateString() + Environment.NewLine);
+            textBoxTesting.AppendText(dayResponse.Day.Name + ". " + daysFromEaster + " дней до Пасхи." +Environment.NewLine);
+            foreach (RuleElement element in dayResponse.Day.Schedule.ChildElements)
+            {
+                if (element is Notice)
+                {
+                    textBoxTesting.AppendText((element as Notice).Name + " " + (element as Notice).AdditionalName + Environment.NewLine);
+                }
+                else if (element is Service)
+                {
+                    textBoxTesting.AppendText((element as Service).Time + " " + (element as Service).Name + " " + (element as Service).AdditionalName + Environment.NewLine);
+                }
+            }
+        }
+
+        private void btnTest40mart_Click(object sender, EventArgs e)
+        {
+            textBoxTesting.Clear();
+
+            foreach (EasterItem easterItem in EasterStorage.Instance.EasterDays)
+            {
+                DateTime innerDate = (DateTime.IsLeapYear(easterItem.Date.Year)) ? new DateTime(easterItem.Date.Year, 3, 08) : new DateTime(easterItem.Date.Year, 3, 09);
+                int daysFromEaster = easterItem.Date.Subtract(innerDate).Days;
+
+                textBoxTesting.AppendText(easterItem.Date.Year + " год. " + daysFromEaster + " дней до Пасхи." + Environment.NewLine);
+            }
+            
+        }
     }
 }

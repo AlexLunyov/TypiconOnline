@@ -55,8 +55,11 @@ namespace TypiconOnline.Domain.Rules.Factories
                 case RuleConstants.GetClosestDayNodeName:
                     outputEl = new GetClosestDay(node);
                     break;
-                //default:
-                //    throw new DefinitionsParsingException("Ошибка: предполагается элемент с выходным типом данных: дата");
+                case RuleConstants.DateByDaysFromEasterNodeName:
+                    outputEl = new DateByDaysFromEaster(node);
+                    break;
+                    //default:
+                    //    throw new DefinitionsParsingException("Ошибка: предполагается элемент с выходным типом данных: дата");
             }
             return outputEl;
         }

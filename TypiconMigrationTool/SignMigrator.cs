@@ -46,6 +46,7 @@ namespace TypiconMigrationTool
             { 3, new Item() { Name = "Славословная", Priority = 5, NewID = 12 } },
             { 2, new Item() { Name = "Шестеричная", Priority = 5, NewID = 13 } },
             { 1, new Item() { Name = "Без знака", Priority = 5, NewID = 14 } },
+            { 21, new Item() { Name = "Двунадесятый Господский праздник", Priority = 1, NewID = 15 } },
         };
 
         private int _oldID;

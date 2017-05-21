@@ -171,7 +171,7 @@ namespace TypiconMigrationTool
 
                 if (!mineinikRow.IsDateBNull())
                 {
-                    ruleDefinition = fileReader.GetXml(menologyDay.Date.Expression);
+                    ruleDefinition = fileReader.GetXml(menologyDay.DateB.Expression);
                 }
                 else
                 {
