@@ -114,7 +114,7 @@ namespace TypiconOnline.Repository.EF.Tests
 				                                <int>-19</int>
 			                                </values>
 			                                <action>
-				                                <daymodification servicesign=""7"" daymove=""-1"" iscustomname=""true""/>
+				                                <modifyday servicesign=""7"" daymove=""-1"" iscustomname=""true""/>
 			                                </action>
 		                                </case>
 		                                <case>
@@ -122,7 +122,7 @@ namespace TypiconOnline.Repository.EF.Tests
 					                            <int>-17</int>
 				                            </values>
 			                                <action>
-				                                <daymodification servicesign=""8"" daymove=""-1"" iscustomname=""true""/>
+				                                <modifyday servicesign=""8"" daymove=""-1"" iscustomname=""true""/>
 			                                </action>
 		                                </case>
 	                                </switch>

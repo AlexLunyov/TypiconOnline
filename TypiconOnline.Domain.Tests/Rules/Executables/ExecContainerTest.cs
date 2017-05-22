@@ -27,15 +27,15 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 				                                 <date>--11-04</date>
 			                                </values>
 			                                <action>
-				                                <daymodification servicesign=""12"" iscustomname=""true"">
+				                                <modifyday servicesign=""12"" iscustomname=""true"">
 					                                <getclosestday dayofweek=""суббота"" weekcount=""-2""><date>--11-08</date></getclosestday>
-				                                </daymodification>
+				                                </modifyday>
 			                                </action>
 		                                </case>
 		                                <default>
-			                                <daymodification servicesign=""12"" iscustomname=""true"">
+			                                <modifyday servicesign=""12"" iscustomname=""true"">
 					                                <getclosestday dayofweek=""суббота"" weekcount=""-1""><date>--11-08</date></getclosestday>
-				                                </daymodification>
+				                                </modifyday>
 		                                </default>
 	                                </switch>
                                 </rule>";
@@ -51,9 +51,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 				                    <date>--11-04</date>
 			                </values>
 			                <action>
-				                <daymodification servicesign=""12"" iscustomname=""true"">
+				                <modifyday servicesign=""12"" iscustomname=""true"">
 					                <getclosestday dayofweek=""суббота"" weekcount=""-2""><date>--11-08</date></getclosestday>
-				                </daymodification>
+				                </modifyday>
 			                </action>
 		                </case>";
             xmlDoc.LoadXml(xmlString);

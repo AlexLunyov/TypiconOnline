@@ -22,7 +22,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 				                        <int>-22</int>
 			                        </values>
 			                        <action>
-				                        <daymodification servicesign=""6"" daymove=""0"" iscustomname=""true""/>
+				                        <modifyday servicesign=""6"" daymove=""0"" iscustomname=""true""/>
                                     </action>
                                 </case> ";
 
@@ -44,7 +44,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 				                        <int>-22</int>
 			                        </values>
 			                        <action>
-				                        <daymodification servicesign=""6"" daymove=""0"" iscustomname=""true""/>
+				                        <modifyday servicesign=""6"" daymove=""0"" iscustomname=""true""/>
                                     </action>
                                 </case> ";
 

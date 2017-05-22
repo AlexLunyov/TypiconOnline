@@ -1,9 +1,12 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Linq;
 using System.Xml;
+using TypiconOnline.Domain.Easter;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Repository.EF;
 
 namespace TypiconOnline.Domain.Tests.Rules.Executables
 {
@@ -23,7 +26,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 				                                <int>-19</int>
 			                                </values>
 			                                <action>
-				                                <daymodification servicesign=""7"" daymove=""-1"" iscustomname=""true""/>
+				                                <modifyday daymove=""-1"" />
 			                                </action>
 		                                </case>
 		                                <case>
@@ -31,13 +34,17 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 					                            <int>-17</int>
 				                            </values>
 			                                <action>
-				                                <daymodification servicesign=""8"" daymove=""-1"" iscustomname=""true""/>
+				                                <modifyday daymove=""-1"" />
 			                                </action>
 		                                </case>
 	                                </switch>
                                 </rule>";
 
             XmlDocument xmlDoc = new XmlDocument();
+
+            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+
+            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
             xmlDoc.LoadXml(xmlString);
 
@@ -51,6 +58,10 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         [Test]
         public void Rules_Executables_Switch_DimitrySaturday()
         {
+            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+
+            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+
             string xmlString = @"<rule>
 	                                <switch>
 		                                <condition>
@@ -61,15 +72,15 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 				                                 <date>--11-04</date>
 			                                </values>
 			                                <action>
-				                                <daymodification servicesign=""12"" iscustomname=""true"">
+				                                <modifyday servicesign=""12"" iscustomname=""true"">
 					                                <getclosestday dayofweek=""суббота"" weekcount=""-2""><date>--11-08</date></getclosestday>
-				                                </daymodification>
+				                                </modifyday>
 			                                </action>
 		                                </case>
 		                                <default>
-			                                <daymodification servicesign=""12"" iscustomname=""true"">
+			                                <modifyday servicesign=""12"" iscustomname=""true"">
 					                                <getclosestday dayofweek=""суббота"" weekcount=""-1""><date>--11-08</date></getclosestday>
-				                                </daymodification>
+				                                </modifyday>
 		                                </default>
 	                                </switch>
                                 </rule>";
@@ -98,15 +109,15 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 				                                 <date>--11-04</date>
 			                                </values>
 			                                <action>
-				                                <daymodification servicesign=""12"" iscustomname=""true"">
+				                                <modifyday servicesign=""12"" iscustomname=""true"">
 					                                <getclosestday dayofweek=""суббота"" weekcount=""-2""><date>--11-08</date></getclosestday>
-				                                </daymodification>
+				                                </modifyday>
 			                                </action>
 		                                </case>
 		                                <default>
-			                                <daymodification servicesign=""12"" iscustomname=""true"">
+			                                <modifyday servicesign=""12"" iscustomname=""true"">
 					                                <getclosestday dayofweek=""суббота"" weekcount=""-1""><date>--11-08</date></getclosestday>
-				                                </daymodification>
+				                                </modifyday>
 		                                </default>
 	                                </switch>
                                 </rule>";

@@ -17,7 +17,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         [Test]
         public void GetDayOfWeek_Simple()
         {
-            string xmlString = "<dayofweek>воскресенье</dayofweek>";
+            string xmlString = @"<getdayofweek name=""воскресенье""></getdayofweek>";
 
             XmlDocument xmlDoc = new XmlDocument();
 

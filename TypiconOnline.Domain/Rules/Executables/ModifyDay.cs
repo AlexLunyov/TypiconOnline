@@ -10,11 +10,11 @@ namespace TypiconOnline.Domain.Rules.Executables
     //
     //  EXAMPLES
     //
-    //  <daymodification servicesign="12" iscustomname="true">
+    //  <modifyday servicesign="12" iscustomname="true">
     //	    <getclosestday dayofweek = "saturday" weekcount="-2"><date>--11-08</date></getclosestday>
-    //  </daymodification>
+    //  </modifyday>
     //
-    //  <daymodification servicesign="6" daymove="0" priority="2" islastname="true" iscustomname="false"/>
+    //  <modifyday servicesign="6" daymove="0" priority="2" islastname="true" iscustomname="false"/>
 
     public class ModifyDay : RuleExecutable, ICustomInterpreted
     {

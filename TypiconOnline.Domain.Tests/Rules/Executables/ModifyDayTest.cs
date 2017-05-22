@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         [Test]
         public void ModifyDay_Simple()
         {
-            string xmlString = @"<daymodification daymove=""0""/>";
+            string xmlString = @"<modifyday daymove=""0""/>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         [Test]
         public void ModifyDay_WrongCustomName()
         {
-            string xmlString = @"<daymodification daymove=""0""/>";
+            string xmlString = @"<modifyday daymove=""0""/>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
@@ -56,7 +56,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         [Test]
         public void ModifyDay_Wrong_HasTwoTerms()
         {
-            string xmlString = @"<daymodification daymove=""0""><date>--11-08</date></daymodification>";
+            string xmlString = @"<modifyday daymove=""0""><date>--11-08</date></modifyday>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
@@ -79,7 +79,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         [Test]
         public void ModifyDay_DefinitionsNotInterpretedException()
         {
-            string xmlString = @"<daymodification><date>--11-08</date></daymodification>";
+            string xmlString = @"<modifyday><date>--11-08</date></modifyday>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
@@ -104,7 +104,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         [Test]
         public void ModifyDay_WithinDate()
         {
-            string xmlString = @"<daymodification><date>--11-08</date></daymodification>";
+            string xmlString = @"<modifyday><date>--11-08</date></modifyday>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
@@ -126,7 +126,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         [Test]
         public void ModifyDay_WithinWrongDate()
         {
-            string xmlString = @"<daymodification><date>--13-08</date></daymodification>";
+            string xmlString = @"<modifyday><date>--13-08</date></modifyday>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
@@ -140,7 +140,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         [Test]
         public void ModifyDay_NoDate()
         {
-            string xmlString = @"<daymodification></daymodification>";
+            string xmlString = @"<modifyday></modifyday>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
@@ -158,7 +158,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 
             EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
-            string xmlString = @"<daymodification><datebydaysfromeaster><int>-43</int></datebydaysfromeaster></daymodification>";
+            string xmlString = @"<modifyday><datebydaysfromeaster><int>-43</int></datebydaysfromeaster></modifyday>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
@@ -172,7 +172,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         [Test]
         public void ModifyDay_UseFullNameTest()
         {
-            string xmlString = @"<daymodification daymove = ""0"" priority=""3""/>";
+            string xmlString = @"<modifyday daymove = ""0"" priority=""3""/>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
