@@ -57,6 +57,8 @@
     <Compile Include="Books\Oktoikh\OktoikhGlas.cs" />
     <Compile Include="ItemTypes\ItemTimeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemTime.cs" />
+    <Compile Include="Rules\Executables\ModifyDay.cs" />
+    <Compile Include="Rules\Executables\ModifyDayBusinessConstraint.cs" />
     <Compile Include="Rules\Expressions\DateByDaysFromEasterBusinessConstraint.cs" />
     <Compile Include="Rules\Expressions\DateByDaysFromEaster.cs" />
     <Compile Include="Rules\Expressions\GetClosestDayBusinessConstraint.cs" />
@@ -99,11 +101,9 @@
     <Compile Include="Rules\Expressions\DateExpression.cs" />
     <Compile Include="Rules\RuleContainerBusinessConstraint.cs" />
     <Compile Include="Rules\RuleContainer.cs" />
-    <Compile Include="Rules\Executables\DayModification.cs" />
     <Compile Include="Rules\Executables\SwitchBusinessBusinessConstraint.cs" />
     <Compile Include="Rules\Executables\ExecContainerBusinessConstraint.cs" />
     <Compile Include="Rules\Executables\ExecContainer.cs" />
-    <Compile Include="Rules\Executables\DayModificationBusinessConstraint.cs" />
     <Compile Include="Rules\Executables\RuleExecutable.cs" />
     <Compile Include="Rules\Executables\Switch.cs" />
     <Compile Include="Rules\Expressions\Case.cs" />

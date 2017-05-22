@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
-  <Class Name="TypiconOnline.Domain.Rules.Executables.DayModification" Collapsed="true">
+  <Class Name="TypiconOnline.Domain.Rules.Executables.ModifyDay" Collapsed="true">
     <Position X="15.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAKAAAACAAAAEggEAAAAAAQAAAAAAQAAABAAQAQA=</HashCode>
-      <FileName>Rules\Executables\DayModification.cs</FileName>
+      <FileName>Rules\Executables\ModifyDay.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Executables.DayModificationBusinessConstraint" Collapsed="true">
+  <Class Name="TypiconOnline.Domain.Rules.Executables.ModifyDayBusinessConstraint" Collapsed="true">
     <Position X="32.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAgAAAAAAACAQAAAAAAAAAIQAAAAAAIAgAAAA=</HashCode>
-      <FileName>Rules\Executables\DayModificationBusinessConstraint.cs</FileName>
+      <FileName>Rules\Executables\ModifyDayBusinessConstraint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Executables.ExecContainer" Collapsed="true">

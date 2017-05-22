@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.Rules
         public const string SwitchNodeName = "switch";
         public const string ConditionNodeName = "condition";
 
-        public const string DayModificationNodeName = "daymodification";
+        public const string ModifyDayNodeName = "daymodification";
         public const string ShortNameAttrName = "shortname";
         public const string IsLastNameAttrName = "islastname";
         public const string AsAdditionAttrName = "asaddition";
@@ -56,7 +56,7 @@ namespace TypiconOnline.Domain.Rules
         //public const string ExecContainerNodeName = "правило";
         //public const string SwitchNodeName = "выбор";
         //public const string ConditionNodeName = "условие";
-        //public const string DayModificationNodeName = "деньизменение";
+        //public const string ModifyDayNodeName = "деньизменение";
         //public const string ServiceSignAttrName = "знакслужбы";
         //public const string IsCustomNameAttrName = "своеимя";
         //public const string DayMoveAttrName = "деньсмещение";

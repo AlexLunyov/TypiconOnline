@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
             AuthorizedTypes = new List<Type>()
             {
-                typeof(DayModification)
+                typeof(ModifyDay)
             };
         }
 
@@ -32,10 +32,10 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
         public override void Execute(ICustomInterpreted element)
         {
-            if ((element is DayModification) 
-                && ((element as DayModification).MoveDateCalculated.Year == _yearToModify))
+            if ((element is ModifyDay) 
+                && ((element as ModifyDay).MoveDateCalculated.Year == _yearToModify))
             {
-                int priority = (element as DayModification).Priority.Value;
+                int priority = (element as ModifyDay).Priority.Value;
 
                 TypiconRule seniorTypiconRule = Rules[0];
 
@@ -47,12 +47,12 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 ModificationsRuleRequest request = new ModificationsRuleRequest()
                 {
                     Caller = seniorTypiconRule,
-                    Date = (element as DayModification).MoveDateCalculated,
+                    Date = (element as ModifyDay).MoveDateCalculated,
                     Priority = priority,
-                    ShortName = (element as DayModification).ShortName,
-                    AsAddition = (element as DayModification).AsAddition.Value,
-                    IsLastName = (element as DayModification).IsLastName.Value,
-                    UseFullName = (element as DayModification).UseFullName.Value
+                    ShortName = (element as ModifyDay).ShortName,
+                    AsAddition = (element as ModifyDay).AsAddition.Value,
+                    IsLastName = (element as ModifyDay).IsLastName.Value,
+                    UseFullName = (element as ModifyDay).UseFullName.Value
                 };
 
                 TypiconEntity typiconEntity = seniorTypiconRule.Owner;//Folder.GetOwner();

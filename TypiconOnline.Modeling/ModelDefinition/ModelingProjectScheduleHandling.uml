@@ -1794,12 +1794,12 @@
             Id="fe4f8d0e-9153-4be0-bc1f-c45316606546"
             isDerived="false"
             sourceEndRoleName="Action"
-            targetEndRoleName="DayModification"
+            targetEndRoleName="ModifyDay"
             isLeaf="false"
             isAbstract="false">
             <classMoniker
               Id="7f8b76f3-351a-44b7-899f-7d8c791ebd4d"
-              LastKnownName="DayModification"
+              LastKnownName="ModifyDay"
               LastKnownLocation="ModelingProjectScheduleHandling.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -1818,7 +1818,7 @@
               <associationHasOwnedEnds>
                 <memberEnd
                   Id="14e66de4-01b9-4832-bc3f-f5d3c8ba0d9e"
-                  name="DayModification"
+                  name="ModifyDay"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
@@ -2134,7 +2134,7 @@
     <packageHasNamedElement>
       <class
         Id="7f8b76f3-351a-44b7-899f-7d8c791ebd4d"
-        name="DayModification"
+        name="ModifyDay"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">

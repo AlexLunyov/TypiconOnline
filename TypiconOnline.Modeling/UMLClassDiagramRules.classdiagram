@@ -1106,7 +1106,7 @@
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <class Id="cb0d5999-6f74-4a97-b75d-59b1169730f0" name="DayModification" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="cb0d5999-6f74-4a97-b75d-59b1169730f0" name="ModifyDay" isAbstract="false" isLeaf="false" isActiveClass="false">
         <appliedStereotypesInternal>
           <stereotypeInstance Id="c6de971c-83bd-43c5-a7db-d20d3ac35c52" name="class" profile="CSharpProfile">
             <elementDefinition Id="7461b925-66eb-4119-9cbf-444a0154e764" />

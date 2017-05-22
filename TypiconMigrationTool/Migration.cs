@@ -171,7 +171,9 @@ namespace TypiconMigrationTool
 
                 if (!mineinikRow.IsDateBNull())
                 {
-                    ruleDefinition = fileReader.GetXml(menologyDay.DateB.Expression);
+                    //TODO: изменил алгоритм. Надо поменять все названия xml-файлов правил для Минеи
+                    string fileName = menologyDay.DateB.Expression + "." + menologyDay.Name;
+                    ruleDefinition = fileReader.GetXml(fileName);
                 }
                 else
                 {

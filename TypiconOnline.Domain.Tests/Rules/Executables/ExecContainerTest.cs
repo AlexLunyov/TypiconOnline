@@ -58,7 +58,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 		                </case>";
             xmlDoc.LoadXml(xmlString);
 
-            DayModification dayModification = new DayModification(xmlDoc.FirstChild);
+            ModifyDay dayModification = new ModifyDay(xmlDoc.FirstChild);
 
             container.ChildElements.Add(dayModification);
 

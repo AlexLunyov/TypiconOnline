@@ -14,10 +14,10 @@ using TypiconOnline.Repository.EF;
 namespace TypiconOnline.Domain.Tests.Rules.Executables
 {
     [TestFixture]
-    public class DayModificationTest
+    public class ModifyDayTest
     {
         [Test]
-        public void DayModification_Simple()
+        public void ModifyDay_Simple()
         {
             string xmlString = @"<daymodification daymove=""0""/>";
 
@@ -25,13 +25,13 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 
             xmlDoc.LoadXml(xmlString);
 
-            DayModification element = new DayModification(xmlDoc.FirstChild);
+            ModifyDay element = new ModifyDay(xmlDoc.FirstChild);
 
             Assert.AreEqual(0, element.DayMoveCount.Value);
         }
 
         [Test]
-        public void DayModification_WrongCustomName()
+        public void ModifyDay_WrongCustomName()
         {
             string xmlString = @"<daymodification daymove=""0""/>";
 
@@ -39,13 +39,13 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 
             xmlDoc.LoadXml(xmlString);
 
-            DayModification element = new DayModification(xmlDoc.FirstChild);
+            ModifyDay element = new ModifyDay(xmlDoc.FirstChild);
 
             Assert.IsFalse(element.IsValid);
 
             //try
             //{
-            //    DayModification element = new DayModification(xmlDoc.FirstChild);
+            //    ModifyDay element = new ModifyDay(xmlDoc.FirstChild);
             //}
             //catch (DefinitionsParsingException )
             //{
@@ -54,7 +54,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         }
 
         [Test]
-        public void DayModification_Wrong_HasTwoTerms()
+        public void ModifyDay_Wrong_HasTwoTerms()
         {
             string xmlString = @"<daymodification daymove=""0""><date>--11-08</date></daymodification>";
 
@@ -62,13 +62,13 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 
             xmlDoc.LoadXml(xmlString);
 
-            DayModification element = new DayModification(xmlDoc.FirstChild);
+            ModifyDay element = new ModifyDay(xmlDoc.FirstChild);
 
             Assert.IsFalse(element.IsValid);
 
             //try
             //{
-            //    DayModification element = new DayModification(xmlDoc.FirstChild);
+            //    ModifyDay element = new ModifyDay(xmlDoc.FirstChild);
             //}
             //catch (DefinitionsParsingException ex)
             //{
@@ -77,7 +77,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         }
 
         [Test]
-        public void DayModification_DefinitionsNotInterpretedException()
+        public void ModifyDay_DefinitionsNotInterpretedException()
         {
             string xmlString = @"<daymodification><date>--11-08</date></daymodification>";
 
@@ -85,7 +85,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 
             xmlDoc.LoadXml(xmlString);
 
-            DayModification element = new DayModification(xmlDoc.FirstChild);
+            ModifyDay element = new ModifyDay(xmlDoc.FirstChild);
 
             DateTime date = element.MoveDateCalculated;
 
@@ -102,7 +102,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         }
 
         [Test]
-        public void DayModification_WithinDate()
+        public void ModifyDay_WithinDate()
         {
             string xmlString = @"<daymodification><date>--11-08</date></daymodification>";
 
@@ -110,7 +110,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 
             xmlDoc.LoadXml(xmlString);
 
-            DayModification element = new DayModification(xmlDoc.FirstChild);
+            ModifyDay element = new ModifyDay(xmlDoc.FirstChild);
 
             //InterpretingSettings settings = new InterpretingSettings(InterpretingMode.ModificationDayOnly);
 
@@ -124,7 +124,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         }
 
         [Test]
-        public void DayModification_WithinWrongDate()
+        public void ModifyDay_WithinWrongDate()
         {
             string xmlString = @"<daymodification><date>--13-08</date></daymodification>";
 
@@ -132,13 +132,13 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 
             xmlDoc.LoadXml(xmlString);
 
-            DayModification element = new DayModification(xmlDoc.FirstChild);
+            ModifyDay element = new ModifyDay(xmlDoc.FirstChild);
 
             Assert.IsFalse(element.IsValid);
         }
 
         [Test]
-        public void DayModification_NoDate()
+        public void ModifyDay_NoDate()
         {
             string xmlString = @"<daymodification></daymodification>";
 
@@ -146,13 +146,13 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 
             xmlDoc.LoadXml(xmlString);
 
-            DayModification element = new DayModification(xmlDoc.FirstChild);
+            ModifyDay element = new ModifyDay(xmlDoc.FirstChild);
 
             Assert.IsFalse(element.IsValid);
         }
 
         [Test]
-        public void DayModification_DateBydaysFromEaster()
+        public void ModifyDay_DateBydaysFromEaster()
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
@@ -164,13 +164,13 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 
             xmlDoc.LoadXml(xmlString);
 
-            DayModification element = new DayModification(xmlDoc.FirstChild);
+            ModifyDay element = new ModifyDay(xmlDoc.FirstChild);
 
             Assert.IsTrue(element.IsValid);
         }
 
         [Test]
-        public void DayModification_UseFullNameTest()
+        public void ModifyDay_UseFullNameTest()
         {
             string xmlString = @"<daymodification daymove = ""0"" priority=""3""/>";
 
@@ -178,7 +178,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 
             xmlDoc.LoadXml(xmlString);
 
-            DayModification element = new DayModification(xmlDoc.FirstChild);
+            ModifyDay element = new ModifyDay(xmlDoc.FirstChild);
 
             Assert.IsTrue(element.UseFullName.Value);
         }

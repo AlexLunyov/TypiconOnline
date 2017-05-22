@@ -70,7 +70,7 @@
       </nodes>
     </associationConnector>
     <classShape Id="14ab7091-5576-4c3d-aeda-27b56e1f637a" absoluteBounds="11.875, 2.5, 1.5, 1.6683043545484546" hideQualifiedName="false" increaseHeight="0.18800345897674561" customColor="181, 193, 223">
-      <classMoniker Id="cb0d5999-6f74-4a97-b75d-59b1169730f0" LastKnownName="DayModification" />
+      <classMoniker Id="cb0d5999-6f74-4a97-b75d-59b1169730f0" LastKnownName="ModifyDay" />
       <nestedChildShapes>
         <AttributeElementListCompartment Id="fb5e1faf-0609-4f9c-a978-8dafacdac4b6" absoluteBounds="11.89, 3.0153356393178306, 1.4700000000000002, 0.68164060264825832" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
         <OperationElementListCompartment Id="82875d5f-ddb0-48d0-b7b5-93a145d61edf" absoluteBounds="11.89, 3.706976241966089, 1.4700000000000002, 0.36132811258236575" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />

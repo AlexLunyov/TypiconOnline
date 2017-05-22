@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Executables
     //
     //  <daymodification servicesign="6" daymove="0" priority="2" islastname="true" iscustomname="false"/>
 
-    public class DayModification : RuleExecutable, ICustomInterpreted
+    public class ModifyDay : RuleExecutable, ICustomInterpreted
     {
         private string _shortName;
         private ItemBoolean _isLastName;
@@ -27,7 +27,7 @@ namespace TypiconOnline.Domain.Rules.Executables
         private ItemInt _priority;
         private DateExpression _childDateExp;
 
-        public DayModification(XmlNode node) : base(node)
+        public ModifyDay(XmlNode node) : base(node)
         {
             if (node.Attributes != null)
             {
@@ -177,7 +177,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            if (IsValid && handler.IsAuthorized<DayModification>())
+            if (IsValid && handler.IsAuthorized<ModifyDay>())
             {
                 if (_childDateExp != null)
                 {
@@ -197,32 +197,32 @@ namespace TypiconOnline.Domain.Rules.Executables
         {
             if (!_isLastName.IsValid)
             {
-                AddBrokenConstraint(DayModificationBusinessConstraint.IsLastNameTypeMismatch, ElementName);
+                AddBrokenConstraint(ModifyDayBusinessConstraint.IsLastNameTypeMismatch, ElementName);
             }
 
             if (!_asAddition.IsValid)
             {
-                AddBrokenConstraint(DayModificationBusinessConstraint.IsLastNameTypeMismatch, ElementName);
+                AddBrokenConstraint(ModifyDayBusinessConstraint.IsLastNameTypeMismatch, ElementName);
             }
 
             if (!_useFullName.IsValid)
             {
-                AddBrokenConstraint(DayModificationBusinessConstraint.UseFullNameTypeMismatch, ElementName);
+                AddBrokenConstraint(ModifyDayBusinessConstraint.UseFullNameTypeMismatch, ElementName);
             }
 
 
             if ((_dayMoveCount != null) && (_childDateExp != null))
             {
-                AddBrokenConstraint(DayModificationBusinessConstraint.DateDoubleDefinition, ElementName);
+                AddBrokenConstraint(ModifyDayBusinessConstraint.DateDoubleDefinition, ElementName);
             }
             else if((_dayMoveCount == null) && (_childDateExp == null))
             {
-                AddBrokenConstraint(DayModificationBusinessConstraint.DateAbsense, ElementName);
+                AddBrokenConstraint(ModifyDayBusinessConstraint.DateAbsense, ElementName);
             }
             else if (((_dayMoveCount == null) || !_dayMoveCount.IsValid) &&
                     (_childDateExp == null))
             {
-                AddBrokenConstraint(DayModificationBusinessConstraint.DayMoveTypeMismatch, ElementName);
+                AddBrokenConstraint(ModifyDayBusinessConstraint.DayMoveTypeMismatch, ElementName);
             }
 
             //добавляем ломаные правила к родителю

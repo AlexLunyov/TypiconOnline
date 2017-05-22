@@ -8,7 +8,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Executables
 {
-    public class DayModificationBusinessConstraint
+    public class ModifyDayBusinessConstraint
     {
         public static readonly BusinessConstraint ServicesSignTypeMismatch = new BusinessConstraint("Значение знака службы должно быть целочисленным.");
         public static readonly BusinessConstraint IsLastNameTypeMismatch = new BusinessConstraint("Значение должно быть логическим.");

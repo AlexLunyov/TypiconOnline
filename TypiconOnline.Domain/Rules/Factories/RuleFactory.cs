@@ -91,8 +91,8 @@ namespace TypiconOnline.Domain.Rules.Factories
                     case RuleConstants.SwitchNodeName:
                         outputEl = new Switch(node);
                         break;
-                    case RuleConstants.DayModificationNodeName:
-                        outputEl = new DayModification(node);
+                    case RuleConstants.ModifyDayNodeName:
+                        outputEl = new ModifyDay(node);
                         break;
                 }
             }
