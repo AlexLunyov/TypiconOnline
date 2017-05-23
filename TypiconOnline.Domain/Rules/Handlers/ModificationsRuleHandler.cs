@@ -32,7 +32,44 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
         public override void Execute(ICustomInterpreted element)
         {
-            if ((element is ModifyDay) 
+            if (element is ModifyReplacedDay)
+            {
+                //
+                
+                TypiconEntity typiconEntity = Rules[0].Owner;
+
+                TypiconRule ruleToModify;
+
+                if ((element as ModifyReplacedDay).Kind == RuleConstants.KindOfReplacedDay.menology)
+                {
+                    ruleToModify = typiconEntity.GetMenologyRule((element as ModifyReplacedDay).DateToReplaceCalculated);
+                }
+                else //if ((element as ModifyReplacedDay).Kind == RuleConstants.KindOfReplacedDay.triodion)
+                {
+                    ruleToModify = typiconEntity.GetTriodionRule((element as ModifyReplacedDay).DateToReplaceCalculated);
+                }
+
+                int priority = (element as ModifyReplacedDay).Priority.Value;
+
+                if (priority == 0)
+                {
+                    priority = ruleToModify.Template.Priority;
+                }
+
+                ModificationsRuleRequest request = new ModificationsRuleRequest()
+                {
+                    Caller = ruleToModify,
+                    Date = (element as ModifyReplacedDay).MoveDateCalculated,
+                    Priority = priority,
+                    ShortName = (element as ModifyReplacedDay).ShortName,
+                    AsAddition = (element as ModifyReplacedDay).AsAddition.Value,
+                    IsLastName = (element as ModifyReplacedDay).IsLastName.Value,
+                    UseFullName = (element as ModifyReplacedDay).UseFullName.Value
+                };
+
+                typiconEntity.AddModifiedRule(request);
+            }
+            else if ((element is ModifyDay) 
                 && ((element as ModifyDay).MoveDateCalculated.Year == _yearToModify))
             {
                 int priority = (element as ModifyDay).Priority.Value;

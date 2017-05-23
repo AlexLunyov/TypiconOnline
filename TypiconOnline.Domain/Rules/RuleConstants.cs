@@ -47,7 +47,10 @@ namespace TypiconOnline.Domain.Rules
         public const string GetDayOfWeekNodeName = "getdayofweek";
         public const string GetDayOfWeekAttrName = "name";
 
-        public const string DateByDaysFromEasterNodeName = "datebydaysfromeaster"; 
+        public const string DateByDaysFromEasterNodeName = "datebydaysfromeaster";
+
+        public const string ModifyReplacedDayNodeName = "modifyreplacedday";
+        public const string KindAttrName = "kind";
 
         //правила для распознавания времени и дат
         public const string ItemTimeParsing = "HH.mm";
@@ -73,6 +76,8 @@ namespace TypiconOnline.Domain.Rules
         //public const string ActionNodeName = "action";
 
         public enum DefinitionsDayOfWeek { понедельник=1, вторник=2, среда=3, четверг=4, пятница=5, суббота=6, воскресенье=7 };
+
+        public enum KindOfReplacedDay { undefined=0, menology=1, triodion=2 };
     }
 
     public enum State { Valid = 0, Invalid = 1, NotDefined = 2}

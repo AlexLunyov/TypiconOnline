@@ -164,11 +164,11 @@ namespace TypiconOnline.Domain.Services
 
             //находим TriodionRule
 
-            DateTime easterDate = EasterStorage.Instance.GetCurrentEaster(inputRequest.Date.Year);
+            //DateTime easterDate = EasterStorage.Instance.GetCurrentEaster(inputRequest.Date.Year);
 
-            int daysFromEaster = inputRequest.Date.Subtract(easterDate).Days;
+            //int daysFromEaster = inputRequest.Date.Subtract(easterDate).Days;
 
-            TriodionRule triodionRule = inputRequest.TypiconEntity.GetTriodionRule(daysFromEaster);
+            TriodionRule triodionRule = inputRequest.TypiconEntity.GetTriodionRule(inputRequest.Date);
 
             //находим ModifiedRule
 

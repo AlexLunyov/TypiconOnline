@@ -58,7 +58,9 @@
     <Compile Include="ItemTypes\ItemTimeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemTime.cs" />
     <Compile Include="Rules\Executables\ModifyDay.cs" />
+    <Compile Include="Rules\Executables\ModifyReplacedDayBusinessConstraint.cs" />
     <Compile Include="Rules\Executables\ModifyDayBusinessConstraint.cs" />
+    <Compile Include="Rules\Executables\ModifyReplacedDay.cs" />
     <Compile Include="Rules\Expressions\DateByDaysFromEasterBusinessConstraint.cs" />
     <Compile Include="Rules\Expressions\DateByDaysFromEaster.cs" />
     <Compile Include="Rules\Expressions\GetClosestDayBusinessConstraint.cs" />

@@ -10,11 +10,11 @@ namespace TypiconOnline.Domain.Rules.Executables
     //
     //  EXAMPLES
     //
-    //  <modifyday servicesign="12" iscustomname="true">
+    //  <modifyday >
     //	    <getclosestday dayofweek = "saturday" weekcount="-2"><date>--11-08</date></getclosestday>
     //  </modifyday>
     //
-    //  <modifyday servicesign="6" daymove="0" priority="2" islastname="true" iscustomname="false"/>
+    //  <modifyday daymove="0" priority="2" islastname="true"/>
 
     public class ModifyDay : RuleExecutable, ICustomInterpreted
     {
@@ -26,6 +26,7 @@ namespace TypiconOnline.Domain.Rules.Executables
         private DateTime _moveDateCalculated;
         private ItemInt _priority;
         private DateExpression _childDateExp;
+        protected ModifyReplacedDay _modifyReplacedDay;
 
         public ModifyDay(XmlNode node) : base(node)
         {
@@ -95,7 +96,17 @@ namespace TypiconOnline.Domain.Rules.Executables
 
             if (node.HasChildNodes)
             {
-                _childDateExp = Factories.RuleFactory.CreateDateExpression(node.FirstChild);
+                foreach (XmlNode childNode in node.ChildNodes)
+                {
+                    if (childNode.Name == RuleConstants.ModifyReplacedDayNodeName)
+                    {
+                        _modifyReplacedDay = Factories.RuleFactory.CreateExecutable(childNode) as ModifyReplacedDay;
+                    }
+                    else
+                    {
+                        _childDateExp = Factories.RuleFactory.CreateDateExpression(childNode);
+                    }
+                }
             }
         }
 
@@ -179,17 +190,34 @@ namespace TypiconOnline.Domain.Rules.Executables
         {
             if (IsValid && handler.IsAuthorized<ModifyDay>())
             {
-                if (_childDateExp != null)
-                {
-                    _childDateExp.Interpret(date, handler);
-                    _moveDateCalculated = (DateTime)_childDateExp.ValueCalculated;
-                }
-                else
-                {
-                    _moveDateCalculated = date.AddDays(DayMoveCount.Value);
-                }
+                InterpretChildDateExp(date, handler);
 
                 handler.Execute(this);
+
+                //обработка ModifyReplacedDay
+
+                if (_modifyReplacedDay != null)
+                {
+                    _modifyReplacedDay.Interpret(_moveDateCalculated, handler);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Интерпретирует определение даты элемента
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="handler"></param>
+        protected void InterpretChildDateExp(DateTime date, IRuleHandler handler)
+        {
+            if (_childDateExp != null)
+            {
+                _childDateExp.Interpret(date, handler);
+                _moveDateCalculated = (DateTime)_childDateExp.ValueCalculated;
+            }
+            else
+            {
+                _moveDateCalculated = date.AddDays(DayMoveCount.Value);
             }
         }
 

@@ -117,6 +117,11 @@ namespace TypiconMigrationTool
                     RuleDefinition = fileReader.GetXml(row.Name)
                 };
 
+                if (signMigrator.TemplateId != null)
+                {
+                    sign.Template = typiconEntity.Signs.First(c => c.Number == signMigrator.TemplateId);
+                }
+
                 //_unitOfWork.Repository<Sign>().Insert(sign);
                 typiconEntity.Signs.Add(sign);
 

@@ -235,6 +235,15 @@ namespace TypiconOnline.Domain.Typicon
             return TriodionRules.FirstOrDefault(c => c.DaysFromEaster == daysFromEaster);
         }
 
+        public TriodionRule GetTriodionRule(DateTime date)
+        {
+            DateTime easterDate = EasterStorage.Instance.GetCurrentEaster(date.Year);
+
+            int daysFromEaster = date.Subtract(easterDate).Days;
+
+            return TriodionRules.FirstOrDefault(c => c.DaysFromEaster == daysFromEaster);
+        }
+
         public RuleEntity GetCommonRule(Func<RuleEntity, bool> predicate)
         {
             return CommonRules.FirstOrDefault(predicate);

@@ -6,7 +6,7 @@ using TypiconOnline.Domain.Rules.Schedule;
 
 namespace TypiconOnline.Domain.Rules.Factories
 {
-    static class RuleFactory
+    public static class RuleFactory
     {
         public static RuleExpression CreateExpression(XmlNode node)
         {
@@ -80,7 +80,7 @@ namespace TypiconOnline.Domain.Rules.Factories
             return outputEl;
         }
 
-        public static RuleElement CreateExecutable(XmlNode node)
+        public static RuleExecutable CreateExecutable(XmlNode node)
         {
             RuleExecutable outputEl = CreateRuleContainer(node);
 
@@ -93,6 +93,9 @@ namespace TypiconOnline.Domain.Rules.Factories
                         break;
                     case RuleConstants.ModifyDayNodeName:
                         outputEl = new ModifyDay(node);
+                        break;
+                    case RuleConstants.ModifyReplacedDayNodeName:
+                        outputEl = new ModifyReplacedDay(node);
                         break;
                 }
             }

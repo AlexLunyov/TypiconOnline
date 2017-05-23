@@ -33,7 +33,7 @@ namespace TypiconMigrationTool
         static readonly Dictionary<int, Item> _signs = new Dictionary<int, Item>()
         {
             { 20, new Item() { Name = "Пасха", Priority = 1, NewID = 1 } },
-            { 11, new Item() { Name = "День Светлой и Страстной седмиц", Priority = 2, NewID = 2 } },
+            { 11, new Item() { Name = "День Светлой седмицы", Priority = 2, NewID = 2 } },
             { 6, new Item() { Name = "Бдение с литией", Priority = 3, NewID = 3 } },
             { 5, new Item() { Name = "Бдение", Priority = 3, NewID = 4 } },
             { 4, new Item() { Name = "Полиелей", Priority = 3, NewID = 5 } },
@@ -47,6 +47,7 @@ namespace TypiconMigrationTool
             { 2, new Item() { Name = "Шестеричная", Priority = 5, NewID = 13 } },
             { 1, new Item() { Name = "Без знака", Priority = 5, NewID = 14 } },
             { 21, new Item() { Name = "Двунадесятый Господский праздник", Priority = 1, NewID = 15 } },
+            { 22, new Item() { Name = "День Страстной седмицы", Priority = 2, NewID = 16, TemplateId = 9 } },
         };
 
         private int _oldID;
@@ -85,11 +86,20 @@ namespace TypiconMigrationTool
             }
         }
 
+        public int? TemplateId
+        {
+            get
+            {
+                return _signs[_oldID].TemplateId;
+            }
+        }
+
         struct Item
         {
             public string Name;
             public int Priority;
             public int NewID;
+            public int? TemplateId;
         }
     }
 }

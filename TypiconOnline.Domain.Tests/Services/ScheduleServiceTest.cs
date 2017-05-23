@@ -24,21 +24,21 @@ namespace TypiconOnline.Domain.Tests.Services
 
             TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
 
-            ScheduleHandler handler = new ScheduleHandler();
+                ScheduleHandler handler = new ScheduleHandler();
 
-            GetScheduleDayRequest request = new GetScheduleDayRequest()
-            {
-                Date = new DateTime(2018, 5, 21),//DateTime.Today,
-                Mode = HandlingMode.AstronimicDay,
-                RuleHandler = new ScheduleHandler(),
-                TypiconEntity = typiconEntity
-            };
+                GetScheduleDayRequest request = new GetScheduleDayRequest()
+                {
+                    Date = new DateTime(2018, 5, 21),//DateTime.Today,
+                    Mode = HandlingMode.AstronimicDay,
+                    RuleHandler = new ScheduleHandler(),
+                    TypiconEntity = typiconEntity
+                };
 
-            ScheduleService scheduleService = new ScheduleService();
+                ScheduleService scheduleService = new ScheduleService();
 
-            GetScheduleDayResponse response = scheduleService.GetScheduleDay(request);
+                GetScheduleDayResponse response = scheduleService.GetScheduleDay(request);
 
-            _unitOfWork.Commit();
+                _unitOfWork.Commit();
 
             Assert.AreEqual(3, response.Day.Schedule.ChildElements.Count);
 

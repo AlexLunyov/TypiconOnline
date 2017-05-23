@@ -31,29 +31,6 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         }
 
         [Test]
-        public void ModifyDay_WrongCustomName()
-        {
-            string xmlString = @"<modifyday daymove=""0""/>";
-
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            ModifyDay element = new ModifyDay(xmlDoc.FirstChild);
-
-            Assert.IsFalse(element.IsValid);
-
-            //try
-            //{
-            //    ModifyDay element = new ModifyDay(xmlDoc.FirstChild);
-            //}
-            //catch (DefinitionsParsingException )
-            //{
-            //    Assert.Pass("isCustomname имеет неверное значение");
-            //}
-        }
-
-        [Test]
         public void ModifyDay_Wrong_HasTwoTerms()
         {
             string xmlString = @"<modifyday daymove=""0""><date>--11-08</date></modifyday>";
