@@ -105,7 +105,6 @@
     </Compile>
     <Compile Include="RegisterByContainer.cs" />
     <Compile Include="RuleHandler.cs" />
-    <Compile Include="SignMigrator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -142,6 +141,10 @@
     <ProjectReference Include="..\TypiconOnline.Services\TypiconOnline.AppServices.csproj">
       <Project>{4EE462F2-D6AF-4B99-B9B3-09AA172FE9C8}</Project>
       <Name>TypiconOnline.AppServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TypiconOnline.WinServices\TypiconOnline.WinServices.csproj">
+      <Project>{611C72A4-9F5A-43B3-9418-1A478A943475}</Project>
+      <Name>TypiconOnline.WinServices</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

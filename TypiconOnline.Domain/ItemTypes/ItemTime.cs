@@ -67,7 +67,7 @@ namespace TypiconOnline.Domain.ItemTypes
         }
 
         /// <summary>
-        /// Возврашает строку в формате "--MM-dd"
+        /// Возврашает строку в формате "HH.mm"
         /// </summary>
         /// <returns></returns>
         public override string ToString()

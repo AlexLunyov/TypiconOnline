@@ -7,6 +7,9 @@ using System.Xml;
 
 namespace TypiconOnline.AppServices.Implementations
 {
+    /// <summary>
+    /// С помощью класса FileReader можно считывать правила для элементов TypiconOnlie.Domain
+    /// </summary>
     class FileReader
     {
         public string FolderPath;

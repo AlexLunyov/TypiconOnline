@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TypiconMigrationTool
+namespace TypiconOnline.WinServices
 {
     public class SignMigrator
     {
@@ -41,6 +41,16 @@ namespace TypiconMigrationTool
             return new SignMigrator(oldID);
         }
 
+        /// <summary>
+        /// Возвращает Id (из старой БД) предустановленных знаков служб
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public static int GetOldId(Func<KeyValuePair<int, Item>, bool> condition )
+        {
+            return _signs.Where(condition).Select(k => k.Key).FirstOrDefault();
+        }
+
         public string Name
         {
             get
@@ -73,7 +83,7 @@ namespace TypiconMigrationTool
             }
         }
 
-        struct Item
+        public struct Item
         {
             public string Name;
             public int Priority;

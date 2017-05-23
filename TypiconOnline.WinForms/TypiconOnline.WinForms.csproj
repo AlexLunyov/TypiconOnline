@@ -112,6 +112,10 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="WordPressSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\WordPressSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FormPassword.cs">
@@ -166,10 +170,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\_Samples\abrudtkuhl-WordPressSharp-31d7200\src\WordPressSharp\WordPressSharp.csproj">
-      <Project>{7a938355-0b6b-48b7-97fb-c0c09015307b}</Project>
-      <Name>WordPressSharp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Infrastructure.Common\TypiconOnline.Infrastructure.Common.csproj">
       <Project>{1F2F3F15-A8CF-4AB7-8603-FB0309EAF8C7}</Project>
       <Name>TypiconOnline.Infrastructure.Common</Name>
@@ -185,6 +185,10 @@
     <ProjectReference Include="..\TypiconOnline.Services\TypiconOnline.AppServices.csproj">
       <Project>{4EE462F2-D6AF-4B99-B9B3-09AA172FE9C8}</Project>
       <Name>TypiconOnline.AppServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TypiconOnline.WinServices\TypiconOnline.WinServices.csproj">
+      <Project>{611C72A4-9F5A-43B3-9418-1A478A943475}</Project>
+      <Name>TypiconOnline.WinServices</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

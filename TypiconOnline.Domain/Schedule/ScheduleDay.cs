@@ -18,6 +18,7 @@ namespace TypiconOnline.Domain.Schedule
         public string Name { get; set; }
         public virtual DateTime Date { get; set; }
         public RuleContainer Schedule { get; set; }
+        public int Sign { get; set; }
     }
 }
 

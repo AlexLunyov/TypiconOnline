@@ -85,6 +85,8 @@ namespace TypiconOnline.Domain.Services
 
             scheduleDay.Date = inputRequest.Date;
 
+            scheduleDay.Sign = GetTemplateSignID(seniorTypiconRule.Template);
+
             //наполняем
             seniorTypiconRule.Rule.Interpret(inputRequest.Date, inputRequest.RuleHandler);
 
@@ -368,9 +370,22 @@ namespace TypiconOnline.Domain.Services
             //modAbstractRules.Add(modRule);
         }
 
+        /// <summary>
+        /// Возвращает ID предустановленного шаблона.
+        /// </summary>
+        /// <param name="sign">Вводимый ID для проверки</param>
+        /// <returns></returns>
+        private int GetTemplateSignID(Sign sign)
+        {
+            return (sign.Template == null) ? sign.Number : GetTemplateSignID(sign.Template);
+        }
+
         public GetScheduleWeekResponse GetScheduleWeek(GetScheduleWeekRequest request)
         {
-            List<ScheduleDay> week = new List<ScheduleDay>();
+            ScheduleWeek week = new ScheduleWeek() 
+            {
+                Name = BookStorage.Oktoikh.GetWeekName(request.Date, false)
+            };
 
             GetScheduleDayRequest dayRequest = new GetScheduleDayRequest()
             {
@@ -386,16 +401,12 @@ namespace TypiconOnline.Domain.Services
             while (i < 7)
             {
                 GetScheduleDayResponse dayResponse = GetScheduleDay(dayRequest);
-                week.Add(dayResponse.Day);
+                week.Days.Add(dayResponse.Day);
                 dayRequest.Date = dayRequest.Date.AddDays(1);
                 i++;
             }
 
-            return new GetScheduleWeekResponse()
-            {
-                Days = week,
-                WeekName = BookStorage.Oktoikh.GetWeekName(dayRequest.Date.AddDays(-7), false)
-            };
+            return new GetScheduleWeekResponse() { Week = week };
         }
     }
 }

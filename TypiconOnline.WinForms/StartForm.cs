@@ -16,6 +16,7 @@ using TypiconOnline.Domain.Easter;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.Domain.Rules;
+using TypiconOnline.WinServices;
 
 namespace ScheduleForm
 {
@@ -229,11 +230,48 @@ namespace ScheduleForm
 
                 _unitOfWork.Commit();
 
+                string messageString = "";
+
+                if (checkBoxDocx.Checked)
+                {
+                    if (textBoxTemplatePath.Text == "")
+                    {
+                        MessageBox.Show("Определите файл docx шаблона.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    string fileTemplateName = textBoxTemplatePath.Text;
+                    string fileOutputName = GetFileName(_selectedDate) + ".docx";
+
+                    if (File.Exists(fileOutputName))
+                        File.Delete(fileOutputName);
+                    File.Copy(fileTemplateName, fileOutputName);
+
+                    DocxScheduleWeekViewer docxViewer = new DocxScheduleWeekViewer(fileOutputName);
+
+                    docxViewer.Execute(weekResponse.Week);
+
+                    messageString += "\nПечатная версия была успешно сохранена. ";
+
+                    FillDateCaptions();
+
+                    if (checkBoxIsDocxOpen.Checked)
+                    {
+                        System.Diagnostics.Process proc = new System.Diagnostics.Process();
+                        proc.StartInfo.FileName = fileOutputName;
+                        proc.StartInfo.UseShellExecute = true;
+                        proc.Start();
+                    }
+                }
+                MessageBox.Show(messageString, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                #region to TextBox
+
                 textBoxResult.Clear();
 
-                textBoxResult.AppendText(weekResponse.WeekName + Environment.NewLine);
+                textBoxResult.AppendText(weekResponse.Week.Name + Environment.NewLine);
 
-                foreach (ScheduleDay day in weekResponse.Days)
+                foreach (ScheduleDay day in weekResponse.Week.Days)
                 {
                     textBoxResult.AppendText("--------------------------" + Environment.NewLine);
                     textBoxResult.AppendText(day.Date.ToShortDateString() + Environment.NewLine);
@@ -250,6 +288,8 @@ namespace ScheduleForm
                         }
                     }
                 }
+
+                #endregion
             //}
             //catch (Exception ex)
             //{
@@ -260,7 +300,7 @@ namespace ScheduleForm
         private string GetFileName(DateTime date)
         {
             string result = textBoxFilePath.Text + "\\";
-            result += _scheduleFileStart + date.ToString("yyyy-MM-dd") + " " + date.AddDays(6).ToString("yyyy-MM-dd") + " " + BookStorage.Oktoikh.GetSundayName(date);
+            result += _scheduleFileStart + date.ToString("yyyy-MM-dd") + " " + date.AddDays(6).ToString("yyyy-MM-dd") + " " + BookStorage.Oktoikh.GetWeekName(date, true);
             return result;
         }
 

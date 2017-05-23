@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Schedule;
 
-namespace TypiconOnline.AppServices.Messaging.Schedule
+namespace TypiconOnline.AppServices.Interfaces
 {
-    public class GetScheduleWeekResponse
+    public interface IScheduleWeekViewer
     {
-        public ScheduleWeek Week { get; set; }
+        void Execute(ScheduleWeek week);
     }
 }
