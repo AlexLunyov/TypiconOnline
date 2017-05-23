@@ -231,6 +231,8 @@ namespace ScheduleForm
 
                 textBoxResult.Clear();
 
+                textBoxResult.AppendText(weekResponse.WeekName + Environment.NewLine);
+
                 foreach (ScheduleDay day in weekResponse.Days)
                 {
                     textBoxResult.AppendText("--------------------------" + Environment.NewLine);

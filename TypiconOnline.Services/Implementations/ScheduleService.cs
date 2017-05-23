@@ -391,7 +391,11 @@ namespace TypiconOnline.Domain.Services
                 i++;
             }
 
-            return new GetScheduleWeekResponse() { Days = week };
+            return new GetScheduleWeekResponse()
+            {
+                Days = week,
+                WeekName = BookStorage.Oktoikh.GetWeekName(dayRequest.Date.AddDays(-7), false)
+            };
         }
     }
 }

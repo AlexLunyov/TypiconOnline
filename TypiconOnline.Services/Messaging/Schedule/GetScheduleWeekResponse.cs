@@ -9,6 +9,7 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
 {
     public class GetScheduleWeekResponse
     {
+        public string WeekName { get; set; }
         public IEnumerable<ScheduleDay> Days { get; set; }
     }
 }

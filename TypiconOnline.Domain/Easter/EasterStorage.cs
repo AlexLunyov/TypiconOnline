@@ -40,10 +40,10 @@ namespace TypiconOnline.Domain.Easter
         /// </summary>
         /// <param name="date"></param>
         /// <returns>Возвращает ту же дату</returns>
-        public DateTime GetCurrentEaster(DateTime date)
-        {
-            return date;
-        }
+        //public DateTime GetCurrentEaster(DateTime date)
+        //{
+        //    return date;
+        //}
 
         public static EasterStorage Instance
         {
