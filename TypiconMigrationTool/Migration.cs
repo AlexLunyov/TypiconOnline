@@ -12,7 +12,7 @@ using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using System.Data.Entity.Validation;
 using TypiconOnline.Domain;
 using TypiconOnline.Domain.Easter;
-using TypiconOnline.WinServices;
+using TypiconOnline.AppServices.Common;
 
 namespace TypiconMigrationTool
 {

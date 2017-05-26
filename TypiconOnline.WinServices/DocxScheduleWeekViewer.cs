@@ -10,6 +10,7 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using TypiconOnline.Domain.Rules.Schedule;
+using TypiconOnline.AppServices.Common;
 
 namespace TypiconOnline.WinServices
 {
