@@ -9,7 +9,7 @@ namespace TypiconOnline.Infrastructure.Common.Domain
 	public interface IReadOnlyRepository<AggregateType> where AggregateType : IAggregateRoot
 	{
 		AggregateType Get(Expression<Func<AggregateType, bool>> predicate);
-        AggregateType Get(int id);
+        //AggregateType Get(int id);
         IEnumerable<AggregateType> GetAll(Expression<Func<AggregateType, bool>> predicate = null);
     }
 }

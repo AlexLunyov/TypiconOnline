@@ -12,5 +12,9 @@ namespace TypiconOnline.AppServices.Interfaces
         void ClearModifiedYears(int id);
         void ReloadRules(int id, string folderPath);
         GetTypiconEntityResponse GetTypiconEntity(int id);
+        GetTypiconEntitiesResponse GetAllTypiconEntities();
+        InsertTypiconEntityResponse InsertTypiconEntity(InsertTypiconEntityRequest insertTypiconEntityRequest);
+        UpdateTypiconEntityResponse UpdateTypiconEntity(UpdateTypiconEntityRequest updateTypiconEntityRequest);
+        DeleteTypiconEntityResponse DeleteTypiconEntity(DeleteTypiconEntityRequest deleteTypiconEntityRequest);
     }
 }

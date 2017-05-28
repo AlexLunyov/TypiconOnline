@@ -17,6 +17,8 @@ using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.WinServices;
+using TypiconOnline.AppServices.Interfaces;
+using TypiconOnline.AppServices.Messaging.Typicon;
 
 namespace ScheduleForm
 {
@@ -26,6 +28,7 @@ namespace ScheduleForm
         private IUnitOfWork _unitOfWork;
         private ScheduleService _scheduleService;
         TypiconEntity _typiconEntity;
+        ITypiconEntityService _typiconEntityService;
 
         private DateTime _selectedDate;
         private const string _scheduleFileStart = "РАСПИСАНИЕ ";
@@ -43,7 +46,11 @@ namespace ScheduleForm
 
             _unitOfWork = container.GetInstance<IUnitOfWork>();
 
-            _typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
+            _typiconEntityService = container.GetInstance<ITypiconEntityService>();
+
+            GetTypiconEntityResponse response = _typiconEntityService.GetTypiconEntity(1);// _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
+
+            _typiconEntity = response.TypiconEntity;
 
             EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
@@ -376,10 +383,7 @@ namespace ScheduleForm
 
         private void btnClearModifiedYears_Click(object sender, EventArgs e)
         {
-            using (TypiconEntityService service = new TypiconEntityService(_unitOfWork))
-            {
-                service.ClearModifiedYears(1);
-            }
+            _typiconEntityService.ClearModifiedYears(1);
 
             btnClearModifiedYears.Enabled = false;
         }
@@ -391,10 +395,7 @@ namespace ScheduleForm
 
         private void btnReloadRules_Click(object sender, EventArgs e)
         {
-            using (TypiconEntityService service = new TypiconEntityService(_unitOfWork))
-            {
-                service.ReloadRules(1, Properties.Settings.Default.RulesFolder);
-            }
+            _typiconEntityService.ReloadRules(1, Properties.Settings.Default.RulesFolder);
         }
 
         private void buttonRulePathSettings_Click(object sender, EventArgs e)

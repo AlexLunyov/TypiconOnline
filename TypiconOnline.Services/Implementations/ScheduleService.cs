@@ -85,7 +85,7 @@ namespace TypiconOnline.Domain.Services
 
             scheduleDay.Date = inputRequest.Date;
 
-            scheduleDay.Sign = GetTemplateSignID(seniorTypiconRule.Template);
+            scheduleDay.Sign = (seniorTypiconRule is Sign) ? (seniorTypiconRule as Sign).Number : GetTemplateSignID(seniorTypiconRule.Template);
 
             //наполняем
             seniorTypiconRule.Rule.Interpret(inputRequest.Date, inputRequest.RuleHandler);

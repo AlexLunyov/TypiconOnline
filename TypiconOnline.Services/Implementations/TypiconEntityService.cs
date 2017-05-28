@@ -12,10 +12,22 @@ using TypiconOnline.Infrastructure.Common.UnitOfWork;
 
 namespace TypiconOnline.AppServices.Implementations
 {
-    public class TypiconEntityService : TypiconEntityServiceBase, ITypiconEntityService
+    public class TypiconEntityService : ITypiconEntityService
     {
-        public TypiconEntityService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public TypiconEntityService(IUnitOfWork unitOfWork)
         {
+            if (unitOfWork == null) throw new ArgumentNullException("UnitOfWork");
+            _unitOfWork = unitOfWork;
+        }
+
+        public IUnitOfWork UnitOfWork
+        {
+            get
+            {
+                return _unitOfWork;
+            }
         }
 
         /// <summary>
@@ -50,7 +62,7 @@ namespace TypiconOnline.AppServices.Implementations
             TypiconEntity typicon = null;
             try
             {
-                typicon = UnitOfWork.Repository<TypiconEntity>().Get(id);
+                typicon = UnitOfWork.Repository<TypiconEntity>().Get(x => x.Id == id);
 
                 if (typicon == null)
                 {
@@ -67,6 +79,23 @@ namespace TypiconOnline.AppServices.Implementations
             }
 
             return response;
+        }
+
+        public GetTypiconEntitiesResponse GetAllTypiconEntities()
+        {
+            GetTypiconEntitiesResponse getTypiconEntitiesResponse = new GetTypiconEntitiesResponse();
+            IEnumerable<TypiconEntity> allTypiconEntities = null;
+
+            try
+            {
+                allTypiconEntities = UnitOfWork.Repository<TypiconEntity>().GetAll();
+                getTypiconEntitiesResponse.TypiconEntities = allTypiconEntities;
+            }
+            catch (Exception ex)
+            {
+                getTypiconEntitiesResponse.Exception = ex;
+            }
+            return getTypiconEntitiesResponse;
         }
 
         public void ReloadRules(int id, string folderPath)
@@ -120,6 +149,21 @@ namespace TypiconOnline.AppServices.Implementations
         private ResourceNotFoundException GetStandardTypiconNotFoundException()
         {
             return new ResourceNotFoundException("Запрашиваемый Устав не был найден.");
+        }
+
+        public InsertTypiconEntityResponse InsertTypiconEntity(InsertTypiconEntityRequest insertTypiconEntityRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateTypiconEntityResponse UpdateTypiconEntity(UpdateTypiconEntityRequest updateTypiconEntityRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DeleteTypiconEntityResponse DeleteTypiconEntity(DeleteTypiconEntityRequest deleteTypiconEntityRequest)
+        {
+            throw new NotImplementedException();
         }
     }
 }

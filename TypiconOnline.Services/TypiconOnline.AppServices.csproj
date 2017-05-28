@@ -42,11 +42,11 @@
   <ItemGroup>
     <Compile Include="Common\SignMigrator.cs" />
     <Compile Include="Exceptions\ResourceNotFoundException.cs" />
+    <Compile Include="Implementations\EnrichedTypiconEntityService.cs" />
     <Compile Include="Implementations\FileReader.cs" />
     <Compile Include="Implementations\HtmlScheduleWeekViewer.cs" />
     <Compile Include="Implementations\ScheduleService.cs" />
     <Compile Include="Implementations\TypiconEntityService.cs" />
-    <Compile Include="Implementations\TypiconEntityServiceBase.cs" />
     <Compile Include="Interfaces\IScheduleService.cs" />
     <Compile Include="Interfaces\IScheduleWeekViewer.cs" />
     <Compile Include="Interfaces\ITypiconEntityService.cs" />
@@ -56,7 +56,14 @@
     <Compile Include="Messaging\Schedule\GetScheduleRequestParameter.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleWeekRequest.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleWeekResponse.cs" />
+    <Compile Include="Messaging\Typicon\DeleteTypiconEntityRequest.cs" />
+    <Compile Include="Messaging\Typicon\DeleteTypiconEntityResponse.cs" />
+    <Compile Include="Messaging\Typicon\GetTypiconEntitiesResponse.cs" />
     <Compile Include="Messaging\Typicon\GetTypiconEntityResponse.cs" />
+    <Compile Include="Messaging\Typicon\InsertTypiconEntityRequest.cs" />
+    <Compile Include="Messaging\Typicon\InsertTypiconEntityResponse.cs" />
+    <Compile Include="Messaging\Typicon\UpdateTypiconEntityRequest.cs" />
+    <Compile Include="Messaging\Typicon\UpdateTypiconEntityResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

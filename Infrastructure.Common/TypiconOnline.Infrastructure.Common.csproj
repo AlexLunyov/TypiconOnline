@@ -31,13 +31,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\SystemRuntimeCacheStorage.cs" />
+    <Compile Include="Caching\ICacheStorage.cs" />
+    <Compile Include="Configuration\AppSettingsConfigurationRepository.cs" />
+    <Compile Include="Configuration\IConfigurationRepository.cs" />
     <Compile Include="Domain\BusinessConstraint.cs" />
     <Compile Include="Domain\IAggregateRoot.cs" />
     <Compile Include="Domain\IReadOnlyRepository.cs" />

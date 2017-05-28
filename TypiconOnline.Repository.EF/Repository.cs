@@ -64,10 +64,12 @@ namespace TypiconOnline.Repository.EF
             return _objectSet.Where(predicate).FirstOrDefault();
         }
 
-        public DomainType Get(int id)
-        {
-            return _objectSet.Find(id);
-        }
+        //public DomainType Get(int id)
+        //{
+        //    return _objectSet.Where(x => x.Id == id).FirstOrDefault();
+
+        //    //return _objectSet.Find(id);
+        //}
 
         public void Update(DomainType aggregate)
         {
