@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Services;
 using TypiconOnline.Domain.Books;
@@ -86,6 +87,11 @@ namespace TypiconOnline.Domain.Services
             scheduleDay.Date = inputRequest.Date;
 
             scheduleDay.Sign = (seniorTypiconRule is Sign) ? (seniorTypiconRule as Sign).Number : GetTemplateSignID(seniorTypiconRule.Template);
+
+            if (inputRequest.ConvertSignToHtmlBinding)
+            {
+                scheduleDay.Sign = SignMigrator.GetOldId(k => k.Value.NewID == scheduleDay.Sign);
+            }
 
             //наполняем
             seniorTypiconRule.Rule.Interpret(inputRequest.Date, inputRequest.RuleHandler);

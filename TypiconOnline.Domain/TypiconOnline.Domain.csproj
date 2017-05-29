@@ -55,6 +55,8 @@
     <Compile Include="Books\Evangelie\EvangelieBook.cs" />
     <Compile Include="Books\Evangelie\EvangelieChapter.cs" />
     <Compile Include="Books\Oktoikh\OktoikhGlas.cs" />
+    <Compile Include="Easter\IEasterStorage.cs" />
+    <Compile Include="Easter\IEasterStorageFactory.cs" />
     <Compile Include="ItemTypes\ItemTimeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemTime.cs" />
     <Compile Include="Rules\Executables\ModifyDay.cs" />
