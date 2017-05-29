@@ -10,12 +10,9 @@ namespace TypiconOnline.Domain.ItemTypes
 {
     public abstract class ItemStyledType : ItemType
     {
-        protected TextStyle _style;
+        protected TextStyle _style = new TextStyle();
 
-        public ItemStyledType()
-        {
-            _style = new TextStyle();
-        }
+        public ItemStyledType() { }
 
         public ItemStyledType(TextStyle style)
         {
@@ -41,7 +38,7 @@ namespace TypiconOnline.Domain.ItemTypes
 
                     foreach (string h in Enum.GetNames(typeof(HeaderCaption)))
                     {
-                        if (child.SelectSingleNode(h) != null)
+                        if (child.SelectSingleNode(h.ToLower()) != null)
                         {
                             Style.Header = (HeaderCaption)Enum.Parse(typeof(HeaderCaption), h);
                         }
