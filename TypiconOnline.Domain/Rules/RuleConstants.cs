@@ -52,6 +52,10 @@ namespace TypiconOnline.Domain.Rules
         public const string ModifyReplacedDayNodeName = "modifyreplacedday";
         public const string KindAttrName = "kind";
 
+        public const string StyleNodeName = "style";
+        public const string StyleRedNodeName = "red";
+        public const string StyleBoldNodeName = "bold";
+
         //правила для распознавания времени и дат
         public const string ItemTimeParsing = "HH.mm";
         public const string ItemDateParsing = "--MM-dd";
