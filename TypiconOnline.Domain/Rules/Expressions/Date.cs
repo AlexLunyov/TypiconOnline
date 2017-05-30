@@ -19,26 +19,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
     {
         public Date(XmlNode node) : base(node)
         {
-            //формат вводимой даты должен быть такой --MM-dd
-            //--04-07
-            if (node != null)
-            {
-                _valueExpression = new ItemDate(node.InnerText);
-            }
-
-            //Regex rgx = new Regex(@"--\d\d-\d\d");//(@"-(-\d{ 2}){ 2}");
-
-            //if (!rgx.IsMatch(node.InnerText))
-            //{
-            //    AddBrokenConstraint(DateBusinessRule.DateTypeMismatch, node.Name);
-            //    //throw new DefinitionsParsingException("Ошибка: неверно введен формат даты. Правильный формат: --MM-dd");
-            //}
-
-            //if (!DateTime.TryParseExact(node.InnerText, "--MM-dd", new CultureInfo("ru-RU"), DateTimeStyles.None, out _outputDate))
-            //{
-            //    AddBrokenConstraint(DateBusinessRule.DateTypeMismatch, node.Name);
-            //    //throw new DefinitionsParsingException("Ошибка: неверно введена дата в элементе " + node.Name);
-            //}
+            _valueExpression = new ItemDate(node.InnerText);
         }
 
         public override object ValueCalculated

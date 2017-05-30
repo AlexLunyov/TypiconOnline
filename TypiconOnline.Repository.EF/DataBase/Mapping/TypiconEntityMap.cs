@@ -21,6 +21,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             HasMany(e => e.ModifiedYears).
                 WithRequired(m => m.TypiconEntity);
 
+
             //HasRequired(e => e.MenologyRules).
             //    WithRequiredDependent(m => m.Owner);
 

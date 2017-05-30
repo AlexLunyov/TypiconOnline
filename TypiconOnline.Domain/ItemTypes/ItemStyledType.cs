@@ -12,39 +12,15 @@ namespace TypiconOnline.Domain.ItemTypes
     {
         protected TextStyle _style = new TextStyle();
 
+        protected string _stringExpression;
+
+        protected string _name = "itemstyled";
+
         public ItemStyledType() { }
 
-        public ItemStyledType(TextStyle style)
+        public ItemStyledType(string expression)
         {
-            if (style == null)
-                throw new ArgumentNullException("Style in ItemText");
-            _style = style;
-        }
-
-        public ItemStyledType(XmlNode node)
-        {
-            if (node == null)
-                throw new ArgumentNullException("Style");
-
-            XmlNode child = node.SelectSingleNode(RuleConstants.StyleNodeName);
-
-            if (child != null)
-            {
-                if (child.HasChildNodes)
-                {
-                    //парсим стиль
-                    Style.IsBold = child.SelectSingleNode(RuleConstants.StyleBoldNodeName) != null;
-                    Style.IsRed = child.SelectSingleNode(RuleConstants.StyleRedNodeName) != null;
-
-                    foreach (string h in Enum.GetNames(typeof(HeaderCaption)))
-                    {
-                        if (child.SelectSingleNode(h.ToLower()) != null)
-                        {
-                            Style.Header = (HeaderCaption)Enum.Parse(typeof(HeaderCaption), h);
-                        }
-                    }
-                }
-            }
+            Build(expression);
         }
 
         public TextStyle Style
@@ -58,6 +34,89 @@ namespace TypiconOnline.Domain.ItemTypes
                 _style = value;
             }
         }
+
+        public string Name {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
+        }
+
+        public virtual string StringExpression
+        {
+            get
+            {
+                _stringExpression = ComposeXml().InnerXml;
+                return _stringExpression;
+            }
+            set
+            {
+                _stringExpression = value;
+                Build(value);
+            }
+        }
+
+        protected virtual XmlDocument ComposeXml()
+        {
+            XmlDocument doc = new XmlDocument();
+
+            XmlNode root = doc.CreateElement(Name);
+
+            XmlNode styleNode = doc.CreateElement(RuleConstants.StyleNodeName);
+
+            if (Style.IsRed)
+            {
+                styleNode.AppendChild(doc.CreateElement(RuleConstants.StyleRedNodeName));
+            }
+
+            if (Style.IsBold)
+            {
+                styleNode.AppendChild(doc.CreateElement(RuleConstants.StyleBoldNodeName));
+            }
+
+            if (Style.Header != HeaderCaption.NotDefined)
+            {
+                styleNode.AppendChild(doc.CreateElement(Enum.GetName(typeof(HeaderCaption), Style.Header)));
+            }
+            root.AppendChild(styleNode);
+            doc.AppendChild(root);
+
+            return doc;
+        }
+
+        protected virtual void Build(string expression)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(expression);
+
+            if ((doc != null) && (doc.DocumentElement != null))
+            {
+                XmlNode node = doc.DocumentElement;
+
+                Name = node.Name;
+
+                node = node.SelectSingleNode(RuleConstants.StyleNodeName);
+
+                if ((node != null) && (node.HasChildNodes))
+                {
+                    //парсим стиль
+                    Style.IsBold = node.SelectSingleNode(RuleConstants.StyleBoldNodeName) != null;
+                    Style.IsRed = node.SelectSingleNode(RuleConstants.StyleRedNodeName) != null;
+
+                    foreach (string h in Enum.GetNames(typeof(HeaderCaption)))
+                    {
+                        if (node.SelectSingleNode(h.ToLower()) != null)
+                        {
+                            Style.Header = (HeaderCaption)Enum.Parse(typeof(HeaderCaption), h);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public class TextStyle
@@ -67,5 +126,5 @@ namespace TypiconOnline.Domain.ItemTypes
         public HeaderCaption Header = HeaderCaption.NotDefined;
     }
 
-    public enum HeaderCaption { NotDefined = 0, H1 = 1, H2 = 2, H3 = 3, H4 = 4 }
+    public enum HeaderCaption { NotDefined = 0, h1 = 1, h2 = 2, h3 = 3, h4 = 4 }
 }

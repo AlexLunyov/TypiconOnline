@@ -12,12 +12,13 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
 
             Property(c => c.Name).HasMaxLength(200).IsRequired();
 
+            Property(c => c.Name1.StringExpression).IsRequired();
+
+            Property(c => c.Name2.StringExpression).IsRequired();
+
             HasOptional(e => e.Folder).
                 WithMany();
-
-            HasOptional(e => e.Owner).
-                WithMany();
-
+               
             Ignore(c => c.Rule);
 
             Property(c => c.RuleDefinition).HasColumnType("xml");//("NVARCHAR");

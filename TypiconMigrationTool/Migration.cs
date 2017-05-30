@@ -94,7 +94,7 @@ namespace TypiconMigrationTool
                 Name = "Типикон",
             };
 
-            typiconEntity.RulesFolder = new FolderEntity() { Name = "Правила", Owner = typiconEntity };
+            typiconEntity.RulesFolder = new TypiconFolderEntity() { Name = "Правила", Owner = typiconEntity };
 
             string folderPath = Properties.Settings.Default.FolderPath + typiconEntity.Name + "\\Sign\\"; 
 
@@ -249,6 +249,14 @@ namespace TypiconMigrationTool
             }
             
             //_unitOfWork.Repository<EasterStorage>().Insert(EasterStorage.Instance);
+        }
+
+        private ItemText CreateItemText(string text)
+        {
+            ItemText itemText = new ItemText();
+            itemText.AddElement("cs-ru", text);
+
+            return itemText;
         }
     }
 }

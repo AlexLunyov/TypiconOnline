@@ -37,11 +37,11 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         public virtual List<Sign> Signs { get; set; }
 
-        private FolderEntity _rulesFolder;
+        private TypiconFolderEntity _rulesFolder;
         /// <summary>
         /// Структуирозованное типизированное хранилище правил для правил
         /// </summary>
-        public virtual FolderEntity RulesFolder
+        public virtual TypiconFolderEntity RulesFolder
         {
             get
             {

@@ -93,6 +93,7 @@
     <Compile Include="Typicon\Modifications\ModifiedTriodionRule.cs" />
     <Compile Include="Typicon\Modifications\ModifiedYear.cs" />
     <Compile Include="Typicon\Priority.cs" />
+    <Compile Include="Typicon\TypiconFolderEntity.cs" />
     <Compile Include="Typicon\TypiconRule.cs" />
     <Compile Include="Easter\EasterItem.cs" />
     <Compile Include="Easter\EasterStorage.cs" />

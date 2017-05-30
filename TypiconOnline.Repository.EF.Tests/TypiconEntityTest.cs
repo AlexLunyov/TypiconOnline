@@ -36,7 +36,7 @@ namespace TypiconOnline.Repository.EF.Tests
                 Name = "Устав для удаления"
             };
 
-            typiconEntity.RulesFolder.AddFolder(new FolderEntity()
+            typiconEntity.RulesFolder.AddFolder(new TypiconFolderEntity()
             {
                 Name = "Папка для удаления",
                 Owner = typiconEntity
@@ -131,7 +131,7 @@ namespace TypiconOnline.Repository.EF.Tests
 
             TypiconEntity typiconEntity = new TypiconEntity();
 
-            typiconEntity.RulesFolder = new FolderEntity()
+            typiconEntity.RulesFolder = new TypiconFolderEntity()
             {
                 Owner = typiconEntity
             };

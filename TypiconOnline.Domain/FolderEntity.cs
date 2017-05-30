@@ -23,7 +23,7 @@ namespace TypiconOnline.Domain
 
         //public virtual int? OwnerId { get; set; }
 
-        public virtual TypiconEntity Owner { get; set; }
+        //public virtual TypiconEntity Owner { get; set; }
 
         public string Name { get; set; }
 
@@ -65,48 +65,7 @@ namespace TypiconOnline.Domain
             return result;
         }
 
-        public MenologyRule FindMenologyRule(DateTime date)
-        {
-            //MenologyRule result = (MenologyRule)Rules.AsQueryable().FirstOrDefault(c => ((c is MenologyRule) &&
-            //                                    (((MenologyRule)c).Day.GetCurrentDate(date.Year)) == date));
-
-            MenologyRule result = (MenologyRule)Rules.FirstOrDefault(c => ((c is MenologyRule) &&
-                                                (((MenologyRule)c).Day.GetCurrentDate(date.Year)) == date));
-
-            if (result == null)
-            {
-                foreach (FolderEntity folder in Folders)
-                {
-                    result = folder.FindMenologyRule(date);
-                    if (result != null)
-                    {
-                        return result;
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        public TriodionRule FindTriodionRule(int daysFromEaster)
-        {
-            TriodionRule result = (TriodionRule)Rules.AsQueryable().
-                FirstOrDefault(c => ((c is TriodionRule) && ((c as TriodionRule).DaysFromEaster == daysFromEaster)));
-
-            if (result == null)
-            {
-                foreach (FolderEntity folder in Folders)
-                {
-                    result = folder.FindTriodionRule(daysFromEaster);
-                    if (result != null)
-                    {
-                        return result;
-                    }
-                }
-            }
-
-            return result;
-        }
+        
 
         //public List<RuleEntity> FindAllRules(Expression<Func<RuleEntity, bool>> predicate = null)
         public List<RuleEntity> FindAllRules(Predicate<RuleEntity> predicate = null)
@@ -151,15 +110,6 @@ namespace TypiconOnline.Domain
             Rules.Add(rule);
         }
 
-        public TypiconEntity GetOwner()
-        {
-            TypiconEntity result = Owner;
-            if ((result == null) && (Parent != null))
-            {
-                return Parent.GetOwner();
-            }
-
-            return result;
-        }
+        
     }
 }

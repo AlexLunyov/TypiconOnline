@@ -15,10 +15,10 @@ namespace TypiconOnline.Domain.Rules
 
         public RuleElement(XmlNode node)
         {
-            if (node != null)
-            {
-                ElementName = node.Name;
-            }
+            if (node == null)
+                throw new ArgumentNullException("RuleElement");         
+               
+            ElementName = node.Name;
         }
 
         private bool _isInterpreted = false;

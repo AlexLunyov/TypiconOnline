@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.ItemTypes
 {
@@ -15,23 +16,11 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public ItemText() { }
 
-        public ItemText(XmlNode node) : base(node)
+        public ItemText(string expression) : base(expression)
         {
-            if (node == null)
-                throw new ArgumentNullException("Node in ItemText");
-
-            if (node.HasChildNodes)
-            {
-                foreach (XmlNode child in node.ChildNodes)
-                {
-                    if (child.Name != RuleConstants.StyleNodeName)
-                    {
-                        AddElement(child.Name, child.InnerText);
-                    }
-                }
-            }
+            Build(expression);
         }
-            
+
         #region Properties
 
         public Dictionary<string, string> Text
@@ -40,6 +29,34 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 return _textDict;
             }
+        }
+
+        //public override string StringExpression
+        //{
+        //    get
+        //    {
+        //        _stringExpression = ComposeXml().Value;
+        //        return _stringExpression;
+        //    }
+        //    set
+        //    {
+        //        _stringExpression = value;
+        //        Build(value);
+        //    }
+        //}
+
+        protected override XmlDocument ComposeXml()
+        {
+            XmlDocument doc = base.ComposeXml();
+
+            foreach(KeyValuePair <string, string> entry in _textDict)
+            {
+                XmlNode node = doc.CreateElement(entry.Key);
+                node.InnerText = entry.Value;
+                doc.FirstChild.AppendChild(node);
+            }
+
+            return doc;
         }
 
         #endregion
@@ -60,14 +77,45 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }
 
-        public void AddElement(string key, string value)
+        protected override void Build(string expression)
         {
+            base.Build(expression);
+
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(expression);
+
+            if ((doc != null) && (doc.DocumentElement != null))
+            {
+                XmlNode node = doc.DocumentElement;
+
+                if (node.HasChildNodes)
+                {
+                    foreach (XmlNode child in node.ChildNodes)
+                    {
+                        if (child.Name != RuleConstants.StyleNodeName)
+                        {
+                            AddElement(child.Name, child.InnerText);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Добавляет текст к коллекции
+        /// </summary>
+        /// <param name="key">язык</param>
+        /// <param name="value">текст</param>
+        /// <returns>Возвращает значение, успешно ли добавилось</returns>
+        public bool AddElement(string key, string value)
+        {
+            bool result = false;
             if (!_textDict.ContainsKey(key))
             {
                 _textDict.Add(key, value);
+                result = true;
             }
+            return result;
         }
     }
-
-    
 }

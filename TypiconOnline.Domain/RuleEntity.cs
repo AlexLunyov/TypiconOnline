@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Typicon;
@@ -15,9 +16,31 @@ namespace TypiconOnline.Domain
 
         public virtual string Name { get; set; }
 
+        public virtual string CommonName
+        {
+            get
+            {
+                return Name;
+            }
+        }
+
+        //private ItemText _name1 = new ItemText();
+        public virtual ItemText Name1
+        {
+            get;
+            //{
+
+            //}
+            set;
+        }
+
+
+
+        public virtual ItemText Name2 { get; set; }
+
         public virtual FolderEntity Folder { get; set; }
 
-        public virtual TypiconEntity Owner { get; set; }
+        //public virtual TypiconEntity Owner { get; set; }
 
         public string PathName
         {

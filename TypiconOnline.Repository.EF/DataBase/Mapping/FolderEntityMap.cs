@@ -19,8 +19,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             //    WithMany(m => m.Folders).HasForeignKey(m => m.ParentId)/*.
             //    HasForeignKey(m => m.TemplateId)*/;
 
-            HasOptional(c => c.Owner).
-                WithRequired();
+            
 
             HasMany(e => e.Folders).
                 WithOptional(m => m.Parent)/*.WillCascadeOnDelete(true)/*.
