@@ -156,7 +156,7 @@ namespace TypiconMigrationTool
                 Id = 1,
                 Priority = 1,
                 Name = "Без знака",
-                TypiconEntity = typiconEntity
+                Owner = typiconEntity
             };
             unitOfWork.Repository<Sign>().Insert(sign);
 

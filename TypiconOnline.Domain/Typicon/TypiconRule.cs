@@ -9,11 +9,9 @@ using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Typicon
 {
-    public abstract class TypiconRule : RuleEntity, IRuleHandlerInitiator
+    public abstract class TypiconRule : RuleEntity//, IRuleHandlerInitiator
     {
         public virtual Sign Template { get; set; }
-
-        public virtual TypiconEntity Owner { get; set; }
 
         /// <summary>
         /// Возвращает Правило: либо свое, либо шаблонное

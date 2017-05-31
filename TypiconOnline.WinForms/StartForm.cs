@@ -19,6 +19,8 @@ using TypiconOnline.Domain.Rules;
 using TypiconOnline.WinServices;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Typicon;
+using TypiconOnline.AppServices.Common;
+using TypiconOnline.Domain.Days;
 
 namespace ScheduleForm
 {
@@ -453,6 +455,47 @@ namespace ScheduleForm
                 textBoxTesting.AppendText(easterItem.Date.Year + " год. " + daysFromEaster + " дней до Пасхи." + Environment.NewLine);
             }
             
+        }
+
+        private void btnSaveDaysXml_Click(object sender, EventArgs e)
+        {
+            
+            string folder = Properties.Settings.Default.RulesFolder + "\\Days\\";
+
+            //Menology
+            XmlToFileSaver saver = new XmlToFileSaver(folder + "Menology.xml");
+            DayXmlHelper<MenologyDay> menXmlHelper = new DayXmlHelper<MenologyDay>(_unitOfWork, saver);
+            menXmlHelper.Save();
+
+            //Triodion
+            saver.FileName = folder + "Triodion.xml";
+            DayXmlHelper<TriodionDay> triodXmlHelper = new DayXmlHelper<TriodionDay>(_unitOfWork, saver);
+            triodXmlHelper.Save();
+
+            //Sign
+            saver.FileName = folder + "Sign.xml";
+            DayXmlHelper<Sign> signXmlHelper = new DayXmlHelper<Sign>(_unitOfWork, saver);
+            triodXmlHelper.Save();
+        }
+
+        private void btnLoadDaysXml_Click(object sender, EventArgs e)
+        {
+            string folder = Properties.Settings.Default.RulesFolder + "\\Days\\";
+
+            //Menology
+            XmlToFileSaver saver = new XmlToFileSaver(folder + "Menology.xml");
+            DayXmlHelper<MenologyDay> menXmlHelper = new DayXmlHelper<MenologyDay>(_unitOfWork, saver);
+            menXmlHelper.Load();
+
+            //Triodion
+            saver.FileName = folder + "Triodion.xml";
+            DayXmlHelper<TriodionDay> triodXmlHelper = new DayXmlHelper<TriodionDay>(_unitOfWork, saver);
+            triodXmlHelper.Load();
+
+            //Sign
+            saver.FileName = folder + "Sign.xml";
+            DayXmlHelper<Sign> signXmlHelper = new DayXmlHelper<Sign>(_unitOfWork, saver);
+            triodXmlHelper.Load();
         }
     }
 }

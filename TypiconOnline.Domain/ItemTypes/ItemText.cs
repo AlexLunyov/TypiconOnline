@@ -90,6 +90,8 @@ namespace TypiconOnline.Domain.ItemTypes
 
                 if (node.HasChildNodes)
                 {
+                    _textDict.Clear();
+
                     foreach (XmlNode child in node.ChildNodes)
                     {
                         if (child.Name != RuleConstants.StyleNodeName)

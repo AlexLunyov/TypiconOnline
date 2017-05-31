@@ -71,7 +71,6 @@
     <Compile Include="DataBase\Mapping\MenologyDayMap.cs" />
     <Compile Include="DataBase\Mapping\FolderEntityMap.cs" />
     <Compile Include="DataBase\Mapping\TypiconFolderEntityMap.cs" />
-    <Compile Include="DataBase\Mapping\TypiconRuleMap.cs" />
     <Compile Include="DataBase\TypiconDBContext.cs" />
     <Compile Include="EFUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

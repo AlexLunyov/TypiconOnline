@@ -65,7 +65,7 @@ namespace TypiconOnline.Repository.EF.DataBase
 
             modelBuilder.Configurations.Add(new FolderEntityMap());
 
-            //modelBuilder.Configurations.Add(new TypiconFolderMap());
+            modelBuilder.Configurations.Add(new TypiconFolderEntityMap());
 
             modelBuilder.Configurations.Add(new TypiconEntityMap());
 
@@ -94,6 +94,8 @@ namespace TypiconOnline.Repository.EF.DataBase
             modelBuilder.Configurations.Add(new ModifiedMenologyRuleMap());
 
             modelBuilder.Configurations.Add(new ModifiedTriodionRuleMap());
+
+            //modelBuilder.Configurations.Add(new TypiconRuleMap());
         }
 
         #endregion

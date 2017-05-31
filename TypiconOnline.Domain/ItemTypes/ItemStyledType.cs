@@ -23,7 +23,7 @@ namespace TypiconOnline.Domain.ItemTypes
             Build(expression);
         }
 
-        public TextStyle Style
+        public TextStyle Style = new TextStyle();/*
         {
             get
             {
@@ -33,9 +33,9 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 _style = value;
             }
-        }
+        }*/
 
-        public string Name {
+        public string Name = "itemstyled"; /*{
             get
             {
                 return _name;
@@ -44,7 +44,7 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 _name = value;
             }
-        }
+        }*/
 
         public virtual string StringExpression
         {

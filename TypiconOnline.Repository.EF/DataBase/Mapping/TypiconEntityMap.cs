@@ -32,7 +32,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             //    WithRequiredDependent(m => m.Owner);
 
             HasRequired(e => e.RulesFolder).
-                WithOptional(m => m.Owner).WillCascadeOnDelete(true);
+                WithOptional(m => m.Owner).WillCascadeOnDelete(false);
 
             ToTable("TypiconEntities");
         }

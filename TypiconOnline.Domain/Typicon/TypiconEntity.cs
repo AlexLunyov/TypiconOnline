@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Typicon
         {
             Signs = new List<Sign>();
             ModifiedYears = new List<ModifiedYear>();
-            CommonRules = new List<RuleEntity>();
+            CommonRules = new List<TypiconRule>();
             MenologyRules = new List<MenologyRule>();
             TriodionRules = new List<TriodionRule>();
         }
@@ -78,7 +78,7 @@ namespace TypiconOnline.Domain.Typicon
 
         public virtual List<ModifiedYear> ModifiedYears { get; set; }
 
-        public virtual List<RuleEntity> CommonRules { get; set; }
+        public virtual List<TypiconRule> CommonRules { get; set; }
         public virtual List<MenologyRule> MenologyRules { get; set; }
         public virtual List<TriodionRule> TriodionRules { get; set; }
 

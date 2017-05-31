@@ -13,6 +13,7 @@ using System.Data.Entity.Validation;
 using TypiconOnline.Domain;
 using TypiconOnline.Domain.Easter;
 using TypiconOnline.AppServices.Common;
+using TypiconOnline.AppServices.Messaging.Common;
 
 namespace TypiconMigrationTool
 {
@@ -112,6 +113,9 @@ namespace TypiconMigrationTool
                 {
                     //Id = signMigrator.NewId,
                     Name = row.Name,
+                    Name1 = XmlHelper.CreateItemText(
+                        new CreateItemTextRequest() { Text = row.Name, Name = "Name1" }),
+                    Name2 = new ItemText() { Name = "Name2"},
                     Number = signMigrator.NewId,
                     Priority = signMigrator.Priority,
                     TypiconEntity = typiconEntity,
@@ -150,10 +154,10 @@ namespace TypiconMigrationTool
         {
             Console.WriteLine("MigrateMenologyDaysAndRules()");
 
-            FolderEntity folder = new FolderEntity() { Name = "Минея" };
+            TypiconFolderEntity folder = new TypiconFolderEntity() { Name = "Минея" };
             typiconEntity.RulesFolder.AddFolder(folder);
 
-            FolderEntity childFolder = new FolderEntity() { Name = "Минея 1" };
+            TypiconFolderEntity childFolder = new TypiconFolderEntity() { Name = "Минея 1" };
 
             folder.AddFolder(childFolder);
 
@@ -163,10 +167,12 @@ namespace TypiconMigrationTool
 
             foreach (ScheduleDBDataSet.MineinikRow mineinikRow in _sh.DataSet.Mineinik.Rows)
             {
-                
                 MenologyDay menologyDay = new MenologyDay()
                 {
                     Name = mineinikRow.Name,
+                    Name1 = XmlHelper.CreateItemText(
+                        new CreateItemTextRequest() { Text = mineinikRow.Name, Name = "Name1" }),
+                    Name2 = new ItemText() { Name = "Name2" },
                     Date = (mineinikRow.IsDateNull()) ? new ItemDate() : new ItemDate(mineinikRow.Date.Month, mineinikRow.Date.Day),
                     DateB = (mineinikRow.IsDateBNull()) ? new ItemDate() : new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day),
                 };
@@ -190,6 +196,9 @@ namespace TypiconMigrationTool
                 {
                     Day = menologyDay,
                     Name = menologyDay.Name,
+                    Name1 = XmlHelper.CreateItemText(
+                        new CreateItemTextRequest() { Text = mineinikRow.Name, Name = "Name1" }),
+                    Name2 = new ItemText() { Name = "Name2" },
                     Owner = typiconEntity,
                     Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(mineinikRow.SignID).NewId),
                     RuleDefinition = ruleDefinition
@@ -206,15 +215,23 @@ namespace TypiconMigrationTool
         {
             Console.WriteLine("MigrateTriodionDaysAndRules()");
 
-            FolderEntity folder = new FolderEntity() { Name = "Триодь" };
+            TypiconFolderEntity folder = new TypiconFolderEntity() { Name = "Триодь" };
 
             typiconEntity.RulesFolder.AddFolder(folder);
 
             foreach (ScheduleDBDataSet.TriodionRow row in _sh.DataSet.Triodion.Rows)
             {
+                CreateItemTextRequest req = new CreateItemTextRequest();
+                req.Text = row.Name;
+                req.Name = "Name1";
+                req.Style.IsBold = row.IsNameBold;
+                ItemText itemText = XmlHelper.CreateItemText(req);
+
                 TriodionDay day = new TriodionDay()
                 {
                     Name = row.Name,
+                    Name1 = itemText,
+                    Name2 = new ItemText() { Name = "Name2" },
                     DaysFromEaster = (int) row.DayFromEaster,
                 };
                 //day.Sign = _unitOfWork.Repository<Sign>().Get(c => c.Id == row.SignID);
@@ -229,6 +246,8 @@ namespace TypiconMigrationTool
                 {
                     Day = day,
                     Name = day.Name,
+                    Name1 = itemText,
+                    Name2 = new ItemText() { Name = "Name2" },
                     Owner = typiconEntity,
                     Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(row.SignID).NewId),
                     RuleDefinition = fileReader.GetXml(row.DayFromEaster.ToString())
@@ -249,14 +268,6 @@ namespace TypiconMigrationTool
             }
             
             //_unitOfWork.Repository<EasterStorage>().Insert(EasterStorage.Instance);
-        }
-
-        private ItemText CreateItemText(string text)
-        {
-            ItemText itemText = new ItemText();
-            itemText.AddElement("cs-ru", text);
-
-            return itemText;
         }
     }
 }

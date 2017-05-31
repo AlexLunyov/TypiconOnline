@@ -67,12 +67,14 @@
             this.tabAdminPage = new System.Windows.Forms.TabPage();
             this.btnReloadRules = new System.Windows.Forms.Button();
             this.btnClearModifiedYears = new System.Windows.Forms.Button();
+            this.tabPageTesting = new System.Windows.Forms.TabPage();
+            this.btnTest40mart = new System.Windows.Forms.Button();
+            this.textBoxTesting = new System.Windows.Forms.TextBox();
+            this.dateTimePickerTesting = new System.Windows.Forms.DateTimePicker();
             this.folderBrowserDialogSettings = new System.Windows.Forms.FolderBrowserDialog();
             this.templateFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.tabPageTesting = new System.Windows.Forms.TabPage();
-            this.dateTimePickerTesting = new System.Windows.Forms.DateTimePicker();
-            this.textBoxTesting = new System.Windows.Forms.TextBox();
-            this.btnTest40mart = new System.Windows.Forms.Button();
+            this.btnSaveDaysXml = new System.Windows.Forms.Button();
+            this.btnLoadDaysXml = new System.Windows.Forms.Button();
             this.tabControlMain.SuspendLayout();
             this.tabPageMain.SuspendLayout();
             this.panelTest.SuspendLayout();
@@ -510,6 +512,8 @@
             // 
             // tabAdminPage
             // 
+            this.tabAdminPage.Controls.Add(this.btnLoadDaysXml);
+            this.tabAdminPage.Controls.Add(this.btnSaveDaysXml);
             this.tabAdminPage.Controls.Add(this.btnReloadRules);
             this.tabAdminPage.Controls.Add(this.btnClearModifiedYears);
             this.tabAdminPage.Location = new System.Drawing.Point(4, 25);
@@ -541,10 +545,6 @@
             this.btnClearModifiedYears.UseVisualStyleBackColor = true;
             this.btnClearModifiedYears.Click += new System.EventHandler(this.btnClearModifiedYears_Click);
             // 
-            // templateFileDialog
-            // 
-            this.templateFileDialog.Filter = "Docx файлы | *.docx";
-            // 
             // tabPageTesting
             // 
             this.tabPageTesting.Controls.Add(this.btnTest40mart);
@@ -558,13 +558,15 @@
             this.tabPageTesting.Text = "Тестирование";
             this.tabPageTesting.UseVisualStyleBackColor = true;
             // 
-            // dateTimePickerTesting
+            // btnTest40mart
             // 
-            this.dateTimePickerTesting.Location = new System.Drawing.Point(31, 19);
-            this.dateTimePickerTesting.Name = "dateTimePickerTesting";
-            this.dateTimePickerTesting.Size = new System.Drawing.Size(200, 22);
-            this.dateTimePickerTesting.TabIndex = 0;
-            this.dateTimePickerTesting.ValueChanged += new System.EventHandler(this.dateTimePickerTesting_ValueChanged);
+            this.btnTest40mart.Location = new System.Drawing.Point(31, 56);
+            this.btnTest40mart.Name = "btnTest40mart";
+            this.btnTest40mart.Size = new System.Drawing.Size(200, 23);
+            this.btnTest40mart.TabIndex = 2;
+            this.btnTest40mart.Text = "все Пасхи";
+            this.btnTest40mart.UseVisualStyleBackColor = true;
+            this.btnTest40mart.Click += new System.EventHandler(this.btnTest40mart_Click);
             // 
             // textBoxTesting
             // 
@@ -577,15 +579,37 @@
             this.textBoxTesting.Size = new System.Drawing.Size(687, 452);
             this.textBoxTesting.TabIndex = 1;
             // 
-            // btnTest40mart
+            // dateTimePickerTesting
             // 
-            this.btnTest40mart.Location = new System.Drawing.Point(31, 56);
-            this.btnTest40mart.Name = "btnTest40mart";
-            this.btnTest40mart.Size = new System.Drawing.Size(200, 23);
-            this.btnTest40mart.TabIndex = 2;
-            this.btnTest40mart.Text = "все Пасхи";
-            this.btnTest40mart.UseVisualStyleBackColor = true;
-            this.btnTest40mart.Click += new System.EventHandler(this.btnTest40mart_Click);
+            this.dateTimePickerTesting.Location = new System.Drawing.Point(31, 19);
+            this.dateTimePickerTesting.Name = "dateTimePickerTesting";
+            this.dateTimePickerTesting.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePickerTesting.TabIndex = 0;
+            this.dateTimePickerTesting.ValueChanged += new System.EventHandler(this.dateTimePickerTesting_ValueChanged);
+            // 
+            // templateFileDialog
+            // 
+            this.templateFileDialog.Filter = "Docx файлы | *.docx";
+            // 
+            // btnSaveDaysXml
+            // 
+            this.btnSaveDaysXml.Location = new System.Drawing.Point(18, 109);
+            this.btnSaveDaysXml.Name = "btnSaveDaysXml";
+            this.btnSaveDaysXml.Size = new System.Drawing.Size(195, 28);
+            this.btnSaveDaysXml.TabIndex = 2;
+            this.btnSaveDaysXml.Text = "Save days\' names as xml";
+            this.btnSaveDaysXml.UseVisualStyleBackColor = true;
+            this.btnSaveDaysXml.Click += new System.EventHandler(this.btnSaveDaysXml_Click);
+            // 
+            // btnLoadDaysXml
+            // 
+            this.btnLoadDaysXml.Location = new System.Drawing.Point(18, 154);
+            this.btnLoadDaysXml.Name = "btnLoadDaysXml";
+            this.btnLoadDaysXml.Size = new System.Drawing.Size(195, 28);
+            this.btnLoadDaysXml.TabIndex = 3;
+            this.btnLoadDaysXml.Text = "Load days\' names as xml";
+            this.btnLoadDaysXml.UseVisualStyleBackColor = true;
+            this.btnLoadDaysXml.Click += new System.EventHandler(this.btnLoadDaysXml_Click);
             // 
             // StartForm
             // 
@@ -670,5 +694,7 @@
         private System.Windows.Forms.TextBox textBoxTesting;
         private System.Windows.Forms.DateTimePicker dateTimePickerTesting;
         private System.Windows.Forms.Button btnTest40mart;
+        private System.Windows.Forms.Button btnSaveDaysXml;
+        private System.Windows.Forms.Button btnLoadDaysXml;
     }
 }

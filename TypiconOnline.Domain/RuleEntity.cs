@@ -40,7 +40,7 @@ namespace TypiconOnline.Domain
 
         public virtual FolderEntity Folder { get; set; }
 
-        //public virtual TypiconEntity Owner { get; set; }
+        public virtual TypiconEntity Owner { get; set; }
 
         public string PathName
         {

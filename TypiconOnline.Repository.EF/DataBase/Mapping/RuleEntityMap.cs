@@ -18,7 +18,10 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
 
             HasOptional(e => e.Folder).
                 WithMany();
-               
+
+            HasOptional(e => e.Owner).
+                WithMany();
+
             Ignore(c => c.Rule);
 
             Property(c => c.RuleDefinition).HasColumnType("xml");//("NVARCHAR");
