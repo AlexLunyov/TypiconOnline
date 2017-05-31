@@ -7,11 +7,12 @@ using System.Xml;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 
 namespace TypiconOnline.AppServices.Common
 {
-    public class DayXmlHelper<T>  where T : RuleEntity
+    public class DayXmlHelper<T>  where T : Day
     {
         IUnitOfWork _unitOfWork;
         IXmlSaver _xmlSaver;
@@ -70,9 +71,9 @@ namespace TypiconOnline.AppServices.Common
                         if (day != null)
                         {
                             XmlNode name1Node = node.SelectSingleNode("Name1");
-                            day.Name1.StringExpression = name1Node.OuterXml;
-
                             XmlNode name2Node = node.SelectSingleNode("Name2");
+
+                            day.Name1.StringExpression = name1Node.OuterXml;
                             day.Name2.StringExpression = name2Node.OuterXml;
                         }
                     }

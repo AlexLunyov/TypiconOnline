@@ -10,7 +10,7 @@ namespace TypiconOnline.Domain.Typicon
 
         public bool IsTemplate { get; set; }
 
-        public virtual TypiconEntity TypiconEntity { get; set; }
+        //public virtual TypiconEntity TypiconEntity { get; set; }
 
         protected override void Validate()
         {

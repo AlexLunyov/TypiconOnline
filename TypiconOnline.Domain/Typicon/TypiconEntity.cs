@@ -244,7 +244,7 @@ namespace TypiconOnline.Domain.Typicon
             return TriodionRules.FirstOrDefault(c => c.DaysFromEaster == daysFromEaster);
         }
 
-        public RuleEntity GetCommonRule(Func<RuleEntity, bool> predicate)
+        public TypiconRule GetCommonRule(Func<TypiconRule, bool> predicate)
         {
             return CommonRules.FirstOrDefault(predicate);
         }

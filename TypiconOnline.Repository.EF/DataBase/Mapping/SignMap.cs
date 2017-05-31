@@ -27,12 +27,18 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             HasOptional(e => e.Template).
                 WithMany().WillCascadeOnDelete(false);
 
-            HasRequired(e => e.TypiconEntity).
+            HasRequired(e => e.Owner).
                 WithMany();
 
             //Ignore(c => c.Rule);
 
             //Property(c => c.RuleDefinition).HasColumnType("NVARCHAR");
+
+            //Map(m =>
+            //{
+            //    m.MapInheritedProperties();
+            //    m.ToTable("Signs");
+            //});
 
             ToTable("Signs");
         }

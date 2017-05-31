@@ -27,17 +27,11 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             //    m.ToTable("TriodionRules");
             //});
 
-            //Map(m =>
-            //{
-            //    m.MapInheritedProperties();
-            //    m.ToTable("TriodionRules");
-            //});
+            HasRequired(c => c.Day).
+                WithMany().WillCascadeOnDelete(false);
 
-            //HasRequired(c => c.Day).
-            //    WithMany().WillCascadeOnDelete(false);
-
-            //HasRequired(c => c.Template).
-            //    WithMany().WillCascadeOnDelete(false);
+            HasRequired(c => c.Template).
+                WithMany().WillCascadeOnDelete(false);
 
             ToTable("TriodionRules");
         }

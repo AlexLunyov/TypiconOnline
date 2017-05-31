@@ -471,11 +471,6 @@ namespace ScheduleForm
             saver.FileName = folder + "Triodion.xml";
             DayXmlHelper<TriodionDay> triodXmlHelper = new DayXmlHelper<TriodionDay>(_unitOfWork, saver);
             triodXmlHelper.Save();
-
-            //Sign
-            saver.FileName = folder + "Sign.xml";
-            DayXmlHelper<Sign> signXmlHelper = new DayXmlHelper<Sign>(_unitOfWork, saver);
-            triodXmlHelper.Save();
         }
 
         private void btnLoadDaysXml_Click(object sender, EventArgs e)
@@ -490,11 +485,6 @@ namespace ScheduleForm
             //Triodion
             saver.FileName = folder + "Triodion.xml";
             DayXmlHelper<TriodionDay> triodXmlHelper = new DayXmlHelper<TriodionDay>(_unitOfWork, saver);
-            triodXmlHelper.Load();
-
-            //Sign
-            saver.FileName = folder + "Sign.xml";
-            DayXmlHelper<Sign> signXmlHelper = new DayXmlHelper<Sign>(_unitOfWork, saver);
             triodXmlHelper.Load();
         }
     }

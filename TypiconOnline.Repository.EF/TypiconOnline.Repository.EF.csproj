@@ -62,6 +62,7 @@
     <Compile Include="DataBase\Mapping\ModifiedMenologyRuleMap.cs" />
     <Compile Include="DataBase\Mapping\ModifiedTriodionRuleMap.cs" />
     <Compile Include="DataBase\Mapping\ModifiedYearMap.cs" />
+    <Compile Include="DataBase\Mapping\DayMap.cs" />
     <Compile Include="DataBase\Mapping\TriodionRuleMap.cs" />
     <Compile Include="DataBase\Mapping\MenologyRuleMap.cs" />
     <Compile Include="DataBase\Mapping\RuleEntityMap.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="DataBase\Mapping\MenologyDayMap.cs" />
     <Compile Include="DataBase\Mapping\FolderEntityMap.cs" />
     <Compile Include="DataBase\Mapping\TypiconFolderEntityMap.cs" />
+    <Compile Include="DataBase\Mapping\TypiconRuleMap.cs" />
     <Compile Include="DataBase\TypiconDBContext.cs" />
     <Compile Include="EFUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

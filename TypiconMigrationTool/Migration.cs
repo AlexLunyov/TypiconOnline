@@ -113,12 +113,9 @@ namespace TypiconMigrationTool
                 {
                     //Id = signMigrator.NewId,
                     Name = row.Name,
-                    Name1 = XmlHelper.CreateItemText(
-                        new CreateItemTextRequest() { Text = row.Name, Name = "Name1" }),
-                    Name2 = new ItemText() { Name = "Name2"},
                     Number = signMigrator.NewId,
                     Priority = signMigrator.Priority,
-                    TypiconEntity = typiconEntity,
+                    Owner = typiconEntity,
                     RuleDefinition = fileReader.GetXml(row.Name)
                 };
 
@@ -196,9 +193,6 @@ namespace TypiconMigrationTool
                 {
                     Day = menologyDay,
                     Name = menologyDay.Name,
-                    Name1 = XmlHelper.CreateItemText(
-                        new CreateItemTextRequest() { Text = mineinikRow.Name, Name = "Name1" }),
-                    Name2 = new ItemText() { Name = "Name2" },
                     Owner = typiconEntity,
                     Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(mineinikRow.SignID).NewId),
                     RuleDefinition = ruleDefinition
@@ -246,8 +240,6 @@ namespace TypiconMigrationTool
                 {
                     Day = day,
                     Name = day.Name,
-                    Name1 = itemText,
-                    Name2 = new ItemText() { Name = "Name2" },
                     Owner = typiconEntity,
                     Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(row.SignID).NewId),
                     RuleDefinition = fileReader.GetXml(row.DayFromEaster.ToString())

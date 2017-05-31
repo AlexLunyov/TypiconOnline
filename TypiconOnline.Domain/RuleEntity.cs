@@ -11,36 +11,11 @@ namespace TypiconOnline.Domain
     /// <summary>
     /// Базовый класс для всех главных элементов системы: богослужебных текстов и правил их компоновки
     /// </summary>
-    public class RuleEntity/*<T> */ : EntityBase<int>, IAggregateRoot /*where T : RuleContainer*/
+    public abstract class RuleEntity/*<T> */ : EntityBase<int>, IAggregateRoot /*where T : RuleContainer*/
     {
-
         public virtual string Name { get; set; }
 
-        public virtual string CommonName
-        {
-            get
-            {
-                return Name;
-            }
-        }
-
-        //private ItemText _name1 = new ItemText();
-        public virtual ItemText Name1
-        {
-            get;
-            //{
-
-            //}
-            set;
-        }
-
-
-
-        public virtual ItemText Name2 { get; set; }
-
         public virtual FolderEntity Folder { get; set; }
-
-        public virtual TypiconEntity Owner { get; set; }
 
         public string PathName
         {

@@ -33,11 +33,11 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             //    m.ToTable("MenologyRules");
             //});
 
-            //HasRequired(c => c.Day).
-            //    WithMany().WillCascadeOnDelete(false);
+            HasRequired(c => c.Day).
+                WithMany().WillCascadeOnDelete(false);
 
-            //HasRequired(c => c.Template).
-            //    WithMany().WillCascadeOnDelete(false);
+            HasRequired(c => c.Template).
+                WithMany().WillCascadeOnDelete(false);
 
             ToTable("MenologyRules");
         }

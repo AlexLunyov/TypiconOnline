@@ -15,8 +15,8 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             HasOptional(e => e.Template).
                 WithMany();
 
-            HasMany(e => e.Signs).
-                WithRequired(m => m.TypiconEntity);
+            //HasMany(e => e.Signs).
+            //    WithRequired(m => m.Owner);
 
             HasMany(e => e.ModifiedYears).
                 WithRequired(m => m.TypiconEntity);

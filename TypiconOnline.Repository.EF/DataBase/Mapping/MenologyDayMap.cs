@@ -21,7 +21,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             //Map(m =>
             //{
             //    m.MapInheritedProperties();
-            //    m.ToTable("MenologyDay");
+            //    m.ToTable("MenologyDays");
             //});
 
             Property(c => c.Date.Expression).

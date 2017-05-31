@@ -7,7 +7,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
     {
         public TypiconRuleMap()
         {
-            HasRequired(e => e.Owner).
+            HasOptional(e => e.Owner).
                 WithMany();
         }
     }
