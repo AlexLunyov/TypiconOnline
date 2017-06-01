@@ -12,11 +12,19 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
     {
         public TriodionDayMap()
         {
-            //    HasKey<int>(c => c.Id);
+            HasKey<int>(c => c.Id);
+            Property(c => c.Id).IsRequired();
+            Property(c => c.Name).HasMaxLength(200);
+            HasOptional(e => e.Folder).
+                WithMany();
 
-            //    Property(c => c.Id).IsRequired();
+            //Ignore(c => c.Rule);
 
-            //Property(c => c.Name).HasMaxLength(200);
+            Property(c => c.RuleDefinition).HasColumnType("xml");//("NVARCHAR");
+
+            Property(c => c.Name1.StringExpression).IsRequired();
+            Property(c => c.Name2.StringExpression).IsRequired();
+            Property(c => c.Name3.StringExpression).IsRequired();
 
             //Map(m =>
             //{
@@ -25,10 +33,6 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             //});
 
             Property(c => c.DaysFromEaster).IsRequired();
-
-            //Ignore(c => c.Rule);
-
-            //Property(c => c.RuleDefinition).HasColumnType("NVARCHAR");
 
             ToTable("TriodionDays");
         }

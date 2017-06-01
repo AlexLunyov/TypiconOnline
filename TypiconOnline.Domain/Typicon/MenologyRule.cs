@@ -8,33 +8,8 @@ using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.Typicon
 {
-    public class MenologyRule : TypiconRule
+    public class MenologyRule : TypiconRule<MenologyDay>
     {
-        private MenologyDay _day;
-        public virtual MenologyDay Day
-        {
-            get
-            {
-                return _day;
-            }
-            set
-            {
-                _day = value;
-
-                //if (value != null)
-                //{
-                //    Date = value.Date;
-                //    DateB = value.DateB;
-                //}
-            }
-        }
-
-        /// <summary>
-        /// Назначенный знак для этого описания
-        /// </summary>
-        //public virtual Sign Sign { get; set; }
-
-        //public new FolderEntity Folder { get; set; }
 
         //отсутвует хранение xml-формы правила
 

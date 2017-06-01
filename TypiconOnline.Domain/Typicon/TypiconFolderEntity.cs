@@ -68,7 +68,7 @@ namespace TypiconOnline.Domain.Typicon
         public TriodionRule FindTriodionRule(int daysFromEaster)
         {
             TriodionRule result = (TriodionRule)Rules.AsQueryable().
-                FirstOrDefault(c => ((c is TriodionRule) && ((c as TriodionRule).DaysFromEaster == daysFromEaster)));
+                FirstOrDefault(c => ((c is TriodionRule) && ((c as TriodionRule).Day.DaysFromEaster == daysFromEaster)));
 
             if (result == null)
             {

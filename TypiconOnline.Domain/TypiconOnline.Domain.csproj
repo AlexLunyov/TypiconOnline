@@ -142,6 +142,8 @@
     <Compile Include="ItemTypes\ItemDateBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemType.cs" />
     <Compile Include="Typicon\TypiconEntity.cs" />
+    <Compile Include="Typicon\TypiconRule T.cs" />
+    <Compile Include="Typicon\TypiconSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure.Common\TypiconOnline.Infrastructure.Common.csproj">

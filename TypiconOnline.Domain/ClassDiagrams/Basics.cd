@@ -41,35 +41,35 @@
   <Class Name="TypiconOnline.Domain.Days.Day">
     <Position X="2.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAQAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAQAIAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
       <FileName>Days\Day.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Days.MenologyDay">
-    <Position X="1.5" Y="6.75" Width="1.5" />
+    <Position X="1.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAECAAAAAAAAAAAAAAAAAAQABAAAAAAAAAAA=</HashCode>
       <FileName>Days\MenologyDay.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Days.TriodionDay">
-    <Position X="3.75" Y="6.75" Width="1.5" />
+    <Position X="3.75" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>Days\TriodionDay.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Typicon.MenologyRule">
-    <Position X="8.25" Y="7" Width="1.5" />
+    <Position X="8.25" Y="9.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIACAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Typicon\MenologyRule.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Typicon.TriodionRule">
-    <Position X="10.5" Y="7" Width="1.5" />
+    <Position X="10.5" Y="9.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIACAAAAAAAEAAAAAAAAAAAAAAAAAIAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Typicon\TriodionRule.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -85,6 +85,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAEBEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Typicon\Sign.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Typicon.TypiconRule&lt;T&gt;">
+    <Position X="9.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAABAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Typicon\TypiconRule T.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

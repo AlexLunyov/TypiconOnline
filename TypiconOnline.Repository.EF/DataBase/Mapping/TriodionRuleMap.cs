@@ -9,31 +9,32 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
     {
         public TriodionRuleMap()
         {
-            //HasKey<int>(c => c.Id);
-            //Property(c => c.Id).IsRequired();
-
-            //Property(c => c.Name).HasMaxLength(200).IsRequired();
-
-            //HasRequired(e => e.Folder).
-            //    WithMany();
+            HasKey<int>(c => c.Id);
+            Property(c => c.Id).IsRequired();
+            Property(c => c.Name).HasMaxLength(200);
+            HasOptional(e => e.Folder).
+                WithMany();
 
             //Ignore(c => c.Rule);
 
-            //Property(c => c.RuleDefinition).HasColumnType("NVARCHAR");
+            Property(c => c.RuleDefinition).HasColumnType("xml");//("NVARCHAR");
 
-            //Map(m =>
-            //{
-            //    m.MapInheritedProperties();
-            //    m.ToTable("TriodionRules");
-            //});
+            HasRequired(e => e.Owner).
+                WithMany();
+
+            HasRequired(e => e.Template).
+                WithMany().WillCascadeOnDelete(false);
 
             HasRequired(c => c.Day).
-                WithMany().WillCascadeOnDelete(false);
+                WithMany();
 
-            HasRequired(c => c.Template).
-                WithMany().WillCascadeOnDelete(false);
+            Map(m =>
+            {
+                m.MapInheritedProperties();
+                m.ToTable("TriodionRules");
+            });
 
-            ToTable("TriodionRules");
+            //ToTable("TriodionRules");
         }
     }
 }

@@ -58,21 +58,21 @@ namespace TypiconOnline.Domain.Typicon
             }
         }
 
-        private Sign _templateSunday;
+        //private Sign _templateSunday;
 
-        public Sign TemplateSunday
-        {
-            get
-            {
-                //TODO: реализовать покрасивей
-                //должен быть добавлен признак IsTemplateSunday в Sign
-                if (_templateSunday == null)
-                {
-                    _templateSunday = Signs.Find(c => c.Number == 6);
-                }
-                return _templateSunday;
-            }
-        }
+        //public Sign TemplateSunday
+        //{
+        //    get
+        //    {
+        //        //TODO: реализовать покрасивей
+        //        //должен быть добавлен признак IsTemplateSunday в Sign
+        //        if (_templateSunday == null)
+        //        {
+        //            _templateSunday = Signs.Find(c => c.Number == 6);
+        //        }
+        //        return _templateSunday;
+        //    }
+        //}
 
         //private Dictionary<int, List<ModifiedRule>> _modifiedYearsDict = new Dictionary<int, List<ModifiedRule>>();
 
@@ -81,6 +81,21 @@ namespace TypiconOnline.Domain.Typicon
         public virtual List<TypiconRule> CommonRules { get; set; }
         public virtual List<MenologyRule> MenologyRules { get; set; }
         public virtual List<TriodionRule> TriodionRules { get; set; }
+
+        private TypiconSettings _settings;
+        public virtual TypiconSettings Settings
+        {
+            get
+            {
+                if (_settings == null)
+                    _settings = new TypiconSettings() { TypiconEntity = this };
+                return _settings;
+            }
+            set
+            {
+                _settings = value;
+            }
+        }
 
         #endregion
 
@@ -232,7 +247,7 @@ namespace TypiconOnline.Domain.Typicon
 
         public TriodionRule GetTriodionRule(int daysFromEaster)
         {
-            return TriodionRules.FirstOrDefault(c => c.DaysFromEaster == daysFromEaster);
+            return TriodionRules.FirstOrDefault(c => c.Day.DaysFromEaster == daysFromEaster);
         }
 
         public TriodionRule GetTriodionRule(DateTime date)
@@ -241,7 +256,7 @@ namespace TypiconOnline.Domain.Typicon
 
             int daysFromEaster = date.Subtract(easterDate).Days;
 
-            return TriodionRules.FirstOrDefault(c => c.DaysFromEaster == daysFromEaster);
+            return TriodionRules.FirstOrDefault(c => c.Day.DaysFromEaster == daysFromEaster);
         }
 
         public TypiconRule GetCommonRule(Func<TypiconRule, bool> predicate)

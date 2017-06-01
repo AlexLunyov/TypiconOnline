@@ -30,8 +30,8 @@ namespace TypiconMigrationTool
 
         public void Execute()
         {
-            Console.WriteLine("ClearEF()");
-            ClearEF();
+            //Console.WriteLine("ClearEF()");
+            //ClearEF();
 
             Console.WriteLine("Migrate()");
             Migrate();
@@ -94,6 +94,7 @@ namespace TypiconMigrationTool
             {
                 Name = "Типикон",
             };
+            typiconEntity.Settings.DefaultLanguage = "cs-ru";
 
             typiconEntity.RulesFolder = new TypiconFolderEntity() { Name = "Правила", Owner = typiconEntity };
 
@@ -170,6 +171,7 @@ namespace TypiconMigrationTool
                     Name1 = XmlHelper.CreateItemText(
                         new CreateItemTextRequest() { Text = mineinikRow.Name, Name = "Name1" }),
                     Name2 = new ItemText() { Name = "Name2" },
+                    Name3 = new ItemText() { Name = "Name3" },
                     Date = (mineinikRow.IsDateNull()) ? new ItemDate() : new ItemDate(mineinikRow.Date.Month, mineinikRow.Date.Day),
                     DateB = (mineinikRow.IsDateBNull()) ? new ItemDate() : new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day),
                 };
@@ -192,7 +194,7 @@ namespace TypiconMigrationTool
                 MenologyRule menologyRule = new MenologyRule()
                 {
                     Day = menologyDay,
-                    Name = menologyDay.Name,
+                    //Name = menologyDay.Name,
                     Owner = typiconEntity,
                     Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(mineinikRow.SignID).NewId),
                     RuleDefinition = ruleDefinition
@@ -200,6 +202,7 @@ namespace TypiconMigrationTool
 
                 folder.AddRule(menologyRule);
                 typiconEntity.MenologyRules.Add(menologyRule);
+                _unitOfWork.Repository<MenologyRule>().Insert(menologyRule);
             }
 
             //_unitOfWork.Commit();
@@ -226,6 +229,7 @@ namespace TypiconMigrationTool
                     Name = row.Name,
                     Name1 = itemText,
                     Name2 = new ItemText() { Name = "Name2" },
+                    Name3 = new ItemText() { Name = "Name3" },
                     DaysFromEaster = (int) row.DayFromEaster,
                 };
                 //day.Sign = _unitOfWork.Repository<Sign>().Get(c => c.Id == row.SignID);

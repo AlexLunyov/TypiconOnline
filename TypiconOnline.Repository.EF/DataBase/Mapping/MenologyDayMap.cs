@@ -12,17 +12,25 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
     {
         public MenologyDayMap()
         {
-            //HasKey<int>(c => c.Id);
+            HasKey<int>(c => c.Id);
+            Property(c => c.Id).IsRequired();
+            Property(c => c.Name).HasMaxLength(200);
+            HasOptional(e => e.Folder).
+                WithMany();
 
-            //Property(c => c.Id).IsRequired();
+            //Ignore(c => c.Rule);
 
-            //Property(c => c.Name).HasMaxLength(200);
+            Property(c => c.RuleDefinition).HasColumnType("xml");//("NVARCHAR");
 
-            //Map(m =>
-            //{
-            //    m.MapInheritedProperties();
-            //    m.ToTable("MenologyDays");
-            //});
+            Property(c => c.Name1.StringExpression).IsRequired();
+            Property(c => c.Name2.StringExpression).IsRequired();
+            Property(c => c.Name3.StringExpression).IsRequired();
+
+            Map(m =>
+            {
+                m.MapInheritedProperties();
+                m.ToTable("MenologyDays");
+            });
 
             Property(c => c.Date.Expression).
                 HasColumnName("Date").
@@ -33,10 +41,6 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
                 HasColumnName("DateB").
                 HasMaxLength(7).
                 IsOptional();
-
-            //Ignore(c => c.Rule);
-
-            //Property(c => c.RuleDefinition).HasColumnType("NVARCHAR");
 
             ToTable("MenologyDays");
         }

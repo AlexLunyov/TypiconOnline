@@ -10,10 +10,10 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             HasKey<int>(c => c.Id);
             Property(c => c.Id).IsRequired();
 
-            Property(c => c.Name).HasMaxLength(200).IsRequired();
-
             HasOptional(e => e.Folder).
                 WithMany();
+
+            Property(c => c.Name).HasMaxLength(200).IsRequired();
 
             Ignore(c => c.Rule);
 

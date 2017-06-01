@@ -9,7 +9,7 @@ using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Typicon
 {
-    public class TypiconRule : RuleEntity//, IRuleHandlerInitiator
+    public abstract class TypiconRule : RuleEntity//, IRuleHandlerInitiator
     {
         public virtual Sign Template { get; set; }
 

@@ -13,10 +13,21 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
     {
         public SignMap()
         {
-            //HasKey<int>(c => c.Id);
-            //Property(c => c.Id).IsRequired();
+            HasKey<int>(c => c.Id);
+            Property(c => c.Id).IsRequired();
+            Property(c => c.Name).HasMaxLength(200);
+            HasOptional(e => e.Folder).
+                WithMany();
 
-            //Property(c => c.Name).HasMaxLength(100).IsRequired();
+            //Ignore(c => c.Rule);
+
+            Property(c => c.RuleDefinition).HasColumnType("xml");//("NVARCHAR");
+
+            HasRequired(e => e.Owner).
+                WithMany();
+
+            HasOptional(e => e.Template).
+                WithMany().WillCascadeOnDelete(false);
 
             Property(c => c.Number).IsRequired();
 
@@ -24,23 +35,23 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
 
             Ignore(c => c.IsTemplate);
 
-            HasOptional(e => e.Template).
-                WithMany().WillCascadeOnDelete(false);
+            //HasOptional(e => e.Template).
+            //    WithMany().WillCascadeOnDelete(false);
 
-            HasRequired(e => e.Owner).
-                WithMany();
+            //HasRequired(e => e.Owner).
+            //    WithMany();
 
             //Ignore(c => c.Rule);
 
             //Property(c => c.RuleDefinition).HasColumnType("NVARCHAR");
 
-            //Map(m =>
-            //{
-            //    m.MapInheritedProperties();
-            //    m.ToTable("Signs");
-            //});
+            Map(m =>
+            {
+                m.MapInheritedProperties();
+                m.ToTable("Signs");
+            });
 
-            ToTable("Signs");
+            //ToTable("Signs");
         }
     }
 }
