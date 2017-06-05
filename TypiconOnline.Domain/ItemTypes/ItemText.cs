@@ -84,7 +84,7 @@ namespace TypiconOnline.Domain.ItemTypes
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(expression);
 
-            if ((doc != null) && (doc.DocumentElement != null))
+            if (doc?.DocumentElement != null)
             {
                 XmlNode node = doc.DocumentElement;
 

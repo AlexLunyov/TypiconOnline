@@ -22,9 +22,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
 
             Property(c => c.RuleDefinition).HasColumnType("xml");//("NVARCHAR");
 
-            Property(c => c.Name1.StringExpression).IsRequired();
-            Property(c => c.Name2.StringExpression).IsRequired();
-            Property(c => c.Name3.StringExpression).IsRequired();
+            Property(c => c.DayName.StringExpression).IsRequired();
 
             //Map(m =>
             //{

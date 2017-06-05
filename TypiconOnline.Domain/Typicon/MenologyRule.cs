@@ -8,10 +8,25 @@ using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.Typicon
 {
-    public class MenologyRule : TypiconRule<MenologyDay>
+    public class MenologyRule : TypiconRule//<MenologyDay>
     {
+        public virtual MenologyDay Day { get; set; }
 
-        //отсутвует хранение xml-формы правила
+        /// <summary>
+        /// Строка сожержит номера имен Дня, использующихся в Правиле, разделенных запятою
+        /// Пример: 
+        /// 1,3
+        /// 1,2,3
+        /// </summary>
+        public virtual string SelectedNames { get; set; }
+
+        public override string Name
+        {
+            get
+            {
+                return GetName(Day, SelectedNames);
+            }
+        }
 
         protected override void Validate()
         {

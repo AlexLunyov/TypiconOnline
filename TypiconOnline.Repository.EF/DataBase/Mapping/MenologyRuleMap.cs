@@ -28,13 +28,13 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             HasRequired(c => c.Day).
                 WithMany();
 
-            Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("MenologyRules");
-            });
+            //Map(m =>
+            //{
+            //    m.MapInheritedProperties();
+            //    m.ToTable("MenologyRules");
+            //});
 
-            //ToTable("MenologyRules");
+            ToTable("MenologyRules");
         }
     }
 }

@@ -87,8 +87,8 @@ namespace TypiconOnline.Domain.Typicon
         {
             get
             {
-                if (_settings == null)
-                    _settings = new TypiconSettings() { TypiconEntity = this };
+                //if (_settings == null)
+                //    _settings = new TypiconSettings() { TypiconEntity = this };
                 return _settings;
             }
             set

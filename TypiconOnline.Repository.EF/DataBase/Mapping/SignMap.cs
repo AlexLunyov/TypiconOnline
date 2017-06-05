@@ -45,13 +45,13 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
 
             //Property(c => c.RuleDefinition).HasColumnType("NVARCHAR");
 
-            Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("Signs");
-            });
+            //Map(m =>
+            //{
+            //    m.MapInheritedProperties();
+            //    m.ToTable("Signs");
+            //});
 
-            //ToTable("Signs");
+            ToTable("Signs");
         }
     }
 }

@@ -19,42 +19,42 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         public virtual string SelectedNames { get; set; }
 
-        public override string Name
-        {
-            get
-            {
-                string result = "";
+        //public override string Name
+        //{
+        //    get
+        //    {
+        //        string result = "";
 
-                string[] names = null;
-                if (!string.IsNullOrEmpty(SelectedNames))
-                {
-                    string[] separator = { ",", " " };
-                    names = SelectedNames.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-                }
+        //        string[] names = null;
+        //        if (!string.IsNullOrEmpty(SelectedNames))
+        //        {
+        //            string[] separator = { ",", " " };
+        //            names = SelectedNames.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+        //        }
 
-                if ((names == null) || (names.Contains("1")))
-                {
-                    string s = Day.Name1.Text[Owner.Settings.DefaultLanguage];
-                    if (s != null) result += s + " ";
-                }
-                if ((names == null) || (names.Contains("2")))
-                {
-                    string s = Day.Name2.Text[Owner.Settings.DefaultLanguage];
-                    if (s != null) result += s + " ";
-                }
-                if ((names == null) || (names.Contains("3")))
-                {
-                    string s = Day.Name3.Text[Owner.Settings.DefaultLanguage];
-                    if (s != null) result += s;
-                }
+        //        if ((names == null) || (names.Contains("1")))
+        //        {
+        //            string s = Day.Name1.Text[Owner.Settings.DefaultLanguage];
+        //            if (s != null) result += s + " ";
+        //        }
+        //        if ((names == null) || (names.Contains("2")))
+        //        {
+        //            string s = Day.Name2.Text[Owner.Settings.DefaultLanguage];
+        //            if (s != null) result += s + " ";
+        //        }
+        //        if ((names == null) || (names.Contains("3")))
+        //        {
+        //            string s = Day.Name3.Text[Owner.Settings.DefaultLanguage];
+        //            if (s != null) result += s;
+        //        }
 
-                return result;
-            }
+        //        return result;
+        //    }
 
-            set
-            {
-                base.Name = value;
-            }
-        }
+        //    set
+        //    {
+        //        base.Name = value;
+        //    }
+        //}
     }
 }

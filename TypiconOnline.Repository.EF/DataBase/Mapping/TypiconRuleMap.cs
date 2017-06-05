@@ -23,11 +23,13 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             HasOptional(e => e.Template).
                 WithMany().WillCascadeOnDelete(false);
 
-            Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("TypiconRules");
-            });
+            //Map(m =>
+            //{
+            //    m.MapInheritedProperties();
+            //    m.ToTable("TypiconRules");
+            //});
+
+            ToTable("TypiconRules");
         }
     }
 }

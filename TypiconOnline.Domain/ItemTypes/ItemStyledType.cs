@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.ItemTypes
 
         protected string _stringExpression;
 
-        protected string _name = "itemstyled";
+        protected string _tagname = "itemstyled";
 
         public ItemStyledType() { }
 
@@ -35,7 +35,7 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }*/
 
-        public string Name = "itemstyled"; /*{
+        public string TagName = "itemstyled"; /*{
             get
             {
                 return _name;
@@ -64,7 +64,7 @@ namespace TypiconOnline.Domain.ItemTypes
         {
             XmlDocument doc = new XmlDocument();
 
-            XmlNode root = doc.CreateElement(Name);
+            XmlNode root = doc.CreateElement(TagName);
 
             XmlNode styleNode = doc.CreateElement(RuleConstants.StyleNodeName);
 
@@ -97,7 +97,7 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 XmlNode node = doc.DocumentElement;
 
-                Name = node.Name;
+                TagName = node.Name;
 
                 node = node.SelectSingleNode(RuleConstants.StyleNodeName);
 

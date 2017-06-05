@@ -32,7 +32,7 @@ namespace TypiconOnline.Repository.EF.DataBase
 
             modelBuilder.Configurations.Add(new TypiconEntityMap());
 
-            ////modelBuilder.Configurations.Add(new RuleEntityMap());
+            modelBuilder.Configurations.Add(new RuleEntityMap());
 
             //modelBuilder.Configurations.Add(new DayMap());
 

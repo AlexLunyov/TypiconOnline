@@ -14,9 +14,6 @@ namespace TypiconOnline.Domain
     public abstract class RuleEntity/*<T> */ : EntityBase<int>, IAggregateRoot /*where T : RuleContainer*/
     {
         public virtual string Name { get; set; }
-
-        public virtual FolderEntity Folder { get; set; }
-
         public string PathName
         {
             get
@@ -24,6 +21,7 @@ namespace TypiconOnline.Domain
                 return (Folder != null) ? (Folder.PathName + "/" + Name) : Name;
             }
         }
+        public virtual FolderEntity Folder { get; set; }
 
         private RuleContainer _rule = null;
         public virtual RuleContainer Rule
@@ -38,7 +36,6 @@ namespace TypiconOnline.Domain
                 return _rule;
             }
         }
-
 
         private string _ruleDefinition;
         public string RuleDefinition

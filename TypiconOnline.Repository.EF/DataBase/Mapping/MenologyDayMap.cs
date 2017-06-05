@@ -22,15 +22,13 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
 
             Property(c => c.RuleDefinition).HasColumnType("xml");//("NVARCHAR");
 
-            Property(c => c.Name1.StringExpression).IsRequired();
-            Property(c => c.Name2.StringExpression).IsRequired();
-            Property(c => c.Name3.StringExpression).IsRequired();
+            Property(c => c.DayName.StringExpression).IsRequired();
 
-            Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("MenologyDays");
-            });
+            //Map(m =>
+            //{
+            //    m.MapInheritedProperties();
+            //    m.ToTable("MenologyDays");
+            //});
 
             Property(c => c.Date.Expression).
                 HasColumnName("Date").

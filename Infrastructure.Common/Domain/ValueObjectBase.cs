@@ -51,9 +51,9 @@ namespace TypiconOnline.Infrastructure.Common.Domain
             }
         }
 
-        protected void AddBrokenConstraint(BusinessConstraint businessRule)
+        protected void AddBrokenConstraint(BusinessConstraint businessConstraint)
         {
-            _brokenConstraints.Add(businessRule);
+            _brokenConstraints.Add(businessConstraint);
         }
 
         protected void AddBrokenConstraint(BusinessConstraint businessConstraint, string constraintPath)

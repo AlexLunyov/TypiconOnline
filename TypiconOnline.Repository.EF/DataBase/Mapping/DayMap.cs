@@ -13,11 +13,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
     {
         public DayMap()
         {
-            Property(c => c.Name1.StringExpression).IsRequired();
-
-            Property(c => c.Name2.StringExpression).IsRequired();
-
-            Property(c => c.Name3.StringExpression).IsRequired();
+            Property(c => c.DayName.StringExpression).IsRequired();
         }
     }
 }

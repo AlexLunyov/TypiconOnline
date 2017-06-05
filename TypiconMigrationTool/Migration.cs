@@ -93,8 +93,11 @@ namespace TypiconMigrationTool
             TypiconEntity typiconEntity = new TypiconEntity()
             {
                 Name = "Типикон",
+                Settings = new TypiconSettings()
+                {
+                    DefaultLanguage = "cs-ru"
+                }
             };
-            typiconEntity.Settings.DefaultLanguage = "cs-ru";
 
             typiconEntity.RulesFolder = new TypiconFolderEntity() { Name = "Правила", Owner = typiconEntity };
 
@@ -168,10 +171,8 @@ namespace TypiconMigrationTool
                 MenologyDay menologyDay = new MenologyDay()
                 {
                     Name = mineinikRow.Name,
-                    Name1 = XmlHelper.CreateItemText(
-                        new CreateItemTextRequest() { Text = mineinikRow.Name, Name = "Name1" }),
-                    Name2 = new ItemText() { Name = "Name2" },
-                    Name3 = new ItemText() { Name = "Name3" },
+                    DayName = XmlHelper.CreateItemTextCollection(
+                        new CreateItemTextRequest() { Text = mineinikRow.Name, Name = "Name" }),
                     Date = (mineinikRow.IsDateNull()) ? new ItemDate() : new ItemDate(mineinikRow.Date.Month, mineinikRow.Date.Day),
                     DateB = (mineinikRow.IsDateBNull()) ? new ItemDate() : new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day),
                 };
@@ -222,14 +223,12 @@ namespace TypiconMigrationTool
                 req.Text = row.Name;
                 req.Name = "Name1";
                 req.Style.IsBold = row.IsNameBold;
-                ItemText itemText = XmlHelper.CreateItemText(req);
+                ItemTextCollection itemTextCol = XmlHelper.CreateItemTextCollection(req);
 
                 TriodionDay day = new TriodionDay()
                 {
                     Name = row.Name,
-                    Name1 = itemText,
-                    Name2 = new ItemText() { Name = "Name2" },
-                    Name3 = new ItemText() { Name = "Name3" },
+                    DayName = itemTextCol,
                     DaysFromEaster = (int) row.DayFromEaster,
                 };
                 //day.Sign = _unitOfWork.Repository<Sign>().Get(c => c.Id == row.SignID);

@@ -44,8 +44,8 @@ namespace TypiconOnline.AppServices.Implementations
                 if (sign == 5 || sign == 6 || sign == 9)
                     _resultString += "<span style=\"color: #ff0000;\">";
 
-                _resultString += day.Date.ToString("dd MMMM yyyy г.") + "<br>";
-                _resultString += day.Date.ToString("dddd").ToUpper() + "<br>";
+                _resultString += day.Date.ToString("dd MMMM yyyy г.") + "<br/>";
+                _resultString += day.Date.ToString("dddd").ToUpper() + "<br/>";
                 _resultString += day.Name + "</strong>";
 
                 if (sign == 5 || sign == 6 || sign == 9)

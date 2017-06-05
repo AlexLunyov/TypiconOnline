@@ -45,7 +45,7 @@ namespace TypiconOnline.AppServices.Common
                 XmlAttribute idAttr = doc.CreateAttribute("id");
                 idAttr.Value = day.Id.ToString();
                 node.Attributes.Append(idAttr);
-                node.InnerXml = day.Name1.StringExpression + day.Name2.StringExpression;
+                node.InnerXml = day.DayName.StringExpression;
                 root.AppendChild(node);
             }
 
@@ -70,11 +70,9 @@ namespace TypiconOnline.AppServices.Common
 
                         if (day != null)
                         {
-                            XmlNode name1Node = node.SelectSingleNode("Name1");
-                            XmlNode name2Node = node.SelectSingleNode("Name2");
+                            XmlNode nameNode = node.SelectSingleNode("Name");
 
-                            day.Name1.StringExpression = name1Node.OuterXml;
-                            day.Name2.StringExpression = name2Node.OuterXml;
+                            day.DayName.StringExpression = nameNode.OuterXml;
                         }
                     }
                 }

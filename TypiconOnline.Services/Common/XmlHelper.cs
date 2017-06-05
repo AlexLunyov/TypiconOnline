@@ -12,11 +12,27 @@ namespace TypiconOnline.AppServices.Common
     {
         public static ItemText CreateItemText(CreateItemTextRequest request)
         {
-            ItemText itemText = new ItemText() { Name = request.Name };
+            ItemText itemText = new ItemText() { TagName = request.Name };
             itemText.AddElement(request.Language, request.Text);
             itemText.Style = request.Style;
 
             return itemText;
+        }
+
+        public static ItemTextCollection CreateItemTextCollection(CreateItemTextRequest request)
+        {
+            ItemTextCollection col = new ItemTextCollection()
+            {
+                TagName = request.Name,
+            };
+
+            ItemText itemText = new ItemText();
+            itemText.AddElement(request.Language, request.Text);
+            itemText.Style = request.Style;
+
+            col.AddItem(itemText);
+
+            return col;
         }
     }
 }

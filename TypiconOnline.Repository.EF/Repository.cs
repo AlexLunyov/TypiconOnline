@@ -58,6 +58,7 @@ namespace TypiconOnline.Repository.EF
                     Include("ModifiedYears").
                     Include("ModifiedYears.ModifiedRules").
                     Include("Signs").
+                    Include("Settings").
                     Where(predicate).FirstOrDefault();
             }
 
