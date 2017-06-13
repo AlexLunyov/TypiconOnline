@@ -23,7 +23,7 @@ namespace TypiconOnline.Domain
         }
         public virtual FolderEntity Folder { get; set; }
 
-        private RuleContainer _rule = null;
+        protected RuleContainer _rule = null;
         public virtual RuleContainer Rule
         {
             get
@@ -37,8 +37,8 @@ namespace TypiconOnline.Domain
             }
         }
 
-        private string _ruleDefinition;
-        public string RuleDefinition
+        protected string _ruleDefinition;
+        public virtual string RuleDefinition
         {
             get
             {

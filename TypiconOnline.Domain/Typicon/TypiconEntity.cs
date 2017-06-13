@@ -33,6 +33,17 @@ namespace TypiconOnline.Domain.Typicon
         public virtual TypiconEntity Template { get; set; }
 
         /// <summary>
+        /// Возвращает true, если у Устава нет шаблона
+        /// </summary>
+        public bool IsTemplate
+        {
+            get
+            {
+                return Template == null;
+            }
+        }
+
+        /// <summary>
         /// Список знаков служб
         /// </summary>
         public virtual List<Sign> Signs { get; set; }

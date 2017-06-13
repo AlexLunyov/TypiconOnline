@@ -60,6 +60,11 @@ namespace TypiconOnline.Domain.Rules
         public const string ItemTimeParsing = "HH.mm";
         public const string ItemDateParsing = "--MM-dd";
 
+        /*
+         * Константы для описания xml-схемы богослужеюных текстов
+         */
+        public const string DayElementNode = "dayelement";
+
         //public const string ExecContainerNodeName = "правило";
         //public const string SwitchNodeName = "выбор";
         //public const string ConditionNodeName = "условие";

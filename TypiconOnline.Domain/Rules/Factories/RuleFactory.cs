@@ -3,6 +3,7 @@ using TypiconOnline.Domain.Rules.Expressions;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Schedule;
+using TypiconOnline.Domain.Rules.Days;
 
 namespace TypiconOnline.Domain.Rules.Factories
 {
@@ -70,6 +71,11 @@ namespace TypiconOnline.Domain.Rules.Factories
 
             if (outputEl == null)
             {
+                outputEl = CreateDayElement(node);
+            }
+
+            if (outputEl == null)
+            {
                 switch (node.Name)
                 {
                     case RuleConstants.NoticeNodeName:
@@ -126,6 +132,18 @@ namespace TypiconOnline.Domain.Rules.Factories
                 case RuleConstants.ExecContainerNodeName:
                 case RuleConstants.ActionNodeName:
                     outputEl = new ExecContainer(node);
+                    break;
+            }
+            return outputEl;
+        }
+
+        public static DayElement CreateDayElement(XmlNode node)
+        {
+            DayElement outputEl = null;
+            switch (node.Name)
+            {
+                case RuleConstants.DayElementNode:
+                    outputEl = new DayElement(node);
                     break;
             }
             return outputEl;
