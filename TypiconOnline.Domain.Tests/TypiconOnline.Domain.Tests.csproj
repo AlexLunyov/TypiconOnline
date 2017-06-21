@@ -55,6 +55,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Rules\Days\EsperinosTest.cs" />
+    <Compile Include="Rules\Days\MikrosEsperinosTest.cs" />
+    <Compile Include="Rules\Days\OrthrosTest.cs" />
+    <Compile Include="Rules\Days\SticheraTest.cs" />
+    <Compile Include="Rules\Days\YmnosGroupTest.cs" />
+    <Compile Include="Rules\Days\YmnosTest.cs" />
     <Compile Include="Rules\Executables\ExecContainerTest.cs" />
     <Compile Include="Rules\Executables\CaseTest.cs" />
     <Compile Include="Rules\Executables\ModifyDayTest.cs" />

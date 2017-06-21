@@ -9,11 +9,44 @@ using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Rules.Days
 {
+    /// <summary>
+    /// Текст службы дня
+    /// </summary>
     public class DayElement : RuleElement
     {
         public DayElement(XmlNode node) : base(node)
         {
-            Name = new ItemText();
+            XmlNode nameNode = node.SelectSingleNode(RuleConstants.DayElementNameNode);
+            if (nameNode != null)
+            {
+                Name = new ItemText(nameNode.OuterXml);
+            }
+
+            //ищем mikrosEsperinos
+            XmlNode mikrosEsperinosNode = node.SelectSingleNode(RuleConstants.MikrosEsperinosNode);
+            if (mikrosEsperinosNode != null)
+            {
+                MikrosEsperinos = new MikrosEsperinos(mikrosEsperinosNode);
+            }
+
+            //ищем esperinos
+            XmlNode esperinosNode = node.SelectSingleNode(RuleConstants.EsperinosNode);
+            if (esperinosNode != null)
+            {
+                Esperinos = new Esperinos(esperinosNode);
+            }
+
+            XmlNode orthrosNode = node.SelectSingleNode(RuleConstants.OrthrosNode);
+            if (orthrosNode != null)
+            {
+                Orthros = new Orthros(orthrosNode);
+            }
+
+            XmlNode leitourgiaNode = node.SelectSingleNode(RuleConstants.LeitourgiaNode);
+            if (leitourgiaNode != null)
+            {
+                Leitourgia = new Leitourgia(leitourgiaNode);
+            }
         }
 
         #region Properties
@@ -23,9 +56,21 @@ namespace TypiconOnline.Domain.Rules.Days
         /// </summary>
         public ItemText Name { get; set; }
         /// <summary>
+        /// Описание службы малой вечерни
+        /// </summary>
+        public MikrosEsperinos MikrosEsperinos { get; set; }
+        /// <summary>
         /// Описание службы вечерни
         /// </summary>
         public Esperinos Esperinos { get; set; }
+        /// <summary>
+        /// Описание службы утрени
+        /// </summary>
+        public Orthros Orthros { get; set; }
+        /// <summary>
+        /// Описание Литургийных чтений
+        /// </summary>
+        public Leitourgia Leitourgia { get; set; }
 
         #endregion
 
@@ -36,7 +81,34 @@ namespace TypiconOnline.Domain.Rules.Days
 
         protected override void Validate()
         {
-            throw new NotImplementedException();
+            if (Name == null)
+            {
+                AddBrokenConstraint(DayElementBusinessConstraint.NameRequired, ElementName);
+            }
+            else if (!Name.IsValid)
+            {
+                AppendAllBrokenConstraints(Name, ElementName + "." + RuleConstants.DayElementNameNode);
+            }
+
+            if (MikrosEsperinos?.IsValid == false)
+            {
+                AppendAllBrokenConstraints(MikrosEsperinos, ElementName + "." + RuleConstants.MikrosEsperinosNode);
+            }
+
+            if (Esperinos?.IsValid == false)
+            {
+                AppendAllBrokenConstraints(Esperinos, ElementName + "." + RuleConstants.EsperinosNode);
+            }
+
+            if (Orthros?.IsValid == false)
+            {
+                AppendAllBrokenConstraints(Orthros, ElementName + "." + RuleConstants.OrthrosNode);
+            }
+
+            if (Leitourgia?.IsValid == false)
+            {
+                AppendAllBrokenConstraints(Leitourgia, ElementName + "." + RuleConstants.LeitourgiaNode);
+            }
         }
     }
 }

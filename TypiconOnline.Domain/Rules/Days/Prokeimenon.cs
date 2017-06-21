@@ -9,11 +9,16 @@ using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Rules.Days
 {
-    public class Prokeimenon : RuleElement
+    /// <summary>
+    /// Описание прокимна
+    /// </summary>
+    public class Prokeimenon : ItemTextCollection
     {
         public Prokeimenon(XmlNode node) : base(node)
         {
-            StihosCollection = new List<ItemText>();
+            //глас
+            XmlAttribute ihosAttr = node.Attributes[RuleConstants.YmnosIhosAttrName];
+            Ihos = (ihosAttr != null) ? new ItemInt(ihosAttr.Value) : new ItemInt();
         }
 
         #region Properties
@@ -21,22 +26,37 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Глас
         /// </summary>
-        public int Ihos { get; set; }
-        /// <summary>
-        /// Стихи
-        /// </summary>
-        public List<ItemText> StihosCollection { get; set; }
+        public ItemInt Ihos { get; set; }
 
         #endregion
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override XmlDocument ComposeXml()
         {
-            throw new NotImplementedException();
+            XmlDocument doc = base.ComposeXml();
+
+            XmlAttribute attr = doc.CreateAttribute(RuleConstants.YmnosIhosAttrName);
+            attr.Value = Ihos.Value.ToString();
+            doc.DocumentElement.Attributes.Append(attr);
+
+            return doc;
         }
 
         protected override void Validate()
         {
-            throw new NotImplementedException();
+            base.Validate();
+
+            if (!Ihos.IsValid)
+            {
+                AppendAllBrokenConstraints(Ihos, RuleConstants.ProkeimenonNode + "." + RuleConstants.YmnosIhosAttrName);
+            }
+            else
+            {
+                //глас должен иметь значения с 1 до 8
+                if ((Ihos.Value < 1) || (Ihos.Value > 8))
+                {
+                    AddBrokenConstraint(YmnosGroupBusinessConstraint.InvalidIhos, RuleConstants.ProkeimenonNode);
+                }
+            }
         }
     }
 }

@@ -49,7 +49,6 @@ namespace TypiconOnline.Domain.Rules
         /// <param name="date"></param>
         /// <param name="handler"></param>
         protected abstract void InnerInterpret(DateTime date, IRuleHandler handler);
-
     }
 }
 

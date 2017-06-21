@@ -64,6 +64,59 @@ namespace TypiconOnline.Domain.Rules
          * Константы для описания xml-схемы богослужеюных текстов
          */
         public const string DayElementNode = "dayelement";
+        public const string DayElementNameNode = "name";
+
+        public const string MikrosEsperinosNode = "mikrosesperinos"; 
+        public const string EsperinosNode = "esperinos";
+        public const string OrthrosNode = "orthros";
+        public const string LeitourgiaNode = "leitourgia";
+
+        public const string KekragariaNode = "kekragaria"; 
+        public const string ProkeimenonNode = "prokeimenon";
+        public const string ApostichaNode = "aposticha";
+        public const string LitiNode = "liti"; 
+        public const string TroparionNode = "troparion"; 
+
+        public const string SedalenKathizma1Node = "sed_1kathisma";
+        public const string SedalenKathizma2Node = "sed_2kathisma";
+        public const string SedalenKathizma3Node = "sed_3kathisma";
+        public const string SedalenPolyeleosNode = "sed_polyeleos"; 
+        public const string MegalynarionNode = "megalynarion"; 
+        public const string EclogarionNode = "eclogarion"; 
+        public const string EvangelionNode = "evangelion";
+        public const string Sticheron50Node = "sticheron_50"; 
+        public const string AinoiNode = "ainoi";
+
+        public const string KanonasNode = "kanonas"; 
+        public const string KanonasAcrosticNode = "acrostic";
+
+        public const string KanonasOdiNode = "odi"; 
+        public const string OdiNumberAttrName = "number";
+        public const string OdiIrmosNode = "irmos";
+        public const string OdiKatavasiaNode = "katavasia"; 
+        public const string OdiTroparionName = "troparion"; 
+        public const string OdiTroparionKindAttr = "kind";
+
+        public const string TheotokionKindAttrValue = "theotokion";
+        public const string TriadikoKindAttrValue = "triadiko";
+
+        public const string KanonasSedalenNode = "sedalen"; 
+        public const string KanonasKontakionNode = "kontakion";
+        public const string KanonasExapostilarionNode = "exapostilarion";
+
+        public const string SticheraGroupNode = "group";
+        public const string SticheraDoxastichonNode = "doxastichon";
+        public const string SticheraTheotokionNode = "theotokion";
+
+        public const string ProsomoionNode = "prosomoion";
+        public const string ProsomoionSelfAttr = "self";
+
+        public const string AnnotationNode = "annotation"; 
+
+        public const string YmnosNode = "ymnos";
+        public const string YmnosIhosAttrName = "ihos";
+        public const string YmnosTextNode = "text";
+        public const string YmnosStihosNode = "stihos";
 
         //public const string ExecContainerNodeName = "правило";
         //public const string SwitchNodeName = "выбор";

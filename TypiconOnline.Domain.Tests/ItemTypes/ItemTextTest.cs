@@ -23,9 +23,9 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 	                                <style><bold/><red/><h1/></style>
                                 </text>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            //XmlDocument xmlDoc = new XmlDocument();
 
-            xmlDoc.LoadXml(xmlString);
+            //xmlDoc.LoadXml(xmlString);
 
             ItemText element = new ItemText(xmlString);// (xmlDoc.FirstChild);
 

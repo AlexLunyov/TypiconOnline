@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Rules.Days
@@ -11,19 +12,28 @@ namespace TypiconOnline.Domain.Rules.Days
     /// <summary>
     /// Вечерня
     /// </summary>
-    public class Esperinos : RuleElement
+    public class Esperinos : MikrosEsperinos
     {
         public Esperinos(XmlNode node) : base(node)
         {
-            //Kekragaria = new Stichera();
+            //Prokeimenon
+            XmlNode elementNode = node.SelectSingleNode(RuleConstants.ProkeimenonNode);
+            if (elementNode != null)
+            {
+                Prokeimenon = new Prokeimenon(elementNode);
+            }
+
+            //Liti
+            elementNode = node.SelectSingleNode(RuleConstants.LitiNode);
+            if (elementNode != null)
+            {
+                Liti = new Stichera(elementNode);
+            }
         }
 
         #region Properties
 
-        /// <summary>
-        /// Господи воззвах
-        /// </summary>
-        public Stichera Kekragaria { get; set; }
+        
         /// <summary>
         /// Прокимен на вечерне
         /// </summary>
@@ -32,15 +42,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// Стихиры на литии
         /// </summary>
         public Stichera Liti { get; set; }
-        /// <summary>
-        /// Стихиры на стиховне
-        /// </summary>
-        public Stichera Aposticha { get; set; }
-
-        /// <summary>
-        /// Отпустительный тропарь
-        /// </summary>
-        public YmnosGroup Troparion { get; set; }
+        
 
         #endregion
 
@@ -51,7 +53,17 @@ namespace TypiconOnline.Domain.Rules.Days
 
         protected override void Validate()
         {
-            throw new NotImplementedException();
+            base.Validate();
+
+            if (Prokeimenon?.IsValid == false)
+            {
+                AppendAllBrokenConstraints(Prokeimenon, ElementName + "." + RuleConstants.ProkeimenonNode);
+            }
+
+            if (Liti?.IsValid == false)
+            {
+                AppendAllBrokenConstraints(Liti, ElementName + "." + RuleConstants.LitiNode);
+            }
         }
     }
 }

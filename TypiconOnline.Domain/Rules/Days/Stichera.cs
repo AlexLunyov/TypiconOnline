@@ -17,8 +17,30 @@ namespace TypiconOnline.Domain.Rules.Days
         public Stichera(XmlNode node) : base(node)
         {
             Groups = new List<YmnosGroup>();
-            //Doxastichon = new YmnosGroup();
-            //Theotokion = new YmnosGroup();
+
+            //группы стихир
+            XmlNodeList groupList = node.SelectNodes(RuleConstants.SticheraGroupNode);
+            if (groupList != null)
+            {
+                foreach (XmlNode groupItemNode in groupList)
+                {
+                    Groups.Add(new YmnosGroup(groupItemNode));
+                }
+            }
+
+            //славник
+            XmlNode doxastichonNode = node.SelectSingleNode(RuleConstants.SticheraDoxastichonNode);
+            if (doxastichonNode != null)
+            {
+                Doxastichon = new YmnosGroup(doxastichonNode);
+            }
+
+            //богородичен
+            XmlNode theotokionNode = node.SelectSingleNode(RuleConstants.SticheraTheotokionNode);
+            if (theotokionNode != null)
+            {
+                Theotokion = new YmnosGroup(theotokionNode);
+            }
         }
 
         #region Properties
@@ -41,7 +63,23 @@ namespace TypiconOnline.Domain.Rules.Days
 
         protected override void Validate()
         {
-            throw new NotImplementedException();
+            foreach (YmnosGroup group in Groups)
+            {
+                if (!group.IsValid)
+                {
+                    AppendAllBrokenConstraints(group, ElementName + "." + RuleConstants.SticheraGroupNode);
+                }
+            }
+
+            if (Doxastichon?.IsValid == false)
+            {
+                AppendAllBrokenConstraints(Doxastichon, ElementName + "." + RuleConstants.SticheraDoxastichonNode);
+            }
+
+            if (Theotokion?.IsValid == false)
+            {
+                AppendAllBrokenConstraints(Theotokion, ElementName + "." + RuleConstants.SticheraTheotokionNode);
+            }
         }
     }
 }

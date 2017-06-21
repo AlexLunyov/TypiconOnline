@@ -61,5 +61,23 @@ namespace TypiconOnline.Infrastructure.Common.Domain
             businessConstraint.ConstraintPath = constraintPath/* + "." + businessConstraint.ConstraintPath*/;
             _brokenConstraints.Add(businessConstraint);
         }
+
+        /// <summary>
+        /// Добавляет все ломаные правила элемента к себе в коллекцию
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="name"></param>
+        protected void AppendAllBrokenConstraints(ValueObjectBase element, string name)
+        {
+            foreach (BusinessConstraint brokenBR in element.GetBrokenConstraints())
+            {
+                AddBrokenConstraint(brokenBR, name);
+            }
+        }
+
+        protected void AppendAllBrokenConstraints(ValueObjectBase element)
+        {
+            AppendAllBrokenConstraints(element, string.Empty);
+        }
     }
 }

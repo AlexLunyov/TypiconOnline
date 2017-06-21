@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.ItemTypes
         private int _value = 0;
         private string _stringValue = "";
 
-        private ItemInt() {}
+        public ItemInt() {}
 
         public ItemInt(int val)
         {
@@ -35,10 +35,18 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }
 
+        public bool IsEmpty
+        {
+            get
+            {
+                return (_stringValue == "");
+            }
+        }
+
 
         protected override void Validate()
         {
-            if (!int.TryParse(_stringValue, out _value))
+            if (!IsEmpty && !int.TryParse(_stringValue, out _value))
             {
                 AddBrokenConstraint(ItemIntBusinessConstraint.IntTypeMismatch, "ItemInt");
                 //throw new DefinitionsParsingException("Ошибка: неверно введена дата в элементе " + node.Name);

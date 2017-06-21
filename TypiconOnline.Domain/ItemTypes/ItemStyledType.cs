@@ -60,6 +60,14 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }
 
+        public bool IsEmpty
+        {
+            get
+            {
+                return string.IsNullOrEmpty(StringExpression);
+            }
+        }
+
         protected virtual XmlDocument ComposeXml()
         {
             XmlDocument doc = new XmlDocument();

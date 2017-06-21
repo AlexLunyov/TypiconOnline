@@ -21,6 +21,11 @@ namespace TypiconOnline.Domain.ItemTypes
             Build(expression);
         }
 
+        public ItemText(XmlNode node)
+        {
+            BuildFromXml(node);
+        }
+
         #region Properties
 
         public Dictionary<string, string> Text
@@ -88,16 +93,21 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 XmlNode node = doc.DocumentElement;
 
-                if (node.HasChildNodes)
-                {
-                    _textDict.Clear();
+                BuildFromXml(node);
+            }
+        }
 
-                    foreach (XmlNode child in node.ChildNodes)
+        private void BuildFromXml(XmlNode node)
+        {
+            if (node.HasChildNodes)
+            {
+                _textDict.Clear();
+
+                foreach (XmlNode child in node.ChildNodes)
+                {
+                    if (child.Name != RuleConstants.StyleNodeName)
                     {
-                        if (child.Name != RuleConstants.StyleNodeName)
-                        {
-                            AddElement(child.Name, child.InnerText);
-                        }
+                        AddElement(child.Name, child.InnerText);
                     }
                 }
             }

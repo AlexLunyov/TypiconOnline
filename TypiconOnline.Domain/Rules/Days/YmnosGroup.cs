@@ -16,9 +16,34 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public YmnosGroup(XmlNode node) : base(node)
         {
-            Prosomoion = new Prosomoion();
-            Annotation = new ItemText();
+            //глас
+            XmlAttribute ihosAttr = node.Attributes[RuleConstants.YmnosIhosAttrName];
+            Ihos = (ihosAttr != null) ? new ItemInt(ihosAttr.Value) : new ItemInt();
+
+            //подобен
+            XmlNode prosomoionNode = node.SelectSingleNode(RuleConstants.ProsomoionNode);
+            if (prosomoionNode != null)
+            {
+                Prosomoion = new Prosomoion(prosomoionNode);
+            }
+
+            //доп описание
+            XmlNode annotationNode = node.SelectSingleNode(RuleConstants.AnnotationNode);
+            if (annotationNode != null)
+            {
+                Annotation = new ItemText(annotationNode.OuterXml);
+            }
+
+            //песнопения
             Ymnis = new List<Ymnos>();
+            XmlNodeList ymnisList = node.SelectNodes(RuleConstants.YmnosNode);
+            if (ymnisList != null)
+            {
+                foreach (XmlNode ymnosItemNode in ymnisList)
+                {
+                    Ymnis.Add(new Ymnos(ymnosItemNode));
+                }
+            }
         }
 
         #region Properties
@@ -26,7 +51,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Глас
         /// </summary>
-        public int Ihos { get; set; }
+        public ItemInt Ihos { get; set; }
 
         /// <summary>
         /// Название подобна (самоподобна)
@@ -38,6 +63,9 @@ namespace TypiconOnline.Domain.Rules.Days
         /// </summary>
         public ItemText Annotation { get; set; }
 
+        /// <summary>
+        /// Коллекция песнопений
+        /// </summary>
         public List<Ymnos> Ymnis { get; set; }
 
         #endregion
@@ -49,7 +77,36 @@ namespace TypiconOnline.Domain.Rules.Days
 
         protected override void Validate()
         {
-            throw new NotImplementedException();
+            if (!Ihos.IsValid)
+            {
+                AppendAllBrokenConstraints(Ihos, ElementName + "." + RuleConstants.YmnosIhosAttrName);
+            }
+            else if (!Ihos.IsEmpty)
+            {
+                //глас должен иметь значения с 1 до 8
+                if ((Ihos.Value < 1) || (Ihos.Value > 8))
+                {
+                    AddBrokenConstraint(YmnosGroupBusinessConstraint.InvalidIhos, ElementName);
+                }
+            }
+
+            if (Prosomoion?.IsValid == false)
+            {
+                AppendAllBrokenConstraints(Prosomoion, ElementName + "." + RuleConstants.ProsomoionNode);
+            }
+
+            if (Annotation?.IsValid == false)
+            {
+                AppendAllBrokenConstraints(Annotation, ElementName + "." + RuleConstants.AnnotationNode);
+            }
+
+            foreach (Ymnos ymnos in Ymnis)
+            {
+                if (!ymnos.IsValid)
+                {
+                    AppendAllBrokenConstraints(ymnos, ElementName + "." + RuleConstants.YmnosNode);
+                }
+            }
         }
     }
 }

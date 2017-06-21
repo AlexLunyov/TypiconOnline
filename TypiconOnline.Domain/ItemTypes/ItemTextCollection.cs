@@ -20,6 +20,11 @@ namespace TypiconOnline.Domain.ItemTypes
             //Items = new List<ItemText>();
         }
 
+        public ItemTextCollection(XmlNode node) : this()
+        {
+            BuildFromXml(node);
+        }
+
         public ItemTextCollection(string expression) : this()
         {
             Build(expression);
@@ -61,21 +66,26 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 XmlNode node = doc.DocumentElement;
 
-                TagName = node.Name;
+                BuildFromXml(node);
+            }
+        }
 
-                if (node.HasChildNodes)
+        private void BuildFromXml(XmlNode node)
+        {
+            TagName = node.Name;
+
+            if (node.HasChildNodes)
+            {
+                _items.Clear();
+
+                foreach (XmlNode child in node.ChildNodes)
                 {
-                    _items.Clear();
-
-                    foreach (XmlNode child in node.ChildNodes)
-                    {
-                        _items.Add(new ItemText(child.OuterXml));
-                    }
+                    _items.Add(new ItemText(child.OuterXml));
                 }
             }
         }
 
-        private XmlDocument ComposeXml()
+        protected virtual XmlDocument ComposeXml()
         {
             XmlDocument doc = new XmlDocument();
 
@@ -94,10 +104,7 @@ namespace TypiconOnline.Domain.ItemTypes
         {
             foreach (ItemText item in Items)
             {
-                foreach (BusinessConstraint constraint in item.GetBrokenConstraints())
-                {
-                    AddBrokenConstraint(constraint);
-                }
+                AppendAllBrokenConstraints(item);
             }
         }
     }
