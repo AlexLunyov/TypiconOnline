@@ -65,6 +65,21 @@ namespace TypiconOnline.Domain.Rules.Factories
             return outputEl;
         }
 
+        public static BooleanExpression CreateBooleanExpression(XmlNode node)
+        {
+            BooleanExpression outputEl = null;
+            //switch (node.Name)
+            //{
+            //    case RuleConstants.DaysFromEasterNodeName:
+            //        outputEl = new DaysFromEaster(node);
+            //        break;
+            //    case RuleConstants.IntNodeName:
+            //        outputEl = new Int(node);
+            //        break;
+            //}
+            return outputEl;
+        }
+
         public static RuleElement CreateElement(XmlNode node)
         {
             RuleElement outputEl = CreateExecutable(node);

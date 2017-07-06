@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Books.Apostol;
-using TypiconOnline.Domain.Books.Evangelie;
+using TypiconOnline.Domain.Books.Evangelion;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Psalter;

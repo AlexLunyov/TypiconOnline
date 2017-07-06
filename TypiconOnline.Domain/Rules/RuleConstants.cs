@@ -36,6 +36,10 @@ namespace TypiconOnline.Domain.Rules
         public const string ValueNodeName = "value";
         public const string ActionNodeName = "action";
 
+        public const string IfNodeName = "if";
+        public const string ThenNodeName = "then";
+        public const string ElseNodeName = "else";
+
         public const string ServiceNodeName = "service";
         public const string ServiceTimeAttrName = "time";
         public const string ServiceNameAttrName = "name";
