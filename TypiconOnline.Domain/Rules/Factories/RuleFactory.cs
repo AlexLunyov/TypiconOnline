@@ -118,6 +118,9 @@ namespace TypiconOnline.Domain.Rules.Factories
                     case RuleConstants.ModifyReplacedDayNodeName:
                         outputEl = new ModifyReplacedDay(node);
                         break;
+                    case RuleConstants.IfNodeName:
+                        outputEl = new If(node);
+                        break;
                 }
             }
             return outputEl;
