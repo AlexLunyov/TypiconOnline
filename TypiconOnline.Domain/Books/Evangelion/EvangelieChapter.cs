@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TypiconOnline.Domain.Books.Evangelie
+namespace TypiconOnline.Domain.Books.Evangelion
 {
-    public class EvangelieChapter
+    public class EvangelionChapter
     {
+        public int Number { get; set; }
     }
 }

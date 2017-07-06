@@ -12,13 +12,13 @@ namespace TypiconOnline.Domain.Rules.Days
     /// <summary>
     /// Песнопения, сгруппированные по гласу и подобнам
     /// </summary>
-    public class YmnosGroup : RuleElement
+    public class YmnosGroup : IhosRuleElement
     {
         public YmnosGroup(XmlNode node) : base(node)
         {
-            //глас
-            XmlAttribute ihosAttr = node.Attributes[RuleConstants.YmnosIhosAttrName];
-            Ihos = (ihosAttr != null) ? new ItemInt(ihosAttr.Value) : new ItemInt();
+            ////глас
+            //XmlAttribute ihosAttr = node.Attributes[RuleConstants.YmnosIhosAttrName];
+            //Ihos = (ihosAttr != null) ? new ItemInt(ihosAttr.Value) : new ItemInt();
 
             //подобен
             XmlNode prosomoionNode = node.SelectSingleNode(RuleConstants.ProsomoionNode);
@@ -48,10 +48,10 @@ namespace TypiconOnline.Domain.Rules.Days
 
         #region Properties
 
-        /// <summary>
-        /// Глас
-        /// </summary>
-        public ItemInt Ihos { get; set; }
+        ///// <summary>
+        ///// Глас
+        ///// </summary>
+        //public ItemInt Ihos { get; set; }
 
         /// <summary>
         /// Название подобна (самоподобна)
@@ -77,18 +77,20 @@ namespace TypiconOnline.Domain.Rules.Days
 
         protected override void Validate()
         {
-            if (!Ihos.IsValid)
-            {
-                AppendAllBrokenConstraints(Ihos, ElementName + "." + RuleConstants.YmnosIhosAttrName);
-            }
-            else if (!Ihos.IsEmpty)
-            {
-                //глас должен иметь значения с 1 до 8
-                if ((Ihos.Value < 1) || (Ihos.Value > 8))
-                {
-                    AddBrokenConstraint(YmnosGroupBusinessConstraint.InvalidIhos, ElementName);
-                }
-            }
+            //if (!Ihos.IsValid)
+            //{
+            //    AppendAllBrokenConstraints(Ihos, ElementName + "." + RuleConstants.YmnosIhosAttrName);
+            //}
+            //else if (!Ihos.IsEmpty)
+            //{
+            //    //глас должен иметь значения с 1 до 8
+            //    if ((Ihos.Value < 1) || (Ihos.Value > 8))
+            //    {
+            //        AddBrokenConstraint(YmnosGroupBusinessConstraint.InvalidIhos, ElementName);
+            //    }
+            //}
+
+            base.Validate();
 
             if (Prosomoion?.IsValid == false)
             {

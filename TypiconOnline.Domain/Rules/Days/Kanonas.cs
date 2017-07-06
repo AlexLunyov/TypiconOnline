@@ -9,7 +9,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// <summary>
     /// Описание канона (на утрене, повечерии, полунощнице, молебне и т.д.)
     /// </summary>
-    public class Kanonas : RuleElement
+    public class Kanonas : IhosRuleElement
     {
         public Kanonas(XmlNode node) : base(node)
         {
@@ -81,6 +81,8 @@ namespace TypiconOnline.Domain.Rules.Days
 
         protected override void Validate()
         {
+            base.Validate();
+
             if (Acrostic?.IsValid == false)
             {
                 AppendAllBrokenConstraints(Acrostic, ElementName + "." + RuleConstants.KanonasAcrosticNode);

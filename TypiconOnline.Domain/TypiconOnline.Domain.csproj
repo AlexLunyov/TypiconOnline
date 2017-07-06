@@ -45,15 +45,15 @@
     <Compile Include="Books\Evangelie.cs" />
     <Compile Include="Books\Oktoikh.cs" />
     <Compile Include="Books\Apostol.cs" />
-    <Compile Include="Books\OldTestament\Kathisma.cs" />
+    <Compile Include="Books\OldTestament\OldTestamentBook.cs" />
     <Compile Include="Books\OldTestament\OldTestamentChapter.cs" />
     <Compile Include="Books\Psalter\Kathisma.cs" />
     <Compile Include="Books\Psalter\Psalm.cs" />
     <Compile Include="Books\Apostol\ApostolBook.cs" />
     <Compile Include="Books\Apostol\ApostolChapter.cs" />
     <Compile Include="Books\BookStorage.cs" />
-    <Compile Include="Books\Evangelie\EvangelieBook.cs" />
-    <Compile Include="Books\Evangelie\EvangelieChapter.cs" />
+    <Compile Include="Books\Evangelion\EvangelieBook.cs" />
+    <Compile Include="Books\Evangelion\EvangelieChapter.cs" />
     <Compile Include="Books\Oktoikh\OktoikhGlas.cs" />
     <Compile Include="Easter\IEasterStorage.cs" />
     <Compile Include="Easter\IEasterStorageFactory.cs" />
@@ -67,8 +67,11 @@
     <Compile Include="Rules\Days\DayElementsContainer.cs" />
     <Compile Include="Rules\Days\DayElementBusinessConstraint.cs" />
     <Compile Include="Rules\Days\EvangelionReading.cs" />
+    <Compile Include="Rules\Days\IhosRuleElement.cs" />
     <Compile Include="Rules\Days\Kanonas.cs" />
     <Compile Include="Rules\Days\Leitourgia.cs" />
+    <Compile Include="Rules\Days\Makarios.cs" />
+    <Compile Include="Rules\Days\MakariosOdi.cs" />
     <Compile Include="Rules\Days\MikrosEsperinos.cs" />
     <Compile Include="Rules\Days\Odi.cs" />
     <Compile Include="Rules\Days\OdiTroparion.cs" />
@@ -176,10 +179,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
+    <Folder Include="Rules\Service\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagrams\Basics.cd" />
-    <None Include="ClassDiagrams\ClassDiagramCalendar.cd" />
     <None Include="ClassDiagrams\Rules.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
