@@ -94,12 +94,20 @@ namespace TypiconOnline.Repository.EF.Tests
 
             EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
+            DayService dayService = new DayService();
+
+            dayService.ServiceName = new ItemText()
+            {
+                StringExpression = "<element><cs-ru>Предпразднство Благовещения Пресвятой Богородицы.</cs-ru></element>"
+            };
+
             MenologyDay day = new MenologyDay()
             {
                 Date = new ItemDate("--04-06"),
                 DateB = new ItemDate("--04-06"),
-                Name = "Предпразднство Благовещения Пресвятой Богородицы."
             };
+
+            day.AppendDayService(dayService);
 
             Sign sign = new Sign()
             {
@@ -131,15 +139,22 @@ namespace TypiconOnline.Repository.EF.Tests
 
             TypiconEntity typiconEntity = new TypiconEntity();
 
-            typiconEntity.RulesFolder = new TypiconFolderEntity()
+            typiconEntity.MenologyRules.Add(new MenologyRule()
             {
-                Owner = typiconEntity
-            };
-            typiconEntity.RulesFolder.AddRule(new MenologyRule()
-            {
-                Day = day,
+                DayServices = new List<DayService>() { dayService },
                 Template = sign,
+                Owner = typiconEntity
             });
+
+            //typiconEntity.RulesFolder = new TypiconFolderEntity()
+            //{
+            //    Owner = typiconEntity
+            //};
+            //typiconEntity.RulesFolder.AddRule(new MenologyRule()
+            //{
+            //    Day = day,
+            //    Template = sign,
+            //});
 
             List<ModifiedRule> modifiedDays = typiconEntity.GetModifiedRules(new DateTime(2038, 4, 5));
 

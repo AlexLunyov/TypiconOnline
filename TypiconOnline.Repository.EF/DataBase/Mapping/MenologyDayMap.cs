@@ -14,15 +14,15 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
         {
             HasKey<int>(c => c.Id);
             Property(c => c.Id).IsRequired();
-            Property(c => c.Name).HasMaxLength(200);
-            HasOptional(e => e.Folder).
-                WithMany();
+            //Property(c => c.Name).HasMaxLength(200);
+            //HasOptional(e => e.Folder).
+            //    WithMany();
 
             //Ignore(c => c.Rule);
 
-            Property(c => c.RuleDefinition).HasColumnType("xml");//("NVARCHAR");
+            //Property(c => c.RuleDefinition).HasColumnType("xml");//("NVARCHAR");
 
-            Property(c => c.DayName.StringExpression).IsRequired();
+            //Property(c => c.DayName.StringExpression).IsRequired();
 
             //Map(m =>
             //{

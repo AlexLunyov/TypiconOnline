@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Typicon
         {
             Signs = new List<Sign>();
             ModifiedYears = new List<ModifiedYear>();
-            CommonRules = new List<TypiconRule>();
+            CommonRules = new List<CommonRule>();
             MenologyRules = new List<MenologyRule>();
             TriodionRules = new List<TriodionRule>();
         }
@@ -89,7 +89,7 @@ namespace TypiconOnline.Domain.Typicon
 
         public virtual List<ModifiedYear> ModifiedYears { get; set; }
 
-        public virtual List<TypiconRule> CommonRules { get; set; }
+        public virtual List<CommonRule> CommonRules { get; set; }
         public virtual List<MenologyRule> MenologyRules { get; set; }
         public virtual List<TriodionRule> TriodionRules { get; set; }
 
@@ -105,6 +105,11 @@ namespace TypiconOnline.Domain.Typicon
             set
             {
                 _settings = value;
+                
+                if (_settings != null)
+                {
+                    _settings.TypiconEntity = this;
+                }
             }
         }
 
@@ -159,7 +164,7 @@ namespace TypiconOnline.Domain.Typicon
                 //теперь обрабатываем переходящие минейные праздники
                 //у них не должны быть определены даты. так их и найдем
 
-                MenologyRules.FindAll(c => (c.Day.Date.IsEmpty && c.Day.DateB.IsEmpty)).
+                MenologyRules.FindAll(c => (c.Date.IsEmpty && c.DateB.IsEmpty)).
                     ForEach(a =>
                     {
                         InterpretMenologyRule(a, date, date.Year);
@@ -182,7 +187,7 @@ namespace TypiconOnline.Domain.Typicon
                             ModificationsRuleHandler handler = new ModificationsRuleHandler(
                                 new RuleHandlerRequest(a), date.Year);
 
-                            int i = a.Day.DaysFromEaster;
+                            int i = a.DaysFromEaster;
                             a.Rule.Interpret(easter.AddDays(i), handler);
                         }
                     });
@@ -253,12 +258,12 @@ namespace TypiconOnline.Domain.Typicon
 
         public MenologyRule GetMenologyRule(DateTime date)
         {
-            return MenologyRules.FirstOrDefault(c => c.Day.GetCurrentDate(date.Year).Date == date.Date);
+            return MenologyRules.FirstOrDefault(c => c.GetCurrentDate(date.Year).Date == date.Date);
         }
 
         public TriodionRule GetTriodionRule(int daysFromEaster)
         {
-            return TriodionRules.FirstOrDefault(c => c.Day.DaysFromEaster == daysFromEaster);
+            return TriodionRules.FirstOrDefault(c => c.DaysFromEaster == daysFromEaster);
         }
 
         public TriodionRule GetTriodionRule(DateTime date)
@@ -267,10 +272,10 @@ namespace TypiconOnline.Domain.Typicon
 
             int daysFromEaster = date.Subtract(easterDate).Days;
 
-            return TriodionRules.FirstOrDefault(c => c.Day.DaysFromEaster == daysFromEaster);
+            return TriodionRules.FirstOrDefault(c => c.DaysFromEaster == daysFromEaster);
         }
 
-        public TypiconRule GetCommonRule(Func<TypiconRule, bool> predicate)
+        public CommonRule GetCommonRule(Func<CommonRule, bool> predicate)
         {
             return CommonRules.FirstOrDefault(predicate);
         }

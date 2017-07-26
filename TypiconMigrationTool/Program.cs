@@ -146,34 +146,34 @@ namespace TypiconMigrationTool
             migration.Execute();
         }
 
-        private static void FillDB(IUnitOfWork unitOfWork)
-        {
-            TypiconEntity typiconEntity = new TypiconEntity();
-            typiconEntity.Name = "Типовой устав";
+        //private static void FillDB(IUnitOfWork unitOfWork)
+        //{
+        //    TypiconEntity typiconEntity = new TypiconEntity();
+        //    typiconEntity.Name = "Типовой устав";
 
-            Sign sign = new Sign()
-            {
-                Id = 1,
-                Priority = 1,
-                Name = "Без знака",
-                Owner = typiconEntity
-            };
-            unitOfWork.Repository<Sign>().Insert(sign);
+        //    Sign sign = new Sign()
+        //    {
+        //        Id = 1,
+        //        Priority = 1,
+        //        Name = "Без знака",
+        //        Owner = typiconEntity
+        //    };
+        //    unitOfWork.Repository<Sign>().Insert(sign);
 
-            typiconEntity.Signs.Add(sign);
+        //    typiconEntity.Signs.Add(sign);
 
-            MenologyDay menologyDay = new MenologyDay()
-            {
-                Id = 1,
-                Name = "Сщмч. Артемона",
-                Date = new ItemDate("--04-26"),
-                DateB = new ItemDate("--04-26"),
-                //Sign = sign
-            };
-            unitOfWork.Repository<MenologyDay>().Insert(menologyDay);
+        //    MenologyDay menologyDay = new MenologyDay()
+        //    {
+        //        Id = 1,
+        //        Name = "Сщмч. Артемона",
+        //        Date = new ItemDate("--04-26"),
+        //        DateB = new ItemDate("--04-26"),
+        //        //Sign = sign
+        //    };
+        //    unitOfWork.Repository<MenologyDay>().Insert(menologyDay);
 
-            unitOfWork.Repository<TypiconEntity>().Insert(typiconEntity);
+        //    unitOfWork.Repository<TypiconEntity>().Insert(typiconEntity);
             
-        }
+        //}
     }
 }

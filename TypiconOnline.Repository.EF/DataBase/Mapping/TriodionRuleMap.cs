@@ -25,8 +25,17 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             HasRequired(e => e.Template).
                 WithMany().WillCascadeOnDelete(false);
 
-            HasRequired(c => c.Day).
-                WithMany();
+            HasMany(c => c.DayServices).WithMany().
+            Map(m =>
+            {
+                m.ToTable("TriodionRuleServices");
+                // Настройка внешних ключей промежуточной таблицы
+                m.MapLeftKey("TriodionRuleId");
+                m.MapRightKey("ServiceDayId");
+            });
+
+            //HasRequired(c => c.Day).
+            //    WithMany();
 
             //Map(m =>
             //{

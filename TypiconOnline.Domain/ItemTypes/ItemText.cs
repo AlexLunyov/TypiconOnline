@@ -10,6 +10,9 @@ using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.ItemTypes
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ItemText : ItemStyledType
     {
         protected Dictionary<string, string> _textDict = new Dictionary<string, string>();
@@ -128,6 +131,30 @@ namespace TypiconOnline.Domain.ItemTypes
                 result = true;
             }
             return result;
+        }
+
+        /// <summary>
+        /// Возвращает значение по заданному языку. Если результат нулевой, возвраает первый попавшийся вариант
+        /// </summary>
+        /// <param name="language">язык. Пример: "cs-ru"</param>
+        /// <returns></returns>
+        public string GetTextByLanguage(string language)
+        {
+            string result = "";
+
+            if (_textDict.ContainsKey(language))
+            {
+                result = _textDict[language];// + " ";
+            }
+            else if (_textDict.Count > 0)
+            {
+                result = _textDict.Values.First();// + " ";
+            }
+
+            return result;
+
+            //return (itemText.Text.ContainsKey(language)) 
+            //    ? itemText.Text[language] + " " : "";
         }
     }
 }

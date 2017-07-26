@@ -5,15 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Days;
-using TypiconOnline.Domain.Typicon;
 
 namespace TypiconOnline.Repository.EF.DataBase.Mapping
 {
-    public class DayMap : EntityTypeConfiguration<Day>
+    class DayServiceMap : EntityTypeConfiguration<DayService>
     {
-        public DayMap()
+        public DayServiceMap()
         {
-            //Property(c => c.DayName.StringExpression).IsRequired();
+            Property(c => c.ServiceName.StringExpression).IsRequired();
+
+            HasRequired(e => e.Parent).
+                WithMany();
         }
     }
 }

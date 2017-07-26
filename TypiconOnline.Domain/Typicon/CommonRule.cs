@@ -12,26 +12,16 @@ using TypiconOnline.Domain.Rules;
 
 namespace TypiconOnline.Domain.Typicon
 {
+    /// <summary>
+    /// Правило для описания повторяющихся элементов, которые можно в дальнейшем неоднократно использовать.
+    /// Пример: ектении
+    /// </summary>
     public class CommonRule : RuleEntity
     {
-        public virtual Sign Template { get; set; }
+        //public virtual Sign Template { get; set; }
 
         public virtual TypiconEntity Owner { get; set; }
-        /// <summary>
-        /// Возвращает Правило: либо свое, либо шаблонное
-        /// </summary>
-        public override RuleContainer Rule
-        {
-            get
-            {
-                if ((base.Rule == null) && string.IsNullOrEmpty(RuleDefinition))
-                {
-                    return Template.Rule;
-                }
-
-                return base.Rule;//(string.IsNullOrEmpty(RuleDefinition)) ? Template.Rule : null;
-            }
-        }
+        
         
     }
 }

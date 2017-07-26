@@ -1,26 +1,46 @@
-﻿
-using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.Rules.Factories;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Days
 {
-    public abstract class Day : RuleEntity/*<CalendarContainer>*/
+    /// <summary>
+    /// Абстрактный класс-родитель для описания текстов богослужения на дни Минеи и Триоди
+    /// </summary>
+    public abstract class Day : EntityBase<int>, IAggregateRoot
     {
-        //public virtual ItemText Name1 { get; set; }
-        //public virtual ItemText Name2 { get; set; }
-        //public virtual ItemText Name3 { get; set; }
+        /// <summary>
+        /// Список последований служб
+        /// </summary>
+        public virtual List<DayService> DayServices { get; set; }
 
-        public virtual ItemTextCollection DayName { get; set; }
+        protected override void Validate()
+        {
+            if (DayServices != null)
+            {
+                foreach (DayService serv in DayServices)
+                {
+                    if (!serv.IsValid)
+                    {
+                        AppendAllBrokenConstraints(serv);
+                    }
+                }
+            }
+        }
 
-        //public override string RuleDefinition
-        //{
-        //    set
-        //    {
-        //        _ruleDefinition = value;
+        public void AppendDayService(DayService serv)
+        {
+            if (DayServices == null)
+            {
+                DayServices = new List<DayService>();
+            }
 
-        //        _rule = RuleDayFactory.CreateRuleContainer(_ruleDefinition);
-        //    }
-        //}
+            serv.Parent = this;
+
+            DayServices.Add(serv);
+        }
     }
 }
-

@@ -52,9 +52,9 @@ namespace TypiconOnline.Repository.EF
                     Include("RulesFolder").
                     Include("CommonRules").
                     Include("MenologyRules").
-                    Include("MenologyRules.Day").
+                    Include("MenologyRules.DayServices").
                     Include("TriodionRules").
-                    Include("TriodionRules.Day").
+                    Include("TriodionRules.DayServices").
                     Include("ModifiedYears").
                     Include("ModifiedYears.ModifiedRules").
                     Include("Signs").

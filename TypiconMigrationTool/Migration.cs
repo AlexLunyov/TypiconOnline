@@ -41,8 +41,22 @@ namespace TypiconMigrationTool
 
             Console.WriteLine("Saving...");
 
-            _unitOfWork.Commit();
-            Console.WriteLine("Success.");
+            try
+            {
+                _unitOfWork.Commit();
+                Console.WriteLine("Success.");
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
+                {
+                    Console.WriteLine("Object: " + validationError.Entry.Entity.ToString());
+                    foreach (DbValidationError err in validationError.ValidationErrors)
+                    {
+                        Console.WriteLine(err.ErrorMessage);
+                    }
+                }
+            }
         }
 
         
@@ -95,7 +109,7 @@ namespace TypiconMigrationTool
                 Name = "Типикон",
                 Settings = new TypiconSettings()
                 {
-                    DefaultLanguage = "cs-ru"
+                    DefaultLanguage = "cs-ru",
                 }
             };
 
@@ -120,8 +134,11 @@ namespace TypiconMigrationTool
                     Number = signMigrator.NewId,
                     Priority = signMigrator.Priority,
                     Owner = typiconEntity,
-                    RuleDefinition = fileReader.GetXml(row.Name)
+                    RuleDefinition = fileReader.GetXml(row.Name),
+                    SignName = new ItemText()
                 };
+
+                sign.SignName.AddElement("cs-ru", row.Name);
 
                 if (signMigrator.TemplateId != null)
                 {
@@ -155,12 +172,12 @@ namespace TypiconMigrationTool
         {
             Console.WriteLine("MigrateMenologyDaysAndRules()");
 
-            TypiconFolderEntity folder = new TypiconFolderEntity() { Name = "Минея" };
-            typiconEntity.RulesFolder.AddFolder(folder);
+            //TypiconFolderEntity folder = new TypiconFolderEntity() { Name = "Минея" };
+            //typiconEntity.RulesFolder.AddFolder(folder);
 
-            TypiconFolderEntity childFolder = new TypiconFolderEntity() { Name = "Минея 1" };
+            //TypiconFolderEntity childFolder = new TypiconFolderEntity() { Name = "Минея 1" };
 
-            folder.AddFolder(childFolder);
+            //folder.AddFolder(childFolder);
 
             string folderPath = Properties.Settings.Default.FolderPath + typiconEntity.Name + "\\Menology\\";
 
@@ -168,40 +185,53 @@ namespace TypiconMigrationTool
 
             foreach (ScheduleDBDataSet.MineinikRow mineinikRow in _sh.DataSet.Mineinik.Rows)
             {
+                DayService dayService = new DayService()
+                {
+                    ServiceName = new ItemText()
+                };
+
+                dayService.ServiceName.AddElement("cs-ru", mineinikRow.Name);
+
                 MenologyDay menologyDay = new MenologyDay()
                 {
-                    Name = mineinikRow.Name,
-                    DayName = XmlHelper.CreateItemTextCollection(
-                        new CreateItemTextRequest() { Text = mineinikRow.Name, Name = "Name" }),
+                    //Name = mineinikRow.Name,
+                    //DayName = XmlHelper.CreateItemTextCollection(
+                    //    new CreateItemTextRequest() { Text = mineinikRow.Name, Name = "Name" }),
                     Date = (mineinikRow.IsDateNull()) ? new ItemDate() : new ItemDate(mineinikRow.Date.Month, mineinikRow.Date.Day),
                     DateB = (mineinikRow.IsDateBNull()) ? new ItemDate() : new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day),
                 };
+                menologyDay.AppendDayService(dayService);
 
                 _unitOfWork.Repository<MenologyDay>().Insert(menologyDay);
 
                 string ruleDefinition = "";
 
+
+
+                MenologyRule menologyRule = new MenologyRule()
+                {
+                    //Name = menologyDay.Name,
+                    Date = menologyDay.Date,
+                    DateB = menologyDay.DateB,
+                    Owner = typiconEntity,
+                    Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(mineinikRow.SignID).NewId),
+                };
+                menologyRule.DayServices = new List<DayService>() { dayService };
+
                 if (!mineinikRow.IsDateBNull())
                 {
                     //TODO: изменил алгоритм. Надо поменять все названия xml-файлов правил для Минеи
-                    string fileName = menologyDay.DateB.Expression + "." + menologyDay.Name;
+                    string fileName = menologyDay.DateB.Expression + "." + menologyRule.Name;
                     ruleDefinition = fileReader.GetXml(fileName);
                 }
                 else
                 {
-                    ruleDefinition = fileReader.GetXml(menologyDay.Name);
+                    ruleDefinition = fileReader.GetXml(menologyRule.Name);
                 }
 
-                MenologyRule menologyRule = new MenologyRule()
-                {
-                    Day = menologyDay,
-                    //Name = menologyDay.Name,
-                    Owner = typiconEntity,
-                    Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(mineinikRow.SignID).NewId),
-                    RuleDefinition = ruleDefinition
-                };
+                menologyRule.RuleDefinition = ruleDefinition;
 
-                folder.AddRule(menologyRule);
+                //folder.AddRule(menologyRule);
                 typiconEntity.MenologyRules.Add(menologyRule);
                 _unitOfWork.Repository<MenologyRule>().Insert(menologyRule);
             }
@@ -219,18 +249,27 @@ namespace TypiconMigrationTool
 
             foreach (ScheduleDBDataSet.TriodionRow row in _sh.DataSet.Triodion.Rows)
             {
-                CreateItemTextRequest req = new CreateItemTextRequest();
-                req.Text = row.Name;
-                req.Name = "Name1";
-                req.Style.IsBold = row.IsNameBold;
-                ItemTextCollection itemTextCol = XmlHelper.CreateItemTextCollection(req);
+                //CreateItemTextRequest req = new CreateItemTextRequest();
+                //req.Text = row.Name;
+                //req.Name = "Name1";
+                //req.Style.IsBold = row.IsNameBold;
+                //ItemTextCollection itemTextCol = XmlHelper.CreateItemTextCollection(req);
+
+                DayService dayService = new DayService()
+                {
+                    ServiceName = new ItemText()
+                };
+                dayService.ServiceName.Style.IsBold = row.IsNameBold;
+                dayService.ServiceName.AddElement("cs-ru", row.Name);
 
                 TriodionDay day = new TriodionDay()
                 {
-                    Name = row.Name,
-                    DayName = itemTextCol,
+                    //Name = row.Name,
+                    //DayName = itemTextCol,
                     DaysFromEaster = (int) row.DayFromEaster,
                 };
+
+                day.AppendDayService(dayService);
                 //day.Sign = _unitOfWork.Repository<Sign>().Get(c => c.Id == row.SignID);
 
                 _unitOfWork.Repository<TriodionDay>().Insert(day);
@@ -241,12 +280,13 @@ namespace TypiconMigrationTool
 
                 TriodionRule rule = new TriodionRule()
                 {
-                    Day = day,
-                    Name = day.Name,
+                    //Name = day.Name,
+                    DaysFromEaster = day.DaysFromEaster,
                     Owner = typiconEntity,
                     Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(row.SignID).NewId),
                     RuleDefinition = fileReader.GetXml(row.DayFromEaster.ToString())
                 };
+                rule.DayServices = new List<DayService>() { dayService };
 
                 folder.AddRule(rule);
                 typiconEntity.TriodionRules.Add(rule);

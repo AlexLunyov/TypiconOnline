@@ -55,20 +55,21 @@ namespace TypiconOnline.Domain
 
         protected override void Validate()
         {
-            if (_rule == null)
+            /*if (_rule == null)
             {
                 AddBrokenConstraint(RuleEntityBusinessConstraint.RuleRequired);
             }
-            else
+            else */if (_rule?.IsValid == false)
             {
-                List<BusinessConstraint> constraints = _rule.GetBrokenConstraints();
-                if (constraints.Count > 0)
-                {
-                    foreach(BusinessConstraint constraint in constraints)
-                    {
-                        AddBrokenConstraint(constraint);
-                    }
-                }
+                AppendAllBrokenConstraints(_rule);
+                //List<BusinessConstraint> constraints = _rule.GetBrokenConstraints();
+                //if (constraints.Count > 0)
+                //{
+                //    foreach(BusinessConstraint constraint in constraints)
+                //    {
+                //        AddBrokenConstraint(constraint);
+                //    }
+                //}
             }
         }
     }

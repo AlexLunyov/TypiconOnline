@@ -17,7 +17,15 @@ namespace TypiconOnline.Domain.Tests.Typicon
         [Test]
         public void Typicon_TypiconEntity_Creature()
         {
-            MenologyDay menologyday = new MenologyDay() { Id = 1, Name = "Благовещение", Date = new ItemDate("--04-07"), DateB = new ItemDate("--04-07") };
+            DayService dayService = new DayService();
+            dayService.ServiceName.AddElement("cs-ru", "Благовещение");
+
+            MenologyDay menologyday = new MenologyDay() {
+                Id = 1,
+                DayServices = new List<DayService>() { dayService },
+                Date = new ItemDate("--04-07"),
+                DateB = new ItemDate("--04-07")
+            };
 
             TypiconEntity typiconEntity = new TypiconEntity()
             {
@@ -39,8 +47,8 @@ namespace TypiconOnline.Domain.Tests.Typicon
                             new MenologyRule()
                             {
                                 Id = 1,
-                                Name = "Благовещение правило",
-                                Day = menologyday,
+                                //Name = "Благовещение правило",
+                                DayServices = new List<DayService>() { dayService },
                                 Template = typiconEntity.Signs[0]
                             }
                         }

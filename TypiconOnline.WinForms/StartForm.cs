@@ -278,38 +278,38 @@ namespace ScheduleForm
                     HtmlScheduleWeekViewer htmlViewer = new HtmlScheduleWeekViewer();
                     htmlViewer.Execute(weekResponse.Week);
 
-                    textBoxResult.Clear();
-                    textBoxResult.AppendText(htmlViewer.ResultString);
+                    //textBoxResult.Clear();
+                    //textBoxResult.AppendText(htmlViewer.ResultString);
 
                 }
 
-                //MessageBox.Show(messageString, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show(messageString, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                #region to TextBox
+            #region to TextBox
 
-                //textBoxResult.Clear();
+            textBoxResult.Clear();
 
-                //textBoxResult.AppendText(weekResponse.Week.Name + Environment.NewLine);
+            textBoxResult.AppendText(weekResponse.Week.Name + Environment.NewLine);
 
-                //foreach (ScheduleDay day in weekResponse.Week.Days)
-                //{
-                //    textBoxResult.AppendText("--------------------------" + Environment.NewLine);
-                //    textBoxResult.AppendText(day.Date.ToShortDateString() + Environment.NewLine);
-                //    textBoxResult.AppendText(day.Name + Environment.NewLine);
-                //    foreach(RuleElement element in day.Schedule.ChildElements)
-                //    {
-                //        if (element is Notice)
-                //        {
-                //            textBoxResult.AppendText((element as Notice).Name + " " + (element as Notice).AdditionalName + Environment.NewLine);
-                //        }
-                //        else if(element is Service)
-                //        {
-                //            textBoxResult.AppendText((element as Service).Time + " " + (element as Service).Name + " " + (element as Service).AdditionalName + Environment.NewLine);
-                //        }
-                //    }
-                //}
+            foreach (ScheduleDay day in weekResponse.Week.Days)
+            {
+                textBoxResult.AppendText("--------------------------" + Environment.NewLine);
+                textBoxResult.AppendText(day.Date.ToShortDateString() + Environment.NewLine);
+                textBoxResult.AppendText(day.Name + Environment.NewLine);
+                foreach (RuleElement element in day.Schedule.ChildElements)
+                {
+                    if (element is Notice)
+                    {
+                        textBoxResult.AppendText((element as Notice).Name + " " + (element as Notice).AdditionalName + Environment.NewLine);
+                    }
+                    else if (element is Service)
+                    {
+                        textBoxResult.AppendText((element as Service).Time + " " + (element as Service).Name + " " + (element as Service).AdditionalName + Environment.NewLine);
+                    }
+                }
+            }
 
-                #endregion
+            #endregion
             //}
             //catch (Exception ex)
             //{

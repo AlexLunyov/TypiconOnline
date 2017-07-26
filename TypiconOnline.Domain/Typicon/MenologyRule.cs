@@ -8,9 +8,21 @@ using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.Typicon
 {
-    public class MenologyRule : TypiconRule//<MenologyDay>
+    public class MenologyRule : DayRule
     {
-        public virtual MenologyDay Day { get; set; }
+        //public virtual MenologyDay Day { get; set; }
+
+        public virtual ItemDate Date
+        {
+            get;
+            set;
+        }
+
+        public virtual ItemDate DateB
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Строка сожержит номера имен Дня, использующихся в Правиле, разделенных запятою
@@ -18,38 +30,51 @@ namespace TypiconOnline.Domain.Typicon
         /// 1,3
         /// 1,2,3
         /// </summary>
-        public virtual string SelectedNames { get; set; }
+        //public virtual string SelectedNames { get; set; }
 
-        public override string Name
-        {
-            get
-            {
-                return GetName(Day, SelectedNames);
-            }
-        }
+        //public override string Name
+        //{
+        //    get
+        //    {
+        //        return GetName(Day, SelectedNames);
+        //    }
+        //}
 
         protected override void Validate()
         {
-            throw new NotImplementedException();
+            base.Validate();
+
+            if (!Date.IsValid)
+            {
+                AppendAllBrokenConstraints(Date, "Date");
+            }
+
+            if (!DateB.IsValid)
+            {
+                AppendAllBrokenConstraints(Date, "DateB");
+            }
         }
-
-        //internal ItemDate Date;
-
-        //internal ItemDate DateB;
 
         /// <summary>
         /// Возвращает конкретную дату в году, когда совершается данная служба
         /// </summary>
         /// <param name="year">Конкретный год</param>
         /// <returns>Если поля Date или DateB пустые, вовращает пустое (минимальное) значение</returns>
-        //public DateTime GetCurrentDate(int year)
-        //{
-        //    if (!Date.IsEmpty && !DateB.IsEmpty)
-        //    {
-        //        return (DateTime.IsLeapYear(year)) ? new DateTime(year, DateB.Month, DateB.Day) : new DateTime(year, Date.Month, Date.Day);
-        //    }
+        public DateTime GetCurrentDate(int year)
+        {
+            if (IsValid) //&& /*!Date.IsEmpty && */!DateB.IsEmpty)
+            {
+                if (DateTime.IsLeapYear(year))
+                {
+                    return (!DateB.IsEmpty) ? new DateTime(year, DateB.Month, DateB.Day) : DateTime.MinValue;
+                }
+                else
+                {
+                    return (!Date.IsEmpty) ? new DateTime(year, Date.Month, Date.Day) : DateTime.MinValue;
+                }
+            }
 
-        //    return DateTime.MinValue;
-        //}
+            return DateTime.MinValue;
+        }
     }
 }

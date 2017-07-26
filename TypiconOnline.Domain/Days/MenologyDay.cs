@@ -42,25 +42,16 @@ namespace TypiconOnline.Domain.Days
 
         protected override void Validate()
         {
-            if (string.IsNullOrEmpty(Name))
-            {
-                AddBrokenConstraint(MenologyDayBusinessConstraint.MenologyDayNameRequired);
-            }
+            base.Validate();
 
             if (!Date.IsValid)
             {
-                foreach (BusinessConstraint principle in Date.GetBrokenConstraints())
-                {
-                    AddBrokenConstraint(principle, "Date");
-                }
+                AppendAllBrokenConstraints(Date, "Date");
             }
 
             if (!DateB.IsValid)
             {
-                foreach (BusinessConstraint principle in DateB.GetBrokenConstraints())
-                {
-                    AddBrokenConstraint(principle, "DateB");
-                }
+                AppendAllBrokenConstraints(Date, "DateB");
             }
         }
 

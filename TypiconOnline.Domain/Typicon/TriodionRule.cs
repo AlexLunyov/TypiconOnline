@@ -7,9 +7,9 @@ using TypiconOnline.Domain.Days;
 
 namespace TypiconOnline.Domain.Typicon
 {
-    public class TriodionRule : TypiconRule//<TriodionDay>
+    public class TriodionRule : DayRule
     {
-        public virtual TriodionDay Day { get; set; }
+        //public virtual TriodionDay Day { get; set; }
 
         /// <summary>
         /// Строка сожержит номера имен Дня, использующихся в Правиле, разделенных запятою
@@ -17,25 +17,17 @@ namespace TypiconOnline.Domain.Typicon
         /// 1,3
         /// 1,2,3
         /// </summary>
-        public virtual string SelectedNames { get; set; }
+        //public virtual string SelectedNames { get; set; }
 
-        public override string Name
-        {
-            get
-            {
-                return GetName(Day, SelectedNames);
-            }
-        }
-
-        //private int _daysFromEaster;
-        //public int DaysFromEaster
+        //public override string Name
         //{
         //    get
         //    {
-        //        return _daysFromEaster;
+        //        return GetName(Day, SelectedNames);
         //    }
-
         //}
+
+        public virtual int DaysFromEaster { get; set; }
 
         /// <summary>
         /// Назначенный знак для этого описания

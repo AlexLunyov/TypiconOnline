@@ -55,6 +55,7 @@
     <Compile Include="Books\Evangelion\EvangelionBook.cs" />
     <Compile Include="Books\Evangelion\EvangelionChapter.cs" />
     <Compile Include="Books\Oktoikh\OktoikhGlas.cs" />
+    <Compile Include="Days\Day.cs" />
     <Compile Include="Easter\IEasterStorage.cs" />
     <Compile Include="Easter\IEasterStorageFactory.cs" />
     <Compile Include="ItemTypes\ItemStyledType.cs" />
@@ -104,7 +105,7 @@
     <Compile Include="Rules\Handlers\IRuleHandlerInitiator.cs" />
     <Compile Include="RuleEntityBusinessConstraint.cs" />
     <Compile Include="RuleEntity.cs" />
-    <Compile Include="Days\Day.cs" />
+    <Compile Include="Days\DayService.cs" />
     <Compile Include="Days\MenologyDay.cs" />
     <Compile Include="Days\MenologyDayBusinessConstraint.cs" />
     <Compile Include="Rules\Handlers\ModificationsRuleHandler.cs" />
@@ -116,6 +117,9 @@
     <Compile Include="Rules\Schedule\ServiceBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\Notice.cs" />
     <Compile Include="Schedule\ScheduleWeek.cs" />
+    <Compile Include="Typicon\CommonRule.cs" />
+    <Compile Include="Typicon\DayRule.cs" />
+    <Compile Include="Typicon\Factories\TypiconEntityFactory.cs" />
     <Compile Include="Typicon\Modifications\ModifiedRule.cs" />
     <Compile Include="Typicon\Modifications\ModifiedMenologyRule.cs" />
     <Compile Include="Typicon\Modifications\ModifiedTriodionRule.cs" />

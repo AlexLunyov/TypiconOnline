@@ -33,52 +33,52 @@ namespace TypiconOnline.AppServices.Common
         /// </summary>
         public void Save()
         {
-            List<T> days = _unitOfWork.Repository<T>().GetAll().ToList();
+            //List<T> days = _unitOfWork.Repository<T>().GetAll().ToList();
 
-            XmlDocument doc = new XmlDocument();
-            XmlNode root = doc.CreateElement(typeof(T).Name + "s");
-            doc.AppendChild(root);
+            //XmlDocument doc = new XmlDocument();
+            //XmlNode root = doc.CreateElement(typeof(T).Name + "s");
+            //doc.AppendChild(root);
 
-            foreach (T day in days)
-            {
-                XmlNode node = doc.CreateElement(typeof(T).Name);
-                XmlAttribute idAttr = doc.CreateAttribute("id");
-                idAttr.Value = day.Id.ToString();
-                node.Attributes.Append(idAttr);
-                node.InnerXml = day.DayName.StringExpression;
-                root.AppendChild(node);
-            }
+            //foreach (T day in days)
+            //{
+            //    XmlNode node = doc.CreateElement(typeof(T).Name);
+            //    XmlAttribute idAttr = doc.CreateAttribute("id");
+            //    idAttr.Value = day.Id.ToString();
+            //    node.Attributes.Append(idAttr);
+            //    node.InnerXml = day.DayName.StringExpression;
+            //    root.AppendChild(node);
+            //}
 
-            _xmlSaver.Save(doc);
+            //_xmlSaver.Save(doc);
         }
 
         public void Load()
         {
-            XmlDocument doc = _xmlSaver.Load();
+            //XmlDocument doc = _xmlSaver.Load();
 
-            XmlElement root = doc.DocumentElement;
+            //XmlElement root = doc.DocumentElement;
 
-            if ((root != null) && (root.HasChildNodes))
-            {
-                foreach (XmlNode node in root.ChildNodes)
-                {
-                    XmlAttribute attrId = node.Attributes["id"];
-                    if (attrId != null)
-                    {
-                        int id = int.Parse(attrId.Value);
-                        T day = _unitOfWork.Repository<T>().Get(c => c.Id == id);
+            //if ((root != null) && (root.HasChildNodes))
+            //{
+            //    foreach (XmlNode node in root.ChildNodes)
+            //    {
+            //        XmlAttribute attrId = node.Attributes["id"];
+            //        if (attrId != null)
+            //        {
+            //            int id = int.Parse(attrId.Value);
+            //            T day = _unitOfWork.Repository<T>().Get(c => c.Id == id);
 
-                        if (day != null)
-                        {
-                            XmlNode nameNode = node.SelectSingleNode("Name");
+            //            if (day != null)
+            //            {
+            //                XmlNode nameNode = node.SelectSingleNode("Name");
 
-                            day.DayName.StringExpression = nameNode.OuterXml;
-                        }
-                    }
-                }
+            //                day.DayName.StringExpression = nameNode.OuterXml;
+            //            }
+            //        }
+            //    }
 
-                _unitOfWork.Commit();
-            }
+            //    _unitOfWork.Commit();
+            //}
         }
     }
 }

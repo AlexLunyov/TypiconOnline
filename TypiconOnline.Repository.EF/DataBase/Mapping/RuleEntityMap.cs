@@ -13,7 +13,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             HasOptional(e => e.Folder).
                 WithMany();
 
-            Property(c => c.Name).HasMaxLength(200).IsRequired();
+            Property(c => c.Name).HasMaxLength(200);//.IsRequired();
 
             Ignore(c => c.Rule);
 

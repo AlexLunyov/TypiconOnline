@@ -24,7 +24,7 @@ namespace TypiconOnline.Domain.Days
 
         protected override void Validate()
         {
-            //throw new NotImplementedException();
+            base.Validate();
         }
     }
 }

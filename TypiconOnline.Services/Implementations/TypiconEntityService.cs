@@ -104,7 +104,7 @@ namespace TypiconOnline.AppServices.Implementations
 
             if (response.TypiconEntity != null)
             {
-                string setting = folderPath + response.TypiconEntity.Name + "\\Menology\\";
+                string setting = folderPath + "\\" + response.TypiconEntity.Name + "\\Menology\\";
 
                 FileReader fileReader = new FileReader(setting);
 
@@ -113,27 +113,27 @@ namespace TypiconOnline.AppServices.Implementations
                     //rule.RuleDefinition = (rule.Day.Date.IsEmpty && rule.Day.DateB.IsEmpty) ?
                     //    fileReader.GetXml(rule.Day.Name) :
                     //    fileReader.GetXml(rule.Day.DateB.Expression);
-                    if (rule.Day.Date.IsEmpty && rule.Day.DateB.IsEmpty)
+                    if (rule.Date.IsEmpty && rule.DateB.IsEmpty)
                     {
-                        rule.RuleDefinition = fileReader.GetXml(rule.Day.Name);
+                        rule.RuleDefinition = fileReader.GetXml(rule.Name);
                     }
                     else
                     {
-                        rule.RuleDefinition = fileReader.GetXml(rule.Day.DateB.Expression);
+                        rule.RuleDefinition = fileReader.GetXml(rule.DateB.Expression);
                     }
 
                 }
 
-                setting = folderPath + response.TypiconEntity.Name + "\\Triodion\\";
+                setting = folderPath + "\\" + response.TypiconEntity.Name + "\\Triodion\\";
 
                 fileReader.FolderPath = setting;
 
                 foreach (TriodionRule rule in response.TypiconEntity.TriodionRules)
                 {
-                    rule.RuleDefinition = fileReader.GetXml(rule.Day.DaysFromEaster.ToString());
+                    rule.RuleDefinition = fileReader.GetXml(rule.DaysFromEaster.ToString());
                 }
 
-                setting = folderPath + response.TypiconEntity.Name + "\\Sign\\";
+                setting = folderPath + "\\" + response.TypiconEntity.Name + "\\Sign\\";
 
                 fileReader.FolderPath = setting;
 
@@ -165,5 +165,6 @@ namespace TypiconOnline.AppServices.Implementations
         {
             throw new NotImplementedException();
         }
+
     }
 }

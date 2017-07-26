@@ -48,7 +48,7 @@ namespace TypiconOnline.Domain.Typicon
             //                                    (((MenologyRule)c).Day.GetCurrentDate(date.Year)) == date));
 
             MenologyRule result = (MenologyRule)Rules.FirstOrDefault(c => ((c is MenologyRule) &&
-                                                (((MenologyRule)c).Day.GetCurrentDate(date.Year)) == date));
+                                                (((MenologyRule)c).GetCurrentDate(date.Year)) == date));
 
             if (result == null)
             {
@@ -68,7 +68,7 @@ namespace TypiconOnline.Domain.Typicon
         public TriodionRule FindTriodionRule(int daysFromEaster)
         {
             TriodionRule result = (TriodionRule)Rules.AsQueryable().
-                FirstOrDefault(c => ((c is TriodionRule) && ((c as TriodionRule).Day.DaysFromEaster == daysFromEaster)));
+                FirstOrDefault(c => ((c is TriodionRule) && ((c as TriodionRule).DaysFromEaster == daysFromEaster)));
 
             if (result == null)
             {

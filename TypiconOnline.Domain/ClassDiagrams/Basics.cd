@@ -8,7 +8,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="TypiconOnline.Domain.Typicon.Modifications.ModifiedMenologyRule" Collapsed="true">
+  <Class Name="TypiconOnline.Domain.Typicon.Modifications.ModifiedMenologyRule">
     <Position X="1.25" Y="11.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -39,11 +39,12 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypiconOnline.Domain.Days.Day">
-    <Position X="2.75" Y="4.5" Width="1.5" />
+    <Position X="2.75" Y="4.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAQAIAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAACAAAAAACAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
       <FileName>Days\Day.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypiconOnline.Domain.Days.MenologyDay">
     <Position X="1.5" Y="7" Width="1.5" />
@@ -60,38 +61,52 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Typicon.MenologyRule">
-    <Position X="8.25" Y="9.25" Width="1.5" />
+    <Position X="8.25" Y="9.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAIECAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Typicon\MenologyRule.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Typicon.TriodionRule">
-    <Position X="10.5" Y="9.25" Width="1.5" />
+    <Position X="10.5" Y="9.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAIACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>Typicon\TriodionRule.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Typicon.TypiconRule">
-    <Position X="8.25" Y="4.5" Width="1.75" />
+    <Position X="9" Y="5.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAACAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Typicon\TypiconRule.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Typicon.Sign">
     <Position X="6" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAEBEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAAACAAAAEBEAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Typicon\Sign.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypiconOnline.Domain.Typicon.TypiconRule&lt;T&gt;">
-    <Position X="9.5" Y="7" Width="1.5" />
+  <Class Name="TypiconOnline.Domain.Typicon.CommonRule">
+    <Position X="8" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAABAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Typicon\TypiconRule T.cs</FileName>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Typicon\CommonRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Days.DayService">
+    <Position X="10.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAQAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Days\DayService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Typicon.DayRule" Collapsed="true">
+    <Position X="9.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAQAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Typicon\DayRule.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
