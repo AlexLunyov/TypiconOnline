@@ -4,19 +4,17 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Typicon;
 
 namespace TypiconOnline.Repository.EF.DataBase.Mapping
 {
-    class DayServiceMap : EntityTypeConfiguration<DayService>
+    class CommonRuleMap : EntityTypeConfiguration<CommonRule>
     {
-        public DayServiceMap()
+        public CommonRuleMap()
         {
-            Property(c => c.ServiceName.StringExpression).IsRequired();
-
-            HasRequired(e => e.Parent).
+            HasRequired(e => e.Owner).
                 WithMany();
-            ToTable("DayServices");
+            ToTable("CommonRules");
         }
     }
 }

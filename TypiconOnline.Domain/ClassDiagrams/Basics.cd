@@ -63,21 +63,21 @@
   <Class Name="TypiconOnline.Domain.Typicon.MenologyRule">
     <Position X="8.25" Y="9.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIECAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAECAAAAAAAAAAAAAAAAAAQABAAAAAAAAAAA=</HashCode>
       <FileName>Typicon\MenologyRule.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Typicon.TriodionRule">
     <Position X="10.5" Y="9.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>Typicon\TriodionRule.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Typicon.TypiconRule">
     <Position X="9" Y="5.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAACAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Typicon\TypiconRule.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -89,7 +89,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Typicon.CommonRule">
-    <Position X="8" Y="4" Width="1.5" />
+    <Position X="10.75" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Typicon\CommonRule.cs</FileName>

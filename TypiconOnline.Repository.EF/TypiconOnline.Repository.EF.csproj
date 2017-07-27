@@ -57,6 +57,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataBase\Mapping\CommonRuleMap.cs" />
     <Compile Include="DataBase\Mapping\DayServiceMap.cs" />
     <Compile Include="DataBase\Mapping\EasterItemMap.cs" />
     <Compile Include="DataBase\Mapping\ModifiedRuleMap.cs" />
