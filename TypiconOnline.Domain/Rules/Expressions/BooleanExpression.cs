@@ -22,7 +22,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
             get
             {
-                return typeof(ItemBoolean);
+                return typeof(bool);
             }
         }
 

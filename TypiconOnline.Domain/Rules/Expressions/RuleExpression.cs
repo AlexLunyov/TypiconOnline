@@ -51,29 +51,32 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         public virtual bool ValueExpressionEquals(RuleExpression entity)
         {
-            return entity != null
+            return (entity != null)
                //&& entity is RuleExpression
                && ValueExpression.Equals(entity.ValueExpression);
                //&& this == (RuleExpression<ExpType>)entity;
         }
 
-        public virtual bool ValueCalculatedEquals(object entity)
-        {
-            return (ValueCalculated == entity);
-        }
+        //public virtual bool ValueCalculatedEquals(RuleExpression exp)
+        //{
+        //    return (exp?.ValueCalculatedEquals(this) == true);
+        //}
 
         //public override int GetHashCode()
         //{
         //    return this.ExpressionType.GetHashCode();
         //}
 
-        //public bool OutputTypeEquals(RuleExpression obj)
-        //{
-        //    if (obj == null)
-        //        return false;
-
-        //    return OutputType.Equals(obj.OutputType);
-        //}
+        /// <summary>
+        /// Метод сравнивает типы выражений объектов
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public bool ExpressionTypeEquals(RuleExpression obj)
+        {
+            return (obj != null)
+                && ExpressionType.Equals(obj.ExpressionType);
+        }
 
         //public bool OutputValueEquals(RuleExpression obj)
         //{

@@ -20,6 +20,11 @@ namespace TypiconOnline.Domain.Rules.Factories
 
             if (outputEl == null)
             {
+                outputEl = CreateBooleanExpression(node);
+            }
+
+            if (outputEl == null)
+            {
                 switch (node.Name)
                 {
                     case RuleConstants.GetDayOfWeekNodeName:
@@ -68,15 +73,31 @@ namespace TypiconOnline.Domain.Rules.Factories
         public static BooleanExpression CreateBooleanExpression(XmlNode node)
         {
             BooleanExpression outputEl = null;
-            //switch (node.Name)
-            //{
-            //    case RuleConstants.DaysFromEasterNodeName:
-            //        outputEl = new DaysFromEaster(node);
-            //        break;
-            //    case RuleConstants.IntNodeName:
-            //        outputEl = new Int(node);
-            //        break;
-            //}
+            switch (node.Name)
+            {
+                case RuleConstants.EqualsNodeName:
+                    outputEl = new Equals(node);
+                    break;
+                case RuleConstants.MoreNodeName:
+                    outputEl = new More(node);
+                    break;
+                case RuleConstants.MoreEqualsNodeName:
+                    outputEl = new MoreEquals(node);
+                    break;
+                case RuleConstants.LessNodeName:
+                    outputEl = new Less(node);
+                    break;
+                case RuleConstants.LessEqualsNodeName:
+                    outputEl = new LessEquals(node);
+                    break;
+                case RuleConstants.AndNodeName:
+                    outputEl = new And(node);
+                    break;
+                case RuleConstants.OrNodeName:
+                    outputEl = new Or(node);
+                    break;
+
+            }
             return outputEl;
         }
 

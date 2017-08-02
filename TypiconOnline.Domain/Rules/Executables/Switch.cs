@@ -23,13 +23,13 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         public Switch(XmlNode node) : base(node)
         {
-            //ищем condition
-            XmlNode conditionNode = node.SelectSingleNode(RuleConstants.ConditionNodeName);
+            //ищем expression
+            XmlNode expressionNode = node.SelectSingleNode(RuleConstants.ExpressionNodeName);
 
-            if (conditionNode != null)
+            if (expressionNode != null)
             {
-                XmlNode valNode = conditionNode.FirstChild;
-                _condition = Factories.RuleFactory.CreateExpression(valNode);
+                XmlNode valNode = expressionNode.FirstChild;
+                _expression = Factories.RuleFactory.CreateExpression(valNode);
             }
             
             //ищем элементы case
@@ -58,12 +58,12 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         #region Properties
 
-        private RuleExpression _condition;
-        public RuleExpression Condition
+        private RuleExpression _expression;
+        public RuleExpression Expression
         {
             get
             {
-                return _condition;
+                return _expression;
             }
         }
 
@@ -96,7 +96,7 @@ namespace TypiconOnline.Domain.Rules.Executables
         {
             if (IsValid)
             {
-                Condition.Interpret(date, settings);
+                Expression.Interpret(date, settings);
 
                 foreach (Case caseElement in _caseElements)
                 {
@@ -106,7 +106,7 @@ namespace TypiconOnline.Domain.Rules.Executables
                     {
                         caseValue.Interpret(date, settings);
 
-                        if (Condition.ValueCalculated.Equals(caseValue.ValueCalculated))
+                        if (Expression.ValueCalculated.Equals(caseValue.ValueCalculated))
                         {
                             //и значения совпадают
                             caseElement.ActionElement.Interpret(date, settings);
@@ -125,17 +125,17 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         protected override void Validate()
         {
-            if (_condition == null)
+            if (_expression == null)
             {
                 AddBrokenConstraint(SwitchBusinessBusinessConstraint.ConditionRequired, ElementName);
-                //throw new DefinitionsParsingException("Ошибка: в элементе switch должен быть определен элемент condition.");
+                //throw new DefinitionsParsingException("Ошибка: в элементе switch должен быть определен элемент expression.");
             }
             else
             {
                 //добавляем ломаные правила к родителю
-                if (!_condition.IsValid)
+                if (!_expression.IsValid)
                 {
-                    foreach (BusinessConstraint brokenRule in _condition.GetBrokenConstraints())
+                    foreach (BusinessConstraint brokenRule in _expression.GetBrokenConstraints())
                     {
                         AddBrokenConstraint(brokenRule, ElementName + "." + brokenRule.ConstraintPath);
                     }
@@ -160,7 +160,7 @@ namespace TypiconOnline.Domain.Rules.Executables
                         }
                     }
 
-                    if ((_condition != null) && (_condition.ExpressionType != caseElement.ExpressionType))
+                    if ((_expression != null) && (_expression.ExpressionType != caseElement.ExpressionType))
                     {
                         AddBrokenConstraint(SwitchBusinessBusinessConstraint.ConditionsTypeMismatch, ElementName);
                         //throw new DefinitionsParsingException("Ошибка: значения элемента " + caseNode.Name + " должны быть одного типа");

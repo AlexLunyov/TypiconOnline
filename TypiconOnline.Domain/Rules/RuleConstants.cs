@@ -12,7 +12,7 @@ namespace TypiconOnline.Domain.Rules
         public const string ExecContainerNodeName = "rule";
 
         public const string SwitchNodeName = "switch";
-        public const string ConditionNodeName = "condition";
+        public const string ExpressionNodeName = "expression";
 
         public const string ModifyDayNodeName = "modifyday";
         public const string ShortNameAttrName = "shortname";
@@ -36,7 +36,8 @@ namespace TypiconOnline.Domain.Rules
         public const string ValueNodeName = "value";
         public const string ActionNodeName = "action";
 
-        public const string IfNodeName = "if";
+        public const string IfNodeName = "if"; 
+        public const string ConditionNodeName = "condition";
         public const string ThenNodeName = "then";
         public const string ElseNodeName = "else";
 
@@ -59,6 +60,19 @@ namespace TypiconOnline.Domain.Rules
         public const string StyleNodeName = "style";
         public const string StyleRedNodeName = "red";
         public const string StyleBoldNodeName = "bold";
+
+        /*
+         * Логические элементы
+         */
+        public const string EqualsNodeName = "equals";
+
+        public const string MoreNodeName = "more";
+        public const string MoreEqualsNodeName = "moreequals";
+        public const string LessNodeName = "less";
+        public const string LessEqualsNodeName = "lessequals";
+        public const string AndNodeName = "and";
+        public const string OrNodeName = "or";
+
 
         //правила для распознавания времени и дат
         public const string ItemTimeParsing = "HH.mm";

@@ -66,11 +66,15 @@
     <Compile Include="Rules\Executables\ModifyDayTest.cs" />
     <Compile Include="Rules\Executables\ModifyReplacedDayTest.cs" />
     <Compile Include="Rules\Executables\SwitchTest.cs" />
+    <Compile Include="Rules\Expressions\OrTest.cs" />
+    <Compile Include="Rules\Expressions\ComparisonsTest.cs" />
+    <Compile Include="Rules\Expressions\EqualsTest.cs" />
     <Compile Include="Rules\Expressions\DateByDaysFromEasterTest.cs" />
     <Compile Include="Rules\Expressions\DateTests.cs" />
     <Compile Include="Rules\Expressions\DaysFromEasterTest.cs" />
     <Compile Include="Rules\Expressions\GetClosestDayTest.cs" />
     <Compile Include="Rules\Expressions\GetDayOfWeekTest.cs" />
+    <Compile Include="Rules\Expressions\AndTest.cs" />
     <Compile Include="Rules\Expressions\IntTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\Schedule\NoticeTest.cs" />
