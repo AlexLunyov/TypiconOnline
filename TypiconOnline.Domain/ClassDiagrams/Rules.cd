@@ -446,7 +446,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Expressions.RuleExpression" Collapsed="true">
     <Position X="42.25" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAECAAAABAAAAAAQAAAAAAAAAAACAAAAABAAgAIA=</HashCode>
+      <HashCode>AAAAAECAAAABAAAAAAQAAAAAAAAAAAAAAAAABAAgAIA=</HashCode>
       <FileName>Rules\Expressions\RuleExpression.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -479,8 +479,8 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Handlers.ModificationsRuleHandler" Collapsed="true">
-    <Position X="0.75" Y="4.75" Width="1.5" />
+  <Class Name="TypiconOnline.Domain.Rules.Handlers.ModificationsRuleHandler">
+    <Position X="0.75" Y="4.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAACAAAAAAAAAQAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>Rules\Handlers\ModificationsRuleHandler.cs</FileName>
@@ -496,7 +496,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Handlers.RuleHandlerBase" Collapsed="true">
     <Position X="2" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAAAAAAAIAAAQQAAgAAAAAAAAAACAAAAEAhAAAAAAA=</HashCode>
+      <HashCode>AgAAAAAAAMAAAQQAAgAAAAAAAAAACAAAAEChAAABAAA=</HashCode>
       <FileName>Rules\Handlers\RuleHandlerBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -504,7 +504,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Handlers.RuleHandlerRequest" Collapsed="true">
     <Position X="77.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAAgAAAAIAAAAAAAAAAAAAAAAAAAIAAAAAAAAgAAAA=</HashCode>
+      <HashCode>AAAAgAAAAMAAAAAAAAAAAAAAAAAAAIAAAAAAAAgBAAA=</HashCode>
       <FileName>Rules\Handlers\RuleHandlerRequest.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -518,7 +518,7 @@
   <Class Name="TypiconOnline.Domain.Rules.RuleConstants" Collapsed="true">
     <Position X="79.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>UIVJdKAoghiZDSIIgaC1iCgy6QEoHQWOgAMDDFaACSI=</HashCode>
+      <HashCode>UIVJdKAoghidDSIIg6C1iCgy6QEoHQWOgAMDDFaACSI=</HashCode>
       <FileName>Rules\RuleConstants.cs</FileName>
     </TypeIdentifier>
   </Class>

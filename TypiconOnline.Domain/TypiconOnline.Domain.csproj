@@ -125,9 +125,11 @@
     <Compile Include="Rules\Handlers\ModificationsRuleRequest.cs" />
     <Compile Include="Rules\Handlers\RuleHandlerRequest.cs" />
     <Compile Include="Rules\Handlers\ScheduleHandler.cs" />
+    <Compile Include="Rules\Schedule\IsCelebrating.cs" />
     <Compile Include="Rules\Schedule\Service.cs" />
     <Compile Include="Rules\Schedule\ServiceBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\Notice.cs" />
+    <Compile Include="Rules\Schedule\KekragariaRule.cs" />
     <Compile Include="Schedule\ScheduleWeek.cs" />
     <Compile Include="Typicon\CommonRule.cs" />
     <Compile Include="Typicon\DayRule.cs" />
@@ -198,7 +200,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
-    <Folder Include="Rules\Service\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagrams\Basics.cd" />

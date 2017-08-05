@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Typicon;
 
 namespace TypiconOnline.Domain.Rules.Handlers
@@ -10,6 +11,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
     public abstract class RuleHandlerBase : IRuleHandler
     {
         protected List<Type> AuthorizedTypes;
+        private List<DayService> _dayServices;
+        private TypiconRule _rule;
         private List<TypiconRule> _rules;
         private HandlingMode _mode;
 
@@ -22,6 +25,27 @@ namespace TypiconOnline.Domain.Rules.Handlers
             get
             {
                 return _mode;
+            }
+        }
+
+        /// <summary>
+        /// Список текстов богослужений для обработки, отсортированный по приоритету
+        /// </summary>
+        public List<DayService> DayServices        {
+            get
+            {
+                return _dayServices;
+            }
+        }
+
+        /// <summary>
+        /// Последовательность богослужения для обработки
+        /// </summary>
+        public TypiconRule Rule
+        {
+            get
+            {
+                return _rule;
             }
         }
 
@@ -48,7 +72,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
         public virtual void Initialize(RuleHandlerRequest request)
         {
             _mode = request.Mode;
-            _rules = request.Rules;
+            _dayServices = request.DayServices;
+            _rule = request.Rule;
         }
 
         public abstract RuleContainer GetResult();

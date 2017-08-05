@@ -19,6 +19,10 @@ namespace TypiconOnline.Domain.Days
         /// </summary>
         public virtual ItemText ServiceName { get; set; }
         /// <summary>
+        /// Признак Господского или Богородичного праздника, его предпразднества или попразднества
+        /// </summary>
+        public virtual bool IsCelebrating { get; set; }
+        /// <summary>
         /// День Минеи или Триоди, которому принадлежит данное описание текста службы
         /// </summary>
         public virtual Day Parent { get; set; }

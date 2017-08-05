@@ -35,8 +35,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
             if (element is ModifyReplacedDay)
             {
                 //
-                
-                TypiconEntity typiconEntity = Rules[0].Owner;
+
+                TypiconEntity typiconEntity = Rule.Owner; //Rules[0].Owner;
 
                 TypiconRule ruleToModify;
 
@@ -74,16 +74,16 @@ namespace TypiconOnline.Domain.Rules.Handlers
             {
                 int priority = (element as ModifyDay).Priority.Value;
 
-                TypiconRule seniorTypiconRule = Rules[0];
+                //TypiconRule seniorTypiconRule = Rules[0];
 
                 if (priority == 0)
                 {
-                    priority = seniorTypiconRule.Template.Priority;
+                    priority = /*seniorTypicon*/Rule.Template.Priority;
                 }
 
                 ModificationsRuleRequest request = new ModificationsRuleRequest()
                 {
-                    Caller = seniorTypiconRule,
+                    Caller = /*seniorTypicon*/Rule,
                     Date = (element as ModifyDay).MoveDateCalculated,
                     Priority = priority,
                     ShortName = (element as ModifyDay).ShortName,
@@ -92,7 +92,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
                     UseFullName = (element as ModifyDay).UseFullName.Value
                 };
 
-                TypiconEntity typiconEntity = seniorTypiconRule.Owner;//Folder.GetOwner();
+                TypiconEntity typiconEntity = /*seniorTypicon*/Rule.Owner;//Folder.GetOwner();
 
                 typiconEntity.AddModifiedRule(request);
             }

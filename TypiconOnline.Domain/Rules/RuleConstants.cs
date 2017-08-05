@@ -136,6 +136,13 @@ namespace TypiconOnline.Domain.Rules
         public const string YmnosTextNode = "text";
         public const string YmnosStihosNode = "stihos";
 
+        /*
+         * Константы для описания правил для составления последовательностей богослужебных текстов
+         */
+
+        public const string KekragariaRuleNode = "kekragaria";
+        public const string ShowPsalmAttribute = "showpsalm";
+
         //public const string ExecContainerNodeName = "правило";
         //public const string SwitchNodeName = "выбор";
         //public const string ConditionNodeName = "условие";

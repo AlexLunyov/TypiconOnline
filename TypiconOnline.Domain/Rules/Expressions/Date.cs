@@ -14,6 +14,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     /// <summary>
     /// Простой класс. Внутри должна быть строка с датой без привязки к году --MM-dd
+    /// Если пустое значение, то дата принимает текущее значение
     /// </summary>
     public class Date : DateExpression
     {
@@ -34,8 +35,9 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
             if (IsValid)
             {
+                //если значение выражения пустое, просто передаем текущую дату
                 //из вводимой даты берем только год
-                _valueCalculated = new DateTime(date.Year, ((ItemDate)_valueExpression).Month, ((ItemDate)_valueExpression).Day);
+                _valueCalculated = (((ItemDate)_valueExpression).IsEmpty) ? date : new DateTime(date.Year, ((ItemDate)_valueExpression).Month, ((ItemDate)_valueExpression).Day);
             }
         }
 

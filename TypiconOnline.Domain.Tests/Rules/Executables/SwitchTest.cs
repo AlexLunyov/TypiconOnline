@@ -139,5 +139,41 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
             //    Assert.Pass(ex.Message);
             //}
         }
+
+        [Test]
+        public void Rules_Executables_Switch_Condition_check()
+        {
+            string xmlString = @"<rule>
+	                                <switch>
+		                                <condition>
+			                                <getdayofweek><date>--01-07</date></getdayofweek>
+		                                </condition>
+		                                <case>
+			                                <values>
+					                                <getdayofweek name=""понедельник""></getdayofweek>
+			                                </values>
+			                                <action>
+				                                <service time=""17.30"" name=""9-й час. Вечерня. малое повечерие."" isdaybefore=""true""/>
+				                                <service time=""06.00"" name=""Полунощница. Утреня.""></service>
+				                                <service time=""08.00"" name=""Великие Часы. Изобразительны. ""></service>
+				                                <notice name=""Божественная литургия не совершается.""/>
+			                                </action>
+		                                </case>
+		                                <default>
+			                                <service time=""17.30"" name=""9-й час. Вечерня. Малое повечерие."" isdaybefore=""true""/>
+			                                <service time=""06.00"" name=""Полуношница. Утреня. Часы.""></service>
+			                                <service time=""08.00"" name=""Божественная литургия.""></service>
+		                                </default>
+	                                </switch>
+                                </rule>";
+
+            XmlDocument xmlDoc = new XmlDocument();
+
+            xmlDoc.LoadXml(xmlString);
+
+            ExecContainer element = new ExecContainer(xmlDoc.FirstChild);
+
+            Assert.IsFalse(element.IsValid);
+        }
     }
 }

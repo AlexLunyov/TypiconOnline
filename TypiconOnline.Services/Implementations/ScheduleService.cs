@@ -43,50 +43,52 @@ namespace TypiconOnline.Domain.Services
 
             ScheduleDay scheduleDay = new ScheduleDay();
 
-            TypiconRule seniorTypiconRule = handlerRequest.Rules[0];
-
             //задаем имя дню
+            scheduleDay.Name = ComposeServiceName(inputRequest, handlerRequest);
 
-            if (handlerRequest.Rules.Count > 1)
-            {
-                for (int i = 1; i < handlerRequest.Rules.Count; i++)
-                {
-                    scheduleDay.Name += handlerRequest.Rules[i].Name + " ";
-                }
-                //Если имеется короткое название, то будем добавлять только его
-                if (handlerRequest.UseFullName && !string.IsNullOrEmpty(seniorTypiconRule.Name))//(string.IsNullOrEmpty(handlerRequest.ShortName))
-                {
-                    scheduleDay.Name = (handlerRequest.PutSeniorRuleNameToEnd) ?
-                        scheduleDay.Name + seniorTypiconRule.Name :
-                        seniorTypiconRule.Name + " " + scheduleDay.Name;
-                }
-            }
-            else if (handlerRequest.UseFullName)//(string.IsNullOrEmpty(handlerRequest.ShortName))
-            {
-                scheduleDay.Name = seniorTypiconRule.Name;
-            }
+            #region  старое формирование имени
+            //if (handlerRequest.Rules.Count > 1)
+            //{
+            //    for (int i = 1; i < handlerRequest.Rules.Count; i++)
+            //    {
+            //        scheduleDay.Name += handlerRequest.Rules[i].Name + " ";
+            //    }
+            //    //Если имеется короткое название, то будем добавлять только его
+            //    if (handlerRequest.UseFullName && !string.IsNullOrEmpty(seniorTypiconRule.Name))//(string.IsNullOrEmpty(handlerRequest.ShortName))
+            //    {
+            //        scheduleDay.Name = (handlerRequest.PutSeniorRuleNameToEnd) ?
+            //            scheduleDay.Name + seniorTypiconRule.Name :
+            //            seniorTypiconRule.Name + " " + scheduleDay.Name;
+            //    }
+            //}
+            //else if (handlerRequest.UseFullName)//(string.IsNullOrEmpty(handlerRequest.ShortName))
+            //{
+            //    scheduleDay.Name = seniorTypiconRule.Name;
+            //}
 
-            if ((seniorTypiconRule is MenologyRule) && (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday)
-                && (seniorTypiconRule.Template.Priority > 1))
-            {
-                //Если Триоди нет и воскресенье, находим название Недели из Октоиха
-                //и добавляем название Недели в начало Name
+            //if ((seniorTypiconRule is MenologyRule) && (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday)
+            //    && (seniorTypiconRule.Template.Priority > 1))
+            //{
+            //    //Если Триоди нет и воскресенье, находим название Недели из Октоиха
+            //    //и добавляем название Недели в начало Name
 
-                //Если имеется короткое название, то добавляем только его
+            //    //Если имеется короткое название, то добавляем только его
 
-                scheduleDay.Name = /*string.IsNullOrEmpty(handlerRequest.ShortName) ?
-                    BookStorage.Oktoikh.GetSundayName(inputRequest.Date) + " " + scheduleDay.Name :*/
-                    BookStorage.Oktoikh.GetSundayName(inputRequest.Date, handlerRequest.ShortName) + " " + scheduleDay.Name;
+            //    scheduleDay.Name = /*string.IsNullOrEmpty(handlerRequest.ShortName) ?
+            //        BookStorage.Oktoikh.GetSundayName(inputRequest.Date) + " " + scheduleDay.Name :*/
+            //        BookStorage.Oktoikh.GetSundayName(inputRequest.Date, handlerRequest.ShortName) + " " + scheduleDay.Name;
 
-                //жестко задаем воскресный день
-                //seniorTypiconRule.Template = inputRequest.TypiconEntity.TemplateSunday;
-                handlerRequest.Rules.Insert(0, inputRequest.TypiconEntity.Settings.TemplateSunday);
-                seniorTypiconRule = inputRequest.TypiconEntity.Settings.TemplateSunday;
-            }
+            //    //жестко задаем воскресный день
+            //    //seniorTypiconRule.Template = inputRequest.TypiconEntity.TemplateSunday;
+            //    handlerRequest.Rules.Insert(0, inputRequest.TypiconEntity.Settings.TemplateSunday);
+            //    seniorTypiconRule = inputRequest.TypiconEntity.Settings.TemplateSunday;
+            //}
+
+            #endregion
 
             scheduleDay.Date = inputRequest.Date;
 
-            scheduleDay.Sign = (seniorTypiconRule is Sign) ? (seniorTypiconRule as Sign).Number : GetTemplateSignID(seniorTypiconRule.Template);
+            scheduleDay.Sign = (handlerRequest.Rule is Sign) ? (handlerRequest.Rule as Sign).Number : GetTemplateSignID(handlerRequest.Rule.Template);
 
             if (inputRequest.ConvertSignToHtmlBinding)
             {
@@ -94,7 +96,7 @@ namespace TypiconOnline.Domain.Services
             }
 
             //наполняем
-            seniorTypiconRule.Rule.Interpret(inputRequest.Date, inputRequest.RuleHandler);
+            handlerRequest.Rule.Rule.Interpret(inputRequest.Date, inputRequest.RuleHandler);
 
             RuleContainer container = inputRequest.RuleHandler.GetResult();
 
@@ -112,23 +114,18 @@ namespace TypiconOnline.Domain.Services
 
                 handlerRequest = ComposeRuleHandlerRequest(inputRequest);
 
-                seniorTypiconRule = handlerRequest.Rules[0];
-
-                if ((seniorTypiconRule is MenologyRule) &&
+                if ((handlerRequest.Rule is MenologyRule) &&
                     (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday))
                 {
                     //если нет Триоди и воскресенье
                     //жестко задаем воскресный день
-                    //seniorTypiconRule.Template = inputRequest.TypiconEntity.TemplateSunday;
-
-                    handlerRequest.Rules.Insert(0, inputRequest.TypiconEntity.Settings.TemplateSunday);
-                    seniorTypiconRule = inputRequest.TypiconEntity.Settings.TemplateSunday;
+                    handlerRequest.Rule = inputRequest.TypiconEntity.Settings.TemplateSunday;
                 }
 
                 inputRequest.RuleHandler.Initialize(handlerRequest);
 
                 //наполняем
-                seniorTypiconRule.Rule.Interpret(inputRequest.Date, inputRequest.RuleHandler);
+                handlerRequest.Rule.Rule.Interpret(inputRequest.Date, inputRequest.RuleHandler);
 
                 container = inputRequest.RuleHandler.GetResult();
 
@@ -151,6 +148,50 @@ namespace TypiconOnline.Domain.Services
             };
 
             return response;
+        }
+
+        private string ComposeServiceName(GetScheduleDayRequest inputRequest, RuleHandlerRequest handlerRequest)
+        {
+            string result = "";
+
+            string language = inputRequest.TypiconEntity.Settings.DefaultLanguage;
+
+            if (handlerRequest.DayServices.Count > 1)
+            {
+                for (int i = 1; i < handlerRequest.DayServices.Count; i++)
+                {
+                    result += handlerRequest.DayServices[i].ServiceName.GetTextByLanguage(language) + " ";
+                }
+                //Если имеется короткое название, то будем добавлять только его
+                if (handlerRequest.UseFullName && !string.IsNullOrEmpty(handlerRequest.Rule.Name))//(string.IsNullOrEmpty(handlerRequest.ShortName))
+                {
+                    result = (handlerRequest.PutSeniorRuleNameToEnd) ?
+                        result + handlerRequest.Rule.Name :
+                        handlerRequest.Rule.Name + " " + result;
+                }
+            }
+            else if (handlerRequest.UseFullName && handlerRequest.DayServices.Count == 1)//(string.IsNullOrEmpty(handlerRequest.ShortName))
+            {
+                result = handlerRequest.DayServices[0].ServiceName.GetTextByLanguage(language);
+            }
+
+            if ((handlerRequest.Rule is MenologyRule) && (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday)
+                && (handlerRequest.Rule.Template.Priority > 1))
+            {
+                //Если Триоди нет и воскресенье, находим название Недели из Октоиха
+                //и добавляем название Недели в начало Name
+
+                //Если имеется короткое название, то добавляем только его
+
+                result = /*string.IsNullOrEmpty(handlerRequest.ShortName) ?
+                    BookStorage.Oktoikh.GetSundayName(inputRequest.Date) + " " + scheduleDay.Name :*/
+                    BookStorage.Oktoikh.GetSundayName(inputRequest.Date, handlerRequest.ShortName) + " " + result;
+
+                //жестко задаем воскресный день
+                handlerRequest.Rule = inputRequest.TypiconEntity.Settings.TemplateSunday;
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -312,29 +353,29 @@ namespace TypiconOnline.Domain.Services
             {
                 modAbstractRules.Sort();
 
-                modAbstractRules.ForEach(c =>
+                for (int i = 0; i < modAbstractRules.Count; i++)
                 {
-                    if (c is ModifiedTriodionRule)
+                    ModifiedRule modRule = modAbstractRules[i];
+                    if (modRule is ModifiedTriodionRule)
                     {
-                        outputRequest.Rules.Add((c as ModifiedTriodionRule).RuleEntity);
+                        outputRequest.DayServices.AddRange((modRule as ModifiedTriodionRule).RuleEntity.DayServices);
+                        //задаем свойству Rule первое Правило из сортированного списка
+                        if (i == 0)
+                        {
+                            outputRequest.Rule = (modRule as ModifiedTriodionRule).RuleEntity;
+                        }
                     }
                     else
                     {
-                        outputRequest.Rules.Add((c as ModifiedMenologyRule).RuleEntity);
+                        outputRequest.DayServices.AddRange((modRule as ModifiedMenologyRule).RuleEntity.DayServices);
+                        //задаем свойству Rule первое Правило из сортированного списка
+                        if (i == 0)
+                        {
+                            outputRequest.Rule = (modRule as ModifiedMenologyRule).RuleEntity;
+                        }
                     }
-                });
+                }
             }
-
-            //сортируем по приоитету, если правил больше одного
-
-            //TODO: это бессмысленно, потому как приоритет измененных правил потерялся
-            //if (outputRequest.Rules.Count > 1)
-            //{
-            //    outputRequest.Rules.Sort(delegate (TypiconRule x, TypiconRule y)
-            //    {
-            //        return x.Template.Priority.CompareTo(y.Template.Priority);
-            //    });
-            //}
 
             return outputRequest;
         }
@@ -399,7 +440,7 @@ namespace TypiconOnline.Domain.Services
                 Mode = request.Mode,
                 RuleHandler = request.RuleHandler,
                 TypiconEntity = request.TypiconEntity,
-                CustomParameters = request.CustomParameters
+                CustomParameters = request.CustomParameters,
             };
 
             int i = 0;

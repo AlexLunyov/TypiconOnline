@@ -15,6 +15,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
     /// 
     /// <getdayofweek><date>--01-04</date></getdayofweek>
     /// <getdayofweek><getclosestday dayofweek="saturday" weekcount="-2"><date>--11-08</date></getclosestday></getdayofweek>
+    /// <getdayofweek name="суббота"/>
     /// </summary>
     public class GetDayOfWeek : RuleExpression
     {
