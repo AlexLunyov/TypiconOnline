@@ -9,6 +9,11 @@ namespace TypiconOnline.Domain.Typicon
 {
     public abstract class DayRule : TypiconRule
     {
+        public DayRule()
+        {
+            DayServices = new List<DayService>();
+        }
+
         /// <summary>
         /// Список последований текстов служб для данного дня Устава
         /// </summary>
@@ -31,7 +36,7 @@ namespace TypiconOnline.Domain.Typicon
         public string GetNameByLanguage(string language)
         {
             string result = "";
-            if (DayServices?.Count > 0)
+            if (DayServices.Count > 0)
             {
                 foreach (DayService serv in DayServices)
                 {

@@ -22,7 +22,7 @@
       <FileName>Typicon\Modifications\ModifiedTriodionRule.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypiconOnline.Domain.FolderEntity" Collapsed="true">
+  <Class Name="TypiconOnline.Domain.FolderEntity">
     <Position X="14" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgIAAAAABICAAAAAAAAASAQAAAAAAAAAAAAAAAAAgCA=</HashCode>

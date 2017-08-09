@@ -179,61 +179,141 @@ namespace TypiconMigrationTool
 
             //folder.AddFolder(childFolder);
 
-            string folderPath = Properties.Settings.Default.FolderPath + typiconEntity.Name + "\\Menology\\";
+            string folderRulePath = Properties.Settings.Default.FolderPath + typiconEntity.Name + "\\Menology\\";
 
-            FileReader fileReader = new FileReader(folderPath);
+            FileReader fileRuleReader = new FileReader(folderRulePath);
+
+            string folderDayPath = Properties.Settings.Default.FolderPath + "Menology\\";
+
+            FileReader fileDayReader = new FileReader(folderDayPath);
 
             foreach (ScheduleDBDataSet.MineinikRow mineinikRow in _sh.DataSet.Mineinik.Rows)
             {
-                DayService dayService = new DayService()
-                {
-                    ServiceName = new ItemText()
-                };
+                DayService dayService = new DayService();
 
+                //наполняем содержимое текста службы
                 dayService.ServiceName.AddElement("cs-ru", mineinikRow.Name);
+                dayService.IsCelebrating = mineinikRow.Rule == "1";
 
-                MenologyDay menologyDay = new MenologyDay()
-                {
-                    //Name = mineinikRow.Name,
-                    //DayName = XmlHelper.CreateItemTextCollection(
-                    //    new CreateItemTextRequest() { Text = mineinikRow.Name, Name = "Name" }),
-                    Date = (mineinikRow.IsDateNull()) ? new ItemDate() : new ItemDate(mineinikRow.Date.Month, mineinikRow.Date.Day),
-                    DateB = (mineinikRow.IsDateBNull()) ? new ItemDate() : new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day),
-                };
-                menologyDay.AppendDayService(dayService);
+                ItemDate d = (!mineinikRow.IsDateBNull()) ? new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day) : null;
 
-                _unitOfWork.Repository<MenologyDay>().Insert(menologyDay);
+                string fileName = (d != null) ? d.Expression + "." + mineinikRow.Name : mineinikRow.Name;
+                dayService.RuleDefinition = fileDayReader.GetXml(fileName);
 
-                string ruleDefinition = "";
-
-
-
-                MenologyRule menologyRule = new MenologyRule()
-                {
-                    //Name = menologyDay.Name,
-                    Date = menologyDay.Date,
-                    DateB = menologyDay.DateB,
-                    Owner = typiconEntity,
-                    Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(mineinikRow.SignID).NewId),
-                };
-                menologyRule.DayServices = new List<DayService>() { dayService };
+                //menologyDay
+                //смотрим, есть ли уже такой объект с заявленной датой
+                MenologyDay menologyDay = null;
 
                 if (!mineinikRow.IsDateBNull())
                 {
-                    //TODO: изменил алгоритм. Надо поменять все названия xml-файлов правил для Минеи
-                    string fileName = menologyDay.DateB.Expression + "." + menologyRule.Name;
-                    ruleDefinition = fileReader.GetXml(fileName);
+                    menologyDay = _unitOfWork.Repository<MenologyDay>()
+                    .Get(c => c.DateB.Expression.Equals(d.Expression));
+                }
+
+                //если нет - создаем
+                if (menologyDay == null)
+                {
+                    menologyDay = new MenologyDay()
+                    {
+                        //Name = mineinikRow.Name,
+                        //DayName = XmlHelper.CreateItemTextCollection(
+                        //    new CreateItemTextRequest() { Text = mineinikRow.Name, Name = "Name" }),
+                        Date = (mineinikRow.IsDateNull()) ? new ItemDate() : new ItemDate(mineinikRow.Date.Month, mineinikRow.Date.Day),
+                        DateB = (mineinikRow.IsDateBNull()) ? new ItemDate() : new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day),
+                    };
+
+                    _unitOfWork.Repository<MenologyDay>().Insert(menologyDay);
+                }
+
+                menologyDay.AppendDayService(dayService);
+
+                //menologyRule
+                //смотрим, есть ли уже такой объект с заявленной датой
+                MenologyRule menologyRule = null;
+
+                if (!mineinikRow.IsDateBNull())
+                {
+                    
+                    menologyRule = _unitOfWork.Repository<MenologyRule>()
+                    .Get(c => c.DateB.Expression.Equals(d.Expression));
+                }
+
+                //если нет - создаем
+                if (menologyRule == null)
+                {
+                    menologyRule = new MenologyRule()
+                    {
+                        //Name = menologyDay.Name,
+                        Date = menologyDay.Date,
+                        DateB = menologyDay.DateB,
+                        Owner = typiconEntity,
+                        Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(mineinikRow.SignID).NewId),
+                    };
+
+                    menologyRule.DayServices.Add(dayService);
+
+                    typiconEntity.MenologyRules.Add(menologyRule);
+                    //_unitOfWork.Repository<MenologyRule>().Insert(menologyRule);
+
+                    //берем xml-правило из файла
+                    menologyRule.RuleDefinition = (!mineinikRow.IsDateBNull()) 
+                                                    ? fileRuleReader.GetXml(menologyDay.DateB.Expression)
+                                                    : fileRuleReader.GetXml(menologyRule.Name);
                 }
                 else
                 {
-                    ruleDefinition = fileReader.GetXml(menologyRule.Name);
+                    menologyRule.DayServices.Add(dayService);
                 }
 
-                menologyRule.RuleDefinition = ruleDefinition;
+                _unitOfWork.Commit();
 
-                //folder.AddRule(menologyRule);
-                typiconEntity.MenologyRules.Add(menologyRule);
-                _unitOfWork.Repository<MenologyRule>().Insert(menologyRule);
+
+                //DayService dayService = new DayService();
+
+                //dayService.ServiceName.AddElement("cs-ru", mineinikRow.Name);
+
+                //MenologyDay menologyDay = new MenologyDay()
+                //{
+                //    //Name = mineinikRow.Name,
+                //    //DayName = XmlHelper.CreateItemTextCollection(
+                //    //    new CreateItemTextRequest() { Text = mineinikRow.Name, Name = "Name" }),
+                //    Date = (mineinikRow.IsDateNull()) ? new ItemDate() : new ItemDate(mineinikRow.Date.Month, mineinikRow.Date.Day),
+                //    DateB = (mineinikRow.IsDateBNull()) ? new ItemDate() : new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day),
+                //};
+                //menologyDay.AppendDayService(dayService);
+
+                //_unitOfWork.Repository<MenologyDay>().Insert(menologyDay);
+
+                //string ruleDefinition = "";
+
+
+
+                //MenologyRule menologyRule = new MenologyRule()
+                //{
+                //    //Name = menologyDay.Name,
+                //    Date = menologyDay.Date,
+                //    DateB = menologyDay.DateB,
+                //    Owner = typiconEntity,
+                //    Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(mineinikRow.SignID).NewId),
+                //};
+                //menologyRule.DayServices = new List<DayService>() { dayService };
+
+                //if (!mineinikRow.IsDateBNull())
+                //{
+                //    //TODO: изменил алгоритм. Надо поменять все названия xml-файлов правил для Минеи
+                //    string fileName = menologyDay.DateB.Expression;// + "." + menologyRule.Name;
+                //    ruleDefinition = fileReader.GetXml(fileName);
+                //}
+                //else
+                //{
+                //    ruleDefinition = fileReader.GetXml(menologyRule.Name);
+                //}
+
+                //menologyRule.RuleDefinition = ruleDefinition;
+
+                ////folder.AddRule(menologyRule);
+                //typiconEntity.MenologyRules.Add(menologyRule);
+                //_unitOfWork.Repository<MenologyRule>().Insert(menologyRule);
             }
 
             //_unitOfWork.Commit();

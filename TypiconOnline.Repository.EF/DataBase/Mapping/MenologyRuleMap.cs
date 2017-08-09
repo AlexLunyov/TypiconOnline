@@ -11,7 +11,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
         {
             HasKey<int>(c => c.Id);
             Property(c => c.Id).IsRequired();
-            Property(c => c.Name).HasMaxLength(200);
+            //Property(c => c.Name).HasMaxLength(200);
             HasOptional(e => e.Folder).
                 WithMany();
 
@@ -25,14 +25,14 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             HasRequired(e => e.Template).
                 WithMany().WillCascadeOnDelete(false);
 
-            HasMany(c => c.DayServices).WithMany().
-            Map(m =>
-            {
-                m.ToTable("MenologyRuleServices");
-                // Настройка внешних ключей промежуточной таблицы
-                m.MapLeftKey("MenologyRuleId");
-                m.MapRightKey("ServiceDayId");
-            });
+            //HasMany(c => c.DayServices).WithMany().
+            //Map(m =>
+            //{
+            //    m.ToTable("MenologyRuleServices");
+            //    // Настройка внешних ключей промежуточной таблицы
+            //    m.MapLeftKey("MenologyRuleId");
+            //    m.MapRightKey("ServiceDayId");
+            //});
             //HasRequired(c => c.Day).
             //    WithMany();
 

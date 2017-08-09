@@ -14,6 +14,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
         {
             Property(c => c.ServiceName.StringExpression).IsRequired();
 
+
             HasRequired(e => e.Parent).
                 WithMany();
             ToTable("DayServices");

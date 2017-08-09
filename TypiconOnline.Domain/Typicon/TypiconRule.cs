@@ -17,7 +17,7 @@ namespace TypiconOnline.Domain.Typicon
         /// <summary>
         /// Возвращает Правило: либо свое, либо шаблонное
         /// </summary>
-        public override RuleContainer Rule
+        public override RuleElement Rule
         {
             get
             {

@@ -81,7 +81,7 @@ namespace TypiconOnline.Domain.Rules
         /*
          * Константы для описания xml-схемы богослужеюных текстов
          */
-        public const string DayElementNode = "dayelement";
+        public const string DayElementNode = "dayservice";
         public const string DayElementNameNode = "name";
 
         public const string MikrosEsperinosNode = "mikrosesperinos"; 

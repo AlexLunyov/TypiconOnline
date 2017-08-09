@@ -47,6 +47,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Days\DayServiceTest.cs" />
     <Compile Include="ItemTypes\ItemTextCollectionTest.cs" />
     <Compile Include="ItemTypes\ItemTimeTest.cs" />
     <Compile Include="ItemTypes\ItemTextTest.cs" />

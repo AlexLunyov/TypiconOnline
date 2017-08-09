@@ -101,6 +101,35 @@ namespace TypiconOnline.Domain.Rules.Factories
             return outputEl;
         }
 
+        public static RuleElement CreateElement(string description)
+        {
+            RuleElement outputEl = null;
+
+            if (string.IsNullOrEmpty(description))
+            {
+                return null;
+            }
+
+            //try
+            //{
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(description);
+
+            if ((doc != null) && (doc.DocumentElement != null))
+            {
+                XmlNode node = doc.DocumentElement;
+
+                outputEl = CreateElement(node);
+            }
+            //}
+            //catch (Exception ex)
+            //{
+
+            //}
+
+            return outputEl;
+        }
+
         public static RuleElement CreateElement(XmlNode node)
         {
             RuleElement outputEl = CreateExecutable(node);

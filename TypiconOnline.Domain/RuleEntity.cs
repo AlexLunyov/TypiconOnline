@@ -23,14 +23,14 @@ namespace TypiconOnline.Domain
         }
         public virtual FolderEntity Folder { get; set; }
 
-        protected RuleContainer _rule = null;
-        public virtual RuleContainer Rule
+        protected RuleElement _rule = null;
+        public virtual RuleElement Rule
         {
             get
             {
                 if ((_rule == null) && !string.IsNullOrEmpty(_ruleDefinition))
                 {
-                    _rule = RuleContainerFactory.CreateRuleContainer(_ruleDefinition);
+                    _rule = RuleFactory.CreateElement(_ruleDefinition);//RuleContainerFactory.CreateRuleContainer(_ruleDefinition);
                 }
 
                 return _rule;
@@ -49,7 +49,7 @@ namespace TypiconOnline.Domain
             {
                 _ruleDefinition = value;
 
-                _rule = RuleContainerFactory.CreateRuleContainer(_ruleDefinition);
+                _rule = RuleFactory.CreateElement(_ruleDefinition);//RuleContainerFactory.CreateRuleContainer(_ruleDefinition);
             }
         }
 

@@ -31,7 +31,7 @@ namespace TypiconMigrationTool
                 if (fileInfo.Exists)
                 {
                     doc.Load(fileName);
-                    XmlNode node = doc.SelectSingleNode("rule");
+                    XmlNode node = doc.DocumentElement;// SelectSingleNode("rule");
 
                     return (node != null) ? node.OuterXml : "";
                 }
