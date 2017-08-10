@@ -14,9 +14,18 @@ namespace TypiconOnline.Domain.Rules.Days
     /// </summary>
     public class Stichera : RuleElement
     {
-        public Stichera(XmlNode node) : base(node)
+        private List<YmnosGroup> _groups = new List<YmnosGroup>();
+
+        public Stichera() { }
+
+        public Stichera(YmnosGroup group)
         {
-            Groups = new List<YmnosGroup>();
+            _groups.Add(new YmnosGroup(group));
+        }
+
+        public Stichera(XmlNode node) : base(node) 
+        {
+            //Groups = new List<YmnosGroup>();
 
             //группы стихир
             XmlNodeList groupList = node.SelectNodes(RuleConstants.SticheraGroupNode);
@@ -44,7 +53,17 @@ namespace TypiconOnline.Domain.Rules.Days
         }
 
         #region Properties
-        public List<YmnosGroup> Groups { get; set; }
+        public List<YmnosGroup> Groups
+        {
+            get
+            {
+                return _groups;
+            }
+            set
+            {
+                _groups = value;
+            }
+        }
         /// <summary>
         /// Славник
         /// </summary>
@@ -53,6 +72,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// Богородичен
         /// </summary>
         public YmnosGroup Theotokion { get; set; }
+        
         #endregion
 
 
@@ -80,6 +100,138 @@ namespace TypiconOnline.Domain.Rules.Days
             {
                 AppendAllBrokenConstraints(Theotokion, ElementName + "." + RuleConstants.SticheraTheotokionNode);
             }
+        }
+
+        private int _sticheraCount = -1;
+        /// <summary>
+        /// Возвращает общее количество стихир, без учета славника и богородична
+        /// </summary>
+        /// <returns></returns>
+        public int SticheraCount
+        {
+            get
+            { 
+                //if (_sticheraCount == -1)
+                //{
+                    ThrowExceptionIfInvalid();
+
+                    _sticheraCount = 0;
+
+                    foreach (YmnosGroup group in Groups)
+                    {
+                        _sticheraCount += group.Ymnis.Count;
+                    }
+                //}
+
+                return _sticheraCount;
+            }
+        }
+
+        /// <summary>
+        /// Возвращает один богослужебный текст с описанием гласа и подобна.
+        /// </summary>
+        /// <param name="index">Сквозной индекс из общего числа текстов данного объекта.</param>
+        /// <returns></returns>
+        public YmnosGroup this[int index]
+        {
+            get
+            {
+                if (index >= SticheraCount)
+                {
+                    throw new IndexOutOfRangeException("YmnosGroup");
+                }
+
+                YmnosGroup ymnosGroup = new YmnosGroup();
+
+                int i = index;
+
+                foreach (YmnosGroup group in Groups)
+                {
+                    if (i < group.Ymnis.Count)
+                    {
+                        //значит ищем в этой коллекции
+                        ymnosGroup.Ihos = group.Ihos;
+                        ymnosGroup.Annotation = group.Annotation;
+                        ymnosGroup.Prosomoion = group.Prosomoion;
+                        ymnosGroup.Ymnis.Add( new Ymnos(group.Ymnis[i]) );
+
+                        break;
+                    }
+                    else
+                    {
+                        i = i - group.Ymnis.Count;
+                    }
+                }
+
+                return ymnosGroup;
+            }
+        }
+
+        /// <summary>
+        /// Возвращает коллекцию богослужебных текстов
+        /// </summary>
+        /// <param name="count">Количество</param>
+        /// <param name="startFrom">стартовый индекс (1 - ориентированный)</param>
+        /// <returns></returns>
+        public Stichera GetStichera(int count, int startFrom)
+        {
+            if (count < 0)
+            {
+                throw new ArgumentOutOfRangeException("count");
+            }
+
+            if (startFrom < 1 || startFrom > SticheraCount)
+            {
+                throw new ArgumentOutOfRangeException("startFrom");
+            }
+
+            ThrowExceptionIfInvalid();
+
+            Stichera ymnis = new Stichera();
+
+            /*если заявленное количество больше того, что есть, выдаем с повторами
+            * например: 8 = 3 3 2
+            *           10= 4 4 3
+            */
+            if (count > SticheraCount)
+            {
+                int appendedCount = 0;
+
+                int i = startFrom - 1;
+
+                YmnosGroup lastGroup = null;
+
+                while (appendedCount < count)
+                {
+                    //округляем в большую сторону результат деления count на SticheraCount
+                    //в результате получаем, сколько раз необходимо повторять песнопение
+                    int b = (int)Math.Ceiling((double)(count - appendedCount) / (SticheraCount - i));
+
+                    YmnosGroup groupToAdd = this[i];
+
+                    if (lastGroup == null || !lastGroup.Equals(groupToAdd))
+                    {
+                        ymnis.Groups.Add(groupToAdd);
+                        lastGroup = groupToAdd;
+                        appendedCount++;
+                        b--;
+                    }
+
+                    Ymnos ymnosToAdd = groupToAdd.Ymnis[0];
+
+                    while (b > 0)
+                    {
+                        lastGroup.Ymnis.Add(new Ymnos(ymnosToAdd));
+
+                        b--;
+                        appendedCount++;
+                    }
+
+                    i++;
+                }
+            }
+
+            return ymnis;
         }
     }
 }

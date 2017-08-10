@@ -140,8 +140,17 @@ namespace TypiconOnline.Domain.Rules
          * Константы для описания правил для составления последовательностей богослужебных текстов
          */
 
-        public const string KekragariaRuleNode = "kekragaria";
+        public const string SticheraRuleNode = "kekragaria";
         public const string ShowPsalmAttribute = "showpsalm";
+
+        /*
+         * Константы для описания атрибутов элемента ymnosRule
+        */
+        public const string YmnosRuleNode = "ymnos";
+        public const string YmnosRuleSourceAttrName = "source";
+        public const string YmnosRulePlaceAttrName = "place";
+        public const string YmnosRuleCountAttrName = "count";
+        public const string YmnosRuleStartFromAttrName = "startfrom";
 
         //public const string ExecContainerNodeName = "правило";
         //public const string SwitchNodeName = "выбор";
@@ -166,6 +175,45 @@ namespace TypiconOnline.Domain.Rules
 
         public enum KindOfReplacedDay { undefined=0, menology=1, triodion=2 };
     }
+
+    /// <summary>
+    /// Перечисление источников (богослуебных книг) для текстов богослужения
+    /// </summary>
+    public enum YmnosSource { Oktoikh = 0, Item1 = 1, Item2 = 2, Item3 = 3, Irmologion = 4 }
+
+    /// <summary>
+    /// Перечисление мест в богослужебных книгах для текстов богослужения
+    /// </summary>
+    public enum PlaceYmnosSource
+    {
+        //kekragaria
+        kekragaria,
+        kekragaria_doxastichon,
+        kekragaria_theotokion,
+        //liti
+        liti,
+        liti_doxastichon,
+        liti_theotokion,
+        //aposticha_esperinos
+        aposticha_esperinos,
+        aposticha_esperinos_doxastichon,
+        aposticha_esperinos_theotokion,
+        //ainoi
+        ainoi,
+        ainoi_doxastichon,
+        ainoi_theotokion,
+        //aposticha_orthros
+        aposticha_orthros,
+        aposticha_orthros_doxastichon,
+        aposticha_orthros_theotokion,
+        //Irmologion
+        app1,
+        app2,
+        app3,
+        app4
+    }
+
+    public enum YmnosKind { Ymnos, Doxastichon, Theotokion }
 
     public enum State { Valid = 0, Invalid = 1, NotDefined = 2}
 }

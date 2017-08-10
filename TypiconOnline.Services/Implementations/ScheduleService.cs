@@ -37,14 +37,14 @@ namespace TypiconOnline.Domain.Services
             }
 
             //Формируем данные для обработки
-            RuleHandlerRequest handlerRequest = ComposeRuleHandlerRequest(inputRequest);
+            RuleHandlerSettings handlerSettings = ComposeRuleHandlerSettings(inputRequest);
 
-            inputRequest.RuleHandler.Initialize(handlerRequest);
+            inputRequest.RuleHandler.Settings = handlerSettings;
 
             ScheduleDay scheduleDay = new ScheduleDay();
 
             //задаем имя дню
-            scheduleDay.Name = ComposeServiceName(inputRequest, handlerRequest);
+            scheduleDay.Name = ComposeServiceName(inputRequest, handlerSettings);
 
             #region  старое формирование имени
             //if (handlerRequest.Rules.Count > 1)
@@ -88,7 +88,7 @@ namespace TypiconOnline.Domain.Services
 
             scheduleDay.Date = inputRequest.Date;
 
-            scheduleDay.Sign = (handlerRequest.Rule is Sign) ? (handlerRequest.Rule as Sign).Number : GetTemplateSignID(handlerRequest.Rule.Template);
+            scheduleDay.Sign = (handlerSettings.Rule is Sign) ? (handlerSettings.Rule as Sign).Number : GetTemplateSignID(handlerSettings.Rule.Template);
 
             if (inputRequest.ConvertSignToHtmlBinding)
             {
@@ -96,7 +96,7 @@ namespace TypiconOnline.Domain.Services
             }
 
             //наполняем
-            handlerRequest.Rule.Rule.Interpret(inputRequest.Date, inputRequest.RuleHandler);
+            handlerSettings.Rule.Rule.Interpret(inputRequest.Date, inputRequest.RuleHandler);
 
             RuleContainer container = inputRequest.RuleHandler.GetResult();
 
@@ -112,20 +112,20 @@ namespace TypiconOnline.Domain.Services
                 inputRequest.Date = inputRequest.Date.AddDays(1);
                 inputRequest.Mode = HandlingMode.DayBefore;
 
-                handlerRequest = ComposeRuleHandlerRequest(inputRequest);
+                handlerSettings = ComposeRuleHandlerSettings(inputRequest);
 
-                if ((handlerRequest.Rule is MenologyRule) &&
+                if ((handlerSettings.Rule is MenologyRule) &&
                     (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday))
                 {
                     //если нет Триоди и воскресенье
                     //жестко задаем воскресный день
-                    handlerRequest.Rule = inputRequest.TypiconEntity.Settings.TemplateSunday;
+                    handlerSettings.Rule = inputRequest.TypiconEntity.Settings.TemplateSunday;
                 }
 
-                inputRequest.RuleHandler.Initialize(handlerRequest);
+                inputRequest.RuleHandler.Settings = handlerSettings;
 
                 //наполняем
-                handlerRequest.Rule.Rule.Interpret(inputRequest.Date, inputRequest.RuleHandler);
+                handlerSettings.Rule.Rule.Interpret(inputRequest.Date, inputRequest.RuleHandler);
 
                 container = inputRequest.RuleHandler.GetResult();
 
@@ -150,7 +150,7 @@ namespace TypiconOnline.Domain.Services
             return response;
         }
 
-        private string ComposeServiceName(GetScheduleDayRequest inputRequest, RuleHandlerRequest handlerRequest)
+        private string ComposeServiceName(GetScheduleDayRequest inputRequest, RuleHandlerSettings handlerRequest)
         {
             string result = "";
 
@@ -202,7 +202,7 @@ namespace TypiconOnline.Domain.Services
         /// </summary>
         /// <param name="inputRequest"></param>
         /// <returns></returns>
-        private RuleHandlerRequest ComposeRuleHandlerRequest(GetScheduleDayRequest inputRequest)
+        private RuleHandlerSettings ComposeRuleHandlerSettings(GetScheduleDayRequest inputRequest)
         {
             //находим MenologyRule
 
@@ -227,7 +227,7 @@ namespace TypiconOnline.Domain.Services
             List<ModifiedRule> modAbstractRules = inputRequest.TypiconEntity.GetModifiedRules(inputRequest.Date);
 
             //создаем выходной объект
-            RuleHandlerRequest outputRequest = new RuleHandlerRequest() { Mode = inputRequest.Mode };
+            RuleHandlerSettings outputRequest = new RuleHandlerSettings() { Mode = inputRequest.Mode };
 
             //рассматриваем полученные измененные правила
             if (modAbstractRules != null && modAbstractRules.Count > 0)
@@ -382,7 +382,7 @@ namespace TypiconOnline.Domain.Services
 
         /// <summary>
         /// Метод добавляет в modAbstractRules подложный ModifiedRule, содержащий typiconRule и его приоритет
-        /// Испольуется для дальнейшей сортировки списка выходных правил метода ComposeRuleHandlerRequest
+        /// Испольуется для дальнейшей сортировки списка выходных правил метода ComposeRuleHandlerSettings
         /// </summary>
         /// <param name="modAbstractRules">список измененных правил</param>
         /// <param name="typiconRule"></param>

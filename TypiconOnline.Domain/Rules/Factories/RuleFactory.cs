@@ -157,6 +157,10 @@ namespace TypiconOnline.Domain.Rules.Factories
 
             if (outputEl == null)
             {
+                outputEl = CreateYmnosRule(node);
+            }
+            if (outputEl == null)
+            {
                 switch (node.Name)
                 {
                     case RuleConstants.SwitchNodeName:
@@ -174,6 +178,11 @@ namespace TypiconOnline.Domain.Rules.Factories
                 }
             }
             return outputEl;
+        }
+
+        public static YmnosRule CreateYmnosRule(XmlNode node)
+        {
+            return (node.Name == RuleConstants.YmnosRuleNode) ? new YmnosRule(node) : null;
         }
 
         public static RuleContainer CreateRuleContainer(XmlNode node) 

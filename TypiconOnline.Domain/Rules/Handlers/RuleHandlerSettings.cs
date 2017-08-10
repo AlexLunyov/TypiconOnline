@@ -9,7 +9,7 @@ using TypiconOnline.Domain.Typicon.Modifications;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {
-    public class RuleHandlerRequest
+    public class RuleHandlerSettings
     {
         public TypiconRule Rule;
         public List<DayService> DayServices;
@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         public string ShortName;
         public bool UseFullName = true;
 
-        public RuleHandlerRequest()
+        public RuleHandlerSettings()
         {
             DayServices = new List<DayService>();
         }
@@ -28,7 +28,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// 
         /// </summary>
         /// <param name="seniorTypiconRule">Главное правило для обработки</param>
-        public RuleHandlerRequest(TypiconRule seniorTypiconRule) : this()
+        public RuleHandlerSettings(TypiconRule seniorTypiconRule) : this()
         {
             Rule = seniorTypiconRule;
         }

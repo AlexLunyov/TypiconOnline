@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Books\Irmologion.cs" />
+    <Compile Include="Books\Irmologion\GetTheotokionRequest.cs" />
     <Compile Include="Books\OldTestament.cs" />
     <Compile Include="Books\Psalter.cs" />
     <Compile Include="Books\Evangelion.cs" />
@@ -58,6 +60,8 @@
     <Compile Include="Days\Day.cs" />
     <Compile Include="Easter\IEasterStorage.cs" />
     <Compile Include="Easter\IEasterStorageFactory.cs" />
+    <Compile Include="ItemTypes\ItemEnumTypeBusinessConstraint.cs" />
+    <Compile Include="ItemTypes\ItemEnumType.cs" />
     <Compile Include="ItemTypes\ItemStyledType.cs" />
     <Compile Include="ItemTypes\ItemText.cs" />
     <Compile Include="ItemTypes\ItemTextBusinessConstraint.cs" />
@@ -120,16 +124,19 @@
     <Compile Include="Days\DayService.cs" />
     <Compile Include="Days\MenologyDay.cs" />
     <Compile Include="Days\MenologyDayBusinessConstraint.cs" />
+    <Compile Include="Rules\Handlers\SticheraRuleHandler.cs" />
     <Compile Include="Rules\Handlers\ModificationsRuleHandler.cs" />
     <Compile Include="Rules\Handlers\RuleHandlerBase.cs" />
     <Compile Include="Rules\Handlers\ModificationsRuleRequest.cs" />
-    <Compile Include="Rules\Handlers\RuleHandlerRequest.cs" />
+    <Compile Include="Rules\Handlers\RuleHandlerSettings.cs" />
     <Compile Include="Rules\Handlers\ScheduleHandler.cs" />
     <Compile Include="Rules\Schedule\IsCelebrating.cs" />
     <Compile Include="Rules\Schedule\Service.cs" />
+    <Compile Include="Rules\Schedule\YmnosRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\ServiceBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\Notice.cs" />
-    <Compile Include="Rules\Schedule\KekragariaRule.cs" />
+    <Compile Include="Rules\Schedule\SticheraRule.cs" />
+    <Compile Include="Rules\Schedule\YmnosRule.cs" />
     <Compile Include="Schedule\ScheduleWeek.cs" />
     <Compile Include="Typicon\CommonRule.cs" />
     <Compile Include="Typicon\DayRule.cs" />
@@ -203,6 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagrams\Basics.cd" />
+    <None Include="ClassDiagrams\Handlers.cd" />
     <None Include="ClassDiagrams\Rules.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

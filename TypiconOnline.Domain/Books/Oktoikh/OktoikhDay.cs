@@ -5,10 +5,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
+using TypiconOnline.Domain.Days;
 
 namespace TypiconOnline.Domain.Books.Oktoikh
 {
-    public class OktoikhDay : RuleEntity
+    public class OktoikhDay : DayService
     {
     }
 }

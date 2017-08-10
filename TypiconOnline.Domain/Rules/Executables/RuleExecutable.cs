@@ -12,6 +12,10 @@ using System.Xml;
 
 namespace TypiconOnline.Domain.Rules.Executables
 {
+    /// <summary>
+    /// Абстрактный класс для "исполняемых" элементов, 
+    /// т.е. которым преполагается назначение какого-либо функционала.
+    /// </summary>
     public abstract class RuleExecutable : RuleElement
     {
         public RuleExecutable() { }

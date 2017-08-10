@@ -14,11 +14,11 @@ namespace TypiconOnline.Domain.Rules.Handlers
         bool IsAuthorized<T>() where T : ICustomInterpreted;
         void Execute(ICustomInterpreted element);
 
-        void Initialize(RuleHandlerRequest request);
+        RuleHandlerSettings Settings { get; set; }
+
+        //void Initialize(RuleHandlerSettings settings);
 
         RuleContainer GetResult();
-                
-        //DateTime GetCurrentEaster(int year);
     }
 
     public enum HandlingMode {

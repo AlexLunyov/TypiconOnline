@@ -56,6 +56,14 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }
 
+        public bool Equals(ItemBoolean item)
+        {
+            if (item == null)
+            {
+                throw new ArgumentNullException("ItemBoolean.Equals");
+            }
 
+            return (_stringValue == item._stringValue);
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public ItemStyledType(string expression)
         {
+            _stringExpression = expression;
             Build(expression);
         }
 
@@ -124,6 +125,15 @@ namespace TypiconOnline.Domain.ItemTypes
                     }
                 }
             }
+        }
+
+        public virtual bool Equals(ItemStyledType item)
+        {
+            if (item == null)
+            {
+                throw new ArgumentNullException("ItemStyledType.Equals");
+            }
+            return (_stringExpression == item._stringExpression);
         }
     }
 

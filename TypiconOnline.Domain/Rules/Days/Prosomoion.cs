@@ -13,10 +13,21 @@ namespace TypiconOnline.Domain.Rules.Days
     /// </summary>
     public class Prosomoion : ItemText
     {
-        /// <summary>
-        /// Если true, то самоподобен
-        /// </summary>
-        public ItemBoolean Self { get; set; }
+        public Prosomoion(Prosomoion source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("Prosomoion");
+            }
+
+            Self = new ItemBoolean(source.Self.Value);
+            Build(source.StringExpression);
+        }
+
+        public Prosomoion() : base()
+        {
+            Self = new ItemBoolean();
+        }
 
         public Prosomoion(XmlNode node)
         {
@@ -28,6 +39,11 @@ namespace TypiconOnline.Domain.Rules.Days
             Build(node.OuterXml);
         }
 
+        /// <summary>
+        /// Если true, то самоподобен
+        /// </summary>
+        public ItemBoolean Self { get; set; }
+
         protected override void Validate()
         {
             base.Validate();
@@ -36,6 +52,18 @@ namespace TypiconOnline.Domain.Rules.Days
             {
                 AppendAllBrokenConstraints(Self, RuleConstants.ProsomoionNode + "." + RuleConstants.ProsomoionSelfAttr);
             }
+        }
+
+        public override bool Equals(ItemStyledType item)
+        {
+            bool result = base.Equals(item);
+
+            if (item is Prosomoion)
+            {
+                result = result && Self.Equals((item as Prosomoion).Self);
+            }
+
+            return result;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Days;
 
 namespace TypiconOnline.Domain.Tests.Rules.Days
@@ -76,6 +77,78 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             YmnosGroup element = new YmnosGroup(root);// (xmlDoc.FirstChild);
 
             Assert.IsTrue(element.IsValid);
+        }
+
+        [Test]
+        public void YmnosGroupTest_Equals()
+        {
+            YmnosGroup element1 = new YmnosGroup()
+            {
+                Annotation = new ItemText(@"<annotation>
+					                            <cs-ru>Феофа́ново</cs-ru>
+				                            </annotation>"),
+                Ihos = new ItemInt(1),
+                Prosomoion = new Prosomoion()
+            };
+
+            YmnosGroup element2 = new YmnosGroup()
+            {
+                Annotation = new ItemText(@"<annotation>
+					                            <cs-ru>Феофа́ново</cs-ru>
+				                            </annotation>"),
+                Ihos = new ItemInt(2),
+                Prosomoion = new Prosomoion()
+            };
+
+            Assert.IsFalse(element1.Equals(element2));
+        }
+
+        [Test]
+        public void YmnosGroupTest_Equals2()
+        {
+            YmnosGroup element1 = new YmnosGroup()
+            {
+                //Annotation = new ItemText(@"<annotation>
+					           //                 <cs-ru>Феофа́ново</cs-ru>
+				            //                </annotation>"),
+                Ihos = new ItemInt(1),
+                //Prosomoion = new Prosomoion()
+            };
+
+            YmnosGroup element2 = new YmnosGroup()
+            {
+                //Annotation = new ItemText(@"<annotation>
+					           //                 <cs-ru>Феофа́ново</cs-ru>
+				            //                </annotation>"),
+                Ihos = new ItemInt(1),
+                //Prosomoion = new Prosomoion()
+            };
+
+            Assert.IsTrue(element1.Equals(element2));
+        }
+
+        [Test]
+        public void YmnosGroupTest_Equals3()
+        {
+            YmnosGroup element1 = new YmnosGroup()
+            {
+                Annotation = new ItemText(@"<annotation>
+                                 <cs-ru>Феофа́ново</cs-ru>
+                                </annotation>"),
+                Ihos = new ItemInt(1),
+                //Prosomoion = new Prosomoion()
+            };
+
+            YmnosGroup element2 = new YmnosGroup()
+            {
+                Annotation = new ItemText(@"<annotation>
+                                 <cs-cs>Феофа́ново</cs-cs>
+                                </annotation>"),
+                Ihos = new ItemInt(1),
+                //Prosomoion = new Prosomoion()
+            };
+
+            Assert.IsFalse(element1.Equals(element2));
         }
     }
 }

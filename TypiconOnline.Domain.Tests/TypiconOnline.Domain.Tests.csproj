@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Days\DayServiceTest.cs" />
+    <Compile Include="Days\SticheraTest.cs" />
     <Compile Include="ItemTypes\ItemTextCollectionTest.cs" />
     <Compile Include="ItemTypes\ItemTimeTest.cs" />
     <Compile Include="ItemTypes\ItemTextTest.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Rules\Expressions\IntTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\Schedule\NoticeTest.cs" />
+    <Compile Include="Rules\Schedule\YmnosRuleTest.cs" />
     <Compile Include="Services\ScheduleServiceTest.cs" />
     <Compile Include="Typicon\TriodionRuleFolderTest.cs" />
     <Compile Include="Typicon\TypiconEntityTest.cs" />

@@ -15,20 +15,26 @@ namespace TypiconOnline.Domain.Rules.Days
     /// </summary>
     public class Ymnos : RuleElement
     {
+        public Ymnos(Ymnos source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("Ymnos");
+            }
+
+            ElementName = string.Copy(source.ElementName);
+            Stihos = new ItemText(source.Stihos.StringExpression);
+            Text = new ItemText(source.Text.StringExpression);
+        }
+
         public Ymnos(XmlNode node) : base(node)
         {
             //ymnos
             XmlNode elemNode = node.SelectSingleNode(RuleConstants.YmnosTextNode);
-            if (elemNode != null)
-            {
-                Text = new ItemText(elemNode.OuterXml);
-            }
+            Text = (elemNode != null) ? new ItemText(elemNode.OuterXml) : new ItemText();
 
             elemNode = node.SelectSingleNode(RuleConstants.YmnosStihosNode);
-            if (elemNode != null)
-            {
-                Stihos = new ItemText(elemNode.OuterXml);
-            }
+            Stihos = (elemNode != null) ? new ItemText(elemNode.OuterXml) : new ItemText();
         }
 
         /// <summary>

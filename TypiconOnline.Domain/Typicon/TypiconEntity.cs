@@ -185,7 +185,7 @@ namespace TypiconOnline.Domain.Typicon
                         if (a.Rule != null)
                         {
                             ModificationsRuleHandler handler = new ModificationsRuleHandler(
-                                new RuleHandlerRequest(a), date.Year);
+                                new RuleHandlerSettings(a), date.Year);
 
                             int i = a.DaysFromEaster;
                             a.Rule.Interpret(easter.AddDays(i), handler);
@@ -201,7 +201,7 @@ namespace TypiconOnline.Domain.Typicon
             if (menologyRule != null)
             {
                 ModificationsRuleHandler handler = new ModificationsRuleHandler(
-                    new RuleHandlerRequest(menologyRule), year);
+                    new RuleHandlerSettings(menologyRule), year);
                 //выполняем его
                 menologyRule.Rule.Interpret(date, handler);
             }

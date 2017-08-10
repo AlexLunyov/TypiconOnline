@@ -11,24 +11,23 @@ namespace TypiconOnline.Domain.Rules.Handlers
 {
     public class ScheduleHandler : RuleHandlerBase
     {
-        private RuleContainer _executingResult = null;
-
-        public ScheduleHandler()//(RuleHandlerRequest request) : base(request)
+        public ScheduleHandler()//(RuleHandlerSettings request) : base(request)
         {
             AuthorizedTypes = new List<Type>()
             {
                 typeof(Service),
                 typeof(Notice)
             };
+
         }
 
         public override void Execute(ICustomInterpreted element)
         {
             if ((element is Service) || (element is Notice))
             {
-                if ((Mode == HandlingMode.All) ||
-                    ((Mode == HandlingMode.DayBefore) && ((element as Service).IsDayBefore.Value)) ||
-                    ((Mode == HandlingMode.ThisDay) && (!(element as Service).IsDayBefore.Value)))
+                if ((_settings.Mode == HandlingMode.All) ||
+                    ((_settings.Mode == HandlingMode.DayBefore) && ((element as Service).IsDayBefore.Value)) ||
+                    ((_settings.Mode == HandlingMode.ThisDay) && (!(element as Service).IsDayBefore.Value)))
                 {
                     if (_executingResult == null)
                     {
@@ -40,12 +39,12 @@ namespace TypiconOnline.Domain.Rules.Handlers
             }
         }
 
-        public override void Initialize(RuleHandlerRequest request)
-        {
-            base.Initialize(request);
+        //public override void Initialize(RuleHandlerSettings settings)
+        //{
+        //    base.Initialize(settings);
 
-            _executingResult = null;
-        }
+        //    _executingResult = null;
+        //}
 
         public override RuleContainer GetResult()
         {

@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.Tests.Days
     public class DayServiceTest
     {
         [Test]
-        public void TestMethod()
+        public void DayServiceTest_Working()
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 

@@ -13,6 +13,23 @@ namespace TypiconOnline.Domain.Rules.Days
     /// </summary>
     public abstract class IhosRuleElement : RuleElement
     {
+        public IhosRuleElement()
+        {
+            Ihos = new ItemInt();
+        }
+
+        public IhosRuleElement(IhosRuleElement source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("IhosRuleElement");
+            }
+
+            ElementName = string.Copy(source.ElementName);
+
+            Ihos = new ItemInt(source.Ihos.Value);
+        }
+
         public IhosRuleElement(XmlNode node) : base(node)
         {
             //глас

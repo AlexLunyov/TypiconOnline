@@ -23,7 +23,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
             return new DateTime(year, 4, 25);
         }
 
-        public void Initialize(RuleHandlerRequest request)
+        public void Initialize(RuleHandlerSettings settings)
         {
             //throw new NotImplementedException();
         }
@@ -40,6 +40,16 @@ namespace TypiconOnline.Domain.Rules.Handlers
             {
                 return new BypassHandler();
             }
+        }
+
+        public RuleHandlerSettings Settings
+        {
+            get
+            {
+                return null;
+            }
+
+            set { }
         }
     }
 }

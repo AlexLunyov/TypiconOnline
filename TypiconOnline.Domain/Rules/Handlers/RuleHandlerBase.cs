@@ -11,71 +11,32 @@ namespace TypiconOnline.Domain.Rules.Handlers
     public abstract class RuleHandlerBase : IRuleHandler
     {
         protected List<Type> AuthorizedTypes;
-        private List<DayService> _dayServices;
-        private TypiconRule _rule;
-        private List<TypiconRule> _rules;
-        private HandlingMode _mode;
+        protected RuleContainer _executingResult;
+        protected RuleHandlerSettings _settings = new RuleHandlerSettings();
 
         public RuleHandlerBase() { }
 
-        #region Properties
-
-        public HandlingMode Mode
+        public RuleHandlerSettings Settings
         {
             get
             {
-                return _mode;
+                return _settings;
             }
-        }
 
-        /// <summary>
-        /// Список текстов богослужений для обработки, отсортированный по приоритету
-        /// </summary>
-        public List<DayService> DayServices        {
-            get
+            set
             {
-                return _dayServices;
+                _settings = value;
+                _executingResult = null;
             }
         }
-
-        /// <summary>
-        /// Последовательность богослужения для обработки
-        /// </summary>
-        public TypiconRule Rule
-        {
-            get
-            {
-                return _rule;
-            }
-        }
-
-        /// <summary>
-        /// Список правил для обработки, отсортированный по приоритету
-        /// </summary>
-        public List<TypiconRule> Rules
-        {
-            get
-            {
-                return _rules;
-            }
-        }
-
-        #endregion
-
-        public abstract void Execute(ICustomInterpreted element);
 
         public bool IsAuthorized<T>() where T : ICustomInterpreted
         {
             return AuthorizedTypes.Contains(typeof(T));
         }
 
-        public virtual void Initialize(RuleHandlerRequest request)
-        {
-            _mode = request.Mode;
-            _dayServices = request.DayServices;
-            _rule = request.Rule;
-        }
-
+        public abstract void Execute(ICustomInterpreted element);
         public abstract RuleContainer GetResult();
+        //public abstract void Initialize(RuleHandlerSettings request);
     }
 }

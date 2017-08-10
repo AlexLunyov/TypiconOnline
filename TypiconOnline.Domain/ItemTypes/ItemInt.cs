@@ -18,6 +18,7 @@ namespace TypiconOnline.Domain.ItemTypes
         public ItemInt(int val)
         {
             _value = val;
+            _stringValue = val.ToString();
         }
 
         public ItemInt(string exp)
@@ -51,6 +52,16 @@ namespace TypiconOnline.Domain.ItemTypes
                 AddBrokenConstraint(ItemIntBusinessConstraint.IntTypeMismatch, "ItemInt");
                 //throw new DefinitionsParsingException("Ошибка: неверно введена дата в элементе " + node.Name);
             }
+        }
+
+        public bool Equals(ItemInt itemInt)
+        {
+            if (itemInt == null)
+            {
+                throw new ArgumentNullException("ItemInt.Equals");
+            }
+
+            return (_stringValue == itemInt._stringValue);
         }
     }
 }

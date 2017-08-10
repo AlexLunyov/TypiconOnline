@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.Rules.Days
             elementNode = node.SelectSingleNode(RuleConstants.TroparionNode);
             if (elementNode != null)
             {
-                Troparion = new YmnosGroup(elementNode);
+                Troparion = new Stichera(elementNode);
             }
 
         }
@@ -50,7 +50,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Отпустительный тропарь
         /// </summary>
-        public YmnosGroup Troparion { get; set; }
+        public Stichera Troparion { get; set; }
 
         #endregion
 

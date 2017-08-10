@@ -15,9 +15,10 @@ namespace TypiconOnline.Domain.Rules.Handlers
     {
         private readonly int _yearToModify;
 
-        public ModificationsRuleHandler(RuleHandlerRequest request)// : base(request)
+        public ModificationsRuleHandler(RuleHandlerSettings settings)// : base(request)
         {
-            Initialize(request);
+            _settings = settings;
+            //Initialize(settings);
 
             AuthorizedTypes = new List<Type>()
             {
@@ -25,7 +26,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
             };
         }
 
-        public ModificationsRuleHandler(RuleHandlerRequest request, int year) : this(request)
+        public ModificationsRuleHandler(RuleHandlerSettings request, int year) : this(request)
         {
             _yearToModify = year;
         }
@@ -36,7 +37,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
             {
                 //
 
-                TypiconEntity typiconEntity = Rule.Owner; //Rules[0].Owner;
+                TypiconEntity typiconEntity = _settings.Rule.Owner; //Rules[0].Owner;
 
                 TypiconRule ruleToModify;
 
@@ -78,12 +79,12 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
                 if (priority == 0)
                 {
-                    priority = /*seniorTypicon*/Rule.Template.Priority;
+                    priority = /*seniorTypicon*/_settings.Rule.Template.Priority;
                 }
 
                 ModificationsRuleRequest request = new ModificationsRuleRequest()
                 {
-                    Caller = /*seniorTypicon*/Rule,
+                    Caller = /*seniorTypicon*/_settings.Rule,
                     Date = (element as ModifyDay).MoveDateCalculated,
                     Priority = priority,
                     ShortName = (element as ModifyDay).ShortName,
@@ -92,7 +93,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
                     UseFullName = (element as ModifyDay).UseFullName.Value
                 };
 
-                TypiconEntity typiconEntity = /*seniorTypicon*/Rule.Owner;//Folder.GetOwner();
+                TypiconEntity typiconEntity = /*seniorTypicon*/_settings.Rule.Owner;//Folder.GetOwner();
 
                 typiconEntity.AddModifiedRule(request);
             }

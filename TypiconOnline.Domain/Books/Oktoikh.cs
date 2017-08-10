@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TypiconOnline.Domain.Books.Oktoikh;
+using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Easter;
 
 namespace TypiconOnline.Domain.Books
@@ -254,6 +255,17 @@ namespace TypiconOnline.Domain.Books
                     }
                 }
                 return result;
+            }
+
+            /// <summary>
+            /// Возвращает текст богослужения дня и гласа, соответствующих заданной дате
+            /// </summary>
+            /// <param name="date"></param>
+            /// <returns></returns>
+            public OktoikhDay GetOktoikhDay(DateTime date)
+            {
+                //TODO: реализовать
+                return new OktoikhDay();
             }
         }
 

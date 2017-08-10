@@ -14,6 +14,20 @@ namespace TypiconOnline.Domain.Rules.Days
     /// </summary>
     public class YmnosGroup : IhosRuleElement
     {
+        public YmnosGroup()
+        {
+            Prosomoion = new Prosomoion();
+            Annotation = new ItemText();
+        }
+
+        public YmnosGroup(YmnosGroup source) : base(source)
+        {
+            Prosomoion = new Prosomoion(source.Prosomoion);
+            Annotation = new ItemText(source.Annotation.StringExpression);
+
+            source.Ymnis.ForEach(c => Ymnis.Add(new Ymnos(c)));
+        }
+
         public YmnosGroup(XmlNode node) : base(node)
         {
             ////глас
@@ -22,20 +36,13 @@ namespace TypiconOnline.Domain.Rules.Days
 
             //подобен
             XmlNode prosomoionNode = node.SelectSingleNode(RuleConstants.ProsomoionNode);
-            if (prosomoionNode != null)
-            {
-                Prosomoion = new Prosomoion(prosomoionNode);
-            }
+            Prosomoion = (prosomoionNode != null) ? new Prosomoion(prosomoionNode) : new Prosomoion();
 
             //доп описание
             XmlNode annotationNode = node.SelectSingleNode(RuleConstants.AnnotationNode);
-            if (annotationNode != null)
-            {
-                Annotation = new ItemText(annotationNode.OuterXml);
-            }
+            Annotation = (annotationNode != null) ? new ItemText(annotationNode.OuterXml) : new ItemText();
 
             //песнопения
-            Ymnis = new List<Ymnos>();
             XmlNodeList ymnisList = node.SelectNodes(RuleConstants.YmnosNode);
             if (ymnisList != null)
             {
@@ -63,10 +70,21 @@ namespace TypiconOnline.Domain.Rules.Days
         /// </summary>
         public ItemText Annotation { get; set; }
 
+        private List<Ymnos> _ymnis = new List<Ymnos>();
         /// <summary>
         /// Коллекция песнопений
         /// </summary>
-        public List<Ymnos> Ymnis { get; set; }
+        public List<Ymnos> Ymnis
+        {
+            get
+            {
+                return _ymnis;
+            }
+            set
+            {
+                _ymnis = value;
+            }
+        }
 
         #endregion
 
@@ -77,19 +95,6 @@ namespace TypiconOnline.Domain.Rules.Days
 
         protected override void Validate()
         {
-            //if (!Ihos.IsValid)
-            //{
-            //    AppendAllBrokenConstraints(Ihos, ElementName + "." + RuleConstants.YmnosIhosAttrName);
-            //}
-            //else if (!Ihos.IsEmpty)
-            //{
-            //    //глас должен иметь значения с 1 до 8
-            //    if ((Ihos.Value < 1) || (Ihos.Value > 8))
-            //    {
-            //        AddBrokenConstraint(YmnosGroupBusinessConstraint.InvalidIhos, ElementName);
-            //    }
-            //}
-
             base.Validate();
 
             if (Prosomoion?.IsValid == false)
@@ -109,6 +114,15 @@ namespace TypiconOnline.Domain.Rules.Days
                     AppendAllBrokenConstraints(ymnos, ElementName + "." + RuleConstants.YmnosNode);
                 }
             }
+        }
+
+        public bool Equals(YmnosGroup ymnosGroup)
+        {
+            if (ymnosGroup == null)
+            {
+                throw new ArgumentNullException("YmnosGroup.Equals");
+            }
+            return (Ihos.Equals(ymnosGroup.Ihos) && Annotation.Equals(ymnosGroup.Annotation) && Prosomoion.Equals(ymnosGroup.Prosomoion));
         }
     }
 }
