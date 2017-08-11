@@ -8,10 +8,10 @@ using TypiconOnline.Domain.Rules.Schedule;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {
-    public class SticheraRuleHandler : RuleHandlerBase
+    public class YmnosStructureRuleHandler : RuleHandlerBase
     {
 
-        public SticheraRuleHandler()
+        public YmnosStructureRuleHandler()
         {
             AuthorizedTypes = new List<Type>()
             {

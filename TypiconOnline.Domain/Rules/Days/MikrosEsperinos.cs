@@ -19,21 +19,21 @@ namespace TypiconOnline.Domain.Rules.Days
             XmlNode elementNode = node.SelectSingleNode(RuleConstants.KekragariaNode);
             if (elementNode != null)
             {
-                Kekragaria = new Stichera(elementNode);
+                Kekragaria = new YmnosStructure(elementNode);
             }
 
             //Aposticha
             elementNode = node.SelectSingleNode(RuleConstants.ApostichaNode);
             if (elementNode != null)
             {
-                Aposticha = new Stichera(elementNode);
+                Aposticha = new YmnosStructure(elementNode);
             }
 
             //Troparion
             elementNode = node.SelectSingleNode(RuleConstants.TroparionNode);
             if (elementNode != null)
             {
-                Troparion = new Stichera(elementNode);
+                Troparion = new YmnosStructure(elementNode);
             }
 
         }
@@ -42,15 +42,15 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Господи воззвах
         /// </summary>
-        public Stichera Kekragaria { get; set; }
+        public YmnosStructure Kekragaria { get; set; }
         /// <summary>
         /// Стихиры на стиховне
         /// </summary>
-        public Stichera Aposticha { get; set; }
+        public YmnosStructure Aposticha { get; set; }
         /// <summary>
         /// Отпустительный тропарь
         /// </summary>
-        public Stichera Troparion { get; set; }
+        public YmnosStructure Troparion { get; set; }
 
         #endregion
 

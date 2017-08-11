@@ -13,28 +13,28 @@ namespace TypiconOnline.Domain.Rules.Days
             XmlNode elementNode = node.SelectSingleNode(RuleConstants.SedalenKathizma1Node);
             if (elementNode != null)
             {
-                SedalenKathizma1 = new Stichera(elementNode);
+                SedalenKathizma1 = new YmnosStructure(elementNode);
             }
 
             //SedalenKathizma2
             elementNode = node.SelectSingleNode(RuleConstants.SedalenKathizma2Node);
             if (elementNode != null)
             {
-                SedalenKathizma2 = new Stichera(elementNode);
+                SedalenKathizma2 = new YmnosStructure(elementNode);
             }
 
             //SedalenKathizma3
             elementNode = node.SelectSingleNode(RuleConstants.SedalenKathizma3Node);
             if (elementNode != null)
             {
-                SedalenKathizma3 = new Stichera(elementNode);
+                SedalenKathizma3 = new YmnosStructure(elementNode);
             }
 
             //SedalenPolyeleos
             elementNode = node.SelectSingleNode(RuleConstants.SedalenPolyeleosNode);
             if (elementNode != null)
             {
-                SedalenPolyeleos = new Stichera(elementNode);
+                SedalenPolyeleos = new YmnosStructure(elementNode);
             }
 
             //Megalynarion
@@ -69,7 +69,7 @@ namespace TypiconOnline.Domain.Rules.Days
             elementNode = node.SelectSingleNode(RuleConstants.Sticheron50Node);
             if (elementNode != null)
             {
-                Sticheron50 = new Stichera(elementNode);
+                Sticheron50 = new YmnosStructure(elementNode);
             }
 
             //Kanonas
@@ -83,14 +83,14 @@ namespace TypiconOnline.Domain.Rules.Days
             elementNode = node.SelectSingleNode(RuleConstants.AinoiNode);
             if (elementNode != null)
             {
-                Ainoi = new Stichera(elementNode);
+                Ainoi = new YmnosStructure(elementNode);
             }
 
             //Aposticha
             elementNode = node.SelectSingleNode(RuleConstants.ApostichaNode);
             if (elementNode != null)
             {
-                Aposticha = new Stichera(elementNode);
+                Aposticha = new YmnosStructure(elementNode);
             }
         }
 
@@ -99,19 +99,19 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// седален по 1-ой кафизме
         /// </summary>
-        public Stichera SedalenKathizma1 { get; set; }
+        public YmnosStructure SedalenKathizma1 { get; set; }
         /// <summary>
         /// седален по 2-ой кафизме
         /// </summary>
-        public Stichera SedalenKathizma2 { get; set; }
+        public YmnosStructure SedalenKathizma2 { get; set; }
         /// <summary>
         /// седален по 3-ой кафизме
         /// </summary>
-        public Stichera SedalenKathizma3 { get; set; }
+        public YmnosStructure SedalenKathizma3 { get; set; }
         /// <summary>
         /// седален по полиелее
         /// </summary>
-        public Stichera SedalenPolyeleos { get; set; }
+        public YmnosStructure SedalenPolyeleos { get; set; }
         /// <summary>
         /// Величания
         /// </summary>
@@ -131,7 +131,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Стихира по 50-м псалме
         /// </summary>
-        public Stichera Sticheron50 { get; set; }
+        public YmnosStructure Sticheron50 { get; set; }
         /// <summary>
         /// Канон
         /// </summary>
@@ -139,11 +139,11 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Стихиры на Хвалитех
         /// </summary>
-        public Stichera Ainoi { get; set; }
+        public YmnosStructure Ainoi { get; set; }
         /// <summary>
         /// Стихиры на стиховне
         /// </summary>
-        public Stichera Aposticha { get; set; }
+        public YmnosStructure Aposticha { get; set; }
 
         #endregion
 

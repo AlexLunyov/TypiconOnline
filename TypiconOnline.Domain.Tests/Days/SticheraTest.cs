@@ -33,9 +33,9 @@ namespace TypiconOnline.Domain.Tests.Days
 
             DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 638);
 
-            Stichera stichera = (dayService.Rule as DayElement).Esperinos.Kekragaria.GetStichera(8, 1);
+            YmnosStructure stichera = (dayService.Rule as DayElement).Esperinos.Kekragaria.GetYmnosStructure(8, 1);
 
-            Assert.AreEqual(stichera.SticheraCount, 8);
+            Assert.AreEqual(stichera.YmnosStructureCount, 8);
         }
 
         [Test]
@@ -47,9 +47,9 @@ namespace TypiconOnline.Domain.Tests.Days
 
             DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 638);
 
-            Stichera stichera = (dayService.Rule as DayElement).Esperinos.Kekragaria.GetStichera(6, 1);
+            YmnosStructure stichera = (dayService.Rule as DayElement).Esperinos.Kekragaria.GetYmnosStructure(6, 1);
 
-            Assert.AreEqual(stichera.SticheraCount, 6);
+            Assert.AreEqual(stichera.YmnosStructureCount, 6);
         }
 
         [Test]
@@ -61,9 +61,9 @@ namespace TypiconOnline.Domain.Tests.Days
 
             DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 638);
             
-            Stichera stichera = (dayService.Rule as DayElement).Esperinos.Kekragaria.GetStichera(8, 3);
+            YmnosStructure stichera = (dayService.Rule as DayElement).Esperinos.Kekragaria.GetYmnosStructure(8, 3);
 
-            Assert.AreEqual(stichera.SticheraCount, 8);
+            Assert.AreEqual(stichera.YmnosStructureCount, 8);
         }
     }
 }

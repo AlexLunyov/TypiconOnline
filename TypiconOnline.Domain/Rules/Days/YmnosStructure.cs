@@ -12,23 +12,23 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Класс описывает коолекцию песнопений.
     /// Таквыми являются Стихиры на Господи воззвах, на Хвалитех, и т.д.
     /// </summary>
-    public class Stichera : RuleElement
+    public class YmnosStructure : RuleElement
     {
         private List<YmnosGroup> _groups = new List<YmnosGroup>();
 
-        public Stichera() { }
+        public YmnosStructure() { }
 
-        public Stichera(YmnosGroup group)
+        public YmnosStructure(YmnosGroup group)
         {
             _groups.Add(new YmnosGroup(group));
         }
 
-        public Stichera(XmlNode node) : base(node) 
+        public YmnosStructure(XmlNode node) : base(node) 
         {
             //Groups = new List<YmnosGroup>();
 
             //группы стихир
-            XmlNodeList groupList = node.SelectNodes(RuleConstants.SticheraGroupNode);
+            XmlNodeList groupList = node.SelectNodes(RuleConstants.YmnosStructureGroupNode);
             if (groupList != null)
             {
                 foreach (XmlNode groupItemNode in groupList)
@@ -38,14 +38,14 @@ namespace TypiconOnline.Domain.Rules.Days
             }
 
             //славник
-            XmlNode doxastichonNode = node.SelectSingleNode(RuleConstants.SticheraDoxastichonNode);
+            XmlNode doxastichonNode = node.SelectSingleNode(RuleConstants.YmnosStructureDoxastichonNode);
             if (doxastichonNode != null)
             {
                 Doxastichon = new YmnosGroup(doxastichonNode);
             }
 
             //богородичен
-            XmlNode theotokionNode = node.SelectSingleNode(RuleConstants.SticheraTheotokionNode);
+            XmlNode theotokionNode = node.SelectSingleNode(RuleConstants.YmnosStructureTheotokionNode);
             if (theotokionNode != null)
             {
                 Theotokion = new YmnosGroup(theotokionNode);
@@ -87,18 +87,18 @@ namespace TypiconOnline.Domain.Rules.Days
             {
                 if (!group.IsValid)
                 {
-                    AppendAllBrokenConstraints(group, ElementName + "." + RuleConstants.SticheraGroupNode);
+                    AppendAllBrokenConstraints(group, ElementName + "." + RuleConstants.YmnosStructureGroupNode);
                 }
             }
 
             if (Doxastichon?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Doxastichon, ElementName + "." + RuleConstants.SticheraDoxastichonNode);
+                AppendAllBrokenConstraints(Doxastichon, ElementName + "." + RuleConstants.YmnosStructureDoxastichonNode);
             }
 
             if (Theotokion?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Theotokion, ElementName + "." + RuleConstants.SticheraTheotokionNode);
+                AppendAllBrokenConstraints(Theotokion, ElementName + "." + RuleConstants.YmnosStructureTheotokionNode);
             }
         }
 
@@ -107,7 +107,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// Возвращает общее количество стихир, без учета славника и богородична
         /// </summary>
         /// <returns></returns>
-        public int SticheraCount
+        public int YmnosStructureCount
         {
             get
             { 
@@ -136,7 +136,7 @@ namespace TypiconOnline.Domain.Rules.Days
         {
             get
             {
-                if (index >= SticheraCount)
+                if (index >= YmnosStructureCount)
                 {
                     throw new IndexOutOfRangeException("YmnosGroup");
                 }
@@ -173,27 +173,27 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <param name="count">Количество</param>
         /// <param name="startFrom">стартовый индекс (1 - ориентированный)</param>
         /// <returns></returns>
-        public Stichera GetStichera(int count, int startFrom)
+        public YmnosStructure GetYmnosStructure(int count, int startFrom)
         {
             if (count < 0)
             {
                 throw new ArgumentOutOfRangeException("count");
             }
 
-            if (startFrom < 1 || startFrom > SticheraCount)
+            if (startFrom < 1 || startFrom > YmnosStructureCount)
             {
                 throw new ArgumentOutOfRangeException("startFrom");
             }
 
             ThrowExceptionIfInvalid();
 
-            Stichera ymnis = new Stichera();
+            YmnosStructure ymnis = new YmnosStructure();
 
             /*если заявленное количество больше того, что есть, выдаем с повторами
             * например: 8 = 3 3 2
             *           10= 4 4 3
             */
-            if (count > SticheraCount)
+            if (count > YmnosStructureCount)
             {
                 int appendedCount = 0;
 
@@ -203,9 +203,9 @@ namespace TypiconOnline.Domain.Rules.Days
 
                 while (appendedCount < count)
                 {
-                    //округляем в большую сторону результат деления count на SticheraCount
+                    //округляем в большую сторону результат деления count на YmnosStructureCount
                     //в результате получаем, сколько раз необходимо повторять песнопение
-                    int b = (int)Math.Ceiling((double)(count - appendedCount) / (SticheraCount - i));
+                    int b = (int)Math.Ceiling((double)(count - appendedCount) / (YmnosStructureCount - i));
 
                     YmnosGroup groupToAdd = this[i];
 

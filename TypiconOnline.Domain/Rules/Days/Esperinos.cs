@@ -27,7 +27,7 @@ namespace TypiconOnline.Domain.Rules.Days
             elementNode = node.SelectSingleNode(RuleConstants.LitiNode);
             if (elementNode != null)
             {
-                Liti = new Stichera(elementNode);
+                Liti = new YmnosStructure(elementNode);
             }
         }
 
@@ -41,7 +41,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Стихиры на литии
         /// </summary>
-        public Stichera Liti { get; set; }
+        public YmnosStructure Liti { get; set; }
         
 
         #endregion

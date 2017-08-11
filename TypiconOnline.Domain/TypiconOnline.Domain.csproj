@@ -89,7 +89,7 @@
     <Compile Include="Rules\Days\Prokeimenon.cs" />
     <Compile Include="Rules\Days\Prosomoion.cs" />
     <Compile Include="Rules\Days\Ymnos.cs" />
-    <Compile Include="Rules\Days\Stichera.cs" />
+    <Compile Include="Rules\Days\YmnosStructure.cs" />
     <Compile Include="Rules\Days\YmnosGroup.cs" />
     <Compile Include="Rules\Executables\If.cs" />
     <Compile Include="Rules\Executables\ModifyDay.cs" />
@@ -131,6 +131,7 @@
     <Compile Include="Rules\Handlers\RuleHandlerSettings.cs" />
     <Compile Include="Rules\Handlers\ScheduleHandler.cs" />
     <Compile Include="Rules\Schedule\IsCelebrating.cs" />
+    <Compile Include="Rules\Schedule\KekragariaRule.cs" />
     <Compile Include="Rules\Schedule\Service.cs" />
     <Compile Include="Rules\Schedule\YmnosRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\ServiceBusinessConstraint.cs" />

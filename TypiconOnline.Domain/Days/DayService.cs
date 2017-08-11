@@ -46,63 +46,63 @@ namespace TypiconOnline.Domain.Days
         /// <param name="count">Количество</param>
         /// <param name="startFrom">С какого по номеру песнопения начинать выборку</param>
         /// <returns></returns>
-        public Stichera GetStichera(PlaceYmnosSource place, int count, int startFrom)
+        public YmnosStructure GetYmnosStructure(PlaceYmnosSource place, int count, int startFrom)
         {
             ThrowExceptionIfInvalid();
 
-            Stichera stichera = null;
+            YmnosStructure stichera = null;
 
             switch (place)
             {
                 //kekragaria
                 case PlaceYmnosSource.kekragaria:
-                    stichera = (Rule as DayElement).Esperinos.Kekragaria.GetStichera(count, startFrom);
+                    stichera = (Rule as DayElement).Esperinos.Kekragaria.GetYmnosStructure(count, startFrom);
                     break;
                 case PlaceYmnosSource.kekragaria_doxastichon:
-                    stichera = new Stichera((Rule as DayElement).Esperinos.Kekragaria.Doxastichon);
+                    stichera = new YmnosStructure() { Doxastichon = new YmnosGroup((Rule as DayElement).Esperinos.Kekragaria.Doxastichon) };
                     break;
                 case PlaceYmnosSource.kekragaria_theotokion:
-                    stichera = new Stichera((Rule as DayElement).Esperinos.Kekragaria.Theotokion);
+                    stichera = new YmnosStructure() { Theotokion = new YmnosGroup((Rule as DayElement).Esperinos.Kekragaria.Theotokion) }; 
                     break;
                 //liti
                 case PlaceYmnosSource.liti:
-                    stichera = (Rule as DayElement).Esperinos.Liti.GetStichera(count, startFrom);
+                    stichera = (Rule as DayElement).Esperinos.Liti.GetYmnosStructure(count, startFrom);
                     break;
                 case PlaceYmnosSource.liti_doxastichon:
-                    stichera = new Stichera((Rule as DayElement).Esperinos.Liti.Doxastichon);
+                    stichera = new YmnosStructure() { Doxastichon = new YmnosGroup((Rule as DayElement).Esperinos.Liti.Doxastichon) }; 
                     break;
                 case PlaceYmnosSource.liti_theotokion:
-                    stichera = new Stichera((Rule as DayElement).Esperinos.Liti.Theotokion);
+                    stichera = new YmnosStructure() { Theotokion = new YmnosGroup((Rule as DayElement).Esperinos.Liti.Theotokion) };
                     break;
                 //aposticha_esperinos
                 case PlaceYmnosSource.aposticha_esperinos:
-                    stichera = (Rule as DayElement).Esperinos.Aposticha.GetStichera(count, startFrom);
+                    stichera = (Rule as DayElement).Esperinos.Aposticha.GetYmnosStructure(count, startFrom);
                     break;
                 case PlaceYmnosSource.aposticha_esperinos_doxastichon:
-                    stichera = new Stichera((Rule as DayElement).Esperinos.Aposticha.Doxastichon);
+                    stichera = new YmnosStructure() { Doxastichon = new YmnosGroup((Rule as DayElement).Esperinos.Aposticha.Doxastichon) };
                     break;
                 case PlaceYmnosSource.aposticha_esperinos_theotokion:
-                    stichera = new Stichera((Rule as DayElement).Esperinos.Aposticha.Theotokion);
+                    stichera = new YmnosStructure() { Theotokion = new YmnosGroup((Rule as DayElement).Esperinos.Aposticha.Theotokion) };
                     break;
                 //ainoi
                 case PlaceYmnosSource.ainoi:
-                    stichera = (Rule as DayElement).Orthros.Ainoi.GetStichera(count, startFrom);
+                    stichera = (Rule as DayElement).Orthros.Ainoi.GetYmnosStructure(count, startFrom);
                     break;
                 case PlaceYmnosSource.ainoi_doxastichon:
-                    stichera = new Stichera((Rule as DayElement).Orthros.Ainoi.Doxastichon);
+                    stichera = new YmnosStructure() { Doxastichon = new YmnosGroup((Rule as DayElement).Orthros.Ainoi.Doxastichon) };
                     break;
                 case PlaceYmnosSource.ainoi_theotokion:
-                    stichera = new Stichera((Rule as DayElement).Orthros.Ainoi.Theotokion);
+                    stichera = new YmnosStructure() { Theotokion = new YmnosGroup((Rule as DayElement).Orthros.Ainoi.Theotokion) };
                     break;
                 //aposticha_orthros
                 case PlaceYmnosSource.aposticha_orthros:
-                    stichera = (Rule as DayElement).Orthros.Aposticha.GetStichera(count, startFrom);
+                    stichera = (Rule as DayElement).Orthros.Aposticha.GetYmnosStructure(count, startFrom);
                     break;
                 case PlaceYmnosSource.aposticha_orthros_doxastichon:
-                    stichera = new Stichera((Rule as DayElement).Orthros.Aposticha.Doxastichon);
+                    stichera = new YmnosStructure() { Doxastichon = new YmnosGroup((Rule as DayElement).Orthros.Aposticha.Doxastichon) };
                     break;
                 case PlaceYmnosSource.aposticha_orthros_theotokion:
-                    stichera = new Stichera((Rule as DayElement).Orthros.Aposticha.Theotokion);
+                    stichera = new YmnosStructure() { Theotokion = new YmnosGroup((Rule as DayElement).Orthros.Aposticha.Theotokion) };
                     break;
             }
 

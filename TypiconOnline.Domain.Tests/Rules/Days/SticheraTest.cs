@@ -49,7 +49,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
 
             XmlNode root = xmlDoc.DocumentElement;
 
-            Stichera element = new Stichera(root);// (xmlDoc.FirstChild);
+            YmnosStructure element = new YmnosStructure(root);// (xmlDoc.FirstChild);
 
             Assert.AreEqual(element.Groups[0].Ihos.Value, 5);
             //Assert.Pass(element.Text.Text["cs-ru"]);

@@ -122,9 +122,9 @@ namespace TypiconOnline.Domain.Rules
         public const string KanonasKontakionNode = "kontakion";
         public const string KanonasExapostilarionNode = "exapostilarion";
 
-        public const string SticheraGroupNode = "group";
-        public const string SticheraDoxastichonNode = "doxastichon";
-        public const string SticheraTheotokionNode = "theotokion";
+        public const string YmnosStructureGroupNode = "group";
+        public const string YmnosStructureDoxastichonNode = "doxastichon";
+        public const string YmnosStructureTheotokionNode = "theotokion";
 
         public const string ProsomoionNode = "prosomoion";
         public const string ProsomoionSelfAttr = "self";
@@ -140,7 +140,7 @@ namespace TypiconOnline.Domain.Rules
          * Константы для описания правил для составления последовательностей богослужебных текстов
          */
 
-        public const string SticheraRuleNode = "kekragaria";
+        public const string YmnosStructureRuleNode = "kekragaria";
         public const string ShowPsalmAttribute = "showpsalm";
 
         /*

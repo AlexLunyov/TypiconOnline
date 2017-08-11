@@ -16,24 +16,22 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Описание стихир Господи воззвах в последовательности богослужений
     /// </summary>
-    public class SticheraRule : ExecContainer, ICustomInterpreted
+    public class YmnosStructureRule : ExecContainer, ICustomInterpreted
     {
-        private Stichera _stichera;
-        private ItemBoolean _showPsalm;
+        private YmnosStructure _stichera;
+        
 
-        public SticheraRule(XmlNode node) : base(node)
+        public YmnosStructureRule(XmlNode node) : base(node)
         {
-            XmlAttribute attr = node.Attributes[RuleConstants.ShowPsalmAttribute];
-
-            _showPsalm = new ItemBoolean((attr != null) ? attr.Value : "false");
+            
         }
 
         #region Properties
 
         /// <summary>
-        /// Вычисленная последовательность стихир на Господи воззвах
+        /// Вычисленная последовательность богослужебных текстов
         /// </summary>
-        public Stichera CalculatedStichera
+        public YmnosStructure CalculatedYmnosStructure
         {
             get
             {
@@ -41,23 +39,15 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public ItemBoolean ShowPsalm
-        {
-            get
-            {
-                return _showPsalm;
-            }
-        }
-
         #endregion
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            if (IsValid && handler.IsAuthorized<SticheraRule>())
+            if (IsValid && handler.IsAuthorized<YmnosStructureRule>())
             {
-                //используем специальный обработчик для SticheraRule,
+                //используем специальный обработчик для YmnosStructureRule,
                 //чтобы создать список источников стихир на обработку
-                SticheraRuleHandler kekragariaHandler = new SticheraRuleHandler();
+                YmnosStructureRuleHandler kekragariaHandler = new YmnosStructureRuleHandler();
 
                 foreach (RuleElement elem in ChildElements)
                 {
@@ -68,19 +58,19 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                 if (container != null)
                 {
-                    CalculateStichera(date, handler, container);
+                    CalculateYmnosStructure(date, handler, container);
                 }
             }
         }
 
-        private void CalculateStichera(DateTime date, IRuleHandler handler, RuleContainer container)
+        private void CalculateYmnosStructure(DateTime date, IRuleHandler handler, RuleContainer container)
         {
-            _stichera = new Stichera();
+            _stichera = new YmnosStructure();
             foreach (YmnosRule ymnosRule in container.ChildElements)
             {
                 if (ymnosRule.Source.Value == YmnosSource.Irmologion)
                 {
-                    //добавляем Богородичны из приложений Ирмология
+                    //TODO: добавляем Богородичны из приложений Ирмология
                 }
                 else
                 {
@@ -104,11 +94,23 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                     if (dayService == null)
                     {
-                        throw new KeyNotFoundException("SticheraRule source not found: " + ymnosRule.Source.Value.ToString());
+                        throw new KeyNotFoundException("YmnosStructureRule source not found: " + ymnosRule.Source.Value.ToString());
                     }
 
-                    //теперь разбираемся с place
-                     //ymnosRule.Place.Value
+                    //теперь разбираемся с place И kind
+                    switch (ymnosRule.YmnosKind.Value)
+                    {
+                        case YmnosKind.Ymnos:
+                            _stichera.Groups.AddRange(dayService.GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Groups);
+                            break;
+                        case YmnosKind.Doxastichon:
+                            _stichera.Doxastichon = dayService.GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Doxastichon;
+                            break;
+                        case YmnosKind.Theotokion:
+                            _stichera.Theotokion = dayService.GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Theotokion;
+                            break;
+                    }
+                    
                 }
 
                 //handler.Settings.DayServices

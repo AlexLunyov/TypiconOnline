@@ -126,11 +126,11 @@
       <FileName>Rules\Days\Prosomoion.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.Stichera" Collapsed="true">
+  <Class Name="TypiconOnline.Domain.Rules.Days.YmnosStructure" Collapsed="true">
     <Position X="77.75" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIEAAAACAAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>Rules\Days\Stichera.cs</FileName>
+      <FileName>Rules\Days\YmnosStructure.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Days.Ymnos" Collapsed="true">
@@ -573,11 +573,11 @@
       <NewMemberFileName>Rules\Schedule\ServiceBusinessConstraint.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Handlers.SticheraRuleHandler" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="TypiconOnline.Domain.Rules.Handlers.YmnosStructureRuleHandler" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="1" Y="3.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQQAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
-      <FileName>Rules\Handlers\SticheraRuleHandler.cs</FileName>
+      <FileName>Rules\Handlers\YmnosStructureRuleHandler.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Schedule.YmnosRule" Collapsed="true">
