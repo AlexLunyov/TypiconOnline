@@ -136,7 +136,7 @@
     <Compile Include="Rules\Schedule\YmnosRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\ServiceBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\Notice.cs" />
-    <Compile Include="Rules\Schedule\SticheraRule.cs" />
+    <Compile Include="Rules\Schedule\YmnosStructureRule.cs" />
     <Compile Include="Rules\Schedule\YmnosRule.cs" />
     <Compile Include="Schedule\ScheduleWeek.cs" />
     <Compile Include="Typicon\CommonRule.cs" />
