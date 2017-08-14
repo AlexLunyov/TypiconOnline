@@ -33,6 +33,16 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
+        public TextHolder(TextHolder item)
+        {
+            _textHolderKind = new ItemEnumType<TextHolderKind>(item.ElementName);
+
+            foreach (ItemText text in item.Paragraphs)
+            {
+                Paragraphs.Add(new ItemText(text.StringExpression));
+            }
+        }
+
         #region Properties
 
         public ItemEnumType<TextHolderKind> Kind
@@ -55,7 +65,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            throw new NotImplementedException();
+            ThrowExceptionIfInvalid();
+
+            if (handler.IsAuthorized<TextHolder>())
+            {
+                handler.Execute(this);
+            }
         }
 
         protected override void Validate()

@@ -68,6 +68,9 @@
     <Compile Include="ItemTypes\ItemTextCollection.cs" />
     <Compile Include="ItemTypes\ItemTimeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemTime.cs" />
+    <Compile Include="Rendering\RenderContainer.cs" />
+    <Compile Include="Rendering\RenderService.cs" />
+    <Compile Include="Rendering\RenderTextHolder.cs" />
     <Compile Include="Rules\Days\DayElement.cs" />
     <Compile Include="Rules\Days\DayElementsContainer.cs" />
     <Compile Include="Rules\Days\DayElementBusinessConstraint.cs" />
@@ -132,6 +135,7 @@
     <Compile Include="Rules\Handlers\RuleHandlerSettings.cs" />
     <Compile Include="Rules\Handlers\ScheduleHandler.cs" />
     <Compile Include="Rules\CommonRuleConstants.cs" />
+    <Compile Include="Rendering\RenderElement.cs" />
     <Compile Include="Rules\Schedule\Paragraph.cs" />
     <Compile Include="Rules\Schedule\TextHolder.cs" />
     <Compile Include="Rules\Schedule\IsCelebrating.cs" />
@@ -214,7 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
-    <Folder Include="Rules\Rendering\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagrams\Basics.cd" />

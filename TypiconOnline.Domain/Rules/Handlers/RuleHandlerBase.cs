@@ -36,7 +36,13 @@ namespace TypiconOnline.Domain.Rules.Handlers
         }
 
         public abstract void Execute(ICustomInterpreted element);
-        public abstract RuleContainer GetResult();
+
+        //public abstract RuleContainer GetResult();
+        public virtual RuleContainer GetResult()
+        {
+            return _executingResult;
+        }
+
         //public abstract void Initialize(RuleHandlerSettings request);
     }
 }

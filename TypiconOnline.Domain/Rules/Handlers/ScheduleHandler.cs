@@ -46,9 +46,9 @@ namespace TypiconOnline.Domain.Rules.Handlers
         //    _executingResult = null;
         //}
 
-        public override RuleContainer GetResult()
-        {
-            return _executingResult;
-        }
+        //public override RuleContainer GetResult()
+        //{
+        //    return _executingResult;
+        //}
     }
 }

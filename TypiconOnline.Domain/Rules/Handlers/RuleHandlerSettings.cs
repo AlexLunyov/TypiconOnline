@@ -18,6 +18,10 @@ namespace TypiconOnline.Domain.Rules.Handlers
         public bool PutSeniorRuleNameToEnd = false;
         public string ShortName;
         public bool UseFullName = true;
+        /// <summary>
+        /// Язык для обработки
+        /// </summary>
+        public string Language;
 
         public RuleHandlerSettings()
         {
