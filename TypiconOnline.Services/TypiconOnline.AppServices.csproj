@@ -51,6 +51,7 @@
     <Compile Include="Implementations\HtmlScheduleWeekViewer.cs" />
     <Compile Include="Implementations\ScheduleService.cs" />
     <Compile Include="Implementations\TypiconEntityService.cs" />
+    <Compile Include="Interfaces\IScheduleDayViewer.cs" />
     <Compile Include="Interfaces\IScheduleService.cs" />
     <Compile Include="Interfaces\IScheduleWeekViewer.cs" />
     <Compile Include="Interfaces\ITypiconEntityService.cs" />

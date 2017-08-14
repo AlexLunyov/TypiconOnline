@@ -27,7 +27,7 @@ namespace TypiconMigrationTool
 
             while (true)
             {
-                Console.WriteLine("Что желаете? '1' - миграция БД, '3' - тест, '4' - тест для Благовещения");
+                Console.WriteLine("Что желаете? '1' - миграция БД, '3' - тест, '4' - тест для Благовещения, '5' - загрузка TestTypicon");
 
                 ConsoleKeyInfo info = Console.ReadKey();
 
@@ -41,6 +41,9 @@ namespace TypiconMigrationTool
                         break;
                     case '4':
                         TestBlagoveshenie(unitOfWork);
+                        break;
+                    case '5':
+                        //TestMigrate();
                         break;
                 }
             }

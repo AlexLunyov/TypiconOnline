@@ -487,5 +487,20 @@ namespace ScheduleForm
             DayXmlHelper<TriodionDay> triodXmlHelper = new DayXmlHelper<TriodionDay>(_unitOfWork, saver);
             triodXmlHelper.Load();
         }
+
+        private void btnGetSequence_Click(object sender, EventArgs e)
+        {
+            GetScheduleDayRequest request = new GetScheduleDayRequest()
+            {
+                Date = SelectedDate,
+                TypiconEntity = _typiconEntity,
+                Mode = HandlingMode.All,
+                RuleHandler = new ServiceSequenceHandler()
+            };
+
+            GetScheduleDayResponse dayResponse = _scheduleService.GetScheduleDay(request);
+
+            //dayResponse.Day.Schedule
+        }
     }
 }

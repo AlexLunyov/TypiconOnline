@@ -65,6 +65,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxFilePath = new System.Windows.Forms.TextBox();
             this.tabAdminPage = new System.Windows.Forms.TabPage();
+            this.btnLoadDaysXml = new System.Windows.Forms.Button();
+            this.btnSaveDaysXml = new System.Windows.Forms.Button();
             this.btnReloadRules = new System.Windows.Forms.Button();
             this.btnClearModifiedYears = new System.Windows.Forms.Button();
             this.tabPageTesting = new System.Windows.Forms.TabPage();
@@ -73,8 +75,12 @@
             this.dateTimePickerTesting = new System.Windows.Forms.DateTimePicker();
             this.folderBrowserDialogSettings = new System.Windows.Forms.FolderBrowserDialog();
             this.templateFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.btnSaveDaysXml = new System.Windows.Forms.Button();
-            this.btnLoadDaysXml = new System.Windows.Forms.Button();
+            this.tabPageSequence = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.monthCalendarSequence = new System.Windows.Forms.MonthCalendar();
+            this.btnGetSequence = new System.Windows.Forms.Button();
+            this.txtSequence = new System.Windows.Forms.TextBox();
             this.tabControlMain.SuspendLayout();
             this.tabPageMain.SuspendLayout();
             this.panelTest.SuspendLayout();
@@ -87,6 +93,9 @@
             this.groupBox1.SuspendLayout();
             this.tabAdminPage.SuspendLayout();
             this.tabPageTesting.SuspendLayout();
+            this.tabPageSequence.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlMain
@@ -95,6 +104,7 @@
             this.tabControlMain.Controls.Add(this.tabPagesSettings);
             this.tabControlMain.Controls.Add(this.tabAdminPage);
             this.tabControlMain.Controls.Add(this.tabPageTesting);
+            this.tabControlMain.Controls.Add(this.tabPageSequence);
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
             this.tabControlMain.Margin = new System.Windows.Forms.Padding(4);
@@ -525,6 +535,26 @@
             this.tabAdminPage.UseVisualStyleBackColor = true;
             this.tabAdminPage.Enter += new System.EventHandler(this.tabAdminPage_Enter);
             // 
+            // btnLoadDaysXml
+            // 
+            this.btnLoadDaysXml.Location = new System.Drawing.Point(18, 154);
+            this.btnLoadDaysXml.Name = "btnLoadDaysXml";
+            this.btnLoadDaysXml.Size = new System.Drawing.Size(195, 28);
+            this.btnLoadDaysXml.TabIndex = 3;
+            this.btnLoadDaysXml.Text = "Load days\' names as xml";
+            this.btnLoadDaysXml.UseVisualStyleBackColor = true;
+            this.btnLoadDaysXml.Click += new System.EventHandler(this.btnLoadDaysXml_Click);
+            // 
+            // btnSaveDaysXml
+            // 
+            this.btnSaveDaysXml.Location = new System.Drawing.Point(18, 109);
+            this.btnSaveDaysXml.Name = "btnSaveDaysXml";
+            this.btnSaveDaysXml.Size = new System.Drawing.Size(195, 28);
+            this.btnSaveDaysXml.TabIndex = 2;
+            this.btnSaveDaysXml.Text = "Save days\' names as xml";
+            this.btnSaveDaysXml.UseVisualStyleBackColor = true;
+            this.btnSaveDaysXml.Click += new System.EventHandler(this.btnSaveDaysXml_Click);
+            // 
             // btnReloadRules
             // 
             this.btnReloadRules.Location = new System.Drawing.Point(18, 62);
@@ -591,25 +621,68 @@
             // 
             this.templateFileDialog.Filter = "Docx файлы | *.docx";
             // 
-            // btnSaveDaysXml
+            // tabPageSequence
             // 
-            this.btnSaveDaysXml.Location = new System.Drawing.Point(18, 109);
-            this.btnSaveDaysXml.Name = "btnSaveDaysXml";
-            this.btnSaveDaysXml.Size = new System.Drawing.Size(195, 28);
-            this.btnSaveDaysXml.TabIndex = 2;
-            this.btnSaveDaysXml.Text = "Save days\' names as xml";
-            this.btnSaveDaysXml.UseVisualStyleBackColor = true;
-            this.btnSaveDaysXml.Click += new System.EventHandler(this.btnSaveDaysXml_Click);
+            this.tabPageSequence.Controls.Add(this.groupBox7);
+            this.tabPageSequence.Controls.Add(this.groupBox6);
+            this.tabPageSequence.Location = new System.Drawing.Point(4, 25);
+            this.tabPageSequence.Name = "tabPageSequence";
+            this.tabPageSequence.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSequence.Size = new System.Drawing.Size(963, 458);
+            this.tabPageSequence.TabIndex = 4;
+            this.tabPageSequence.Text = "Последование";
+            this.tabPageSequence.UseVisualStyleBackColor = true;
             // 
-            // btnLoadDaysXml
+            // groupBox6
             // 
-            this.btnLoadDaysXml.Location = new System.Drawing.Point(18, 154);
-            this.btnLoadDaysXml.Name = "btnLoadDaysXml";
-            this.btnLoadDaysXml.Size = new System.Drawing.Size(195, 28);
-            this.btnLoadDaysXml.TabIndex = 3;
-            this.btnLoadDaysXml.Text = "Load days\' names as xml";
-            this.btnLoadDaysXml.UseVisualStyleBackColor = true;
-            this.btnLoadDaysXml.Click += new System.EventHandler(this.btnLoadDaysXml_Click);
+            this.groupBox6.Controls.Add(this.btnGetSequence);
+            this.groupBox6.Controls.Add(this.monthCalendarSequence);
+            this.groupBox6.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupBox6.Location = new System.Drawing.Point(3, 3);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(200, 452);
+            this.groupBox6.TabIndex = 0;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Календарь";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.txtSequence);
+            this.groupBox7.Dock = System.Windows.Forms.DockStyle.Right;
+            this.groupBox7.Location = new System.Drawing.Point(209, 3);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(751, 452);
+            this.groupBox7.TabIndex = 1;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Текст";
+            // 
+            // monthCalendarSequence
+            // 
+            this.monthCalendarSequence.Location = new System.Drawing.Point(-1, 29);
+            this.monthCalendarSequence.Margin = new System.Windows.Forms.Padding(12, 11, 12, 11);
+            this.monthCalendarSequence.Name = "monthCalendarSequence";
+            this.monthCalendarSequence.TabIndex = 8;
+            // 
+            // btnGetSequence
+            // 
+            this.btnGetSequence.Location = new System.Drawing.Point(-1, 250);
+            this.btnGetSequence.Name = "btnGetSequence";
+            this.btnGetSequence.Size = new System.Drawing.Size(192, 29);
+            this.btnGetSequence.TabIndex = 9;
+            this.btnGetSequence.Text = "Сформировать";
+            this.btnGetSequence.UseVisualStyleBackColor = true;
+            this.btnGetSequence.Click += new System.EventHandler(this.btnGetSequence_Click);
+            // 
+            // txtSequence
+            // 
+            this.txtSequence.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtSequence.Location = new System.Drawing.Point(3, 18);
+            this.txtSequence.Multiline = true;
+            this.txtSequence.Name = "txtSequence";
+            this.txtSequence.ReadOnly = true;
+            this.txtSequence.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtSequence.Size = new System.Drawing.Size(745, 431);
+            this.txtSequence.TabIndex = 1;
             // 
             // StartForm
             // 
@@ -643,6 +716,10 @@
             this.tabAdminPage.ResumeLayout(false);
             this.tabPageTesting.ResumeLayout(false);
             this.tabPageTesting.PerformLayout();
+            this.tabPageSequence.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -696,5 +773,11 @@
         private System.Windows.Forms.Button btnTest40mart;
         private System.Windows.Forms.Button btnSaveDaysXml;
         private System.Windows.Forms.Button btnLoadDaysXml;
+        private System.Windows.Forms.TabPage tabPageSequence;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.TextBox txtSequence;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button btnGetSequence;
+        private System.Windows.Forms.MonthCalendar monthCalendarSequence;
     }
 }

@@ -89,15 +89,19 @@ namespace TypiconOnline.Domain.ItemTypes
         {
             base.Build(expression);
 
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(expression);
-
-            if (doc?.DocumentElement != null)
+            if (!string.IsNullOrEmpty(expression))
             {
-                XmlNode node = doc.DocumentElement;
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(expression);
 
-                BuildFromXml(node);
+                if (doc?.DocumentElement != null)
+                {
+                    XmlNode node = doc.DocumentElement;
+
+                    BuildFromXml(node);
+                }
             }
+            
         }
 
         private void BuildFromXml(XmlNode node)

@@ -19,14 +19,27 @@ namespace TypiconOnline.Domain.Rules.Schedule
     public class YmnosStructureRule : ExecContainer, ICustomInterpreted
     {
         private YmnosStructure _stichera;
-        
+
+        private ItemEnumType<YmnosStructureKind> _ymnosStructureKind;
+
 
         public YmnosStructureRule(XmlNode node) : base(node)
         {
-            
+            _ymnosStructureKind = new ItemEnumType<YmnosStructureKind>(node.Name);
         }
 
         #region Properties
+
+        /// <summary>
+        /// Тип структуры (Господи воззвах, стихиры на стиховне и т.д.)
+        /// </summary>
+        public ItemEnumType<YmnosStructureKind> YmnosStructureKind
+        {
+            get
+            {
+                return _ymnosStructureKind;
+            }
+        }
 
         /// <summary>
         /// Вычисленная последовательность богослужебных текстов
@@ -47,14 +60,14 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 //используем специальный обработчик для YmnosStructureRule,
                 //чтобы создать список источников стихир на обработку
-                YmnosStructureRuleHandler kekragariaHandler = new YmnosStructureRuleHandler();
+                YmnosStructureRuleHandler structHandler = new YmnosStructureRuleHandler();
 
                 foreach (RuleElement elem in ChildElements)
                 {
-                    elem.Interpret(date, kekragariaHandler);
+                    elem.Interpret(date, structHandler);
                 }
 
-                RuleContainer container = kekragariaHandler.GetResult();
+                RuleContainer container = structHandler.GetResult();
 
                 if (container != null)
                 {
@@ -95,6 +108,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     if (dayService == null)
                     {
                         throw new KeyNotFoundException("YmnosStructureRule source not found: " + ymnosRule.Source.Value.ToString());
+                    }
+
+                    if (ymnosRule.Place == null)
+                    {
+                        //TODO: на случай если будет реализован функционал, когда у ymnosRule может быть не определен place
                     }
 
                     //теперь разбираемся с place И kind

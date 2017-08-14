@@ -130,17 +130,21 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 AppendAllBrokenConstraints(_source);
             }
 
-            if (_place?.IsValid == false)
+            if (_place == null)
+            {
+                AddBrokenConstraint(YmnosRuleBusinessConstraint.PlaceRequired, ElementName);
+            }
+            else if (_place.IsValid == false)
             {
                 AppendAllBrokenConstraints(_place);
             }
 
-            if (_count?.IsValid == false)
+            if (_count.IsValid == false)
             {
                 AppendAllBrokenConstraints(_count);
             }
 
-            if (_startFrom?.IsValid == false)
+            if (_startFrom.IsValid == false)
             {
                 AppendAllBrokenConstraints(_startFrom);
             }

@@ -152,6 +152,15 @@ namespace TypiconOnline.Domain.Rules
         public const string YmnosRuleCountAttrName = "count";
         public const string YmnosRuleStartFromAttrName = "startfrom";
 
+        /*
+         * TextHolder
+         */
+        public const string TextHolderPapragraphNode = "p";
+        public const string TextHolderLectorNode = "lector";
+        public const string TextHolderChoirNode = "choir";
+        public const string TextHolderDeaconNode = "deacon";
+        public const string TextHolderPriestNode = "priest";
+
         //public const string ExecContainerNodeName = "правило";
         //public const string SwitchNodeName = "выбор";
         //public const string ConditionNodeName = "условие";
@@ -214,6 +223,14 @@ namespace TypiconOnline.Domain.Rules
     }
 
     public enum YmnosKind { Ymnos, Doxastichon, Theotokion }
+    
+    public enum YmnosStructureKind { Kekragaria, Aposticha, Liti, Ainoi }
+
+    public enum ServiceSequenceKind { MikrosEsperinos, Esperinos, Orthros, Hour, Leitourgia }
+
+    public enum TextHolderKind { Choir, Lector, Priest, Deacon }
+    
+
 
     public enum State { Valid = 0, Invalid = 1, NotDefined = 2}
 }

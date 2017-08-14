@@ -11,9 +11,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class Service : RuleContainer, ICustomInterpreted
     {
-        private ItemTime _time = new ItemTime();
+        private ItemTime _time;
         private string _name;
-        private ItemBoolean _isDayBefore = new ItemBoolean();
+        private ItemBoolean _isDayBefore;
         private string _additionalName;
 
         public Service(XmlNode node) : base(node)
@@ -21,28 +21,16 @@ namespace TypiconOnline.Domain.Rules.Schedule
             if (node.Attributes.Count > 0)
             {
                 XmlAttribute attr = node.Attributes[RuleConstants.ServiceTimeAttrName];
-                if (attr != null)
-                {
-                    _time = new ItemTime(attr.Value);
-                }
+                _time = new ItemTime((attr != null) ? attr.Value : string.Empty);
 
                 attr = node.Attributes[RuleConstants.ServiceNameAttrName];
-                if (attr != null)
-                {
-                    _name = attr.Value;
-                }
+                _name = (attr != null) ? attr.Value : string.Empty;
 
                 attr = node.Attributes[RuleConstants.ServiceIsDayBeforeAttrName];
-                if (attr != null)
-                {
-                    _isDayBefore = new ItemBoolean(attr.Value);
-                }
+                _isDayBefore = new ItemBoolean((attr != null) ? attr.Value : string.Empty);
 
                 attr = node.Attributes[RuleConstants.ServiceAdditionalNameAttrName];
-                if (attr != null)
-                {
-                    _additionalName = attr.Value;
-                }
+                _additionalName = (attr != null) ? attr.Value : string.Empty;
             }
         }
 

@@ -124,15 +124,21 @@
     <Compile Include="Days\DayService.cs" />
     <Compile Include="Days\MenologyDay.cs" />
     <Compile Include="Days\MenologyDayBusinessConstraint.cs" />
+    <Compile Include="Rules\Handlers\ServiceSequenceHandler.cs" />
     <Compile Include="Rules\Handlers\SticheraRuleHandler.cs" />
     <Compile Include="Rules\Handlers\ModificationsRuleHandler.cs" />
     <Compile Include="Rules\Handlers\RuleHandlerBase.cs" />
     <Compile Include="Rules\Handlers\ModificationsRuleRequest.cs" />
     <Compile Include="Rules\Handlers\RuleHandlerSettings.cs" />
     <Compile Include="Rules\Handlers\ScheduleHandler.cs" />
+    <Compile Include="Rules\CommonRuleConstants.cs" />
+    <Compile Include="Rules\Schedule\Paragraph.cs" />
+    <Compile Include="Rules\Schedule\TextHolder.cs" />
     <Compile Include="Rules\Schedule\IsCelebrating.cs" />
     <Compile Include="Rules\Schedule\KekragariaRule.cs" />
     <Compile Include="Rules\Schedule\Service.cs" />
+    <Compile Include="Rules\Schedule\ServiceSequence.cs" />
+    <Compile Include="Rules\Schedule\TextHolderBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\YmnosRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\ServiceBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\Notice.cs" />
@@ -208,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
+    <Folder Include="Rules\Rendering\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagrams\Basics.cd" />

@@ -20,8 +20,7 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public ItemStyledType(string expression)
         {
-            _stringExpression = expression;
-            Build(expression);
+            StringExpression = expression;
         }
 
         public TextStyle Style = new TextStyle();/*
@@ -57,7 +56,7 @@ namespace TypiconOnline.Domain.ItemTypes
             set
             {
                 _stringExpression = value;
-                Build(value);
+                Build(value);                
             }
         }
 
@@ -99,28 +98,31 @@ namespace TypiconOnline.Domain.ItemTypes
 
         protected virtual void Build(string expression)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(expression);
-
-            if ((doc != null) && (doc.DocumentElement != null))
+            if (!string.IsNullOrEmpty(_stringExpression))
             {
-                XmlNode node = doc.DocumentElement;
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(expression);
 
-                TagName = node.Name;
-
-                node = node.SelectSingleNode(RuleConstants.StyleNodeName);
-
-                if ((node != null) && (node.HasChildNodes))
+                if ((doc != null) && (doc.DocumentElement != null))
                 {
-                    //парсим стиль
-                    Style.IsBold = node.SelectSingleNode(RuleConstants.StyleBoldNodeName) != null;
-                    Style.IsRed = node.SelectSingleNode(RuleConstants.StyleRedNodeName) != null;
+                    XmlNode node = doc.DocumentElement;
 
-                    foreach (string h in Enum.GetNames(typeof(HeaderCaption)))
+                    TagName = node.Name;
+
+                    node = node.SelectSingleNode(RuleConstants.StyleNodeName);
+
+                    if ((node != null) && (node.HasChildNodes))
                     {
-                        if (node.SelectSingleNode(h.ToLower()) != null)
+                        //парсим стиль
+                        Style.IsBold = node.SelectSingleNode(RuleConstants.StyleBoldNodeName) != null;
+                        Style.IsRed = node.SelectSingleNode(RuleConstants.StyleRedNodeName) != null;
+
+                        foreach (string h in Enum.GetNames(typeof(HeaderCaption)))
                         {
-                            Style.Header = (HeaderCaption)Enum.Parse(typeof(HeaderCaption), h);
+                            if (node.SelectSingleNode(h.ToLower()) != null)
+                            {
+                                Style.Header = (HeaderCaption)Enum.Parse(typeof(HeaderCaption), h);
+                            }
                         }
                     }
                 }

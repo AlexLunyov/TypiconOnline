@@ -175,6 +175,13 @@ namespace TypiconOnline.Domain.Rules.Factories
                     case RuleConstants.IfNodeName:
                         outputEl = new If(node);
                         break;
+                    //TextHolder
+                    case RuleConstants.TextHolderLectorNode:
+                    case RuleConstants.TextHolderChoirNode:
+                    case RuleConstants.TextHolderDeaconNode:
+                    case RuleConstants.TextHolderPriestNode:
+                        outputEl = new TextHolder(node);
+                        break;
                 }
             }
             return outputEl;
@@ -225,5 +232,6 @@ namespace TypiconOnline.Domain.Rules.Factories
             }
             return outputEl;
         }
+
     }
 }

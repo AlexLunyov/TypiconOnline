@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
         public RuleHandlerBase() { }
 
-        public RuleHandlerSettings Settings
+        public virtual RuleHandlerSettings Settings
         {
             get
             {

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -33,6 +34,18 @@ namespace TypiconOnline.Domain.Rules.Schedule
         }
 
         #endregion
+
+        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        {
+            ThrowExceptionIfInvalid();
+
+            if (handler.IsAuthorized<KekragariaRule>())
+            {
+                base.InnerInterpret(date, handler);
+
+
+            }
+        }
 
         protected override void Validate()
         {

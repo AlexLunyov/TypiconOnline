@@ -26,7 +26,7 @@ namespace TypiconOnline.Domain.ItemTypes
             //    throw new ArgumentException("T must be an enumerated type");
             //}
 
-            _stringValue = exp;
+            _stringValue = exp.ToLower();
 
             _isValid = Enum.TryParse(exp, true, out _value);
         }

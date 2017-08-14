@@ -8,12 +8,15 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class YmnosRuleBusinessConstraint
+    public class TextHolderBusinessConstraint
     {
+        public static readonly BusinessConstraint ParagraphRequired = new BusinessConstraint("Отсутствуют определение параграфа с текстом.");
+        public static readonly BusinessConstraint ParagraphEmpty = new BusinessConstraint("Параграф не содержит определений текста.");
+
         public static readonly BusinessConstraint KindMismatch = new BusinessConstraint("Отсутствуют определение типа песнопения (обычный, славник, богородичен...).");
         public static readonly BusinessConstraint SourceRequired = new BusinessConstraint("Отсутствуют определение источника песнопения (книги).");
         public static readonly BusinessConstraint SourceInvalid = new BusinessConstraint("Неверный источник песнопения (книги).");
-        public static readonly BusinessConstraint PlaceRequired = new BusinessConstraint("Отсутствуют определение места в источнике песнопения (книги).");
+        
         public static readonly BusinessConstraint PlaceInvalid = new BusinessConstraint("Неверно определено место в источнике песнопения (книги).");
     }
 }
