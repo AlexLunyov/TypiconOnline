@@ -11,17 +11,15 @@ using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Schedule;
-using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Easter;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Implementations;
-using TypiconOnline.Domain.Rules;
 using TypiconOnline.WinServices;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.Domain.Days;
-using TypiconOnline.Domain.Rendering;
+using TypiconOnline.Domain.ViewModels;
 
 namespace ScheduleForm
 {
@@ -297,15 +295,15 @@ namespace ScheduleForm
                 textBoxResult.AppendText("--------------------------" + Environment.NewLine);
                 textBoxResult.AppendText(day.Date.ToShortDateString() + Environment.NewLine);
                 textBoxResult.AppendText(day.Name + Environment.NewLine);
-                foreach (RenderElement element in day.Schedule.ChildElements)
+                foreach (ElementViewModel element in day.Schedule.ChildElements)
                 {
-                    if (element is RenderNotice)
+                    if (element is NoticeViewModel)
                     {
-                        textBoxResult.AppendText((element as RenderNotice).Text + " " + (element as RenderNotice).AdditionalName + Environment.NewLine);
+                        textBoxResult.AppendText((element as NoticeViewModel).Text + " " + (element as NoticeViewModel).AdditionalName + Environment.NewLine);
                     }
-                    else if (element is RenderServiceElement)
+                    else if (element is ServiceViewModel)
                     {
-                        textBoxResult.AppendText((element as RenderServiceElement).Time + " " + (element as RenderServiceElement).Text + " " + (element as RenderServiceElement).AdditionalName + Environment.NewLine);
+                        textBoxResult.AppendText((element as ServiceViewModel).Time + " " + (element as ServiceViewModel).Text + " " + (element as ServiceViewModel).AdditionalName + Environment.NewLine);
                     }
                 }
             }
@@ -431,15 +429,15 @@ namespace ScheduleForm
 
             textBoxTesting.AppendText(dayResponse.Day.Date.ToShortDateString() + Environment.NewLine);
             textBoxTesting.AppendText(dayResponse.Day.Name + ". " + daysFromEaster + " дней до Пасхи." +Environment.NewLine);
-            foreach (RenderElement element in dayResponse.Day.Schedule.ChildElements)
+            foreach (ElementViewModel element in dayResponse.Day.Schedule.ChildElements)
             {
-                if (element is RenderNotice)
+                if (element is NoticeViewModel)
                 {
-                    textBoxTesting.AppendText((element as RenderNotice).Text + " " + (element as RenderNotice).AdditionalName + Environment.NewLine);
+                    textBoxTesting.AppendText((element as NoticeViewModel).Text + " " + (element as NoticeViewModel).AdditionalName + Environment.NewLine);
                 }
-                else if (element is RenderServiceElement)
+                else if (element is ServiceViewModel)
                 {
-                    textBoxTesting.AppendText((element as RenderServiceElement).Time + " " + (element as RenderServiceElement).Text + " " + (element as RenderServiceElement).AdditionalName + Environment.NewLine);
+                    textBoxTesting.AppendText((element as ServiceViewModel).Time + " " + (element as ServiceViewModel).Text + " " + (element as ServiceViewModel).AdditionalName + Environment.NewLine);
                 }
             }
         }

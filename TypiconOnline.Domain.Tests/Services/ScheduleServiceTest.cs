@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Easter;
-using TypiconOnline.Domain.Rendering;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Repository.EF;
 
 namespace TypiconOnline.Domain.Tests.Services
@@ -47,7 +47,7 @@ namespace TypiconOnline.Domain.Tests.Services
 
             builder.AppendLine(response.Day.Date.ToShortDateString() + " " + response.Day.Name);
 
-            foreach (RenderServiceElement service in response.Day.Schedule.ChildElements)
+            foreach (ServiceViewModel service in response.Day.Schedule.ChildElements)
             {
                 builder.AppendLine(service.Time + " " + service.Text);
             }

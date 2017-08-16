@@ -68,14 +68,6 @@
     <Compile Include="ItemTypes\ItemTextCollection.cs" />
     <Compile Include="ItemTypes\ItemTimeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemTime.cs" />
-    <Compile Include="Rendering\Factories\RenderingFactory.cs" />
-    <Compile Include="Rendering\RenderContainer.cs" />
-    <Compile Include="Rendering\RenderNotice.cs" />
-    <Compile Include="Rendering\RenderServiceElement.cs" />
-    <Compile Include="Rendering\RenderServiceSequence.cs" />
-    <Compile Include="Rendering\RenderTextHolder.cs" />
-    <Compile Include="Rendering\RenderYmnosGroup.cs" />
-    <Compile Include="Rendering\RenderYmnosStructure.cs" />
     <Compile Include="Rules\Days\DayElement.cs" />
     <Compile Include="Rules\Days\DayElementsContainer.cs" />
     <Compile Include="Rules\Days\DayElementBusinessConstraint.cs" />
@@ -141,7 +133,6 @@
     <Compile Include="Rules\Handlers\RuleHandlerSettings.cs" />
     <Compile Include="Rules\Handlers\ScheduleHandler.cs" />
     <Compile Include="Rules\CommonRuleConstants.cs" />
-    <Compile Include="Rendering\RenderElement.cs" />
     <Compile Include="Rules\Schedule\Paragraph.cs" />
     <Compile Include="Rules\Schedule\TextHolder.cs" />
     <Compile Include="Rules\Schedule\IsCelebrating.cs" />
@@ -216,6 +207,15 @@
     <Compile Include="Typicon\TypiconEntity.cs" />
     <Compile Include="Typicon\TypiconRule T.cs" />
     <Compile Include="Typicon\TypiconSettings.cs" />
+    <Compile Include="ViewModels\ContainerViewModel.cs" />
+    <Compile Include="ViewModels\ElementViewModel.cs" />
+    <Compile Include="ViewModels\Factories\ViewModelFactory.cs" />
+    <Compile Include="ViewModels\NoticeViewModel.cs" />
+    <Compile Include="ViewModels\ServiceSequenceViewModel.cs" />
+    <Compile Include="ViewModels\ServiceViewModel.cs" />
+    <Compile Include="ViewModels\TextHolderViewModel.cs" />
+    <Compile Include="ViewModels\YmnosGroupViewModel.cs" />
+    <Compile Include="ViewModels\YmnosStructureViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure.Common\TypiconOnline.Infrastructure.Common.csproj">

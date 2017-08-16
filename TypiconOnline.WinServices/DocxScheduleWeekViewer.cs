@@ -11,7 +11,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.AppServices.Common;
-using TypiconOnline.Domain.Rendering;
+using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.WinServices
 {
@@ -84,7 +84,7 @@ namespace TypiconOnline.WinServices
                     SetTextToCell(tdDate, sDate, false, false);
                     dayTable.AppendChild(tr);
 
-                    foreach (RenderServiceElement service in day.Schedule.ChildElements)
+                    foreach (ServiceViewModel service in day.Schedule.ChildElements)
                     {
                         tr = (TableRow)dayTemplateTable.ChildElements[4].Clone();
                         TableCell tdTime = (TableCell)tr.ChildElements[2];
