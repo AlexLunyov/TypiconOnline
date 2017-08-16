@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.Domain.Rendering;
 using TypiconOnline.Domain.Schedule;
+using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -26,50 +26,50 @@ namespace TypiconOnline.AppServices.Implementations
 
             _resultStringBuilder.Clear();
 
-            foreach (RenderElement element in day.Schedule.ChildElements)
+            foreach (ElementViewModel element in day.Schedule.ChildElements)
             {
                 Render(element);
             }
         }
 
-        private void Render(RenderElement element)
+        private void Render(ElementViewModel element)
         {
-            if (element is RenderServiceElement)
+            if (element is ServiceViewModel)
             {
-                RenderServiceElement r = element as RenderServiceElement;
+                ServiceViewModel r = element as ServiceViewModel;
                 _resultStringBuilder.AppendFormat("{0} {1} {2}", r.Time, r.Text, r.AdditionalName);
                 _resultStringBuilder.AppendLine();
 
-                foreach (RenderElement childElement in r.ChildElements)
+                foreach (ElementViewModel childElement in r.ChildElements)
                 {
                     Render(childElement);
                 }
             }
-            else if (element is RenderServiceSequence)
+            else if (element is ServiceSequenceViewModel)
             {
-                RenderServiceSequence r = element as RenderServiceSequence;
+                ServiceSequenceViewModel r = element as ServiceSequenceViewModel;
                 _resultStringBuilder.AppendFormat("[ {0} ]", r.Kind);
                 _resultStringBuilder.AppendLine();
 
-                foreach (RenderElement childElement in r.ChildElements)
+                foreach (ElementViewModel childElement in r.ChildElements)
                 {
                     Render(childElement);
                 }
             }
-            else if (element is RenderYmnosStructure)
+            else if (element is YmnosStructureViewModel)
             {
-                RenderYmnosStructure r = element as RenderYmnosStructure;
+                YmnosStructureViewModel r = element as YmnosStructureViewModel;
                 _resultStringBuilder.AppendFormat("[ {0}. {1} {2}]", r.Kind, r.IhosText, r.Ihos);
                 _resultStringBuilder.AppendLine();
 
-                foreach (RenderElement childElement in r.ChildElements)
+                foreach (ElementViewModel childElement in r.ChildElements)
                 {
                     Render(childElement);
                 }
             }
-            else if (element is RenderYmnosGroup)
+            else if (element is YmnosGroupViewModel)
             {
-                RenderYmnosGroup r = element as RenderYmnosGroup;
+                YmnosGroupViewModel r = element as YmnosGroupViewModel;
                 _resultStringBuilder.AppendFormat("[ {0} {1}. ", r.IhosText, r.Ihos);
 
                 if (!string.IsNullOrEmpty(r.Self))
@@ -82,14 +82,14 @@ namespace TypiconOnline.AppServices.Implementations
                 }
                 _resultStringBuilder.AppendLine("]");
 
-                foreach (RenderElement childElement in r.ChildElements)
+                foreach (ElementViewModel childElement in r.ChildElements)
                 {
                     Render(childElement);
                 }
             }
-            else if (element is RenderTextHolder)
+            else if (element is TextHolderViewModel)
             {
-                RenderTextHolder r = element as RenderTextHolder;
+                TextHolderViewModel r = element as TextHolderViewModel;
                 _resultStringBuilder.AppendFormat("[ {0} ]", r.Kind);
                 _resultStringBuilder.AppendLine();
 

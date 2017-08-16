@@ -5,9 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.Domain.Rendering;
-using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Schedule;
+using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -56,7 +55,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 _resultString += "<table border=0>";
 
-                foreach (RenderServiceElement service in day.Schedule.ChildElements)
+                foreach (ServiceViewModel service in day.Schedule.ChildElements)
                 {
                     _resultString += "<tr><td>";
 

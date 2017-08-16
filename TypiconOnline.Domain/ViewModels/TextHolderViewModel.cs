@@ -8,19 +8,19 @@ using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
 
-namespace TypiconOnline.Domain.Rendering
+namespace TypiconOnline.Domain.ViewModels
 {
-    public class RenderTextHolder : RenderElement
+    public class TextHolderViewModel : ElementViewModel
     {
         public TextHolderKind Kind { get; set; }
         public IEnumerable<string> Paragraphs { get; set; } 
             
-        public RenderTextHolder()
+        public TextHolderViewModel()
         {
             Paragraphs = new List<string>();
         }
 
-        public RenderTextHolder(TextHolder textHolder, RuleHandlerBase handler)
+        public TextHolderViewModel(TextHolder textHolder, RuleHandlerBase handler)
         {
             if (textHolder == null) throw new ArgumentNullException("textHolder");
             if (handler == null) throw new ArgumentNullException("handler");

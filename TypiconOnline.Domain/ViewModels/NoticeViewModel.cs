@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
 
-namespace TypiconOnline.Domain.Rendering
+namespace TypiconOnline.Domain.ViewModels
 {
-    public class RenderNotice : RenderServiceElement
+    public class NoticeViewModel : ServiceViewModel
     {
-        public RenderNotice(Service item, RuleHandlerBase handler) : base(item, handler)
+        public NoticeViewModel(Service item, RuleHandlerBase handler) : base(item, handler)
         {
         }
     }

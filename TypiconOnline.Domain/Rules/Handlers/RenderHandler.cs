@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TypiconOnline.Domain.Rendering;
+using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {
@@ -27,7 +27,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
             throw new NotImplementedException();
         }
 
-        public virtual RenderContainer GetResult()
+        public virtual ContainerViewModel GetResult()
         {
             throw new NotImplementedException();
         }

@@ -8,9 +8,9 @@ using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
 
-namespace TypiconOnline.Domain.Rendering
+namespace TypiconOnline.Domain.ViewModels
 {
-    public class RenderYmnosGroup : RenderContainer
+    public class YmnosGroupViewModel : ContainerViewModel
     {
         /// <summary>
         /// Глас
@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.Rendering
         /// </summary>
         public string Self { get; set; }
 
-        public RenderYmnosGroup(YmnosGroup group, RuleHandlerBase handler)
+        public YmnosGroupViewModel(YmnosGroup group, RuleHandlerBase handler)
         {
             if (group == null || group.Ymnis == null) throw new ArgumentNullException("YmnosGroup");
             if (handler == null) throw new ArgumentNullException("handler");
@@ -66,14 +66,14 @@ namespace TypiconOnline.Domain.Rendering
                 //добавляем стих и песнопение как отдельные объекты
                 if (!ymnos.Stihos.IsEmpty)
                 {
-                    ChildElements.Add( new RenderTextHolder()
+                    ChildElements.Add( new TextHolderViewModel()
                     {
                         Kind = TextHolderKind.Stihos,
                         Paragraphs = new string[] { ymnos.Stihos.Text[handler.Settings.Language] }
                     });
                 }
 
-                ChildElements.Add(new RenderTextHolder()
+                ChildElements.Add(new TextHolderViewModel()
                 {
                     Kind = TextHolderKind.Choir,
                     Paragraphs = new string[] { ymnos.Text.Text[handler.Settings.Language] }

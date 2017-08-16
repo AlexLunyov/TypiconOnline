@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TypiconOnline.Domain.Rendering;
+using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Typicon;
@@ -12,7 +12,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
 {
     public class ScheduleHandler : RuleHandlerBase
     {
-        protected RenderContainer _executingResult;
+        protected ContainerViewModel _executingResult;
 
         public ScheduleHandler()//(RuleHandlerSettings request) : base(request)
         {
@@ -48,10 +48,10 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 {
                     if (_executingResult == null)
                     {
-                        _executingResult = new RenderContainer();
+                        _executingResult = new ContainerViewModel();
                     }
 
-                    RenderServiceElement renderService = new RenderServiceElement(element as Service, this);
+                    ServiceViewModel renderService = new ServiceViewModel(element as Service, this);
                     //renderService.CopyOnlyValues(element as Service);
 
                     _executingResult.ChildElements.Add(renderService);
@@ -66,7 +66,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         //    _executingResult = null;
         //}
 
-        public virtual RenderContainer GetResult()
+        public virtual ContainerViewModel GetResult()
         {
             return _executingResult;
         }

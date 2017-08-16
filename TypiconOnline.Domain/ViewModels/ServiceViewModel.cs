@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
+using TypiconOnline.Domain.ViewModels.Factories;
 
-namespace TypiconOnline.Domain.Rendering
+namespace TypiconOnline.Domain.ViewModels
 {
-    public class RenderServiceElement : RenderContainer
+    public class ServiceViewModel : ContainerViewModel
     {
         public string Time;
         public bool IsDayBefore;
         public string AdditionalName;
 
-        public RenderServiceElement() { }
+        public ServiceViewModel() { }
 
-        public RenderServiceElement(Service service, RuleHandlerBase handler)
+        public ServiceViewModel(Service service, RuleHandlerBase handler)
         {
             CopyOnlyValues(service);
 
@@ -25,7 +26,7 @@ namespace TypiconOnline.Domain.Rendering
             {
                 if ((element is ICustomInterpreted) && handler.IsTypeAuthorized(element as ICustomInterpreted))
                 {
-                    ChildElements.Add(RenderingFactory.CreateElement(element, handler));
+                    ChildElements.Add(ViewModelFactory.CreateElement(element, handler));
                 }
             }
         }

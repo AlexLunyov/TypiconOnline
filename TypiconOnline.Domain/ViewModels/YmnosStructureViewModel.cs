@@ -8,9 +8,9 @@ using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
 
-namespace TypiconOnline.Domain.Rendering
+namespace TypiconOnline.Domain.ViewModels
 {
-    public class RenderYmnosStructure : RenderContainer
+    public class YmnosStructureViewModel : ContainerViewModel
     {
         public YmnosStructureKind Kind { get; set; }
 
@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Rendering
         /// </summary>
         public string IhosText { get; set; }
 
-        public RenderYmnosStructure(YmnosStructureRule rule, RuleHandlerBase handler)
+        public YmnosStructureViewModel(YmnosStructureRule rule, RuleHandlerBase handler)
         {
             if (rule == null || rule.CalculatedYmnosStructure == null) throw new ArgumentNullException("ymnosStructure");
             if (handler == null) throw new ArgumentNullException("handler");
@@ -34,7 +34,7 @@ namespace TypiconOnline.Domain.Rendering
             {
                 YmnosGroup group = rule.CalculatedYmnosStructure.Groups[i];
 
-                RenderYmnosGroup item = new RenderYmnosGroup(group, handler);
+                YmnosGroupViewModel item = new YmnosGroupViewModel(group, handler);
 
                 if (i == 0)
                 {
@@ -47,12 +47,12 @@ namespace TypiconOnline.Domain.Rendering
 
             if (rule.CalculatedYmnosStructure.Doxastichon != null)
             {
-                ChildElements.Add(new RenderYmnosGroup(rule.CalculatedYmnosStructure.Doxastichon, handler));
+                ChildElements.Add(new YmnosGroupViewModel(rule.CalculatedYmnosStructure.Doxastichon, handler));
             }
 
             if (rule.CalculatedYmnosStructure.Theotokion != null)
             {
-                ChildElements.Add(new RenderYmnosGroup(rule.CalculatedYmnosStructure.Theotokion, handler));
+                ChildElements.Add(new YmnosGroupViewModel(rule.CalculatedYmnosStructure.Theotokion, handler));
             }
         }
     }

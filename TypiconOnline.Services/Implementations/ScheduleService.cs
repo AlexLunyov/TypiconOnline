@@ -5,13 +5,11 @@ using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Services;
 using TypiconOnline.Domain.Books;
-using TypiconOnline.Domain.Easter;
-using TypiconOnline.Domain.Rendering;
-using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Schedule;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
+using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.Domain.Services
 {
@@ -99,7 +97,7 @@ namespace TypiconOnline.Domain.Services
             //наполняем
             handlerSettings.Rule.Rule.Interpret(inputRequest.Date, inputRequest.Handler);
 
-            RenderContainer container = inputRequest.Handler.GetResult();
+            ContainerViewModel container = inputRequest.Handler.GetResult();
 
             if (container != null)
             {

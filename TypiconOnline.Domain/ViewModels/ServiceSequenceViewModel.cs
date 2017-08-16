@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
+using TypiconOnline.Domain.ViewModels.Factories;
 
-namespace TypiconOnline.Domain.Rendering
+namespace TypiconOnline.Domain.ViewModels
 {
-    public class RenderServiceSequence : RenderContainer
+    public class ServiceSequenceViewModel : ContainerViewModel
     {
         public ServiceSequenceKind Kind { get; set; }
 
-        public RenderServiceSequence(ServiceSequence rule, RuleHandlerBase handler)
+        public ServiceSequenceViewModel(ServiceSequence rule, RuleHandlerBase handler)
         {
             if (rule == null) throw new ArgumentNullException("ServiceSequence");
             if (handler == null) throw new ArgumentNullException("handler");
@@ -26,7 +27,7 @@ namespace TypiconOnline.Domain.Rendering
             {
                 if ((element is ICustomInterpreted) && handler.IsTypeAuthorized(element as ICustomInterpreted))
                 {
-                    ChildElements.Add(RenderingFactory.CreateElement(element, handler));
+                    ChildElements.Add(ViewModelFactory.CreateElement(element, handler));
                 }
             }
         }

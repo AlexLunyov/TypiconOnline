@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Days;
-using TypiconOnline.Domain.Rendering;
+using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.Typicon;
 
 namespace TypiconOnline.Domain.Rules.Handlers

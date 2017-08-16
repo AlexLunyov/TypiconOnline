@@ -1,5 +1,5 @@
 ﻿using System;
-using TypiconOnline.Domain.Rendering;
+using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Typicon;
@@ -13,12 +13,12 @@ namespace TypiconOnline.Domain.Schedule
     {
         public ScheduleDay()
         {
-            Schedule = new RenderContainer();
+            Schedule = new ContainerViewModel();
         }
 
         public string Name { get; set; }
         public virtual DateTime Date { get; set; }
-        public RenderContainer Schedule { get; set; }
+        public ContainerViewModel Schedule { get; set; }
         public int Sign { get; set; }
     }
 }
