@@ -228,7 +228,7 @@ namespace TypiconOnline.Domain.Rules
 
     public enum ServiceSequenceKind { MikrosEsperinos, Esperinos, Orthros, Hour, Leitourgia }
 
-    public enum TextHolderKind { Choir, Lector, Priest, Deacon }
+    public enum TextHolderKind { Choir, Lector, Priest, Deacon, Stihos, Undefined }
     
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Rendering;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Typicon;
@@ -11,6 +12,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
 {
     public class ScheduleHandler : RuleHandlerBase
     {
+        protected RenderContainer _executingResult;
+
         public ScheduleHandler()//(RuleHandlerSettings request) : base(request)
         {
             AuthorizedTypes = new List<Type>()
@@ -19,6 +22,20 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 typeof(Notice)
             };
 
+        }
+
+        public override RuleHandlerSettings Settings
+        {
+            get
+            {
+                return base.Settings;
+            }
+
+            set
+            {
+                base.Settings = value;
+                _executingResult = null;
+            }
         }
 
         public override void Execute(ICustomInterpreted element)
@@ -31,10 +48,13 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 {
                     if (_executingResult == null)
                     {
-                        _executingResult = new ExecContainer();
+                        _executingResult = new RenderContainer();
                     }
 
-                    _executingResult.ChildElements.Add(element as Service);
+                    RenderServiceElement renderService = new RenderServiceElement(element as Service, this);
+                    //renderService.CopyOnlyValues(element as Service);
+
+                    _executingResult.ChildElements.Add(renderService);
                 }
             }
         }
@@ -46,9 +66,9 @@ namespace TypiconOnline.Domain.Rules.Handlers
         //    _executingResult = null;
         //}
 
-        //public override RuleContainer GetResult()
-        //{
-        //    return _executingResult;
-        //}
+        public virtual RenderContainer GetResult()
+        {
+            return _executingResult;
+        }
     }
 }

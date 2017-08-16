@@ -18,7 +18,7 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
         public virtual DateTime Date { get; set; }
         
         //TODO: ???? нужен ли?
-        public IRuleHandler RuleHandler { get; set; }
+        public ScheduleHandler Handler { get; set; }
         public HandlingMode Mode { get; set; }
         /// <summary>
         /// Признак, конвертировать ли номер знака службы в формат отображения в веб-формах

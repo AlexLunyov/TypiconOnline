@@ -21,6 +21,7 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Rendering;
 
 namespace ScheduleForm
 {
@@ -232,7 +233,7 @@ namespace ScheduleForm
                     Date = SelectedDate,
                     TypiconEntity = _typiconEntity,
                     Mode = HandlingMode.AstronimicDay,
-                    RuleHandler = new ScheduleHandler()
+                    Handler = new ScheduleHandler()
                 };
 
                 GetScheduleWeekResponse weekResponse = _scheduleService.GetScheduleWeek(weekRequest);
@@ -296,15 +297,15 @@ namespace ScheduleForm
                 textBoxResult.AppendText("--------------------------" + Environment.NewLine);
                 textBoxResult.AppendText(day.Date.ToShortDateString() + Environment.NewLine);
                 textBoxResult.AppendText(day.Name + Environment.NewLine);
-                foreach (RuleElement element in day.Schedule.ChildElements)
+                foreach (RenderElement element in day.Schedule.ChildElements)
                 {
-                    if (element is Notice)
+                    if (element is RenderNotice)
                     {
-                        textBoxResult.AppendText((element as Notice).Name + " " + (element as Notice).AdditionalName + Environment.NewLine);
+                        textBoxResult.AppendText((element as RenderNotice).Text + " " + (element as RenderNotice).AdditionalName + Environment.NewLine);
                     }
-                    else if (element is Service)
+                    else if (element is RenderServiceElement)
                     {
-                        textBoxResult.AppendText((element as Service).Time + " " + (element as Service).Name + " " + (element as Service).AdditionalName + Environment.NewLine);
+                        textBoxResult.AppendText((element as RenderServiceElement).Time + " " + (element as RenderServiceElement).Text + " " + (element as RenderServiceElement).AdditionalName + Environment.NewLine);
                     }
                 }
             }
@@ -415,7 +416,7 @@ namespace ScheduleForm
                 Date = dateTimePickerTesting.Value,
                 TypiconEntity = _typiconEntity,
                 Mode = HandlingMode.AstronimicDay,
-                RuleHandler = new ScheduleHandler()
+                Handler = new ScheduleHandler()
             };
 
             GetScheduleDayResponse dayResponse = _scheduleService.GetScheduleDay(dayRequest);
@@ -430,15 +431,15 @@ namespace ScheduleForm
 
             textBoxTesting.AppendText(dayResponse.Day.Date.ToShortDateString() + Environment.NewLine);
             textBoxTesting.AppendText(dayResponse.Day.Name + ". " + daysFromEaster + " дней до Пасхи." +Environment.NewLine);
-            foreach (RuleElement element in dayResponse.Day.Schedule.ChildElements)
+            foreach (RenderElement element in dayResponse.Day.Schedule.ChildElements)
             {
-                if (element is Notice)
+                if (element is RenderNotice)
                 {
-                    textBoxTesting.AppendText((element as Notice).Name + " " + (element as Notice).AdditionalName + Environment.NewLine);
+                    textBoxTesting.AppendText((element as RenderNotice).Text + " " + (element as RenderNotice).AdditionalName + Environment.NewLine);
                 }
-                else if (element is Service)
+                else if (element is RenderServiceElement)
                 {
-                    textBoxTesting.AppendText((element as Service).Time + " " + (element as Service).Name + " " + (element as Service).AdditionalName + Environment.NewLine);
+                    textBoxTesting.AppendText((element as RenderServiceElement).Time + " " + (element as RenderServiceElement).Text + " " + (element as RenderServiceElement).AdditionalName + Environment.NewLine);
                 }
             }
         }
@@ -490,17 +491,31 @@ namespace ScheduleForm
 
         private void btnGetSequence_Click(object sender, EventArgs e)
         {
-            GetScheduleDayRequest request = new GetScheduleDayRequest()
+            try
             {
-                Date = SelectedDate,
-                TypiconEntity = _typiconEntity,
-                Mode = HandlingMode.All,
-                RuleHandler = new ServiceSequenceHandler()
-            };
+                GetScheduleDayRequest request = new GetScheduleDayRequest()
+                {
+                    Date = monthCalendarSequence.SelectionStart,
+                    TypiconEntity = _typiconEntity,
+                    Mode = HandlingMode.All,
+                    Handler = new ServiceSequenceHandler() 
+                };
 
-            GetScheduleDayResponse dayResponse = _scheduleService.GetScheduleDay(request);
+            request.Handler.Settings.Language = "cs-ru";
 
-            //dayResponse.Day.Schedule
+                GetScheduleDayResponse dayResponse = _scheduleService.GetScheduleDay(request);
+
+                TextScheduleDayViewer viewer = new TextScheduleDayViewer();
+                viewer.Execute(dayResponse.Day);
+
+                txtSequence.Clear();
+                txtSequence.AppendText(viewer.GetResult());
+            }
+            catch (Exception ex)
+            {
+                txtSequence.Clear();
+                txtSequence.AppendText(ex.Message);
+            }
         }
     }
 }

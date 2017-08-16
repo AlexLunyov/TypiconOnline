@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Rendering;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Typicon;
 
@@ -99,9 +100,9 @@ namespace TypiconOnline.Domain.Rules.Handlers
             }
         }
 
-        public override RuleContainer GetResult()
-        {
-            throw new NotImplementedException();
-        }
+        //public override RenderContainer GetResult()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

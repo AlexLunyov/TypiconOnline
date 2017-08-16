@@ -52,13 +52,13 @@ namespace TypiconOnline.Domain.Rules
 
         #region Methods
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler settings)
+        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
             if (IsValid)
             {
                 foreach (RuleElement el in ChildElements)
                 {
-                    el.Interpret(date, settings);
+                    el.Interpret(date, handler);
                 }
             }
         }

@@ -39,12 +39,12 @@ namespace TypiconOnline.Infrastructure.Common.Domain
         {
             //_brokenRules.Clear();
             //Validate();
-            if (_brokenConstraints.Count() > 0)
+            if (!IsValid)
             {
                 StringBuilder issues = new StringBuilder();
-                foreach (BusinessConstraint businessRule in _brokenConstraints)
+                foreach (BusinessConstraint businessConstraint in _brokenConstraints)
                 {
-                    issues.AppendLine(businessRule.ConstraintFullDescription);
+                    issues.AppendLine(businessConstraint.ConstraintFullDescription);
                 }
 
                 throw new ValueObjectIsInvalidException(issues.ToString());

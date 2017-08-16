@@ -31,10 +31,10 @@ namespace TypiconOnline.Domain.Rules.Days
         {
             //ymnos
             XmlNode elemNode = node.SelectSingleNode(RuleConstants.YmnosTextNode);
-            Text = (elemNode != null) ? new ItemText(elemNode.OuterXml) : new ItemText();
+            Text =  new ItemText((elemNode != null) ? elemNode.OuterXml : string.Empty);
 
             elemNode = node.SelectSingleNode(RuleConstants.YmnosStihosNode);
-            Stihos = (elemNode != null) ? new ItemText(elemNode.OuterXml) : new ItemText();
+            Stihos = new ItemText((elemNode != null) ? elemNode.OuterXml : string.Empty);
         }
 
         /// <summary>

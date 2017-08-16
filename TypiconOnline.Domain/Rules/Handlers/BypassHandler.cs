@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Rendering;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {
@@ -21,17 +22,6 @@ namespace TypiconOnline.Domain.Rules.Handlers
         public DateTime GetCurrentEaster(int year)
         {
             return new DateTime(year, 4, 25);
-        }
-
-        public void Initialize(RuleHandlerSettings settings)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public RuleContainer GetResult()
-        {
-            return null;
-            //throw new NotImplementedException();
         }
 
         public static BypassHandler Instance

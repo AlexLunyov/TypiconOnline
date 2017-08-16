@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TypiconOnline.Domain.Rendering
 {
-    public class RenderContainer
+    public class RenderContainer : RenderElement
     {
         public List<RenderElement> ChildElements = new List<RenderElement>();
     }

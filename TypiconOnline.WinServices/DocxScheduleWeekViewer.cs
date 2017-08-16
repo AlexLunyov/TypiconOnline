@@ -11,6 +11,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.AppServices.Common;
+using TypiconOnline.Domain.Rendering;
 
 namespace TypiconOnline.WinServices
 {
@@ -83,14 +84,14 @@ namespace TypiconOnline.WinServices
                     SetTextToCell(tdDate, sDate, false, false);
                     dayTable.AppendChild(tr);
 
-                    foreach (Service service in day.Schedule.ChildElements)
+                    foreach (RenderServiceElement service in day.Schedule.ChildElements)
                     {
                         tr = (TableRow)dayTemplateTable.ChildElements[4].Clone();
                         TableCell tdTime = (TableCell)tr.ChildElements[2];
                         TableCell tdSName = (TableCell)tr.ChildElements[3];
 
                         string sTime = service.Time.ToString();
-                        string sSName = service.Name;
+                        string sSName = service.Text;
 
                         bool bIsTimeBold = false; //(serviceNode.Attributes["istimebold"] != null);
                         bool bIsTimeRed = false; //(serviceNode.Attributes["istimered"] != null);

@@ -22,6 +22,17 @@ namespace TypiconOnline.Domain.Rules.Schedule
             _serviceSequenceKind = new ItemEnumType<ServiceSequenceKind>(node.Name);
         }
 
+        #region Properties
+
+        public ItemEnumType<ServiceSequenceKind> ServiceSequenceKind
+        {
+            get
+            {
+                return _serviceSequenceKind;
+            }
+        }
+        #endregion
+
         protected override void Validate()
         {
             base.Validate();

@@ -13,7 +13,8 @@ using System.Data.Entity.Validation;
 using TypiconOnline.Domain;
 using TypiconOnline.Domain.Easter;
 using TypiconOnline.AppServices.Common;
-using TypiconOnline.AppServices.Messaging.Common;
+using TypiconOnline.AppServices.Implementations;
+using System.IO;
 
 namespace TypiconMigrationTool
 {
@@ -166,6 +167,7 @@ namespace TypiconMigrationTool
             }
             MigrateMenologyDaysAndRules(typiconEntity);
             MigrateTriodionDaysAndRules(typiconEntity);
+            MigrateCommonRules(typiconEntity);
         }
 
         private void MigrateMenologyDaysAndRules(TypiconEntity typiconEntity)
@@ -373,6 +375,28 @@ namespace TypiconMigrationTool
             }
 
             //_unitOfWork.Commit();
+        }
+
+        private void MigrateCommonRules(TypiconEntity typiconEntity)
+        {
+            Console.WriteLine("MigrateCommonRules()");
+            string folderPath = Properties.Settings.Default.FolderPath + typiconEntity.Name + "\\Common\\";
+
+            FileReader fileReader = new FileReader(folderPath);
+
+            IEnumerable<FilesSearchResponse> files = fileReader.GetXmlsFromDirectory();
+
+            foreach (FilesSearchResponse file in files)
+            {
+                CommonRule commonRule = new CommonRule()
+                {
+                    Name = file.Name,
+                    RuleDefinition = file.Xml,
+                    Owner = typiconEntity
+                };
+                typiconEntity.CommonRules.Add(commonRule);
+            }
+            
         }
 
         private void MigrateEasters()

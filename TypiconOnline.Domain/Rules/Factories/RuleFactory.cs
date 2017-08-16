@@ -157,10 +157,6 @@ namespace TypiconOnline.Domain.Rules.Factories
 
             if (outputEl == null)
             {
-                outputEl = CreateYmnosRule(node);
-            }
-            if (outputEl == null)
-            {
                 switch (node.Name)
                 {
                     case RuleConstants.SwitchNodeName:
@@ -181,6 +177,12 @@ namespace TypiconOnline.Domain.Rules.Factories
                     case RuleConstants.TextHolderDeaconNode:
                     case RuleConstants.TextHolderPriestNode:
                         outputEl = new TextHolder(node);
+                        break;
+                    //YmnosRule
+                    case RuleConstants.YmnosRuleNode:
+                    case RuleConstants.YmnosStructureTheotokionNode:
+                    case RuleConstants.YmnosStructureDoxastichonNode:
+                        outputEl = new YmnosRule(node);
                         break;
                 }
             }
@@ -216,6 +218,18 @@ namespace TypiconOnline.Domain.Rules.Factories
                 case RuleConstants.ExecContainerNodeName:
                 case RuleConstants.ActionNodeName:
                     outputEl = new ExecContainer(node);
+                    break;
+                case RuleConstants.MikrosEsperinosNode:
+                case RuleConstants.EsperinosNode:
+                case RuleConstants.OrthrosNode:
+                case RuleConstants.LeitourgiaNode:
+                    outputEl = new ServiceSequence(node);
+                    break;
+                case RuleConstants.KekragariaNode:
+                case RuleConstants.ApostichaNode:
+                case RuleConstants.LitiNode:
+                case RuleConstants.AinoiNode:
+                    outputEl = new YmnosStructureRule(node);
                     break;
             }
             return outputEl;

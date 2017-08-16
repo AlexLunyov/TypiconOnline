@@ -81,11 +81,11 @@ namespace TypiconOnline.Domain.Rules.Days
 
         protected override void Validate()
         {
-            if (Name == null)
+            /*if (Name == null)
             {
                 AddBrokenConstraint(DayElementBusinessConstraint.NameRequired, ElementName);
             }
-            else if (!Name.IsValid)
+            else */if (Name?.IsValid == false)
             {
                 AppendAllBrokenConstraints(Name, ElementName + "." + RuleConstants.DayElementNameNode);
             }

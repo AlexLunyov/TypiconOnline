@@ -95,7 +95,6 @@
     <Compile Include="Experiments\Context.cs" />
     <Compile Include="Experiments\GenericTest.cs" />
     <Compile Include="Experiments\TestClass1.cs" />
-    <Compile Include="FileReader.cs" />
     <Compile Include="Migration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

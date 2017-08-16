@@ -71,9 +71,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             if (IsValid && handler.IsAuthorized<Service>())
             {
+                base.InnerInterpret(date, handler);
+
                 handler.Execute(this);
 
-                base.InnerInterpret(date, handler);
+                //обработка дочерних элементов совершается в handler.Execute(this);
+                //base.InnerInterpret(date, handler);
             }
         }
 

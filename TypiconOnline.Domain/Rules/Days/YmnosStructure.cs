@@ -136,7 +136,7 @@ namespace TypiconOnline.Domain.Rules.Days
         {
             get
             {
-                if (index >= YmnosStructureCount)
+                if (index >= YmnosStructureCount || index < 0)
                 {
                     throw new IndexOutOfRangeException("YmnosGroup");
                 }
@@ -192,9 +192,10 @@ namespace TypiconOnline.Domain.Rules.Days
             /*если заявленное количество больше того, что есть, выдаем с повторами
             * например: 8 = 3 3 2
             *           10= 4 4 3
+            * 
             */
-            if (count > YmnosStructureCount)
-            {
+            //if (count > YmnosStructureCount)
+            //{
                 int appendedCount = 0;
 
                 int i = startFrom - 1;
@@ -229,7 +230,7 @@ namespace TypiconOnline.Domain.Rules.Days
 
                     i++;
                 }
-            }
+            //}
 
             return ymnis;
         }

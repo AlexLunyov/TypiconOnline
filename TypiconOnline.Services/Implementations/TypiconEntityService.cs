@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -110,9 +111,6 @@ namespace TypiconOnline.AppServices.Implementations
 
                 foreach (MenologyRule rule in response.TypiconEntity.MenologyRules)
                 {
-                    //rule.RuleDefinition = (rule.Day.Date.IsEmpty && rule.Day.DateB.IsEmpty) ?
-                    //    fileReader.GetXml(rule.Day.Name) :
-                    //    fileReader.GetXml(rule.Day.DateB.Expression);
                     if (rule.Date.IsEmpty && rule.DateB.IsEmpty)
                     {
                         rule.RuleDefinition = fileReader.GetXml(rule.Name);
@@ -142,7 +140,40 @@ namespace TypiconOnline.AppServices.Implementations
                     sign.RuleDefinition = fileReader.GetXml(sign.Name);
                 }
 
+                //commonRules
+
+                ReloadCommonRules(response.TypiconEntity, folderPath);
+
                 UnitOfWork.Commit();
+            }
+        }
+
+        private void ReloadCommonRules(TypiconEntity typiconEntity, string folderPath)
+        {
+            folderPath = Path.Combine(folderPath, typiconEntity.Name, "Common");
+
+            FileReader fileReader = new FileReader(folderPath);
+
+            IEnumerable<FilesSearchResponse> files = fileReader.GetXmlsFromDirectory();
+
+            foreach (FilesSearchResponse file in files)
+            {
+                CommonRule commonRule = typiconEntity.GetCommonRule(c => c.Name == file.Name);
+
+                if (commonRule == null)
+                {
+                    commonRule = new CommonRule()
+                    {
+                        Name = file.Name,
+                        RuleDefinition = file.Xml,
+                        Owner = typiconEntity
+                    };
+                    typiconEntity.CommonRules.Add(commonRule);
+                }
+                else
+                {
+                    commonRule.RuleDefinition = file.Xml;
+                }
             }
         }
 

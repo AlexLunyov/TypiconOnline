@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Rendering;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Schedule;
 
@@ -10,6 +11,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
 {
     public class YmnosStructureRuleHandler : RuleHandlerBase
     {
+        protected RuleContainer _executingResult;
 
         public YmnosStructureRuleHandler()
         {
@@ -34,7 +36,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
             }
         }
 
-        public override RuleContainer GetResult()
+        public RuleContainer GetResult()
         {
             return _executingResult;
         }

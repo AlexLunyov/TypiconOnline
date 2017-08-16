@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Rendering;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Services;
@@ -30,7 +31,7 @@ namespace TypiconOnline.Domain.Tests.Services
                 {
                     Date = new DateTime(2018, 5, 21),//DateTime.Today,
                     Mode = HandlingMode.AstronimicDay,
-                    RuleHandler = new ScheduleHandler(),
+                    Handler = new ScheduleHandler(),
                     TypiconEntity = typiconEntity
                 };
 
@@ -46,9 +47,9 @@ namespace TypiconOnline.Domain.Tests.Services
 
             builder.AppendLine(response.Day.Date.ToShortDateString() + " " + response.Day.Name);
 
-            foreach (Service service in response.Day.Schedule.ChildElements)
+            foreach (RenderServiceElement service in response.Day.Schedule.ChildElements)
             {
-                builder.AppendLine(service.Time + " " + service.Name);
+                builder.AppendLine(service.Time + " " + service.Text);
             }
 
             Assert.Pass(builder.ToString());

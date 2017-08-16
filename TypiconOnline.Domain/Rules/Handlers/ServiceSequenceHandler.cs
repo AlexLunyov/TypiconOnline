@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Rendering;
 using TypiconOnline.Domain.Rules.Schedule;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {
-    public class ServiceSequenceHandler : RuleHandlerBase
+    public class ServiceSequenceHandler : ScheduleHandler
     {
         public ServiceSequenceHandler()
         {
@@ -15,30 +16,29 @@ namespace TypiconOnline.Domain.Rules.Handlers
             {
                 typeof(Service),
                 //typeof(Notice),
-                typeof(TextHolder)
+                typeof(TextHolder),
+                typeof(YmnosStructureRule),
+                typeof(ServiceSequence)
             };
-        }
-
-        public override RuleHandlerSettings Settings
-        {
-            set
-            {
-                base.Settings = value;
-            }
         }
 
         public override void Execute(ICustomInterpreted element)
         {
-            if (element is TextHolder)
-            {
-                
-                _executingResult.ChildElements.Add(new TextHolder(element as TextHolder));
-            }
+            base.Execute(element);
+
+            //if (element is TextHolder)
+            //{
+            //    _executingResult.ChildElements.Add(new RenderTextHolder((element as TextHolder), this));
+            //}
+            //else if (element is YmnosStructureRule)
+            //{
+            //    _executingResult.ChildElements.Add(new RenderYmnosStructure(element as YmnosStructureRule, this));
+            //}
+            //else if (element is ServiceSequence)
+            //{
+            //    _executingResult.ChildElements.Add(new RenderServiceSequence(element as ServiceSequence, this));
+            //}
         }
 
-        //public override RuleContainer GetResult()
-        //{
-        //    return _executingResult;
-        //}
     }
 }

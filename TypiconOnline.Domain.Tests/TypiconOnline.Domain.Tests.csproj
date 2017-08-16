@@ -79,6 +79,7 @@
     <Compile Include="Rules\Expressions\AndTest.cs" />
     <Compile Include="Rules\Expressions\IntTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rules\Handlers\ServiceSequenceHandlerTest.cs" />
     <Compile Include="Rules\Schedule\NoticeTest.cs" />
     <Compile Include="Rules\Schedule\TextHolderTest.cs" />
     <Compile Include="Rules\Schedule\YmnosRuleTest.cs" />

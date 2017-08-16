@@ -68,9 +68,14 @@
     <Compile Include="ItemTypes\ItemTextCollection.cs" />
     <Compile Include="ItemTypes\ItemTimeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemTime.cs" />
+    <Compile Include="Rendering\Factories\RenderingFactory.cs" />
     <Compile Include="Rendering\RenderContainer.cs" />
-    <Compile Include="Rendering\RenderService.cs" />
+    <Compile Include="Rendering\RenderNotice.cs" />
+    <Compile Include="Rendering\RenderServiceElement.cs" />
+    <Compile Include="Rendering\RenderServiceSequence.cs" />
     <Compile Include="Rendering\RenderTextHolder.cs" />
+    <Compile Include="Rendering\RenderYmnosGroup.cs" />
+    <Compile Include="Rendering\RenderYmnosStructure.cs" />
     <Compile Include="Rules\Days\DayElement.cs" />
     <Compile Include="Rules\Days\DayElementsContainer.cs" />
     <Compile Include="Rules\Days\DayElementBusinessConstraint.cs" />
@@ -127,6 +132,7 @@
     <Compile Include="Days\DayService.cs" />
     <Compile Include="Days\MenologyDay.cs" />
     <Compile Include="Days\MenologyDayBusinessConstraint.cs" />
+    <Compile Include="Rules\Handlers\RenderHandler.cs" />
     <Compile Include="Rules\Handlers\ServiceSequenceHandler.cs" />
     <Compile Include="Rules\Handlers\SticheraRuleHandler.cs" />
     <Compile Include="Rules\Handlers\ModificationsRuleHandler.cs" />
@@ -150,6 +156,8 @@
     <Compile Include="Rules\Schedule\YmnosRule.cs" />
     <Compile Include="Schedule\ScheduleWeek.cs" />
     <Compile Include="Typicon\CommonRule.cs" />
+    <Compile Include="Typicon\CommonRuleService.cs" />
+    <Compile Include="Typicon\CommonRuleServiceRequest.cs" />
     <Compile Include="Typicon\DayRule.cs" />
     <Compile Include="Typicon\Factories\TypiconEntityFactory.cs" />
     <Compile Include="Typicon\Modifications\ModifiedRule.cs" />

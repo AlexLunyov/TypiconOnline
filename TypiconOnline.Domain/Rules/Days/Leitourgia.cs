@@ -30,7 +30,8 @@ namespace TypiconOnline.Domain.Rules.Days
 
         protected override void Validate()
         {
-            throw new NotImplementedException();
+            //TODO: не реализовано
+            //throw new NotImplementedException();
         }
     }
 }

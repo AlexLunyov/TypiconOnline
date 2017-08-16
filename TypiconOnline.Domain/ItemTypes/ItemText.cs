@@ -110,11 +110,15 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 _textDict.Clear();
 
+                _isEmpty = true;
+
                 foreach (XmlNode child in node.ChildNodes)
                 {
                     if (child.Name != RuleConstants.StyleNodeName)
                     {
                         AddElement(child.Name, child.InnerText);
+
+                        _isEmpty = false;
                     }
                 }
             }

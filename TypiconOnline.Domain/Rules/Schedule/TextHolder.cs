@@ -11,7 +11,7 @@ using TypiconOnline.Domain.Rules.Handlers;
 namespace TypiconOnline.Domain.Rules.Schedule
 {
     /// <summary>
-    /// Класс содержит описания текстов богослужения (возгласы священников, тексты диаконов, чтецов и т.д.)
+    /// Класс содержит описания текстов богослужения (возгласы священников, тексты для диаконов, чтецов и т.д.)
     /// </summary>
     public class TextHolder: RuleExecutable, ICustomInterpreted
     {

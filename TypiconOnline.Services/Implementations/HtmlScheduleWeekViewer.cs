@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Interfaces;
+using TypiconOnline.Domain.Rendering;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Schedule;
 
@@ -55,12 +56,12 @@ namespace TypiconOnline.AppServices.Implementations
 
                 _resultString += "<table border=0>";
 
-                foreach (Service service in day.Schedule.ChildElements)
+                foreach (RenderServiceElement service in day.Schedule.ChildElements)
                 {
                     _resultString += "<tr><td>";
 
                     _resultString += service.Time.ToString() + "&nbsp;</td><td>";
-                    _resultString += service.Name;
+                    _resultString += service.Text;
 
                     //additionalName
                     if (!string.IsNullOrEmpty(service.AdditionalName))

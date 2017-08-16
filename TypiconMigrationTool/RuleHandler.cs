@@ -93,7 +93,7 @@ namespace TypiconMigrationTool
                 Date = date,
                 Mode = HandlingMode.All,
                 TypiconEntity = _typiconEntity,
-                RuleHandler = new ScheduleHandler()
+                Handler = new ScheduleHandler()
             };
 
             GetScheduleDayResponse response = _scheduleService.GetScheduleDay(request);

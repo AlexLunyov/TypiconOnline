@@ -73,14 +73,14 @@
             this.btnTest40mart = new System.Windows.Forms.Button();
             this.textBoxTesting = new System.Windows.Forms.TextBox();
             this.dateTimePickerTesting = new System.Windows.Forms.DateTimePicker();
+            this.tabPageSequence = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.txtSequence = new System.Windows.Forms.TextBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnGetSequence = new System.Windows.Forms.Button();
+            this.monthCalendarSequence = new System.Windows.Forms.MonthCalendar();
             this.folderBrowserDialogSettings = new System.Windows.Forms.FolderBrowserDialog();
             this.templateFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.tabPageSequence = new System.Windows.Forms.TabPage();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.monthCalendarSequence = new System.Windows.Forms.MonthCalendar();
-            this.btnGetSequence = new System.Windows.Forms.Button();
-            this.txtSequence = new System.Windows.Forms.TextBox();
             this.tabControlMain.SuspendLayout();
             this.tabPageMain.SuspendLayout();
             this.panelTest.SuspendLayout();
@@ -94,8 +94,8 @@
             this.tabAdminPage.SuspendLayout();
             this.tabPageTesting.SuspendLayout();
             this.tabPageSequence.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlMain
@@ -617,10 +617,6 @@
             this.dateTimePickerTesting.TabIndex = 0;
             this.dateTimePickerTesting.ValueChanged += new System.EventHandler(this.dateTimePickerTesting_ValueChanged);
             // 
-            // templateFileDialog
-            // 
-            this.templateFileDialog.Filter = "Docx файлы | *.docx";
-            // 
             // tabPageSequence
             // 
             this.tabPageSequence.Controls.Add(this.groupBox7);
@@ -633,45 +629,16 @@
             this.tabPageSequence.Text = "Последование";
             this.tabPageSequence.UseVisualStyleBackColor = true;
             // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.btnGetSequence);
-            this.groupBox6.Controls.Add(this.monthCalendarSequence);
-            this.groupBox6.Dock = System.Windows.Forms.DockStyle.Left;
-            this.groupBox6.Location = new System.Drawing.Point(3, 3);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(200, 452);
-            this.groupBox6.TabIndex = 0;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Календарь";
-            // 
             // groupBox7
             // 
             this.groupBox7.Controls.Add(this.txtSequence);
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox7.Location = new System.Drawing.Point(209, 3);
+            this.groupBox7.Location = new System.Drawing.Point(225, 3);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(751, 452);
+            this.groupBox7.Size = new System.Drawing.Size(735, 452);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Текст";
-            // 
-            // monthCalendarSequence
-            // 
-            this.monthCalendarSequence.Location = new System.Drawing.Point(-1, 29);
-            this.monthCalendarSequence.Margin = new System.Windows.Forms.Padding(12, 11, 12, 11);
-            this.monthCalendarSequence.Name = "monthCalendarSequence";
-            this.monthCalendarSequence.TabIndex = 8;
-            // 
-            // btnGetSequence
-            // 
-            this.btnGetSequence.Location = new System.Drawing.Point(-1, 250);
-            this.btnGetSequence.Name = "btnGetSequence";
-            this.btnGetSequence.Size = new System.Drawing.Size(192, 29);
-            this.btnGetSequence.TabIndex = 9;
-            this.btnGetSequence.Text = "Сформировать";
-            this.btnGetSequence.UseVisualStyleBackColor = true;
-            this.btnGetSequence.Click += new System.EventHandler(this.btnGetSequence_Click);
             // 
             // txtSequence
             // 
@@ -681,8 +648,44 @@
             this.txtSequence.Name = "txtSequence";
             this.txtSequence.ReadOnly = true;
             this.txtSequence.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSequence.Size = new System.Drawing.Size(745, 431);
+            this.txtSequence.Size = new System.Drawing.Size(729, 431);
             this.txtSequence.TabIndex = 1;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btnGetSequence);
+            this.groupBox6.Controls.Add(this.monthCalendarSequence);
+            this.groupBox6.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupBox6.Location = new System.Drawing.Point(3, 3);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(216, 452);
+            this.groupBox6.TabIndex = 0;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Календарь";
+            // 
+            // btnGetSequence
+            // 
+            this.btnGetSequence.Location = new System.Drawing.Point(9, 250);
+            this.btnGetSequence.Name = "btnGetSequence";
+            this.btnGetSequence.Size = new System.Drawing.Size(192, 29);
+            this.btnGetSequence.TabIndex = 9;
+            this.btnGetSequence.Text = "Сформировать";
+            this.btnGetSequence.UseVisualStyleBackColor = true;
+            this.btnGetSequence.Click += new System.EventHandler(this.btnGetSequence_Click);
+            // 
+            // monthCalendarSequence
+            // 
+            this.monthCalendarSequence.Location = new System.Drawing.Point(9, 29);
+            this.monthCalendarSequence.Margin = new System.Windows.Forms.Padding(12, 11, 12, 11);
+            this.monthCalendarSequence.MaxSelectionCount = 1;
+            this.monthCalendarSequence.Name = "monthCalendarSequence";
+            this.monthCalendarSequence.ShowToday = false;
+            this.monthCalendarSequence.ShowTodayCircle = false;
+            this.monthCalendarSequence.TabIndex = 8;
+            // 
+            // templateFileDialog
+            // 
+            this.templateFileDialog.Filter = "Docx файлы | *.docx";
             // 
             // StartForm
             // 
@@ -717,9 +720,9 @@
             this.tabPageTesting.ResumeLayout(false);
             this.tabPageTesting.PerformLayout();
             this.tabPageSequence.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

@@ -60,11 +60,13 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }
 
+        protected bool _isEmpty = true;
+
         public bool IsEmpty
         {
             get
             {
-                return string.IsNullOrEmpty(StringExpression);
+                return _isEmpty;// string.IsNullOrEmpty(StringExpression);
             }
         }
 
@@ -124,6 +126,12 @@ namespace TypiconOnline.Domain.ItemTypes
                                 Style.Header = (HeaderCaption)Enum.Parse(typeof(HeaderCaption), h);
                             }
                         }
+
+                        _isEmpty = false;
+                    }
+                    else
+                    {
+                        _isEmpty = true;
                     }
                 }
             }

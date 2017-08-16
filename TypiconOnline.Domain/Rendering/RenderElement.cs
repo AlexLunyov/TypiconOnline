@@ -12,6 +12,6 @@ namespace TypiconOnline.Domain.Rendering
     /// </summary>
     public abstract class RenderElement
     {
-        public string Text;
+        public string Text { get; set; }
     }
 }

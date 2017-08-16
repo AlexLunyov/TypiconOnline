@@ -4,14 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Rendering;
 using TypiconOnline.Domain.Typicon;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {
+    /// <summary>
+    /// Базовый класс для обработчиков правил Rules
+    /// </summary>
     public abstract class RuleHandlerBase : IRuleHandler
     {
         protected List<Type> AuthorizedTypes;
-        protected RuleContainer _executingResult;
+        //protected RenderContainer _executingResult;
         protected RuleHandlerSettings _settings = new RuleHandlerSettings();
 
         public RuleHandlerBase() { }
@@ -26,8 +30,13 @@ namespace TypiconOnline.Domain.Rules.Handlers
             set
             {
                 _settings = value;
-                _executingResult = null;
+                //_executingResult = null;
             }
+        }
+
+        public bool IsTypeAuthorized(ICustomInterpreted t) 
+        {
+            return AuthorizedTypes.Contains(t.GetType());
         }
 
         public bool IsAuthorized<T>() where T : ICustomInterpreted
@@ -35,13 +44,17 @@ namespace TypiconOnline.Domain.Rules.Handlers
             return AuthorizedTypes.Contains(typeof(T));
         }
 
+        /// <summary>
+        /// Абстрактный метод обработки правила
+        /// </summary>
+        /// <param name="element"></param>
         public abstract void Execute(ICustomInterpreted element);
 
         //public abstract RuleContainer GetResult();
-        public virtual RuleContainer GetResult()
-        {
-            return _executingResult;
-        }
+        //public virtual RenderContainer GetResult()
+        //{
+        //    return _executingResult;
+        //}
 
         //public abstract void Initialize(RuleHandlerSettings request);
     }

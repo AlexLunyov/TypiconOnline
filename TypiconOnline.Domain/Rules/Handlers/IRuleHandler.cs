@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Rendering;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {
@@ -18,7 +19,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
         //void Initialize(RuleHandlerSettings settings);
 
-        RuleContainer GetResult();
+        //RenderContainer GetResult();
     }
 
     public enum HandlingMode {

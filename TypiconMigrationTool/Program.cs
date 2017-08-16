@@ -11,6 +11,7 @@ using TypiconOnline.Domain.Schedule;
 using System.Text;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Rendering;
 
 namespace TypiconMigrationTool
 {
@@ -94,9 +95,9 @@ namespace TypiconMigrationTool
                         StringBuilder stringBuilder = new StringBuilder();
                         stringBuilder.AppendLine(day.Date.ToShortDateString() + " " + day.Date.ToString("dddd").ToUpper());
                         stringBuilder.AppendLine(day.Name);
-                        foreach (Service service in day.Schedule.ChildElements)
+                        foreach (RenderServiceElement service in day.Schedule.ChildElements)
                         {
-                            stringBuilder.AppendLine(service.Time + " " + service.Name + " " + service.AdditionalName);
+                            stringBuilder.AppendLine(service.Time + " " + service.Text + " " + service.AdditionalName);
                         }
 
                         Console.WriteLine(stringBuilder.ToString());
@@ -125,9 +126,9 @@ namespace TypiconMigrationTool
                         StringBuilder stringBuilder = new StringBuilder();
                         stringBuilder.AppendLine(day.Date.ToShortDateString());
                         stringBuilder.AppendLine(day.Name);
-                        foreach (Service service in day.Schedule.ChildElements)
+                        foreach (RenderServiceElement service in day.Schedule.ChildElements)
                         {
-                            stringBuilder.AppendLine(service.Time + " " + service.Name + " " + service.AdditionalName);
+                            stringBuilder.AppendLine(service.Time + " " + service.Text + " " + service.AdditionalName);
                         }
 
                         Console.WriteLine(stringBuilder.ToString());

@@ -10,6 +10,7 @@ using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Typicon;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -56,7 +57,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            if (IsValid && handler.IsAuthorized<YmnosStructureRule>())
+            ThrowExceptionIfInvalid();
+
+            if (handler.IsAuthorized<YmnosStructureRule>())
             {
                 //используем специальный обработчик для YmnosStructureRule,
                 //чтобы создать список источников стихир на обработку
@@ -73,6 +76,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 {
                     CalculateYmnosStructure(date, handler, container);
                 }
+
+                handler.Execute(this);
             }
         }
 
@@ -130,8 +135,40 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     }
                     
                 }
+            }
 
-                //handler.Settings.DayServices
+            SetStringCommonRules(handler);
+        }
+
+        private void SetStringCommonRules(IRuleHandler handler)
+        {
+            CommonRuleServiceRequest req = new CommonRuleServiceRequest() { Handler = handler };
+
+            req.Key = CommonRuleConstants.IhosText;
+            ItemText ihosText = CommonRuleService.Instance.GetItemTextValue(req);
+
+            //добавляем стихи к славнику и богородичну
+            if (_stichera.Doxastichon != null)
+            {
+                //слава
+                req.Key = CommonRuleConstants.SlavaText;
+                _stichera.Doxastichon.Ymnis[0].Stihos = CommonRuleService.Instance.GetItemTextValue(req);
+
+                //и ныне
+                if (_stichera.Theotokion != null)
+                {
+                    req.Key = CommonRuleConstants.InyneText;
+                    _stichera.Theotokion.Ymnis[0].Stihos = CommonRuleService.Instance.GetItemTextValue(req);
+                }
+            }
+            else
+            {
+                //слава и ныне
+                if (_stichera.Theotokion != null)
+                {
+                    req.Key = CommonRuleConstants.SlavaInyneText;
+                    _stichera.Theotokion.Ymnis[0].Stihos = CommonRuleService.Instance.GetItemTextValue(req);
+                }
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace TypiconOnline.AppServices.Implementations
     /// <summary>
     /// С помощью класса FileReader можно считывать правила для элементов TypiconOnlie.Domain
     /// </summary>
-    class FileReader
+    public class FileReader
     {
         public string FolderPath;
         XmlDocument doc = new XmlDocument();
@@ -30,11 +31,11 @@ namespace TypiconOnline.AppServices.Implementations
                 }
 
                 string fileName = FolderPath + name + ".xml";
-                System.IO.FileInfo fileInfo = new System.IO.FileInfo(fileName);
+                FileInfo fileInfo = new FileInfo(fileName);
                 if (fileInfo.Exists)
                 {
                     doc.Load(fileName);
-                    XmlNode node = doc.SelectSingleNode("rule");
+                    XmlNode node = doc.DocumentElement;
 
                     return (node != null) ? node.OuterXml : "";
                 }
@@ -43,5 +44,34 @@ namespace TypiconOnline.AppServices.Implementations
 
             return "";
         }
+        public IEnumerable<FilesSearchResponse> GetXmlsFromDirectory()
+        {
+            List<FilesSearchResponse> result = new List<FilesSearchResponse>();
+
+            string[] files = Directory.GetFiles(FolderPath, "*.xml");
+
+            foreach (string fileName in files)
+            {
+                FileInfo fileInfo = new FileInfo(fileName);
+                FilesSearchResponse response = new FilesSearchResponse();
+
+                response.Name = Path.GetFileNameWithoutExtension(fileInfo.Name);
+
+                doc.Load(fileName);
+                XmlNode node = doc.DocumentElement;
+
+                response.Xml = (node != null) ? node.OuterXml : string.Empty;
+
+                result.Add(response);
+            }
+
+            return result;
+        }
+    }
+
+    public class FilesSearchResponse
+    {
+        public string Name;
+        public string Xml;
     }
 }
