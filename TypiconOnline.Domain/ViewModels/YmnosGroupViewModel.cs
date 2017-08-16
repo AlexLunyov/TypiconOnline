@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.ViewModels
         /// </summary>
         public string Self { get; set; }
 
-        public YmnosGroupViewModel(YmnosGroup group, RuleHandlerBase handler)
+        public YmnosGroupViewModel(YmnosGroup group, IRuleHandler handler) : base()
         {
             if (group == null || group.Ymnis == null) throw new ArgumentNullException("YmnosGroup");
             if (handler == null) throw new ArgumentNullException("handler");

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
-using TypiconOnline.Domain.ViewModels.Factories;
 
 namespace TypiconOnline.Domain.ViewModels
 {
@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.ViewModels
     {
         public ServiceSequenceKind Kind { get; set; }
 
-        public ServiceSequenceViewModel(ServiceSequence rule, RuleHandlerBase handler)
+        public ServiceSequenceViewModel(ServiceSequence rule, IRuleHandler handler)
         {
             if (rule == null) throw new ArgumentNullException("ServiceSequence");
             if (handler == null) throw new ArgumentNullException("handler");
@@ -25,9 +25,11 @@ namespace TypiconOnline.Domain.ViewModels
 
             foreach (RuleElement element in rule.ChildElements)
             {
-                if ((element is ICustomInterpreted) && handler.IsTypeAuthorized(element as ICustomInterpreted))
+                if ((element is IViewModelElement) 
+                    && (element is ICustomInterpreted) && handler.IsTypeAuthorized(element as ICustomInterpreted))
                 {
-                    ChildElements.Add(ViewModelFactory.CreateElement(element, handler));
+                    ChildElements.Add((element as IViewModelElement).CreateViewModel(handler));
+                    //ChildElements.Add(ViewModelFactory.CreateElement(element, handler));
                 }
             }
         }

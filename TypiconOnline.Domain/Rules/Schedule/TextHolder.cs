@@ -4,16 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
     /// <summary>
     /// Класс содержит описания текстов богослужения (возгласы священников, тексты для диаконов, чтецов и т.д.)
     /// </summary>
-    public class TextHolder: RuleExecutable, ICustomInterpreted
+    public class TextHolder: RuleExecutable, ICustomInterpreted, IViewModelElement
     {
         private ItemEnumType<TextHolderKind> _textHolderKind;
         private List<ItemText> _paragraphs = new List<ItemText>();
@@ -91,6 +93,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     AppendAllBrokenConstraints(item);
                 }
             }
+        }
+
+        public ElementViewModel CreateViewModel(IRuleHandler handler)
+        {
+            return new TextHolderViewModel(this, handler);
         }
     }
 }

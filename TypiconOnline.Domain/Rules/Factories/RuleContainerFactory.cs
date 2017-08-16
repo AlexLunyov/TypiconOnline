@@ -10,7 +10,7 @@ namespace TypiconOnline.Domain.Rules.Factories
 {
     static class RuleContainerFactory
     {
-        public static RuleContainer CreateRuleContainer(string description)
+        public static ExecContainer CreateRuleContainer(string description)
         {
             ExecContainer outputEl = null;
 

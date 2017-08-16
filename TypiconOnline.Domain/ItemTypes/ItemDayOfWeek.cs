@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.ItemTypes
 
         private string _stringValue = "";
 
-        private bool _isValid = true;
+        //private bool _isValid = true;
 
         private ItemDayOfWeek() { }
 
@@ -25,6 +25,8 @@ namespace TypiconOnline.Domain.ItemTypes
             _value = val;
 
             _stringValue = val.ToString();
+
+            _isValid = true;
         }
 
         public ItemDayOfWeek(string exp) : base(exp)

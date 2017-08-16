@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class Service : RuleContainer, ICustomInterpreted
+    public class Service : ExecContainer, ICustomInterpreted
     {
         private ItemTime _time;
         private string _name;

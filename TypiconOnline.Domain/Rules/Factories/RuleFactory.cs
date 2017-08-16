@@ -153,7 +153,7 @@ namespace TypiconOnline.Domain.Rules.Factories
 
         public static RuleExecutable CreateExecutable(XmlNode node)
         {
-            RuleExecutable outputEl = CreateRuleContainer(node);
+            RuleExecutable outputEl = CreateExecContainer(node);
 
             if (outputEl == null)
             {
@@ -194,21 +194,21 @@ namespace TypiconOnline.Domain.Rules.Factories
             return (node.Name == RuleConstants.YmnosRuleNode) ? new YmnosRule(node) : null;
         }
 
-        public static RuleContainer CreateRuleContainer(XmlNode node) 
-        {
-            RuleContainer outputEl = CreateExecContainer(node);
+        //public static RuleContainer CreateRuleContainer(XmlNode node) 
+        //{
+        //    RuleContainer outputEl = CreateExecContainer(node);
 
-            if (outputEl == null)
-            {
-                switch (node.Name)
-                {
-                    case RuleConstants.ServiceNodeName:
-                        outputEl = new Service(node);
-                        break;
-                }
-            }
-            return outputEl;
-        }
+        //    if (outputEl == null)
+        //    {
+        //        switch (node.Name)
+        //        {
+        //            case RuleConstants.ServiceNodeName:
+        //                outputEl = new Service(node);
+        //                break;
+        //        }
+        //    }
+        //    return outputEl;
+        //}
 
         public static ExecContainer CreateExecContainer(XmlNode node)
         {
@@ -230,6 +230,9 @@ namespace TypiconOnline.Domain.Rules.Factories
                 case RuleConstants.LitiNode:
                 case RuleConstants.AinoiNode:
                     outputEl = new YmnosStructureRule(node);
+                    break;
+                case RuleConstants.ServiceNodeName:
+                    outputEl = new Service(node);
                     break;
             }
             return outputEl;

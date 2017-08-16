@@ -24,6 +24,11 @@ namespace TypiconOnline.Domain.Rules.Handlers
             return new DateTime(year, 4, 25);
         }
 
+        public bool IsTypeAuthorized(ICustomInterpreted t)
+        {
+            return true;
+        }
+
         public static BypassHandler Instance
         {
             get

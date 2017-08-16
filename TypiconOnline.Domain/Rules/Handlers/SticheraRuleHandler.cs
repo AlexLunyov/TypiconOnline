@@ -11,7 +11,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
 {
     public class YmnosStructureRuleHandler : RuleHandlerBase
     {
-        protected RuleContainer _executingResult;
+        protected ExecContainer _executingResult;
 
         public YmnosStructureRuleHandler()
         {
@@ -36,7 +36,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
             }
         }
 
-        public RuleContainer GetResult()
+        public ExecContainer GetResult()
         {
             return _executingResult;
         }

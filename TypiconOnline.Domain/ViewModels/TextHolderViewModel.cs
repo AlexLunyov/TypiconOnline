@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.ViewModels
             Paragraphs = new List<string>();
         }
 
-        public TextHolderViewModel(TextHolder textHolder, RuleHandlerBase handler)
+        public TextHolderViewModel(TextHolder textHolder, IRuleHandler handler)
         {
             if (textHolder == null) throw new ArgumentNullException("textHolder");
             if (handler == null) throw new ArgumentNullException("handler");

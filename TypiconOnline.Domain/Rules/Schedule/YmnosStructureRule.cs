@@ -6,18 +6,20 @@ using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
     /// <summary>
     /// Описание стихир Господи воззвах в последовательности богослужений
     /// </summary>
-    public class YmnosStructureRule : ExecContainer, ICustomInterpreted
+    public class YmnosStructureRule : ExecContainer, ICustomInterpreted, IViewModelElement
     {
         private YmnosStructure _stichera;
 
@@ -70,7 +72,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     elem.Interpret(date, structHandler);
                 }
 
-                RuleContainer container = structHandler.GetResult();
+                ExecContainer container = structHandler.GetResult();
 
                 if (container != null)
                 {
@@ -81,7 +83,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        private void CalculateYmnosStructure(DateTime date, IRuleHandler handler, RuleContainer container)
+        private void CalculateYmnosStructure(DateTime date, IRuleHandler handler, ExecContainer container)
         {
             _stichera = new YmnosStructure();
             foreach (YmnosRule ymnosRule in container.ChildElements)
@@ -176,6 +178,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             base.Validate();
             //TODO: добавить проверку на наличие элементов stichira в дочерних элементах
+        }
+
+        public ElementViewModel CreateViewModel(IRuleHandler handler)
+        {
+            return new YmnosStructureViewModel(this, handler);
         }
     }
 }

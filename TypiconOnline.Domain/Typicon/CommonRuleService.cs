@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Schedule;
 
 namespace TypiconOnline.Domain.Typicon
@@ -44,12 +45,12 @@ namespace TypiconOnline.Domain.Typicon
 
             commonRule.ThrowExceptionIfInvalid();
 
-            if (!(commonRule.Rule is RuleContainer) || (commonRule.Rule as RuleContainer).ChildElements?.Count == 0)
+            if (!(commonRule.Rule is ExecContainer) || (commonRule.Rule as ExecContainer).ChildElements?.Count == 0)
             {
                 throw new ArgumentException("CommonRule");
             }
 
-            TextHolder textHolder = (TextHolder)(commonRule.Rule as RuleContainer).ChildElements[0];
+            TextHolder textHolder = (TextHolder)(commonRule.Rule as ExecContainer).ChildElements[0];
 
             if (textHolder.Paragraphs?.Count == 0)
             {

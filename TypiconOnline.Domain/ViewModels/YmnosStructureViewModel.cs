@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.ViewModels
         /// </summary>
         public string IhosText { get; set; }
 
-        public YmnosStructureViewModel(YmnosStructureRule rule, RuleHandlerBase handler)
+        public YmnosStructureViewModel(YmnosStructureRule rule, IRuleHandler handler) : base()
         {
             if (rule == null || rule.CalculatedYmnosStructure == null) throw new ArgumentNullException("ymnosStructure");
             if (handler == null) throw new ArgumentNullException("handler");

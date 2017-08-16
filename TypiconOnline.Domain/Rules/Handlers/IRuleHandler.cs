@@ -13,6 +13,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
     public interface IRuleHandler
     {
         bool IsAuthorized<T>() where T : ICustomInterpreted;
+        bool IsTypeAuthorized(ICustomInterpreted t);
+
         void Execute(ICustomInterpreted element);
 
         RuleHandlerSettings Settings { get; set; }

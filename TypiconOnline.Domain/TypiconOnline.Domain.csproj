@@ -60,6 +60,7 @@
     <Compile Include="Days\Day.cs" />
     <Compile Include="Easter\IEasterStorage.cs" />
     <Compile Include="Easter\IEasterStorageFactory.cs" />
+    <Compile Include="Interfaces\IViewModelElement.cs" />
     <Compile Include="ItemTypes\ItemEnumTypeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemEnumType.cs" />
     <Compile Include="ItemTypes\ItemStyledType.cs" />
@@ -69,7 +70,6 @@
     <Compile Include="ItemTypes\ItemTimeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemTime.cs" />
     <Compile Include="Rules\Days\DayElement.cs" />
-    <Compile Include="Rules\Days\DayElementsContainer.cs" />
     <Compile Include="Rules\Days\DayElementBusinessConstraint.cs" />
     <Compile Include="Rules\Days\EvangelionReading.cs" />
     <Compile Include="Rules\Days\IhosRuleElement.cs" />
@@ -83,7 +83,6 @@
     <Compile Include="Rules\Days\OdiBusinessConstraint.cs" />
     <Compile Include="Rules\Days\YmnosGroupBusinessConstraint.cs" />
     <Compile Include="Rules\Days\YmnosBusinessConstraint.cs" />
-    <Compile Include="Rules\Days\DayElementsContainerBusinessConstraint.cs" />
     <Compile Include="Rules\Days\Esperinos.cs" />
     <Compile Include="Rules\Days\Orthros.cs" />
     <Compile Include="Rules\Days\Prokeimenon.cs" />
@@ -171,8 +170,6 @@
     <Compile Include="Days\TriodionDayBusinessConstraint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\Expressions\DateExpression.cs" />
-    <Compile Include="Rules\RuleContainerBusinessConstraint.cs" />
-    <Compile Include="Rules\RuleContainer.cs" />
     <Compile Include="Rules\Executables\SwitchBusinessBusinessConstraint.cs" />
     <Compile Include="Rules\Executables\ExecContainerBusinessConstraint.cs" />
     <Compile Include="Rules\Executables\ExecContainer.cs" />
@@ -209,7 +206,6 @@
     <Compile Include="Typicon\TypiconSettings.cs" />
     <Compile Include="ViewModels\ContainerViewModel.cs" />
     <Compile Include="ViewModels\ElementViewModel.cs" />
-    <Compile Include="ViewModels\Factories\ViewModelFactory.cs" />
     <Compile Include="ViewModels\NoticeViewModel.cs" />
     <Compile Include="ViewModels\ServiceSequenceViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
@@ -224,9 +220,7 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="ClassDiagrams\Basics.cd" />
     <None Include="ClassDiagrams\Handlers.cd" />

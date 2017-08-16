@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.ItemTypes
         protected T _value;
         private string _stringValue = "";
 
-        private bool _isValid = false;
+        protected bool _isValid = false;
 
         public ItemEnumType() { }
 

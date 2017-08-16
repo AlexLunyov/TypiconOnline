@@ -36,5 +36,10 @@ namespace TypiconOnline.Domain.Rules.Handlers
         {
             throw new NotImplementedException();
         }
+
+        public bool IsTypeAuthorized(ICustomInterpreted t)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

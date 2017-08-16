@@ -379,7 +379,15 @@ namespace ScheduleForm
 
         private void buttonExecute_Click(object sender, EventArgs e)
         {
-            Execute();
+            //try
+            //{
+                Execute();
+            //}
+            //catch (Exception ex)
+            //{
+            //    textBoxResult.Clear();
+            //    textBoxResult.AppendText(ex.Message);
+            //}
         }
 
         private void btnClearModifiedYears_Click(object sender, EventArgs e)

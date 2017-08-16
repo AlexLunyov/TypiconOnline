@@ -63,28 +63,11 @@ namespace TypiconOnline.Domain.Rules
             }
         }
 
-        //public void Remove(ICompositeInnerElement innerElement)
-        //{
-        //    if ((innerElement != null) && (innerElement is RuleElement))
-        //    {
-        //        _childElements.Remove((RuleElement)innerElement);
-        //    }
-        //}
-
-        //public void Add(ICompositeInnerElement innerElement)
-        //{
-        //    if ((innerElement != null) && (innerElement is RuleElement))
-        //    {
-        //        _childElements.Add((RuleElement)innerElement);
-        //    }
-        //}
-
         protected override void Validate()
         {
             if (ChildElements.Count == 0)
             {
-                AddBrokenConstraint(RuleContainerBusinessConstraint.DefinitionContainerChildrenRequired/*, DsConstants.ExecContainerNodeName*/);
-                //throw new DsParsingException("Ошибка: правило не содержит элементов.");
+                AddBrokenConstraint(RuleContainerBusinessConstraint.DefinitionContainerChildrenRequired);
             }
             else
             {
@@ -93,10 +76,7 @@ namespace TypiconOnline.Domain.Rules
                     //добавляем ломаные правила к родителю
                     if (!element.IsValid)
                     {
-                        foreach (BusinessConstraint brokenRule in element.GetBrokenConstraints())
-                        {
-                            AddBrokenConstraint(brokenRule, ElementName + "." + brokenRule.ConstraintPath);
-                        }
+                        AppendAllBrokenConstraints(element);
                     }
                 }
             }
