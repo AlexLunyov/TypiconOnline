@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
 
@@ -12,6 +13,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// <summary>
     /// Песнопения, сгруппированные по гласу и подобнам
     /// </summary>
+    [Serializable]
     public class YmnosGroup : IhosRuleElement
     {
         public YmnosGroup()
@@ -43,7 +45,8 @@ namespace TypiconOnline.Domain.Rules.Days
             Annotation = (annotationNode != null) ? new ItemText(annotationNode.OuterXml) : new ItemText();
 
             //песнопения
-            XmlNodeList ymnisList = node.SelectNodes(RuleConstants.YmnosNode);
+            string xPath = string.Format("//{0}/{1}", RuleConstants.YmnisNode, RuleConstants.YmnosNode);
+            XmlNodeList ymnisList = node.SelectNodes(xPath);
             if (ymnisList != null)
             {
                 foreach (XmlNode ymnosItemNode in ymnisList)
@@ -63,17 +66,20 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Название подобна (самоподобна)
         /// </summary>
+        [XmlElement(RuleConstants.ProsomoionNode)]
         public Prosomoion Prosomoion { get; set; }
 
         /// <summary>
         /// Дополнительные сведения. Например, "Феофаново" - Про стихиру
         /// </summary>
+        [XmlElement(RuleConstants.AnnotationNode)]
         public ItemText Annotation { get; set; }
 
         private List<Ymnos> _ymnis = new List<Ymnos>();
         /// <summary>
         /// Коллекция песнопений
         /// </summary>
+        [XmlElement(RuleConstants.YmnisNode)]
         public List<Ymnos> Ymnis
         {
             get

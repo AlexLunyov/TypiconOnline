@@ -643,11 +643,11 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="TypiconOnline.Domain.Rules.Factories.IRuleFactory" Collapsed="true">
+  <Interface Name="TypiconOnline.Domain.Interfaces.IRuleFactory" Collapsed="true">
     <Position X="82" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>Rules\Factories\IRuleFactory.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IRuleFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypiconOnline.Domain.Rules.Handlers.IRuleHandler" Collapsed="true">

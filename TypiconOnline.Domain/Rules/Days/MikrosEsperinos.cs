@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Rules.Days
@@ -11,6 +12,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// <summary>
     /// Описание службы малой вечерни
     /// </summary>
+    [Serializable]
     public class MikrosEsperinos : RuleElement
     {
         public MikrosEsperinos(XmlNode node) : base(node)
@@ -42,14 +44,17 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Господи воззвах
         /// </summary>
+        [XmlElement(RuleConstants.KekragariaNode)]
         public YmnosStructure Kekragaria { get; set; }
         /// <summary>
         /// Стихиры на стиховне
         /// </summary>
+        [XmlElement(RuleConstants.ApostichaNode)]
         public YmnosStructure Aposticha { get; set; }
         /// <summary>
         /// Отпустительный тропарь
         /// </summary>
+        [XmlElement(RuleConstants.TroparionNode)]
         public YmnosStructure Troparion { get; set; }
 
         #endregion

@@ -50,9 +50,9 @@ namespace TypiconOnline.Domain.ViewModels
                 ChildElements.Add(new YmnosGroupViewModel(rule.CalculatedYmnosStructure.Doxastichon, handler));
             }
 
-            if (rule.CalculatedYmnosStructure.Theotokion != null)
+            if (rule.CalculatedYmnosStructure.Theotokion?.Count > 0)
             {
-                ChildElements.Add(new YmnosGroupViewModel(rule.CalculatedYmnosStructure.Theotokion, handler));
+                ChildElements.Add(new YmnosGroupViewModel(rule.CalculatedYmnosStructure.Theotokion[0], handler));
             }
         }
     }

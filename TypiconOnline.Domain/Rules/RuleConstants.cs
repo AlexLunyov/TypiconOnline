@@ -122,6 +122,7 @@ namespace TypiconOnline.Domain.Rules
         public const string KanonasKontakionNode = "kontakion";
         public const string KanonasExapostilarionNode = "exapostilarion";
 
+        public const string YmnosStructureGroupsNode = "groups"; 
         public const string YmnosStructureGroupNode = "group";
         public const string YmnosStructureDoxastichonNode = "doxastichon";
         public const string YmnosStructureTheotokionNode = "theotokion";
@@ -129,7 +130,9 @@ namespace TypiconOnline.Domain.Rules
         public const string ProsomoionNode = "prosomoion";
         public const string ProsomoionSelfAttr = "self";
 
-        public const string AnnotationNode = "annotation"; 
+        public const string AnnotationNode = "annotation";
+
+        public const string YmnisNode = "ymnis"; 
 
         public const string YmnosNode = "ymnos";
         public const string YmnosIhosAttrName = "ihos";

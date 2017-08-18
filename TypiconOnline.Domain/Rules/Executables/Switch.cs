@@ -128,24 +128,19 @@ namespace TypiconOnline.Domain.Rules.Executables
             if (_expression == null)
             {
                 AddBrokenConstraint(SwitchBusinessBusinessConstraint.ConditionRequired, ElementName);
-                //throw new DefinitionsParsingException("Ошибка: в элементе switch должен быть определен элемент expression.");
             }
             else
             {
                 //добавляем ломаные правила к родителю
                 if (!_expression.IsValid)
                 {
-                    foreach (BusinessConstraint brokenRule in _expression.GetBrokenConstraints())
-                    {
-                        AddBrokenConstraint(brokenRule, ElementName + "." + brokenRule.ConstraintPath);
-                    }
+                    AppendAllBrokenConstraints(_expression, ElementName);
                 }
             }
 
             if (_caseElements == null)
             {
                 AddBrokenConstraint(SwitchBusinessBusinessConstraint.CaseRequired, ElementName);
-                //throw new DefinitionsParsingException("Ошибка: в элементе switch должен быть определен хотя бы один элемент case.");
             }
             else
             {
@@ -154,27 +149,20 @@ namespace TypiconOnline.Domain.Rules.Executables
                 {
                     if (!caseElement.IsValid)
                     {
-                        foreach (BusinessConstraint brokenRule in caseElement.GetBrokenConstraints())
-                        {
-                            AddBrokenConstraint(brokenRule, ElementName + "." + RuleConstants.CaseNodeName + "." + brokenRule.ConstraintPath);
-                        }
+                        AppendAllBrokenConstraints(caseElement, string.Format("{0}.{1}", ElementName, RuleConstants.CaseNodeName));
                     }
 
-                    if ((_expression != null) && (_expression.ExpressionType != caseElement.ExpressionType))
+                    if (_expression?.ExpressionType != caseElement.ExpressionType)
                     {
                         AddBrokenConstraint(SwitchBusinessBusinessConstraint.ConditionsTypeMismatch, ElementName);
-                        //throw new DefinitionsParsingException("Ошибка: значения элемента " + caseNode.Name + " должны быть одного типа");
                     }
                 }
             }
 
             //добавляем ломаные правила к родителю
-            if ((_default != null) && !_default.IsValid)
+            if (_default?.IsValid == false)
             {
-                foreach (BusinessConstraint brokenRule in _default.GetBrokenConstraints())
-                {
-                    AddBrokenConstraint(brokenRule, ElementName + "." + RuleConstants.DefaultNodeName + "." + brokenRule.ConstraintPath);
-                }
+                AppendAllBrokenConstraints(_default, string.Format("{0}.{1}", ElementName, RuleConstants.DefaultNodeName));
             }
         }
 

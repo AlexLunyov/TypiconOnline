@@ -157,19 +157,19 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 _stichera.Doxastichon.Ymnis[0].Stihos = CommonRuleService.Instance.GetItemTextValue(req);
 
                 //и ныне
-                if (_stichera.Theotokion != null)
+                if (_stichera.Theotokion?.Count > 0)
                 {
                     req.Key = CommonRuleConstants.InyneText;
-                    _stichera.Theotokion.Ymnis[0].Stihos = CommonRuleService.Instance.GetItemTextValue(req);
+                    _stichera.Theotokion[0].Ymnis[0].Stihos = CommonRuleService.Instance.GetItemTextValue(req);
                 }
             }
             else
             {
                 //слава и ныне
-                if (_stichera.Theotokion != null)
+                if (_stichera.Theotokion?.Count > 0)
                 {
                     req.Key = CommonRuleConstants.SlavaInyneText;
-                    _stichera.Theotokion.Ymnis[0].Stihos = CommonRuleService.Instance.GetItemTextValue(req);
+                    _stichera.Theotokion[0].Ymnis[0].Stihos = CommonRuleService.Instance.GetItemTextValue(req);
                 }
             }
         }

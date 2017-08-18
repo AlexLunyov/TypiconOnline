@@ -29,6 +29,16 @@ namespace TypiconOnline.Domain.Typicon
             }
         }
 
+        //public virtual Sign TemplateNoSign { get; set; }
+
+        //public virtual Sign Template6 { get; set; }
+
+        //public virtual Sign TemplateSlavoslovie { get; set; }
+
+        //public virtual Sign TemplatePolyeleos { get; set; }
+
+        //public virtual Sign TemplateBdenie { get; set; }
+
         protected override void Validate()
         {
             throw new NotImplementedException();

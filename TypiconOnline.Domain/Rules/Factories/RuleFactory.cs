@@ -4,10 +4,11 @@ using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Rules.Days;
+using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Factories
 {
-    public static class RuleFactory
+    public static class RuleFactory//: IRuleFactory
     {
         public static RuleExpression CreateExpression(XmlNode node)
         {

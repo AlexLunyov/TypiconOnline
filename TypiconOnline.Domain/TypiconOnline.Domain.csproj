@@ -162,7 +162,7 @@
     <Compile Include="Books\Oktoikh\OktoikhDay.cs" />
     <Compile Include="Schedule\ScheduleDay.cs" />
     <Compile Include="FolderEntity.cs" />
-    <Compile Include="Rules\Factories\IRuleFactory.cs" />
+    <Compile Include="Interfaces\IRuleFactory.cs" />
     <Compile Include="Typicon\TriodionRule.cs" />
     <Compile Include="Typicon\MenologyRule.cs" />
     <Compile Include="Typicon\Sign.cs" />
@@ -220,11 +220,14 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Books\Menology\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagrams\Basics.cd" />
     <None Include="ClassDiagrams\Handlers.cd" />
     <None Include="ClassDiagrams\Rules.cd" />
+    <None Include="ClassDiagrams\Rules.Days.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

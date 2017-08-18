@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
 
@@ -12,8 +13,11 @@ namespace TypiconOnline.Domain.Rules.Days
     /// <summary>
     /// Текст службы дня
     /// </summary>
+    [Serializable]
     public class DayElement : RuleElement
     {
+        public DayElement() { }
+
         public DayElement(XmlNode node) : base(node)
         {
             XmlNode nameNode = node.SelectSingleNode(RuleConstants.DayElementNameNode);
@@ -54,22 +58,27 @@ namespace TypiconOnline.Domain.Rules.Days
         /// Наименование праздника.
         /// Например, "Великомученика Никиты."
         /// </summary>
+        [XmlElement(RuleConstants.DayElementNameNode)]
         public ItemText Name { get; set; }
         /// <summary>
         /// Описание службы малой вечерни
         /// </summary>
+        [XmlElement(RuleConstants.MikrosEsperinosNode)]
         public MikrosEsperinos MikrosEsperinos { get; set; }
         /// <summary>
         /// Описание службы вечерни
         /// </summary>
+        [XmlElement(RuleConstants.EsperinosNode)]
         public Esperinos Esperinos { get; set; }
         /// <summary>
         /// Описание службы утрени
         /// </summary>
+        [XmlElement(RuleConstants.OrthrosNode)]
         public Orthros Orthros { get; set; }
         /// <summary>
         /// Описание Литургийных чтений
         /// </summary>
+        [XmlElement(RuleConstants.LeitourgiaNode)]
         public Leitourgia Leitourgia { get; set; }
 
         #endregion

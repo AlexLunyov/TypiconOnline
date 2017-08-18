@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.Rules.Days
@@ -11,6 +12,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// <summary>
     /// Описание подобна
     /// </summary>
+    [Serializable]
     public class Prosomoion : ItemText
     {
         public Prosomoion(Prosomoion source)
@@ -42,6 +44,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Если true, то самоподобен
         /// </summary>
+        [XmlAttribute(RuleConstants.ProsomoionSelfAttr)]
         public ItemBoolean Self { get; set; }
 
         protected override void Validate()

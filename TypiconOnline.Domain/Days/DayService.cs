@@ -62,7 +62,8 @@ namespace TypiconOnline.Domain.Days
                     stichera = new YmnosStructure() { Doxastichon = new YmnosGroup((Rule as DayElement).Esperinos.Kekragaria.Doxastichon) };
                     break;
                 case PlaceYmnosSource.kekragaria_theotokion:
-                    stichera = new YmnosStructure() { Theotokion = new YmnosGroup((Rule as DayElement).Esperinos.Kekragaria.Theotokion) }; 
+                    //TODO: прамая ссылка без копирования и клонирования
+                    stichera = new YmnosStructure() { Theotokion = (Rule as DayElement).Esperinos.Kekragaria.Theotokion }; 
                     break;
                 //liti
                 case PlaceYmnosSource.liti:
@@ -72,7 +73,8 @@ namespace TypiconOnline.Domain.Days
                     stichera = new YmnosStructure() { Doxastichon = new YmnosGroup((Rule as DayElement).Esperinos.Liti.Doxastichon) }; 
                     break;
                 case PlaceYmnosSource.liti_theotokion:
-                    stichera = new YmnosStructure() { Theotokion = new YmnosGroup((Rule as DayElement).Esperinos.Liti.Theotokion) };
+                    //TODO: прамая ссылка без копирования и клонирования
+                    stichera = new YmnosStructure() { Theotokion = (Rule as DayElement).Esperinos.Liti.Theotokion };
                     break;
                 //aposticha_esperinos
                 case PlaceYmnosSource.aposticha_esperinos:
@@ -82,7 +84,8 @@ namespace TypiconOnline.Domain.Days
                     stichera = new YmnosStructure() { Doxastichon = new YmnosGroup((Rule as DayElement).Esperinos.Aposticha.Doxastichon) };
                     break;
                 case PlaceYmnosSource.aposticha_esperinos_theotokion:
-                    stichera = new YmnosStructure() { Theotokion = new YmnosGroup((Rule as DayElement).Esperinos.Aposticha.Theotokion) };
+                    //TODO: прамая ссылка без копирования и клонирования
+                    stichera = new YmnosStructure() { Theotokion = (Rule as DayElement).Esperinos.Aposticha.Theotokion };
                     break;
                 //ainoi
                 case PlaceYmnosSource.ainoi:
@@ -92,7 +95,8 @@ namespace TypiconOnline.Domain.Days
                     stichera = new YmnosStructure() { Doxastichon = new YmnosGroup((Rule as DayElement).Orthros.Ainoi.Doxastichon) };
                     break;
                 case PlaceYmnosSource.ainoi_theotokion:
-                    stichera = new YmnosStructure() { Theotokion = new YmnosGroup((Rule as DayElement).Orthros.Ainoi.Theotokion) };
+                    //TODO: прамая ссылка без копирования и клонирования
+                    stichera = new YmnosStructure() { Theotokion = (Rule as DayElement).Orthros.Ainoi.Theotokion };
                     break;
                 //aposticha_orthros
                 case PlaceYmnosSource.aposticha_orthros:
@@ -102,7 +106,8 @@ namespace TypiconOnline.Domain.Days
                     stichera = new YmnosStructure() { Doxastichon = new YmnosGroup((Rule as DayElement).Orthros.Aposticha.Doxastichon) };
                     break;
                 case PlaceYmnosSource.aposticha_orthros_theotokion:
-                    stichera = new YmnosStructure() { Theotokion = new YmnosGroup((Rule as DayElement).Orthros.Aposticha.Theotokion) };
+                    //TODO: прамая ссылка без копирования и клонирования
+                    stichera = new YmnosStructure() { Theotokion = (Rule as DayElement).Orthros.Aposticha.Theotokion };
                     break;
             }
 
