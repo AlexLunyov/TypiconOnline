@@ -38,7 +38,7 @@ namespace TypiconOnline.Domain.ViewModels
 
                 if (i == 0)
                 {
-                    Ihos = group.Ihos.Value;
+                    Ihos = group.Ihos;
                     IhosText = item.IhosText;
                 }
 

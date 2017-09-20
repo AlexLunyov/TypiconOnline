@@ -36,17 +36,17 @@ namespace TypiconOnline.Domain.Rules.Days
                 Sedalen = new YmnosGroup(elemNode);
             }
 
-            elemNode = node.SelectSingleNode(RuleConstants.KanonasKontakionNode);
-            if (elemNode != null)
-            {
-                Kontakion = new YmnosGroup(elemNode);
-            }
+            //elemNode = node.SelectSingleNode(RuleConstants.KanonasKontakionNode);
+            //if (elemNode != null)
+            //{
+            //    Kontakion = new Kontakion(elemNode);
+            //}
 
-            elemNode = node.SelectSingleNode(RuleConstants.KanonasExapostilarionNode);
-            if (elemNode != null)
-            {
-                Exapostilarion = new YmnosGroup(elemNode);
-            }
+            //elemNode = node.SelectSingleNode(RuleConstants.KanonasExapostilarionNode);
+            //if (elemNode != null)
+            //{
+            //    Exapostilarion = new Exapostilarion(elemNode);
+            //}
         }
 
         #region Properties
@@ -66,11 +66,11 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// кондак по 6-ой песне
         /// </summary>
-        public YmnosGroup Kontakion { get; set; }
+        public Kontakion Kontakion { get; set; }
         /// <summary>
         /// Эксапостиларий по 9-й песне
         /// </summary>
-        public YmnosGroup Exapostilarion { get; set; }
+        public Exapostilarion Exapostilarion { get; set; }
 
         #endregion
 

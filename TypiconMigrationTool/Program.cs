@@ -12,6 +12,11 @@ using System.Text;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Easter;
 using TypiconOnline.Domain.ViewModels;
+using TypiconMigrationTool.Experiments.XmlSerialization;
+using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.Domain.Rules.Days;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace TypiconMigrationTool
 {
@@ -28,7 +33,8 @@ namespace TypiconMigrationTool
 
             while (true)
             {
-                Console.WriteLine("Что желаете? '1' - миграция БД, '3' - тест, '4' - тест для Благовещения, '5' - загрузка TestTypicon");
+                Console.WriteLine("Что желаете? '1' - миграция БД, '3' - тест, '4' - тест для Благовещения, '5' - XmlSerialization");
+                Console.WriteLine("'6' - test Esperinos");
 
                 ConsoleKeyInfo info = Console.ReadKey();
 
@@ -44,7 +50,10 @@ namespace TypiconMigrationTool
                         TestBlagoveshenie(unitOfWork);
                         break;
                     case '5':
-                        //TestMigrate();
+                        TestXmlSrialization();
+                        break;
+                    case '6':
+                        TestEsperinos();
                         break;
                 }
             }
@@ -60,6 +69,38 @@ namespace TypiconMigrationTool
             //FillDB(unitOfWork);
 
             //unitOfWork.Commit();
+        }
+
+        private static void TestEsperinos()
+        {
+            XmlSerializer formatter = new XmlSerializer(typeof(Esperinos));
+
+            Esperinos esperinos = null;
+
+            using (FileStream fs = new FileStream(@"data\Esperinos.xml", FileMode.OpenOrCreate))
+            {
+                esperinos = (Esperinos)formatter.Deserialize(fs);
+                Console.WriteLine("Объект десериализован");
+            }
+
+            using (FileStream fs = new FileStream(@"data\Esperinos.xml", FileMode.OpenOrCreate))
+            {
+                formatter.Serialize(fs, esperinos);
+                Console.WriteLine("Объект сериализован");
+            }
+        }
+
+        private static void TestXmlSrialization()
+        {
+            SerializationExperiment exp = new SerializationExperiment();
+            Monastery mon = exp.GetObject();
+
+            string xml = exp.Serialize(mon);
+            Console.WriteLine(xml);
+
+            mon = exp.Deserialize<Monastery>(xml);
+
+            Console.WriteLine(mon != null ? "Success." : "Failure.");
         }
 
         private static void TestBlagoveshenie(IUnitOfWork unitOfWork)
@@ -150,34 +191,5 @@ namespace TypiconMigrationTool
             migration.Execute();
         }
 
-        //private static void FillDB(IUnitOfWork unitOfWork)
-        //{
-        //    TypiconEntity typiconEntity = new TypiconEntity();
-        //    typiconEntity.Name = "Типовой устав";
-
-        //    Sign sign = new Sign()
-        //    {
-        //        Id = 1,
-        //        Priority = 1,
-        //        Name = "Без знака",
-        //        Owner = typiconEntity
-        //    };
-        //    unitOfWork.Repository<Sign>().Insert(sign);
-
-        //    typiconEntity.Signs.Add(sign);
-
-        //    MenologyDay menologyDay = new MenologyDay()
-        //    {
-        //        Id = 1,
-        //        Name = "Сщмч. Артемона",
-        //        Date = new ItemDate("--04-26"),
-        //        DateB = new ItemDate("--04-26"),
-        //        //Sign = sign
-        //    };
-        //    unitOfWork.Repository<MenologyDay>().Insert(menologyDay);
-
-        //    unitOfWork.Repository<TypiconEntity>().Insert(typiconEntity);
-            
-        //}
     }
 }

@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Esperinos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/Users/%d0%9c%d0%be%d0%bd%d0%b0%d1%81%d1%82%d1%8b%d1%80%d1%8c/Documents/programming/XML/DaySchema.xsd">
+  <kekragaria>
+    <group ihos="1">
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Господи воззвах, 1 стихира </cs-ru>
+        </text>
+      </ymnos>
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Господи воззвах, 2 стихира </cs-ru>
+        </text>
+      </ymnos>
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Господи воззвах, 3 стихира </cs-ru>
+        </text>
+      </ymnos>
+    </group>
+    <group ihos="2">
+      <prosomoion>
+        <cs-ru>Ки́ими похва́льными.</cs-ru>
+      </prosomoion>
+      <annotation>
+        <cs-ru>Творе́ние господи́на Пахо́мия мона́ха.</cs-ru>
+      </annotation>
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Господи воззвах, 4 стихира </cs-ru>
+        </text>
+      </ymnos>
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Господи воззвах, 5 стихира </cs-ru>
+        </text>
+      </ymnos>
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Господи воззвах, 6 стихира </cs-ru>
+        </text>
+      </ymnos>
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Господи воззвах, 7 стихира </cs-ru>
+        </text>
+      </ymnos>
+    </group>
+    <doxastichon ihos="8">
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Господи воззвах, Славник</cs-ru>
+        </text>
+      </ymnos>
+    </doxastichon>
+    <theotokion ihos="8">
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Господи воззвах, Богородичен</cs-ru>
+        </text>
+      </ymnos>
+    </theotokion>
+  </kekragaria>
+  <paroimies>
+    <paroimia quote="3.1-14">
+      <bookname>
+        <cs-ru>Прему́дрости Соломо́ни чте́ние.</cs-ru>
+      </bookname>
+      <text>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 1. Стих 1</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 1. Стих 2</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 1. Стих 3</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 1. Стих 4</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 1. Стих 5</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 1. Стих 6</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 1. Стих 7</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 1. Стих 8</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 1. Стих 9</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 1. Стих 10</cs-ru>
+        </item>
+      </text>
+    </paroimia>
+    <paroimia quote="5.15-57, 6.1-8">
+      <bookname>
+        <cs-ru>Прему́дрости Соломо́ни чте́ние.</cs-ru>
+      </bookname>
+      <text>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 2. Стих 1</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 2. Стих 2</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 2. Стих 3</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 2. Стих 4</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 2. Стих 5</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 2. Стих 6</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 2. Стих 7</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 2. Стих 8</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 2. Стих 9</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 2. Стих 10</cs-ru>
+        </item>
+      </text>
+    </paroimia>
+    <paroimia quote="5.15-57, 6.1-8">
+      <bookname>
+        <cs-ru>Прему́дрости Соломо́ни чте́ние.</cs-ru>
+      </bookname>
+      <text>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 3. Стих 1</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 3. Стих 2</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 3. Стих 3</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 3. Стих 4</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 3. Стих 5</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 3. Стих 6</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 3. Стих 7</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 3. Стих 8</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 3. Стих 9</cs-ru>
+        </item>
+        <item>
+          <cs-ru>[item] [sign] Вечерня. Паремия 3. Стих 10</cs-ru>
+        </item>
+      </text>
+    </paroimia>
+  </paroimies>
+  <liti>
+    <group ihos="2">
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Вечерня. Лития. Стихира 1</cs-ru>
+        </text>
+      </ymnos>
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Вечерня. Лития. Стихира 2</cs-ru>
+        </text>
+      </ymnos>
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Вечерня. Лития. Стихира 3</cs-ru>
+        </text>
+      </ymnos>
+    </group>
+    <group ihos="5">
+      <ymnos>
+        <annotation>
+          <cs-ru>[item] [sign] Вечерня. Лития. Стихира 4. Аннотация</cs-ru>
+        </annotation>
+        <text>
+          <cs-ru>[item] [sign] Вечерня. Лития. Стихира 4</cs-ru>
+        </text>
+      </ymnos>
+      <ymnos>
+        <annotation>
+          <cs-ru>[item] [sign] Вечерня. Лития. Стихира 5. Аннотация</cs-ru>
+        </annotation>
+        <text>
+          <cs-ru>[item] [sign] Вечерня. Лития. Стихира 5</cs-ru>
+        </text>
+      </ymnos>
+      <ymnos>
+        <annotation>
+          <cs-ru>[item] [sign] Вечерня. Лития. Стихира 6. Аннотация</cs-ru>
+        </annotation>
+        <text>
+          <cs-ru>[item] [sign] Вечерня. Лития. Стихира 6</cs-ru>
+        </text>
+      </ymnos>
+    </group>
+    <group ihos="1">
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Вечерня. Лития. Стихира 7</cs-ru>
+        </text>
+      </ymnos>
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Вечерня. Лития. Стихира 8</cs-ru>
+        </text>
+      </ymnos>
+    </group>
+    <theotokion ihos="4">
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Вечерня. Лития. Слава и ныне</cs-ru>
+        </text>
+      </ymnos>
+    </theotokion>
+  </liti>
+  <aposticha>
+    <group ihos="2">
+      <ymnos>
+        <stihoi>
+          <stihos>
+            <cs-ru>[item] [sign] Вечерня. На стиховне, Стих 1-й стихиры.</cs-ru>
+          </stihos>
+        </stihoi>
+        <text>
+          <cs-ru>[item] [sign] Вечерня. На стиховне, 1 стихира.</cs-ru>
+        </text>
+      </ymnos>
+      <ymnos>
+        <stihoi>
+          <stihos>
+            <cs-ru>[item] [sign] Вечерня. На стиховне, Стих 2-й стихиры.</cs-ru>
+          </stihos>
+        </stihoi>
+        <text>
+          <cs-ru>[item] [sign] Вечерня. На стиховне, 2 стихира.</cs-ru>
+        </text>
+      </ymnos>
+      <ymnos>
+        <stihoi>
+          <stihos>
+            <cs-ru>[item] [sign] Вечерня. На стиховне, Стих 3-й стихиры.</cs-ru>
+          </stihos>
+        </stihoi>
+        <text>
+          <cs-ru>[item] [sign] Вечерня. На стиховне, 3 стихира.</cs-ru>
+        </text>
+      </ymnos>
+    </group>
+    <doxastichon ihos="6">
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Вечерня. На стиховне, Славник.</cs-ru>
+        </text>
+      </ymnos>
+    </doxastichon>
+    <theotokion ihos="6">
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign]  Вечерня. На стиховне, Богородичен</cs-ru>
+        </text>
+      </ymnos>
+    </theotokion>
+  </aposticha>
+  <troparion>
+    <group ihos="8">
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Вечерня. Тропарь</cs-ru>
+        </text>
+      </ymnos>
+    </group>
+    <theotokion ihos="8">
+      <ymnos>
+        <text>
+          <cs-ru>[item] [sign] Вечерня. Тропарь. Богородичен</cs-ru>
+        </text>
+      </ymnos>
+    </theotokion>
+  </troparion>
+</Esperinos>

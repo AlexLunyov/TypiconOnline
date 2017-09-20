@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Easter;
 using TypiconOnline.Domain.Rules.Days;
@@ -32,7 +33,10 @@ namespace TypiconOnline.Domain.Tests.Days
 
             DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 638);
 
-            YmnosStructure stichera = (dayService.Rule as DayElement).Esperinos.Kekragaria.GetYmnosStructure(8, 1);
+            TypiconSerializer ser = new TypiconSerializer();
+            DayContainer container = ser.Deserialize<DayContainer>(dayService.DayDefinition);
+
+            YmnosStructure stichera = container.Esperinos.Kekragaria.GetYmnosStructure(8, 1);
 
             Assert.AreEqual(stichera.YmnosStructureCount, 8);
         }
@@ -46,7 +50,10 @@ namespace TypiconOnline.Domain.Tests.Days
 
             DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 638);
 
-            YmnosStructure stichera = (dayService.Rule as DayElement).Esperinos.Kekragaria.GetYmnosStructure(6, 1);
+            TypiconSerializer ser = new TypiconSerializer();
+            DayContainer container = ser.Deserialize<DayContainer>(dayService.DayDefinition);
+
+            YmnosStructure stichera = container.Esperinos.Kekragaria.GetYmnosStructure(6, 1);
 
             Assert.AreEqual(stichera.YmnosStructureCount, 6);
         }
@@ -59,8 +66,11 @@ namespace TypiconOnline.Domain.Tests.Days
             //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
             DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 638);
-            
-            YmnosStructure stichera = (dayService.Rule as DayElement).Esperinos.Kekragaria.GetYmnosStructure(8, 3);
+
+            TypiconSerializer ser = new TypiconSerializer();
+            DayContainer container = ser.Deserialize<DayContainer>(dayService.DayDefinition);
+
+            YmnosStructure stichera = container.Esperinos.Kekragaria.GetYmnosStructure(8, 3);
 
             Assert.AreEqual(stichera.YmnosStructureCount, 8);
         }
@@ -74,7 +84,10 @@ namespace TypiconOnline.Domain.Tests.Days
 
             DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 638);
 
-            YmnosStructure stichera = (dayService.Rule as DayElement).Esperinos.Kekragaria.GetYmnosStructure(3, 1);
+            TypiconSerializer ser = new TypiconSerializer();
+            DayContainer container = ser.Deserialize<DayContainer>(dayService.DayDefinition);
+
+            YmnosStructure stichera = container.Esperinos.Kekragaria.GetYmnosStructure(3, 1);
 
             Assert.AreEqual(stichera.YmnosStructureCount, 3);
         }
@@ -88,7 +101,10 @@ namespace TypiconOnline.Domain.Tests.Days
 
             DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 638);
 
-            YmnosStructure stichera = (dayService.Rule as DayElement).Esperinos.Kekragaria.GetYmnosStructure(3, 3);
+            TypiconSerializer ser = new TypiconSerializer();
+            DayContainer container = ser.Deserialize<DayContainer>(dayService.DayDefinition);
+
+            YmnosStructure stichera = container.Esperinos.Kekragaria.GetYmnosStructure(3, 3);
 
             Assert.AreEqual(stichera.YmnosStructureCount, 3);
         }

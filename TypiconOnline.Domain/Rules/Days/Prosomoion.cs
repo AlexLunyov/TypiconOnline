@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 
@@ -17,18 +18,14 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public Prosomoion(Prosomoion source)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("Prosomoion");
-            }
+            if (source == null) throw new ArgumentNullException("Prosomoion");
 
-            Self = new ItemBoolean(source.Self.Value);
+            Self = source.Self;
             Build(source.StringExpression);
         }
 
         public Prosomoion() : base()
         {
-            Self = new ItemBoolean();
         }
 
         public Prosomoion(XmlNode node)
@@ -36,7 +33,12 @@ namespace TypiconOnline.Domain.Rules.Days
             //самоподобен?
             XmlAttribute selfAttr = node.Attributes[RuleConstants.ProsomoionSelfAttr];
 
-            Self = (selfAttr != null) ? new ItemBoolean(selfAttr.Value) : new ItemBoolean();
+            if (selfAttr != null)
+            {
+                bool result = false;
+                bool.TryParse(selfAttr.Value, out result);
+                Self = result;
+            }
 
             Build(node.OuterXml);
         }
@@ -45,19 +47,9 @@ namespace TypiconOnline.Domain.Rules.Days
         /// Если true, то самоподобен
         /// </summary>
         [XmlAttribute(RuleConstants.ProsomoionSelfAttr)]
-        public ItemBoolean Self { get; set; }
+        public bool Self { get; set; }
 
-        protected override void Validate()
-        {
-            base.Validate();
-
-            if (!Self.IsValid)
-            {
-                AppendAllBrokenConstraints(Self, RuleConstants.ProsomoionNode + "." + RuleConstants.ProsomoionSelfAttr);
-            }
-        }
-
-        public override bool Equals(ItemStyledType item)
+        public bool Equals(Prosomoion item)
         {
             bool result = base.Equals(item);
 

@@ -123,18 +123,20 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     }
 
                     //теперь разбираемся с place И kind
-                    switch (ymnosRule.YmnosKind.Value)
-                    {
-                        case YmnosKind.Ymnos:
-                            _stichera.Groups.AddRange(dayService.GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Groups);
-                            break;
-                        case YmnosKind.Doxastichon:
-                            _stichera.Doxastichon = dayService.GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Doxastichon;
-                            break;
-                        case YmnosKind.Theotokion:
-                            _stichera.Theotokion = dayService.GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Theotokion;
-                            break;
-                    }
+
+                    //TODO: закомментил все, потому как dayService.GetYmnosStructure не работает
+                    //switch (ymnosRule.YmnosKind.Value)
+                    //{
+                    //    case YmnosKind.Ymnos:
+                    //        _stichera.Groups.AddRange(dayService.GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Groups);
+                    //        break;
+                    //    case YmnosKind.Doxastichon:
+                    //        _stichera.Doxastichon = dayService.GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Doxastichon;
+                    //        break;
+                    //    case YmnosKind.Theotokion:
+                    //        _stichera.Theotokion = dayService.GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Theotokion;
+                    //        break;
+                    //}
                     
                 }
             }
@@ -154,13 +156,13 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 //слава
                 req.Key = CommonRuleConstants.SlavaText;
-                _stichera.Doxastichon.Ymnis[0].Stihos = CommonRuleService.Instance.GetItemTextValue(req);
+                _stichera.Doxastichon.Ymnis[0].Stihoi.Add(CommonRuleService.Instance.GetItemTextValue(req));
 
                 //и ныне
                 if (_stichera.Theotokion?.Count > 0)
                 {
                     req.Key = CommonRuleConstants.InyneText;
-                    _stichera.Theotokion[0].Ymnis[0].Stihos = CommonRuleService.Instance.GetItemTextValue(req);
+                    _stichera.Theotokion[0].Ymnis[0].Stihoi.Add(CommonRuleService.Instance.GetItemTextValue(req));
                 }
             }
             else
@@ -169,7 +171,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 if (_stichera.Theotokion?.Count > 0)
                 {
                     req.Key = CommonRuleConstants.SlavaInyneText;
-                    _stichera.Theotokion[0].Ymnis[0].Stihos = CommonRuleService.Instance.GetItemTextValue(req);
+                    _stichera.Theotokion[0].Ymnis[0].Stihoi.Add(CommonRuleService.Instance.GetItemTextValue(req));
                 }
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -34,7 +35,7 @@ namespace TypiconOnline.Domain.ViewModels
             if (group == null || group.Ymnis == null) throw new ArgumentNullException("YmnosGroup");
             if (handler == null) throw new ArgumentNullException("handler");
 
-            Ihos = group.Ihos.Value;
+            Ihos = group.Ihos;
 
             if (!group.Annotation.IsEmpty)
             {
@@ -55,7 +56,7 @@ namespace TypiconOnline.Domain.ViewModels
                 Prosomoion = Prosomoion + " " + group.Prosomoion.Text[handler.Settings.Language];
             }
             //самоподобен?
-            if (group.Prosomoion.Self.Value)
+            if (group.Prosomoion.Self)
             {
                 req.Key = CommonRuleConstants.SelfText;
                 Self = CommonRuleService.Instance.GetTextValue(req);
@@ -64,12 +65,12 @@ namespace TypiconOnline.Domain.ViewModels
             foreach (Ymnos ymnos in group.Ymnis)
             {
                 //добавляем стих и песнопение как отдельные объекты
-                if (!ymnos.Stihos.IsEmpty)
+                foreach (ItemText stihos in ymnos.Stihoi)
                 {
                     ChildElements.Add( new TextHolderViewModel()
                     {
                         Kind = TextHolderKind.Stihos,
-                        Paragraphs = new string[] { ymnos.Stihos.Text[handler.Settings.Language] }
+                        Paragraphs = new string[] { stihos.Text[handler.Settings.Language] }
                     });
                 }
 

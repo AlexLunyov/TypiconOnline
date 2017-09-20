@@ -5,6 +5,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 
@@ -13,11 +15,19 @@ namespace TypiconOnline.Domain.ItemTypes
     /// <summary>
     /// 
     /// </summary>
-    public class ItemText : ItemStyledType
+    public class ItemText : ItemStyledType, IXmlSerializable
     {
         protected Dictionary<string, string> _textDict = new Dictionary<string, string>();
 
         public ItemText() { }
+
+        public ItemText(ItemText source) : base(source)
+        {
+            foreach (KeyValuePair<string, string> entry in source.Text)
+            {
+                AddElement(entry.Key, entry.Value);
+            }
+        }
 
         public ItemText(string expression) : base(expression)
         {
@@ -36,6 +46,14 @@ namespace TypiconOnline.Domain.ItemTypes
             get
             {
                 return _textDict;
+            }
+        }
+
+        public override bool IsEmpty
+        {
+            get
+            {
+                return base.IsEmpty && _textDict.Count == 0;
             }
         }
 
@@ -72,17 +90,22 @@ namespace TypiconOnline.Domain.ItemTypes
 
         protected override void Validate()
         {
-            //Принимаем только элементы с именем xx-xx
-            //TODO: добавить еще валидацию на предустановленные языки
-            Regex rgx = new Regex(@"^[a-z]{2}-[a-z]{2}$");
-            
             foreach (KeyValuePair<string, string> entry in _textDict)
             {
-                if (!rgx.IsMatch(entry.Key))
+                if (!IsKeyValid(entry.Key))
                 {
                     AddBrokenConstraint(ItemTextBusinessConstraint.LanguageMismatch, "ItemText");
                 }
             }
+        }
+
+        private bool IsKeyValid(string key)
+        {
+            //Принимаем только элементы с именем xx-xx
+            //TODO: добавить еще валидацию на предустановленные языки
+            Regex rgx = new Regex(@"^[a-z]{2}-[a-z]{2}$");
+
+            return rgx.IsMatch(key);
         }
 
         protected override void Build(string expression)
@@ -163,6 +186,69 @@ namespace TypiconOnline.Domain.ItemTypes
 
             //return (itemText.Text.ContainsKey(language)) 
             //    ? itemText.Text[language] + " " : "";
+        }
+
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml(XmlReader reader)
+        {
+            //reader.MoveToContent();
+            //while (reader.Read())
+            //{
+            //    if (reader.NodeType == XmlNodeType.Element)
+            //    {
+            //        string name = reader.Name;
+
+            //        if (name == RuleConstants.StyleNodeName)
+            //        {
+            //            XmlSerializer _serializer = new XmlSerializer(typeof(TextStyle), new XmlRootAttribute(RuleConstants.StyleNodeName));
+            //            Style = _serializer.Deserialize(reader) as TextStyle;
+            //        }
+            //        else if (IsKeyValid(name))
+            //        {
+            //            string value = reader.ReadElementContentAsString();
+            //            AddElement(name, value);
+            //        }
+            //    }
+            //}
+
+            bool wasEmpty = reader.IsEmptyElement;
+            // jump to <parameters>
+            reader.Read();
+
+            if (wasEmpty)
+                return;
+
+            while (reader.NodeType != XmlNodeType.EndElement)
+            {
+                // jump to <item>
+                reader.MoveToContent();
+
+                string name = reader.Name;
+
+                if (name == RuleConstants.StyleNodeName)
+                {
+                    XmlSerializer _serializer = new XmlSerializer(typeof(TextStyle), new XmlRootAttribute(RuleConstants.StyleNodeName));
+                    Style = _serializer.Deserialize(reader) as TextStyle;
+                }
+                else if (IsKeyValid(name))
+                {
+                    string value = reader.ReadElementContentAsString();
+                    AddElement(name, value);
+                }
+
+                reader.Read();
+            }
+
+            reader.Read();
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            throw new NotImplementedException();
         }
     }
 }

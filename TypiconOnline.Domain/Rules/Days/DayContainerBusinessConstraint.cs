@@ -8,7 +8,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Days
 {
-    public class DayElementBusinessConstraint
+    public class DayContainerBusinessConstraint
     {
         public static readonly BusinessConstraint NameRequired = new BusinessConstraint("Имя обязательно для заполнения.");
     }

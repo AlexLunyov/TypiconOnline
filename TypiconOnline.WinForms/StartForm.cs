@@ -497,8 +497,8 @@ namespace ScheduleForm
 
         private void btnGetSequence_Click(object sender, EventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 GetScheduleDayRequest request = new GetScheduleDayRequest()
                 {
                     Date = monthCalendarSequence.SelectionStart,
@@ -516,12 +516,12 @@ namespace ScheduleForm
 
                 txtSequence.Clear();
                 txtSequence.AppendText(viewer.GetResult());
-            }
-            catch (Exception ex)
-            {
-                txtSequence.Clear();
-                txtSequence.AppendText(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    txtSequence.Clear();
+            //    txtSequence.AppendText(ex.Message);
+            //}
         }
     }
 }

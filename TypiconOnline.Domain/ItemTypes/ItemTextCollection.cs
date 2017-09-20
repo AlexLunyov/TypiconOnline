@@ -5,15 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
+using TypiconOnline.Domain.Rules;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.ItemTypes
 {
+    [Serializable]
     public class ItemTextCollection: ItemType
     {
         private string _stringExpression;
 
-        private List<ItemText> _items = new List<ItemText>();
+        
 
         public ItemTextCollection()
         {
@@ -29,8 +32,9 @@ namespace TypiconOnline.Domain.ItemTypes
         {
             Build(expression);
         }
-
-        public string TagName { get; set; }
+        [XmlIgnore]
+        public string TagName { get; private set; }
+        [XmlIgnore]
         public virtual string StringExpression
         {
             get
@@ -43,18 +47,20 @@ namespace TypiconOnline.Domain.ItemTypes
                 Build(_stringExpression);
             }
         }
-        public ReadOnlyCollection<ItemText> Items
+
+        private List<ItemText> _items = new List<ItemText>();
+
+        [XmlElement(RuleConstants.ItemTextCollectionNode)]
+        public List<ItemText> Items
         {
             get
             {
-                return _items.AsReadOnly();
+                return _items;
             }
-        }
-
-        public void AddItem(ItemText item)
-        {
-            item.TagName = TagName + _items.Count;
-            _items.Add(item);
+            set
+            {
+                _items = value;
+            }
         }
 
         private void Build(string expression)

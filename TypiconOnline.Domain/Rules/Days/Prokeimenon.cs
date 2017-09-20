@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
 
@@ -12,13 +13,21 @@ namespace TypiconOnline.Domain.Rules.Days
     /// <summary>
     /// Описание прокимна
     /// </summary>
+    [Serializable]
     public class Prokeimenon : ItemTextCollection
     {
+        public Prokeimenon() : base() { }
+
         public Prokeimenon(XmlNode node) : base(node)
         {
             //глас
             XmlAttribute ihosAttr = node.Attributes[RuleConstants.YmnosIhosAttrName];
-            Ihos = (ihosAttr != null) ? new ItemInt(ihosAttr.Value) : new ItemInt();
+            if (ihosAttr != null)
+            {
+                int result = default(int);
+                int.TryParse(ihosAttr.Value, out result);
+                Ihos = result;
+            }
         }
 
         #region Properties
@@ -26,7 +35,10 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Глас
         /// </summary>
-        public ItemInt Ihos { get; set; }
+        [XmlAttribute(RuleConstants.YmnosIhosAttrName)]
+        public int Ihos { get; set; }
+        [XmlAttribute(RuleConstants.ProkeimenonKindAttr)]//(AttributeName = RuleConstants.ProkeimenonKindAttr, Type = typeof(ProkiemenonKind))]
+        public ProkiemenonKind Kind { get; set; }
 
         #endregion
 
@@ -35,7 +47,7 @@ namespace TypiconOnline.Domain.Rules.Days
             XmlDocument doc = base.ComposeXml();
 
             XmlAttribute attr = doc.CreateAttribute(RuleConstants.YmnosIhosAttrName);
-            attr.Value = Ihos.Value.ToString();
+            attr.Value = Ihos.ToString();
             doc.DocumentElement.Attributes.Append(attr);
 
             return doc;
@@ -45,17 +57,10 @@ namespace TypiconOnline.Domain.Rules.Days
         {
             base.Validate();
 
-            if (!Ihos.IsValid)
+            //глас должен иметь значения с 1 до 8
+            if ((Ihos < 1) || (Ihos > 8))
             {
-                AppendAllBrokenConstraints(Ihos, RuleConstants.ProkeimenonNode + "." + RuleConstants.YmnosIhosAttrName);
-            }
-            else
-            {
-                //глас должен иметь значения с 1 до 8
-                if ((Ihos.Value < 1) || (Ihos.Value > 8))
-                {
-                    AddBrokenConstraint(YmnosGroupBusinessConstraint.InvalidIhos, RuleConstants.ProkeimenonNode);
-                }
+                AddBrokenConstraint(YmnosGroupBusinessConstraint.InvalidIhos, RuleConstants.ProkeimenonNode);
             }
         }
     }

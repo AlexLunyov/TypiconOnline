@@ -87,7 +87,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
                 Annotation = new ItemText(@"<annotation>
 					                            <cs-ru>Феофа́ново</cs-ru>
 				                            </annotation>"),
-                Ihos = new ItemInt(1),
+                Ihos = 1,
                 Prosomoion = new Prosomoion()
             };
 
@@ -96,7 +96,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
                 Annotation = new ItemText(@"<annotation>
 					                            <cs-ru>Феофа́ново</cs-ru>
 				                            </annotation>"),
-                Ihos = new ItemInt(2),
+                Ihos = 2,
                 Prosomoion = new Prosomoion()
             };
 
@@ -111,7 +111,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
                 //Annotation = new ItemText(@"<annotation>
 					           //                 <cs-ru>Феофа́ново</cs-ru>
 				            //                </annotation>"),
-                Ihos = new ItemInt(1),
+                Ihos = 1,
                 //Prosomoion = new Prosomoion()
             };
 
@@ -120,7 +120,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
                 //Annotation = new ItemText(@"<annotation>
 					           //                 <cs-ru>Феофа́ново</cs-ru>
 				            //                </annotation>"),
-                Ihos = new ItemInt(1),
+                Ihos = 1,
                 //Prosomoion = new Prosomoion()
             };
 
@@ -135,7 +135,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
                 Annotation = new ItemText(@"<annotation>
                                  <cs-ru>Феофа́ново</cs-ru>
                                 </annotation>"),
-                Ihos = new ItemInt(1),
+                Ihos = 1,
                 //Prosomoion = new Prosomoion()
             };
 
@@ -144,7 +144,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
                 Annotation = new ItemText(@"<annotation>
                                  <cs-cs>Феофа́ново</cs-cs>
                                 </annotation>"),
-                Ihos = new ItemInt(1),
+                Ihos = 1,
                 //Prosomoion = new Prosomoion()
             };
 

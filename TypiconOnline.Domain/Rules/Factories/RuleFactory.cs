@@ -135,10 +135,10 @@ namespace TypiconOnline.Domain.Rules.Factories
         {
             RuleElement outputEl = CreateExecutable(node);
 
-            if (outputEl == null)
-            {
-                outputEl = CreateDayElement(node);
-            }
+            //if (outputEl == null)
+            //{
+            //    outputEl = CreateDayElement(node);
+            //}
 
             if (outputEl == null)
             {
@@ -239,17 +239,7 @@ namespace TypiconOnline.Domain.Rules.Factories
             return outputEl;
         }
 
-        public static DayElement CreateDayElement(XmlNode node)
-        {
-            DayElement outputEl = null;
-            switch (node.Name)
-            {
-                case RuleConstants.DayElementNode:
-                    outputEl = new DayElement(node);
-                    break;
-            }
-            return outputEl;
-        }
+        
 
     }
 }

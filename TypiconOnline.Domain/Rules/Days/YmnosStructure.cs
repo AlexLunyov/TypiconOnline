@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Days
 {
@@ -14,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Таквыми являются Стихиры на Господи воззвах, на Хвалитех, и т.д.
     /// </summary>
     [Serializable]
-    public class YmnosStructure : RuleElement
+    public class YmnosStructure : ValueObjectBase
     {
         private List<YmnosGroup> _groups = new List<YmnosGroup>();
         private List<YmnosGroup> _theotokion = new List<YmnosGroup>();
@@ -26,7 +27,7 @@ namespace TypiconOnline.Domain.Rules.Days
             _groups.Add(new YmnosGroup(group));
         }
 
-        public YmnosStructure(XmlNode node) : base(node) 
+        public YmnosStructure(XmlNode node) 
         {
             //Groups = new List<YmnosGroup>();
 
@@ -63,7 +64,7 @@ namespace TypiconOnline.Domain.Rules.Days
         }
 
         #region Properties
-        [XmlElement(RuleConstants.YmnosStructureGroupsNode)]
+        [XmlElement(RuleConstants.YmnosStructureGroupNode)]
         public List<YmnosGroup> Groups
         {
             get
@@ -98,32 +99,26 @@ namespace TypiconOnline.Domain.Rules.Days
 
         #endregion
 
-
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void Validate()
         {
             foreach (YmnosGroup group in Groups)
             {
                 if (!group.IsValid)
                 {
-                    AppendAllBrokenConstraints(group, ElementName + "." + RuleConstants.YmnosStructureGroupNode);
+                    AppendAllBrokenConstraints(group, /*ElementName + "." + */RuleConstants.YmnosStructureGroupNode);
                 }
             }
 
             if (Doxastichon?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Doxastichon, ElementName + "." + RuleConstants.YmnosStructureDoxastichonNode);
+                AppendAllBrokenConstraints(Doxastichon, /*ElementName + "." + */RuleConstants.YmnosStructureDoxastichonNode);
             }
 
             foreach (YmnosGroup group in Theotokion)
             {
                 if (!group.IsValid)
                 {
-                    AppendAllBrokenConstraints(group, ElementName + "." + RuleConstants.YmnosStructureTheotokionNode);
+                    AppendAllBrokenConstraints(group, /*ElementName + "." + */RuleConstants.YmnosStructureTheotokionNode);
                 }
             }
         }

@@ -81,6 +81,7 @@
             this.monthCalendarSequence = new System.Windows.Forms.MonthCalendar();
             this.folderBrowserDialogSettings = new System.Windows.Forms.FolderBrowserDialog();
             this.templateFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.label7 = new System.Windows.Forms.Label();
             this.tabControlMain.SuspendLayout();
             this.tabPageMain.SuspendLayout();
             this.panelTest.SuspendLayout();
@@ -619,6 +620,7 @@
             // 
             // tabPageSequence
             // 
+            this.tabPageSequence.Controls.Add(this.label7);
             this.tabPageSequence.Controls.Add(this.groupBox7);
             this.tabPageSequence.Controls.Add(this.groupBox6);
             this.tabPageSequence.Location = new System.Drawing.Point(4, 25);
@@ -665,7 +667,7 @@
             // 
             // btnGetSequence
             // 
-            this.btnGetSequence.Location = new System.Drawing.Point(9, 250);
+            this.btnGetSequence.Location = new System.Drawing.Point(9, 282);
             this.btnGetSequence.Name = "btnGetSequence";
             this.btnGetSequence.Size = new System.Drawing.Size(192, 29);
             this.btnGetSequence.TabIndex = 9;
@@ -682,10 +684,20 @@
             this.monthCalendarSequence.ShowToday = false;
             this.monthCalendarSequence.ShowTodayCircle = false;
             this.monthCalendarSequence.TabIndex = 8;
+            this.monthCalendarSequence.TodayDate = new System.DateTime(2017, 9, 28, 0, 0, 0, 0);
             // 
             // templateFileDialog
             // 
             this.templateFileDialog.Filter = "Docx файлы | *.docx";
+            // 
+            // label7
+            // 
+            this.label7.Location = new System.Drawing.Point(9, 233);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(195, 49);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "Тест на 28 сентября 2017 года";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // StartForm
             // 
@@ -782,5 +794,6 @@
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Button btnGetSequence;
         private System.Windows.Forms.MonthCalendar monthCalendarSequence;
+        private System.Windows.Forms.Label label7;
     }
 }

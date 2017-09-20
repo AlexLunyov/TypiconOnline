@@ -51,7 +51,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
 
             YmnosStructure element = new YmnosStructure(root);// (xmlDoc.FirstChild);
 
-            Assert.AreEqual(element.Groups[0].Ihos.Value, 5);
+            Assert.AreEqual(element.Groups[0].Ihos, 5);
             //Assert.Pass(element.Text.Text["cs-ru"]);
         }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace TypiconOnline.Domain.Rules
 {
@@ -60,6 +61,7 @@ namespace TypiconOnline.Domain.Rules
         public const string StyleNodeName = "style";
         public const string StyleRedNodeName = "red";
         public const string StyleBoldNodeName = "bold";
+        public const string StyleHeaderNodeName = "header";
 
         /*
          * Логические элементы
@@ -89,8 +91,16 @@ namespace TypiconOnline.Domain.Rules
         public const string OrthrosNode = "orthros";
         public const string LeitourgiaNode = "leitourgia";
 
-        public const string KekragariaNode = "kekragaria"; 
+        public const string KekragariaNode = "kekragaria";
+
+        public const string IhosAttrName = "ihos";
+        public const string YmnosGroupKindAttrName = "kind";
+
         public const string ProkeimenonNode = "prokeimenon";
+        public const string ProkeimenonKindAttr = "kind";
+
+        public const string ItemTextCollectionNode = "item";
+
         public const string ApostichaNode = "aposticha";
         public const string LitiNode = "liti"; 
         public const string TroparionNode = "troparion"; 
@@ -120,7 +130,9 @@ namespace TypiconOnline.Domain.Rules
 
         public const string KanonasSedalenNode = "sedalen"; 
         public const string KanonasKontakionNode = "kontakion";
+        public const string IkosNode = "ikos";
         public const string KanonasExapostilarionNode = "exapostilarion";
+        public const string KanonasExapostilarionYmnosNode = "ymnos";
 
         public const string YmnosStructureGroupsNode = "groups"; 
         public const string YmnosStructureGroupNode = "group";
@@ -232,8 +244,38 @@ namespace TypiconOnline.Domain.Rules
     public enum ServiceSequenceKind { MikrosEsperinos, Esperinos, Orthros, Hour, Leitourgia }
 
     public enum TextHolderKind { Choir, Lector, Priest, Deacon, Stihos, Undefined }
-    
+    [Serializable]
+    public enum ProkiemenonKind
+    {
+        [XmlEnum(Name = "prokiemenon")]
+        Prokiemenon,
+        [XmlEnum(Name = "alleluia")]
+        Alleluia
+    }
+    [Serializable]
+    public enum Languages
+    {
+        [XmlEnum(Name = "cs-cs")]
+        cs_cs,
+        [XmlEnum(Name = "cs-ru")]
+        cs_ru,
+        [XmlEnum(Name = "ru-ru")]
+        ru_ru,
+        [XmlEnum(Name = "el-el")]
+        el_el
+    }
 
+    /// <summary>
+    /// Разновидность группы песнопений
+    /// </summary>
+    [Serializable]
+    public enum YmnosGroupKind
+    {
+        [XmlEnum(Name = "undefined")]
+        Undefined,
+        [XmlEnum(Name = "stavros")]
+        Stavros
+    }
 
-    public enum State { Valid = 0, Invalid = 1, NotDefined = 2}
+    public enum State { Valid = 0, Invalid = 1, Undefined = 2}
 }

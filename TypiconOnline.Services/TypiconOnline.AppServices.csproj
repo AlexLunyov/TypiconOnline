@@ -43,20 +43,23 @@
   <ItemGroup>
     <Compile Include="Common\DayXmlHelper T.cs" />
     <Compile Include="Common\SignMigrator.cs" />
-    <Compile Include="Common\XmlHelper.cs" />
     <Compile Include="Common\XmlToFileSaver.cs" />
     <Compile Include="Exceptions\ResourceNotFoundException.cs" />
+    <Compile Include="Implementations\DayContainerService.cs" />
     <Compile Include="Implementations\EnrichedTypiconEntityService.cs" />
     <Compile Include="Implementations\FileReader.cs" />
     <Compile Include="Implementations\HtmlScheduleWeekViewer.cs" />
     <Compile Include="Implementations\ScheduleService.cs" />
     <Compile Include="Implementations\TextScheduleDayViewer.cs" />
     <Compile Include="Implementations\TypiconEntityService.cs" />
+    <Compile Include="Implementations\TypiconSerializer.cs" />
+    <Compile Include="Interfaces\IDayContainerService.cs" />
     <Compile Include="Interfaces\IScheduleDayViewer.cs" />
     <Compile Include="Interfaces\IScheduleService.cs" />
     <Compile Include="Interfaces\IScheduleWeekViewer.cs" />
     <Compile Include="Interfaces\ITypiconEntityService.cs" />
     <Compile Include="Interfaces\IXmlSaver.cs" />
+    <Compile Include="Interfaces\IXmlSerializer.cs" />
     <Compile Include="Messaging\Common\CreateItemTextRequest.cs" />
     <Compile Include="Messaging\ServiceResponseBase.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleDayRequest.cs" />

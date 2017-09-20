@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Days
 {
@@ -13,9 +14,11 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Описание службы малой вечерни
     /// </summary>
     [Serializable]
-    public class MikrosEsperinos : RuleElement
+    public class MikrosEsperinos : ValueObjectBase
     {
-        public MikrosEsperinos(XmlNode node) : base(node)
+        public MikrosEsperinos() { }
+
+        public MikrosEsperinos(XmlNode node)
         {
             //kekragaria
             XmlNode elementNode = node.SelectSingleNode(RuleConstants.KekragariaNode);
@@ -59,26 +62,21 @@ namespace TypiconOnline.Domain.Rules.Days
 
         #endregion
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void Validate()
         {
             if (Kekragaria?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Kekragaria, ElementName + "." + RuleConstants.KekragariaNode);
+                AppendAllBrokenConstraints(Kekragaria, RuleConstants.MikrosEsperinosNode + "." + RuleConstants.KekragariaNode);
             }
 
             if (Aposticha?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Aposticha, ElementName + "." + RuleConstants.ApostichaNode);
+                AppendAllBrokenConstraints(Aposticha, RuleConstants.MikrosEsperinosNode + "." + RuleConstants.ApostichaNode);
             }
 
             if (Troparion?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Troparion, ElementName + "." + RuleConstants.TroparionNode);
+                AppendAllBrokenConstraints(Troparion, RuleConstants.MikrosEsperinosNode + "." + RuleConstants.TroparionNode);
             }
         }
     }

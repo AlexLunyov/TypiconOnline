@@ -7,18 +7,19 @@ using System.Xml;
 using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Days
 {
     /// <summary>
-    /// Текст службы дня
+    /// Класс - хранилище текста службы дня
     /// </summary>
     [Serializable]
-    public class DayElement : RuleElement
+    public class DayContainer : ValueObjectBase
     {
-        public DayElement() { }
+        public DayContainer() { }
 
-        public DayElement(XmlNode node) : base(node)
+        public DayContainer(XmlNode node) 
         {
             XmlNode nameNode = node.SelectSingleNode(RuleConstants.DayElementNameNode);
             if (nameNode != null)
@@ -54,6 +55,7 @@ namespace TypiconOnline.Domain.Rules.Days
         }
 
         #region Properties
+
         /// <summary>
         /// Наименование праздника.
         /// Например, "Великомученика Никиты."
@@ -83,11 +85,6 @@ namespace TypiconOnline.Domain.Rules.Days
 
         #endregion
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void Validate()
         {
             /*if (Name == null)
@@ -96,27 +93,27 @@ namespace TypiconOnline.Domain.Rules.Days
             }
             else */if (Name?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Name, ElementName + "." + RuleConstants.DayElementNameNode);
+                AppendAllBrokenConstraints(Name, RuleConstants.DayElementNameNode);
             }
 
             if (MikrosEsperinos?.IsValid == false)
             {
-                AppendAllBrokenConstraints(MikrosEsperinos, ElementName + "." + RuleConstants.MikrosEsperinosNode);
+                AppendAllBrokenConstraints(MikrosEsperinos, RuleConstants.MikrosEsperinosNode);
             }
 
             if (Esperinos?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Esperinos, ElementName + "." + RuleConstants.EsperinosNode);
+                AppendAllBrokenConstraints(Esperinos, RuleConstants.EsperinosNode);
             }
 
             if (Orthros?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Orthros, ElementName + "." + RuleConstants.OrthrosNode);
+                AppendAllBrokenConstraints(Orthros, RuleConstants.OrthrosNode);
             }
 
             if (Leitourgia?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Leitourgia, ElementName + "." + RuleConstants.LeitourgiaNode);
+                AppendAllBrokenConstraints(Leitourgia, RuleConstants.LeitourgiaNode);
             }
         }
     }

@@ -8,6 +8,9 @@ using TypiconOnline.Domain.Rules.Schedule;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {
+    /// <summary>
+    /// Обработчик правил, который выводит последовательность богослужений
+    /// </summary>
     public class ServiceSequenceHandler : ScheduleHandler
     {
         public ServiceSequenceHandler()

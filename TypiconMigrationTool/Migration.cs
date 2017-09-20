@@ -200,7 +200,7 @@ namespace TypiconMigrationTool
                 ItemDate d = (!mineinikRow.IsDateBNull()) ? new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day) : null;
 
                 string fileName = (d != null) ? d.Expression + "." + mineinikRow.Name : mineinikRow.Name;
-                dayService.RuleDefinition = fileDayReader.GetXml(fileName);
+                dayService.DayDefinition = fileDayReader.GetXml(fileName);
 
                 //menologyDay
                 //смотрим, есть ли уже такой объект с заявленной датой

@@ -4,11 +4,15 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.ItemTypes
 {
-    public class ItemInt : ItemType
+    [Serializable]
+    public class ItemInt : ItemType, IXmlSerializable
     {
         private int _value = 0;
         private string _stringValue = "";
@@ -17,8 +21,7 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public ItemInt(int val)
         {
-            _value = val;
-            _stringValue = val.ToString();
+            Value = val;
         }
 
         public ItemInt(string exp)
@@ -33,6 +36,11 @@ namespace TypiconOnline.Domain.ItemTypes
             get
             {
                 return _value;
+            }
+            set
+            {
+                _value = value;
+                _stringValue = value.ToString();
             }
         }
 
@@ -63,5 +71,27 @@ namespace TypiconOnline.Domain.ItemTypes
 
             return (_stringValue == itemInt._stringValue);
         }
+
+        #region IXmlSerializable
+
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml(XmlReader reader)
+        {
+            reader.MoveToContent();
+            _stringValue = reader.ReadElementContentAsString();
+
+            int.TryParse(_stringValue, out _value);
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            writer.WriteValue(_stringValue);
+        }
+
+        #endregion
     }
 }

@@ -21,6 +21,11 @@ namespace TypiconOnline.AppServices.Implementations
             FolderPath = folderPath;
         }
 
+        /// <summary>
+        /// Возвращает строку Xml из файла
+        /// </summary>
+        /// <param name="name">Имя файла</param>
+        /// <returns></returns>
         public string GetXml(string name)
         {
             try

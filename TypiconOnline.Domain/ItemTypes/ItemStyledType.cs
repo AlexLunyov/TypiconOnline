@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 using TypiconOnline.Domain.Rules;
 
 namespace TypiconOnline.Domain.ItemTypes
@@ -18,11 +19,17 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public ItemStyledType() { }
 
+        public ItemStyledType(ItemStyledType source)
+        {
+            StringExpression = source.StringExpression;
+        }
+
         public ItemStyledType(string expression)
         {
             StringExpression = expression;
         }
 
+        [XmlElement(RuleConstants.StyleNodeName)]
         public TextStyle Style = new TextStyle();/*
         {
             get
@@ -34,7 +41,7 @@ namespace TypiconOnline.Domain.ItemTypes
                 _style = value;
             }
         }*/
-
+        [XmlIgnore]
         public string TagName = "itemstyled"; /*{
             get
             {
@@ -45,7 +52,7 @@ namespace TypiconOnline.Domain.ItemTypes
                 _name = value;
             }
         }*/
-
+        [XmlIgnore]
         public virtual string StringExpression
         {
             get
@@ -62,7 +69,7 @@ namespace TypiconOnline.Domain.ItemTypes
 
         protected bool _isEmpty = true;
 
-        public bool IsEmpty
+        public virtual bool IsEmpty
         {
             get
             {
@@ -146,13 +153,26 @@ namespace TypiconOnline.Domain.ItemTypes
             return (_stringExpression == item._stringExpression);
         }
     }
-
+    [Serializable]
     public class TextStyle
     {
+        [XmlElement(RuleConstants.StyleRedNodeName)]
         public bool IsRed = false;
+        [XmlElement(RuleConstants.StyleBoldNodeName)]
         public bool IsBold = false;
+        [XmlElement(RuleConstants.StyleHeaderNodeName)]
         public HeaderCaption Header = HeaderCaption.NotDefined;
     }
-
-    public enum HeaderCaption { NotDefined = 0, h1 = 1, h2 = 2, h3 = 3, h4 = 4 }
+    [Serializable]
+    public enum HeaderCaption {
+        [XmlEnum(Name = "notdefined")]
+        NotDefined = 0,
+        [XmlEnum(Name = "h1")]
+        h1 = 1,
+        [XmlEnum(Name = "h2")]
+        h2 = 2,
+        [XmlEnum(Name = "h3")]
+        h3 = 3,
+        [XmlEnum(Name = "h4")]
+        h4 = 4 }
 }

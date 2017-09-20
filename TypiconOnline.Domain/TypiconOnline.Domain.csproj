@@ -60,6 +60,7 @@
     <Compile Include="Days\Day.cs" />
     <Compile Include="Easter\IEasterStorage.cs" />
     <Compile Include="Easter\IEasterStorageFactory.cs" />
+    <Compile Include="Interfaces\IhosElement.cs" />
     <Compile Include="Interfaces\IViewModelElement.cs" />
     <Compile Include="ItemTypes\ItemEnumTypeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemEnumType.cs" />
@@ -69,11 +70,15 @@
     <Compile Include="ItemTypes\ItemTextCollection.cs" />
     <Compile Include="ItemTypes\ItemTimeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemTime.cs" />
-    <Compile Include="Rules\Days\DayElement.cs" />
-    <Compile Include="Rules\Days\DayElementBusinessConstraint.cs" />
+    <Compile Include="ItemTypes\XmlSerializableDictionary.cs" />
+    <Compile Include="Rules\Days\DayContainer.cs" />
+    <Compile Include="Rules\Days\DayContainerBusinessConstraint.cs" />
     <Compile Include="Rules\Days\EvangelionReading.cs" />
+    <Compile Include="Rules\Days\Exapostilarion.cs" />
+    <Compile Include="Rules\Days\ExapostilarionItem.cs" />
     <Compile Include="Rules\Days\IhosRuleElement.cs" />
     <Compile Include="Rules\Days\Kanonas.cs" />
+    <Compile Include="Rules\Days\Kontakion.cs" />
     <Compile Include="Rules\Days\Leitourgia.cs" />
     <Compile Include="Rules\Days\Makarios.cs" />
     <Compile Include="Rules\Days\MakariosOdi.cs" />
@@ -81,6 +86,7 @@
     <Compile Include="Rules\Days\Odi.cs" />
     <Compile Include="Rules\Days\OdiTroparion.cs" />
     <Compile Include="Rules\Days\OdiBusinessConstraint.cs" />
+    <Compile Include="Rules\Days\KontakionBusinessConstraint.cs" />
     <Compile Include="Rules\Days\YmnosGroupBusinessConstraint.cs" />
     <Compile Include="Rules\Days\YmnosBusinessConstraint.cs" />
     <Compile Include="Rules\Days\Esperinos.cs" />

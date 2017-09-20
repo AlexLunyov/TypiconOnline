@@ -95,6 +95,9 @@
     <Compile Include="Experiments\Context.cs" />
     <Compile Include="Experiments\GenericTest.cs" />
     <Compile Include="Experiments\TestClass1.cs" />
+    <Compile Include="Experiments\SerializationExperiment.cs" />
+    <Compile Include="Experiments\XmlSerialization\BoolExpression.cs" />
+    <Compile Include="Experiments\XmlSerialization\Monastery.cs" />
     <Compile Include="Migration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -130,6 +133,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\Esperinos.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="data\ScheduleDB.mdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

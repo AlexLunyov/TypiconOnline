@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
 
@@ -12,19 +13,27 @@ namespace TypiconOnline.Domain.Rules.Days
     /// <summary>
     /// Вечерня
     /// </summary>
+    [Serializable]
     public class Esperinos : MikrosEsperinos
     {
+        public Esperinos() { }
+
         public Esperinos(XmlNode node) : base(node)
         {
-            //Prokeimenon
-            XmlNode elementNode = node.SelectSingleNode(RuleConstants.ProkeimenonNode);
-            if (elementNode != null)
+            //Prokeimeni
+            XmlNodeList prokiemenonList = node.SelectNodes(RuleConstants.ProkeimenonNode);
+            if (prokiemenonList != null)
             {
-                Prokeimenon = new Prokeimenon(elementNode);
+                Prokeimeni = new List<Prokeimenon>();
+
+                foreach (XmlNode prokiemenonItemNode in prokiemenonList)
+                {
+                    Prokeimeni.Add(new Prokeimenon(prokiemenonItemNode));
+                }
             }
 
             //Liti
-            elementNode = node.SelectSingleNode(RuleConstants.LitiNode);
+            XmlNode elementNode = node.SelectSingleNode(RuleConstants.LitiNode);
             if (elementNode != null)
             {
                 Liti = new YmnosStructure(elementNode);
@@ -33,36 +42,39 @@ namespace TypiconOnline.Domain.Rules.Days
 
         #region Properties
 
-        
         /// <summary>
-        /// Прокимен на вечерне
+        /// Прокимны на вечерне.
+        /// Два прокимна бывает Великим постом
         /// </summary>
-        public Prokeimenon Prokeimenon { get; set; }
+        [XmlElement(RuleConstants.ProkeimenonNode)]
+        public List<Prokeimenon> Prokeimeni { get; set; }
         /// <summary>
         /// Стихиры на литии
         /// </summary>
+        [XmlElement(RuleConstants.LitiNode)]
         public YmnosStructure Liti { get; set; }
         
 
         #endregion
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void Validate()
         {
             base.Validate();
 
-            if (Prokeimenon?.IsValid == false)
+            if (Prokeimeni != null)
             {
-                AppendAllBrokenConstraints(Prokeimenon, ElementName + "." + RuleConstants.ProkeimenonNode);
+                Prokeimeni.ForEach(c =>
+                {
+                    if (!c.IsValid)
+                    {
+                        AppendAllBrokenConstraints(c, /*ElementName + "." + */RuleConstants.ProkeimenonNode);
+                    }
+                });
             }
 
             if (Liti?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Liti, ElementName + "." + RuleConstants.LitiNode);
+                AppendAllBrokenConstraints(Liti, /*ElementName + "." + */RuleConstants.LitiNode);
             }
         }
     }

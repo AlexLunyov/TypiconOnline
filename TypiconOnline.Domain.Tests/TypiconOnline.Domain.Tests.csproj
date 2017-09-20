@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Days\DayServiceTest.cs" />
+    <Compile Include="Days\EsperinosTest.cs" />
     <Compile Include="Days\SticheraTest.cs" />
     <Compile Include="ItemTypes\ItemTextCollectionTest.cs" />
     <Compile Include="ItemTypes\ItemTimeTest.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Rules\Schedule\TextHolderTest.cs" />
     <Compile Include="Rules\Schedule\YmnosRuleTest.cs" />
     <Compile Include="Services\ScheduleServiceTest.cs" />
+    <Compile Include="Typicon\BerlukiRuTest.cs" />
     <Compile Include="Typicon\TriodionRuleFolderTest.cs" />
     <Compile Include="Typicon\TypiconEntityTest.cs" />
   </ItemGroup>
@@ -115,6 +117,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Esperinos.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
