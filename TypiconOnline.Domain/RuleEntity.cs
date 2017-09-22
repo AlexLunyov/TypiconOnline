@@ -9,7 +9,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 namespace TypiconOnline.Domain
 {
     /// <summary>
-    /// Базовый класс для всех главных элементов системы: богослужебных текстов и правил их компоновки
+    /// Базовый класс для всех главных элементов системы: правил компоновки богослужебных текстов
     /// </summary>
     public abstract class RuleEntity/*<T> */ : EntityBase<int>, IAggregateRoot /*where T : RuleContainer*/
     {

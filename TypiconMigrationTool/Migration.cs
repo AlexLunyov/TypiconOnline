@@ -174,6 +174,9 @@ namespace TypiconMigrationTool
         {
             Console.WriteLine("MigrateMenologyDaysAndRules()");
 
+            Timer timer = new Timer();
+            timer.Start();
+
             //TypiconFolderEntity folder = new TypiconFolderEntity() { Name = "Минея" };
             //typiconEntity.RulesFolder.AddFolder(folder);
 
@@ -269,6 +272,7 @@ namespace TypiconMigrationTool
 
                 _unitOfWork.Commit();
 
+                
 
                 //DayService dayService = new DayService();
 
@@ -318,12 +322,18 @@ namespace TypiconMigrationTool
                 //_unitOfWork.Repository<MenologyRule>().Insert(menologyRule);
             }
 
+            timer.Stop();
+            Console.WriteLine(timer.GetStringValue());
+
             //_unitOfWork.Commit();
         }
 
         private void MigrateTriodionDaysAndRules(TypiconEntity typiconEntity)
         {
             Console.WriteLine("MigrateTriodionDaysAndRules()");
+
+            Timer timer = new Timer();
+            timer.Start();
 
             TypiconFolderEntity folder = new TypiconFolderEntity() { Name = "Триодь" };
 
@@ -374,12 +384,19 @@ namespace TypiconMigrationTool
                 typiconEntity.TriodionRules.Add(rule);
             }
 
+            timer.Stop();
+            Console.WriteLine(timer.GetStringValue());
+
             //_unitOfWork.Commit();
         }
 
         private void MigrateCommonRules(TypiconEntity typiconEntity)
         {
             Console.WriteLine("MigrateCommonRules()");
+
+            Timer timer = new Timer();
+            timer.Start();
+
             string folderPath = Properties.Settings.Default.FolderPath + typiconEntity.Name + "\\Common\\";
 
             FileReader fileReader = new FileReader(folderPath);
@@ -396,7 +413,9 @@ namespace TypiconMigrationTool
                 };
                 typiconEntity.CommonRules.Add(commonRule);
             }
-            
+
+            timer.Stop();
+            Console.WriteLine(timer.GetStringValue());
         }
 
         private void MigrateEasters()

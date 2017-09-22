@@ -32,13 +32,13 @@ namespace TypiconOnline.Repository.EF.DataBase
 
             modelBuilder.Configurations.Add(new TypiconEntityMap());
 
-            modelBuilder.Configurations.Add(new RuleEntityMap());
+            //modelBuilder.Configurations.Add(new RuleEntityMap());
 
             //modelBuilder.Configurations.Add(new DayMap());
-            modelBuilder.Configurations.Add(new DayServiceMap()); 
+            modelBuilder.Configurations.Add(new DayServiceMap());
 
             modelBuilder.Configurations.Add(new MenologyDayMap());
-            modelBuilder.Configurations.Add(new DayRuleMap()); 
+            modelBuilder.Configurations.Add(new DayRuleMap());
 
             modelBuilder.Configurations.Add(new MenologyRuleMap());
 
@@ -62,7 +62,9 @@ namespace TypiconOnline.Repository.EF.DataBase
 
             modelBuilder.Configurations.Add(new ModifiedTriodionRuleMap());
 
-            modelBuilder.Configurations.Add(new TypiconRuleMap());
+            modelBuilder.Configurations.Add(new CommonRuleMap()); 
+
+            //modelBuilder.Configurations.Add(new TypiconRuleMap());
 
             //modelBuilder.Configurations.Add(new TypiconDayRuleMap()); 
         }
