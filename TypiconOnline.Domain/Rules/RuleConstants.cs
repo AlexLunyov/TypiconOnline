@@ -98,6 +98,12 @@ namespace TypiconOnline.Domain.Rules
 
         public const string ProkeimenonNode = "prokeimenon";
         public const string ProkeimenonKindAttr = "kind";
+        public const string ProkeimenonKindAlleluia = "alleluia";
+
+        public const string ParoimiaNode = "paroimia"; 
+        public const string ParoimiaQuoteAttr = "quote";
+        public const string ParoimiaBookNameNode = "bookname";
+        public const string ParoimiaStihosNode = "stihos";
 
         public const string ItemTextCollectionNode = "item";
 
@@ -247,9 +253,9 @@ namespace TypiconOnline.Domain.Rules
     [Serializable]
     public enum ProkiemenonKind
     {
-        [XmlEnum(Name = "prokiemenon")]
+        [XmlEnum(Name = RuleConstants.ProkeimenonNode)]
         Prokiemenon,
-        [XmlEnum(Name = "alleluia")]
+        [XmlEnum(Name = RuleConstants.ProkeimenonKindAlleluia)]
         Alleluia
     }
     [Serializable]

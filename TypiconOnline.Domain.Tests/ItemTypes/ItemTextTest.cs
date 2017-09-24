@@ -84,8 +84,7 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
         [Test]
         public void ItemText_Deserialize()
         {
-            string xmlString = @"<?xml version=""1.0"" encoding=""UTF - 8""?>
-                                <ItemText xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" >
+            string xmlString = @"<ItemText>
                                     <cs-ru>Блажен муж, иже не иде на совет нечестивых и на пути грешных не ста, и на седалищи губителей не седе,</cs-ru>
 	                                <cs-cs>Бlжeнъ мyжъ, и4же не и4де на совётъ нечести1выхъ, и3 на пути2 грёшныхъ не стA, и3 на сэдaлищи губи1телей не сёде:</cs-cs>
 	                                <ru-ru>Блажен муж, который не пошел на совет нечестивых, и на путь грешных не вступил, и не сидел в сборище губителей;</ru-ru>
@@ -105,6 +104,24 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 
             Assert.IsNotNull(element);
             Assert.AreEqual(element.Style.Header, HeaderCaption.h1);
+        }
+
+        [Test]
+        public void ItemText_Serialize()
+        {
+            string xmlString = @"<ItemText>
+						            <cs-ru>cs-ru Текст</cs-ru>
+                                    <cs-cs>cs-cs Текст</cs-cs>
+                                    <ru-ru>ru-ru Текст</ru-ru>
+					            </ItemText>";
+            TypiconSerializer ser = new TypiconSerializer();
+            ItemText element = ser.Deserialize<ItemText>(xmlString);
+
+            element.Text["cs-cs"] = "cs-cs Текст измененный";
+
+            string result = ser.Serialize(element);
+
+            Assert.Pass(result);
         }
     }
 }

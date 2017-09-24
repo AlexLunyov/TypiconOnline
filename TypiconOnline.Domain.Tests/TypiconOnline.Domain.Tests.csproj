@@ -63,6 +63,7 @@
     <Compile Include="Rules\Days\OrthrosTest.cs" />
     <Compile Include="Rules\Days\SticheraTest.cs" />
     <Compile Include="Rules\Days\YmnosGroupTest.cs" />
+    <Compile Include="Rules\Days\YmnosSrtuctureTest.cs" />
     <Compile Include="Rules\Days\YmnosTest.cs" />
     <Compile Include="Rules\Executables\ExecContainerTest.cs" />
     <Compile Include="Rules\Executables\CaseTest.cs" />

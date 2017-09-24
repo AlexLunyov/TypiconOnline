@@ -37,7 +37,7 @@ namespace TypiconOnline.Domain.ViewModels
 
             Ihos = group.Ihos;
 
-            if (!group.Annotation.IsEmpty)
+            if (group.Annotation?.IsEmpty == false)
             {
                 Text = group.Annotation.Text[handler.Settings.Language];
             }
@@ -48,7 +48,7 @@ namespace TypiconOnline.Domain.ViewModels
             IhosText = CommonRuleService.Instance.GetTextValue(req);
 
             //если подобен
-            if (!group.Prosomoion.IsEmpty)
+            if (group.Prosomoion?.IsEmpty == false)
             {
                 req.Key = CommonRuleConstants.ProsomoionText;
                 Prosomoion = CommonRuleService.Instance.GetTextValue(req);
@@ -56,7 +56,7 @@ namespace TypiconOnline.Domain.ViewModels
                 Prosomoion = Prosomoion + " " + group.Prosomoion.Text[handler.Settings.Language];
             }
             //самоподобен?
-            if (group.Prosomoion.Self)
+            if (group.Prosomoion?.Self == true)
             {
                 req.Key = CommonRuleConstants.SelfText;
                 Self = CommonRuleService.Instance.GetTextValue(req);

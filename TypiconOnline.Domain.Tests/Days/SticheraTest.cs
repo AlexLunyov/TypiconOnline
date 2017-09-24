@@ -31,7 +31,7 @@ namespace TypiconOnline.Domain.Tests.Days
 
             //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
-            DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 638);
+            DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 350);
 
             TypiconSerializer ser = new TypiconSerializer();
             DayContainer container = ser.Deserialize<DayContainer>(dayService.DayDefinition);
@@ -48,7 +48,7 @@ namespace TypiconOnline.Domain.Tests.Days
 
             //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
-            DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 638);
+            DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 350);
 
             TypiconSerializer ser = new TypiconSerializer();
             DayContainer container = ser.Deserialize<DayContainer>(dayService.DayDefinition);
@@ -65,7 +65,7 @@ namespace TypiconOnline.Domain.Tests.Days
 
             //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
-            DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 638);
+            DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 350);
 
             TypiconSerializer ser = new TypiconSerializer();
             DayContainer container = ser.Deserialize<DayContainer>(dayService.DayDefinition);
@@ -82,7 +82,7 @@ namespace TypiconOnline.Domain.Tests.Days
 
             //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
-            DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 638);
+            DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 350);
 
             TypiconSerializer ser = new TypiconSerializer();
             DayContainer container = ser.Deserialize<DayContainer>(dayService.DayDefinition);
@@ -99,7 +99,7 @@ namespace TypiconOnline.Domain.Tests.Days
 
             //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
-            DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 638);
+            DayService dayService = _unitOfWork.Repository<DayService>().Get(c => c.Id == 350);
 
             TypiconSerializer ser = new TypiconSerializer();
             DayContainer container = ser.Deserialize<DayContainer>(dayService.DayDefinition);

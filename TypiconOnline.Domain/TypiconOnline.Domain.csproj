@@ -87,6 +87,8 @@
     <Compile Include="Rules\Days\OdiTroparion.cs" />
     <Compile Include="Rules\Days\OdiBusinessConstraint.cs" />
     <Compile Include="Rules\Days\KontakionBusinessConstraint.cs" />
+    <Compile Include="Rules\Days\Paroimia.cs" />
+    <Compile Include="Rules\Days\ProkeimenonBusinessConstraint.cs" />
     <Compile Include="Rules\Days\YmnosGroupBusinessConstraint.cs" />
     <Compile Include="Rules\Days\YmnosBusinessConstraint.cs" />
     <Compile Include="Rules\Days\Esperinos.cs" />

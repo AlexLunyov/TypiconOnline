@@ -35,11 +35,35 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         }
 
         [Test]
-        public void Ymnos_Serialization()
+        public void Ymnos_Deserialization()
         {
             string xmlString = @"<Ymnos>
                                     <text>
 						                <cs-ru>[item] [sign] Господи воззвах, Славник</cs-ru>
+					                </text>
+				                </Ymnos>";
+            TypiconSerializer ser = new TypiconSerializer();
+            Ymnos element = ser.Deserialize<Ymnos>(xmlString);
+
+            Assert.NotNull(element.Text.Text["cs-ru"]);
+            Assert.Pass(element.Text.Text["cs-ru"]);
+        }
+
+        [Test]
+        public void Ymnos_DeserializationFull()
+        {
+            string xmlString = @"<Ymnos>
+                                    <annotation>
+					                    <cs-ru>Аннотация</cs-ru>
+				                    </annotation>
+                                    <stihos>
+							            <cs-ru>Стих 1</cs-ru>
+						            </stihos>
+                                    <stihos>
+							            <cs-ru>Стих 2</cs-ru>
+						            </stihos>
+                                    <text>
+						                <cs-ru>Текст</cs-ru>
 					                </text>
 				                </Ymnos>";
             TypiconSerializer ser = new TypiconSerializer();
@@ -69,12 +93,15 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             TypiconSerializer ser = new TypiconSerializer();
             Ymnos element = ser.Deserialize<Ymnos>(xmlString);
 
-            Assert.NotNull(element.Text.Text["cs-ru"]);
-            Assert.Pass(element.Text.Text["cs-ru"]);
+            element.Text.Text["cs-ru"] = "Текст измененный";
+
+            string result = ser.Serialize(element);
+
+            Assert.Pass(result);
         }
 
         [Test]
-        public void Ymnos_SerializationTextRequired()
+        public void Ymnos_DeserializationTextRequired()
         {
             string xmlString = @"<Ymnos>
                                     <annotation>

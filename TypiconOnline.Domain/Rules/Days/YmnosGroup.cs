@@ -21,8 +21,8 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public YmnosGroup()
         {
-            Prosomoion = new Prosomoion();
-            Annotation = new ItemText();
+            //Prosomoion = new Prosomoion();
+            //Annotation = new ItemText();
         }
 
         public YmnosGroup(YmnosGroup source) 
@@ -59,8 +59,7 @@ namespace TypiconOnline.Domain.Rules.Days
             Annotation = (annotationNode != null) ? new ItemText(annotationNode.OuterXml) : new ItemText();
 
             //песнопения
-            string xPath = string.Format("//{0}/{1}", RuleConstants.YmnisNode, RuleConstants.YmnosNode);
-            XmlNodeList ymnisList = node.SelectNodes(xPath);
+            XmlNodeList ymnisList = node.SelectNodes(RuleConstants.YmnosNode);
             if (ymnisList != null)
             {
                 foreach (XmlNode ymnosItemNode in ymnisList)
@@ -82,8 +81,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// Тип группы
         /// </summary>
         [XmlAttribute(RuleConstants.YmnosGroupKindAttrName)]
-        //TODO: проверить!
-        [DefaultValue(typeof(YmnosGroupKind), "undefined")]
+        [DefaultValue(YmnosGroupKind.Undefined)]
         public YmnosGroupKind Kind { get; set; }
         /// <summary>
         /// Название подобна (самоподобна)
@@ -147,7 +145,9 @@ namespace TypiconOnline.Domain.Rules.Days
         {
             if (ymnosGroup == null) throw new ArgumentNullException("YmnosGroup.Equals");
             
-            return (Ihos.Equals(ymnosGroup.Ihos) && Annotation.Equals(ymnosGroup.Annotation) && Prosomoion.Equals(ymnosGroup.Prosomoion));
+            return (Ihos.Equals(ymnosGroup.Ihos) 
+                && Annotation?.Equals(ymnosGroup.Annotation) == true 
+                && Prosomoion?.Equals(ymnosGroup.Prosomoion) == true);
         }
     }
 }

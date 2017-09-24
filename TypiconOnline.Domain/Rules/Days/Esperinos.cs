@@ -32,6 +32,18 @@ namespace TypiconOnline.Domain.Rules.Days
                 }
             }
 
+            //Paroimies
+            XmlNodeList paroimiaList = node.SelectNodes(RuleConstants.ParoimiaNode);
+            if (paroimiaList != null)
+            {
+                Paroimies = new List<Paroimia>();
+
+                foreach (XmlNode peroimiaItemNode in paroimiaList)
+                {
+                    Paroimies.Add(new Paroimia(peroimiaItemNode));
+                }
+            }
+
             //Liti
             XmlNode elementNode = node.SelectSingleNode(RuleConstants.LitiNode);
             if (elementNode != null)
@@ -48,6 +60,11 @@ namespace TypiconOnline.Domain.Rules.Days
         /// </summary>
         [XmlElement(RuleConstants.ProkeimenonNode)]
         public List<Prokeimenon> Prokeimeni { get; set; }
+        /// <summary>
+        /// Список Паремий на Вечерне
+        /// </summary>
+        [XmlElement(RuleConstants.ParoimiaNode)]
+        public List<Paroimia> Paroimies { get; set; }
         /// <summary>
         /// Стихиры на литии
         /// </summary>

@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.ItemTypes
         }
 
         [XmlElement(RuleConstants.StyleNodeName)]
-        public TextStyle Style = new TextStyle();/*
+        public TextStyle Style 
         {
             get
             {
@@ -40,7 +40,8 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 _style = value;
             }
-        }*/
+        }
+
         [XmlIgnore]
         public string TagName = "itemstyled"; /*{
             get
@@ -85,17 +86,17 @@ namespace TypiconOnline.Domain.ItemTypes
 
             XmlNode styleNode = doc.CreateElement(RuleConstants.StyleNodeName);
 
-            if (Style.IsRed)
+            if (Style?.IsRed == true)
             {
                 styleNode.AppendChild(doc.CreateElement(RuleConstants.StyleRedNodeName));
             }
 
-            if (Style.IsBold)
+            if (Style?.IsBold == true)
             {
                 styleNode.AppendChild(doc.CreateElement(RuleConstants.StyleBoldNodeName));
             }
 
-            if (Style.Header != HeaderCaption.NotDefined)
+            if (Style?.Header != HeaderCaption.NotDefined)
             {
                 styleNode.AppendChild(doc.CreateElement(Enum.GetName(typeof(HeaderCaption), Style.Header)));
             }
@@ -146,11 +147,9 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public virtual bool Equals(ItemStyledType item)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException("ItemStyledType.Equals");
-            }
-            return (_stringExpression == item._stringExpression);
+            //if (item == null) return false;
+
+            return (_stringExpression == item?._stringExpression);
         }
     }
     [Serializable]

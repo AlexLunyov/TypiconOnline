@@ -195,26 +195,6 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public void ReadXml(XmlReader reader)
         {
-            //reader.MoveToContent();
-            //while (reader.Read())
-            //{
-            //    if (reader.NodeType == XmlNodeType.Element)
-            //    {
-            //        string name = reader.Name;
-
-            //        if (name == RuleConstants.StyleNodeName)
-            //        {
-            //            XmlSerializer _serializer = new XmlSerializer(typeof(TextStyle), new XmlRootAttribute(RuleConstants.StyleNodeName));
-            //            Style = _serializer.Deserialize(reader) as TextStyle;
-            //        }
-            //        else if (IsKeyValid(name))
-            //        {
-            //            string value = reader.ReadElementContentAsString();
-            //            AddElement(name, value);
-            //        }
-            //    }
-            //}
-
             bool wasEmpty = reader.IsEmptyElement;
             // jump to <parameters>
             reader.Read();
@@ -248,7 +228,16 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public void WriteXml(XmlWriter writer)
         {
-            throw new NotImplementedException();
+            foreach (KeyValuePair<string, string> entry in _textDict)
+            {
+                writer.WriteElementString(entry.Key, entry.Value);
+            }
+
+            if (Style != null)
+            {
+                XmlSerializer _serializer = new XmlSerializer(typeof(TextStyle), new XmlRootAttribute(RuleConstants.StyleNodeName));
+                _serializer.Serialize(writer, Style);
+            }
         }
     }
 }

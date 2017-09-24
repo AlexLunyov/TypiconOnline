@@ -77,13 +77,13 @@ namespace TypiconMigrationTool
 
             Esperinos esperinos = null;
 
-            using (FileStream fs = new FileStream(@"data\Esperinos.xml", FileMode.OpenOrCreate))
+            using (FileStream fs = new FileStream(@"data\Esperinos.xml", FileMode.Open))
             {
                 esperinos = (Esperinos)formatter.Deserialize(fs);
                 Console.WriteLine("Объект десериализован");
             }
 
-            using (FileStream fs = new FileStream(@"data\Esperinos.xml", FileMode.OpenOrCreate))
+            using (FileStream fs = new FileStream(@"data\Esperinos.xml", FileMode.Create))
             {
                 formatter.Serialize(fs, esperinos);
                 Console.WriteLine("Объект сериализован");

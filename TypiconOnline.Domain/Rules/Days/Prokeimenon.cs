@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Days
 {
@@ -14,11 +16,11 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Описание прокимна
     /// </summary>
     [Serializable]
-    public class Prokeimenon : ItemTextCollection
+    public class Prokeimenon : ValueObjectBase
     {
-        public Prokeimenon() : base() { }
+        public Prokeimenon() { }
 
-        public Prokeimenon(XmlNode node) : base(node)
+        public Prokeimenon(XmlNode node)// : base(node)
         {
             //глас
             XmlAttribute ihosAttr = node.Attributes[RuleConstants.YmnosIhosAttrName];
@@ -27,6 +29,16 @@ namespace TypiconOnline.Domain.Rules.Days
                 int result = default(int);
                 int.TryParse(ihosAttr.Value, out result);
                 Ihos = result;
+            }
+
+            //стихи
+            XmlNodeList stihoiList = node.SelectNodes(RuleConstants.YmnosStihosNode);
+            if (stihoiList != null)
+            {
+                foreach (XmlNode stihosItemNode in stihoiList)
+                {
+                    Stihoi.Add(new ItemText(stihosItemNode));
+                }
             }
         }
 
@@ -38,29 +50,39 @@ namespace TypiconOnline.Domain.Rules.Days
         [XmlAttribute(RuleConstants.YmnosIhosAttrName)]
         public int Ihos { get; set; }
         [XmlAttribute(RuleConstants.ProkeimenonKindAttr)]//(AttributeName = RuleConstants.ProkeimenonKindAttr, Type = typeof(ProkiemenonKind))]
+        [DefaultValue(ProkiemenonKind.Prokiemenon)]
         public ProkiemenonKind Kind { get; set; }
+
+        private List<ItemText> _stihoi = new List<ItemText>();
+        /// <summary>
+        /// Коллекция стихов прокимна
+        /// </summary>
+        [XmlElement(RuleConstants.YmnosStihosNode)]
+        public List<ItemText> Stihoi
+        {
+            get
+            {
+                return _stihoi;
+            }
+            set
+            {
+                _stihoi = value;
+            }
+        }
 
         #endregion
 
-        protected override XmlDocument ComposeXml()
-        {
-            XmlDocument doc = base.ComposeXml();
-
-            XmlAttribute attr = doc.CreateAttribute(RuleConstants.YmnosIhosAttrName);
-            attr.Value = Ihos.ToString();
-            doc.DocumentElement.Attributes.Append(attr);
-
-            return doc;
-        }
-
         protected override void Validate()
         {
-            base.Validate();
-
             //глас должен иметь значения с 1 до 8
             if ((Ihos < 1) || (Ihos > 8))
             {
                 AddBrokenConstraint(YmnosGroupBusinessConstraint.InvalidIhos, RuleConstants.ProkeimenonNode);
+            }
+
+            if (Stihoi == null || Stihoi.Count == 0)
+            {
+                AddBrokenConstraint(ProkeimenonBusinessConstraint.StohoiRequired);
             }
         }
     }
