@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.ItemTypes
         }
 
         [XmlElement(RuleConstants.StyleNodeName)]
-        public TextStyle Style 
+        public TextStyle Style = new TextStyle();/*
         {
             get
             {
@@ -40,8 +40,7 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 _style = value;
             }
-        }
-
+        }*/
         [XmlIgnore]
         public string TagName = "itemstyled"; /*{
             get
@@ -64,7 +63,7 @@ namespace TypiconOnline.Domain.ItemTypes
             set
             {
                 _stringExpression = value;
-                Build(value);                
+                Build(value);
             }
         }
 
@@ -86,17 +85,17 @@ namespace TypiconOnline.Domain.ItemTypes
 
             XmlNode styleNode = doc.CreateElement(RuleConstants.StyleNodeName);
 
-            if (Style?.IsRed == true)
+            if (Style.IsRed)
             {
                 styleNode.AppendChild(doc.CreateElement(RuleConstants.StyleRedNodeName));
             }
 
-            if (Style?.IsBold == true)
+            if (Style.IsBold)
             {
                 styleNode.AppendChild(doc.CreateElement(RuleConstants.StyleBoldNodeName));
             }
 
-            if (Style?.Header != HeaderCaption.NotDefined)
+            if (Style.Header != HeaderCaption.NotDefined)
             {
                 styleNode.AppendChild(doc.CreateElement(Enum.GetName(typeof(HeaderCaption), Style.Header)));
             }
@@ -147,9 +146,11 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public virtual bool Equals(ItemStyledType item)
         {
-            //if (item == null) return false;
-
-            return (_stringExpression == item?._stringExpression);
+            if (item == null)
+            {
+                throw new ArgumentNullException("ItemStyledType.Equals");
+            }
+            return (_stringExpression == item._stringExpression);
         }
     }
     [Serializable]
@@ -163,7 +164,8 @@ namespace TypiconOnline.Domain.ItemTypes
         public HeaderCaption Header = HeaderCaption.NotDefined;
     }
     [Serializable]
-    public enum HeaderCaption {
+    public enum HeaderCaption
+    {
         [XmlEnum(Name = "notdefined")]
         NotDefined = 0,
         [XmlEnum(Name = "h1")]
@@ -173,5 +175,6 @@ namespace TypiconOnline.Domain.ItemTypes
         [XmlEnum(Name = "h3")]
         h3 = 3,
         [XmlEnum(Name = "h4")]
-        h4 = 4 }
+        h4 = 4
+    }
 }
