@@ -31,6 +31,17 @@ namespace TypiconOnline.Domain.Rules.Days
                 Ihos = result;
             }
 
+            XmlAttribute kindAttr = node.Attributes[RuleConstants.ProkeimenonKindAttr];
+            if (kindAttr != null)
+            {
+                ProkiemenonKind kind;
+
+                if (Enum.TryParse(kindAttr.Value, out kind))
+                {
+                    Kind = kind;
+                }
+            }
+
             //стихи
             XmlNodeList stihoiList = node.SelectNodes(RuleConstants.YmnosStihosNode);
             if (stihoiList != null)
@@ -49,6 +60,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// </summary>
         [XmlAttribute(RuleConstants.YmnosIhosAttrName)]
         public int Ihos { get; set; }
+
         [XmlAttribute(RuleConstants.ProkeimenonKindAttr)]//(AttributeName = RuleConstants.ProkeimenonKindAttr, Type = typeof(ProkiemenonKind))]
         [DefaultValue(ProkiemenonKind.Prokiemenon)]
         public ProkiemenonKind Kind { get; set; }
@@ -82,7 +94,7 @@ namespace TypiconOnline.Domain.Rules.Days
 
             if (Stihoi == null || Stihoi.Count == 0)
             {
-                AddBrokenConstraint(ProkeimenonBusinessConstraint.StohoiRequired);
+                AddBrokenConstraint(ProkeimenonBusinessConstraint.StihoiRequired);
             }
         }
     }

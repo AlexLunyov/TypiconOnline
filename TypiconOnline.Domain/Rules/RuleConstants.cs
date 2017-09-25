@@ -116,14 +116,27 @@ namespace TypiconOnline.Domain.Rules
         public const string SedalenKathisma3Node = "sed_3kathisma";
         public const string SedalenPolyeleosNode = "sed_polyeleos"; 
         public const string MegalynarionNode = "megalynarion"; 
-        public const string EclogarionNode = "eclogarion"; 
+        public const string EclogarionNode = "eclogarion";
+         
         public const string EvangelionNode = "evangelion";
+        public const string EvangelionPartNode = "part";
+        public const string EvangelionBookNameAttr = "bookname";
+        public const string EvangelionPartNumberAttr = "number"; 
+
+        public const string EvangelionBokMf = "Мф";
+        public const string EvangelionBokMk = "Мк";
+        public const string EvangelionBokLk = "Лк";
+        public const string EvangelionBokIn = "Ин";
+
         public const string Sticheron50Node = "sticheron_50"; 
         public const string AinoiNode = "ainoi";
 
+        public const string KanonesNode = "kanones";
         public const string KanonasNode = "kanonas"; 
         public const string KanonasAcrosticNode = "acrostic";
+        public const string KanonasStihosNode = "stihos";
 
+        public const string KanonasOdesNode = "odes";
         public const string KanonasOdiNode = "odi"; 
         public const string OdiNumberAttrName = "number";
         public const string OdiIrmosNode = "irmos";
@@ -131,8 +144,10 @@ namespace TypiconOnline.Domain.Rules
         public const string OdiTroparionName = "troparion"; 
         public const string OdiTroparionKindAttr = "kind";
 
+        public const string YmnosKindAttrValue = "ymnos";
         public const string TheotokionKindAttrValue = "theotokion";
         public const string TriadikoKindAttrValue = "triadiko";
+        public const string MartyrionKindAttrValue = "martyrion";
 
         public const string KanonasSedalenNode = "sedalen"; 
         public const string KanonasKontakionNode = "kontakion";
@@ -243,7 +258,30 @@ namespace TypiconOnline.Domain.Rules
         app4
     }
 
-    public enum YmnosKind { Ymnos, Doxastichon, Theotokion }
+    /// <summary>
+    /// Разновидность песнопений (используется при составлении ПРАВИЛ)
+    /// </summary>
+    public enum YmnosKind
+    {
+        [XmlEnum(Name = "ymnos")]
+        Ymnos,
+        [XmlEnum(Name = "theotokion")]
+        Theotokion,
+        [XmlEnum(Name = "triadiko")]
+        Triadiko,
+        [XmlEnum(Name = "martyrion")]
+        Martyrion
+    }
+
+    /// <summary>
+    /// Разновидность песнопений (используется при составлении ПРАВИЛ)
+    /// </summary>
+    public enum YmnosRuleKind {
+        [XmlEnum(Name = RuleConstants.YmnosKindAttrValue)]
+        Ymnos,
+        Doxastichon,
+        Theotokion
+    }
     
     public enum YmnosStructureKind { Kekragaria, Aposticha, Liti, Ainoi }
 

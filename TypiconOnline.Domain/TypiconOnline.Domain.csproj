@@ -73,12 +73,14 @@
     <Compile Include="ItemTypes\XmlSerializableDictionary.cs" />
     <Compile Include="Rules\Days\DayContainer.cs" />
     <Compile Include="Rules\Days\DayContainerBusinessConstraint.cs" />
-    <Compile Include="Rules\Days\EvangelionReading.cs" />
+    <Compile Include="Rules\Days\Evangelion.cs" />
+    <Compile Include="Rules\Days\EvangelionPart.cs" />
     <Compile Include="Rules\Days\Exapostilarion.cs" />
     <Compile Include="Rules\Days\ExapostilarionItem.cs" />
     <Compile Include="Rules\Days\IhosRuleElement.cs" />
     <Compile Include="Rules\Days\Kanonas.cs" />
     <Compile Include="Rules\Days\Kontakion.cs" />
+    <Compile Include="Rules\Days\KanonasBusinessConstraint.cs" />
     <Compile Include="Rules\Days\Leitourgia.cs" />
     <Compile Include="Rules\Days\Makarios.cs" />
     <Compile Include="Rules\Days\MakariosOdi.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Rules\Days\KontakionBusinessConstraint.cs" />
     <Compile Include="Rules\Days\Paroimia.cs" />
     <Compile Include="Rules\Days\ProkeimenonBusinessConstraint.cs" />
+    <Compile Include="Rules\Days\EvangelionPartBusinessConstraint.cs" />
     <Compile Include="Rules\Days\YmnosGroupBusinessConstraint.cs" />
     <Compile Include="Rules\Days\YmnosBusinessConstraint.cs" />
     <Compile Include="Rules\Days\Esperinos.cs" />

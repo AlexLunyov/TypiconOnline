@@ -4,38 +4,49 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Days
 {
     /// <summary>
     /// Песнь канона
     /// </summary>
-    public class Odi : RuleElement
+    [Serializable]
+    public class Odi : ValueObjectBase
     {
-        public Odi(XmlNode node) : base(node)
+        public Odi() { }
+
+        public Odi(XmlNode node) 
         {
             //номер песни
             XmlAttribute numberAttr = node.Attributes[RuleConstants.OdiNumberAttrName];
-            Number = (numberAttr != null) ? new ItemInt(numberAttr.Value) : new ItemInt();
+            if (numberAttr != null)
+            {
+                int result = default(int);
+                int.TryParse(numberAttr.Value, out result);
+                Number = result;
+            }
 
             //ирмос
             XmlNode elemNode = node.SelectSingleNode(RuleConstants.OdiIrmosNode);
             if (elemNode != null)
             {
-                Irmos = new ItemText(elemNode.OuterXml);
+                Irmos = new Ymnos(elemNode);
             }
 
             //тропари
-            TroparionCollection = new List<OdiTroparion>();
 
             XmlNodeList tropNodes = node.SelectNodes(RuleConstants.OdiTroparionName);
             if (tropNodes != null)
             {
+                TroparionCollection = new List<Ymnos>();
+
                 foreach (XmlNode tropNode in tropNodes)
                 {
-                    TroparionCollection.Add(new OdiTroparion(tropNode));
+                    TroparionCollection.Add(new Ymnos(tropNode));
                 }
             }
 
@@ -52,64 +63,55 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Глас
         /// </summary>
-        public ItemInt Number { get; set; }
+        [XmlAttribute(RuleConstants.OdiNumberAttrName)]
+        public int Number { get; set; }
 
         /// <summary>
         /// Ирмос
         /// </summary>
-        public ItemText Irmos { get; set; }
+        [XmlElement(RuleConstants.OdiIrmosNode)]
+        public Ymnos Irmos { get; set; }
         /// <summary>
         /// Тропари песни канона
         /// </summary>
-        public List<OdiTroparion> TroparionCollection { get; set; }
+        [XmlElement(RuleConstants.OdiTroparionName)]
+        public List<Ymnos> TroparionCollection { get; set; }
         /// <summary>
         /// Ирмос
         /// </summary>
+        [XmlElement(RuleConstants.OdiKatavasiaNode)]
         public ItemText Katavasia { get; set; }
 
         #endregion
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
-        {
-            //ничего
-        }
-
         protected override void Validate()
         {
-            if (!Number.IsValid)
-            {
-                AppendAllBrokenConstraints(Number, RuleConstants.KanonasOdiNode + "." + RuleConstants.OdiNumberAttrName);
-            }
-            else
+            if ((Number < 1) || (Number > 9))
             {
                 //номер песни должен иметь значения с 1 до 9
-                if ((Number.Value < 1) || (Number.Value > 9))
-                {
-                    AddBrokenConstraint(OdiBusinessConstraint.InvalidNumber, RuleConstants.KanonasOdiNode);
-                }
+                AddBrokenConstraint(OdiBusinessConstraint.InvalidNumber, RuleConstants.KanonasOdiNode);
             }
 
-            if (Irmos == null || Irmos.IsEmpty == true)
+            if (Irmos == null)
             {
-                AddBrokenConstraint(OdiBusinessConstraint.IrmosRequired, ElementName);
+                AddBrokenConstraint(OdiBusinessConstraint.IrmosRequired);
             }
-
-            if (Irmos?.IsValid == false)
+            else if (!Irmos.IsValid)
             {
-                AppendAllBrokenConstraints(Irmos, ElementName + "." + RuleConstants.OdiIrmosNode);
+                AppendAllBrokenConstraints(Irmos, RuleConstants.OdiIrmosNode);
             }
 
-            foreach (OdiTroparion trop in TroparionCollection)
+            foreach (Ymnos trop in TroparionCollection)
             {
                 if (!trop.IsValid)
                 {
-                    AppendAllBrokenConstraints(trop, ElementName + "." + RuleConstants.OdiTroparionName);
+                    AppendAllBrokenConstraints(trop, RuleConstants.OdiTroparionName);
                 }
             }
 
             if (Katavasia?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Katavasia, ElementName + "." + RuleConstants.OdiKatavasiaNode);
+                AppendAllBrokenConstraints(Katavasia, RuleConstants.OdiKatavasiaNode);
             }
         }
     }

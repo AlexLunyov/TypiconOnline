@@ -188,6 +188,19 @@ namespace TypiconOnline.Domain.ItemTypes
             //    ? itemText.Text[language] + " " : "";
         }
 
+        /// <summary>
+        /// Возвращает значение по заданному языку. Если результат нулевой, возвраает первый попавшийся вариант
+        /// </summary>
+        /// <param name="language">язык. Пример: "cs-ru"</param>
+        /// <returns></returns>
+        public string this[string language]
+        {
+            get
+            {
+                return GetTextByLanguage(language);
+            }
+        }
+
         public XmlSchema GetSchema()
         {
             return null;

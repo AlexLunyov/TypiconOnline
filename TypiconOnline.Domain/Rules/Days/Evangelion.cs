@@ -12,14 +12,15 @@ namespace TypiconOnline.Domain.Rules.Days
     /// <summary>
     /// Евангельское чтение
     /// </summary>
-    public class EvangelionReading : ValueObjectBase
+    public class Evangelion : ValueObjectBase
     {
-        public EvangelionReading() { }
+        public Evangelion() { }
 
-        public EvangelionReading(XmlNode node) { }
+        public Evangelion(XmlNode node) { }
 
         #region Properties
 
+        public List<EvangelionPart> Parts { get; set; }
 
         #endregion
 

@@ -13,6 +13,8 @@ namespace TypiconOnline.Domain.Rules.Days
     /// </summary>
     public class OdiTroparion: ItemText
     {
+        public OdiTroparion() { }
+
         public OdiTroparion(XmlNode node) : base(node)
         {
             //kind

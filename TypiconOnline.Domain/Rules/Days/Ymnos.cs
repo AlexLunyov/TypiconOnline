@@ -37,6 +37,17 @@ namespace TypiconOnline.Domain.Rules.Days
             XmlNode elemNode = node.SelectSingleNode(RuleConstants.YmnosTextNode);
             Text =  new ItemText((elemNode != null) ? elemNode.OuterXml : string.Empty);
 
+            XmlAttribute kindAttr = node.Attributes[RuleConstants.OdiTroparionKindAttr];
+            if (kindAttr != null)
+            {
+                YmnosKind kind;
+
+                if (Enum.TryParse(kindAttr.Value, out kind))
+                {
+                    Kind = kind;
+                }
+            }
+
             XmlNodeList stihoiList = node.SelectNodes(RuleConstants.YmnosStihosNode);
             if (stihoiList != null)
             {
@@ -46,6 +57,12 @@ namespace TypiconOnline.Domain.Rules.Days
                 }
             }
         }
+
+        /// <summary>
+        /// Разновидность песнопения (троичен, богородиен, мученичен...)
+        /// </summary>
+        [XmlAttribute(RuleConstants.OdiTroparionKindAttr)]
+        public YmnosKind Kind { get; set; }
         /// <summary>
         /// Дополнительные сведения. Например, "Феофаново" - Про стихиру
         /// </summary>

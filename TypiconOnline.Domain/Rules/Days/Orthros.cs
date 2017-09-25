@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
@@ -64,24 +65,36 @@ namespace TypiconOnline.Domain.Rules.Days
             }
 
             //Evangelion
-            elementNode = node.SelectSingleNode(RuleConstants.EvangelionNode);
-            if (elementNode != null)
+            string xPath = string.Format("{0}/{1}", RuleConstants.EvangelionNode, RuleConstants.EvangelionPartNode);
+            XmlNodeList evangelionList = node.SelectNodes(xPath);
+            if (evangelionList != null)
             {
-                Evangelion = new EvangelionReading(elementNode);
+                Evangelion = new List<EvangelionPart>();
+
+                foreach (XmlNode ymnosItemNode in evangelionList)
+                {
+                    Evangelion.Add(new EvangelionPart(ymnosItemNode));
+                }
             }
 
             //Sticheron50
             elementNode = node.SelectSingleNode(RuleConstants.Sticheron50Node);
             if (elementNode != null)
             {
-                Sticheron50 = new YmnosStructure(elementNode);
+                Sticheron50 = new YmnosGroup(elementNode);
             }
 
             //Kanonas
-            elementNode = node.SelectSingleNode(RuleConstants.KanonasNode);
-            if (elementNode != null)
+            xPath = string.Format("{0}/{1}", RuleConstants.KanonesNode, RuleConstants.KanonasNode);
+            XmlNodeList kanonesList = node.SelectNodes(xPath);
+            if (kanonesList != null)
             {
-                Kanonas = new Kanonas(elementNode);
+                Kanones = new List<Days.Kanonas>();
+
+                foreach (XmlNode kanonasNode in kanonesList)
+                {
+                    Kanones.Add(new Kanonas(kanonasNode));
+                }
             }
 
             //Ainoi
@@ -139,18 +152,20 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Евангельское чтение
         /// </summary>
-        [XmlElement(RuleConstants.EvangelionNode)]
-        public EvangelionReading Evangelion { get; set; }
+        [XmlArray(RuleConstants.EvangelionNode)]
+        [XmlArrayItem(RuleConstants.EvangelionPartNode, Type = typeof(EvangelionPart))]
+        public List<EvangelionPart> Evangelion { get; set; }
         /// <summary>
         /// Стихира по 50-м псалме
         /// </summary>
         [XmlElement(RuleConstants.Sticheron50Node)]
-        public YmnosStructure Sticheron50 { get; set; }
+        public YmnosGroup Sticheron50 { get; set; }
         /// <summary>
         /// Канон
         /// </summary>
-        [XmlElement(RuleConstants.KanonasNode)]
-        public Kanonas Kanonas { get; set; }
+        [XmlArray(RuleConstants.KanonesNode)]
+        [XmlArrayItem(RuleConstants.KanonasNode)]
+        public List<Kanonas> Kanones { get; set; }
         /// <summary>
         /// Стихиры на Хвалитех
         /// </summary>
@@ -201,9 +216,15 @@ namespace TypiconOnline.Domain.Rules.Days
                 AppendAllBrokenConstraints(Prokeimenon, /*ElementName + "." + */RuleConstants.ProkeimenonNode);
             }
 
-            if (Evangelion?.IsValid == false)
+            if (Evangelion != null)
             {
-                AppendAllBrokenConstraints(Evangelion, /*ElementName + "." + */RuleConstants.EvangelionNode);
+                foreach (EvangelionPart part in Evangelion)
+                {
+                    if (!part.IsValid)
+                    {
+                        AppendAllBrokenConstraints(part, /*ElementName + "." + */RuleConstants.EvangelionNode);
+                    }
+                }
             }
 
             if (Sticheron50?.IsValid == false)
@@ -211,9 +232,15 @@ namespace TypiconOnline.Domain.Rules.Days
                 AppendAllBrokenConstraints(Sticheron50, /*ElementName + "." + */RuleConstants.Sticheron50Node);
             }
 
-            if (Kanonas?.IsValid == false)
+            if (Kanones != null)
             {
-                AppendAllBrokenConstraints(Kanonas, /*ElementName + "." + */RuleConstants.KanonasNode);
+                foreach (Kanonas kanonas in Kanones)
+                {
+                    if (!kanonas.IsValid)
+                    {
+                        AppendAllBrokenConstraints(kanonas, /*ElementName + "." + */RuleConstants.KanonasNode);
+                    }
+                }
             }
 
             if (Ainoi?.IsValid == false)

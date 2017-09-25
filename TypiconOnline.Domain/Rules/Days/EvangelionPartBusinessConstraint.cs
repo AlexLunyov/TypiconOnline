@@ -8,9 +8,8 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Days
 {
-    public class ProkeimenonBusinessConstraint
+    public class EvangelionPartBusinessConstraint
     {
-        public static readonly BusinessConstraint InvalidIhos = new BusinessConstraint("Неверный глас (значения могут быть с 1 до 8).");
-        public static readonly BusinessConstraint StihoiRequired = new BusinessConstraint("Хотя бы один стих должен быть определен.");
+        public static readonly BusinessConstraint InvalidNumber = new BusinessConstraint("Номер зачала должен иметь положительное значение.");
     }
 }

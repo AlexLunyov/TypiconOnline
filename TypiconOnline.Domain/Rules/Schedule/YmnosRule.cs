@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class YmnosRule : RuleExecutable, ICustomInterpreted
     {
-        private ItemEnumType<YmnosKind> _ymnosKind;
+        private ItemEnumType<YmnosRuleKind> _ymnosKind;
         private ItemEnumType<YmnosSource> _source;
         private ItemEnumType<PlaceYmnosSource> _place;
         private ItemInt _count;
@@ -25,7 +25,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         public YmnosRule(XmlNode node) : base(node)
         {
-            _ymnosKind = new ItemEnumType<YmnosKind>(node.Name);
+            _ymnosKind = new ItemEnumType<YmnosRuleKind>(node.Name);
 
             XmlAttribute attr = node.Attributes[RuleConstants.YmnosRuleSourceAttrName];
             _source = (attr != null) ? new ItemEnumType<YmnosSource>(attr.Value) : null;
@@ -50,7 +50,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <summary>
         /// Тип песнопения (общий, славник, богородичен...)
         /// </summary>
-        public ItemEnumType<YmnosKind> YmnosKind
+        public ItemEnumType<YmnosRuleKind> YmnosKind
         {
             get
             {

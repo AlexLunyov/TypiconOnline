@@ -70,7 +70,7 @@ namespace TypiconOnline.Domain.Rules.Days
         {
             if (Stihoi == null || Stihoi.Count == 0)
             {
-                AddBrokenConstraint(ProkeimenonBusinessConstraint.StohoiRequired);
+                AddBrokenConstraint(ProkeimenonBusinessConstraint.StihoiRequired);
             }
         }
     }
