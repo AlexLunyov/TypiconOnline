@@ -172,6 +172,15 @@ namespace TypiconOnline.Domain.Rules
         public const string YmnosTextNode = "text";
         public const string YmnosStihosNode = "stihos";
 
+        public const string MakarismiNode = "makarismi";
+        public const string MakarismiOdiNode = "odi";
+        public const string MakarismiOdiNumberAttr = "number";
+        public const string MakarismiOdiCountAttr = "count";
+
+        public const string ApostlesNode = "apostles";
+        public const string AlleluiaNode = "alleluia"; 
+        public const string KinonikNode = "kinonik";
+
         /*
          * Константы для описания правил для составления последовательностей богослужебных текстов
          */

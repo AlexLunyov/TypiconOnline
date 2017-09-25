@@ -71,6 +71,7 @@
     <Compile Include="ItemTypes\ItemTimeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemTime.cs" />
     <Compile Include="ItemTypes\XmlSerializableDictionary.cs" />
+    <Compile Include="Rules\Days\ApostlesPart.cs" />
     <Compile Include="Rules\Days\DayContainer.cs" />
     <Compile Include="Rules\Days\DayContainerBusinessConstraint.cs" />
     <Compile Include="Rules\Days\Evangelion.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Rules\Days\MakariosOdi.cs" />
     <Compile Include="Rules\Days\MikrosEsperinos.cs" />
     <Compile Include="Rules\Days\Odi.cs" />
+    <Compile Include="Rules\Days\MakariosOdiBusinessConstraint.cs" />
     <Compile Include="Rules\Days\OdiTroparion.cs" />
     <Compile Include="Rules\Days\OdiBusinessConstraint.cs" />
     <Compile Include="Rules\Days\KontakionBusinessConstraint.cs" />

@@ -8,9 +8,8 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Days
 {
-    public class OdiBusinessConstraint
+    public class MakariosOdiBusinessConstraint
     {
-        public static readonly BusinessConstraint InvalidNumber = new BusinessConstraint("Неверный номер песни (допустимые значения с 1 до 9).");
-        public static readonly BusinessConstraint IrmosRequired = new BusinessConstraint("ирмос канона обязателен для заполнения.");
+        public static readonly BusinessConstraint InvalidNumber = new BusinessConstraint("Количество тропарей должно иметь положительное значение.");
     }
 }

@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Xml;
+using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Days
 {
     /// <summary>
     /// Описание песни из блаженн
     /// </summary>
-    public class MakariosOdi : RuleElement
+    [Serializable]
+    public class MakariosOdi : ValueObjectBase
     {
-        public MakariosOdi(XmlNode node) : base(node)
+        public MakariosOdi() { }
+
+        public MakariosOdi(XmlNode node) 
         {
 
         }
@@ -19,22 +24,29 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Номер песни
         /// </summary>
-        public ItemInt Number { get; set; }
+        [XmlAttribute(RuleConstants.MakarismiOdiNumberAttr)]
+        public int Number { get; set; }
         /// <summary>
         /// Количество стихов
         /// </summary>
-        public ItemInt Count { get; set; }
+        [XmlAttribute(RuleConstants.MakarismiOdiCountAttr)]
+        public int Count { get; set; }
 
         #endregion
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void Validate()
         {
-            throw new NotImplementedException();
+            if ((Number < 1) || (Number > 9))
+            {
+                //номер песни должен иметь значения с 1 до 9
+                AddBrokenConstraint(OdiBusinessConstraint.InvalidNumber, RuleConstants.KanonasOdiNode);
+            }
+
+            if (Count < 0)
+            {
+                //количество тропарей должно иметь положительное значение
+                AddBrokenConstraint(MakariosOdiBusinessConstraint.InvalidNumber, RuleConstants.KanonasOdiNode); 
+            }
         }
     }
 }

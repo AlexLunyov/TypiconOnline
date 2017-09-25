@@ -7,11 +7,11 @@ namespace TypiconOnline.Domain.Rules.Days
 {
 
     [Serializable]
-    public class EvangelionPart : ValueObjectBase
+    public class EvangelionPart : ApostlesPart
     {
         public EvangelionPart() { }
 
-        public EvangelionPart(XmlNode node)
+        public EvangelionPart(XmlNode node) : base(node)
         {
             //BookName
             XmlAttribute bookNameAttr = node.Attributes[RuleConstants.EvangelionBookNameAttr];
@@ -24,15 +24,6 @@ namespace TypiconOnline.Domain.Rules.Days
                     BookName = book;
                 }
             }
-
-            //номер
-            XmlAttribute ihosAttr = node.Attributes[RuleConstants.EvangelionPartNumberAttr];
-            if (ihosAttr != null)
-            {
-                int result = default(int);
-                int.TryParse(ihosAttr.Value, out result);
-                Number = result;
-            }
         }
 
         #region Properties
@@ -43,20 +34,11 @@ namespace TypiconOnline.Domain.Rules.Days
         [XmlAttribute(RuleConstants.EvangelionBookNameAttr)]
         public EvangelionBook BookName { get; set; }
 
-        /// <summary>
-        /// Ноемр зачала
-        /// </summary>
-        [XmlAttribute(RuleConstants.EvangelionPartNumberAttr)]
-        public int Number { get; set; }
-
         #endregion
 
         protected override void Validate()
         {
-            if (Number < 0)
-            {
-                AddBrokenConstraint(EvangelionPartBusinessConstraint.InvalidNumber);
-            }
+            base.Validate();
         }
     }
 
