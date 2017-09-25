@@ -5,25 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Days
 {
-    public class EvangelionReading : RuleElement
+    /// <summary>
+    /// Евангельское чтение
+    /// </summary>
+    public class EvangelionReading : ValueObjectBase
     {
-        public EvangelionReading(XmlNode node) : base(node)
-        {
+        public EvangelionReading() { }
 
-        }
+        public EvangelionReading(XmlNode node) { }
 
         #region Properties
 
 
         #endregion
-
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
-        {
-            throw new NotImplementedException();
-        }
 
         protected override void Validate()
         {

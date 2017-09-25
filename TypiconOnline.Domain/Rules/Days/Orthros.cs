@@ -1,33 +1,38 @@
 ﻿using System;
 using System.Xml;
+using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Days
 {
-    public class Orthros : RuleElement
+    [Serializable]
+    public class Orthros : ValueObjectBase
     {
-        public Orthros(XmlNode node) : base(node)
+        public Orthros() { }
+
+        public Orthros(XmlNode node) 
         {
-            //SedalenKathizma1
-            XmlNode elementNode = node.SelectSingleNode(RuleConstants.SedalenKathizma1Node);
+            //SedalenKathisma1
+            XmlNode elementNode = node.SelectSingleNode(RuleConstants.SedalenKathisma1Node);
             if (elementNode != null)
             {
-                SedalenKathizma1 = new YmnosStructure(elementNode);
+                SedalenKathisma1 = new YmnosStructure(elementNode);
             }
 
-            //SedalenKathizma2
-            elementNode = node.SelectSingleNode(RuleConstants.SedalenKathizma2Node);
+            //SedalenKathisma2
+            elementNode = node.SelectSingleNode(RuleConstants.SedalenKathisma2Node);
             if (elementNode != null)
             {
-                SedalenKathizma2 = new YmnosStructure(elementNode);
+                SedalenKathisma2 = new YmnosStructure(elementNode);
             }
 
-            //SedalenKathizma3
-            elementNode = node.SelectSingleNode(RuleConstants.SedalenKathizma3Node);
+            //SedalenKathisma3
+            elementNode = node.SelectSingleNode(RuleConstants.SedalenKathisma3Node);
             if (elementNode != null)
             {
-                SedalenKathizma3 = new YmnosStructure(elementNode);
+                SedalenKathisma3 = new YmnosStructure(elementNode);
             }
 
             //SedalenPolyeleos
@@ -99,119 +104,126 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// седален по 1-ой кафизме
         /// </summary>
-        public YmnosStructure SedalenKathizma1 { get; set; }
+        [XmlElement(RuleConstants.SedalenKathisma1Node)]
+        public YmnosStructure SedalenKathisma1 { get; set; }
         /// <summary>
         /// седален по 2-ой кафизме
         /// </summary>
-        public YmnosStructure SedalenKathizma2 { get; set; }
+        [XmlElement(RuleConstants.SedalenKathisma2Node)]
+        public YmnosStructure SedalenKathisma2 { get; set; }
         /// <summary>
         /// седален по 3-ой кафизме
         /// </summary>
-        public YmnosStructure SedalenKathizma3 { get; set; }
+        [XmlElement(RuleConstants.SedalenKathisma3Node)]
+        public YmnosStructure SedalenKathisma3 { get; set; }
         /// <summary>
         /// седален по полиелее
         /// </summary>
+        [XmlElement(RuleConstants.SedalenPolyeleosNode)]
         public YmnosStructure SedalenPolyeleos { get; set; }
         /// <summary>
         /// Величания
         /// </summary>
+        [XmlElement(RuleConstants.MegalynarionNode)]
         public ItemTextCollection Megalynarion { get; set; }
         /// <summary>
         /// Псалом избранный
         /// </summary>
+        [XmlElement(RuleConstants.EclogarionNode)]
         public ItemTextCollection Eclogarion { get; set; }
         /// <summary>
         /// Прокимен на полиелее
         /// </summary>
+        [XmlElement(RuleConstants.ProkeimenonNode)]
         public Prokeimenon Prokeimenon { get; set; }
         /// <summary>
         /// Евангельское чтение
         /// </summary>
+        [XmlElement(RuleConstants.EvangelionNode)]
         public EvangelionReading Evangelion { get; set; }
         /// <summary>
         /// Стихира по 50-м псалме
         /// </summary>
+        [XmlElement(RuleConstants.Sticheron50Node)]
         public YmnosStructure Sticheron50 { get; set; }
         /// <summary>
         /// Канон
         /// </summary>
+        [XmlElement(RuleConstants.KanonasNode)]
         public Kanonas Kanonas { get; set; }
         /// <summary>
         /// Стихиры на Хвалитех
         /// </summary>
+        [XmlElement(RuleConstants.AinoiNode)]
         public YmnosStructure Ainoi { get; set; }
         /// <summary>
         /// Стихиры на стиховне
         /// </summary>
+        [XmlElement(RuleConstants.ApostichaNode)]
         public YmnosStructure Aposticha { get; set; }
 
         #endregion
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void Validate()
         {
-            if (SedalenKathizma1?.IsValid == false)
+            if (SedalenKathisma1?.IsValid == false)
             {
-                AppendAllBrokenConstraints(SedalenKathizma1, ElementName + "." + RuleConstants.SedalenKathizma1Node);
+                AppendAllBrokenConstraints(SedalenKathisma1, /*ElementName + "." + */RuleConstants.SedalenKathisma1Node);
             }
 
-            if (SedalenKathizma2?.IsValid == false)
+            if (SedalenKathisma2?.IsValid == false)
             {
-                AppendAllBrokenConstraints(SedalenKathizma2, ElementName + "." + RuleConstants.SedalenKathizma2Node);
+                AppendAllBrokenConstraints(SedalenKathisma2, /*ElementName + "." + */RuleConstants.SedalenKathisma2Node);
             }
 
-            if (SedalenKathizma3?.IsValid == false)
+            if (SedalenKathisma3?.IsValid == false)
             {
-                AppendAllBrokenConstraints(SedalenKathizma3, ElementName + "." + RuleConstants.SedalenKathizma3Node);
+                AppendAllBrokenConstraints(SedalenKathisma3, /*ElementName + "." + */RuleConstants.SedalenKathisma3Node);
             }
 
             if (SedalenPolyeleos?.IsValid == false)
             {
-                AppendAllBrokenConstraints(SedalenPolyeleos, ElementName + "." + RuleConstants.SedalenPolyeleosNode);
+                AppendAllBrokenConstraints(SedalenPolyeleos, /*ElementName + "." + */RuleConstants.SedalenPolyeleosNode);
             }
 
             if (Megalynarion?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Megalynarion, ElementName + "." + RuleConstants.MegalynarionNode);
+                AppendAllBrokenConstraints(Megalynarion, /*ElementName + "." + */RuleConstants.MegalynarionNode);
             }
 
             if (Eclogarion?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Eclogarion, ElementName + "." + RuleConstants.EclogarionNode);
+                AppendAllBrokenConstraints(Eclogarion, /*ElementName + "." + */RuleConstants.EclogarionNode);
             }
 
             if (Prokeimenon?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Prokeimenon, ElementName + "." + RuleConstants.ProkeimenonNode);
+                AppendAllBrokenConstraints(Prokeimenon, /*ElementName + "." + */RuleConstants.ProkeimenonNode);
             }
 
             if (Evangelion?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Evangelion, ElementName + "." + RuleConstants.EvangelionNode);
+                AppendAllBrokenConstraints(Evangelion, /*ElementName + "." + */RuleConstants.EvangelionNode);
             }
 
             if (Sticheron50?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Sticheron50, ElementName + "." + RuleConstants.Sticheron50Node);
+                AppendAllBrokenConstraints(Sticheron50, /*ElementName + "." + */RuleConstants.Sticheron50Node);
             }
 
             if (Kanonas?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Kanonas, ElementName + "." + RuleConstants.KanonasNode);
+                AppendAllBrokenConstraints(Kanonas, /*ElementName + "." + */RuleConstants.KanonasNode);
             }
 
             if (Ainoi?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Ainoi, ElementName + "." + RuleConstants.AinoiNode);
+                AppendAllBrokenConstraints(Ainoi, /*ElementName + "." + */RuleConstants.AinoiNode);
             }
 
             if (Aposticha?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Aposticha, ElementName + "." + RuleConstants.ApostichaNode);
+                AppendAllBrokenConstraints(Aposticha, /*ElementName + "." + */RuleConstants.ApostichaNode);
             }
         }
     }

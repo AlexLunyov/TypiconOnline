@@ -111,9 +111,9 @@ namespace TypiconOnline.Domain.Rules
         public const string LitiNode = "liti"; 
         public const string TroparionNode = "troparion"; 
 
-        public const string SedalenKathizma1Node = "sed_1kathisma";
-        public const string SedalenKathizma2Node = "sed_2kathisma";
-        public const string SedalenKathizma3Node = "sed_3kathisma";
+        public const string SedalenKathisma1Node = "sed_1kathisma";
+        public const string SedalenKathisma2Node = "sed_2kathisma";
+        public const string SedalenKathisma3Node = "sed_3kathisma";
         public const string SedalenPolyeleosNode = "sed_polyeleos"; 
         public const string MegalynarionNode = "megalynarion"; 
         public const string EclogarionNode = "eclogarion"; 
