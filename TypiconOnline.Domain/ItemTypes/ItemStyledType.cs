@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.ItemTypes
         }
 
         [XmlElement(RuleConstants.StyleNodeName)]
-        public TextStyle Style = new TextStyle();/*
+        public TextStyle Style
         {
             get
             {
@@ -40,7 +40,7 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 _style = value;
             }
-        }*/
+        }
         [XmlIgnore]
         public string TagName = "itemstyled"; /*{
             get
@@ -69,11 +69,16 @@ namespace TypiconOnline.Domain.ItemTypes
 
         protected bool _isEmpty = true;
 
+        /// <summary>
+        /// Возвращает True, если хотя бы одно из свойств не имеет значение по умолчанию
+        /// </summary>
         public virtual bool IsEmpty
         {
             get
             {
-                return _isEmpty;// string.IsNullOrEmpty(StringExpression);
+                return (!_style.IsRed && !_style.IsBold && _style.Header == HeaderCaption.NotDefined);
+
+                //return _isEmpty;// string.IsNullOrEmpty(StringExpression);
             }
         }
 

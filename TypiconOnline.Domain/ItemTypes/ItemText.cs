@@ -233,7 +233,7 @@ namespace TypiconOnline.Domain.ItemTypes
                 writer.WriteElementString(entry.Key, entry.Value);
             }
 
-            if (Style != null)
+            if (Style != null && !base.IsEmpty)
             {
                 XmlSerializer _serializer = new XmlSerializer(typeof(TextStyle), new XmlRootAttribute(RuleConstants.StyleNodeName));
                 _serializer.Serialize(writer, Style);

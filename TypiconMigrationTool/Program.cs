@@ -75,13 +75,11 @@ namespace TypiconMigrationTool
         {
             XmlSerializer formatter = new XmlSerializer(typeof(Esperinos));
 
-            Esperinos esperinos = null;
+            string xmlString = File.ReadAllText(@"data\Esperinos.xml");
 
-            using (FileStream fs = new FileStream(@"data\Esperinos.xml", FileMode.Open))
-            {
-                esperinos = (Esperinos)formatter.Deserialize(fs);
-                Console.WriteLine("Объект десериализован");
-            }
+            TypiconSerializer ser = new TypiconSerializer();
+
+            Esperinos esperinos = ser.Deserialize<Esperinos>(xmlString);
 
             using (FileStream fs = new FileStream(@"data\Esperinos.xml", FileMode.Create))
             {
