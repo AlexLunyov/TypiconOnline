@@ -40,24 +40,7 @@ namespace TypiconMigrationTool
             Console.WriteLine("MigrateEasters()");
             MigrateEasters();
 
-            Console.WriteLine("Saving...");
-
-            try
-            {
-                _unitOfWork.Commit();
-                Console.WriteLine("Success.");
-            }
-            catch (DbEntityValidationException ex)
-            {
-                foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
-                {
-                    Console.WriteLine("Object: " + validationError.Entry.Entity.ToString());
-                    foreach (DbValidationError err in validationError.ValidationErrors)
-                    {
-                        Console.WriteLine(err.ErrorMessage);
-                    }
-                }
-            }
+            Commit();
         }
 
         
@@ -154,20 +137,43 @@ namespace TypiconMigrationTool
 
             _unitOfWork.Repository<TypiconEntity>().Insert(typiconEntity);
 
-            try
-            {
-                _unitOfWork.Commit();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                foreach (DbEntityValidationResult result in ex.EntityValidationErrors)
-                {
-                    Console.WriteLine(result.ToString());
-                }
-            }
+            Commit();
+
             MigrateMenologyDaysAndRules(typiconEntity);
             MigrateTriodionDaysAndRules(typiconEntity);
             MigrateCommonRules(typiconEntity);
+
+            Commit();
+        }
+
+        private void Commit()
+        {
+            try
+            {
+                Console.WriteLine("Saving...");
+
+                Timer timer = new Timer();
+                timer.Start();
+
+                _unitOfWork.Commit();
+
+                Console.WriteLine("Success.");
+                timer.Stop();
+                Console.WriteLine(timer.GetStringValue());
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+            }
         }
 
         private void MigrateMenologyDaysAndRules(TypiconEntity typiconEntity)
@@ -192,6 +198,9 @@ namespace TypiconMigrationTool
 
             FileReader fileDayReader = new FileReader(folderDayPath);
 
+            MenologyDay menologyDay = null;
+            MenologyRule menologyRule = null;
+
             foreach (ScheduleDBDataSet.MineinikRow mineinikRow in _sh.DataSet.Mineinik.Rows)
             {
                 DayService dayService = new DayService();
@@ -200,24 +209,18 @@ namespace TypiconMigrationTool
                 dayService.ServiceName.AddElement("cs-ru", mineinikRow.Name);
                 dayService.IsCelebrating = mineinikRow.Rule == "1";
 
-                ItemDate d = (!mineinikRow.IsDateBNull()) ? new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day) : null;
+                ItemDate d = (!mineinikRow.IsDateBNull()) ? new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day) : new ItemDate();
+                string fileName = (!mineinikRow.IsDateBNull()) ? d.Expression + "." + mineinikRow.Name : mineinikRow.Name;
 
-                string fileName = (d != null) ? d.Expression + "." + mineinikRow.Name : mineinikRow.Name;
                 dayService.DayDefinition = fileDayReader.GetXml(fileName);
 
                 //menologyDay
-                //смотрим, есть ли уже такой объект с заявленной датой
-                MenologyDay menologyDay = null;
-
-                if (!mineinikRow.IsDateBNull())
+                /* Чтобы лишний раз не обращаться к БД,
+                 * смотрим, не один и тот же MenologyDay, что и предыдущая строка из Access
+                */
+                if (menologyDay == null || !menologyDay.DateB.Expression.Equals(d.Expression))
                 {
-                    menologyDay = _unitOfWork.Repository<MenologyDay>()
-                    .Get(c => c.DateB.Expression.Equals(d.Expression));
-                }
-
-                //если нет - создаем
-                if (menologyDay == null)
-                {
+                    //нет - создаем новый день
                     menologyDay = new MenologyDay()
                     {
                         //Name = mineinikRow.Name,
@@ -229,22 +232,15 @@ namespace TypiconMigrationTool
 
                     _unitOfWork.Repository<MenologyDay>().Insert(menologyDay);
                 }
+                
 
                 menologyDay.AppendDayService(dayService);
 
                 //menologyRule
-                //смотрим, есть ли уже такой объект с заявленной датой
-                MenologyRule menologyRule = null;
-
-                if (!mineinikRow.IsDateBNull())
-                {
-                    
-                    menologyRule = _unitOfWork.Repository<MenologyRule>()
-                    .Get(c => c.DateB.Expression.Equals(d.Expression));
-                }
-
-                //если нет - создаем
-                if (menologyRule == null)
+                /*смотрим, есть ли уже такой объект с заявленной датой
+                 * если дата пустая - т.е. праздник переходящий - значит 
+                */
+                if (menologyRule == null || d.IsEmpty || (!d.IsEmpty && !menologyRule.DateB.Expression.Equals(d.Expression)))
                 {
                     menologyRule = new MenologyRule()
                     {
@@ -258,10 +254,9 @@ namespace TypiconMigrationTool
                     menologyRule.DayServices.Add(dayService);
 
                     typiconEntity.MenologyRules.Add(menologyRule);
-                    //_unitOfWork.Repository<MenologyRule>().Insert(menologyRule);
 
                     //берем xml-правило из файла
-                    menologyRule.RuleDefinition = (!mineinikRow.IsDateBNull()) 
+                    menologyRule.RuleDefinition = (!mineinikRow.IsDateBNull())
                                                     ? fileRuleReader.GetXml(menologyDay.DateB.Expression)
                                                     : fileRuleReader.GetXml(menologyRule.Name);
                 }
@@ -269,63 +264,10 @@ namespace TypiconMigrationTool
                 {
                     menologyRule.DayServices.Add(dayService);
                 }
-
-                _unitOfWork.Commit();
-
-                
-
-                //DayService dayService = new DayService();
-
-                //dayService.ServiceName.AddElement("cs-ru", mineinikRow.Name);
-
-                //MenologyDay menologyDay = new MenologyDay()
-                //{
-                //    //Name = mineinikRow.Name,
-                //    //DayName = XmlHelper.CreateItemTextCollection(
-                //    //    new CreateItemTextRequest() { Text = mineinikRow.Name, Name = "Name" }),
-                //    Date = (mineinikRow.IsDateNull()) ? new ItemDate() : new ItemDate(mineinikRow.Date.Month, mineinikRow.Date.Day),
-                //    DateB = (mineinikRow.IsDateBNull()) ? new ItemDate() : new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day),
-                //};
-                //menologyDay.AppendDayService(dayService);
-
-                //_unitOfWork.Repository<MenologyDay>().Insert(menologyDay);
-
-                //string ruleDefinition = "";
-
-
-
-                //MenologyRule menologyRule = new MenologyRule()
-                //{
-                //    //Name = menologyDay.Name,
-                //    Date = menologyDay.Date,
-                //    DateB = menologyDay.DateB,
-                //    Owner = typiconEntity,
-                //    Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(mineinikRow.SignID).NewId),
-                //};
-                //menologyRule.DayServices = new List<DayService>() { dayService };
-
-                //if (!mineinikRow.IsDateBNull())
-                //{
-                //    //TODO: изменил алгоритм. Надо поменять все названия xml-файлов правил для Минеи
-                //    string fileName = menologyDay.DateB.Expression;// + "." + menologyRule.Name;
-                //    ruleDefinition = fileReader.GetXml(fileName);
-                //}
-                //else
-                //{
-                //    ruleDefinition = fileReader.GetXml(menologyRule.Name);
-                //}
-
-                //menologyRule.RuleDefinition = ruleDefinition;
-
-                ////folder.AddRule(menologyRule);
-                //typiconEntity.MenologyRules.Add(menologyRule);
-                //_unitOfWork.Repository<MenologyRule>().Insert(menologyRule);
             }
 
             timer.Stop();
             Console.WriteLine(timer.GetStringValue());
-
-            //_unitOfWork.Commit();
         }
 
         private void MigrateTriodionDaysAndRules(TypiconEntity typiconEntity)

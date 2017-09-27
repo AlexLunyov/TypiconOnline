@@ -61,7 +61,7 @@ namespace TypiconOnline.Domain.ItemTypes
         //{
         //    get
         //    {
-        //        _stringExpression = ComposeXml().Value;
+        //        _stringExpression = ComposeXml().InnerXml;
         //        return _stringExpression;
         //    }
         //    set
@@ -77,8 +77,14 @@ namespace TypiconOnline.Domain.ItemTypes
 
             foreach(KeyValuePair <string, string> entry in _textDict)
             {
-                XmlNode node = doc.CreateElement(entry.Key);
+                XmlNode node = doc.CreateElement(RuleConstants.ItemTextItemNode);
+
+                XmlAttribute attr = doc.CreateAttribute(RuleConstants.ItemTextLanguageAttr);
+                attr.Value = entry.Key;
+                node.Attributes.Append(attr);
+
                 node.InnerText = entry.Value;
+
                 doc.FirstChild.AppendChild(node);
             }
 
