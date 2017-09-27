@@ -9,6 +9,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 namespace TypiconOnline.Domain.Rules.Days
 {
     [Serializable]
+    [XmlRoot(RuleConstants.OrthrosNode)]
     public class Orthros : ValueObjectBase
     {
         public Orthros() { }
@@ -44,17 +45,29 @@ namespace TypiconOnline.Domain.Rules.Days
             }
 
             //Megalynarion
-            elementNode = node.SelectSingleNode(RuleConstants.MegalynarionNode);
-            if (elementNode != null)
+            string xPath = string.Format("{0}/{1}", RuleConstants.MegalynarionNode, RuleConstants.YmnosStihosNode);
+            XmlNodeList megalynarionList = node.SelectNodes(xPath);
+            if (megalynarionList != null)
             {
-                Megalynarion = new ItemTextCollection(elementNode.OuterXml);
+                Megalynarion = new List<ItemText>();
+
+                foreach (XmlNode megalynarionItemNode in megalynarionList)
+                {
+                    Megalynarion.Add(new ItemText(megalynarionItemNode));
+                }
             }
 
             //Eclogarion
-            elementNode = node.SelectSingleNode(RuleConstants.EclogarionNode);
-            if (elementNode != null)
+            xPath = string.Format("{0}/{1}", RuleConstants.EclogarionNode, RuleConstants.YmnosStihosNode);
+            XmlNodeList eclogarionList = node.SelectNodes(xPath);
+            if (eclogarionList != null)
             {
-                Eclogarion = new ItemTextCollection(elementNode.OuterXml);
+                Eclogarion = new List<ItemText>();
+
+                foreach (XmlNode eclogarionItemNode in eclogarionList)
+                {
+                    Eclogarion.Add(new ItemText(eclogarionItemNode));
+                }
             }
 
             //Prokeimenon
@@ -65,7 +78,7 @@ namespace TypiconOnline.Domain.Rules.Days
             }
 
             //Evangelion
-            string xPath = string.Format("{0}/{1}", RuleConstants.EvangelionNode, RuleConstants.EvangelionPartNode);
+            xPath = string.Format("{0}/{1}", RuleConstants.EvangelionNode, RuleConstants.EvangelionPartNode);
             XmlNodeList evangelionList = node.SelectNodes(xPath);
             if (evangelionList != null)
             {
@@ -137,13 +150,15 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Величания
         /// </summary>
-        [XmlElement(RuleConstants.MegalynarionNode)]
-        public ItemTextCollection Megalynarion { get; set; }
+        [XmlArray(RuleConstants.MegalynarionNode)]
+        [XmlArrayItem(RuleConstants.YmnosStihosNode)]
+        public List<ItemText> Megalynarion { get; set; }
         /// <summary>
         /// Псалом избранный
         /// </summary>
-        [XmlElement(RuleConstants.EclogarionNode)]
-        public ItemTextCollection Eclogarion { get; set; }
+        [XmlArray(RuleConstants.EclogarionNode)]
+        [XmlArrayItem(RuleConstants.YmnosStihosNode)]
+        public List<ItemText> Eclogarion { get; set; }
         /// <summary>
         /// Прокимен на полиелее
         /// </summary>
@@ -201,14 +216,26 @@ namespace TypiconOnline.Domain.Rules.Days
                 AppendAllBrokenConstraints(SedalenPolyeleos, /*ElementName + "." + */RuleConstants.SedalenPolyeleosNode);
             }
 
-            if (Megalynarion?.IsValid == false)
+            if (Megalynarion != null)
             {
-                AppendAllBrokenConstraints(Megalynarion, /*ElementName + "." + */RuleConstants.MegalynarionNode);
+                foreach (ItemText item in Megalynarion)
+                {
+                    if (!item.IsValid)
+                    {
+                        AppendAllBrokenConstraints(item, RuleConstants.MegalynarionNode);
+                    }
+                }
             }
 
-            if (Eclogarion?.IsValid == false)
+            if (Eclogarion != null)
             {
-                AppendAllBrokenConstraints(Eclogarion, /*ElementName + "." + */RuleConstants.EclogarionNode);
+                foreach (ItemText item in Eclogarion)
+                {
+                    if (!item.IsValid)
+                    {
+                        AppendAllBrokenConstraints(item, RuleConstants.EclogarionNode);
+                    }
+                }
             }
 
             if (Prokeimenon?.IsValid == false)

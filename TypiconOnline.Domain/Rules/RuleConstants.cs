@@ -58,7 +58,9 @@ namespace TypiconOnline.Domain.Rules
         public const string ModifyReplacedDayNodeName = "modifyreplacedday";
         public const string KindAttrName = "kind";
 
-        public const string StyleNodeName = "style";
+        public const string ItemTextItemNode = "item";
+        public const string ItemTextLanguageAttr = "language";
+        public const string StyleNodeName = "style"; 
         public const string StyleRedNodeName = "red";
         public const string StyleBoldNodeName = "bold";
         public const string StyleHeaderNodeName = "header";

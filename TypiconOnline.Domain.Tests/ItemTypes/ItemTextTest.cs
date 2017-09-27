@@ -18,13 +18,17 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
         [Test]
         public void ItemText_Right()
         {
-            string xmlString = @"<text>
-	                                <cs-ru>Блажен муж, иже не иде на совет нечестивых и на пути грешных не ста, и на седалищи губителей не седе,</cs-ru>
-	                                <cs-cs>Бlжeнъ мyжъ, и4же не и4де на совётъ нечести1выхъ, и3 на пути2 грёшныхъ не стA, и3 на сэдaлищи губи1телей не сёде:</cs-cs>
-	                                <ru-ru>Блажен муж, который не пошел на совет нечестивых, и на путь грешных не вступил, и не сидел в сборище губителей;</ru-ru>
-	                                <el-el>Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</el-el>
-	                                <style><bold/><red/><h1/></style>
-                                </text>";
+            string xmlString = @"<ItemText>
+	                                <item language=""cs-ru"">Блажен муж, иже не иде на совет нечестивых и на пути грешных не ста, и на седалищи губителей не седе,</item>
+	                                <item language=""cs-cs"">Бlжeнъ мyжъ, и4же не и4де на совётъ нечести1выхъ, и3 на пути2 грёшныхъ не стA, и3 на сэдaлищи губи1телей не сёде:</item>
+	                                <item language=""ru-ru"">Блажен муж, который не пошел на совет нечестивых, и на путь грешных не вступил, и не сидел в сборище губителей;</item>
+	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
+	                                <style>
+		                                <bold/>
+		                                <red/>
+		                                <h1/>
+	                                </style>
+                                </ItemText>";
 
             //XmlDocument xmlDoc = new XmlDocument();
 
@@ -36,15 +40,14 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
         }
 
         [Test]
-        public void ItemxText_WrongLanguage()
+        public void ItemText_WrongLanguage()
         {
-            string xmlString = @"<text>
-	                                <cs-ru>Блажен муж, иже не иде на совет нечестивых и на пути грешных не ста, и на седалищи губителей не седе,</cs-ru>
-	                                <cs-cs1>Бlжeнъ мyжъ, и4же не и4де на совётъ нечести1выхъ, и3 на пути2 грёшныхъ не стA, и3 на сэдaлищи губи1телей не сёде:</cs-cs1>
-	                                <ru-ru>Блажен муж, который не пошел на совет нечестивых, и на путь грешных не вступил, и не сидел в сборище губителей;</ru-ru>
-	                                <el-el>Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</el-el>
-	                                <style><bold/><red/><h1/></style>
-                                </text>";
+            string xmlString = @"<ItemText>
+	                                <item language=""cs-ru"">Блажен муж, иже не иде на совет нечестивых и на пути грешных не ста, и на седалищи губителей не седе,</item>
+	                                <item language=""cs-c1s"">Бlжeнъ мyжъ, и4же не и4де на совётъ нечести1выхъ, и3 на пути2 грёшныхъ не стA, и3 на сэдaлищи губи1телей не сёде:</item>
+	                                <item language=""ru-ru"">Блажен муж, который не пошел на совет нечестивых, и на путь грешных не вступил, и не сидел в сборище губителей;</item>
+	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
+                                </ItemText>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
@@ -58,13 +61,15 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
         [Test]
         public void ItemxText_ComposeXml()
         {
-            string xmlString = @"<text>
-	                                <cs-ru>Блажен муж, иже не иде на совет нечестивых и на пути грешных не ста, и на седалищи губителей не седе,</cs-ru>
-	                                <cs-cs1>Бlжeнъ мyжъ, и4же не и4де на совётъ нечести1выхъ, и3 на пути2 грёшныхъ не стA, и3 на сэдaлищи губи1телей не сёде:</cs-cs1>
-	                                <ru-ru>Блажен муж, который не пошел на совет нечестивых, и на путь грешных не вступил, и не сидел в сборище губителей;</ru-ru>
-	                                <el-el>Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</el-el>
-	                                <style><bold/><red/><h1/></style>
-                                </text>";
+            string xmlString = @"<ItemText>
+	                                <item language=""cs-ru"">Блажен муж, иже не иде на совет нечестивых и на пути грешных не ста, и на седалищи губителей не седе,</item>
+	                                <item language=""cs-cs"">Бlжeнъ мyжъ, и4же не и4де на совётъ нечести1выхъ, и3 на пути2 грёшныхъ не стA, и3 на сэдaлищи губи1телей не сёде:</item>
+	                                <item language=""ru-ru"">Блажен муж, который не пошел на совет нечестивых, и на путь грешных не вступил, и не сидел в сборище губителей;</item>
+	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
+	                                <style>
+		                                <bold>true</bold>
+	                                </style>
+                                </ItemText>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
@@ -85,21 +90,18 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
         public void ItemText_Deserialize()
         {
             string xmlString = @"<ItemText>
-                                    <cs-ru>Блажен муж, иже не иде на совет нечестивых и на пути грешных не ста, и на седалищи губителей не седе,</cs-ru>
-	                                <cs-cs>Бlжeнъ мyжъ, и4же не и4де на совётъ нечести1выхъ, и3 на пути2 грёшныхъ не стA, и3 на сэдaлищи губи1телей не сёде:</cs-cs>
-	                                <ru-ru>Блажен муж, который не пошел на совет нечестивых, и на путь грешных не вступил, и не сидел в сборище губителей;</ru-ru>
-	                                <el-el>Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</el-el>
-	                                <style><bold/><red/><h1/></style>
+	                                <item language=""cs-ru"">Блажен муж, иже не иде на совет нечестивых и на пути грешных не ста, и на седалищи губителей не седе,</item>
+	                                <item language=""cs-cs"">Бlжeнъ мyжъ, и4же не и4де на совётъ нечести1выхъ, и3 на пути2 грёшныхъ не стA, и3 на сэдaлищи губи1телей не сёде:</item>
+	                                <item language=""ru-ru"">Блажен муж, который не пошел на совет нечестивых, и на путь грешных не вступил, и не сидел в сборище губителей;</item>
+	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
+	                                <style>
+		                                <bold>true</bold>
+                                        <header>h1</header>
+	                                </style>
                                 </ItemText>";
 
-            XmlSerializer formatter = new XmlSerializer(typeof(ItemText));
-
-            ItemText element = null;
-
-            using (StringReader fs = new StringReader(xmlString))
-            {
-                element = (ItemText)formatter.Deserialize(fs);
-            }
+            TypiconSerializer ser = new TypiconSerializer();
+            ItemText element = ser.Deserialize<ItemText>(xmlString);
 
 
             Assert.IsNotNull(element);
@@ -110,14 +112,19 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
         public void ItemText_Serialize()
         {
             string xmlString = @"<ItemText>
-						            <cs-ru>cs-ru Текст</cs-ru>
-                                    <cs-cs>cs-cs Текст</cs-cs>
-                                    <ru-ru>ru-ru Текст</ru-ru>
-					            </ItemText>";
+	                                <item language=""cs-ru"">Блажен муж, иже не иде на совет нечестивых и на пути грешных не ста, и на седалищи губителей не седе,</item>
+	                                <item language=""cs-cs"">Бlжeнъ мyжъ, и4же не и4де на совётъ нечести1выхъ, и3 на пути2 грёшныхъ не стA, и3 на сэдaлищи губи1телей не сёде:</item>
+	                                <item language=""ru-ru"">Блажен муж, который не пошел на совет нечестивых, и на путь грешных не вступил, и не сидел в сборище губителей;</item>
+	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
+	                                
+                                </ItemText>";
             TypiconSerializer ser = new TypiconSerializer();
             ItemText element = ser.Deserialize<ItemText>(xmlString);
 
             element.Text["cs-cs"] = "cs-cs Текст измененный";
+
+            element.Style.Header = HeaderCaption.h1;
+            element.Style.IsBold = true;
 
             string result = ser.Serialize(element);
 

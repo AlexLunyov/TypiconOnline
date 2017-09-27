@@ -139,9 +139,14 @@ namespace TypiconOnline.Domain.ItemTypes
                 {
                     if (child.Name != RuleConstants.StyleNodeName)
                     {
-                        AddElement(child.Name, child.InnerText);
+                        XmlAttribute langAttr = child.Attributes[RuleConstants.ItemTextLanguageAttr];
+                        if (langAttr != null)
+                        {
+                            string language = langAttr.Value;
+                            AddElement(language, child.InnerText);
 
-                        _isEmpty = false;
+                            _isEmpty = false;
+                        }
                     }
                 }
             }
@@ -208,23 +213,31 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public void ReadXml(XmlReader reader)
         {
-            //new version
             reader.MoveToElement();
+
+            reader.Read();
+
             while (reader.NodeType != XmlNodeType.EndElement)
             {
-                reader.Read();
+                reader.MoveToContent();
 
                 string name = reader.Name;
 
-                if (name == RuleConstants.StyleNodeName)
+                switch (name)
                 {
-                    XmlSerializer _serializer = new XmlSerializer(typeof(TextStyle), new XmlRootAttribute(RuleConstants.StyleNodeName));
-                    Style = _serializer.Deserialize(reader) as TextStyle;
-                }
-                else if (IsKeyValid(name))
-                {
-                    string value = reader.ReadElementContentAsString();
-                    AddElement(name, value);
+                    case RuleConstants.ItemTextItemNode:
+                        string language = reader.GetAttribute(RuleConstants.ItemTextLanguageAttr);
+                        if (IsKeyValid(language))
+                        {
+                            string value = reader.ReadElementContentAsString();
+                            AddElement(language, value);
+                        }
+                        //reader.MoveToElement();
+                        break;
+                    case RuleConstants.StyleNodeName:
+                        XmlSerializer _serializer = new XmlSerializer(typeof(TextStyle), new XmlRootAttribute(RuleConstants.StyleNodeName));
+                        Style = _serializer.Deserialize(reader) as TextStyle;
+                        break;
                 }
             }
 
@@ -241,7 +254,9 @@ namespace TypiconOnline.Domain.ItemTypes
             if (Style != null && !base.IsEmpty)
             {
                 XmlSerializer _serializer = new XmlSerializer(typeof(TextStyle), new XmlRootAttribute(RuleConstants.StyleNodeName));
-                _serializer.Serialize(writer, Style);
+                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+                ns.Add("", "");
+                _serializer.Serialize(writer, Style, ns);
             }
         }
     }
