@@ -11,8 +11,6 @@ namespace TypiconOnline.Domain.ItemTypes
 {
     public abstract class ItemStyledType : ItemType
     {
-        protected TextStyle _style = new TextStyle();
-
         protected string _stringExpression;
 
         protected string _tagname = "itemstyled";
@@ -30,17 +28,8 @@ namespace TypiconOnline.Domain.ItemTypes
         }
 
         [XmlElement(RuleConstants.StyleNodeName)]
-        public TextStyle Style
-        {
-            get
-            {
-                return _style;
-            }
-            set
-            {
-                _style = value;
-            }
-        }
+        public TextStyle Style = new TextStyle();
+
         [XmlIgnore]
         public string TagName = "itemstyled"; /*{
             get
@@ -76,7 +65,7 @@ namespace TypiconOnline.Domain.ItemTypes
         {
             get
             {
-                return (!_style.IsRed && !_style.IsBold && _style.Header == HeaderCaption.NotDefined);
+                return (!Style.IsRed && !Style.IsBold && Style.Header == HeaderCaption.NotDefined);
 
                 //return _isEmpty;// string.IsNullOrEmpty(StringExpression);
             }

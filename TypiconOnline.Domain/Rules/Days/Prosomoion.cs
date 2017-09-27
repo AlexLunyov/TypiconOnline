@@ -51,14 +51,7 @@ namespace TypiconOnline.Domain.Rules.Days
 
         public bool Equals(Prosomoion item)
         {
-            bool result = base.Equals(item);
-
-            if (item is Prosomoion)
-            {
-                result = result && Self.Equals((item as Prosomoion).Self);
-            }
-
-            return result;
+            return base.Equals(item) && Self.Equals(item.Self);
         }
     }
 }

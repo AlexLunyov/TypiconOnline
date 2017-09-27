@@ -96,10 +96,12 @@ namespace TypiconOnline.Domain.Rules
         public const string IhosAttrName = "ihos";
         public const string YmnosGroupKindAttrName = "kind";
 
-        public const string ProkeimenonNode = "prokeimenon";
+        public const string ProkeimeniNode = "prokeimeni";
+        public const string ProkeimenonNode = "prokeimenon"; 
         public const string ProkeimenonKindAttr = "kind";
         public const string ProkeimenonKindAlleluia = "alleluia";
 
+        public const string ParoimiesNode = "paroimies";
         public const string ParoimiaNode = "paroimia"; 
         public const string ParoimiaQuoteAttr = "quote";
         public const string ParoimiaBookNameNode = "bookname";

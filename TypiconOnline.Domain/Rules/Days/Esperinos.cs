@@ -21,7 +21,8 @@ namespace TypiconOnline.Domain.Rules.Days
         public Esperinos(XmlNode node) : base(node)
         {
             //Prokeimeni
-            XmlNodeList prokiemenonList = node.SelectNodes(RuleConstants.ProkeimenonNode);
+            string xPath = string.Format("{0}/{1}", RuleConstants.ProkeimeniNode, RuleConstants.ProkeimenonNode);
+            XmlNodeList prokiemenonList = node.SelectNodes(xPath);
             if (prokiemenonList != null)
             {
                 Prokeimeni = new List<Prokeimenon>();
@@ -33,7 +34,8 @@ namespace TypiconOnline.Domain.Rules.Days
             }
 
             //Paroimies
-            XmlNodeList paroimiaList = node.SelectNodes(RuleConstants.ParoimiaNode);
+            xPath = string.Format("{0}/{1}", RuleConstants.ParoimiesNode, RuleConstants.ParoimiaNode);
+            XmlNodeList paroimiaList = node.SelectNodes(xPath);
             if (paroimiaList != null)
             {
                 Paroimies = new List<Paroimia>();
@@ -58,12 +60,14 @@ namespace TypiconOnline.Domain.Rules.Days
         /// Прокимны на вечерне.
         /// Два прокимна бывает Великим постом
         /// </summary>
-        [XmlElement(RuleConstants.ProkeimenonNode)]
+        [XmlArray(RuleConstants.ProkeimeniNode)]
+        [XmlArrayItem(RuleConstants.ProkeimenonNode)]
         public List<Prokeimenon> Prokeimeni { get; set; }
         /// <summary>
         /// Список Паремий на Вечерне
         /// </summary>
-        [XmlElement(RuleConstants.ParoimiaNode)]
+        [XmlArray(RuleConstants.ParoimiesNode)]
+        [XmlArrayItem(RuleConstants.ParoimiaNode)]
         public List<Paroimia> Paroimies { get; set; }
         /// <summary>
         /// Стихиры на литии

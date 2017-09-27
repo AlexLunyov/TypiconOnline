@@ -15,6 +15,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Класс - хранилище текста службы дня
     /// </summary>
     [Serializable]
+    [XmlRoot(ElementName = RuleConstants.DayElementNode)]
     public class DayContainer : ValueObjectBase
     {
         public DayContainer() { }

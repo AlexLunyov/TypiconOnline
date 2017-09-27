@@ -44,20 +44,22 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
 					                        </ymnos>
 				                        </theotokion>
 			                        </kekragaria>
-			                        <prokeimenon ihos=""7"">
-				                        <stihos>
-					                        <cs-ru>Бо́г на́ш на небеси́ и на земли́, / вся́, ели́ка восхоте́, сотвори́.</cs-ru>
-				                        </stihos>
-				                        <stihos>
-					                        <cs-ru>Во исхо́де Изра́илеве от Еги́пта, до́му Иа́ковля, из люде́й ва́рвар, бы́сть Иуде́я святы́ня его́.</cs-ru>
-				                        </stihos>
-				                        <stihos>
-					                        <cs-ru>Мо́ре ви́де и побеже́, Иорда́н возврати́ся вспя́ть.</cs-ru>
-				                        </stihos>
-				                        <stihos>
-					                        <cs-ru>Что́ ти е́сть, мо́ре, я́ко побе́гло еси́? И тебе́, Иорда́не, я́ко возврати́лся еси́ вспя́ть?</cs-ru>
-				                        </stihos>
-			                        </prokeimenon>
+                                    <prokeimeni>
+			                            <prokeimenon ihos=""7"">
+				                            <stihos>
+					                            <cs-ru>Бо́г на́ш на небеси́ и на земли́, / вся́, ели́ка восхоте́, сотвори́.</cs-ru>
+				                            </stihos>
+				                            <stihos>
+					                            <cs-ru>Во исхо́де Изра́илеве от Еги́пта, до́му Иа́ковля, из люде́й ва́рвар, бы́сть Иуде́я святы́ня его́.</cs-ru>
+				                            </stihos>
+				                            <stihos>
+					                            <cs-ru>Мо́ре ви́де и побеже́, Иорда́н возврати́ся вспя́ть.</cs-ru>
+				                            </stihos>
+				                            <stihos>
+					                            <cs-ru>Что́ ти е́сть, мо́ре, я́ко побе́гло еси́? И тебе́, Иорда́не, я́ко возврати́лся еси́ вспя́ть?</cs-ru>
+				                            </stihos>
+			                            </prokeimenon>
+                                    </prokeimeni>
 			                        <aposticha>
 				                        <group ihos=""6"">
 					                        <prosomoion>

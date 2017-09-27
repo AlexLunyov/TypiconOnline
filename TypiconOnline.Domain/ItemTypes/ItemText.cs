@@ -208,17 +208,11 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public void ReadXml(XmlReader reader)
         {
-            bool wasEmpty = reader.IsEmptyElement;
-            // jump to <parameters>
-            reader.Read();
-
-            if (wasEmpty)
-                return;
-
+            //new version
+            reader.MoveToElement();
             while (reader.NodeType != XmlNodeType.EndElement)
             {
-                // jump to <item>
-                reader.MoveToContent();
+                reader.Read();
 
                 string name = reader.Name;
 
@@ -232,8 +226,6 @@ namespace TypiconOnline.Domain.ItemTypes
                     string value = reader.ReadElementContentAsString();
                     AddElement(name, value);
                 }
-
-                reader.Read();
             }
 
             reader.Read();

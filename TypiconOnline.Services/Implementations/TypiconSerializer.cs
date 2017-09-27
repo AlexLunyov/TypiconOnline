@@ -22,6 +22,7 @@ namespace TypiconOnline.AppServices.Implementations
             XmlSerializer serializer = new XmlSerializer(typeof(T));
 
             XmlReaderSettings settings = new XmlReaderSettings();
+
             // No settings need modifying here
 
             using (StringReader textReader = new StringReader(xml))
