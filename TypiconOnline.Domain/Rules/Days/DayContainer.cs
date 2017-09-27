@@ -79,6 +79,11 @@ namespace TypiconOnline.Domain.Rules.Days
         [XmlElement(RuleConstants.OrthrosNode)]
         public Orthros Orthros { get; set; }
         /// <summary>
+        /// Служба шестого часа в Триоди
+        /// </summary>
+        [XmlElement(RuleConstants.SixHourNode)]
+        public SixHour SixHour { get; set; }
+        /// <summary>
         /// Описание Литургийных чтений
         /// </summary>
         [XmlElement(RuleConstants.LeitourgiaNode)]

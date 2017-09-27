@@ -88,7 +88,8 @@ namespace TypiconOnline.Domain.Rules
 
         public const string MikrosEsperinosNode = "mikrosesperinos"; 
         public const string EsperinosNode = "esperinos";
-        public const string OrthrosNode = "orthros";
+        public const string OrthrosNode = "orthros"; 
+        public const string SixHourNode = "sixhour";
         public const string LeitourgiaNode = "leitourgia";
 
         public const string KekragariaNode = "kekragaria";
@@ -171,8 +172,10 @@ namespace TypiconOnline.Domain.Rules
 
         public const string YmnosNode = "ymnos";
         public const string YmnosIhosAttrName = "ihos";
-        public const string YmnosTextNode = "text";
+        public const string YmnosTextNode = "text"; 
         public const string YmnosStihosNode = "stihos";
+
+        public const string SixHourTroparionNode = "troparion";
 
         public const string MakarismiNode = "makarismi";
         public const string MakarismiOdiNode = "odi";
