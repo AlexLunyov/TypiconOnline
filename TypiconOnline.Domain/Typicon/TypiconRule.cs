@@ -15,6 +15,10 @@ namespace TypiconOnline.Domain.Typicon
         public virtual Sign Template { get; set; }
         public virtual TypiconEntity Owner { get; set; }
         /// <summary>
+        /// Признак, использовать ли определение RuleDefinition как дополнение к шаблону Template
+        /// </summary>
+        public virtual bool IsAddition { get; set; }
+        /// <summary>
         /// Возвращает Правило: либо свое, либо шаблонное
         /// </summary>
         public override RuleElement Rule

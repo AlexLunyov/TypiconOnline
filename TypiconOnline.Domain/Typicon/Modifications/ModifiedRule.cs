@@ -11,20 +11,20 @@ namespace TypiconOnline.Domain.Typicon.Modifications
 {
     public class ModifiedRule : EntityBase<int>, IAggregateRoot, IComparable<ModifiedRule>
     {
-        public DayRule RuleEntity { get; set; }
+        public virtual DayRule RuleEntity { get; set; }
 
-        public DateTime Date { get; set; }
+        public virtual DateTime Date { get; set; }
         //public DayType Day { get; set; }
 
-        public int Priority { get; set; }
+        public virtual int Priority { get; set; }
 
-        public bool IsLastName { get; set; }
+        public virtual bool IsLastName { get; set; }
 
-        public string ShortName { get; set; }
+        public virtual string ShortName { get; set; }
 
-        public bool AsAddition { get; set; }
+        public virtual bool IsAddition { get; set; }
 
-        public bool UseFullName { get; set; }
+        public virtual bool UseFullName { get; set; }
 
         protected override void Validate()
         {

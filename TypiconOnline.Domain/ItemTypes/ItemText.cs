@@ -57,6 +57,14 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }
 
+        public bool IsTextEmpty
+        {
+            get
+            {
+                return _textDict.Count == 0;
+            }
+        }
+
         //public override string StringExpression
         //{
         //    get

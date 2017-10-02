@@ -231,7 +231,8 @@ namespace ScheduleForm
                     Date = SelectedDate,
                     TypiconEntity = _typiconEntity,
                     Mode = HandlingMode.AstronimicDay,
-                    Handler = new ScheduleHandler()
+                    Handler = new ScheduleHandler(),
+                    Language = "cs-ru"
                 };
 
                 GetScheduleWeekResponse weekResponse = _scheduleService.GetScheduleWeek(weekRequest);

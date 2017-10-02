@@ -232,7 +232,7 @@ namespace TypiconOnline.Domain.Typicon
                     RuleEntity = (MenologyRule)request.Caller,
                     Priority = request.Priority,
                     IsLastName = request.IsLastName,
-                    AsAddition = request.AsAddition,
+                    IsAddition = request.AsAddition,
                     ShortName = request.ShortName,
                     UseFullName = request.UseFullName
                 });
@@ -246,7 +246,7 @@ namespace TypiconOnline.Domain.Typicon
                     RuleEntity = (TriodionRule)request.Caller,
                     Priority = request.Priority,
                     IsLastName = request.IsLastName,
-                    AsAddition = request.AsAddition,
+                    IsAddition = request.AsAddition,
                     ShortName = request.ShortName,
                     UseFullName = request.UseFullName
                 });

@@ -46,46 +46,6 @@ namespace TypiconOnline.Domain.Services
             //задаем имя дню
             scheduleDay.Name = ComposeServiceName(inputRequest, handlerSettings);
 
-            #region  старое формирование имени
-            //if (handlerRequest.Rules.Count > 1)
-            //{
-            //    for (int i = 1; i < handlerRequest.Rules.Count; i++)
-            //    {
-            //        scheduleDay.Name += handlerRequest.Rules[i].Name + " ";
-            //    }
-            //    //Если имеется короткое название, то будем добавлять только его
-            //    if (handlerRequest.UseFullName && !string.IsNullOrEmpty(seniorTypiconRule.Name))//(string.IsNullOrEmpty(handlerRequest.ShortName))
-            //    {
-            //        scheduleDay.Name = (handlerRequest.PutSeniorRuleNameToEnd) ?
-            //            scheduleDay.Name + seniorTypiconRule.Name :
-            //            seniorTypiconRule.Name + " " + scheduleDay.Name;
-            //    }
-            //}
-            //else if (handlerRequest.UseFullName)//(string.IsNullOrEmpty(handlerRequest.ShortName))
-            //{
-            //    scheduleDay.Name = seniorTypiconRule.Name;
-            //}
-
-            //if ((seniorTypiconRule is MenologyRule) && (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday)
-            //    && (seniorTypiconRule.Template.Priority > 1))
-            //{
-            //    //Если Триоди нет и воскресенье, находим название Недели из Октоиха
-            //    //и добавляем название Недели в начало Name
-
-            //    //Если имеется короткое название, то добавляем только его
-
-            //    scheduleDay.Name = /*string.IsNullOrEmpty(handlerRequest.ShortName) ?
-            //        BookStorage.Oktoikh.GetSundayName(inputRequest.Date) + " " + scheduleDay.Name :*/
-            //        BookStorage.Oktoikh.GetSundayName(inputRequest.Date, handlerRequest.ShortName) + " " + scheduleDay.Name;
-
-            //    //жестко задаем воскресный день
-            //    //seniorTypiconRule.Template = inputRequest.TypiconEntity.TemplateSunday;
-            //    handlerRequest.Rules.Insert(0, inputRequest.TypiconEntity.Settings.TemplateSunday);
-            //    seniorTypiconRule = inputRequest.TypiconEntity.Settings.TemplateSunday;
-            //}
-
-            #endregion
-
             scheduleDay.Date = inputRequest.Date;
 
             scheduleDay.Sign = (handlerSettings.Rule is Sign) ? (handlerSettings.Rule as Sign).Number : GetTemplateSignID(handlerSettings.Rule.Template);
@@ -152,7 +112,11 @@ namespace TypiconOnline.Domain.Services
 
         private string ComposeServiceName(GetScheduleDayRequest inputRequest, RuleHandlerSettings handlerRequest)
         {
-            if (handlerRequest.DayServices.Count == 0) throw new ArgumentNullException("Ошибка: не определена коллекция богослужебных текстов.");
+            //находим самое последнее правило - добавление
+            while (handlerRequest.Addition != null)
+            {
+                handlerRequest = handlerRequest.Addition;
+            }
 
             string result = "";
 
@@ -160,30 +124,30 @@ namespace TypiconOnline.Domain.Services
 
             DayService seniorService = handlerRequest.DayServices[0];
 
+            //собираем все имена текстов, кроме главного
             if (handlerRequest.DayServices.Count > 1)
             {
                 for (int i = 1; i < handlerRequest.DayServices.Count; i++)
                 {
                     result += handlerRequest.DayServices[i].ServiceName[language] + " ";
                 }
-
-                //Если имеется короткое название, то будем добавлять только его
-                if (seniorService.UseFullName && !string.IsNullOrEmpty(seniorService.ServiceName[language]))//(string.IsNullOrEmpty(handlerRequest.ShortName))
-                {
-                    string n = seniorService.ServiceName[language];
-                    result = (handlerRequest.PutSeniorRuleNameToEnd) ?
-                        result + n :
-                        n + " " + result;
-                        //result + handlerRequest.Rule.Name :
-                        //handlerRequest.Rule.Name + " " + result;
-                }
             }
-            else if (seniorService.UseFullName && handlerRequest.DayServices.Count == 1)//(string.IsNullOrEmpty(handlerRequest.ShortName))
+
+            //а теперь разбираемся с главным
+
+            string s = seniorService.ServiceName[language];
+
+            if (inputRequest.Date.DayOfWeek != DayOfWeek.Sunday
+                || (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday 
+                    && (seniorService.UseFullName || seniorService.ServiceShortName.IsTextEmpty)))
             {
-                result = seniorService.ServiceName[language];
+                result = (handlerRequest.PutSeniorRuleNameToEnd) ?
+                        result + s :
+                        s + " " + result;
             }
 
-            if ((handlerRequest.Rule is MenologyRule) && (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday)
+            if ((handlerRequest.Rule is MenologyRule) 
+                && (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday)
                 && (handlerRequest.Rule.Template.Priority > 1))
             {
                 //Если Триоди нет и воскресенье, находим название Недели из Октоиха
@@ -191,9 +155,8 @@ namespace TypiconOnline.Domain.Services
 
                 //Если имеется короткое название, то добавляем только его
 
-                result = /*string.IsNullOrEmpty(handlerRequest.ShortName) ?
-                    BookStorage.Oktoikh.GetSundayName(inputRequest.Date) + " " + scheduleDay.Name :*/
-                    BookStorage.Oktoikh.GetSundayName(inputRequest.Date, GetShortName(handlerRequest.DayServices, handlerRequest.Language)) + " " + result;
+                result = BookStorage.Oktoikh.GetSundayName(inputRequest.Date, 
+                    GetShortName(handlerRequest.DayServices, handlerRequest.Language)) + " " + result;
 
                 //жестко задаем воскресный день
                 handlerRequest.Rule = inputRequest.TypiconEntity.Settings.TemplateSunday;
@@ -208,10 +171,11 @@ namespace TypiconOnline.Domain.Services
 
             for (int i = 0; i < dayServices.Count; i++)
             {
-                result += dayServices[i].ServiceName[language];
-                if (i < dayServices.Count - 1)
+                string s = dayServices[i].ServiceShortName[language];
+
+                if (!string.IsNullOrEmpty(s))
                 {
-                    result += ", ";
+                    result = (!string.IsNullOrEmpty(result)) ? result + ", " + s : s;
                 }
             }
 
@@ -245,16 +209,16 @@ namespace TypiconOnline.Domain.Services
             List<ModifiedRule> modAbstractRules = inputRequest.TypiconEntity.GetModifiedRules(inputRequest.Date);
 
             //создаем выходной объект
-            RuleHandlerSettings outputSettings = null;
+            RuleHandlerSettings additionalSettings = null;
 
             //рассматриваем полученные измененные правила
             //и выбираем одно - с максимальным приоритетом
-            if (modAbstractRules != null && modAbstractRules.Count > 0)
+            if (modAbstractRules?.Count > 0)
             {
                 //выбираем измененное правило, максимальное по приоритету
                 ModifiedRule abstrRule = modAbstractRules.Min();
 
-                if (!abstrRule.AsAddition)
+                if (!abstrRule.IsAddition)
                 {
                     if (abstrRule.RuleEntity is MenologyRule)
                     {
@@ -269,20 +233,21 @@ namespace TypiconOnline.Domain.Services
                 else
                 {
                     //создаем первый объект, который в дальнейшем станет ссылкой Addition у выбранного правила
-                    outputSettings = new RuleHandlerSettings()
+                    additionalSettings = new RuleHandlerSettings()
                     {
                         Rule = abstrRule.RuleEntity,
-                        //DayServices = abstrRule.RuleEntity.DayServices.co
+                        DayServices = abstrRule.RuleEntity.DayServices.ToList(),
                         Mode = inputRequest.Mode,
                         Language = inputRequest.Language,
                         CustomParameters = inputRequest.CustomParameters,
+                        PutSeniorRuleNameToEnd = abstrRule.IsLastName
                     };
-                }
 
-                outputSettings.PutSeniorRuleNameToEnd = abstrRule.IsLastName;
-                //outputRequest.ShortName = abstrRule.ShortName;
-                //outputRequest.UseFullName = abstrRule.UseFullName;
+                    modAbstractRules.Clear();
+                }
             }
+
+            #region Вычисление приоритетов и наполнение списка modAbstractRules
 
             //определяем приоритет и находим, какие объекты будем обрабатывать
 
@@ -350,26 +315,56 @@ namespace TypiconOnline.Domain.Services
                     break;
             }
 
-            //добавляем все измененные правила
-            if (modAbstractRules != null)
+            #endregion
+
+            //сортируем полученный список по приоритетам
+            modAbstractRules.Sort();
+
+            //получаем коллекцию богослужебных текстов
+            List<DayService> dayServices = GetDayServices(modAbstractRules);
+
+            //смотрим, не созданы ли уже настройки
+            if (additionalSettings != null)
             {
-                modAbstractRules.Sort();
+                //созданы - значит был определен элемент для добавления
+                additionalSettings.DayServices.AddRange(dayServices);
+            }
 
-                for (int i = 0; i < modAbstractRules.Count; i++)
-                {
-                    ModifiedRule modRule = modAbstractRules[i];
+            RuleHandlerSettings outputSettings = GetRecursiveSettings(modAbstractRules[0].RuleEntity, dayServices, inputRequest, additionalSettings);
 
-                    outputSettings.DayServices.AddRange(modRule.RuleEntity.DayServices);
-                    //задаем свойству Rule первое Правило из сортированного списка
-                    if (i == 0)
-                    {
-                        outputSettings.Rule = modRule.RuleEntity;
-                    }
-                    
-                }
+            return outputSettings;
+        }
+
+        private RuleHandlerSettings GetRecursiveSettings(TypiconRule rule, List<DayService> dayServices, GetScheduleDayRequest inputRequest,
+            RuleHandlerSettings additionalSettings)
+        {
+            RuleHandlerSettings outputSettings = new RuleHandlerSettings()
+            {
+                Addition = additionalSettings,
+                Rule = rule,
+                DayServices = dayServices.ToList(),
+                Mode = inputRequest.Mode,
+                Language = inputRequest.Language,
+                CustomParameters = inputRequest.CustomParameters
+            };
+
+            
+            if (!string.IsNullOrEmpty(rule.RuleDefinition) && rule.IsAddition && rule.Template != null)
+            {
+                //если правило определено и определено как добавление входим в рекурсию
+                outputSettings = GetRecursiveSettings(rule.Template, dayServices, inputRequest, outputSettings);
             }
 
             return outputSettings;
+        }
+
+        private List<DayService> GetDayServices(List<ModifiedRule> modRules)
+        {
+            List<DayService> result = new List<DayService>();
+
+            modRules.ForEach(c => result.AddRange(c.RuleEntity.DayServices));
+
+            return result;
         }
 
         /// <summary>
@@ -378,7 +373,7 @@ namespace TypiconOnline.Domain.Services
         /// </summary>
         /// <param name="modAbstractRules">список измененных правил</param>
         /// <param name="typiconRule"></param>
-        private void AddFakeModRule(List<ModifiedRule> modAbstractRules, TypiconRule typiconRule)
+        private void AddFakeModRule(List<ModifiedRule> modAbstractRules, DayRule typiconRule)
         {
             if (modAbstractRules == null)
             {
@@ -388,12 +383,10 @@ namespace TypiconOnline.Domain.Services
             ModifiedRule modRule = new ModifiedRule()
             {
                 Priority = typiconRule.Template.Priority,
-                RuleEntity = typiconRule as TriodionRule
+                RuleEntity = typiconRule
             };
 
             modAbstractRules.Insert(0, modRule);
-
-            //modAbstractRules.Add(modRule);
         }
 
         /// <summary>
@@ -419,6 +412,7 @@ namespace TypiconOnline.Domain.Services
                 Mode = request.Mode,
                 Handler = request.Handler,
                 TypiconEntity = request.TypiconEntity,
+                Language = request.Language,
                 CustomParameters = request.CustomParameters,
             };
 
