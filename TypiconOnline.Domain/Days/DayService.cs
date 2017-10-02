@@ -15,12 +15,22 @@ namespace TypiconOnline.Domain.Days
         public DayService()
         {
             ServiceName = new ItemText();
+            ServiceShortName = new ItemText();
         }
 
         /// <summary>
         /// Наименование праздника
         /// </summary>
         public virtual ItemText ServiceName { get; set; }
+        /// <summary>
+        /// Краткое наименование праздника (для Недель - используется при формировании расписания)
+        /// </summary>
+        public virtual ItemText ServiceShortName { get; set; }
+        /// <summary>
+        /// Признак, использовать ли полное имя при составлении расписания
+        /// Например, имеет значение true для правздника Недели по Рождестве
+        /// </summary>
+        public virtual bool UseFullName { get; set; }
         /// <summary>
         /// Признак Господского или Богородичного праздника, его предпразднества или попразднества
         /// </summary>

@@ -31,6 +31,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="ScheduleHandling">
+      <HintPath>..\..\ScheduleSolution\ScheduleHandler\bin\Debug\ScheduleHandling.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,6 +52,7 @@
     <Compile Include="Implementations\EnrichedTypiconEntityService.cs" />
     <Compile Include="Implementations\FileReader.cs" />
     <Compile Include="Implementations\HtmlScheduleWeekViewer.cs" />
+    <Compile Include="Implementations\RuleToHandle.cs" />
     <Compile Include="Implementations\ScheduleService.cs" />
     <Compile Include="Implementations\TextScheduleDayViewer.cs" />
     <Compile Include="Implementations\TypiconEntityService.cs" />
@@ -58,6 +62,7 @@
     <Compile Include="Interfaces\IScheduleService.cs" />
     <Compile Include="Interfaces\IScheduleWeekViewer.cs" />
     <Compile Include="Interfaces\ITypiconEntityService.cs" />
+    <Compile Include="Interfaces\IXmlMigrationService.cs" />
     <Compile Include="Interfaces\IXmlSaver.cs" />
     <Compile Include="Interfaces\IXmlSerializer.cs" />
     <Compile Include="Messaging\Common\CreateItemTextRequest.cs" />
@@ -75,6 +80,7 @@
     <Compile Include="Messaging\Typicon\InsertTypiconEntityResponse.cs" />
     <Compile Include="Messaging\Typicon\UpdateTypiconEntityRequest.cs" />
     <Compile Include="Messaging\Typicon\UpdateTypiconEntityResponse.cs" />
+    <Compile Include="Migration\DayDefinitionTemplateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

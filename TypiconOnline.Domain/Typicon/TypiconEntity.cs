@@ -226,7 +226,7 @@ namespace TypiconOnline.Domain.Typicon
 
             if (request.Caller is MenologyRule)
             {
-                modifiedYear.ModifiedRules.Add(new ModifiedMenologyRule()
+                modifiedYear.ModifiedRules.Add(new ModifiedRule()
                 {
                     Date = request.Date,
                     RuleEntity = (MenologyRule)request.Caller,
@@ -240,7 +240,7 @@ namespace TypiconOnline.Domain.Typicon
 
             if (request.Caller is TriodionRule)
             {
-                modifiedYear.ModifiedRules.Add(new ModifiedTriodionRule()
+                modifiedYear.ModifiedRules.Add(new ModifiedRule()
                 {
                     Date = request.Date,
                     RuleEntity = (TriodionRule)request.Caller,

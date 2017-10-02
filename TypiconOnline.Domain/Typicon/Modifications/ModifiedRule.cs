@@ -9,8 +9,10 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon.Modifications
 {
-    public abstract class ModifiedRule : EntityBase<int>, IAggregateRoot, IComparable<ModifiedRule>
+    public class ModifiedRule : EntityBase<int>, IAggregateRoot, IComparable<ModifiedRule>
     {
+        public DayRule RuleEntity { get; set; }
+
         public DateTime Date { get; set; }
         //public DayType Day { get; set; }
 
@@ -37,9 +39,9 @@ namespace TypiconOnline.Domain.Typicon.Modifications
         public int CompareTo(ModifiedRule other)
         {
             if ((Priority < other.Priority) || 
-                ((Priority == other.Priority) && ((this is ModifiedTriodionRule) && (other is ModifiedMenologyRule))))
+                ((Priority == other.Priority) && ((RuleEntity is TriodionRule) && (other.RuleEntity is MenologyRule))))
                 return -1;
-            else if ((other.Priority == Priority) && !((this is ModifiedMenologyRule) && (other is ModifiedTriodionRule)))
+            else if ((other.Priority == Priority) && !((RuleEntity is MenologyRule) && (other.RuleEntity is TriodionRule)))
                 return 0;
             else return 1;
         }

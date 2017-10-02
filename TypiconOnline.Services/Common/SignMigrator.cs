@@ -33,6 +33,8 @@ namespace TypiconOnline.AppServices.Common
 
         public SignMigrator(int oldID)
         {
+            if (!_signs.ContainsKey(oldID)) throw new ArgumentOutOfRangeException("oldID");
+
             _oldID = oldID;
         }
 
@@ -80,6 +82,24 @@ namespace TypiconOnline.AppServices.Common
             get
             {
                 return _signs[_oldID].TemplateId;
+            }
+        }
+
+        /// <summary>
+        /// Возвращает имя базового шаблона (элемента, у которого TemplateId == null)
+        /// </summary>
+        public string MajorTemplateName
+        {
+            get
+            {
+                Item item = _signs[_oldID];
+
+                while (item.TemplateId != null)
+                {
+                    item = _signs.Where(c => c.Value.NewID == item.TemplateId).FirstOrDefault().Value;
+                }
+
+                return item.Name;
             }
         }
 

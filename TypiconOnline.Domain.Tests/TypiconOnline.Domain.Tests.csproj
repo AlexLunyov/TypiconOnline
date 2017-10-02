@@ -50,6 +50,7 @@
     <Compile Include="Days\DayServiceTest.cs" />
     <Compile Include="Days\EsperinosTest.cs" />
     <Compile Include="Days\SticheraTest.cs" />
+    <Compile Include="Experiments\Experiment.cs" />
     <Compile Include="ItemTypes\ItemTextCollectionTest.cs" />
     <Compile Include="ItemTypes\ItemTimeTest.cs" />
     <Compile Include="ItemTypes\ItemTextTest.cs" />

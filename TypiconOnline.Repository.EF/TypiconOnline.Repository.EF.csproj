@@ -62,8 +62,6 @@
     <Compile Include="DataBase\Mapping\DayServiceMap.cs" />
     <Compile Include="DataBase\Mapping\EasterItemMap.cs" />
     <Compile Include="DataBase\Mapping\ModifiedRuleMap.cs" />
-    <Compile Include="DataBase\Mapping\ModifiedMenologyRuleMap.cs" />
-    <Compile Include="DataBase\Mapping\ModifiedTriodionRuleMap.cs" />
     <Compile Include="DataBase\Mapping\ModifiedYearMap.cs" />
     <Compile Include="DataBase\Mapping\DayMap.cs" />
     <Compile Include="DataBase\Mapping\TriodionRuleMap.cs" />

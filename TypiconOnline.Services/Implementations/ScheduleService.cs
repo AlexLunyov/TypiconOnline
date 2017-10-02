@@ -5,6 +5,7 @@ using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Services;
 using TypiconOnline.Domain.Books;
+using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Schedule;
 using TypiconOnline.Domain.Typicon;
@@ -151,20 +152,25 @@ namespace TypiconOnline.Domain.Services
 
         private string ComposeServiceName(GetScheduleDayRequest inputRequest, RuleHandlerSettings handlerRequest)
         {
+            if (handlerRequest.DayServices.Count == 0) throw new ArgumentNullException("Ошибка: не определена коллекция богослужебных текстов.");
+
             string result = "";
 
             string language = inputRequest.TypiconEntity.Settings.DefaultLanguage;
+
+            DayService seniorService = handlerRequest.DayServices[0];
 
             if (handlerRequest.DayServices.Count > 1)
             {
                 for (int i = 1; i < handlerRequest.DayServices.Count; i++)
                 {
-                    result += handlerRequest.DayServices[i].ServiceName.Text[language] + " ";
+                    result += handlerRequest.DayServices[i].ServiceName[language] + " ";
                 }
+
                 //Если имеется короткое название, то будем добавлять только его
-                if (handlerRequest.UseFullName && !string.IsNullOrEmpty(handlerRequest.Rule.Name))//(string.IsNullOrEmpty(handlerRequest.ShortName))
+                if (seniorService.UseFullName && !string.IsNullOrEmpty(seniorService.ServiceName[language]))//(string.IsNullOrEmpty(handlerRequest.ShortName))
                 {
-                    string n = handlerRequest.DayServices[0].ServiceName.Text[language];
+                    string n = seniorService.ServiceName[language];
                     result = (handlerRequest.PutSeniorRuleNameToEnd) ?
                         result + n :
                         n + " " + result;
@@ -172,9 +178,9 @@ namespace TypiconOnline.Domain.Services
                         //handlerRequest.Rule.Name + " " + result;
                 }
             }
-            else if (handlerRequest.UseFullName && handlerRequest.DayServices.Count == 1)//(string.IsNullOrEmpty(handlerRequest.ShortName))
+            else if (seniorService.UseFullName && handlerRequest.DayServices.Count == 1)//(string.IsNullOrEmpty(handlerRequest.ShortName))
             {
-                result = handlerRequest.DayServices[0].ServiceName.Text[language];
+                result = seniorService.ServiceName[language];
             }
 
             if ((handlerRequest.Rule is MenologyRule) && (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday)
@@ -187,7 +193,7 @@ namespace TypiconOnline.Domain.Services
 
                 result = /*string.IsNullOrEmpty(handlerRequest.ShortName) ?
                     BookStorage.Oktoikh.GetSundayName(inputRequest.Date) + " " + scheduleDay.Name :*/
-                    BookStorage.Oktoikh.GetSundayName(inputRequest.Date, handlerRequest.ShortName) + " " + result;
+                    BookStorage.Oktoikh.GetSundayName(inputRequest.Date, GetShortName(handlerRequest.DayServices, handlerRequest.Language)) + " " + result;
 
                 //жестко задаем воскресный день
                 handlerRequest.Rule = inputRequest.TypiconEntity.Settings.TemplateSunday;
@@ -196,11 +202,25 @@ namespace TypiconOnline.Domain.Services
             return result;
         }
 
+        private string GetShortName(List<DayService> dayServices, string language)
+        {
+            string result = "";
+
+            for (int i = 0; i < dayServices.Count; i++)
+            {
+                result += dayServices[i].ServiceName[language];
+                if (i < dayServices.Count - 1)
+                {
+                    result += ", ";
+                }
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Формирует запрос для дальнейшей обработки: главную и второстепенную службу, HandlingMode
-        /// 1.	Находим связанные правила для введенной даты
-        /// 2.	Делаем фильтрацию
-        /// 3.	Из оставшихся выбираем главную службу и второстепенную
+        /// Процесс описан в документации
         /// </summary>
         /// <param name="inputRequest"></param>
         /// <returns></returns>
@@ -215,65 +235,53 @@ namespace TypiconOnline.Domain.Services
 
             //находим TriodionRule
 
-            //DateTime easterDate = EasterStorage.Instance.GetCurrentEaster(inputRequest.Date.Year);
-
-            //int daysFromEaster = inputRequest.Date.Subtract(easterDate).Days;
-
             TriodionRule triodionRule = inputRequest.TypiconEntity.GetTriodionRule(inputRequest.Date);
 
             //находим ModifiedRule
 
-            ModifiedMenologyRule modMenologyRule = null;
-            ModifiedTriodionRule modTriodionRule = null;
+            ModifiedRule modMenologyRule = null;
+            ModifiedRule modTriodionRule = null;
 
             List<ModifiedRule> modAbstractRules = inputRequest.TypiconEntity.GetModifiedRules(inputRequest.Date);
 
             //создаем выходной объект
-            RuleHandlerSettings outputRequest = new RuleHandlerSettings()
-            {
-                Mode = inputRequest.Mode,
-                Language = inputRequest.Handler.Settings.Language
-            };
+            RuleHandlerSettings outputSettings = null;
 
             //рассматриваем полученные измененные правила
+            //и выбираем одно - с максимальным приоритетом
             if (modAbstractRules != null && modAbstractRules.Count > 0)
             {
-                bool isNotAddition = modAbstractRules.TrueForAll(c => !c.AsAddition);
-                bool isLastName = !modAbstractRules.TrueForAll(c => !c.IsLastName);
-
-                //сортируем по приоитету, если измененных правил больше одного
-                //if (modAbstractRules.Count > 1)
-                //{
-                //    modAbstractRules.Sort(delegate (ModifiedRule x, ModifiedRule y)
-                //    {
-                //        return x.Priority.CompareTo(y.Priority);
-                //    });
-                //}
-
                 //выбираем измененное правило, максимальное по приоритету
                 ModifiedRule abstrRule = modAbstractRules.Min();
 
-                //считаем, что в списке правила только Минейные или Триодные
-
-                if (abstrRule is ModifiedMenologyRule)
+                if (!abstrRule.AsAddition)
                 {
-                    if (isNotAddition)
+                    if (abstrRule.RuleEntity is MenologyRule)
                     {
-                        modMenologyRule = abstrRule as ModifiedMenologyRule;
+                        modMenologyRule = abstrRule;
+                    }
+
+                    if (abstrRule.RuleEntity is TriodionRule)
+                    {
+                        modTriodionRule = abstrRule;
                     }
                 }
-
-                if (abstrRule is ModifiedTriodionRule)
+                else
                 {
-                    if (isNotAddition)
+                    //создаем первый объект, который в дальнейшем станет ссылкой Addition у выбранного правила
+                    outputSettings = new RuleHandlerSettings()
                     {
-                        modTriodionRule = abstrRule as ModifiedTriodionRule;
-                    }
+                        Rule = abstrRule.RuleEntity,
+                        //DayServices = abstrRule.RuleEntity.DayServices.co
+                        Mode = inputRequest.Mode,
+                        Language = inputRequest.Language,
+                        CustomParameters = inputRequest.CustomParameters,
+                    };
                 }
 
-                outputRequest.PutSeniorRuleNameToEnd = isLastName;
-                outputRequest.ShortName = abstrRule.ShortName;
-                outputRequest.UseFullName = abstrRule.UseFullName;
+                outputSettings.PutSeniorRuleNameToEnd = abstrRule.IsLastName;
+                //outputRequest.ShortName = abstrRule.ShortName;
+                //outputRequest.UseFullName = abstrRule.UseFullName;
             }
 
             //определяем приоритет и находим, какие объекты будем обрабатывать
@@ -304,14 +312,10 @@ namespace TypiconOnline.Domain.Services
                     //senior Triodion, junior Menology
                     if (modTriodionRule == null)
                     {
-                        //outputRequest.Rules.Add(triodionRule);
-
                         AddFakeModRule(modAbstractRules, triodionRule);
                     }
                     if (modMenologyRule == null)
                     {
-                        //outputRequest.Rules.Add(menologyRule);
-
                         AddFakeModRule(modAbstractRules, menologyRule);
                     }
                     break;
@@ -319,14 +323,10 @@ namespace TypiconOnline.Domain.Services
                     //senior Menology, junior Triodion
                     if (modMenologyRule == null)
                     {
-                        //outputRequest.Rules.Add(menologyRule);
-
                         AddFakeModRule(modAbstractRules, menologyRule);
                     }
                     if (modTriodionRule == null)
                     {
-                        //outputRequest.Rules.Add(triodionRule);
-
                         AddFakeModRule(modAbstractRules, triodionRule);
                     }
                     break;
@@ -336,8 +336,6 @@ namespace TypiconOnline.Domain.Services
                         //только Минея
                         if (modMenologyRule == null)
                         {
-                            //outputRequest.Rules.Add(menologyRule);
-
                             AddFakeModRule(modAbstractRules, menologyRule);
                         }
                     }
@@ -346,8 +344,6 @@ namespace TypiconOnline.Domain.Services
                         //только Триодь
                         if (modTriodionRule == null)
                         {
-                            //outputRequest.Rules.Add(triodionRule);
-
                             AddFakeModRule(modAbstractRules, triodionRule);
                         }
                     }
@@ -362,28 +358,18 @@ namespace TypiconOnline.Domain.Services
                 for (int i = 0; i < modAbstractRules.Count; i++)
                 {
                     ModifiedRule modRule = modAbstractRules[i];
-                    if (modRule is ModifiedTriodionRule)
+
+                    outputSettings.DayServices.AddRange(modRule.RuleEntity.DayServices);
+                    //задаем свойству Rule первое Правило из сортированного списка
+                    if (i == 0)
                     {
-                        outputRequest.DayServices.AddRange((modRule as ModifiedTriodionRule).RuleEntity.DayServices);
-                        //задаем свойству Rule первое Правило из сортированного списка
-                        if (i == 0)
-                        {
-                            outputRequest.Rule = (modRule as ModifiedTriodionRule).RuleEntity;
-                        }
+                        outputSettings.Rule = modRule.RuleEntity;
                     }
-                    else
-                    {
-                        outputRequest.DayServices.AddRange((modRule as ModifiedMenologyRule).RuleEntity.DayServices);
-                        //задаем свойству Rule первое Правило из сортированного списка
-                        if (i == 0)
-                        {
-                            outputRequest.Rule = (modRule as ModifiedMenologyRule).RuleEntity;
-                        }
-                    }
+                    
                 }
             }
 
-            return outputRequest;
+            return outputSettings;
         }
 
         /// <summary>
@@ -399,24 +385,11 @@ namespace TypiconOnline.Domain.Services
                 modAbstractRules = new List<ModifiedRule>();
             }
 
-            ModifiedRule modRule = null;
-
-            if (typiconRule is TriodionRule)
+            ModifiedRule modRule = new ModifiedRule()
             {
-                modRule = new ModifiedTriodionRule()
-                {
-                    Priority = typiconRule.Template.Priority,
-                    RuleEntity = typiconRule as TriodionRule
-                };
-            }
-            else
-            {
-                modRule = new ModifiedMenologyRule()
-                {
-                    Priority = typiconRule.Template.Priority,
-                    RuleEntity = typiconRule as MenologyRule
-                };
-            }
+                Priority = typiconRule.Template.Priority,
+                RuleEntity = typiconRule as TriodionRule
+            };
 
             modAbstractRules.Insert(0, modRule);
 

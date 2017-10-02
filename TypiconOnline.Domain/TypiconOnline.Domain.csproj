@@ -60,6 +60,7 @@
     <Compile Include="Days\Day.cs" />
     <Compile Include="Easter\IEasterStorage.cs" />
     <Compile Include="Easter\IEasterStorageFactory.cs" />
+    <Compile Include="Interfaces\IDayServiceFactory.cs" />
     <Compile Include="Interfaces\IhosElement.cs" />
     <Compile Include="Interfaces\IViewModelElement.cs" />
     <Compile Include="ItemTypes\ItemEnumTypeBusinessConstraint.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Days\DayService.cs" />
     <Compile Include="Days\MenologyDay.cs" />
     <Compile Include="Days\MenologyDayBusinessConstraint.cs" />
+    <Compile Include="Rules\Handlers\IScheduleCustomParameter.cs" />
     <Compile Include="Rules\Handlers\RenderHandler.cs" />
     <Compile Include="Rules\Handlers\ServiceSequenceHandler.cs" />
     <Compile Include="Rules\Handlers\SticheraRuleHandler.cs" />
@@ -166,8 +168,6 @@
     <Compile Include="Typicon\DayRule.cs" />
     <Compile Include="Typicon\Factories\TypiconEntityFactory.cs" />
     <Compile Include="Typicon\Modifications\ModifiedRule.cs" />
-    <Compile Include="Typicon\Modifications\ModifiedMenologyRule.cs" />
-    <Compile Include="Typicon\Modifications\ModifiedTriodionRule.cs" />
     <Compile Include="Typicon\Modifications\ModifiedYear.cs" />
     <Compile Include="Typicon\Priority.cs" />
     <Compile Include="Typicon\TypiconFolderEntity.cs" />

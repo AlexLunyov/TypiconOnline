@@ -129,7 +129,6 @@ namespace TypiconMigrationTool
                     sign.Template = typiconEntity.Signs.First(c => c.Number == signMigrator.TemplateId);
                 }
 
-                //_unitOfWork.Repository<Sign>().Insert(sign);
                 typiconEntity.Signs.Add(sign);
 
                 i++;
@@ -194,25 +193,18 @@ namespace TypiconMigrationTool
 
             FileReader fileRuleReader = new FileReader(folderRulePath);
 
-            string folderDayPath = Properties.Settings.Default.FolderPath + "Menology\\";
-
-            FileReader fileDayReader = new FileReader(folderDayPath);
-
             MenologyDay menologyDay = null;
             MenologyRule menologyRule = null;
 
+            MigrationDayServiceFactory factory = new MigrationDayServiceFactory(Properties.Settings.Default.FolderPath);
+
             foreach (ScheduleDBDataSet.MineinikRow mineinikRow in _sh.DataSet.Mineinik.Rows)
             {
-                DayService dayService = new DayService();
+                factory.Initialize(mineinikRow);
 
-                //наполняем содержимое текста службы
-                dayService.ServiceName.AddElement("cs-ru", mineinikRow.Name);
-                dayService.IsCelebrating = mineinikRow.Rule == "1";
+                DayService dayService = factory.Create();
 
                 ItemDate d = (!mineinikRow.IsDateBNull()) ? new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day) : new ItemDate();
-                string fileName = (!mineinikRow.IsDateBNull()) ? d.Expression + "." + mineinikRow.Name : mineinikRow.Name;
-
-                dayService.DayDefinition = fileDayReader.GetXml(fileName);
 
                 //menologyDay
                 /* Чтобы лишний раз не обращаться к БД,

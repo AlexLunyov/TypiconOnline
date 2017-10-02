@@ -212,6 +212,8 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }
 
+        #region IXmlSerializable
+
         public XmlSchema GetSchema()
         {
             return null;
@@ -264,6 +266,13 @@ namespace TypiconOnline.Domain.ItemTypes
                 ns.Add("", "");
                 _serializer.Serialize(writer, Style, ns);
             }
+        }
+
+        #endregion
+
+        public override string ToString()
+        {
+            return (_textDict.Count > 0) ? _textDict.First().Value : base.ToString();
         }
     }
 }

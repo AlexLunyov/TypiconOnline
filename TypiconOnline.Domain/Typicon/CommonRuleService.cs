@@ -67,7 +67,7 @@ namespace TypiconOnline.Domain.Typicon
         /// <returns></returns>
         public string GetTextValue(CommonRuleServiceRequest request)
         {
-            return GetItemTextValue(request).Text[request.Handler.Settings.Language];
+            return GetItemTextValue(request)[request.Handler.Settings.Language];
         }
     }
 }

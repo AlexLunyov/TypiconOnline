@@ -78,7 +78,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
                 Mode = HandlingMode.AstronimicDay,
                 Handler = new ScheduleHandler(),
                 TypiconEntity = typiconEntity,
-                CustomParameters = new List<GetScheduleRequestParameter>(),
+                CustomParameters = new List<IScheduleCustomParameter>(),
             };
 
             ScheduleService scheduleService = new ScheduleService();

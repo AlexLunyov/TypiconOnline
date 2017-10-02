@@ -9,23 +9,33 @@ using TypiconOnline.Domain.Typicon.Modifications;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {
+    /// <summary>
+    /// Настройки для обработки правил
+    /// </summary>
     public class RuleHandlerSettings
     {
-        public TypiconRule Rule;
-        public List<DayService> DayServices;
-
-        public HandlingMode Mode;
-        public bool PutSeniorRuleNameToEnd = false;
-        public string ShortName;
-        public bool UseFullName = true;
+        /// <summary>
+        /// Дополнение для текущего правила
+        /// </summary>
+        public RuleHandlerSettings Addition { get; set; }
+        public TypiconRule Rule { get; set; }
+        public List<DayService> DayServices { get; set; }
+        public HandlingMode Mode { get; set; }
+        public bool PutSeniorRuleNameToEnd { get; set; }
+        //public string ShortName { get; set; }
+        //public bool UseFullName { get; set; }
         /// <summary>
         /// Язык для обработки
         /// </summary>
-        public string Language;
+        public string Language { get; set; }
+
+        public List<IScheduleCustomParameter> CustomParameters { get; set; }
 
         public RuleHandlerSettings()
         {
             DayServices = new List<DayService>();
+            PutSeniorRuleNameToEnd = false;
+            //UseFullName = true;
         }
 
         /// <summary>

@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Typicon
         {
             get
             {
-                return SignName.GetTextByLanguage((Owner != null) ? Owner.Settings.DefaultLanguage : "");
+                return SignName[(Owner != null) ? Owner.Settings.DefaultLanguage : ""];
             }
         }
 
