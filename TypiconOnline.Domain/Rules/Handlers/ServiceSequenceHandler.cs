@@ -28,19 +28,6 @@ namespace TypiconOnline.Domain.Rules.Handlers
         public override void Execute(ICustomInterpreted element)
         {
             base.Execute(element);
-
-            if (element is TextHolder)
-            {
-                ExecutingResult.ChildElements.Add(new TextHolderViewModel((element as TextHolder), this));
-            }
-            else if (element is YmnosStructureRule)
-            {
-                ExecutingResult.ChildElements.Add(new YmnosStructureViewModel(element as YmnosStructureRule, this));
-            }
-            else if (element is ServiceSequence)
-            {
-                ExecutingResult.ChildElements.Add(new ServiceSequenceViewModel(element as ServiceSequence, this));
-            }
         }
 
     }
