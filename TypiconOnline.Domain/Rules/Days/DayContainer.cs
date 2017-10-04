@@ -122,5 +122,111 @@ namespace TypiconOnline.Domain.Rules.Days
                 AppendAllBrokenConstraints(Leitourgia, RuleConstants.LeitourgiaNode);
             }
         }
+
+        
+        /// <summary>
+        /// Возвращает тексты из определенного места в службе
+        /// </summary>
+        /// <param name="place">Место</param>
+        /// <param name="count">Количество</param>
+        /// <param name="startFrom">С какого по номеру песнопения начинать выборку</param>
+        /// <returns></returns>
+        public YmnosStructure GetYmnosStructure(PlaceYmnosSource place, int count, int startFrom)
+        {
+            ThrowExceptionIfInvalid();
+
+            YmnosStructure stichera = null;
+
+            switch (place)
+            {
+                //kekragaria
+                case PlaceYmnosSource.kekragaria:
+                    stichera = Esperinos?.Kekragaria?.GetYmnosStructure(count, startFrom);
+                    break;
+                case PlaceYmnosSource.kekragaria_doxastichon:
+                    if (Esperinos?.Kekragaria?.Doxastichon != null)
+                    {
+                        stichera = new YmnosStructure() { Doxastichon = new YmnosGroup(Esperinos.Kekragaria.Doxastichon) };
+                    }
+                    break;
+                case PlaceYmnosSource.kekragaria_theotokion:
+                    if (Esperinos?.Kekragaria?.Theotokion != null)
+                    {
+                        //TODO: прамая ссылка без копирования и клонирования
+                        stichera = new YmnosStructure() { Theotokion = Esperinos.Kekragaria.Theotokion };
+                    }
+                    break;
+                //liti
+                case PlaceYmnosSource.liti:
+                    stichera = Esperinos?.Liti?.GetYmnosStructure(count, startFrom);
+                    break;
+                case PlaceYmnosSource.liti_doxastichon:
+                    if (Esperinos?.Liti?.Doxastichon != null)
+                    {
+                        stichera = new YmnosStructure() { Doxastichon = new YmnosGroup(Esperinos.Liti.Doxastichon) };
+                    }
+                    break;
+                case PlaceYmnosSource.liti_theotokion:
+                    if (Esperinos?.Liti?.Theotokion != null)
+                    {
+                        //TODO: прамая ссылка без копирования и клонирования
+                        stichera = new YmnosStructure() { Theotokion = Esperinos.Liti.Theotokion };
+                    }
+                    break;
+                //aposticha_esperinos
+                case PlaceYmnosSource.aposticha_esperinos:
+                    stichera = Esperinos?.Aposticha?.GetYmnosStructure(count, startFrom);
+                    break;
+                case PlaceYmnosSource.aposticha_esperinos_doxastichon:
+                    if (Esperinos?.Aposticha?.Doxastichon != null)
+                    {
+                        stichera = new YmnosStructure() { Doxastichon = new YmnosGroup(Esperinos.Aposticha.Doxastichon) };
+                    }
+                    break;
+                case PlaceYmnosSource.aposticha_esperinos_theotokion:
+                    if (Esperinos?.Aposticha?.Theotokion != null)
+                    {
+                        //TODO: прамая ссылка без копирования и клонирования
+                        stichera = new YmnosStructure() { Theotokion = Esperinos.Aposticha.Theotokion };
+                    }
+                    break;
+                //ainoi
+                case PlaceYmnosSource.ainoi:
+                    stichera = Orthros?.Ainoi?.GetYmnosStructure(count, startFrom);
+                    break;
+                case PlaceYmnosSource.ainoi_doxastichon:
+                    if (Orthros?.Ainoi?.Doxastichon != null)
+                    {
+                        stichera = new YmnosStructure() { Doxastichon = new YmnosGroup(Orthros.Ainoi.Doxastichon) };
+                    }
+                    break;
+                case PlaceYmnosSource.ainoi_theotokion:
+                    if (Orthros?.Ainoi?.Theotokion != null)
+                    {
+                        //TODO: прамая ссылка без копирования и клонирования
+                        stichera = new YmnosStructure() { Theotokion = Orthros.Ainoi.Theotokion };
+                    }
+                    break;
+                //aposticha_orthros
+                case PlaceYmnosSource.aposticha_orthros:
+                    stichera = Orthros?.Aposticha?.GetYmnosStructure(count, startFrom);
+                    break;
+                case PlaceYmnosSource.aposticha_orthros_doxastichon:
+                    if (Orthros?.Aposticha?.Doxastichon != null)
+                    {
+                        stichera = new YmnosStructure() { Doxastichon = new YmnosGroup(Orthros.Aposticha.Doxastichon) };
+                    }
+                    break;
+                case PlaceYmnosSource.aposticha_orthros_theotokion:
+                    if (Orthros?.Aposticha?.Theotokion != null)
+                    {
+                        //TODO: прамая ссылка без копирования и клонирования
+                        stichera = new YmnosStructure() { Theotokion = Orthros.Aposticha.Theotokion };
+                    }
+                    break;
+            }
+
+            return stichera;
+        }
     }
 }

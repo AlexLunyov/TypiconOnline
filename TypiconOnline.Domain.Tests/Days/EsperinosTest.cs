@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Rules.Days;
+using TypiconOnline.AppServices.Implementations;
 
 namespace TypiconOnline.Domain.Tests.Days
 {

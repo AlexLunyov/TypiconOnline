@@ -29,18 +29,18 @@ namespace TypiconOnline.Domain.Rules.Handlers
         {
             base.Execute(element);
 
-            //if (element is TextHolder)
-            //{
-            //    _executingResult.ChildElements.Add(new RenderTextHolder((element as TextHolder), this));
-            //}
-            //else if (element is YmnosStructureRule)
-            //{
-            //    _executingResult.ChildElements.Add(new RenderYmnosStructure(element as YmnosStructureRule, this));
-            //}
-            //else if (element is ServiceSequence)
-            //{
-            //    _executingResult.ChildElements.Add(new RenderServiceSequence(element as ServiceSequence, this));
-            //}
+            if (element is TextHolder)
+            {
+                ExecutingResult.ChildElements.Add(new TextHolderViewModel((element as TextHolder), this));
+            }
+            else if (element is YmnosStructureRule)
+            {
+                ExecutingResult.ChildElements.Add(new YmnosStructureViewModel(element as YmnosStructureRule, this));
+            }
+            else if (element is ServiceSequence)
+            {
+                ExecutingResult.ChildElements.Add(new ServiceSequenceViewModel(element as ServiceSequence, this));
+            }
         }
 
     }

@@ -48,7 +48,11 @@ namespace TypiconOnline.Domain.Services
 
             scheduleDay.Date = inputRequest.Date;
 
-            scheduleDay.Sign = (handlerSettings.Rule is Sign) ? (handlerSettings.Rule as Sign).Number : GetTemplateSignID(handlerSettings.Rule.Template);
+            Sign sign = (handlerSettings.Rule is Sign) ? handlerSettings.Rule as Sign : GetTemplateSign(handlerSettings.Rule.Template);
+
+            scheduleDay.Sign = sign.Number;
+            scheduleDay.SignName = sign.SignName[handlerSettings.Language];
+            //scheduleDay.Sign = (handlerSettings.Rule is Sign) ? (handlerSettings.Rule as Sign).Number : GetTemplateSignID(handlerSettings.Rule.Template);
 
             if (inputRequest.ConvertSignToHtmlBinding)
             {
@@ -397,6 +401,11 @@ namespace TypiconOnline.Domain.Services
         private int GetTemplateSignID(Sign sign)
         {
             return (sign.Template == null) ? sign.Number : GetTemplateSignID(sign.Template);
+        }
+
+        private Sign GetTemplateSign(Sign sign)
+        {
+            return (sign.Template == null) ? sign : GetTemplateSign(sign.Template);
         }
 
         public GetScheduleWeekResponse GetScheduleWeek(GetScheduleWeekRequest request)

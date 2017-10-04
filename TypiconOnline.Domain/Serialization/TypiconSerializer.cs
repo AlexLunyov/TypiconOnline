@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using TypiconOnline.AppServices.Interfaces;
+using TypiconOnline.Domain.Interfaces;
 
-namespace TypiconOnline.AppServices.Implementations
+namespace TypiconOnline.Domain.Serialization
 {
     public class TypiconSerializer : IXmlSerializer
     {

@@ -12,6 +12,9 @@ namespace TypiconOnline.Domain.Days
     /// </summary>
     public class DayService : EntityBase<int>, IAggregateRoot
     {
+        private DayContainer _dayContainer;
+        private string _dayDefinition;
+
         public DayService()
         {
             ServiceName = new ItemText();
@@ -42,7 +45,37 @@ namespace TypiconOnline.Domain.Days
         /// <summary>
         /// Описание последовательности дня в xml-формате
         /// </summary>
-        public virtual string DayDefinition { get; set; }
+        public virtual string DayDefinition
+        {
+            get
+            {
+                return _dayDefinition;
+            }
+            set
+            {
+                if (_dayDefinition != value)
+                {
+                    _dayDefinition = value;
+                    _dayContainer = null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Возвращает объектную модель определния богослужебного текста
+        /// </summary>
+        /// <returns></returns>
+        public DayContainer GetDay()
+        {
+            ThrowExceptionIfInvalid();
+
+            if (_dayContainer == null)
+            {
+                _dayContainer = new DayContainerFactory(_dayDefinition).Create();
+            }
+
+            return _dayContainer;
+        }
 
         protected override void Validate()
         {
@@ -52,81 +85,7 @@ namespace TypiconOnline.Domain.Days
             }
         }
 
-        /*
-        /// <summary>
-        /// Возвращает тексты из определенного места в службе
-        /// </summary>
-        /// <param name="place">Место</param>
-        /// <param name="count">Количество</param>
-        /// <param name="startFrom">С какого по номеру песнопения начинать выборку</param>
-        /// <returns></returns>
-        public YmnosStructure GetYmnosStructure(PlaceYmnosSource place, int count, int startFrom)
-        {
-            ThrowExceptionIfInvalid();
-
-            YmnosStructure stichera = null;
-
-            switch (place)
-            {
-                //kekragaria
-                case PlaceYmnosSource.kekragaria:
-                    stichera = (Rule as DayContainer).Esperinos.Kekragaria.GetYmnosStructure(count, startFrom);
-                    break;
-                case PlaceYmnosSource.kekragaria_doxastichon:
-                    stichera = new YmnosStructure() { Doxastichon = new YmnosGroup((Rule as DayContainer).Esperinos.Kekragaria.Doxastichon) };
-                    break;
-                case PlaceYmnosSource.kekragaria_theotokion:
-                    //TODO: прамая ссылка без копирования и клонирования
-                    stichera = new YmnosStructure() { Theotokion = (Rule as DayContainer).Esperinos.Kekragaria.Theotokion }; 
-                    break;
-                //liti
-                case PlaceYmnosSource.liti:
-                    stichera = (Rule as DayContainer).Esperinos.Liti.GetYmnosStructure(count, startFrom);
-                    break;
-                case PlaceYmnosSource.liti_doxastichon:
-                    stichera = new YmnosStructure() { Doxastichon = new YmnosGroup((Rule as DayContainer).Esperinos.Liti.Doxastichon) }; 
-                    break;
-                case PlaceYmnosSource.liti_theotokion:
-                    //TODO: прамая ссылка без копирования и клонирования
-                    stichera = new YmnosStructure() { Theotokion = (Rule as DayContainer).Esperinos.Liti.Theotokion };
-                    break;
-                //aposticha_esperinos
-                case PlaceYmnosSource.aposticha_esperinos:
-                    stichera = (Rule as DayContainer).Esperinos.Aposticha.GetYmnosStructure(count, startFrom);
-                    break;
-                case PlaceYmnosSource.aposticha_esperinos_doxastichon:
-                    stichera = new YmnosStructure() { Doxastichon = new YmnosGroup((Rule as DayContainer).Esperinos.Aposticha.Doxastichon) };
-                    break;
-                case PlaceYmnosSource.aposticha_esperinos_theotokion:
-                    //TODO: прамая ссылка без копирования и клонирования
-                    stichera = new YmnosStructure() { Theotokion = (Rule as DayContainer).Esperinos.Aposticha.Theotokion };
-                    break;
-                //ainoi
-                case PlaceYmnosSource.ainoi:
-                    stichera = (Rule as DayContainer).Orthros.Ainoi.GetYmnosStructure(count, startFrom);
-                    break;
-                case PlaceYmnosSource.ainoi_doxastichon:
-                    stichera = new YmnosStructure() { Doxastichon = new YmnosGroup((Rule as DayContainer).Orthros.Ainoi.Doxastichon) };
-                    break;
-                case PlaceYmnosSource.ainoi_theotokion:
-                    //TODO: прамая ссылка без копирования и клонирования
-                    stichera = new YmnosStructure() { Theotokion = (Rule as DayContainer).Orthros.Ainoi.Theotokion };
-                    break;
-                //aposticha_orthros
-                case PlaceYmnosSource.aposticha_orthros:
-                    stichera = (Rule as DayContainer).Orthros.Aposticha.GetYmnosStructure(count, startFrom);
-                    break;
-                case PlaceYmnosSource.aposticha_orthros_doxastichon:
-                    stichera = new YmnosStructure() { Doxastichon = new YmnosGroup((Rule as DayContainer).Orthros.Aposticha.Doxastichon) };
-                    break;
-                case PlaceYmnosSource.aposticha_orthros_theotokion:
-                    //TODO: прамая ссылка без копирования и клонирования
-                    stichera = new YmnosStructure() { Theotokion = (Rule as DayContainer).Orthros.Aposticha.Theotokion };
-                    break;
-            }
-
-            return stichera;
-        }*/
+        
 
     }
 }

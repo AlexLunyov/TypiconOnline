@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.Domain.Serialization;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.Domain.Easter;
@@ -12,6 +12,7 @@ using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Repository.EF;
+using TypiconOnline.AppServices.Implementations;
 
 namespace TypiconOnline.Domain.Tests.Typicon
 {

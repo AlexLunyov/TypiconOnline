@@ -5,6 +5,7 @@ using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Interfaces;
+using System.IO;
 
 namespace TypiconOnline.Domain.Rules.Factories
 {
@@ -102,6 +103,11 @@ namespace TypiconOnline.Domain.Rules.Factories
             return outputEl;
         }
 
+        /// <summary>
+        /// Фабричный метод создает элменты из xml строки. Игнорирует пробелы и комментарии
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns></returns>
         public static RuleElement CreateElement(string description)
         {
             RuleElement outputEl = null;
@@ -111,10 +117,17 @@ namespace TypiconOnline.Domain.Rules.Factories
                 return null;
             }
 
+            var settings = new XmlReaderSettings() { IgnoreComments = true, IgnoreWhitespace = true };
+
+            XmlReader reader = XmlReader.Create(new StringReader(description), settings);
+
             //try
             //{
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(description);
+
+            doc.Load(reader);
+            
+            //doc.LoadXml(description);
 
             if ((doc != null) && (doc.DocumentElement != null))
             {

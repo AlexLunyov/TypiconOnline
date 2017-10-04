@@ -14,6 +14,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Описание подобна
     /// </summary>
     [Serializable]
+    [XmlRoot(ElementName = RuleConstants.ProsomoionNode)]
     public class Prosomoion : ItemText
     {
         public Prosomoion(Prosomoion source)
@@ -53,5 +54,35 @@ namespace TypiconOnline.Domain.Rules.Days
         {
             return base.Equals(item) && Self.Equals(item.Self);
         }
+
+        #region IXmlSerializable
+
+        public override void ReadXml(XmlReader reader)
+        {
+            if (reader.MoveToAttribute(RuleConstants.ProsomoionSelfAttr))
+            {
+                string val = reader.Value;
+
+                bool result = false;
+                bool.TryParse(val, out result);
+                Self = result;
+
+                reader.MoveToElement();
+            }
+
+            base.ReadXml(reader);
+        }
+
+        public override void WriteXml(XmlWriter writer)
+        {
+            if (Self)
+            {
+                writer.WriteAttributeString(RuleConstants.ProsomoionSelfAttr, Self.ToString());
+            }
+
+            base.WriteXml(writer);
+        }
+
+        #endregion
     }
 }

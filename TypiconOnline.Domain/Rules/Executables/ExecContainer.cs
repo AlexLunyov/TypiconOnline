@@ -68,8 +68,12 @@ namespace TypiconOnline.Domain.Rules.Executables
             {
                 foreach (RuleElement element in ChildElements)
                 {
+                    if (element == null)
+                    {
+                        AddBrokenConstraint(ExecContainerBusinessConstraint.InvalidChild); 
+                    }
                     //добавляем ломаные правила к родителю
-                    if (!element.IsValid)
+                    else if (!element.IsValid)
                     {
                         AppendAllBrokenConstraints(element);
                     }

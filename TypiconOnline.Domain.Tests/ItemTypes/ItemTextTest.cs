@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.Tests.ItemTypes

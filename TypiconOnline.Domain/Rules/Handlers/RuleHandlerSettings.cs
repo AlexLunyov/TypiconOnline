@@ -19,6 +19,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// </summary>
         public RuleHandlerSettings Addition { get; set; }
         public TypiconRule Rule { get; set; }
+        //public List<DayToHandle> DaysToHandle { get; set; }
         public List<DayService> DayServices { get; set; }
         public HandlingMode Mode { get; set; }
         public bool PutSeniorRuleNameToEnd { get; set; }

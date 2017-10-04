@@ -39,7 +39,7 @@ namespace TypiconOnline.Domain.ViewModels
 
             if (group.Annotation?.IsEmpty == false)
             {
-                Text = group.Annotation.Text[handler.Settings.Language];
+                Text = group.Annotation[handler.Settings.Language];
             }
 
             //текст "Глас"
@@ -53,7 +53,7 @@ namespace TypiconOnline.Domain.ViewModels
                 req.Key = CommonRuleConstants.ProsomoionText;
                 Prosomoion = CommonRuleService.Instance.GetTextValue(req);
 
-                Prosomoion = Prosomoion + " " + group.Prosomoion.Text[handler.Settings.Language];
+                Prosomoion = Prosomoion + " " + group.Prosomoion[handler.Settings.Language];
             }
             //самоподобен?
             if (group.Prosomoion?.Self == true)
@@ -70,14 +70,14 @@ namespace TypiconOnline.Domain.ViewModels
                     ChildElements.Add( new TextHolderViewModel()
                     {
                         Kind = TextHolderKind.Stihos,
-                        Paragraphs = new string[] { stihos.Text[handler.Settings.Language] }
+                        Paragraphs = new string[] { stihos[handler.Settings.Language] }
                     });
                 }
 
                 ChildElements.Add(new TextHolderViewModel()
                 {
                     Kind = TextHolderKind.Choir,
-                    Paragraphs = new string[] { ymnos.Text.Text[handler.Settings.Language] }
+                    Paragraphs = new string[] { ymnos.Text[handler.Settings.Language] }
                 });
             }
         }

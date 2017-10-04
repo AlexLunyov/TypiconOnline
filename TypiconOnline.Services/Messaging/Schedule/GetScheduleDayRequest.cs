@@ -14,6 +14,7 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
         public GetScheduleDayRequest()
         {
             ConvertSignToHtmlBinding = false;
+            Language = "cs-ru";
         }
         public TypiconEntity TypiconEntity { get; set; }
         public virtual DateTime Date { get; set; }

@@ -124,20 +124,18 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                     //теперь разбираемся с place И kind
 
-                    //TODO: закомментил все, потому как dayService.GetYmnosStructure не работает
-                    //switch (ymnosRule.YmnosKind.Value)
-                    //{
-                    //    case YmnosKind.Ymnos:
-                    //        _stichera.Groups.AddRange(dayService.GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Groups);
-                    //        break;
-                    //    case YmnosKind.Doxastichon:
-                    //        _stichera.Doxastichon = dayService.GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Doxastichon;
-                    //        break;
-                    //    case YmnosKind.Theotokion:
-                    //        _stichera.Theotokion = dayService.GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Theotokion;
-                    //        break;
-                    //}
-                    
+                    switch (ymnosRule.YmnosKind.Value)
+                    {
+                        case YmnosRuleKind.Ymnos:
+                            _stichera.Groups.AddRange(dayService.GetDay().GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Groups);
+                            break;
+                        case YmnosRuleKind.Doxastichon:
+                            _stichera.Doxastichon = dayService.GetDay().GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Doxastichon;
+                            break;
+                        case YmnosRuleKind.Theotokion:
+                            _stichera.Theotokion = dayService.GetDay().GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Theotokion;
+                            break;
+                    }
                 }
             }
 

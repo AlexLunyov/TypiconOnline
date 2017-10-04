@@ -296,6 +296,7 @@ namespace ScheduleForm
                 textBoxResult.AppendText("--------------------------" + Environment.NewLine);
                 textBoxResult.AppendText(day.Date.ToShortDateString() + Environment.NewLine);
                 textBoxResult.AppendText(day.Name + Environment.NewLine);
+                textBoxResult.AppendText("Знак службы: " + day.SignName + Environment.NewLine);
                 foreach (ElementViewModel element in day.Schedule.ChildElements)
                 {
                     if (element is NoticeViewModel)
@@ -505,7 +506,8 @@ namespace ScheduleForm
                     Date = monthCalendarSequence.SelectionStart,
                     TypiconEntity = _typiconEntity,
                     Mode = HandlingMode.All,
-                    Handler = new ServiceSequenceHandler() 
+                    Handler = new ServiceSequenceHandler(),
+                    Language = "cs-ru"
                 };
 
             request.Handler.Settings.Language = "cs-ru";

@@ -60,9 +60,12 @@
     <Compile Include="Days\Day.cs" />
     <Compile Include="Easter\IEasterStorage.cs" />
     <Compile Include="Easter\IEasterStorageFactory.cs" />
+    <Compile Include="Interfaces\IDayContainerFactory.cs" />
     <Compile Include="Interfaces\IDayServiceFactory.cs" />
-    <Compile Include="Interfaces\IhosElement.cs" />
+    <Compile Include="Interfaces\IContainingIhos.cs" />
+    <Compile Include="Interfaces\IStructedElement.cs" />
     <Compile Include="Interfaces\IViewModelElement.cs" />
+    <Compile Include="Interfaces\IXmlSerializer.cs" />
     <Compile Include="ItemTypes\ItemEnumTypeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemEnumType.cs" />
     <Compile Include="ItemTypes\ItemStyledType.cs" />
@@ -129,11 +132,12 @@
     <Compile Include="Rules\Expressions\GetDayOfWeek.cs" />
     <Compile Include="Rules\Expressions\BooleanExpression.cs" />
     <Compile Include="Rules\Expressions\LogicalExpression.cs" />
+    <Compile Include="Rules\Factories\DayContainerFactory.cs" />
     <Compile Include="Rules\Factories\RuleDayFactory.cs" />
     <Compile Include="Rules\Handlers\BypassHandler.cs" />
+    <Compile Include="Rules\Handlers\DayToHandle.cs" />
     <Compile Include="Rules\Handlers\IRuleHandler.cs" />
     <Compile Include="ICustomInterpreted.cs" />
-    <Compile Include="Rules\Handlers\IRuleHandlerInitiator.cs" />
     <Compile Include="RuleEntityBusinessConstraint.cs" />
     <Compile Include="RuleEntity.cs" />
     <Compile Include="Days\DayService.cs" />
@@ -162,6 +166,7 @@
     <Compile Include="Rules\Schedule\YmnosStructureRule.cs" />
     <Compile Include="Rules\Schedule\YmnosRule.cs" />
     <Compile Include="Schedule\ScheduleWeek.cs" />
+    <Compile Include="Serialization\TypiconSerializer.cs" />
     <Compile Include="Typicon\CommonRule.cs" />
     <Compile Include="Typicon\CommonRuleService.cs" />
     <Compile Include="Typicon\CommonRuleServiceRequest.cs" />

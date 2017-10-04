@@ -182,6 +182,8 @@ namespace TypiconOnline.AppServices.Implementations
             return new ResourceNotFoundException("Запрашиваемый Устав не был найден.");
         }
 
+        #region not realized
+
         public InsertTypiconEntityResponse InsertTypiconEntity(InsertTypiconEntityRequest insertTypiconEntityRequest)
         {
             throw new NotImplementedException();
@@ -196,6 +198,8 @@ namespace TypiconOnline.AppServices.Implementations
         {
             throw new NotImplementedException();
         }
+
+        #endregion
 
     }
 }

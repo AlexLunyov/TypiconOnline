@@ -13,6 +13,7 @@ namespace TypiconOnline.AppServices.Implementations
     {
         private DayContainer _dayContainer;
 
+
         public DayContainerService(DayContainer dayContainer)
         {
             if (dayContainer == null) throw new ArgumentNullException("DayContainer");

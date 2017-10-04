@@ -12,7 +12,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
 {
     public class ScheduleHandler : RuleHandlerBase
     {
-        protected ContainerViewModel _executingResult;
+        private ContainerViewModel _executingResult;
 
         public ScheduleHandler()//(RuleHandlerSettings request) : base(request)
         {
@@ -46,16 +46,28 @@ namespace TypiconOnline.Domain.Rules.Handlers
                     ((_settings.Mode == HandlingMode.DayBefore) && ((element as Service).IsDayBefore.Value)) ||
                     ((_settings.Mode == HandlingMode.ThisDay) && (!(element as Service).IsDayBefore.Value)))
                 {
-                    if (_executingResult == null)
-                    {
-                        _executingResult = new ContainerViewModel();
-                    }
+                    //if (_executingResult == null)
+                    //{
+                    //    _executingResult = new ContainerViewModel();
+                    //}
 
                     ServiceViewModel renderService = new ServiceViewModel(element as Service, this);
                     //renderService.CopyOnlyValues(element as Service);
 
-                    _executingResult.ChildElements.Add(renderService);
+                    ExecutingResult.ChildElements.Add(renderService);
                 }
+            }
+        }
+
+        protected ContainerViewModel ExecutingResult
+        {
+            get
+            {
+                if (_executingResult == null)
+                {
+                    _executingResult = new ContainerViewModel();
+                }
+                return _executingResult;
             }
         }
 

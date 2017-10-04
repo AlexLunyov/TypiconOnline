@@ -11,5 +11,6 @@ namespace TypiconOnline.Domain.Rules.Executables
     public class ExecContainerBusinessConstraint
     {
         public static readonly BusinessConstraint ExecContainerChildrenRequired = new BusinessConstraint("Правило не содержит элементов.");
+        public static readonly BusinessConstraint InvalidChild = new BusinessConstraint("Дочерний элемент имеет неверный формат.");
     }
 }

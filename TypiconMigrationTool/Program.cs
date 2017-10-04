@@ -17,6 +17,7 @@ using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.Domain.Rules.Days;
 using System.IO;
 using System.Xml.Serialization;
+using TypiconOnline.Domain.Serialization;
 
 namespace TypiconMigrationTool
 {

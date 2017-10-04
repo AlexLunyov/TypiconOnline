@@ -23,6 +23,10 @@ namespace TypiconOnline.Domain.Schedule
         /// Номер знака службы
         /// </summary>
         public int Sign { get; set; }
+        /// <summary>
+        /// Наименование знака службы
+        /// </summary>
+        public string SignName { get; set; }
     }
 }
 

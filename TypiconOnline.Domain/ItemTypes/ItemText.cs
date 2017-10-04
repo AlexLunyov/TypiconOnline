@@ -227,11 +227,15 @@ namespace TypiconOnline.Domain.ItemTypes
             return null;
         }
 
-        public void ReadXml(XmlReader reader)
+        public virtual void ReadXml(XmlReader reader)
         {
-            reader.MoveToElement();
+            bool wasEmpty = reader.IsEmptyElement;
 
+            reader.MoveToElement();
             reader.Read();
+
+            if (wasEmpty)
+                return;
 
             while (reader.NodeType != XmlNodeType.EndElement)
             {
@@ -254,17 +258,28 @@ namespace TypiconOnline.Domain.ItemTypes
                         XmlSerializer _serializer = new XmlSerializer(typeof(TextStyle), new XmlRootAttribute(RuleConstants.StyleNodeName));
                         Style = _serializer.Deserialize(reader) as TextStyle;
                         break;
+                    //default:
+                    //    reader.Read();
+                    //    break;
                 }
             }
 
             reader.Read();
         }
 
-        public void WriteXml(XmlWriter writer)
+        public virtual void WriteXml(XmlWriter writer)
         {
             foreach (KeyValuePair<string, string> entry in _textDict)
             {
-                writer.WriteElementString(entry.Key, entry.Value);
+                writer.WriteStartElement(RuleConstants.ItemTextItemNode);
+
+                writer.WriteStartAttribute(RuleConstants.ItemTextLanguageAttr);
+                writer.WriteValue(entry.Key);
+                writer.WriteEndAttribute();
+
+                writer.WriteString(entry.Value);
+
+                writer.WriteEndElement();
             }
 
             if (Style != null && !base.IsEmpty)
