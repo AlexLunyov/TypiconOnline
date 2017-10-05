@@ -14,24 +14,9 @@ namespace TypiconOnline.Domain.ViewModels
     {
         public ServiceSequenceKind Kind { get; set; }
 
-        public ServiceSequenceViewModel(ServiceSequence rule, IRuleHandler handler)
+        public ServiceSequenceViewModel(ServiceSequence rule, IRuleHandler handler) : base(rule, handler)
         {
-            if (rule == null) throw new ArgumentNullException("ServiceSequence");
-            if (handler == null) throw new ArgumentNullException("handler");
-
-            rule.ThrowExceptionIfInvalid();
-
             Kind = rule.ServiceSequenceKind.Value;
-
-            foreach (RuleElement element in rule.ChildElements)
-            {
-                if ((element is IViewModelElement) 
-                    && (element is ICustomInterpreted) && handler.IsTypeAuthorized(element as ICustomInterpreted))
-                {
-                    ChildElements.Add((element as IViewModelElement).CreateViewModel(handler));
-                    //ChildElements.Add(ViewModelFactory.CreateElement(element, handler));
-                }
-            }
         }
     }
 }

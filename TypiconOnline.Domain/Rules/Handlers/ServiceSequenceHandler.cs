@@ -21,7 +21,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 //typeof(Notice),
                 typeof(TextHolder),
                 typeof(YmnosStructureRule),
-                typeof(ServiceSequence)
+                typeof(ServiceSequence),
+                typeof(Ektenis)
             };
         }
 

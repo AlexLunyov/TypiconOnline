@@ -198,6 +198,10 @@ namespace TypiconOnline.Domain.Rules.Factories
                     case RuleConstants.YmnosStructureDoxastichonNode:
                         outputEl = new YmnosRule(node);
                         break;
+                    //Ektenis
+                    case RuleConstants.EktenisNode:
+                        outputEl = new Ektenis(node);
+                        break;
                 }
             }
             return outputEl;
@@ -247,7 +251,7 @@ namespace TypiconOnline.Domain.Rules.Factories
                     break;
                 case RuleConstants.ServiceNodeName:
                     outputEl = new Service(node);
-                    break;
+                    break;                
             }
             return outputEl;
         }

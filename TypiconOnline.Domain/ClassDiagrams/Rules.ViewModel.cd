@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TypiconOnline.Domain.ViewModels.ContainerViewModel" Collapsed="true">
+    <Position X="5.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ContainerViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.ViewModels.EktenisViewModel" Collapsed="true">
+    <Position X="1.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\EktenisViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.ViewModels.ElementViewModel" Collapsed="true">
+    <Position X="6.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>ViewModels\ElementViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.ViewModels.NoticeViewModel" Collapsed="true">
+    <Position X="8" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\NoticeViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.ViewModels.ServiceSequenceViewModel" Collapsed="true">
+    <Position X="3.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ServiceSequenceViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.ViewModels.ServiceViewModel" Collapsed="true">
+    <Position X="8" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAACQA=</HashCode>
+      <FileName>ViewModels\ServiceViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.ViewModels.TextHolderViewModel" Collapsed="true">
+    <Position X="12.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\TextHolderViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.ViewModels.YmnosGroupViewModel" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAQAAAAABAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\YmnosGroupViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.ViewModels.YmnosStructureViewModel" Collapsed="true">
+    <Position X="10.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAABAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\YmnosStructureViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

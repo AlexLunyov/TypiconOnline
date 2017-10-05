@@ -17,12 +17,12 @@ namespace TypiconOnline.Domain.Rules.Executables
         public If(XmlNode node): base(node)
         {
             //ищем condition
-            XmlNode elementNode = node.SelectSingleNode(RuleConstants.ConditionNodeName);
+            XmlNode elementNode = node.SelectSingleNode(RuleConstants.ExpressionIfNodeName);
 
             if (elementNode != null)
             {
                 XmlNode valNode = elementNode.FirstChild;
-                _condition = Factories.RuleFactory.CreateBooleanExpression(valNode);
+                _expression = Factories.RuleFactory.CreateBooleanExpression(valNode);
             }
 
             //ищем then
@@ -42,12 +42,12 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         #region Properties
 
-        private BooleanExpression _condition;
-        public BooleanExpression Condition
+        private BooleanExpression _expression;
+        public BooleanExpression Expression
         {
             get
             {
-                return _condition;
+                return _expression;
             }
         }
 
@@ -63,9 +63,9 @@ namespace TypiconOnline.Domain.Rules.Executables
         {
             if (IsValid)
             {
-                Condition.Interpret(date, handler);
+                Expression.Interpret(date, handler);
 
-                if ((bool)Condition.ValueCalculated)
+                if ((bool)Expression.ValueCalculated)
                 {
                     _then.Interpret(date, handler);
                 }
@@ -78,16 +78,16 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         protected override void Validate()
         {
-            if (_condition == null)
+            if (_expression == null)
             {
                 AddBrokenConstraint(IfBusinessBusinessConstraint.ConditionRequired, ElementName);
             }
             else
             {
                 //добавляем ломаные правила к родителю
-                if (!_condition.IsValid)
+                if (!_expression.IsValid)
                 {
-                    AppendAllBrokenConstraints(_condition);
+                    AppendAllBrokenConstraints(_expression);
                 }
             }
 

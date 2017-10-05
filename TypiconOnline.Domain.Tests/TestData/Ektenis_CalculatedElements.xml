@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ektenis>
+  <name>
+    <item language="cs-ru">Мирная ектения.</item>
+  </name>
+  <deacon>
+    <p>
+      <item language="cs-ru">deacon1</item>
+    </p>
+  </deacon>
+  <if>
+    <expression>
+      <equals>
+        <date>--05-10</date>
+        <date>--05-10</date>
+      </equals>
+    </expression>
+    <then>
+      <choir>
+        <p>
+          <item language="cs-ru">choir1</item>
+        </p>
+      </choir>
+      <deacon>
+        <p>
+          <item language="cs-ru">deacon2</item>
+        </p>
+      </deacon>
+      <choir>
+        <p>
+          <item language="cs-ru">choir2</item>
+        </p>
+      </choir>
+      <priest>
+        <p>
+          <item language="cs-ru">priest</item>
+        </p>
+      </priest>
+    </then>
+  </if>
+</ektenis>

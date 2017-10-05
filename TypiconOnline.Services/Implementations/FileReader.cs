@@ -22,7 +22,7 @@ namespace TypiconOnline.AppServices.Implementations
         }
 
         /// <summary>
-        /// Возвращает строку Xml из файла
+        /// Возвращает строку Xml из файла. Комментарии в xml-документе опускаются
         /// </summary>
         /// <param name="name">Имя файла</param>
         /// <returns></returns>
@@ -34,12 +34,21 @@ namespace TypiconOnline.AppServices.Implementations
                 {
                     name = name.Substring(0, name.Length - 1);
                 }
+                if (!name.EndsWith(".xml"))
+                {
+                    name = name + ".xml";
+                }
 
-                string fileName = FolderPath + name + ".xml";
+                string fileName = Path.Combine(FolderPath,  name);
                 FileInfo fileInfo = new FileInfo(fileName);
                 if (fileInfo.Exists)
                 {
-                    doc.Load(fileName);
+                    var settings = new XmlReaderSettings() { IgnoreComments = true, IgnoreWhitespace = true };
+
+                    XmlReader reader = XmlReader.Create(fileName, settings);
+
+                    doc.Load(reader);
+
                     XmlNode node = doc.DocumentElement;
 
                     return (node != null) ? node.OuterXml : "";

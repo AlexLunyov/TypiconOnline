@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.ViewModels
 
             Kind = rule.YmnosStructureKind.Value;
 
-            //groups
+            //Groups
             for (int i = 0; i < rule.CalculatedYmnosStructure.Groups.Count; i++)
             {
                 YmnosGroup group = rule.CalculatedYmnosStructure.Groups[i];
@@ -44,12 +44,12 @@ namespace TypiconOnline.Domain.ViewModels
 
                 ChildElements.Add(item);
             }
-
+            //Doxastichon
             if (rule.CalculatedYmnosStructure.Doxastichon != null)
             {
                 ChildElements.Add(new YmnosGroupViewModel(rule.CalculatedYmnosStructure.Doxastichon, handler));
             }
-
+            //Theotokion
             if (rule.CalculatedYmnosStructure.Theotokion?.Count > 0)
             {
                 ChildElements.Add(new YmnosGroupViewModel(rule.CalculatedYmnosStructure.Theotokion[0], handler));

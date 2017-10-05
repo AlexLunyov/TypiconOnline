@@ -38,7 +38,7 @@ namespace TypiconOnline.Domain.Rules
         public const string ActionNodeName = "action";
 
         public const string IfNodeName = "if"; 
-        public const string ConditionNodeName = "condition";
+        public const string ExpressionIfNodeName = "expression";
         public const string ThenNodeName = "then";
         public const string ElseNodeName = "else";
 
@@ -213,24 +213,11 @@ namespace TypiconOnline.Domain.Rules
         public const string TextHolderDeaconNode = "deacon";
         public const string TextHolderPriestNode = "priest";
 
-        //public const string ExecContainerNodeName = "правило";
-        //public const string SwitchNodeName = "выбор";
-        //public const string ConditionNodeName = "условие";
-        //public const string ModifyDayNodeName = "деньизменение";
-        //public const string ServiceSignAttrName = "знакслужбы";
-        //public const string IsCustomNameAttrName = "своеимя";
-        //public const string DayMoveAttrName = "деньсмещение";
-        //public const string DaysFromEasterNodeName = "днейотпасхи";
-        //public const string DateNodeName = "дата";
-        //public const string IntNodeName = "число";
-        //public const string GetClosestDayNodeName = "ближайшийдень";
-        //public const string DayOfWeekAttrName = "деньнедели";
-        //public const string WeekCountAttrName = "количествонедель";
-        //public const string CaseNodeName = "вариант";
-        //public const string DefaultNodeName = "поумолчанию";
-        //public const string ValuesNodeName = "значения";
-        //public const string ValueNodeName = "значение";
-        //public const string ActionNodeName = "action";
+        /*
+         * Ektenis
+         */
+        public const string EktenisNode = "ektenis";
+        public const string EktenisNameNode = "name";
 
         public enum DefinitionsDayOfWeek { понедельник=1, вторник=2, среда=3, четверг=4, пятница=5, суббота=6, воскресенье=7 };
 

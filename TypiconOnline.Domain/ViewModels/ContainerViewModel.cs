@@ -21,6 +21,21 @@ namespace TypiconOnline.Domain.ViewModels
 
         public ContainerViewModel(ExecContainer container, IRuleHandler handler) : this()
         {
+            if (container == null) throw new ArgumentNullException("Rule");
+            if (handler == null) throw new ArgumentNullException("handler");
+
+            container.ThrowExceptionIfInvalid();
+
+            FillChildElements(container, handler);
+        }
+
+        /// <summary>
+        /// Заполняет дочерними элементами свойство ChildElements
+        /// </summary>
+        /// <param name="container">Правило, имеющее дочерние элементы</param>
+        /// <param name="handler">обработчик</param>
+        protected void FillChildElements(ExecContainer container, IRuleHandler handler)
+        {
             foreach (RuleElement element in container.ChildElements)
             {
                 if ((element is IViewModelElement)

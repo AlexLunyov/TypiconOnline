@@ -14,11 +14,12 @@ namespace TypiconOnline.Domain.Rules.Handlers
     /// </summary>
     public abstract class RuleHandlerBase : IRuleHandler
     {
-        protected List<Type> AuthorizedTypes;
         //protected RenderContainer _executingResult;
         protected RuleHandlerSettings _settings = new RuleHandlerSettings();
 
         public RuleHandlerBase() { }
+
+        protected List<Type> AuthorizedTypes { get; set; }
 
         public virtual RuleHandlerSettings Settings
         {

@@ -15,10 +15,6 @@ namespace TypiconOnline.Domain.ViewModels
 
         public ServiceViewModel(Service service, RuleHandlerBase handler) : base(service, handler)
         {
-            if (service == null) throw new ArgumentNullException("Service");
-
-            service.ThrowExceptionIfInvalid();
-
             Text = service.Name;
             Time = service.Time.Expression;
             IsDayBefore = service.IsDayBefore.Value;
