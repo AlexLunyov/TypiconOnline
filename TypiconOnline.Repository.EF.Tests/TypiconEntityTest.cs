@@ -36,11 +36,11 @@ namespace TypiconOnline.Repository.EF.Tests
                 Name = "Устав для удаления"
             };
 
-            typiconEntity.RulesFolder.AddFolder(new TypiconFolderEntity()
-            {
-                Name = "Папка для удаления",
-                Owner = typiconEntity
-            });
+            //typiconEntity.RulesFolder.AddFolder(new TypiconFolderEntity()
+            //{
+            //    Name = "Папка для удаления",
+            //    Owner = typiconEntity
+            //});
 
             _unitOfWork.Repository<TypiconEntity>().Insert(typiconEntity);
 

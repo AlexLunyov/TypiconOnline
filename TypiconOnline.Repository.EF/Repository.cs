@@ -35,34 +35,34 @@ namespace TypiconOnline.Repository.EF
 
         public DomainType Get(Expression<Func<DomainType, bool>> predicate)
         {
-            //return _objectSet.Where(predicate).FirstOrDefault();
-            
-            if (typeof(DomainType).Equals(typeof(TypiconEntity)))
-            {
-                //_typiconDBContext.TypiconEntitySet.Include(c => c.RulesFolder)
-                //    .Include(c => c.CommonRules)
-                //    .Include(c => c.MenologyRules)
-                //    .Include(c => c.MenologyRules.Select(m => m.Day))
-                //    .Include(c => c.TriodionRules)
-                //    .Include(c => c.TriodionRules.Select(m => m.Day))
-                //    .Include(c => c.ModifiedYears)
-                //    .Include(c => c.Signs)
-                //    .Where(predicate).FirstOrDefault();
-                return _objectSet.
-                    Include("RulesFolder").
-                    Include("CommonRules").
-                    Include("MenologyRules").
-                    Include("MenologyRules.DayServices").
-                    Include("TriodionRules").
-                    Include("TriodionRules.DayServices").
-                    Include("ModifiedYears").
-                    Include("ModifiedYears.ModifiedRules").
-                    Include("Signs").
-                    Include("Settings").
-                    Where(predicate).FirstOrDefault();
-            }
-
             return _objectSet.Where(predicate).FirstOrDefault();
+
+            //if (typeof(DomainType).Equals(typeof(TypiconEntity)))
+            //{
+            //    //_typiconDBContext.TypiconEntitySet.Include(c => c.RulesFolder)
+            //    //    .Include(c => c.CommonRules)
+            //    //    .Include(c => c.MenologyRules)
+            //    //    .Include(c => c.MenologyRules.Select(m => m.Day))
+            //    //    .Include(c => c.TriodionRules)
+            //    //    .Include(c => c.TriodionRules.Select(m => m.Day))
+            //    //    .Include(c => c.ModifiedYears)
+            //    //    .Include(c => c.Signs)
+            //    //    .Where(predicate).FirstOrDefault();
+            //    return _objectSet.
+            //        Include("RulesFolder").
+            //        Include("CommonRules").
+            //        Include("MenologyRules").
+            //        Include("MenologyRules.DayServices").
+            //        Include("TriodionRules").
+            //        Include("TriodionRules.DayServices").
+            //        Include("ModifiedYears").
+            //        Include("ModifiedYears.ModifiedRules").
+            //        Include("Signs").
+            //        Include("Settings").
+            //        Where(predicate).FirstOrDefault();
+            //}
+
+            //return _objectSet.Where(predicate).FirstOrDefault();
         }
 
         //public DomainType Get(int id)

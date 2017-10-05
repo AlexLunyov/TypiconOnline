@@ -17,7 +17,7 @@ namespace TypiconOnline.Repository.EF.DataBase
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<TypiconDBContext>());
 
             //убираем ленивую загрузку
-            Configuration.LazyLoadingEnabled = false;
+            //Configuration.LazyLoadingEnabled = false;
         }
 
         #region Modeling
@@ -26,9 +26,9 @@ namespace TypiconOnline.Repository.EF.DataBase
         {
             // настройка полей с помощью Fluent API
 
-            modelBuilder.Configurations.Add(new FolderEntityMap());
+            //modelBuilder.Configurations.Add(new FolderEntityMap());
 
-            modelBuilder.Configurations.Add(new TypiconFolderEntityMap());
+            //modelBuilder.Configurations.Add(new TypiconFolderEntityMap());
 
             modelBuilder.Configurations.Add(new TypiconEntityMap());
 

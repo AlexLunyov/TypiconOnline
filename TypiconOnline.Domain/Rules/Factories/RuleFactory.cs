@@ -101,6 +101,9 @@ namespace TypiconOnline.Domain.Rules.Factories
                 case RuleConstants.IsCelebratingNodeName:
                     outputEl = new IsCelebrating(node);
                     break;
+                case RuleConstants.IsTwoSaintsNodeName:
+                    outputEl = new IsTwoSaints(node);
+                    break;
 
             }
             return outputEl;

@@ -106,7 +106,7 @@ namespace TypiconOnline.Domain
 
         public void AddRule(RuleEntity rule)
         {
-            rule.Folder = this;
+            //rule.Folder = this;
             Rules.Add(rule);
         }
 

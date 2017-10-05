@@ -34,29 +34,37 @@ namespace TypiconOnline.Domain.Tests.Typicon
                 Signs = new List<Sign>() { new Sign() { Id = 1, Name = "Бдение с литией" } }
             };
 
-            FolderEntity folder = new FolderEntity()
+            //FolderEntity folder = new FolderEntity()
+            //{
+            //    Name = "Минея",
+            //    Folders = new List<FolderEntity>()
+            //    {
+            //        new FolderEntity()
+            //        {
+            //            Name = "Благовещение папка",
+            //            Rules = new List<RuleEntity>()
+            //            {
+            //new MenologyRule()
+            //{
+            //    Id = 1,
+            //    //Name = "Благовещение правило",
+            //    DayServices = new List<DayService>() { dayService },
+            //    Template = typiconEntity.Signs[0]
+            //}
+            //            }
+            //        }
+            //    }
+            //};
+
+            MenologyRule rule = new MenologyRule()
             {
-                Name = "Минея",
-                Folders = new List<FolderEntity>()
-                {
-                    new FolderEntity()
-                    {
-                        Name = "Благовещение папка",
-                        Rules = new List<RuleEntity>()
-                        {
-                            new MenologyRule()
-                            {
-                                Id = 1,
-                                //Name = "Благовещение правило",
-                                DayServices = new List<DayService>() { dayService },
-                                Template = typiconEntity.Signs[0]
-                            }
-                        }
-                    }
-                }
+                Id = 1,
+                //Name = "Благовещение правило",
+                DayServices = new List<DayService>() { dayService },
+                Template = typiconEntity.Signs[0]
             };
 
-            typiconEntity.RulesFolder.AddFolder(folder);
+            typiconEntity.MenologyRules.Add(rule);
 
             Assert.Pass("Your first passing test");
         }

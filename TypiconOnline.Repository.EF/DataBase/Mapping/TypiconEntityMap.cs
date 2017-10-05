@@ -34,8 +34,8 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             //HasRequired(e => e.OktoikhRules).
             //    WithRequiredDependent(m => m.Owner);
 
-            HasRequired(e => e.RulesFolder).
-                WithOptional(m => m.Owner).WillCascadeOnDelete(false);
+            //HasRequired(e => e.RulesFolder).
+            //    WithOptional(m => m.Owner).WillCascadeOnDelete(false);
 
             ToTable("TypiconEntities");
         }

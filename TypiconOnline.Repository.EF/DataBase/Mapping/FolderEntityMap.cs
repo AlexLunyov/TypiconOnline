@@ -25,8 +25,8 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
                 WithOptional(m => m.Parent)/*.WillCascadeOnDelete(true)/*.
                 HasForeignKey(m => m.ParentId)*/;
 
-            HasMany(e => e.Rules).
-                WithOptional(m => m.Folder).WillCascadeOnDelete(true);
+            //HasMany(e => e.Rules).
+            //    WithOptional(m => m.Folder).WillCascadeOnDelete(true);
 
             ToTable("Folders");
         }

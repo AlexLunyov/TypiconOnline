@@ -90,6 +90,7 @@
     <Compile Include="Rules\Handlers\ServiceSequenceHandlerTest.cs" />
     <Compile Include="Rules\Schedule\CommonRuleElementTest.cs" />
     <Compile Include="Rules\Schedule\EktenisTest.cs" />
+    <Compile Include="Rules\Schedule\IsTwoSaintsTest.cs" />
     <Compile Include="Rules\Schedule\IsCelebratingTest.cs" />
     <Compile Include="Rules\Schedule\NoticeTest.cs" />
     <Compile Include="Rules\Schedule\TextHolderTest.cs" />
@@ -133,6 +134,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="TestData\CommonRuleElement_Simple.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\IsTwoSaints_Simple.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\IsCelebrating_Simple.xml">

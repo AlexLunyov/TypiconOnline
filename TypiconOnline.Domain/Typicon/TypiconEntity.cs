@@ -48,26 +48,26 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         public virtual List<Sign> Signs { get; set; }
 
-        private TypiconFolderEntity _rulesFolder;
+        //private TypiconFolderEntity _rulesFolder;
         /// <summary>
         /// Структуирозованное типизированное хранилище правил для правил
         /// </summary>
-        public virtual TypiconFolderEntity RulesFolder
-        {
-            get
-            {
-                //if (_rulesFolder == null)
-                //{
-                //    _rulesFolder = new FolderEntity() { Name = "Правила (шаблон)", Owner = this };
-                //}
-                return _rulesFolder;
-            }
-            set
-            {
-                _rulesFolder = value;
-                RulesFolder.Owner = this;
-            }
-        }
+        //public virtual TypiconFolderEntity RulesFolder
+        //{
+        //    get
+        //    {
+        //        //if (_rulesFolder == null)
+        //        //{
+        //        //    _rulesFolder = new FolderEntity() { Name = "Правила (шаблон)", Owner = this };
+        //        //}
+        //        return _rulesFolder;
+        //    }
+        //    set
+        //    {
+        //        _rulesFolder = value;
+        //        RulesFolder.Owner = this;
+        //    }
+        //}
 
         //private Sign _templateSunday;
 

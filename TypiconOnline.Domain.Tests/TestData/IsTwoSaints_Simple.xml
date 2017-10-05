@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ektenis>
+  <name>
+    <item language="cs-ru">Мирная ектения.</item>
+  </name>
+  <deacon>
+    <p>
+      <item language="cs-ru">deacon1</item>
+    </p>
+  </deacon>
+  <if>
+    <expression>
+      <istwosaints/>
+    </expression>
+    <then>
+      <choir>
+        <p>
+          <item language="cs-ru">choir1</item>
+        </p>
+      </choir>      
+    </then>
+  </if>
+</ektenis>

@@ -84,6 +84,7 @@ namespace TypiconOnline.Domain.Rules
          * Логические элементы, связанные с правилами
          */
         public const string IsCelebratingNodeName = "iscelebrating";
+        public const string IsTwoSaintsNodeName = "istwosaints";
 
 
         //правила для распознавания времени и дат

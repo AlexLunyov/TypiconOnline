@@ -97,7 +97,7 @@ namespace TypiconMigrationTool
                 }
             };
 
-            typiconEntity.RulesFolder = new TypiconFolderEntity() { Name = "Правила", Owner = typiconEntity };
+            //typiconEntity.RulesFolder = new TypiconFolderEntity() { Name = "Правила", Owner = typiconEntity };
 
             string folderPath = Properties.Settings.Default.FolderPath + typiconEntity.Name + "\\Sign\\"; 
 
@@ -269,9 +269,9 @@ namespace TypiconMigrationTool
             Timer timer = new Timer();
             timer.Start();
 
-            TypiconFolderEntity folder = new TypiconFolderEntity() { Name = "Триодь" };
+            //TypiconFolderEntity folder = new TypiconFolderEntity() { Name = "Триодь" };
 
-            typiconEntity.RulesFolder.AddFolder(folder);
+            //typiconEntity.RulesFolder.AddFolder(folder);
 
             foreach (ScheduleDBDataSet.TriodionRow row in _sh.DataSet.Triodion.Rows)
             {
@@ -314,7 +314,7 @@ namespace TypiconMigrationTool
                 };
                 rule.DayServices = new List<DayService>() { dayService };
 
-                folder.AddRule(rule);
+                //folder.AddRule(rule);
                 typiconEntity.TriodionRules.Add(rule);
             }
 
