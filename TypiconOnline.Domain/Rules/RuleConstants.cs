@@ -80,6 +80,11 @@ namespace TypiconOnline.Domain.Rules
         public const string AndNodeName = "and";
         public const string OrNodeName = "or";
 
+        /*
+         * Логические элементы, связанные с правилами
+         */
+        public const string IsCelebratingNodeName = "iscelebrating";
+
 
         //правила для распознавания времени и дат
         public const string ItemTimeParsing = "HH.mm";

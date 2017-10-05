@@ -98,6 +98,9 @@ namespace TypiconOnline.Domain.Rules.Factories
                 case RuleConstants.OrNodeName:
                     outputEl = new Or(node);
                     break;
+                case RuleConstants.IsCelebratingNodeName:
+                    outputEl = new IsCelebrating(node);
+                    break;
 
             }
             return outputEl;

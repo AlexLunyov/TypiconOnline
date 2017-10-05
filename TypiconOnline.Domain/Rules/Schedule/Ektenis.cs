@@ -60,8 +60,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 //используем специальный обработчик для Ektenis,
                 //чтобы создать вычисленный список элементов TextHolder
-                CollectorRuleHandler<TextHolder> structHandler = new CollectorRuleHandler<TextHolder>();
-                //YmnosStructureRuleHandler structHandler = new YmnosStructureRuleHandler();
+                CollectorRuleHandler<TextHolder> structHandler = new CollectorRuleHandler<TextHolder>() { Settings = handler.Settings };
 
                 foreach (RuleElement elem in ChildElements)
                 {

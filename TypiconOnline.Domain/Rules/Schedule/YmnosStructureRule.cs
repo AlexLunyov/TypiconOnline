@@ -65,7 +65,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 //используем специальный обработчик для YmnosStructureRule,
                 //чтобы создать список источников стихир на обработку
-                CollectorRuleHandler<YmnosRule> structHandler = new CollectorRuleHandler<YmnosRule>();
+                CollectorRuleHandler<YmnosRule> structHandler = new CollectorRuleHandler<YmnosRule>() { Settings = handler.Settings };
                 //YmnosStructureRuleHandler structHandler = new YmnosStructureRuleHandler();
 
                 foreach (RuleElement elem in ChildElements)

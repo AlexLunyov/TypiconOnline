@@ -23,7 +23,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 typeof(YmnosStructureRule),
                 typeof(ServiceSequence),
                 typeof(Ektenis),
-                typeof(CommonRuleElement)
+                typeof(CommonRuleElement),
+                typeof(IsCelebrating)
             };
         }
 
