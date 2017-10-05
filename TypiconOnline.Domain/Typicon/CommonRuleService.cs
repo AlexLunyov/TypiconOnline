@@ -45,7 +45,7 @@ namespace TypiconOnline.Domain.Typicon
 
             commonRule.ThrowExceptionIfInvalid();
 
-            if (!(commonRule.Rule is ExecContainer) || (commonRule.Rule as ExecContainer).ChildElements?.Count == 0)
+            if (!(commonRule.Rule is ExecContainer) || (commonRule.Rule as ExecContainer).ChildElements.Count == 0)
             {
                 throw new ArgumentException("CommonRule");
             }

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--rule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/Users/%d0%9c%d0%be%d0%bd%d0%b0%d1%81%d1%82%d1%8b%d1%80%d1%8c/Documents/programming/XML/Rules/RulesSchema.xsd"-->
+  <esperinos>
+    <!--Вседневная вечерня для службы без знака.-->
+    <priest>
+      <p>
+        <item language="cs-ru">Благословен Бог наш всегда, ныне и присно, и во веки веков.</item>
+      </p>
+    </priest>
+    <lector>
+      <p>
+        <item language="cs-ru">Аминь.</item>
+      </p>
+      <p>
+        <item language="cs-ru">[Приидите, поклонимся]</item>
+      </p>
+      <p>
+        <item language="cs-ru">[Алиллуия]</item>
+      </p>
+    </lector>
+    <priest>
+      <p>
+        <item language="cs-ru">[Светильничные молитвы]</item>
+      </p>
+    </priest>
+    <commonrule name="Ектения_мирная"/>
+  </esperinos>
+<!--/rule-->

@@ -65,6 +65,9 @@ namespace TypiconOnline.Domain.Rules
         public const string StyleBoldNodeName = "bold";
         public const string StyleHeaderNodeName = "header";
 
+        public const string CommonRuleNode = "commonrule";
+        public const string CommonRuleNameAttr = "name";
+
         /*
          * Логические элементы
          */
@@ -83,7 +86,7 @@ namespace TypiconOnline.Domain.Rules
         public const string ItemDateParsing = "--MM-dd";
 
         /*
-         * Константы для описания xml-схемы богослужеюных текстов
+         * Константы для описания xml-схемы богослужебных текстов
          */
         public const string DayElementNode = "dayservice";
         public const string DayElementNameNode = "name";

@@ -197,10 +197,14 @@ namespace TypiconOnline.Domain.Rules.Factories
                     case RuleConstants.YmnosStructureTheotokionNode:
                     case RuleConstants.YmnosStructureDoxastichonNode:
                         outputEl = new YmnosRule(node);
-                        break;
+                        break; 
                     //Ektenis
                     case RuleConstants.EktenisNode:
                         outputEl = new Ektenis(node);
+                        break;
+                    //CommonRuleElement
+                    case RuleConstants.CommonRuleNode:
+                        outputEl = new CommonRuleElement(node);
                         break;
                 }
             }
