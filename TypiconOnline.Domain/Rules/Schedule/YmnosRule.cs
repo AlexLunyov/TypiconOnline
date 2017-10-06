@@ -229,7 +229,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                             break;
                         case YmnosRuleKind.Theotokion:
                             groups = dayService.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Theotokion;
-                            if (group != null)
+                            if (groups != null)
                             {
                                 result = new YmnosStructure();
                                 result.Theotokion.AddRange(groups);
