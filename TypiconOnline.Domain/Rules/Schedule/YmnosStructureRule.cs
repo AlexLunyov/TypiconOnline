@@ -89,52 +89,19 @@ namespace TypiconOnline.Domain.Rules.Schedule
             _stichera = new YmnosStructure();
             foreach (YmnosRule ymnosRule in container.ChildElements)
             {
-                if (ymnosRule.Source.Value == YmnosSource.Irmologion)
+                YmnosStructure s = ymnosRule.CalculateYmnosStructure(date, handler);
+                if (s != null)
                 {
-                    //TODO: добавляем Богородичны из приложений Ирмология
-                }
-                else
-                {
-                    //разбираемся с source
-                    DayService dayService = null;
-                    switch (ymnosRule.Source.Value)
-                    {
-                        case YmnosSource.Item1:
-                            dayService = (handler.Settings.DayServices.Count > 0) ? handler.Settings.DayServices[0] : null;
-                            break;
-                        case YmnosSource.Item2:
-                            dayService = (handler.Settings.DayServices.Count > 1) ? handler.Settings.DayServices[1] : null;
-                            break;
-                        case YmnosSource.Item3:
-                            dayService = (handler.Settings.DayServices.Count > 2) ? handler.Settings.DayServices[2] : null;
-                            break;
-                        case YmnosSource.Oktoikh:
-                            dayService = BookStorage.Oktoikh.GetOktoikhDay(date);
-                            break;
-                    }
-
-                    if (dayService == null)
-                    {
-                        throw new KeyNotFoundException("YmnosStructureRule source not found: " + ymnosRule.Source.Value.ToString());
-                    }
-
-                    if (ymnosRule.Place == null)
-                    {
-                        //TODO: на случай если будет реализован функционал, когда у ymnosRule может быть не определен place
-                    }
-
-                    //теперь разбираемся с place И kind
-
                     switch (ymnosRule.YmnosKind.Value)
                     {
                         case YmnosRuleKind.Ymnos:
-                            _stichera.Groups.AddRange(dayService.GetDay().GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Groups);
+                            _stichera.Groups.AddRange(s.Groups);
                             break;
                         case YmnosRuleKind.Doxastichon:
-                            _stichera.Doxastichon = dayService.GetDay().GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Doxastichon;
+                            _stichera.Doxastichon = s.Doxastichon;
                             break;
                         case YmnosRuleKind.Theotokion:
-                            _stichera.Theotokion = dayService.GetDay().GetYmnosStructure(ymnosRule.Place.Value, ymnosRule.Count.Value, ymnosRule.StartFrom.Value).Theotokion;
+                            _stichera.Theotokion = s.Theotokion;
                             break;
                     }
                 }

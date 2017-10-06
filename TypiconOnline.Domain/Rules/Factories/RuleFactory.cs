@@ -104,6 +104,9 @@ namespace TypiconOnline.Domain.Rules.Factories
                 case RuleConstants.IsTwoSaintsNodeName:
                     outputEl = new IsTwoSaints(node);
                     break;
+                case RuleConstants.IsExistsNodeName:
+                    outputEl = new IsExists(node);
+                    break;
 
             }
             return outputEl;

@@ -27,8 +27,15 @@ namespace TypiconOnline.Domain.Rules.Days
 
         public YmnosGroup(YmnosGroup source) 
         {
-            Prosomoion = new Prosomoion(source.Prosomoion);
-            Annotation = new ItemText(source.Annotation.StringExpression);
+            if (source.Prosomoion != null)
+            {
+                Prosomoion = new Prosomoion(source.Prosomoion);
+            }
+
+            if (source.Annotation != null)
+            {
+                Annotation = new ItemText(source.Annotation.StringExpression);
+            }
 
             Ihos = source.Ihos;
 

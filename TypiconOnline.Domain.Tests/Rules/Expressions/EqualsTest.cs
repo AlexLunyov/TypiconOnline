@@ -119,5 +119,26 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             Assert.IsTrue((bool)element.ValueCalculated);
         }
+        [Test]
+        public void Rules_Expressions_And_Dates()
+        {
+            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+
+            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+
+            string xmlString = @"<equals>
+                                    <date/>
+                                    <date>--04-15</date>
+                                 </equals>";
+
+            XmlDocument xmlDoc = new XmlDocument();
+
+            xmlDoc.LoadXml(xmlString);
+
+            BooleanExpression element = RuleFactory.CreateBooleanExpression(xmlDoc.FirstChild);
+            element.Interpret(new DateTime(2017, 4, 15), BypassHandler.Instance);
+
+            Assert.IsTrue((bool)element.ValueCalculated);
+        }
     }
 }
