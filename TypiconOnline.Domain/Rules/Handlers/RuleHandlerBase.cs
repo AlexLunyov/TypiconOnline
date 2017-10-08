@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {

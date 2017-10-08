@@ -9,6 +9,7 @@ using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Expressions
 {
@@ -33,12 +34,9 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override void InnerInterpret(DateTime date, IRuleHandler settings)
         {
-            if (IsValid)
-            {
-                //если значение выражения пустое, просто передаем текущую дату
-                //из вводимой даты берем только год
-                _valueCalculated = (((ItemDate)_valueExpression).IsEmpty) ? date : new DateTime(date.Year, ((ItemDate)_valueExpression).Month, ((ItemDate)_valueExpression).Day);
-            }
+            //если значение выражения пустое, просто передаем текущую дату
+            //из вводимой даты берем только год
+            _valueCalculated = (((ItemDate)_valueExpression).IsEmpty) ? date : new DateTime(date.Year, ((ItemDate)_valueExpression).Month, ((ItemDate)_valueExpression).Day);
         }
 
         protected override void Validate()

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Infrastructure.Common.Domain;
 
@@ -49,12 +50,9 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            if (IsValid)
+            foreach (RuleElement el in ChildElements)
             {
-                foreach (RuleElement el in ChildElements)
-                {
-                    el.Interpret(date, handler);
-                }
+                el.Interpret(date, handler);
             }
         }
 
@@ -62,7 +60,8 @@ namespace TypiconOnline.Domain.Rules.Executables
         {
             if (ChildElements.Count == 0)
             {
-                AddBrokenConstraint(ExecContainerBusinessConstraint.ExecContainerChildrenRequired);
+                //HACK: убрана проверка на обязательное наличие дочерних элементов. В дальнейшем надо ее вернуть, когда будут заполнены все правила
+                //AddBrokenConstraint(ExecContainerBusinessConstraint.ExecContainerChildrenRequired);
             }
             else
             {

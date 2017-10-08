@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.ViewModels;
 
-namespace TypiconOnline.Domain.Rules.Handlers
+namespace TypiconOnline.Domain.Interfaces
 {
     /// <summary>
     /// Интерфейс для обработчиков правил
@@ -24,10 +25,5 @@ namespace TypiconOnline.Domain.Rules.Handlers
         //RenderContainer GetResult();
     }
 
-    public enum HandlingMode {
-        All = 0,
-        ThisDay = 1,
-        DayBefore = 2,
-        AstronimicDay = 3
-    }
+
 }

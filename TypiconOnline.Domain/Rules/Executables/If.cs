@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Expressions;
 using TypiconOnline.Domain.Rules.Handlers;
 
@@ -61,18 +62,15 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            if (IsValid)
-            {
-                Expression.Interpret(date, handler);
+            Expression.Interpret(date, handler);
 
-                if ((bool)Expression.ValueCalculated)
-                {
-                    _then.Interpret(date, handler);
-                }
-                else if (_else != null)
-                {
-                    _else.Interpret(date, handler);
-                }
+            if ((bool)Expression.ValueCalculated)
+            {
+                _then.Interpret(date, handler);
+            }
+            else if (_else != null)
+            {
+                _else.Interpret(date, handler);
             }
         }
 

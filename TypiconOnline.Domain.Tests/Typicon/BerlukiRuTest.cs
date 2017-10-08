@@ -13,6 +13,8 @@ using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Repository.EF;
 using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Rules;
 
 namespace TypiconOnline.Domain.Tests.Typicon
 {

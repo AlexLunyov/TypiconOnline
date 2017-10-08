@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
+using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
 
@@ -15,6 +17,7 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
         {
             ConvertSignToHtmlBinding = false;
             Language = "cs-ru";
+            ThrowExceptionIfInvalid = false;
         }
         public TypiconEntity TypiconEntity { get; set; }
         public virtual DateTime Date { get; set; }
@@ -30,6 +33,10 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
         /// Признак, конвертировать ли номер знака службы в формат отображения в веб-формах
         /// </summary>
         public bool ConvertSignToHtmlBinding { get; set; }
+        /// <summary>
+        /// Признак, генерировать ли исключение в случае неверного составления правила при его обработке
+        /// </summary>
+        public bool ThrowExceptionIfInvalid { get; set; }
 
         //TODO: реализовать. Либо можно будет обойтись только RuleHandler ???
         public List<IScheduleCustomParameter> CustomParameters { get; set; }

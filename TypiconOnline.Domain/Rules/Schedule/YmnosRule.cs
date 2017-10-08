@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
@@ -107,7 +108,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            if (IsValid && handler.IsAuthorized<YmnosRule>())
+            if (handler.IsAuthorized<YmnosRule>())
             {
                 handler.Execute(this);
             }

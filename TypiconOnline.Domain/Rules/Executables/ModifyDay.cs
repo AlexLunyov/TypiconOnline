@@ -4,6 +4,7 @@ using TypiconOnline.Domain.Rules.Expressions;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Executables
 {

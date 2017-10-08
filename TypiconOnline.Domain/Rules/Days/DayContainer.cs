@@ -152,7 +152,6 @@ namespace TypiconOnline.Domain.Rules.Days
                 case PlaceYmnosSource.kekragaria_theotokion:
                     if (Esperinos?.Kekragaria?.Theotokion != null)
                     {
-                        //TODO: прамая ссылка без копирования и клонирования
                         stichera = new YmnosStructure() { Theotokion = Esperinos.Kekragaria.Theotokion };
                     }
                     break;
@@ -169,7 +168,6 @@ namespace TypiconOnline.Domain.Rules.Days
                 case PlaceYmnosSource.liti_theotokion:
                     if (Esperinos?.Liti?.Theotokion != null)
                     {
-                        //TODO: прамая ссылка без копирования и клонирования
                         stichera = new YmnosStructure() { Theotokion = Esperinos.Liti.Theotokion };
                     }
                     break;
@@ -186,7 +184,6 @@ namespace TypiconOnline.Domain.Rules.Days
                 case PlaceYmnosSource.aposticha_esperinos_theotokion:
                     if (Esperinos?.Aposticha?.Theotokion != null)
                     {
-                        //TODO: прамая ссылка без копирования и клонирования
                         stichera = new YmnosStructure() { Theotokion = Esperinos.Aposticha.Theotokion };
                     }
                     break;
@@ -203,7 +200,6 @@ namespace TypiconOnline.Domain.Rules.Days
                 case PlaceYmnosSource.ainoi_theotokion:
                     if (Orthros?.Ainoi?.Theotokion != null)
                     {
-                        //TODO: прамая ссылка без копирования и клонирования
                         stichera = new YmnosStructure() { Theotokion = Orthros.Ainoi.Theotokion };
                     }
                     break;
@@ -220,7 +216,6 @@ namespace TypiconOnline.Domain.Rules.Days
                 case PlaceYmnosSource.aposticha_orthros_theotokion:
                     if (Orthros?.Aposticha?.Theotokion != null)
                     {
-                        //TODO: прамая ссылка без копирования и клонирования
                         stichera = new YmnosStructure() { Theotokion = Orthros.Aposticha.Theotokion };
                     }
                     break;

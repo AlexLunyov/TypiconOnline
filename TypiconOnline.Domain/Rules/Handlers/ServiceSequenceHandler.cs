@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.Rules.Schedule;
+using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {
@@ -24,7 +25,6 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 typeof(ServiceSequence),
                 typeof(Ektenis),
                 typeof(CommonRuleElement),
-                typeof(IsCelebrating)
             };
         }
 

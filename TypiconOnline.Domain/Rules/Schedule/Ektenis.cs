@@ -15,34 +15,36 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Правило для ектений
     /// </summary>
-    public class Ektenis : RuleExecutable, ICustomInterpreted, IViewModelElement
+    public class Ektenis : ExecContainer, ICustomInterpreted, IViewModelElement
     {
         private List<TextHolder> _calculatedText;
 
-        public Ektenis(XmlNode node) : base(node)
-        {
-            ChildElements = new List<RuleElement>();
+        public Ektenis(XmlNode node) : base(node) { }
 
-            if (node.HasChildNodes)
-            {
-                foreach (XmlNode childNode in node.ChildNodes)
-                {
-                    if (childNode.Name == RuleConstants.EktenisNameNode)
-                    {
-                        Name = new ItemText(childNode.OuterXml);
-                    }
-                    else
-                    {
-                        RuleElement element = Factories.RuleFactory.CreateElement(childNode);
-                        ChildElements.Add(element);
-                    }
-                }
-            }
-        }
+        //public Ektenis(XmlNode node) : base(node)
+        //{
+        //    ChildElements = new List<RuleElement>();
 
-        public ItemText Name { get; set; }
+        //    if (node.HasChildNodes)
+        //    {
+        //        foreach (XmlNode childNode in node.ChildNodes)
+        //        {
+        //            if (childNode.Name == RuleConstants.EktenisNameNode)
+        //            {
+        //                Name = new ItemText(childNode.OuterXml);
+        //            }
+        //            else
+        //            {
+        //                RuleElement element = Factories.RuleFactory.CreateElement(childNode);
+        //                ChildElements.Add(element);
+        //            }
+        //        }
+        //    }
+        //}
 
-        public virtual List<RuleElement> ChildElements { get; set; }
+        //public ItemText Name { get; set; }
+
+        //public virtual List<RuleElement> ChildElements { get; set; }
 
         public List<TextHolder> CalculatedElements
         {
@@ -54,8 +56,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            ThrowExceptionIfInvalid();
-
             if (handler.IsAuthorized<Ektenis>())
             {
                 //используем специальный обработчик для Ektenis,
@@ -75,19 +75,19 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void Validate()
         {
-            if (Name == null || !Name.IsValid || Name.IsEmpty)
-            {
-                AddBrokenConstraint(EktenisBusinessConstraint.NameReqiured);
-            }
+            //if (Name == null || !Name.IsValid || Name.IsEmpty)
+            //{
+            //    AddBrokenConstraint(EktenisBusinessConstraint.NameReqiured);
+            //}
 
             foreach (RuleElement element in ChildElements)
             {
-                /*if (element == null)
+                if (element == null)
                 {
                     AddBrokenConstraint(ExecContainerBusinessConstraint.InvalidChild);
                 }
                 //добавляем ломаные правила к родителю
-                else */if (!element.IsValid)
+                else if (!element.IsValid)
                 {
                     AppendAllBrokenConstraints(element);
                 }

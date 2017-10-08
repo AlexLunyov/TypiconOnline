@@ -13,6 +13,7 @@ using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Easter;
 using TypiconOnline.Infrastructure.Common.Domain;
+using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Expressions
 {
@@ -30,17 +31,14 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            if (IsValid)
-            {
-                DateTime easterDate = EasterStorage.Instance.GetCurrentEaster(date.Year);
+            DateTime easterDate = EasterStorage.Instance.GetCurrentEaster(date.Year);
 
-                _childDateExp.Interpret(date, handler);
+            _childDateExp.Interpret(date, handler);
 
-                //DateTime easterDate = handler.GetCurrentEaster(date.Year);
+            //DateTime easterDate = handler.GetCurrentEaster(date.Year);
 
-                _valueCalculated = ((DateTime)_childDateExp.ValueCalculated).Subtract(easterDate).Days;
-                _valueExpression = new ItemInt((int)_valueCalculated);
-            }
+            _valueCalculated = ((DateTime)_childDateExp.ValueCalculated).Subtract(easterDate).Days;
+            _valueExpression = new ItemInt((int)_valueCalculated);
         }
 
         protected override void Validate()

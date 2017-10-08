@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
 
@@ -17,7 +18,7 @@ namespace TypiconOnline.Domain.ViewModels
 
             rule.ThrowExceptionIfInvalid();
 
-            Text = rule.Name[handler.Settings.Language];
+            //Text = rule.Name[handler.Settings.Language];
 
             foreach (TextHolder text in rule.CalculatedElements)
             {

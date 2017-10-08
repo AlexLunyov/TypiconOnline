@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TypiconOnline.Domain
+namespace TypiconOnline.Domain.Interfaces
 {
     /// <summary>
     /// Наследуется элементами правил для их особой обработки классами, реализующими 

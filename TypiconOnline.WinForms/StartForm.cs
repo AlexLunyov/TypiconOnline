@@ -20,6 +20,7 @@ using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.Rules;
 
 namespace ScheduleForm
 {
@@ -232,7 +233,8 @@ namespace ScheduleForm
                     TypiconEntity = _typiconEntity,
                     Mode = HandlingMode.AstronimicDay,
                     Handler = new ScheduleHandler(),
-                    Language = "cs-ru"
+                    Language = "cs-ru",
+                    ThrowExceptionIfInvalid = checkBoxException.Checked
                 };
 
                 GetScheduleWeekResponse weekResponse = _scheduleService.GetScheduleWeek(weekRequest);
@@ -381,15 +383,15 @@ namespace ScheduleForm
 
         private void buttonExecute_Click(object sender, EventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 Execute();
-            //}
-            //catch (Exception ex)
-            //{
-            //    textBoxResult.Clear();
-            //    textBoxResult.AppendText(ex.Message);
-            //}
+            }
+            catch (Exception ex)
+            {
+                textBoxResult.Clear();
+                textBoxResult.AppendText(ex.Message);
+            }
         }
 
         private void btnClearModifiedYears_Click(object sender, EventArgs e)

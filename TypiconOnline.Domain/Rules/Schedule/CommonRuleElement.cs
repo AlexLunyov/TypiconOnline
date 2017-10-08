@@ -30,7 +30,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            ThrowExceptionIfInvalid();
             if (handler.IsAuthorized<CommonRuleElement>())
             {
                 //находим правило

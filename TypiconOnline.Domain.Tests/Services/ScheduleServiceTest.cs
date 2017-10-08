@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Services;

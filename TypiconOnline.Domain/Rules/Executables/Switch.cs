@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Expressions;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -94,32 +95,29 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         protected override void InnerInterpret(DateTime date, IRuleHandler settings)
         {
-            if (IsValid)
+            Expression.Interpret(date, settings);
+
+            foreach (Case caseElement in _caseElements)
             {
-                Expression.Interpret(date, settings);
+                caseElement.Interpret(date, settings);
 
-                foreach (Case caseElement in _caseElements)
+                foreach (RuleExpression caseValue in caseElement.ValuesElements)
                 {
-                    caseElement.Interpret(date, settings);
+                    caseValue.Interpret(date, settings);
 
-                    foreach (RuleExpression caseValue in caseElement.ValuesElements)
+                    if (Expression.ValueCalculated.Equals(caseValue.ValueCalculated))
                     {
-                        caseValue.Interpret(date, settings);
-
-                        if (Expression.ValueCalculated.Equals(caseValue.ValueCalculated))
-                        {
-                            //и значения совпадают
-                            caseElement.ActionElement.Interpret(date, settings);
-                            return;
-                        }
+                        //и значения совпадают
+                        caseElement.ActionElement.Interpret(date, settings);
+                        return;
                     }
                 }
+            }
 
-                //если мы здесь, значит совпадений не было
-                if (_default != null)
-                {
-                    _default.Interpret(date, settings);
-                }
+            //если мы здесь, значит совпадений не было
+            if (_default != null)
+            {
+                _default.Interpret(date, settings);
             }
         }
 

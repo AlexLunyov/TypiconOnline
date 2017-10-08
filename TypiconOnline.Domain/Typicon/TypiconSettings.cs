@@ -9,6 +9,11 @@ namespace TypiconOnline.Domain.Typicon
 
         public virtual string DefaultLanguage { get; set; }
 
+        /// <summary>
+        /// Признак, генерировать ли исключение в случае неверного составления правила при его обработке
+        /// </summary>
+        public virtual bool IsExceptionThrownWhenInvalid { get; set; }
+
         private Sign _templateSunday;
 
         public virtual Sign TemplateSunday

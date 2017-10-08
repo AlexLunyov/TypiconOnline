@@ -1,4 +1,5 @@
-﻿using TypiconOnline.Domain.Rules.Handlers;
+﻿using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.AppServices.Messaging.Schedule
 {

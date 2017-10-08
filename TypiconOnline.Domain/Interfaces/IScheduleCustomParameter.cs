@@ -1,4 +1,4 @@
-﻿namespace TypiconOnline.Domain.Rules.Handlers
+﻿namespace TypiconOnline.Domain.Interfaces
 {
     public interface IScheduleCustomParameter
     {

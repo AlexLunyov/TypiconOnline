@@ -8,6 +8,7 @@ using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Expressions
 {
@@ -93,12 +94,9 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override void InnerInterpret(DateTime date, IRuleHandler settings)
         {
-            if (IsValid)
+            foreach (RuleExpression valueElement in ValuesElements)
             {
-                foreach (RuleExpression valueElement in ValuesElements)
-                {
-                    valueElement.Interpret(date, settings);
-                }
+                valueElement.Interpret(date, settings);
             }
         }
 

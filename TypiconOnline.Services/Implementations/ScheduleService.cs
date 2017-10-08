@@ -6,6 +6,8 @@ using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Services;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Schedule;
 using TypiconOnline.Domain.Typicon;
@@ -243,6 +245,7 @@ namespace TypiconOnline.Domain.Services
                         DayServices = abstrRule.RuleEntity.DayServices.ToList(),
                         Mode = inputRequest.Mode,
                         Language = inputRequest.Language,
+                        ThrowExceptionIfInvalid = inputRequest.ThrowExceptionIfInvalid,
                         CustomParameters = inputRequest.CustomParameters,
                         PutSeniorRuleNameToEnd = abstrRule.IsLastName
                     };
@@ -349,6 +352,7 @@ namespace TypiconOnline.Domain.Services
                 DayServices = dayServices.ToList(),
                 Mode = inputRequest.Mode,
                 Language = inputRequest.Language,
+                ThrowExceptionIfInvalid = inputRequest.ThrowExceptionIfInvalid,
                 CustomParameters = inputRequest.CustomParameters
             };
 
@@ -422,6 +426,7 @@ namespace TypiconOnline.Domain.Services
                 Handler = request.Handler,
                 TypiconEntity = request.TypiconEntity,
                 Language = request.Language,
+                ThrowExceptionIfInvalid = request.ThrowExceptionIfInvalid,
                 CustomParameters = request.CustomParameters,
             };
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Infrastructure.Common.Domain;
@@ -84,18 +85,15 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            if (IsValid)
+            if (_childDateExp != null)
             {
-                if (_childDateExp != null)
-                {
-                    _childDateExp.Interpret(date, handler);
+                _childDateExp.Interpret(date, handler);
 
-                    _valueCalculated = ((DateTime)_childDateExp.ValueCalculated).DayOfWeek;
-                }
-                else
-                {
-                    _valueCalculated = _name.Value;
-                }
+                _valueCalculated = ((DateTime)_childDateExp.ValueCalculated).DayOfWeek;
+            }
+            else
+            {
+                _valueCalculated = _name.Value;
             }
         }
     }

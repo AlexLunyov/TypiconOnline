@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Expressions;
 using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -29,8 +30,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            ThrowExceptionIfInvalid();
-
             _valueCalculated = _ymnos.CalculateYmnosStructure(date, handler) != null;
         }
 

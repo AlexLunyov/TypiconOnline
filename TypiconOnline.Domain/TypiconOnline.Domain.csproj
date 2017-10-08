@@ -137,14 +137,14 @@
     <Compile Include="Rules\Handlers\BypassHandler.cs" />
     <Compile Include="Rules\Handlers\CollectorRuleHandler.cs" />
     <Compile Include="Rules\Handlers\DayToHandle.cs" />
-    <Compile Include="Rules\Handlers\IRuleHandler.cs" />
-    <Compile Include="ICustomInterpreted.cs" />
+    <Compile Include="Interfaces\IRuleHandler.cs" />
+    <Compile Include="Interfaces\ICustomInterpreted.cs" />
     <Compile Include="RuleEntityBusinessConstraint.cs" />
     <Compile Include="RuleEntity.cs" />
     <Compile Include="Days\DayService.cs" />
     <Compile Include="Days\MenologyDay.cs" />
     <Compile Include="Days\MenologyDayBusinessConstraint.cs" />
-    <Compile Include="Rules\Handlers\IScheduleCustomParameter.cs" />
+    <Compile Include="Interfaces\IScheduleCustomParameter.cs" />
     <Compile Include="Rules\Handlers\RenderHandler.cs" />
     <Compile Include="Rules\Handlers\ServiceSequenceHandler.cs" />
     <Compile Include="Rules\Handlers\YmnosStructureRuleHandler.cs" />
@@ -230,7 +230,6 @@
     <Compile Include="ItemTypes\ItemDateBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemType.cs" />
     <Compile Include="Typicon\TypiconEntity.cs" />
-    <Compile Include="Typicon\TypiconRule T.cs" />
     <Compile Include="Typicon\TypiconSettings.cs" />
     <Compile Include="ViewModels\ContainerViewModel.cs" />
     <Compile Include="ViewModels\EktenisViewModel.cs" />

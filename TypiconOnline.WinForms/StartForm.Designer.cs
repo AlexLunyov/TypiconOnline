@@ -74,6 +74,7 @@
             this.textBoxTesting = new System.Windows.Forms.TextBox();
             this.dateTimePickerTesting = new System.Windows.Forms.DateTimePicker();
             this.tabPageSequence = new System.Windows.Forms.TabPage();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.txtSequence = new System.Windows.Forms.TextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -81,7 +82,7 @@
             this.monthCalendarSequence = new System.Windows.Forms.MonthCalendar();
             this.folderBrowserDialogSettings = new System.Windows.Forms.FolderBrowserDialog();
             this.templateFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.label7 = new System.Windows.Forms.Label();
+            this.checkBoxException = new System.Windows.Forms.CheckBox();
             this.tabControlMain.SuspendLayout();
             this.tabPageMain.SuspendLayout();
             this.panelTest.SuspendLayout();
@@ -111,7 +112,7 @@
             this.tabControlMain.Margin = new System.Windows.Forms.Padding(4);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(971, 487);
+            this.tabControlMain.Size = new System.Drawing.Size(971, 515);
             this.tabControlMain.TabIndex = 0;
             // 
             // tabPageMain
@@ -121,7 +122,7 @@
             this.tabPageMain.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageMain.Name = "tabPageMain";
             this.tabPageMain.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPageMain.Size = new System.Drawing.Size(963, 458);
+            this.tabPageMain.Size = new System.Drawing.Size(963, 486);
             this.tabPageMain.TabIndex = 0;
             this.tabPageMain.Text = "Главная";
             this.tabPageMain.UseVisualStyleBackColor = true;
@@ -134,7 +135,7 @@
             this.panelTest.Location = new System.Drawing.Point(4, 4);
             this.panelTest.Margin = new System.Windows.Forms.Padding(4);
             this.panelTest.Name = "panelTest";
-            this.panelTest.Size = new System.Drawing.Size(955, 450);
+            this.panelTest.Size = new System.Drawing.Size(955, 478);
             this.panelTest.TabIndex = 1;
             // 
             // groupBox5
@@ -143,7 +144,7 @@
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Right;
             this.groupBox5.Location = new System.Drawing.Point(350, 0);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(605, 450);
+            this.groupBox5.Size = new System.Drawing.Size(605, 478);
             this.groupBox5.TabIndex = 21;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Результат";
@@ -156,7 +157,7 @@
             this.textBoxResult.Name = "textBoxResult";
             this.textBoxResult.ReadOnly = true;
             this.textBoxResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxResult.Size = new System.Drawing.Size(599, 429);
+            this.textBoxResult.Size = new System.Drawing.Size(599, 457);
             this.textBoxResult.TabIndex = 0;
             // 
             // groupBox4
@@ -172,13 +173,14 @@
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox4.Size = new System.Drawing.Size(487, 450);
+            this.groupBox4.Size = new System.Drawing.Size(487, 478);
             this.groupBox4.TabIndex = 20;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Сформировать расписание";
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.checkBoxException);
             this.groupBox3.Controls.Add(this.checkBoxIsDocxOpen);
             this.groupBox3.Controls.Add(this.checkBoxWordpress);
             this.groupBox3.Controls.Add(this.checkBoxTxt);
@@ -187,7 +189,7 @@
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox3.Size = new System.Drawing.Size(335, 135);
+            this.groupBox3.Size = new System.Drawing.Size(335, 168);
             this.groupBox3.TabIndex = 19;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Сохранить результаты";
@@ -242,7 +244,7 @@
             // 
             // buttonExecute
             // 
-            this.buttonExecute.Location = new System.Drawing.Point(69, 409);
+            this.buttonExecute.Location = new System.Drawing.Point(58, 442);
             this.buttonExecute.Margin = new System.Windows.Forms.Padding(4);
             this.buttonExecute.Name = "buttonExecute";
             this.buttonExecute.Size = new System.Drawing.Size(219, 28);
@@ -314,7 +316,7 @@
             this.tabPagesSettings.Margin = new System.Windows.Forms.Padding(4);
             this.tabPagesSettings.Name = "tabPagesSettings";
             this.tabPagesSettings.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPagesSettings.Size = new System.Drawing.Size(963, 458);
+            this.tabPagesSettings.Size = new System.Drawing.Size(963, 486);
             this.tabPagesSettings.TabIndex = 1;
             this.tabPagesSettings.Text = "Настройки";
             this.tabPagesSettings.UseVisualStyleBackColor = true;
@@ -530,7 +532,7 @@
             this.tabAdminPage.Location = new System.Drawing.Point(4, 25);
             this.tabAdminPage.Name = "tabAdminPage";
             this.tabAdminPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAdminPage.Size = new System.Drawing.Size(963, 458);
+            this.tabAdminPage.Size = new System.Drawing.Size(963, 486);
             this.tabAdminPage.TabIndex = 2;
             this.tabAdminPage.Text = "Администрирование";
             this.tabAdminPage.UseVisualStyleBackColor = true;
@@ -584,7 +586,7 @@
             this.tabPageTesting.Location = new System.Drawing.Point(4, 25);
             this.tabPageTesting.Name = "tabPageTesting";
             this.tabPageTesting.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTesting.Size = new System.Drawing.Size(963, 458);
+            this.tabPageTesting.Size = new System.Drawing.Size(963, 486);
             this.tabPageTesting.TabIndex = 3;
             this.tabPageTesting.Text = "Тестирование";
             this.tabPageTesting.UseVisualStyleBackColor = true;
@@ -607,7 +609,7 @@
             this.textBoxTesting.Name = "textBoxTesting";
             this.textBoxTesting.ReadOnly = true;
             this.textBoxTesting.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxTesting.Size = new System.Drawing.Size(687, 452);
+            this.textBoxTesting.Size = new System.Drawing.Size(687, 480);
             this.textBoxTesting.TabIndex = 1;
             // 
             // dateTimePickerTesting
@@ -626,10 +628,19 @@
             this.tabPageSequence.Location = new System.Drawing.Point(4, 25);
             this.tabPageSequence.Name = "tabPageSequence";
             this.tabPageSequence.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSequence.Size = new System.Drawing.Size(963, 458);
+            this.tabPageSequence.Size = new System.Drawing.Size(963, 486);
             this.tabPageSequence.TabIndex = 4;
             this.tabPageSequence.Text = "Последование";
             this.tabPageSequence.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.Location = new System.Drawing.Point(9, 233);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(195, 49);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "Тест на 28 сентября 2017 года";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox7
             // 
@@ -637,7 +648,7 @@
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Right;
             this.groupBox7.Location = new System.Drawing.Point(225, 3);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(735, 452);
+            this.groupBox7.Size = new System.Drawing.Size(735, 480);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Текст";
@@ -650,7 +661,7 @@
             this.txtSequence.Name = "txtSequence";
             this.txtSequence.ReadOnly = true;
             this.txtSequence.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSequence.Size = new System.Drawing.Size(729, 431);
+            this.txtSequence.Size = new System.Drawing.Size(729, 459);
             this.txtSequence.TabIndex = 1;
             // 
             // groupBox6
@@ -660,7 +671,7 @@
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox6.Location = new System.Drawing.Point(3, 3);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(216, 452);
+            this.groupBox6.Size = new System.Drawing.Size(216, 480);
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Календарь";
@@ -690,20 +701,24 @@
             // 
             this.templateFileDialog.Filter = "Docx файлы | *.docx";
             // 
-            // label7
+            // checkBoxException
             // 
-            this.label7.Location = new System.Drawing.Point(9, 233);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(195, 49);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "Тест на 28 сентября 2017 года";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxException.AutoSize = true;
+            this.checkBoxException.ForeColor = System.Drawing.Color.Red;
+            this.checkBoxException.Location = new System.Drawing.Point(8, 131);
+            this.checkBoxException.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxException.Name = "checkBoxException";
+            this.checkBoxException.Size = new System.Drawing.Size(322, 21);
+            this.checkBoxException.TabIndex = 4;
+            this.checkBoxException.Text = "Исключение, если неверно заполнено правило";
+            this.checkBoxException.UseCompatibleTextRendering = true;
+            this.checkBoxException.UseVisualStyleBackColor = true;
             // 
             // StartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(971, 487);
+            this.ClientSize = new System.Drawing.Size(971, 515);
             this.Controls.Add(this.tabControlMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -795,5 +810,6 @@
         private System.Windows.Forms.Button btnGetSequence;
         private System.Windows.Forms.MonthCalendar monthCalendarSequence;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox checkBoxException;
     }
 }

@@ -222,6 +222,7 @@ namespace TypiconOnline.Domain.Rules
         public const string TextHolderChoirNode = "choir";
         public const string TextHolderDeaconNode = "deacon";
         public const string TextHolderPriestNode = "priest";
+        public const string TextHolderTextNode = "text";
 
         /*
          * Ektenis
@@ -300,7 +301,7 @@ namespace TypiconOnline.Domain.Rules
 
     public enum ServiceSequenceKind { MikrosEsperinos, Esperinos, Orthros, Hour, Leitourgia }
 
-    public enum TextHolderKind { Choir, Lector, Priest, Deacon, Stihos, Undefined }
+    public enum TextHolderKind { Choir, Lector, Priest, Deacon, Stihos, Text, Undefined }
     [Serializable]
     public enum ProkiemenonKind
     {
@@ -335,4 +336,15 @@ namespace TypiconOnline.Domain.Rules
     }
 
     public enum State { Valid = 0, Invalid = 1, Undefined = 2}
+
+    /// <summary>
+    /// Используется при обработке правил
+    /// </summary>
+    public enum HandlingMode
+    {
+        All = 0,
+        ThisDay = 1,
+        DayBefore = 2,
+        AstronimicDay = 3
+    }
 }

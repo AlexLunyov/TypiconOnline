@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Schedule;
+using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {

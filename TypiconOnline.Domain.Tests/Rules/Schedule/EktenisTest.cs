@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             element.Interpret(DateTime.Today, handler);
 
-            Assert.AreEqual(5, element.CalculatedElements.Count);
+            Assert.AreEqual(6, element.CalculatedElements.Count);
         }
 
         [Test]
@@ -53,8 +53,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             EktenisViewModel model = element.CreateViewModel(handler) as EktenisViewModel;
 
-            Assert.AreEqual("Мирная ектения.", model.Text);
-            Assert.AreEqual("deacon1", (model.ChildElements[0] as TextHolderViewModel).Paragraphs.First());
+            Assert.AreEqual("deacon1", (model.ChildElements[1] as TextHolderViewModel).Paragraphs.First());
         }
     }
 }

@@ -199,6 +199,7 @@ namespace TypiconOnline.Domain.Rules.Factories
                     case RuleConstants.TextHolderChoirNode:
                     case RuleConstants.TextHolderDeaconNode:
                     case RuleConstants.TextHolderPriestNode:
+                    case RuleConstants.TextHolderTextNode:
                         outputEl = new TextHolder(node);
                         break;
                     //YmnosRule

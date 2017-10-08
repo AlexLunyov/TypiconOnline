@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
 
@@ -46,6 +47,31 @@ namespace TypiconOnline.Domain.Rules.Handlers
         public RuleHandlerSettings(TypiconRule seniorTypiconRule) : this()
         {
             Rule = seniorTypiconRule;
+        }
+
+        private bool? _throwExceptionIfInvalid = null;
+
+        /// <summary>
+        /// Признак, генерировать ли исключение в случае неверного составления правила при его обработке
+        /// </summary>
+        public bool ThrowExceptionIfInvalid
+        {
+            get
+            {
+                if (_throwExceptionIfInvalid == null)
+                {
+                    _throwExceptionIfInvalid = Rule?.Owner.Settings.IsExceptionThrownWhenInvalid;
+                    if (_throwExceptionIfInvalid == null)
+                    {
+                        _throwExceptionIfInvalid = true;
+                    }
+                }
+                return (bool) _throwExceptionIfInvalid;
+            }
+            set
+            {
+                _throwExceptionIfInvalid = value;
+            }
         }
     }
 }

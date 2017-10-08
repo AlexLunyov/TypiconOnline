@@ -14,6 +14,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Expressions
 {
@@ -71,53 +72,50 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            if (IsValid)
+            _childDateExp.Interpret(date, handler);
+
+            if (WeekCount.Value != 0)
             {
-                _childDateExp.Interpret(date, handler);
+                int i = (WeekCount.Value > 0) ? 1 : -1;
 
-                if (WeekCount.Value != 0)
+                _valueCalculated = _childDateExp.ValueCalculated;
+                while (((DateTime)_valueCalculated).DayOfWeek != DayOfWeek.Value)
                 {
-                    int i = (WeekCount.Value > 0) ? 1 : -1;
-
-                    _valueCalculated = _childDateExp.ValueCalculated;
-                    while (((DateTime)_valueCalculated).DayOfWeek != DayOfWeek.Value)
-                    {
-                        _valueCalculated = ((DateTime)_valueCalculated).AddDays(i);
-                    }
-
-                    if (_valueCalculated != _childDateExp.ValueCalculated)
-                        i = (WeekCount.Value > 0) ? (WeekCount.Value - 1) : (WeekCount.Value + 1);
-                    else
-                        i = WeekCount.Value;
-
-                    if (i != 0)
-                        _valueCalculated = ((DateTime)_valueCalculated).AddDays(i * 7);
+                    _valueCalculated = ((DateTime)_valueCalculated).AddDays(i);
                 }
+
+                if (_valueCalculated != _childDateExp.ValueCalculated)
+                    i = (WeekCount.Value > 0) ? (WeekCount.Value - 1) : (WeekCount.Value + 1);
                 else
+                    i = WeekCount.Value;
+
+                if (i != 0)
+                    _valueCalculated = ((DateTime)_valueCalculated).AddDays(i * 7);
+            }
+            else
+            {
+                //находим принципально ближайший день
+                int forward = 0;
+                int backward = 0;
+
+                DateTime exp = (DateTime)_childDateExp.ValueCalculated;
+
+                while (exp.DayOfWeek != DayOfWeek.Value)
                 {
-                    //находим принципально ближайший день
-                    int forward = 0;
-                    int backward = 0;
-
-                    DateTime exp = (DateTime)_childDateExp.ValueCalculated;
-
-                    while (exp.DayOfWeek != DayOfWeek.Value)
-                    {
-                        exp = exp.AddDays(1);
-                        forward++;
-                    }
-
-                    exp = (DateTime)_childDateExp.ValueCalculated;
-
-                    while (exp.DayOfWeek != DayOfWeek.Value)
-                    {
-                        exp = exp.AddDays(-1);
-                        backward++;
-                    }
-
-                    _valueCalculated = (forward < backward) ? ((DateTime)_childDateExp.ValueCalculated).AddDays(forward) :
-                                                              ((DateTime)_childDateExp.ValueCalculated).AddDays(backward * -1);
+                    exp = exp.AddDays(1);
+                    forward++;
                 }
+
+                exp = (DateTime)_childDateExp.ValueCalculated;
+
+                while (exp.DayOfWeek != DayOfWeek.Value)
+                {
+                    exp = exp.AddDays(-1);
+                    backward++;
+                }
+
+                _valueCalculated = (forward < backward) ? ((DateTime)_childDateExp.ValueCalculated).AddDays(forward) :
+                                                            ((DateTime)_childDateExp.ValueCalculated).AddDays(backward * -1);
             }
         }
 

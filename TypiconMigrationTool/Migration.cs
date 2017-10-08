@@ -94,6 +94,7 @@ namespace TypiconMigrationTool
                 Settings = new TypiconSettings()
                 {
                     DefaultLanguage = "cs-ru",
+                    IsExceptionThrownWhenInvalid = true
                 }
             };
 

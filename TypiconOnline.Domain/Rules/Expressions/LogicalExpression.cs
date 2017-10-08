@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Handlers;
 
@@ -29,28 +30,25 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            if (IsValid)
+            RuleExpression exp1 = null;
+            RuleExpression exp2 = null;
+
+            bool? expValue = null;
+
+            for (int i = 0; i < _childElements.Count; i++)
             {
-                RuleExpression exp1 = null;
-                RuleExpression exp2 = null;
-
-                bool? expValue = null;
-
-                for (int i = 0; i < _childElements.Count; i++)
-                {
-                    exp2 = _childElements[i];
-                    exp2.Interpret(date, handler);
+                exp2 = _childElements[i];
+                exp2.Interpret(date, handler);
                     
-                    if (exp1 != null)
-                    {
-                        expValue = Operate(exp1, exp2, expValue);
-                    }
-
-                    exp1 = exp2;
+                if (exp1 != null)
+                {
+                    expValue = Operate(exp1, exp2, expValue);
                 }
 
-                _valueCalculated = expValue;
+                exp1 = exp2;
             }
+
+            _valueCalculated = expValue;
         }
 
         /// <summary>

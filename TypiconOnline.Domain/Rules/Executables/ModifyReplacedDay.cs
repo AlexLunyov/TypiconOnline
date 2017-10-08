@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Rules.Executables
@@ -51,18 +52,15 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            if (IsValid)
+            InterpretChildDateExp(date, handler);
+
+            _dateToReplaceCalculated = date;
+
+            handler.Execute(this);
+
+            if (_modifyReplacedDay != null)
             {
-                InterpretChildDateExp(date, handler);
-
-                _dateToReplaceCalculated = date;
-
-                handler.Execute(this);
-
-                if (_modifyReplacedDay != null)
-                {
-                    _modifyReplacedDay.Interpret(MoveDateCalculated, handler);
-                }
+                _modifyReplacedDay.Interpret(MoveDateCalculated, handler);
             }
         }
 
