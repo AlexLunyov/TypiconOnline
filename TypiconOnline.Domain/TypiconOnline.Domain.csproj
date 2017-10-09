@@ -136,6 +136,8 @@
     <Compile Include="Rules\Factories\RuleDayFactory.cs" />
     <Compile Include="Rules\Handlers\BypassHandler.cs" />
     <Compile Include="Rules\Handlers\CollectorRuleHandler.cs" />
+    <Compile Include="Rules\Handlers\CustomParameters\CustomParameterBase T.cs" />
+    <Compile Include="Rules\Handlers\CustomParameters\KekragariaCustomParameter.cs" />
     <Compile Include="Rules\Handlers\DayToHandle.cs" />
     <Compile Include="Interfaces\IRuleHandler.cs" />
     <Compile Include="Interfaces\ICustomInterpreted.cs" />

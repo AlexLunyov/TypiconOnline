@@ -31,6 +31,8 @@ namespace TypiconOnline.Domain.Rules
         /// <param name="handler"></param>
         public virtual void Interpret(DateTime date, IRuleHandler handler)
         {
+            handler.Settings.ApplyCustomParameters(this);
+
             //Проверка для всех элементов правил. 
             //Если неверно составлен, то либо выкидывается исключение (в случае соответствующей настройки),
             //либо просто ничего не обрабатывается

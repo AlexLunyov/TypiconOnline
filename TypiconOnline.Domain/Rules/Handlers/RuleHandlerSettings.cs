@@ -37,6 +37,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         {
             DayServices = new List<DayService>();
             PutSeniorRuleNameToEnd = false;
+            CustomParameters = new List<IScheduleCustomParameter>();
             //UseFullName = true;
         }
 
@@ -72,6 +73,14 @@ namespace TypiconOnline.Domain.Rules.Handlers
             {
                 _throwExceptionIfInvalid = value;
             }
+        }
+
+        /// <summary>
+        /// Применяет кастомные праметры к элементу, если таковые найдутся - соответствующие его типу
+        /// </summary>
+        public void ApplyCustomParameters(RuleElement element)
+        {
+            CustomParameters.ForEach(c => c.Apply(element));
         }
     }
 }

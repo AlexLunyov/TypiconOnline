@@ -67,7 +67,6 @@
     <Compile Include="Messaging\ServiceResponseBase.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleDayRequest.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleDayResponse.cs" />
-    <Compile Include="Messaging\Schedule\GetScheduleRequestParameter.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleWeekRequest.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleWeekResponse.cs" />
     <Compile Include="Messaging\Typicon\DeleteTypiconEntityRequest.cs" />
