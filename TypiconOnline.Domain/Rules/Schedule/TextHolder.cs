@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.ViewModels;
@@ -37,11 +38,25 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         public TextHolder(TextHolder item)
         {
+            if (item == null) throw new ArgumentNullException("TextHolder");
+
             _textHolderKind = new ItemEnumType<TextHolderKind>(item.ElementName);
 
             foreach (ItemText text in item.Paragraphs)
             {
                 Paragraphs.Add(new ItemText(text.StringExpression));
+            }
+        }
+
+        public TextHolder(Ymnos ymnos)
+        {
+            if (ymnos == null) throw new ArgumentNullException("Ymnos");
+
+            _textHolderKind = new ItemEnumType<TextHolderKind>() { Value = TextHolderKind.Choir };
+            
+            if (ymnos.Annotation != null)
+            {
+
             }
         }
 

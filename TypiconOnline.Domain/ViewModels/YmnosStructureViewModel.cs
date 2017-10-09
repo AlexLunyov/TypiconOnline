@@ -8,11 +8,14 @@ using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
+using TypiconOnline.Domain.Typicon;
 
 namespace TypiconOnline.Domain.ViewModels
 {
-    public class YmnosStructureViewModel : ContainerViewModel
+    public abstract class YmnosStructureViewModel : ContainerViewModel
     {
+        private YmnosStructureRule _rule;
+
         public YmnosStructureKind Kind { get; set; }
 
         public int Ihos { get; set; }
@@ -21,21 +24,31 @@ namespace TypiconOnline.Domain.ViewModels
         /// </summary>
         public string IhosText { get; set; }
 
-        public YmnosStructureViewModel(YmnosStructureRule rule, IRuleHandler handler) : base()
+        public YmnosStructureViewModel(YmnosStructureRule rule, IRuleHandler handler) 
         {
-            if (rule == null || rule.CalculatedYmnosStructure == null) throw new ArgumentNullException("ymnosStructure");
+            if (rule == null || rule.CalculatedYmnosStructure == null) throw new ArgumentNullException("YmnosStructureRule");
             if (handler == null) throw new ArgumentNullException("handler");
 
-            rule.ThrowExceptionIfInvalid();
+            _rule = rule;
+            _handler = handler;
 
-            Kind = rule.YmnosStructureKind.Value;
+            Kind = _rule.YmnosStructureKind.Value;
+        }
+
+        protected override void FillChildElements()
+        {
+            //здесь вставляется индивидуальная обработка наследников
+            ConstructForm(_handler);
+
+            //а теперь добавляем стихиры, общие для всех наследников данного класса
+            YmnosStructure ymnosStructure = _rule.CalculatedYmnosStructure;
 
             //Groups
-            for (int i = 0; i < rule.CalculatedYmnosStructure.Groups.Count; i++)
+            for (int i = 0; i < ymnosStructure.Groups.Count; i++)
             {
-                YmnosGroup group = rule.CalculatedYmnosStructure.Groups[i];
+                YmnosGroup group = ymnosStructure.Groups[i];
 
-                YmnosGroupViewModel item = new YmnosGroupViewModel(group, handler);
+                YmnosGroupViewModel item = new YmnosGroupViewModel(group, _handler);
 
                 if (i == 0)
                 {
@@ -43,18 +56,54 @@ namespace TypiconOnline.Domain.ViewModels
                     IhosText = item.IhosText;
                 }
 
-                ChildElements.Add(item);
+                _childElements.AddRange(item.ChildElements);
             }
+
+            SetStringCommonRules(ymnosStructure, _handler);
+
             //Doxastichon
-            if (rule.CalculatedYmnosStructure.Doxastichon != null)
+            if (ymnosStructure.Doxastichon != null)
             {
-                ChildElements.Add(new YmnosGroupViewModel(rule.CalculatedYmnosStructure.Doxastichon, handler));
+                _childElements.AddRange(new YmnosGroupViewModel(ymnosStructure.Doxastichon, _handler).ChildElements);
             }
             //Theotokion
-            if (rule.CalculatedYmnosStructure.Theotokion?.Count > 0)
+            if (ymnosStructure.Theotokion?.Count > 0)
             {
-                ChildElements.Add(new YmnosGroupViewModel(rule.CalculatedYmnosStructure.Theotokion[0], handler));
+                _childElements.AddRange(new YmnosGroupViewModel(ymnosStructure.Theotokion[0], _handler).ChildElements);
             }
         }
+
+        private void SetStringCommonRules(YmnosStructure ymnosStructure, IRuleHandler handler)
+        {
+            CommonRuleServiceRequest req = new CommonRuleServiceRequest() { Handler = handler };
+
+            //добавляем стихи к славнику и богородичну
+            if (ymnosStructure.Doxastichon != null)
+            {
+                //слава
+                req.Key = CommonRuleConstants.SlavaText;
+                ymnosStructure.Doxastichon.Ymnis[0].Stihoi.Add(CommonRuleService.Instance.GetItemTextValue(req));
+                //и ныне
+                if (ymnosStructure.Theotokion?.Count > 0)
+                {
+                    req.Key = CommonRuleConstants.InyneText;
+                    ymnosStructure.Theotokion[0].Ymnis[0].Stihoi.Add(CommonRuleService.Instance.GetItemTextValue(req));
+                }
+            }
+            else
+            {
+                //слава и ныне
+                if (ymnosStructure.Theotokion?.Count > 0)
+                {
+                    req.Key = CommonRuleConstants.SlavaInyneText;
+                    ymnosStructure.Theotokion[0].Ymnis[0].Stihoi.Add(CommonRuleService.Instance.GetItemTextValue(req));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Метод определяется в наследниках. Конструирует уникальную выходную форму для кажждого класса в отдельности
+        /// </summary>
+        protected abstract void ConstructForm(IRuleHandler handler);
     }
 }

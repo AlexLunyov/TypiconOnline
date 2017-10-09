@@ -34,16 +34,9 @@ namespace TypiconOnline.Domain.Rules
             //Проверка для всех элементов правил. 
             //Если неверно составлен, то либо выкидывается исключение (в случае соответствующей настройки),
             //либо просто ничего не обрабатывается
-            if (!IsValid)
+            if (ThrowExceptionIfInvalid(handler))
             {
-                if (handler.Settings.ThrowExceptionIfInvalid)
-                {
-                    ThrowExceptionIfInvalid();
-                }
-                else
-                {
-                    return;
-                }
+                return;
             }
 
             InnerInterpret(date, handler);
@@ -65,6 +58,25 @@ namespace TypiconOnline.Domain.Rules
         /// <param name="date"></param>
         /// <param name="handler"></param>
         protected abstract void InnerInterpret(DateTime date, IRuleHandler handler);
+
+        /// <summary>
+        /// Выкидывает исключение, если настройки обработчика позволяют это
+        /// </summary>
+        /// <param name="handler"></param>
+        /// <returns>Возвращает true, если элемент неверно заполнен</returns>
+        public bool ThrowExceptionIfInvalid(IRuleHandler handler)
+        {
+            if (!IsValid)
+            {
+                if (handler.Settings.ThrowExceptionIfInvalid)
+                {
+                    ThrowExceptionIfInvalid();
+                }
+                return true;
+            }
+
+            return false;
+        }
     }
 }
 

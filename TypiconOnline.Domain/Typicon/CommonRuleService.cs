@@ -37,20 +37,9 @@ namespace TypiconOnline.Domain.Typicon
         /// <returns></returns>
         public ItemText GetItemTextValue(CommonRuleServiceRequest request)
         {
-            if (request == null || request.Handler == null) throw new ArgumentNullException();
+            List<RuleElement> children = GetCommonRuleChildren(request);
 
-            CommonRule commonRule = request.Handler.Settings.Rule.Owner.GetCommonRule(c => c.Name == request.Key);
-
-            if (commonRule == null) throw new NullReferenceException("CommonRule");
-
-            commonRule.ThrowExceptionIfInvalid();
-
-            if (!(commonRule.Rule is ExecContainer) || (commonRule.Rule as ExecContainer).ChildElements.Count == 0)
-            {
-                throw new ArgumentException("CommonRule");
-            }
-
-            TextHolder textHolder = (TextHolder)(commonRule.Rule as ExecContainer).ChildElements[0];
+            TextHolder textHolder = (TextHolder)children[0];
 
             if (textHolder.Paragraphs?.Count == 0)
             {
@@ -68,6 +57,39 @@ namespace TypiconOnline.Domain.Typicon
         public string GetTextValue(CommonRuleServiceRequest request)
         {
             return GetItemTextValue(request)[request.Handler.Settings.Language];
+        }
+
+        /// <summary>
+        /// Возвращает коллекцию RuleElement запрашиваемого общего правила.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public List<RuleElement> GetCommonRuleChildren(CommonRuleServiceRequest request)
+        {
+            if (request == null || request.Handler == null) throw new ArgumentNullException();
+
+            CommonRule commonRule = request.Handler.Settings.Rule.Owner.GetCommonRule(c => c.Name == request.Key);
+
+            if (commonRule == null) throw new NullReferenceException("CommonRule");
+
+            if (!commonRule.IsValid)
+            {
+                if (request.Handler.Settings.ThrowExceptionIfInvalid)
+                {
+                    commonRule.ThrowExceptionIfInvalid();
+                }
+                else
+                {
+                    return new List<RuleElement>();
+                }
+            }
+
+            if (!(commonRule.Rule is ExecContainer) || (commonRule.Rule as ExecContainer).ChildElements.Count == 0)
+            {
+                throw new ArgumentException("CommonRule");
+            }
+
+            return (commonRule.Rule as ExecContainer).ChildElements.ToList();
         }
     }
 }

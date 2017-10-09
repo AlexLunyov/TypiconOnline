@@ -37,6 +37,12 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 return _value;
             }
+            set
+            {
+                _value = value;
+                _stringValue = _value.ToString().ToLower();
+                _isValid = true;
+            }
         }
 
         protected override void Validate()

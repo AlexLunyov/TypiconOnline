@@ -12,21 +12,38 @@ namespace TypiconOnline.Domain.ViewModels
 {
     public class ContainerViewModel : ElementViewModel
     {
-        public List<ElementViewModel> ChildElements { get; set; }
+        private ExecContainer _container;
+        protected IRuleHandler _handler;
+
+        protected List<ElementViewModel> _childElements;
 
         public ContainerViewModel()
         {
-            ChildElements = new List<ElementViewModel>();
+            _container = new ExecContainer();
         }
 
-        public ContainerViewModel(ExecContainer container, IRuleHandler handler) : this()
+        public ContainerViewModel(ExecContainer container, IRuleHandler handler) //: this()
         {
             if (container == null) throw new ArgumentNullException("Rule");
             if (handler == null) throw new ArgumentNullException("handler");
 
-            container.ThrowExceptionIfInvalid();
+            _container = container;
+            _handler = handler;
+        }
 
-            FillChildElements(container, handler);
+        public virtual List<ElementViewModel> ChildElements
+        {
+            get
+            {
+                if (_childElements == null)
+                {
+                    _childElements = new List<ElementViewModel>();
+
+                    FillChildElements();
+                }
+
+                return _childElements;
+            }
         }
 
         /// <summary>
@@ -34,14 +51,14 @@ namespace TypiconOnline.Domain.ViewModels
         /// </summary>
         /// <param name="container">Правило, имеющее дочерние элементы</param>
         /// <param name="handler">обработчик</param>
-        protected void FillChildElements(ExecContainer container, IRuleHandler handler)
+        protected virtual void FillChildElements()
         {
-            foreach (RuleElement element in container.ChildElements)
+            foreach (RuleElement element in _container.ChildElements)
             {
                 if ((element is IViewModelElement)
-                    && (element is ICustomInterpreted) && handler.IsTypeAuthorized(element as ICustomInterpreted))
+                    && (element is ICustomInterpreted) && _handler.IsTypeAuthorized(element as ICustomInterpreted))
                 {
-                    ChildElements.Add((element as IViewModelElement).CreateViewModel(handler));
+                    _childElements.Add((element as IViewModelElement).CreateViewModel(_handler));
                 }
             }
         }

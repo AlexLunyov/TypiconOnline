@@ -6,13 +6,20 @@ using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
+    /// <summary>
+    /// Правило для стихир на Господи воззвах
+    /// </summary>
     public class KekragariaRule : YmnosStructureRule
     {
         private ItemBoolean _showPsalm;
+
 
         public KekragariaRule(XmlNode node) : base(node)
         {
@@ -34,6 +41,16 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
+        private List<RuleElement> _outputForm = null;
+
+        public List<RuleElement> OutputForm
+        {
+            get
+            {
+                return _outputForm;
+            }
+        }
+
         #endregion
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
@@ -41,8 +58,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
             if (handler.IsAuthorized<KekragariaRule>())
             {
                 base.InnerInterpret(date, handler);
-
-
             }
         }
 
@@ -54,6 +69,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 AppendAllBrokenConstraints(_showPsalm);
             }
+        }
+
+        public override ElementViewModel CreateViewModel(IRuleHandler handler)
+        {
+            return new KekragariaRuleViewModel(this, handler);
         }
     }
 }

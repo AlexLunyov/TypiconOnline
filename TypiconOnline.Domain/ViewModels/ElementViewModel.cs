@@ -13,5 +13,6 @@ namespace TypiconOnline.Domain.ViewModels
     public abstract class ElementViewModel
     {
         public string Text { get; set; }
+
     }
 }

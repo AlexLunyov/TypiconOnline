@@ -67,6 +67,15 @@ namespace TypiconOnline.AppServices.Implementations
                     Render(childElement);
                 }
             }
+            else if (element is KekragariaRuleViewModel)
+            {
+                KekragariaRuleViewModel r = element as KekragariaRuleViewModel;
+
+                foreach (ElementViewModel childElement in r.ChildElements)
+                {
+                    Render(childElement);
+                }
+            }
             else if (element is YmnosGroupViewModel)
             {
                 YmnosGroupViewModel r = element as YmnosGroupViewModel;

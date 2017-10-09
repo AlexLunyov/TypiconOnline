@@ -202,6 +202,7 @@ namespace TypiconOnline.Domain.Rules
          * Константы для описания правил для составления последовательностей богослужебных текстов
          */
 
+        public const string KekragariaRuleNode = "kekragaria";
         public const string YmnosStructureRuleNode = "kekragaria";
         public const string ShowPsalmAttribute = "showpsalm";
 

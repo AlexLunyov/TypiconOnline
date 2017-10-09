@@ -10,10 +10,6 @@ namespace TypiconOnline.Domain.Rules
     public static class CommonRuleConstants
     {
         /// <summary>
-        /// Шапка Господи воззвах
-        /// </summary>
-        public const string KekragariaCaption = "_sys_kekragaria";
-        /// <summary>
         /// Правило для разметки Господи воззвах
         /// </summary>
         public const string KekragariaRule = "_sys_kekragaria";

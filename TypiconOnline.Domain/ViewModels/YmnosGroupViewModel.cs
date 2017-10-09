@@ -14,6 +14,8 @@ namespace TypiconOnline.Domain.ViewModels
 {
     public class YmnosGroupViewModel : ContainerViewModel
     {
+        private YmnosGroup _group;
+
         /// <summary>
         /// Глас
         /// </summary>
@@ -31,10 +33,13 @@ namespace TypiconOnline.Domain.ViewModels
         /// </summary>
         public string Self { get; set; }
 
-        public YmnosGroupViewModel(YmnosGroup group, IRuleHandler handler) : base()
+        public YmnosGroupViewModel(YmnosGroup group, IRuleHandler handler)
         {
             if (group == null || group.Ymnis == null) throw new ArgumentNullException("YmnosGroup");
             if (handler == null) throw new ArgumentNullException("handler");
+
+            _group = group;
+            _handler = handler;
 
             Ihos = group.Ihos;
 
@@ -54,7 +59,7 @@ namespace TypiconOnline.Domain.ViewModels
                 req.Key = CommonRuleConstants.ProsomoionText;
                 Prosomoion = CommonRuleService.Instance.GetTextValue(req);
 
-                Prosomoion = Prosomoion + " " + group.Prosomoion[handler.Settings.Language];
+                Prosomoion = string.Format(@"{0}: ""{1}""", Prosomoion, group.Prosomoion[handler.Settings.Language]);
             }
             //самоподобен?
             if (group.Prosomoion?.Self == true)
@@ -62,23 +67,26 @@ namespace TypiconOnline.Domain.ViewModels
                 req.Key = CommonRuleConstants.SelfText;
                 Self = CommonRuleService.Instance.GetTextValue(req);
             }
+        }
 
-            foreach (Ymnos ymnos in group.Ymnis)
+        protected override void FillChildElements()
+        {
+            foreach (Ymnos ymnos in _group.Ymnis)
             {
                 //добавляем стих и песнопение как отдельные объекты
                 foreach (ItemText stihos in ymnos.Stihoi)
                 {
-                    ChildElements.Add( new TextHolderViewModel()
+                    _childElements.Add(new TextHolderViewModel()
                     {
                         Kind = TextHolderKind.Stihos,
-                        Paragraphs = new string[] { stihos[handler.Settings.Language] }
+                        Paragraphs = new string[] { stihos[_handler.Settings.Language] }
                     });
                 }
 
-                ChildElements.Add(new TextHolderViewModel()
+                _childElements.Add(new TextHolderViewModel()
                 {
                     Kind = TextHolderKind.Choir,
-                    Paragraphs = new string[] { ymnos.Text[handler.Settings.Language] }
+                    Paragraphs = new string[] { ymnos.Text[_handler.Settings.Language] }
                 });
             }
         }

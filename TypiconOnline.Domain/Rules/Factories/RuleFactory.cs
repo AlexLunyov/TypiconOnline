@@ -257,11 +257,15 @@ namespace TypiconOnline.Domain.Rules.Factories
                 case RuleConstants.LeitourgiaNode:
                     outputEl = new ServiceSequence(node);
                     break;
-                case RuleConstants.KekragariaNode:
+                case RuleConstants.KekragariaRuleNode:
+                    outputEl = new KekragariaRule(node);
+                    break;
+                case RuleConstants.AinoiNode:
+                    outputEl = new AinoiRule(node);
+                    break;
                 case RuleConstants.ApostichaNode:
                 case RuleConstants.LitiNode:
-                case RuleConstants.AinoiNode:
-                    outputEl = new YmnosStructureRule(node);
+                    outputEl = new ApostichaRule(node);
                     break;
                 case RuleConstants.ServiceNodeName:
                     outputEl = new Service(node);

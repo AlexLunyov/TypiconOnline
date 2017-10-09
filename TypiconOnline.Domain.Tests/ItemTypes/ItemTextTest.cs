@@ -130,5 +130,32 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 
             Assert.Pass(result);
         }
+
+        [Test]
+        public void ItemText_StringExpression()
+        {
+            string xmlString = @"<ItemText>
+	                                <item language=""cs-ru"">Блажен муж, иже не иде на совет нечестивых и на пути грешных не ста, и на седалищи губителей не седе,</item>
+	                                <item language=""cs-cs"">Бlжeнъ мyжъ, и4же не и4де на совётъ нечести1выхъ, и3 на пути2 грёшныхъ не стA, и3 на сэдaлищи губи1телей не сёде:</item>
+	                                <item language=""ru-ru"">Блажен муж, который не пошел на совет нечестивых, и на путь грешных не вступил, и не сидел в сборище губителей;</item>
+	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
+	                                <style>
+		                                <bold/>
+		                                <red/>
+		                                <h1/>
+	                                </style>
+                                </ItemText>";
+
+            //XmlDocument xmlDoc = new XmlDocument();
+
+            //xmlDoc.LoadXml(xmlString);
+
+            ItemText element = new ItemText();
+
+            element.StringExpression = xmlString;
+
+            Assert.AreEqual(element.Style.Header, HeaderCaption.h1);
+            Assert.AreEqual(4, element.Text.Count);
+        }
     }
 }

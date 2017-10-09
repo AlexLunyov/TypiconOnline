@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Описание стихир Господи воззвах в последовательности богослужений
     /// </summary>
-    public class YmnosStructureRule : ExecContainer, ICustomInterpreted, IViewModelElement
+    public abstract class YmnosStructureRule : ExecContainer, ICustomInterpreted, IViewModelElement
     {
         private YmnosStructure _stichera;
 
@@ -105,40 +105,39 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 }
             }
 
-            SetStringCommonRules(handler);
+            //SetStringCommonRules(handler);
         }
 
-        private void SetStringCommonRules(IRuleHandler handler)
-        {
-            CommonRuleServiceRequest req = new CommonRuleServiceRequest() { Handler = handler };
+        //private void SetStringCommonRules(IRuleHandler handler)
+        //{
+        //    CommonRuleServiceRequest req = new CommonRuleServiceRequest() { Handler = handler, Key = CommonRuleConstants.IhosText };
 
-            req.Key = CommonRuleConstants.IhosText;
-            ItemText ihosText = CommonRuleService.Instance.GetItemTextValue(req);
+        //    //ItemText ihosText = CommonRuleService.Instance.GetItemTextValue(req);
 
-            //добавляем стихи к славнику и богородичну
-            if (_stichera.Doxastichon != null)
-            {
-                //слава
-                req.Key = CommonRuleConstants.SlavaText;
-                _stichera.Doxastichon.Ymnis[0].Stihoi.Add(CommonRuleService.Instance.GetItemTextValue(req));
+        //    //добавляем стихи к славнику и богородичну
+        //    if (_stichera.Doxastichon != null)
+        //    {
+        //        //слава
+        //        req.Key = CommonRuleConstants.SlavaText;
+        //        _stichera.Doxastichon.Ymnis[0].Stihoi.Add(CommonRuleService.Instance.GetItemTextValue(req));
 
-                //и ныне
-                if (_stichera.Theotokion?.Count > 0)
-                {
-                    req.Key = CommonRuleConstants.InyneText;
-                    _stichera.Theotokion[0].Ymnis[0].Stihoi.Add(CommonRuleService.Instance.GetItemTextValue(req));
-                }
-            }
-            else
-            {
-                //слава и ныне
-                if (_stichera.Theotokion?.Count > 0)
-                {
-                    req.Key = CommonRuleConstants.SlavaInyneText;
-                    _stichera.Theotokion[0].Ymnis[0].Stihoi.Add(CommonRuleService.Instance.GetItemTextValue(req));
-                }
-            }
-        }
+        //        //и ныне
+        //        if (_stichera.Theotokion?.Count > 0)
+        //        {
+        //            req.Key = CommonRuleConstants.InyneText;
+        //            _stichera.Theotokion[0].Ymnis[0].Stihoi.Add(CommonRuleService.Instance.GetItemTextValue(req));
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //слава и ныне
+        //        if (_stichera.Theotokion?.Count > 0)
+        //        {
+        //            req.Key = CommonRuleConstants.SlavaInyneText;
+        //            _stichera.Theotokion[0].Ymnis[0].Stihoi.Add(CommonRuleService.Instance.GetItemTextValue(req));
+        //        }
+        //    }
+        //}
 
         protected override void Validate()
         {
@@ -146,9 +145,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
             //TODO: добавить проверку на наличие элементов stichira в дочерних элементах
         }
 
-        public ElementViewModel CreateViewModel(IRuleHandler handler)
-        {
-            return new YmnosStructureViewModel(this, handler);
-        }
+        public abstract ElementViewModel CreateViewModel(IRuleHandler handler);
+        //{
+        //    return new YmnosStructureViewModel(this, handler);
+        //}
+
+        
     }
 }

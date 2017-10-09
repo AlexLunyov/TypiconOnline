@@ -25,6 +25,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 typeof(ServiceSequence),
                 typeof(Ektenis),
                 typeof(CommonRuleElement),
+                typeof(KekragariaRule),
+                typeof(AinoiRule)
             };
         }
 

@@ -65,19 +65,19 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }
 
-        //public override string StringExpression
-        //{
-        //    get
-        //    {
-        //        _stringExpression = ComposeXml().InnerXml;
-        //        return _stringExpression;
-        //    }
-        //    set
-        //    {
-        //        _stringExpression = value;
-        //        Build(value);
-        //    }
-        //}
+        public override string StringExpression
+        {
+            get
+            {
+                _stringExpression = ComposeXml().InnerXml;
+                return _stringExpression;
+            }
+            set
+            {
+                _stringExpression = value;
+                Build(value);
+            }
+        }
 
         protected override XmlDocument ComposeXml()
         {

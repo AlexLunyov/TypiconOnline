@@ -154,6 +154,8 @@
     <Compile Include="Rules\Handlers\RuleHandlerSettings.cs" />
     <Compile Include="Rules\Handlers\ScheduleHandler.cs" />
     <Compile Include="Rules\CommonRuleConstants.cs" />
+    <Compile Include="Rules\Schedule\AinoiRule.cs" />
+    <Compile Include="Rules\Schedule\ApostichaRule.cs" />
     <Compile Include="Rules\Schedule\CommonRuleElement.cs" />
     <Compile Include="Rules\Schedule\Ektenis.cs" />
     <Compile Include="Rules\Schedule\CommonRuleBusinessConstraint.cs" />
@@ -234,6 +236,7 @@
     <Compile Include="ViewModels\ContainerViewModel.cs" />
     <Compile Include="ViewModels\EktenisViewModel.cs" />
     <Compile Include="ViewModels\ElementViewModel.cs" />
+    <Compile Include="ViewModels\KekragariaRuleViewModel.cs" />
     <Compile Include="ViewModels\NoticeViewModel.cs" />
     <Compile Include="ViewModels\ServiceSequenceViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
