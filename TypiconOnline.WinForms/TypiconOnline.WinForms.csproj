@@ -118,6 +118,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormCustomParams.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCustomParams.Designer.cs">
+      <DependentUpon>FormCustomParams.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPassword.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +139,9 @@
     <Compile Include="StartForm.Designer.cs">
       <DependentUpon>StartForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FormCustomParams.resx">
+      <DependentUpon>FormCustomParams.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormPassword.resx">
       <DependentUpon>FormPassword.cs</DependentUpon>
     </EmbeddedResource>

@@ -29,6 +29,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
         public YmnosStructureRule(XmlNode node) : base(node)
         {
             _ymnosStructureKind = new ItemEnumType<YmnosStructureKind>(node.Name);
+
+            XmlAttribute attr = node.Attributes[RuleConstants.TotalCountAttribute];
+
+            TotalYmnosCount = new ItemInt((attr != null) ? attr.Value : string.Empty);
         }
 
         #region Properties

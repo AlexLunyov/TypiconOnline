@@ -35,6 +35,7 @@
             this.textBoxResult = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBoxException = new System.Windows.Forms.CheckBox();
             this.checkBoxIsDocxOpen = new System.Windows.Forms.CheckBox();
             this.checkBoxWordpress = new System.Windows.Forms.CheckBox();
             this.checkBoxTxt = new System.Windows.Forms.CheckBox();
@@ -82,7 +83,7 @@
             this.monthCalendarSequence = new System.Windows.Forms.MonthCalendar();
             this.folderBrowserDialogSettings = new System.Windows.Forms.FolderBrowserDialog();
             this.templateFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.checkBoxException = new System.Windows.Forms.CheckBox();
+            this.btnSequenceCustomParams = new System.Windows.Forms.Button();
             this.tabControlMain.SuspendLayout();
             this.tabPageMain.SuspendLayout();
             this.panelTest.SuspendLayout();
@@ -193,6 +194,19 @@
             this.groupBox3.TabIndex = 19;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Сохранить результаты";
+            // 
+            // checkBoxException
+            // 
+            this.checkBoxException.AutoSize = true;
+            this.checkBoxException.ForeColor = System.Drawing.Color.Red;
+            this.checkBoxException.Location = new System.Drawing.Point(8, 131);
+            this.checkBoxException.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxException.Name = "checkBoxException";
+            this.checkBoxException.Size = new System.Drawing.Size(322, 21);
+            this.checkBoxException.TabIndex = 4;
+            this.checkBoxException.Text = "Исключение, если неверно заполнено правило";
+            this.checkBoxException.UseCompatibleTextRendering = true;
+            this.checkBoxException.UseVisualStyleBackColor = true;
             // 
             // checkBoxIsDocxOpen
             // 
@@ -646,9 +660,9 @@
             // 
             this.groupBox7.Controls.Add(this.txtSequence);
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox7.Location = new System.Drawing.Point(225, 3);
+            this.groupBox7.Location = new System.Drawing.Point(243, 3);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(735, 480);
+            this.groupBox7.Size = new System.Drawing.Size(717, 480);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Текст";
@@ -661,24 +675,25 @@
             this.txtSequence.Name = "txtSequence";
             this.txtSequence.ReadOnly = true;
             this.txtSequence.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSequence.Size = new System.Drawing.Size(729, 459);
+            this.txtSequence.Size = new System.Drawing.Size(711, 459);
             this.txtSequence.TabIndex = 1;
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.btnSequenceCustomParams);
             this.groupBox6.Controls.Add(this.btnGetSequence);
             this.groupBox6.Controls.Add(this.monthCalendarSequence);
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox6.Location = new System.Drawing.Point(3, 3);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(216, 480);
+            this.groupBox6.Size = new System.Drawing.Size(234, 480);
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Календарь";
             // 
             // btnGetSequence
             // 
-            this.btnGetSequence.Location = new System.Drawing.Point(9, 282);
+            this.btnGetSequence.Location = new System.Drawing.Point(9, 324);
             this.btnGetSequence.Name = "btnGetSequence";
             this.btnGetSequence.Size = new System.Drawing.Size(192, 29);
             this.btnGetSequence.TabIndex = 9;
@@ -701,18 +716,15 @@
             // 
             this.templateFileDialog.Filter = "Docx файлы | *.docx";
             // 
-            // checkBoxException
+            // btnSequenceCustomParams
             // 
-            this.checkBoxException.AutoSize = true;
-            this.checkBoxException.ForeColor = System.Drawing.Color.Red;
-            this.checkBoxException.Location = new System.Drawing.Point(8, 131);
-            this.checkBoxException.Margin = new System.Windows.Forms.Padding(4);
-            this.checkBoxException.Name = "checkBoxException";
-            this.checkBoxException.Size = new System.Drawing.Size(322, 21);
-            this.checkBoxException.TabIndex = 4;
-            this.checkBoxException.Text = "Исключение, если неверно заполнено правило";
-            this.checkBoxException.UseCompatibleTextRendering = true;
-            this.checkBoxException.UseVisualStyleBackColor = true;
+            this.btnSequenceCustomParams.Location = new System.Drawing.Point(9, 282);
+            this.btnSequenceCustomParams.Name = "btnSequenceCustomParams";
+            this.btnSequenceCustomParams.Size = new System.Drawing.Size(157, 29);
+            this.btnSequenceCustomParams.TabIndex = 10;
+            this.btnSequenceCustomParams.Text = "Настройки...";
+            this.btnSequenceCustomParams.UseVisualStyleBackColor = true;
+            this.btnSequenceCustomParams.Click += new System.EventHandler(this.btnSequenceCustomParams_Click);
             // 
             // StartForm
             // 
@@ -811,5 +823,6 @@
         private System.Windows.Forms.MonthCalendar monthCalendarSequence;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox checkBoxException;
+        private System.Windows.Forms.Button btnSequenceCustomParams;
     }
 }

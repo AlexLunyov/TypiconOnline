@@ -26,9 +26,7 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public ItemBoolean(bool val)
         {
-            _value = val;
-            _isValid = true;
-            _stringValue = _value.ToString();
+            Value = val;
         }
 
         public bool Value
@@ -36,6 +34,12 @@ namespace TypiconOnline.Domain.ItemTypes
             get
             {
                 return _value;
+            }
+            set
+            {
+                _value = value;
+                _isValid = true;
+                _stringValue = _value.ToString();
             }
         }
 

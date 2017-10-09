@@ -205,6 +205,7 @@ namespace TypiconOnline.Domain.Rules
         public const string KekragariaRuleNode = "kekragaria";
         public const string YmnosStructureRuleNode = "kekragaria";
         public const string ShowPsalmAttribute = "showpsalm";
+        public const string TotalCountAttribute = "totalcount";
 
         /*
          * Константы для описания атрибутов элемента ymnosRule

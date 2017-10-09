@@ -21,6 +21,8 @@ using TypiconOnline.AppServices.Common;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Interfaces;
+using System.Collections.Generic;
 
 namespace ScheduleForm
 {
@@ -31,6 +33,8 @@ namespace ScheduleForm
         private ScheduleService _scheduleService;
         TypiconEntity _typiconEntity;
         ITypiconEntityService _typiconEntityService;
+
+        List<IScheduleCustomParameter> CustomParameters { get; set; }
 
         private DateTime _selectedDate;
         private const string _scheduleFileStart = "РАСПИСАНИЕ ";
@@ -509,7 +513,8 @@ namespace ScheduleForm
                     TypiconEntity = _typiconEntity,
                     Mode = HandlingMode.All,
                     Handler = new ServiceSequenceHandler(),
-                    Language = "cs-ru"
+                    Language = "cs-ru",
+                    CustomParameters = CustomParameters
                 };
 
             request.Handler.Settings.Language = "cs-ru";
@@ -527,6 +532,18 @@ namespace ScheduleForm
             //    txtSequence.Clear();
             //    txtSequence.AppendText(ex.Message);
             //}
+        }
+
+        private void btnSequenceCustomParams_Click(object sender, EventArgs e)
+        {
+            using (FormCustomParams dialog = new FormCustomParams())
+            {
+                // Show testDialog as a modal dialog and determine if DialogResult = OK.
+                if (dialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    CustomParameters = dialog.CustomParameters.ToList();
+                }
+            }
         }
     }
 }
