@@ -204,8 +204,8 @@ namespace TypiconOnline.Domain.Rules.Factories
                         break;
                     //YmnosRule
                     case RuleConstants.YmnosRuleNode:
-                    case RuleConstants.YmnosStructureTheotokionNode:
-                    case RuleConstants.YmnosStructureDoxastichonNode:
+                    case RuleConstants.YmnosRuleTheotokionNode:
+                    case RuleConstants.YmnosRuleDoxastichonNode:
                         outputEl = new YmnosRule(node);
                         break; 
                     //Ektenis

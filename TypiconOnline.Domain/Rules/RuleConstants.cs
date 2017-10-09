@@ -210,7 +210,9 @@ namespace TypiconOnline.Domain.Rules
         /*
          * Константы для описания атрибутов элемента ymnosRule
         */
-        public const string YmnosRuleNode = "ymnos";
+        public const string YmnosRuleNode = "ymnosrule";
+        public const string YmnosRuleDoxastichonNode = "doxastichonrule";
+        public const string YmnosRuleTheotokionNode = "theotokionrule";
         public const string YmnosRuleSourceAttrName = "source";
         public const string YmnosRulePlaceAttrName = "place";
         public const string YmnosRuleCountAttrName = "count";
@@ -294,9 +296,9 @@ namespace TypiconOnline.Domain.Rules
     /// </summary>
     public enum YmnosRuleKind {
         [XmlEnum(Name = RuleConstants.YmnosKindAttrValue)]
-        Ymnos,
-        Doxastichon,
-        Theotokion
+        YmnosRule,
+        DoxastichonRule,
+        TheotokionRule
     }
     
     public enum YmnosStructureKind { Kekragaria, Aposticha, Liti, Ainoi }

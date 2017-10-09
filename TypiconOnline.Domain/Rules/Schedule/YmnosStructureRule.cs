@@ -100,13 +100,13 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 {
                     switch (ymnosRule.YmnosKind.Value)
                     {
-                        case YmnosRuleKind.Ymnos:
+                        case YmnosRuleKind.YmnosRule:
                             _stichera.Groups.AddRange(s.Groups);
                             break;
-                        case YmnosRuleKind.Doxastichon:
+                        case YmnosRuleKind.DoxastichonRule:
                             _stichera.Doxastichon = s.Doxastichon;
                             break;
-                        case YmnosRuleKind.Theotokion:
+                        case YmnosRuleKind.TheotokionRule:
                             _stichera.Theotokion = s.Theotokion;
                             break;
                     }

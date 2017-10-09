@@ -80,7 +80,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// </summary>
         public void ApplyCustomParameters(RuleElement element)
         {
-            CustomParameters.ForEach(c => c.Apply(element));
+            CustomParameters?.ForEach(c => c.Apply(element));
         }
     }
 }

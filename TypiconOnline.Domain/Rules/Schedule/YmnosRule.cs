@@ -210,7 +210,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                     switch (YmnosKind.Value)
                     {
-                        case YmnosRuleKind.Ymnos:
+                        case YmnosRuleKind.YmnosRule:
                             groups = dayService.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Groups;
                             if (groups != null)
                             {
@@ -219,7 +219,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                             }
 
                             break;
-                        case YmnosRuleKind.Doxastichon:
+                        case YmnosRuleKind.DoxastichonRule:
                             group = dayService.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Doxastichon;
                             if (group != null)
                             {
@@ -228,7 +228,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                             }
 
                             break;
-                        case YmnosRuleKind.Theotokion:
+                        case YmnosRuleKind.TheotokionRule:
                             groups = dayService.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Theotokion;
                             if (groups != null)
                             {
