@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Messaging.Typicon;
-using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
@@ -25,7 +25,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             //находим первый попавшийся MenologyRule
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
             GetTypiconEntityResponse resp = new TypiconEntityService(_unitOfWork).GetTypiconEntity(1);
             TypiconEntity typiconEntity = resp.TypiconEntity;
 
@@ -49,7 +49,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             EktenisViewModel model = (rule.Rule as Ektenis).CreateViewModel(handler) as EktenisViewModel;
 
-            Assert.AreEqual(2, model.ChildElements.Count);
+            Assert.AreEqual(3, model.ChildElements.Count);
 
             //а теперь находим правило НЕ праздничное
             rule = typiconEntity.GetMenologyRule(new DateTime(2017, 10, 15));
@@ -62,7 +62,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             model = (rule.Rule as Ektenis).CreateViewModel(handler) as EktenisViewModel;
 
-            Assert.AreEqual(1, model.ChildElements.Count);
+            Assert.AreEqual(2, model.ChildElements.Count);
         }
     }
 }

@@ -2,7 +2,8 @@
 using System.Linq;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Messaging.Typicon;
-using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Books;
+using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Repository.EF;
 
@@ -16,7 +17,7 @@ namespace TypiconOnline.AppServices.Tests
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
 
             TypiconEntityService service = new TypiconEntityService(_unitOfWork);
 

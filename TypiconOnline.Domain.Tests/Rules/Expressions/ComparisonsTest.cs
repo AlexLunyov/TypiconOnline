@@ -6,8 +6,8 @@ using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Repository.EF;
-using TypiconOnline.Domain.Easter;
 using System.Linq;
+using TypiconOnline.Domain.Books;
 
 namespace TypiconOnline.Domain.Tests.Rules.Expressions
 {
@@ -54,8 +54,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         [Test]
         public void Rules_Expressions_More_False()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
 
             string xmlString = @"<more>
                                     <int>2</int>

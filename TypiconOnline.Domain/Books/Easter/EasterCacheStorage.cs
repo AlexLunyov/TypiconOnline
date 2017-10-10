@@ -8,19 +8,19 @@ using TypiconOnline.Infrastructure.Common.Configuration;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 
-namespace TypiconOnline.Domain.Easter
+namespace TypiconOnline.Domain.Books.Easter
 {
     /// <summary>
     /// Хранилище дней Пасхи
     /// </summary>
-    public class EasterStorage : IEasterStorage
+    public class EasterCacheStorage : IEasterService
     {
         private readonly ICacheStorage _cacheStorage;
         private readonly IConfigurationRepository _configurationRepository;
 
         private const string _easterStorageKey = "EasterStorageKey";
 
-        private EasterStorage()
+        private EasterCacheStorage()
         {
             //TODO: реализовать ссылку на интерфейсы. Пока так, напрямую
             _cacheStorage = new SystemRuntimeCacheStorage();
@@ -54,6 +54,11 @@ namespace TypiconOnline.Domain.Easter
             return easter.Date;
         }
 
+        public IEnumerable<EasterItem> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Метод сделан только для тестирования
         /// </summary>
@@ -64,7 +69,7 @@ namespace TypiconOnline.Domain.Easter
         //    return date;
         //}
 
-        public static EasterStorage Instance
+        public static EasterCacheStorage Instance
         {
             get { return Nested.instance; }
         }
@@ -75,7 +80,7 @@ namespace TypiconOnline.Domain.Easter
             {
             }
 
-            internal static readonly EasterStorage instance = new EasterStorage();
+            internal static readonly EasterCacheStorage instance = new EasterCacheStorage();
         }
     }
 }

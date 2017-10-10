@@ -10,7 +10,7 @@ using System.Globalization;
 using TypiconOnline.Domain.Schedule;
 using System.Text;
 using TypiconOnline.Domain.Rules.Schedule;
-using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.ViewModels;
 using TypiconMigrationTool.Experiments.XmlSerialization;
 using TypiconOnline.AppServices.Implementations;
@@ -104,7 +104,7 @@ namespace TypiconMigrationTool
 
         private static void TestBlagoveshenie(IUnitOfWork unitOfWork)
         {
-            RuleHandler ruleHandler = new RuleHandler(unitOfWork);
+            /*RuleHandler ruleHandler = new RuleHandler(unitOfWork);
 
             while (true)
             {
@@ -143,7 +143,7 @@ namespace TypiconMigrationTool
                         Console.WriteLine(stringBuilder.ToString());
                     }
                 }
-            }
+            }*/
         }
 
         private static void TestDate(IUnitOfWork unitOfWork)

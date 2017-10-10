@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Messaging.Schedule;
-using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -23,7 +23,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Handlers
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
 
             TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
 

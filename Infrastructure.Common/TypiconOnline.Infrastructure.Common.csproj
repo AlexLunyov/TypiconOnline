@@ -48,6 +48,8 @@
     <Compile Include="Domain\IAggregateRoot.cs" />
     <Compile Include="Domain\IReadOnlyRepository.cs" />
     <Compile Include="Domain\IRepository.cs" />
+    <Compile Include="Domain\ServiceRequestBase.cs" />
+    <Compile Include="Domain\ServiceResponseBase.cs" />
     <Compile Include="Domain\ValueObjectIsInvalidException.cs" />
     <Compile Include="Domain\ValueObjectBase.cs" />
     <Compile Include="Domain\EntityBase.cs" />

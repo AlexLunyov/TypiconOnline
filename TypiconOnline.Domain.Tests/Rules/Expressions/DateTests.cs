@@ -42,7 +42,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
             xmlDoc.LoadXml(xmlString);
 
             Date date = new Date(xmlDoc.FirstChild);
-            date.Interpret(DateTime.Today, BypassHandler.Instance);
+            //date.Interpret(DateTime.Today, BypassHandler.Instance);
 
             Assert.IsFalse(date.IsValid);
 
@@ -71,7 +71,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
             xmlDoc.LoadXml(xmlString);
 
             Date date = new Date(xmlDoc.FirstChild);
-            date.Interpret(DateTime.Today, BypassHandler.Instance);
+            //date.Interpret(DateTime.Today, BypassHandler.Instance);
 
             Assert.IsFalse(date.IsValid);
 

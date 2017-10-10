@@ -64,7 +64,6 @@
     <Compile Include="Interfaces\IXmlMigrationService.cs" />
     <Compile Include="Interfaces\IXmlSaver.cs" />
     <Compile Include="Messaging\Common\CreateItemTextRequest.cs" />
-    <Compile Include="Messaging\ServiceResponseBase.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleDayRequest.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleDayResponse.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleWeekRequest.cs" />

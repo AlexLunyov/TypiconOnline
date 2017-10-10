@@ -186,7 +186,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                         dayService = (handler.Settings.DayServices.Count > 2) ? handler.Settings.DayServices[2] : null;
                         break;
                     case YmnosSource.Oktoikh:
-                        dayService = BookStorage.Oktoikh.GetOktoikhDay(date);
+                        dayService = BookStorage.Instance.Oktoikh.GetOktoikhDay(date);
                         break;
                 }
 

@@ -7,6 +7,13 @@ using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.WinServices;
+using TypiconOnline.Domain.Books.Evangelion;
+using TypiconOnline.Domain.Books.Apostol;
+using TypiconOnline.Domain.Books.OldTestament;
+using TypiconOnline.Domain.Books.Psalter;
+using TypiconOnline.Domain.Books.Oktoikh;
+using TypiconOnline.Domain.Books.Irmologion;
+using TypiconOnline.Domain.Books.Easter;
 
 namespace ScheduleForm
 {
@@ -31,6 +38,13 @@ namespace ScheduleForm
                     });
                     x.For<IUnitOfWork>().Use<EFUnitOfWork>();
                     x.For<ITypiconEntityService>().Use<TypiconEntityService>();
+                    x.For<IEvangelionService>().Use<EvangelionService>();
+                    x.For<IApostolService>().Use<ApostolService>();
+                    x.For<IOldTestamentService>().Use<OldTestamentService>();
+                    x.For<IPsalterService>().Use<PsalterService>();
+                    x.For<IOktoikhService>().Use<OktoikhService>();
+                    x.For<IIrmologionService>().Use<IrmologionService>();
+                    x.For<IEasterService>().Use<EasterService>();
                 });
         }
     }

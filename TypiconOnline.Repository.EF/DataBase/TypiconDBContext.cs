@@ -2,7 +2,6 @@
 using System.Data.Entity;
 using TypiconOnline.Domain;
 using TypiconOnline.Domain.Days;
-using TypiconOnline.Domain.Easter;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Repository.EF.DataBase.Mapping;

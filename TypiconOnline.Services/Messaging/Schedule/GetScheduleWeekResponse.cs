@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Schedule;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.AppServices.Messaging.Schedule
 {
-    public class GetScheduleWeekResponse
+    public class GetScheduleWeekResponse: ServiceResponseBase
     {
         public ScheduleWeek Week { get; set; }
     }

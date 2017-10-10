@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         {
             string xmlString = @"<ymnos>
 						            <text>
-							            <cs-ru>Зна́ние Твое́ вложи́в души́ мое́й, очи́сти мо́й по́мысл и Твои́х за́поведей де́лателя, Спа́се, покажи́, да возмогу́ победи́ти страсте́й мои́х ра́зная привоста́ния, победи́тельную по́честь прие́м безстра́стия, моли́твами Твоего́ до́бляго страстоте́рпца Ники́ты, Человеколю́бче: и́бо са́м на́с воспомина́ти того́ в па́мяти его́ созва́, моля́ся непреста́нно о все́х на́с.</cs-ru>
+							            <item language=""cs-ru"">Зна́ние Твое́ вложи́в души́ мое́й, очи́сти мо́й по́мысл и Твои́х за́поведей де́лателя, Спа́се, покажи́, да возмогу́ победи́ти страсте́й мои́х ра́зная привоста́ния, победи́тельную по́честь прие́м безстра́стия, моли́твами Твоего́ до́бляго страстоте́рпца Ники́ты, Человеколю́бче: и́бо са́м на́с воспомина́ти того́ в па́мяти его́ созва́, моля́ся непреста́нно о все́х на́с.</item>
 						            </text>
 					            </ymnos>";
 
@@ -39,7 +39,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         {
             string xmlString = @"<Ymnos>
                                     <text>
-						                <cs-ru>[item] [sign] Господи воззвах, Славник</cs-ru>
+						                <item language=""cs-ru"">[item] [sign] Господи воззвах, Славник</item>
 					                </text>
 				                </Ymnos>";
             TypiconSerializer ser = new TypiconSerializer();
@@ -54,16 +54,16 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         {
             string xmlString = @"<Ymnos>
                                     <annotation>
-					                    <cs-ru>Аннотация</cs-ru>
+					                    <item language=""cs-ru"">Аннотация</item>
 				                    </annotation>
                                     <stihos>
-							            <cs-ru>Стих 1</cs-ru>
+							            <item language=""cs-ru"">Стих 1</item>
 						            </stihos>
                                     <stihos>
-							            <cs-ru>Стих 2</cs-ru>
+							            <item language=""cs-ru"">Стих 2</item>
 						            </stihos>
                                     <text>
-						                <cs-ru>Текст</cs-ru>
+						                <item language=""cs-ru"">Текст</item>
 					                </text>
 				                </Ymnos>";
             TypiconSerializer ser = new TypiconSerializer();
@@ -78,16 +78,16 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         {
             string xmlString = @"<Ymnos>
                                     <annotation>
-					                    <cs-ru>Аннотация</cs-ru>
+					                    <item language=""cs-ru"">Аннотация</item>
 				                    </annotation>
                                     <stihos>
-							            <cs-ru>Стих 1</cs-ru>
+							            <item language=""cs-ru"">Стих 1</item>
 						            </stihos>
                                     <stihos>
-							            <cs-ru>Стих 2</cs-ru>
+							            <item language=""cs-ru"">Стих 2</item>
 						            </stihos>
                                     <text>
-						                <cs-ru>Текст</cs-ru>
+						                <item language=""cs-ru"">Текст</item>
 					                </text>
 				                </Ymnos>";
             TypiconSerializer ser = new TypiconSerializer();
@@ -105,13 +105,13 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         {
             string xmlString = @"<Ymnos>
                                     <annotation>
-					                    <cs-ru>Творе́ние господи́на Пахо́мия мона́ха.</cs-ru>
+					                    <item language=""cs-ru"">Творе́ние господи́на Пахо́мия мона́ха.</item>
 				                    </annotation>
                                     <stihos>
-							            <cs-ru>[item] [sign] Вечерня. На стиховне, Стих 1-й стихиры.</cs-ru>
+							            <item language=""cs-ru"">[item] [sign] Вечерня. На стиховне, Стих 1-й стихиры.</item>
 						            </stihos>
                                     <stihos>
-							            <cs-ru>[item] [sign] Вечерня. На стиховне, Стих 2-й стихиры.</cs-ru>
+							            <item language=""cs-ru"">[item] [sign] Вечерня. На стиховне, Стих 2-й стихиры.</item>
 						            </stihos>
 				                </Ymnos>";
             TypiconSerializer ser = new TypiconSerializer();

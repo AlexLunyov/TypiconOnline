@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.AppServices.Messaging.Schedule;
-using TypiconOnline.Domain.Easter;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Factories;

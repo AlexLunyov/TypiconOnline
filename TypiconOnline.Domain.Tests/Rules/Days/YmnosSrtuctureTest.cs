@@ -20,31 +20,31 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
 			                        <group ihos=""1"">
 				                        <ymnos>
 					                        <text>
-						                        <cs-ru>[item] [sign] Господи воззвах, 1 стихира </cs-ru>
+						                        <item language=""cs-ru"">[item] [sign] Господи воззвах, 1 стихира </item>
 					                        </text>
 				                        </ymnos>
 				                        <ymnos>
 					                        <text>
-						                        <cs-ru>[item] [sign] Господи воззвах, 2 стихира </cs-ru>
+						                        <item language=""cs-ru"">[item] [sign] Господи воззвах, 2 стихира </item>
 					                        </text>
 				                        </ymnos>
 				                        <ymnos>
 					                        <text>
-						                        <cs-ru>[item] [sign] Господи воззвах, 3 стихира </cs-ru>
+						                        <item language=""cs-ru"">[item] [sign] Господи воззвах, 3 стихира </item>
 					                        </text>
 				                        </ymnos>
 			                        </group>
 			                        <doxastichon ihos=""8"">
 				                        <ymnos>
 					                        <text>
-						                        <cs-ru>[item] [sign] Господи воззвах, Славник</cs-ru>
+						                        <item language=""cs-ru"">[item] [sign] Господи воззвах, Славник</item>
 					                        </text>
 				                        </ymnos>
 			                        </doxastichon>
 			                        <theotokion ihos=""8"" kind=""stavros"">
 				                        <ymnos>
 					                        <text>
-						                        <cs-ru>[item] [sign] Господи воззвах, Крестобогородичен</cs-ru>
+						                        <item language=""cs-ru"">[item] [sign] Господи воззвах, Крестобогородичен</item>
 					                        </text>
 				                        </ymnos>
 			                        </theotokion>
@@ -67,31 +67,31 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
 			                        <group ihos=""1"">
 				                        <ymnos>
 					                        <text>
-						                        <cs-ru>[item] [sign] Господи воззвах, 1 стихира </cs-ru>
+						                        <item language=""cs-ru"">[item] [sign] Господи воззвах, 1 стихира </item>
 					                        </text>
 				                        </ymnos>
 				                        <ymnos>
 					                        <text>
-						                        <cs-ru>[item] [sign] Господи воззвах, 2 стихира </cs-ru>
+						                        <item language=""cs-ru"">[item] [sign] Господи воззвах, 2 стихира </item>
 					                        </text>
 				                        </ymnos>
 				                        <ymnos>
 					                        <text>
-						                        <cs-ru>[item] [sign] Господи воззвах, 3 стихира </cs-ru>
+						                        <item language=""cs-ru"">[item] [sign] Господи воззвах, 3 стихира </item>
 					                        </text>
 				                        </ymnos>
 			                        </group>
 			                        <doxastichon ihos=""8"">
 				                        <ymnos>
 					                        <text>
-						                        <cs-ru>[item] [sign] Господи воззвах, Славник</cs-ru>
+						                        <item language=""cs-ru"">[item] [sign] Господи воззвах, Славник</item>
 					                        </text>
 				                        </ymnos>
 			                        </doxastichon>
 			                        <theotokion ihos=""8"" kind=""stavros"">
 				                        <ymnos>
 					                        <text>
-						                        <cs-ru>[item] [sign] Господи воззвах, Крестобогородичен</cs-ru>
+						                        <item language=""cs-ru"">[item] [sign] Господи воззвах, Крестобогородичен</item>
 					                        </text>
 				                        </ymnos>
 			                        </theotokion>

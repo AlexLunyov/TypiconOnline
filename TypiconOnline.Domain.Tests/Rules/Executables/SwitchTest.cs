@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 using System.Xml;
-using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
@@ -18,9 +18,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         {
             string xmlString = @"<rule>
 	                                <switch>
-		                                <condition>
+		                                <expression>
 			                                <daysfromeaster><date>--04-06</date></daysfromeaster>
-		                                </condition>
+		                                </expression>
 		                                <case>
 			                                <values>
 				                                <int>-19</int>
@@ -42,9 +42,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 
             XmlDocument xmlDoc = new XmlDocument();
 
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
 
             xmlDoc.LoadXml(xmlString);
 
@@ -58,15 +56,13 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         [Test]
         public void Rules_Executables_Switch_DimitrySaturday()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
 
             string xmlString = @"<rule>
 	                                <switch>
-		                                <condition>
+		                                <expression>
 			                                <getclosestday dayofweek=""суббота"" weekcount=""-1""><date>--11-08</date></getclosestday>
-		                                </condition>
+		                                </expression>
 		                                <case>
 			                                <values>
 				                                 <date>--11-04</date>
@@ -101,9 +97,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         {
             string xmlString = @"<rule>
 	                                <switch>
-		                                <condition>
+		                                <expression>
 			                                <int>-08</int>
-		                                </condition>
+		                                </expression>
 		                                <case>
 			                                <values>
 				                                 <date>--11-04</date>
@@ -145,9 +141,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         {
             string xmlString = @"<rule>
 	                                <switch>
-		                                <condition>
+		                                <expression>
 			                                <getdayofweek><date>--01-07</date></getdayofweek>
-		                                </condition>
+		                                </expression>
 		                                <case>
 			                                <values>
 					                                <getdayofweek name=""понедельник""></getdayofweek>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TypiconOnline.AppServices.Messaging.Schedule;
-using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Schedule;
 using TypiconOnline.Domain.Services;
@@ -83,7 +83,8 @@ namespace TypiconMigrationTool
                 new EasterItem() { Date = blagovDate.AddDays(3).AddYears(31) },
             };
 
-            EasterStorage.Instance.EasterDays = easters;
+            //TODO: 10/10/2017 закомментировал, потому как поменялся функционал 
+            //EasterStorage.Instance.EasterDays = easters;
         }
 
 

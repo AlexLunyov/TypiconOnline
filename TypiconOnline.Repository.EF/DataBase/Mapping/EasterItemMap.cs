@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Days;
-using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Books.Easter;
 
 namespace TypiconOnline.Repository.EF.DataBase.Mapping
 {

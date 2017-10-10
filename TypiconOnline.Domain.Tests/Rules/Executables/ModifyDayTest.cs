@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
@@ -133,7 +133,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
+
+            //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
             string xmlString = @"<modifyday><datebydaysfromeaster><int>-43</int></datebydaysfromeaster></modifyday>";
 

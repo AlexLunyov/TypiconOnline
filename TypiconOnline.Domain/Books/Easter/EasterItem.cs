@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Infrastructure.Common.Domain;
 
-namespace TypiconOnline.Domain.Easter
+namespace TypiconOnline.Domain.Books.Easter
 {
     public class EasterItem : IAggregateRoot
     {

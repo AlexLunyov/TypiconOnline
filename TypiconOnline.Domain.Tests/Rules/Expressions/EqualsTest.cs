@@ -6,8 +6,8 @@ using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Repository.EF;
-using TypiconOnline.Domain.Easter;
 using System.Linq;
+using TypiconOnline.Domain.Books;
 
 namespace TypiconOnline.Domain.Tests.Rules.Expressions
 {
@@ -101,9 +101,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
        [Test]
         public void Rules_Expressions_And_Calculating_Correct()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
 
             string xmlString = @"<equals>
                                     <int>-1</int>
@@ -122,9 +120,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         [Test]
         public void Rules_Expressions_And_Dates()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
 
             string xmlString = @"<equals>
                                     <date/>

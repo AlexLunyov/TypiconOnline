@@ -11,9 +11,9 @@ using System.Text;
 using System.Xml;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.Easter;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Books;
 
 namespace TypiconOnline.Domain.Rules.Expressions
 {
@@ -31,7 +31,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            DateTime easterDate = EasterStorage.Instance.GetCurrentEaster(date.Year);
+            DateTime easterDate = BookStorage.Instance.Easters.GetCurrentEaster(date.Year);
 
             _childDateExp.Interpret(date, handler);
 

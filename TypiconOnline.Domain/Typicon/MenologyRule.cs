@@ -12,6 +12,12 @@ namespace TypiconOnline.Domain.Typicon
     {
         //public virtual MenologyDay Day { get; set; }
 
+        public MenologyRule()
+        {
+            Date = new ItemDate();
+            DateB = new ItemDate();
+        }
+
         public virtual ItemDate Date
         {
             get;

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {
-    public class ModificationsRuleRequest
+    public class ModificationsRuleRequest: ServiceRequestBase
     {
         public TypiconRule Caller;
         public DateTime Date;

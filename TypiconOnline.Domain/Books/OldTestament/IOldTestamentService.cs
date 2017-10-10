@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TypiconOnline.Domain.Easter
+namespace TypiconOnline.Domain.Books.OldTestament
 {
-    public interface IEasterStorage
+    public interface IOldTestamentService
     {
-        DateTime GetCurrentEaster(int year);
     }
 }

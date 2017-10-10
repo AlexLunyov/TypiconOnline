@@ -1,6 +1,8 @@
-﻿namespace TypiconOnline.AppServices.Messaging.Typicon
+﻿using TypiconOnline.Infrastructure.Common.Domain;
+
+namespace TypiconOnline.AppServices.Messaging.Typicon
 {
-    public class DeleteTypiconEntityResponse
+    public class DeleteTypiconEntityResponse: ServiceResponseBase
     {
     }
 }

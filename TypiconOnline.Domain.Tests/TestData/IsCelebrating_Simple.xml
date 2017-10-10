@@ -1,8 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ektenis>
-  <name>
-    <item language="cs-ru">Мирная ектения.</item>
-  </name>
+  <text>
+    <p>
+      <item language="cs-ru">Мирная ектения.</item>
+      <style>
+        <header>h3</header>
+      </style>
+    </p>
+  </text>
   <deacon>
     <p>
       <item language="cs-ru">deacon1</item>

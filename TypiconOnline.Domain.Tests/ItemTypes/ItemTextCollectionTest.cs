@@ -18,15 +18,15 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
             string xmlString = @"<name>
                                     <Name1>
 			                            <style/>
-			                            <cs-ru>Попразднство Рождества Христова.</cs-ru>
+			                            <item language=""cs-ru"">Попразднство Рождества Христова.</item>
 		                            </Name1>
 		                            <Name2>
 			                            <style/>
-			                            <cs-ru>Мучеников 14 000 младенцев, от Ирода в Вифлееме избиенных. Прп. Марке́лла, игумена обители «Неусыпа́ющих».</cs-ru>
+			                            <item language=""cs-ru"">Мучеников 14 000 младенцев, от Ирода в Вифлееме избиенных. Прп. Марке́лла, игумена обители «Неусыпа́ющих».</item>
 		                            </Name2>
                                     <Name3>
 			                            <style/>
-			                            <cs-ru>Прп. Марке́лла, игумена обители «Неусыпа́ющих».</cs-ru>
+			                            <item language=""cs-ru"">Прп. Марке́лла, игумена обители «Неусыпа́ющих».</item>
 		                            </Name3>
                                 </name>";
             XmlDocument xmlDoc = new XmlDocument();

@@ -40,15 +40,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Books\Irmologion.cs" />
+    <Compile Include="Books\Apostol\ApostolService.cs" />
+    <Compile Include="Books\Apostol\IApostolService.cs" />
+    <Compile Include="Books\BookServiceBase.cs" />
+    <Compile Include="Books\BookStorageFactory.cs" />
+    <Compile Include="Books\Easter\EasterService.cs" />
+    <Compile Include="Books\Evangelion\EvangelionService.cs" />
+    <Compile Include="Books\Evangelion\IEvangelionService.cs" />
+    <Compile Include="Books\IBookStorageFactory.cs" />
+    <Compile Include="Books\Irmologion\GetTheotokionResponse.cs" />
     <Compile Include="Books\Irmologion\GetTheotokionRequest.cs" />
-    <Compile Include="Books\OldTestament.cs" />
-    <Compile Include="Books\Psalter.cs" />
-    <Compile Include="Books\Evangelion.cs" />
-    <Compile Include="Books\Oktoikh.cs" />
-    <Compile Include="Books\Apostol.cs" />
+    <Compile Include="Books\Irmologion\IIrmologionService.cs" />
+    <Compile Include="Books\Irmologion\IrmologionService.cs" />
+    <Compile Include="Books\Oktoikh\IOktoikhService.cs" />
+    <Compile Include="Books\Oktoikh\OktoikhService.cs" />
+    <Compile Include="Books\OldTestament\IOldTestamentService.cs" />
     <Compile Include="Books\OldTestament\OldTestamentBook.cs" />
     <Compile Include="Books\OldTestament\OldTestamentChapter.cs" />
+    <Compile Include="Books\OldTestament\OldTestamentService.cs" />
+    <Compile Include="Books\Psalter\IPsalterService.cs" />
     <Compile Include="Books\Psalter\Kathisma.cs" />
     <Compile Include="Books\Psalter\Psalm.cs" />
     <Compile Include="Books\Apostol\ApostolBook.cs" />
@@ -57,9 +67,9 @@
     <Compile Include="Books\Evangelion\EvangelionBook.cs" />
     <Compile Include="Books\Evangelion\EvangelionChapter.cs" />
     <Compile Include="Books\Oktoikh\OktoikhGlas.cs" />
+    <Compile Include="Books\Psalter\PsalterService.cs" />
     <Compile Include="Days\Day.cs" />
-    <Compile Include="Easter\IEasterStorage.cs" />
-    <Compile Include="Easter\IEasterStorageFactory.cs" />
+    <Compile Include="Books\Easter\IEasterService.cs" />
     <Compile Include="Interfaces\IDayContainerFactory.cs" />
     <Compile Include="Interfaces\IDayServiceFactory.cs" />
     <Compile Include="Interfaces\IContainingIhos.cs" />
@@ -189,8 +199,8 @@
     <Compile Include="Typicon\Priority.cs" />
     <Compile Include="Typicon\TypiconFolderEntity.cs" />
     <Compile Include="Typicon\TypiconRule.cs" />
-    <Compile Include="Easter\EasterItem.cs" />
-    <Compile Include="Easter\EasterStorage.cs" />
+    <Compile Include="Books\Easter\EasterItem.cs" />
+    <Compile Include="Books\Easter\EasterCacheStorage.cs" />
     <Compile Include="Books\Oktoikh\OktoikhDay.cs" />
     <Compile Include="Schedule\ScheduleDay.cs" />
     <Compile Include="FolderEntity.cs" />

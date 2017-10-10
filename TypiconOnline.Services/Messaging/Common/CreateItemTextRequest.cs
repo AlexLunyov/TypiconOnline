@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.AppServices.Messaging.Common
 {
-    public class CreateItemTextRequest
+    public class CreateItemTextRequest : ServiceRequestBase
     {
         public string Name;
         public string Text;

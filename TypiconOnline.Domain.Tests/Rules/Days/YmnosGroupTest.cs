@@ -20,26 +20,26 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             string xmlString = @"<YmnosGroup ihos=""9"">
 				                    <ymnos>
 					                    <stihos>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, Стих 1-й стихиры.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 1-й стихиры.</item>
 					                    </stihos>
 					                    <text>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, 1 стихира.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 1 стихира.</item>
 					                    </text>
 				                    </ymnos>
 				                    <ymnos>
 					                    <stihos>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, Стих 2-й стихиры.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 2-й стихиры.</item>
 					                    </stihos>
 					                    <text>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, 2 стихира.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 2 стихира.</item>
 					                    </text>
 				                    </ymnos>
 				                    <ymnos>
 					                    <stihos>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, Стих 3-й стихиры.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 3-й стихиры.</item>
 					                    </stihos>
 					                    <text>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, 3 стихира.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 3 стихира.</item>
 					                    </text>
 				                    </ymnos>
 			                    </YmnosGroup>";
@@ -60,30 +60,30 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         {
             string xmlString = @"<YmnosGroup ihos=""4"">
 				                    <prosomoion>
-					                    <cs-ru>Ки́ими похва́льными.</cs-ru>
+					                    <item language=""cs-ru"">Ки́ими похва́льными.</item>
 				                    </prosomoion>
                                     <ymnos>
 					                    <stihos>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, Стих 1-й стихиры.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 1-й стихиры.</item>
 					                    </stihos>
 					                    <text>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, 1 стихира.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 1 стихира.</item>
 					                    </text>
 				                    </ymnos>
 				                    <ymnos>
 					                    <stihos>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, Стих 2-й стихиры.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 2-й стихиры.</item>
 					                    </stihos>
 					                    <text>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, 2 стихира.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 2 стихира.</item>
 					                    </text>
 				                    </ymnos>
 				                    <ymnos>
 					                    <stihos>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, Стих 3-й стихиры.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 3-й стихиры.</item>
 					                    </stihos>
 					                    <text>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, 3 стихира.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 3 стихира.</item>
 					                    </text>
 				                    </ymnos>
 			                    </YmnosGroup>";
@@ -105,7 +105,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             YmnosGroup element1 = new YmnosGroup()
             {
                 Annotation = new ItemText(@"<annotation>
-					                            <cs-ru>Феофа́ново</cs-ru>
+					                            <item language=""cs-ru"">Феофа́ново</item>
 				                            </annotation>"),
                 Ihos = 1,
                 Prosomoion = new Prosomoion()
@@ -114,7 +114,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             YmnosGroup element2 = new YmnosGroup()
             {
                 Annotation = new ItemText(@"<annotation>
-					                            <cs-ru>Феофа́ново</cs-ru>
+					                            <item language=""cs-ru"">Феофа́ново</item>
 				                            </annotation>"),
                 Ihos = 2,
                 Prosomoion = new Prosomoion()
@@ -129,7 +129,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             YmnosGroup element1 = new YmnosGroup()
             {
                 //Annotation = new ItemText(@"<annotation>
-					           //                 <cs-ru>Феофа́ново</cs-ru>
+					           //                 <item language=""cs-ru"">Феофа́ново</item>
 				            //                </annotation>"),
                 Ihos = 1,
                 //Prosomoion = new Prosomoion()
@@ -138,7 +138,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             YmnosGroup element2 = new YmnosGroup()
             {
                 //Annotation = new ItemText(@"<annotation>
-					           //                 <cs-ru>Феофа́ново</cs-ru>
+					           //                 <item language=""cs-ru"">Феофа́ново</item>
 				            //                </annotation>"),
                 Ihos = 1,
                 //Prosomoion = new Prosomoion()
@@ -153,7 +153,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             YmnosGroup element1 = new YmnosGroup()
             {
                 Annotation = new ItemText(@"<annotation>
-                                 <cs-ru>Феофа́ново</cs-ru>
+                                 <item language=""cs-ru"">Феофа́ново</item>
                                 </annotation>"),
                 Ihos = 1,
                 //Prosomoion = new Prosomoion()
@@ -162,7 +162,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             YmnosGroup element2 = new YmnosGroup()
             {
                 Annotation = new ItemText(@"<annotation>
-                                 <cs-cs>Феофа́ново</cs-cs>
+                                 <item language=""cs-cs"">Феофа́ново</item>
                                 </annotation>"),
                 Ihos = 1,
                 //Prosomoion = new Prosomoion()
@@ -176,30 +176,30 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         {
             string xmlString = @"<YmnosGroup ihos=""4"">
 				                    <prosomoion>
-					                    <cs-ru>Ки́ими похва́льными.</cs-ru>
+					                    <item language=""cs-ru"">Ки́ими похва́льными.</item>
 				                    </prosomoion>
                                     <ymnos>
 					                    <stihos>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, Стих 1-й стихиры.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 1-й стихиры.</item>
 					                    </stihos>
 					                    <text>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, 1 стихира.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 1 стихира.</item>
 					                    </text>
 				                    </ymnos>
 				                    <ymnos>
 					                    <stihos>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, Стих 2-й стихиры.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 2-й стихиры.</item>
 					                    </stihos>
 					                    <text>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, 2 стихира.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 2 стихира.</item>
 					                    </text>
 				                    </ymnos>
 				                    <ymnos>
 					                    <stihos>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, Стих 3-й стихиры.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 3-й стихиры.</item>
 					                    </stihos>
 					                    <text>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, 3 стихира.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 3 стихира.</item>
 					                    </text>
 				                    </ymnos>
 			                    </YmnosGroup>";
@@ -217,30 +217,30 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         {
             string xmlString = @"<YmnosGroup ihos=""4"">
 				                    <prosomoion>
-					                    <cs-ru>Ки́ими похва́льными.</cs-ru>
+					                    <item language=""cs-ru"">Ки́ими похва́льными.</item>
 				                    </prosomoion>
                                     <ymnos>
 					                    <stihos>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, Стих 1-й стихиры.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 1-й стихиры.</item>
 					                    </stihos>
 					                    <text>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, 1 стихира.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 1 стихира.</item>
 					                    </text>
 				                    </ymnos>
 				                    <ymnos>
 					                    <stihos>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, Стих 2-й стихиры.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 2-й стихиры.</item>
 					                    </stihos>
 					                    <text>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, 2 стихира.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 2 стихира.</item>
 					                    </text>
 				                    </ymnos>
 				                    <ymnos>
 					                    <stihos>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, Стих 3-й стихиры.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 3-й стихиры.</item>
 					                    </stihos>
 					                    <text>
-						                    <cs-ru>[item] [sign] Малая вечерня. На стиховне, 3 стихира.</cs-ru>
+						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 3 стихира.</item>
 					                    </text>
 				                    </ymnos>
 			                    </YmnosGroup>";

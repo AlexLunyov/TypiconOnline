@@ -8,10 +8,11 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.AppServices.Messaging.Schedule
 {
-    public class GetScheduleDayRequest
+    public class GetScheduleDayRequest: ServiceRequestBase
     {
         public GetScheduleDayRequest()
         {

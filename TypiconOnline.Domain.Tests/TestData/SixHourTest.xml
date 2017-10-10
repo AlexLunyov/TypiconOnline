@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sixhour>
+  <troparion>
+    <group ihos="5">
+      <ymnos>
+        <text>
+          <item language="cs-ru">[item] [sign] 6-й час. Тропарь пророчества</item>
+        </text>
+      </ymnos>
+    </group>
+  </troparion>
+  <prokeimeni>
+    <prokeimenon ihos="4">
+      <stihos>
+        <item language="cs-ru">[item] [sign] 6-й час. Прокимен 1. Стих 1</item>
+      </stihos>
+      <stihos>
+        <item language="cs-ru">[item] [sign] 6-й час. Прокимен 1. Стих 2</item>
+      </stihos>
+    </prokeimenon>
+    <prokeimenon ihos="6">
+      <stihos>
+        <item language="cs-ru">[item] [sign] 6-й час. Прокимен 2. Стих 1</item>
+      </stihos>
+      <stihos>
+        <item language="cs-ru">[item] [sign] 6-й час. Прокимен 2. Стих 2</item>
+      </stihos>
+    </prokeimenon>
+  </prokeimeni>
+  <paroimies>
+    <paroimia quote="3.1-14">
+      <bookname>
+        <item language="cs-ru">Пророчества Исаиина чтение</item>
+      </bookname>
+      <stihos>
+        <item language="cs-ru">[item] [sign] 6-й час. Паремия 1. Стих 1</item>
+      </stihos>
+      <stihos>
+        <item language="cs-ru">[item] [sign] 6-й час. Паремия 1. Стих 2</item>
+      </stihos>
+      <stihos>
+        <item language="cs-ru">[item] [sign] 6-й час. Паремия 1. Стих 3</item>
+      </stihos>
+      <stihos>
+        <item language="cs-ru">[item] [sign] 6-й час. Паремия 1. Стих 4</item>
+      </stihos>
+      <stihos>
+        <item language="cs-ru">[item] [sign] 6-й час. Паремия 1. Стих 5</item>
+      </stihos>
+      <stihos>
+        <item language="cs-ru">[item] [sign] 6-й час. Паремия 1. Стих 6</item>
+      </stihos>
+      <stihos>
+        <item language="cs-ru">[item] [sign] 6-й час. Паремия 1. Стих 7</item>
+      </stihos>
+      <stihos>
+        <item language="cs-ru">[item] [sign] 6-й час. Паремия 1. Стих 8</item>
+      </stihos>
+      <stihos>
+        <item language="cs-ru">[item] [sign] 6-й час. Паремия 1. Стих 9</item>
+      </stihos>
+      <stihos>
+        <item language="cs-ru">[item] [sign] 6-й час. Паремия 1. Стих 10</item>
+      </stihos>
+    </paroimia>
+  </paroimies>
+</sixhour>

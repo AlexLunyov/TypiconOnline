@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain;
-using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon.Modifications;
@@ -177,7 +177,7 @@ namespace TypiconOnline.Domain.Typicon
 
                 //найти текущую Пасху
                 //Для каждого правила выполнять interpret(), где date = текущая Пасха. AddDays(Day.DaysFromEaster)
-                DateTime easter = EasterStorage.Instance.GetCurrentEaster(date.Year);
+                DateTime easter = BookStorage.Instance.Easters.GetCurrentEaster(date.Year);
 
                 TriodionRules.
                     ForEach(a =>
@@ -268,7 +268,7 @@ namespace TypiconOnline.Domain.Typicon
 
         public TriodionRule GetTriodionRule(DateTime date)
         {
-            DateTime easterDate = EasterStorage.Instance.GetCurrentEaster(date.Year);
+            DateTime easterDate = BookStorage.Instance.Easters.GetCurrentEaster(date.Year);
 
             int daysFromEaster = date.Subtract(easterDate).Days;
 

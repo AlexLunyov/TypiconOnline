@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Leitourgia>
+  <makarismi>
+    <odi number="3" count="4"/>
+    <odi number="6" count="4"/>
+  </makarismi>
+  <prokeimenon ihos="7">
+    <stihos>
+      <item language="cs-ru">[item] [sign] Честна́ пред Го́сподем / сме́рть преподо́бных Его́.</item>
+    </stihos>
+    <stihos>
+      <item language="cs-ru">[item] [sign] Что́ возда́м Го́сподеви о все́х, я́же воздаде́ ми?</item>
+    </stihos>
+  </prokeimenon>
+  <apostles>
+    <part number="213"/>
+  </apostles>
+  <alleluia ihos="6">
+    <stihos>
+      <item language="cs-ru">[item] [sign] Блаже́н му́ж, боя́йся Го́спода, в за́поведех Его́ восхо́щет зело́.</item>
+    </stihos>
+    <stihos>
+      <item language="cs-ru">[item] [sign] Си́льно на земли́ бу́дет се́мя его́.</item>
+    </stihos>
+  </alleluia>
+  <evangelion>
+    <part number="10" bookname="Мф"/>
+  </evangelion>
+  <kinonik>
+    <item language="cs-ru">[item] [sign] Ра́дуйтеся пра́веднии о Го́споде, [пра́вым подоба́ет похвала́].</item>
+  </kinonik>
+</Leitourgia>

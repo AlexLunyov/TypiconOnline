@@ -151,10 +151,12 @@ namespace TypiconOnline.Domain.Rules.Days
         public bool Equals(YmnosGroup ymnosGroup)
         {
             if (ymnosGroup == null) throw new ArgumentNullException("YmnosGroup.Equals");
-            
-            return (Ihos.Equals(ymnosGroup.Ihos) 
-                && Annotation?.Equals(ymnosGroup.Annotation) == true 
-                && Prosomoion?.Equals(ymnosGroup.Prosomoion) == true);
+
+            return (Ihos.Equals(ymnosGroup.Ihos)
+                && Annotation == ymnosGroup.Annotation
+                && Prosomoion == ymnosGroup.Prosomoion);
+                //&& Annotation?.Equals(ymnosGroup.Annotation) == true 
+                //&& Prosomoion?.Equals(ymnosGroup.Prosomoion) == true);
         }
     }
 }

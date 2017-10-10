@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Rules.Expressions;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Repository.EF;
@@ -18,9 +18,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         [Test]
         public void DateByDaysFromEaster_Test()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
 
             string xmlString = "<datebydaysfromeaster><int>-1</int></datebydaysfromeaster>";
 
@@ -40,9 +38,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         [Test]
         public void DateByDaysFromEaster_Circle()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
 
             string xmlString = "<datebydaysfromeaster><daysfromeaster><date>--04-07</date></daysfromeaster></datebydaysfromeaster>";
 

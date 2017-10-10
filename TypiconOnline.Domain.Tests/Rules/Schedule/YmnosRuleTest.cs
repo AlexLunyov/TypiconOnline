@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void YmnosRule_Creature()
         {
-            string xmlString = @"<ymnos source=""item1"" place=""kekragaria"" count=""3"" startfrom=""2""/>";
+            string xmlString = @"<ymnosrule source=""item1"" place=""kekragaria"" count=""3"" startfrom=""2""/>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void YmnosRule_InvalidSource()
         {
-            string xmlString = @"<ymnos source=""item"" place=""kekragaria"" count=""3"" startfrom=""2""/>";
+            string xmlString = @"<ymnosrule source=""item"" place=""kekragaria"" count=""3"" startfrom=""2""/>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
@@ -45,7 +45,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void YmnosRule_NoSource()
         {
-            string xmlString = @"<ymnos place=""kekragaria"" count=""3"" startfrom=""2""/>";
+            string xmlString = @"<ymnosrule place=""kekragaria"" count=""3"" startfrom=""2""/>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
@@ -60,7 +60,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void YmnosRule_InvalidPlace()
         {
-            string xmlString = @"<ymnos source=""item1"" place=""kekragaria11"" count=""3"" startfrom=""2""/>";
+            string xmlString = @"<ymnosrule source=""item1"" place=""kekragaria11"" count=""3"" startfrom=""2""/>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
@@ -75,7 +75,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void YmnosRule_InvalidCount()
         {
-            string xmlString = @"<ymnos source=""item1"" place=""kekragaria"" count=""3ss"" startfrom=""2""/>";
+            string xmlString = @"<ymnosrule source=""item1"" place=""kekragaria"" count=""3ss"" startfrom=""2""/>";
 
             XmlDocument xmlDoc = new XmlDocument();
 
@@ -90,7 +90,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void YmnosRule_InvalidStartFrom()
         {
-            string xmlString = @"<ymnos source=""item1"" place=""kekragaria"" count=""3"" startfrom=""2s""/>";
+            string xmlString = @"<ymnosrule source=""item1"" place=""kekragaria"" count=""3"" startfrom=""2s""/>";
 
             XmlDocument xmlDoc = new XmlDocument();
 

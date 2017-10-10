@@ -1,6 +1,8 @@
-﻿namespace TypiconOnline.AppServices.Messaging.Typicon
+﻿using TypiconOnline.Infrastructure.Common.Domain;
+
+namespace TypiconOnline.AppServices.Messaging.Typicon
 {
-    public class InsertTypiconEntityRequest
+    public class InsertTypiconEntityRequest: ServiceRequestBase
     {
     }
 }

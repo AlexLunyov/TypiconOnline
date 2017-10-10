@@ -41,7 +41,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
             xmlDoc.LoadXml(xmlString);
 
             And element = new And(xmlDoc.FirstChild);
-            element.Interpret(DateTime.Today, BypassHandler.Instance);
+            //element.Interpret(DateTime.Today, BypassHandler.Instance);
 
             Assert.IsFalse(element.IsValid);
         }

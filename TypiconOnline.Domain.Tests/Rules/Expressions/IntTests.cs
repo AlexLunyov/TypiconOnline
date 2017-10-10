@@ -20,23 +20,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
             xmlDoc.LoadXml(xmlString);
 
             Int intElement = new Int(xmlDoc.FirstChild);
-            intElement.Interpret(DateTime.Today, BypassHandler.Instance);
+            //intElement.Interpret(DateTime.Today, BypassHandler.Instance);
 
             Assert.IsFalse(intElement.IsValid);
-
-            //bool isValid = true;
-
-            //try
-            //{
-            //    Int intElement = new Int(xmlDoc.FirstChild);
-            //    intElement.Interpret(DateTime.Today);
-            //}
-            //catch (DefinitionsParsingException ex)
-            //{
-            //    isValid = false;
-            //}
-
-            //Assert.IsFalse(isValid);
         }
 
         [Test]

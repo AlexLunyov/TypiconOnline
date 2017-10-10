@@ -11,7 +11,7 @@ using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Schedule;
-using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.WinServices;
@@ -23,6 +23,12 @@ using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Interfaces;
 using System.Collections.Generic;
+using TypiconOnline.Domain.Books.Evangelion;
+using TypiconOnline.Domain.Books.Apostol;
+using TypiconOnline.Domain.Books.Psalter;
+using TypiconOnline.Domain.Books.Oktoikh;
+using TypiconOnline.Domain.Books.Irmologion;
+using TypiconOnline.Domain.Books.OldTestament;
 
 namespace ScheduleForm
 {
@@ -58,7 +64,16 @@ namespace ScheduleForm
 
             _typiconEntity = response.TypiconEntity;
 
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = new BookStorage(
+                container.GetInstance<IEvangelionService>(),
+                container.GetInstance<IApostolService>(),
+                container.GetInstance<IOldTestamentService>(),
+                container.GetInstance<IPsalterService>(),
+                container.GetInstance<IOktoikhService>(),
+                container.GetInstance<IIrmologionService>(),
+                container.GetInstance<IEasterService>());
+
+            //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
             _scheduleService = new ScheduleService();
 
@@ -157,7 +172,7 @@ namespace ScheduleForm
         {
             DateTime date = monthCalendarXML.SelectionRange.Start;
 
-            labelNextScheduleWeek.Text = BookStorage.Oktoikh.GetSundayName(date/*_selectedDate*/);
+            labelNextScheduleWeek.Text = BookStorage.Instance.Oktoikh.GetSundayName(date/*_selectedDate*/);
 
             while (monthCalendarXML.SelectionStart.DayOfWeek != DayOfWeek.Monday)
             {
@@ -205,17 +220,17 @@ namespace ScheduleForm
 
                         _selectedDate = date.AddDays(1);
 
-                        labelNextScheduleWeek.Text = BookStorage.Oktoikh.GetSundayName(_selectedDate);
+                        labelNextScheduleWeek.Text = BookStorage.Instance.Oktoikh.GetSundayName(_selectedDate);
                     }
                     catch
                     {
-                        labelNextScheduleWeek.Text = BookStorage.Oktoikh.GetSundayName(_selectedDate);
+                        labelNextScheduleWeek.Text = BookStorage.Instance.Oktoikh.GetSundayName(_selectedDate);
                         _selectedDate = DateTime.Today;
                     }
                 }
                 else
                 {
-                    labelNextScheduleWeek.Text = BookStorage.Oktoikh.GetSundayName(_selectedDate);
+                    labelNextScheduleWeek.Text = BookStorage.Instance.Oktoikh.GetSundayName(_selectedDate);
                     _selectedDate = DateTime.Today;
                 }
             }
@@ -327,7 +342,7 @@ namespace ScheduleForm
         private string GetFileName(DateTime date)
         {
             string result = textBoxFilePath.Text + "\\";
-            result += _scheduleFileStart + date.ToString("yyyy-MM-dd") + " " + date.AddDays(6).ToString("yyyy-MM-dd") + " " + BookStorage.Oktoikh.GetWeekName(date, true);
+            result += _scheduleFileStart + date.ToString("yyyy-MM-dd") + " " + date.AddDays(6).ToString("yyyy-MM-dd") + " " + BookStorage.Instance.Oktoikh.GetWeekName(date, true);
             return result;
         }
 
@@ -439,7 +454,7 @@ namespace ScheduleForm
 
             textBoxTesting.Clear();
 
-            DateTime easter = EasterStorage.Instance.GetCurrentEaster(dateTimePickerTesting.Value.Year);
+            DateTime easter = BookStorage.Instance.Easters.GetCurrentEaster(dateTimePickerTesting.Value.Year);
 
             int daysFromEaster = dateTimePickerTesting.Value.Subtract(easter).Days;
 
@@ -462,7 +477,7 @@ namespace ScheduleForm
         {
             textBoxTesting.Clear();
 
-            foreach (EasterItem easterItem in EasterStorage.Instance.EasterDays)
+            foreach (EasterItem easterItem in BookStorage.Instance.Easters.GetAll())
             {
                 DateTime innerDate = (DateTime.IsLeapYear(easterItem.Date.Year)) ? new DateTime(easterItem.Date.Year, 3, 08) : new DateTime(easterItem.Date.Year, 3, 09);
                 int daysFromEaster = easterItem.Date.Subtract(innerDate).Days;

@@ -11,7 +11,7 @@ using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using System.Data.Entity.Validation;
 using TypiconOnline.Domain;
-using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Implementations;
 using System.IO;

@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Days;
-using TypiconOnline.Domain.Easter;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Repository.EF;

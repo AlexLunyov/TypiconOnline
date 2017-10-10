@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain;
+using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Days;
-using TypiconOnline.Domain.Easter;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
@@ -23,7 +23,7 @@ namespace TypiconOnline.Repository.EF.Tests
 
             TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
 
-            Assert.AreEqual(typiconEntity.Signs.Count, 14);
+            Assert.AreEqual(typiconEntity.Signs.Count, 16);
         }
 
         [Test]
@@ -58,14 +58,14 @@ namespace TypiconOnline.Repository.EF.Tests
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
 
             TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
             List<ModifiedRule> modifiedDays = typiconEntity.GetModifiedRules(new DateTime(2017, 10, 28));
 
             _unitOfWork.Commit();
 
-            Assert.AreEqual(typiconEntity.ModifiedYears.Count, 1);
+            Assert.AreEqual(modifiedDays.Count, 1);
         }
 
         //[Test]
@@ -87,78 +87,78 @@ namespace TypiconOnline.Repository.EF.Tests
         //    Assert.Pass("Success.");
         //}
 
-        [Test]
-        public void TypiconEntity_GetModifiedRule2()
-        {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+        //[Test]
+        //public void TypiconEntity_GetModifiedRule2()
+        //{
+        //    EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+        //    BookStorage.Instance = BookStorageFactory.Create();
 
-            DayService dayService = new DayService();
+        //    DayService dayService = new DayService();
 
-            dayService.ServiceName = new ItemText()
-            {
-                StringExpression = "<element><cs-ru>Предпразднство Благовещения Пресвятой Богородицы.</cs-ru></element>"
-            };
+        //    dayService.ServiceName = new ItemText()
+        //    {
+        //        StringExpression = "<element><cs-ru>Предпразднство Благовещения Пресвятой Богородицы.</cs-ru></element>"
+        //    };
 
-            MenologyDay day = new MenologyDay()
-            {
-                Date = new ItemDate("--04-06"),
-                DateB = new ItemDate("--04-06"),
-            };
+        //    MenologyDay day = new MenologyDay()
+        //    {
+        //        Date = new ItemDate("--04-06"),
+        //        DateB = new ItemDate("--04-06"),
+        //    };
 
-            day.AppendDayService(dayService);
+        //    day.AppendDayService(dayService);
 
-            Sign sign = new Sign()
-            {
-                Name = "Без знака",
-                RuleDefinition = @"<rule>
-	                                <switch>
-		                                <condition>
-			                                <daysfromeaster><date>--04-06</date></daysfromeaster>
-		                                </condition>
-		                                <case>
-			                                <values>
-				                                <int>-19</int>
-			                                </values>
-			                                <action>
-				                                <modifyday servicesign=""7"" daymove=""-1"" iscustomname=""true""/>
-			                                </action>
-		                                </case>
-		                                <case>
-				                            <values>
-					                            <int>-17</int>
-				                            </values>
-			                                <action>
-				                                <modifyday servicesign=""8"" daymove=""-1"" iscustomname=""true""/>
-			                                </action>
-		                                </case>
-	                                </switch>
-                                </rule>"
-            };
+        //    Sign sign = new Sign()
+        //    {
+        //        Name = "Без знака",
+        //        RuleDefinition = @"<rule>
+	       //                         <switch>
+		      //                          <expression>
+			     //                           <daysfromeaster><date>--04-06</date></daysfromeaster>
+		      //                          </expression>
+		      //                          <case>
+			     //                           <values>
+				    //                            <int>-19</int>
+			     //                           </values>
+			     //                           <action>
+				    //                            <modifyday servicesign=""7"" daymove=""-1"" iscustomname=""true""/>
+			     //                           </action>
+		      //                          </case>
+		      //                          <case>
+				    //                        <values>
+					   //                         <int>-17</int>
+				    //                        </values>
+			     //                           <action>
+				    //                            <modifyday servicesign=""8"" daymove=""-1"" iscustomname=""true""/>
+			     //                           </action>
+		      //                          </case>
+	       //                         </switch>
+        //                        </rule>"
+        //    };
 
-            TypiconEntity typiconEntity = new TypiconEntity();
+        //    TypiconEntity typiconEntity = new TypiconEntity();
 
-            typiconEntity.MenologyRules.Add(new MenologyRule()
-            {
-                DayServices = new List<DayService>() { dayService },
-                Template = sign,
-                Owner = typiconEntity
-            });
+        //    typiconEntity.MenologyRules.Add(new MenologyRule()
+        //    {
+        //        DayServices = new List<DayService>() { dayService },
+        //        Template = sign,
+        //        Owner = typiconEntity
+        //    });
 
-            //typiconEntity.RulesFolder = new TypiconFolderEntity()
-            //{
-            //    Owner = typiconEntity
-            //};
-            //typiconEntity.RulesFolder.AddRule(new MenologyRule()
-            //{
-            //    Day = day,
-            //    Template = sign,
-            //});
+        //    //typiconEntity.RulesFolder = new TypiconFolderEntity()
+        //    //{
+        //    //    Owner = typiconEntity
+        //    //};
+        //    //typiconEntity.RulesFolder.AddRule(new MenologyRule()
+        //    //{
+        //    //    Day = day,
+        //    //    Template = sign,
+        //    //});
 
-            List<ModifiedRule> modifiedDays = typiconEntity.GetModifiedRules(new DateTime(2038, 4, 5));
+        //    List<ModifiedRule> modifiedDays = typiconEntity.GetModifiedRules(new DateTime(2038, 4, 5));
 
-            Assert.IsNotNull(modifiedDays);
-        }
+        //    Assert.IsNotNull(modifiedDays);
+        //}
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
             _daysFromEaster.Interpret(date, handler);
 
-            DateTime easterDate = EasterStorage.Instance.GetCurrentEaster(date.Year);
+            DateTime easterDate = BookStorage.Instance.Easters.GetCurrentEaster(date.Year);
 
             _valueCalculated = easterDate.AddDays((int)_daysFromEaster.ValueCalculated);
         }

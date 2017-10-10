@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Books;
+using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Repository.EF;
 
@@ -18,7 +19,7 @@ namespace TypiconOnline.Domain.Tests.Days
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
 
             TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
 

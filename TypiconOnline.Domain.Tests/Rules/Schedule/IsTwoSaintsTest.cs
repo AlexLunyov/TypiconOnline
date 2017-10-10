@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Messaging.Typicon;
-using TypiconOnline.Domain.Easter;
+using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
@@ -24,7 +24,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         public void IsTwoSaints_Test()
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
             GetTypiconEntityResponse resp = new TypiconEntityService(_unitOfWork).GetTypiconEntity(1);
             TypiconEntity typiconEntity = resp.TypiconEntity;
 

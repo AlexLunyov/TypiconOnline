@@ -1,8 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ektenis>
-  <name>
-    <item language="cs-ru">Мирная ектения.</item>
-  </name>
   <deacon>
     <p>
       <item language="cs-ru">deacon1</item>
@@ -16,7 +13,7 @@
           <date>--01-16</date>
         </equals>
         <exists>
-          <ymnos source="item3" place="kekragaria_doxastichon"/>
+          <ymnosrule source="item3" place="kekragaria_doxastichon"/>
         </exists>
       </and>
     </expression>
@@ -36,7 +33,7 @@
           <date>--02-09</date>
         </equals>
         <exists>
-          <ymnos source="item1" place="kekragaria_doxastichon"/>
+          <ymnosrule source="item1" place="kekragaria_doxastichon"/>
         </exists>
       </and>
     </expression>

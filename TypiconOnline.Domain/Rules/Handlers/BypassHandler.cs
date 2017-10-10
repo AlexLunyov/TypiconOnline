@@ -38,11 +38,13 @@ namespace TypiconOnline.Domain.Rules.Handlers
             }
         }
 
+        private RuleHandlerSettings settings = new RuleHandlerSettings();
+
         public RuleHandlerSettings Settings
         {
             get
             {
-                return null;
+                return settings;
             }
 
             set { }

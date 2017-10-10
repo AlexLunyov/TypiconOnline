@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Rules.Days;
+using System.IO;
+using TypiconOnline.AppServices.Implementations;
 
 namespace TypiconOnline.Domain.Tests.Rules.Days
 {
@@ -15,76 +17,12 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         [Test]
         public void SixHourTest_Deserialization()
         {
-            #region xml
-            string xmlString = @"<sixhour>
-		                            <troparion>
-			                            <group ihos=""5"">
-				                            <ymnos>
-					                            <text>
-						                            <cs-ru>[item] [sign] 6-й час. Тропарь пророчества</cs-ru>
-					                            </text>
-				                            </ymnos>
-			                            </group>
-		                            </troparion>
-		                            <prokeimeni>
-			                            <prokeimenon ihos=""4"">
-				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Прокимен 1. Стих 1</cs-ru>
-				                            </stihos>
-				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Прокимен 1. Стих 2</cs-ru>
-				                            </stihos>
-			                            </prokeimenon>
-			                            <prokeimenon ihos=""6"">
-				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Прокимен 2. Стих 1</cs-ru>
-				                            </stihos>
-				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Прокимен 2. Стих 2</cs-ru>
-				                            </stihos>
-			                            </prokeimenon>
-		                            </prokeimeni>
-		                            <paroimies>
-			                            <paroimia quote=""3.1-14"">
-				                            <bookname>
-					                            <cs-ru>Пророчества Исаиина чтение</cs-ru>
-				                            </bookname>
-				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 1</cs-ru>
-				                            </stihos>
-				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 2</cs-ru>
-				                            </stihos>
-				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 3</cs-ru>
-				                            </stihos>
-				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 4</cs-ru>
-				                            </stihos>
-				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 5</cs-ru>
-				                            </stihos>
-				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 6</cs-ru>
-				                            </stihos>
-				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 7</cs-ru>
-				                            </stihos>
-				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 8</cs-ru>
-				                            </stihos>
-				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 9</cs-ru>
-				                            </stihos>
-				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 10</cs-ru>
-				                            </stihos>
-			                            </paroimia>
-		                            </paroimies>
-	                            </sixhour>";
-            #endregion
+            string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
+            FileReader reader = new FileReader(folderPath);
+            string xml = reader.GetXml("SixHourTest.xml");
+
             TypiconSerializer ser = new TypiconSerializer();
-            SixHour element = ser.Deserialize<SixHour>(xmlString);
+            SixHour element = ser.Deserialize<SixHour>(xml);
 
             Assert.AreEqual(1, element.Troparion.YmnosStructureCount);
             Assert.AreEqual(2, element.Prokeimeni.Count);
@@ -100,55 +38,55 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
 		                            <prokeimeni>
 			                            <prokeimenon ihos=""4"">
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Прокимен 1. Стих 1</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Прокимен 1. Стих 1</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Прокимен 1. Стих 2</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Прокимен 1. Стих 2</item>
 				                            </stihos>
 			                            </prokeimenon>
 			                            <prokeimenon ihos=""6"">
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Прокимен 2. Стих 1</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Прокимен 2. Стих 1</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Прокимен 2. Стих 2</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Прокимен 2. Стих 2</item>
 				                            </stihos>
 			                            </prokeimenon>
 		                            </prokeimeni>
 		                            <paroimies>
 			                            <paroimia quote=""3.1-14"">
 				                            <bookname>
-					                            <cs-ru>Пророчества Исаиина чтение</cs-ru>
+					                            <item language=""cs-ru"">Пророчества Исаиина чтение</item>
 				                            </bookname>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 1</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 1</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 2</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 2</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 3</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 3</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 4</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 4</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 5</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 5</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 6</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 6</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 7</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 7</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 8</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 8</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 9</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 9</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 10</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 10</item>
 				                            </stihos>
 			                            </paroimia>
 		                            </paroimies>
@@ -169,7 +107,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
 			                            <group ihos=""5"">
 				                            <ymnos>
 					                            <text>
-						                            <cs-ru>[item] [sign] 6-й час. Тропарь пророчества</cs-ru>
+						                            <item language=""cs-ru"">[item] [sign] 6-й час. Тропарь пророчества</item>
 					                            </text>
 				                            </ymnos>
 			                            </group>
@@ -180,37 +118,37 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
 		                            <paroimies>
 			                            <paroimia quote=""3.1-14"">
 				                            <bookname>
-					                            <cs-ru>Пророчества Исаиина чтение</cs-ru>
+					                            <item language=""cs-ru"">Пророчества Исаиина чтение</item>
 				                            </bookname>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 1</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 1</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 2</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 2</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 3</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 3</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 4</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 4</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 5</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 5</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 6</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 6</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 7</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 7</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 8</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 8</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 9</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 9</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Паремия 1. Стих 10</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Паремия 1. Стих 10</item>
 				                            </stihos>
 			                            </paroimia>
 		                            </paroimies>
@@ -231,7 +169,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
 			                            <group ihos=""5"">
 				                            <ymnos>
 					                            <text>
-						                            <cs-ru>[item] [sign] 6-й час. Тропарь пророчества</cs-ru>
+						                            <item language=""cs-ru"">[item] [sign] 6-й час. Тропарь пророчества</item>
 					                            </text>
 				                            </ymnos>
 			                            </group>
@@ -239,18 +177,18 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
 		                            <prokeimeni>
 			                            <prokeimenon ihos=""4"">
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Прокимен 1. Стих 1</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Прокимен 1. Стих 1</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Прокимен 1. Стих 2</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Прокимен 1. Стих 2</item>
 				                            </stihos>
 			                            </prokeimenon>
 			                            <prokeimenon ihos=""6"">
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Прокимен 2. Стих 1</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Прокимен 2. Стих 1</item>
 				                            </stihos>
 				                            <stihos>
-					                            <cs-ru>[item] [sign] 6-й час. Прокимен 2. Стих 2</cs-ru>
+					                            <item language=""cs-ru"">[item] [sign] 6-й час. Прокимен 2. Стих 2</item>
 				                            </stihos>
 			                            </prokeimenon>
 		                            </prokeimeni>

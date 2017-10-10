@@ -161,7 +161,7 @@ namespace TypiconOnline.Domain.Services
 
                 //Если имеется короткое название, то добавляем только его
 
-                result = BookStorage.Oktoikh.GetSundayName(inputRequest.Date, 
+                result = BookStorage.Instance.Oktoikh.GetSundayName(inputRequest.Date, 
                     GetShortName(handlerRequest.DayServices, handlerRequest.Language)) + " " + result;
 
                 //жестко задаем воскресный день
@@ -416,7 +416,7 @@ namespace TypiconOnline.Domain.Services
         {
             ScheduleWeek week = new ScheduleWeek() 
             {
-                Name = BookStorage.Oktoikh.GetWeekName(request.Date, false)
+                Name = BookStorage.Instance.Oktoikh.GetWeekName(request.Date, false)
             };
 
             GetScheduleDayRequest dayRequest = new GetScheduleDayRequest()

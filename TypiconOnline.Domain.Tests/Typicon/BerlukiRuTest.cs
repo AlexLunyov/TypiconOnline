@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Messaging.Typicon;
-using TypiconOnline.Domain.Easter;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
@@ -15,6 +14,7 @@ using TypiconOnline.Repository.EF;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Books;
 
 namespace TypiconOnline.Domain.Tests.Typicon
 {
@@ -26,7 +26,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
 
             TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
 
@@ -68,7 +68,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
+            BookStorage.Instance = BookStorageFactory.Create();
 
             TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
 
