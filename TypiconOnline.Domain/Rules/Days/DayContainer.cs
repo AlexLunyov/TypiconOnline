@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// </summary>
     [Serializable]
     [XmlRoot(ElementName = RuleConstants.DayElementNode)]
-    public class DayContainer : ValueObjectBase
+    public class DayContainer : DayElementBase
     {
         public DayContainer() { }
 

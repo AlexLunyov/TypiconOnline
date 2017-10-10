@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Rules;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Books.Irmologion
@@ -12,5 +13,8 @@ namespace TypiconOnline.Domain.Books.Irmologion
     /// </summary>
     public class GetTheotokionRequest: ServiceRequestBase
     {
+        public PlaceYmnosSource Place { get; set; }
+        public int Ihos { get; set; }
+        public DayOfWeek DayOfWeek { get; set; }
     }
 }

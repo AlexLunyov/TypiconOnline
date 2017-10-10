@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Описание прокимна
     /// </summary>
     [Serializable]
-    public class Prokeimenon : ValueObjectBase
+    public class Prokeimenon : DayElementBase
     {
         public Prokeimenon() { }
 

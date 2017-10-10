@@ -11,7 +11,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Описание песни из блаженн
     /// </summary>
     [Serializable]
-    public class MakariosOdi : ValueObjectBase
+    public class MakariosOdi : DayElementBase
     {
         public MakariosOdi() { }
 

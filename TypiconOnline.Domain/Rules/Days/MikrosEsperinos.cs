@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Описание службы малой вечерни
     /// </summary>
     [Serializable]
-    public class MikrosEsperinos : ValueObjectBase
+    public class MikrosEsperinos : DayElementBase
     {
         public MikrosEsperinos() { }
 

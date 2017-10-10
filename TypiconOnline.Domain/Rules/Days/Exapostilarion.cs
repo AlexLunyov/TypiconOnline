@@ -12,7 +12,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Описание эксапостилария, находящегося после 9-й песни канона утрени
     /// </summary>
     [Serializable]
-    public class Exapostilarion : ValueObjectBase
+    public class Exapostilarion : DayElementBase
     {
         #region Properties
 

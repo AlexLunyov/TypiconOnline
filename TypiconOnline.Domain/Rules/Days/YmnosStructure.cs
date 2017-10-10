@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Таквыми являются Стихиры на Господи воззвах, на Хвалитех, и т.д.
     /// </summary>
     [Serializable]
-    public class YmnosStructure : ValueObjectBase
+    public class YmnosStructure : DayElementBase
     {
         private List<YmnosGroup> _groups = new List<YmnosGroup>();
         private List<YmnosGroup> _theotokion = new List<YmnosGroup>();

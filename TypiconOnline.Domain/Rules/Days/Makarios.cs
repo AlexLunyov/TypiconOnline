@@ -9,9 +9,9 @@ using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Rules.Days
 {
-    public class Makarios : RuleElement
+    public class Makarios : DayElementBase
     {
-        public Makarios(XmlNode node) : base(node)
+        public Makarios(XmlNode node) 
         {
 
         }
@@ -21,11 +21,6 @@ namespace TypiconOnline.Domain.Rules.Days
         public List<MakariosOdi> Odes { get; set; }
 
         #endregion
-
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
-        {
-            throw new NotImplementedException();
-        }
 
         protected override void Validate()
         {

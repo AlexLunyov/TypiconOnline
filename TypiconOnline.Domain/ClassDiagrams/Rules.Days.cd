@@ -1,134 +1,213 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="TypiconOnline.Domain.Rules.Days.DayContainer" Collapsed="true">
-    <Position X="8.5" Y="2" Width="1.5" />
+  <Class Name="TypiconOnline.Domain.Rules.Days.ApostlesPart" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAABAAAAgAAQAAAAABEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAACAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rules\Days\ApostlesPart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.DayContainer" Collapsed="true">
+    <Position X="7.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAABAIAAgAAQAAEAABEAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Days\DayContainer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Days.DayContainerBusinessConstraint" Collapsed="true">
-    <Position X="29.25" Y="0.5" Width="1.5" />
+    <Position X="41.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Days\DayContainerBusinessConstraint.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.Esperinos" Collapsed="true">
-    <Position X="1.75" Y="3.5" Width="1.5" />
+  <Class Name="TypiconOnline.Domain.Rules.Days.DayElementBase" Collapsed="true">
+    <Position X="19.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAgAAAAAEAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rules\Days\DayElementBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.Esperinos" Collapsed="true">
+    <Position X="2.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAIAAAAAAAAAAAAAgAAAAAEAAAAAA=</HashCode>
       <FileName>Rules\Days\Esperinos.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.EvangelionReading" Collapsed="true">
-    <Position X="19.75" Y="2" Width="1.75" />
+  <Class Name="TypiconOnline.Domain.Rules.Days.Evangelion" Collapsed="true">
+    <Position X="38.75" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Rules\Days\EvangelionReading.cs</FileName>
+      <HashCode>AAAAAAAAAACAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rules\Days\Evangelion.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.IhosRuleElement" Collapsed="true">
-    <Position X="5" Y="2" Width="1.5" />
+  <Class Name="TypiconOnline.Domain.Rules.Days.EvangelionPart" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Rules\Days\IhosRuleElement.cs</FileName>
+      <HashCode>AAAAAAAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rules\Days\EvangelionPart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.EvangelionPartBusinessConstraint" Collapsed="true">
+    <Position X="43" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Rules\Days\EvangelionPartBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.Exapostilarion" Collapsed="true">
+    <Position X="23" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAACAAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Rules\Days\Exapostilarion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.ExapostilarionItem" Collapsed="true">
+    <Position X="29.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAgAAAAAAQAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Rules\Days\ExapostilarionItem.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Days.Kanonas" Collapsed="true">
-    <Position X="4" Y="3.5" Width="1.5" />
+    <Position X="34.25" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABIAAAAACACAAAACAAQAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <HashCode>AQABAAAAEACACAAAACAAQAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
       <FileName>Rules\Days\Kanonas.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.Leitourgia" Collapsed="true">
-    <Position X="24.5" Y="2" Width="1.5" />
+  <Class Name="TypiconOnline.Domain.Rules.Days.KanonasBusinessConstraint" Collapsed="true">
+    <Position X="44.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Rules\Days\Leitourgia.cs</FileName>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rules\Days\KanonasBusinessConstraint.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.Makarios" Collapsed="true">
-    <Position X="10.75" Y="2" Width="1.5" />
+  <Class Name="TypiconOnline.Domain.Rules.Days.Kontakion" Collapsed="true">
+    <Position X="11.75" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAACAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Rules\Days\Makarios.cs</FileName>
+      <HashCode>AQAAAEAAAACAAAAAAAAAgAAAAAgQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rules\Days\Kontakion.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.MakariosOdi" Collapsed="true">
-    <Position X="15.25" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAIAAAAACAAAAAAEAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Rules\Days\MakariosOdi.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.MikrosEsperinos" Collapsed="true">
-    <Position X="1.75" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAIAgAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
-      <FileName>Rules\Days\MikrosEsperinos.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.Odi" Collapsed="true">
-    <Position X="22.25" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAIAAAAACAAAAAAEAAIAAAAAAAAgAAAAAAAAAAAIA=</HashCode>
-      <FileName>Rules\Days\Odi.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.OdiBusinessConstraint" Collapsed="true">
-    <Position X="31" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
-      <FileName>Rules\Days\OdiBusinessConstraint.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.OdiTroparion" Collapsed="true">
-    <Position X="2.75" Y="6" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Rules\Days\OdiTroparion.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.Orthros" Collapsed="true">
-    <Position X="17.5" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAIQAAAACAAAAAAgAAAAAAACAQwEEAAAAAGgAAAAA=</HashCode>
-      <FileName>Rules\Days\Orthros.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.Prokeimenon" Collapsed="true">
-    <Position X="5.5" Y="6" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AQAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
-      <FileName>Rules\Days\Prokeimenon.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.Prosomoion" Collapsed="true">
-    <Position X="0.5" Y="6" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAgAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Rules\Days\Prosomoion.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.Ymnos" Collapsed="true">
-    <Position X="13" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAIAAAEACAAAAAAAAAgAAAAAAAAAAAAAAACAAAAQA=</HashCode>
-      <FileName>Rules\Days\Ymnos.cs</FileName>
-    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Days.KontakionBusinessConstraint" Collapsed="true">
-    <Position X="29.25" Y="1.5" Width="1.5" />
+    <Position X="46.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Days\KontakionBusinessConstraint.cs</FileName>
       <NewMemberFileName>Rules\Days\YmnosBusinessConstraint.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.Leitourgia" Collapsed="true">
+    <Position X="18.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAQEAAAAACAAAAAAAAAAAAAACAAAAAAAAAAAgAAEAA=</HashCode>
+      <FileName>Rules\Days\Leitourgia.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.MakariosOdi" Collapsed="true">
+    <Position X="25.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAEAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rules\Days\MakariosOdi.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.MakariosOdiBusinessConstraint" Collapsed="true">
+    <Position X="41.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Rules\Days\MakariosOdiBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.MikrosEsperinos" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAIAgAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Rules\Days\MikrosEsperinos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.Odi" Collapsed="true">
+    <Position X="9.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAEAAIAAAAAAAAgAAAAAAAAAAAIA=</HashCode>
+      <FileName>Rules\Days\Odi.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.OdiBusinessConstraint" Collapsed="true">
+    <Position X="43" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Rules\Days\OdiBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.Orthros" Collapsed="true">
+    <Position X="20.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAACAAAAAAgAAAAAAACAQAEEAAADAGgAAAAA=</HashCode>
+      <FileName>Rules\Days\Orthros.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.Paroimia" Collapsed="true">
+    <Position X="32" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEASAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Rules\Days\Paroimia.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.Prokeimenon" Collapsed="true">
+    <Position X="36.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAEADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Rules\Days\Prokeimenon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.ProkeimenonBusinessConstraint" Collapsed="true">
+    <Position X="44.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAAAAA=</HashCode>
+      <FileName>Rules\Days\ProkeimenonBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.Prosomoion" Collapsed="true">
+    <Position X="46.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAABAAACAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Rules\Days\Prosomoion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.SixHour" Collapsed="true">
+    <Position X="16.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAIAAAAAAAAAAAAAgAAAAACAAAAAA=</HashCode>
+      <FileName>Rules\Days\SixHour.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.SixHourBusinessConstraint" Collapsed="true">
+    <Position X="41.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Rules\Days\SixHourBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.Ymnos" Collapsed="true">
+    <Position X="27.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEADAAAAAAAAAgAAAAAAAAAAAAAAACAAAAQA=</HashCode>
+      <FileName>Rules\Days\Ymnos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Days.YmnosBusinessConstraint" Collapsed="true">
+    <Position X="43" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rules\Days\YmnosBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="TypiconOnline.Domain.Rules.Days.YmnosGroup" Collapsed="true">
-    <Position X="6.25" Y="3.5" Width="1.5" />
+    <Position X="5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAABAAAADAAAAAgAAAgAAAAAAQAAAACAAAAAAAAAA=</HashCode>
       <FileName>Rules\Days\YmnosGroup.cs</FileName>
@@ -136,46 +215,24 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Days.YmnosGroupBusinessConstraint" Collapsed="true">
-    <Position X="31" Y="1.5" Width="1.5" />
+    <Position X="44.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Rules\Days\YmnosGroupBusinessConstraint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Days.YmnosStructure" Collapsed="true">
-    <Position X="26.75" Y="2" Width="1.5" />
+    <Position X="14" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAAACAAAQACAQAAIAAAEAAAAAAAAAgAIAAAAQ=</HashCode>
       <FileName>Rules\Days\YmnosStructure.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.RuleElement" Collapsed="true">
-    <Position X="14.25" Y="0.5" Width="1.5" />
+  <Enum Name="TypiconOnline.Domain.Rules.Days.EvangelionBook" Collapsed="true">
+    <Position X="41.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAAAgABAAAAAAAAAAAIAAAIAAAAAAAA=</HashCode>
-      <FileName>Rules\RuleElement.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TypiconOnline.Domain.ItemTypes.ItemText" Collapsed="true">
-    <Position X="1.75" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAACBAAAAAACAADACAABAgAAAAAACiAAAAQA=</HashCode>
-      <FileName>ItemTypes\ItemText.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="TypiconOnline.Domain.ItemTypes.ItemTextCollection" Collapsed="true">
-    <Position X="5.5" Y="4.5" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAGAAAABAAAAAAABAAgAAAAAACAAAACQA=</HashCode>
-      <FileName>ItemTypes\ItemTextCollection.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Enum Name="TypiconOnline.Domain.Rules.Days.OdiTroparionKind" Collapsed="true">
-    <Position X="29.25" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAACA=</HashCode>
-      <FileName>Rules\Days\OdiTroparion.cs</FileName>
+      <HashCode>AAAAAAAAAAAACAAAAAAQQgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rules\Days\EvangelionPart.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

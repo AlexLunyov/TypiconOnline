@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Песнь канона
     /// </summary>
     [Serializable]
-    public class Odi : ValueObjectBase
+    public class Odi : DayElementBase
     {
         public Odi() { }
 

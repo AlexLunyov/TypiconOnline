@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Описание кондака, содержащегося в каноне утрени
     /// </summary>
     [Serializable]
-    public class Kontakion : ValueObjectBase, IContainingIhos
+    public class Kontakion : DayElementBase, IContainingIhos
     {
         #region Properties
         /// <summary>

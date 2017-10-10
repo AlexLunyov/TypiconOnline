@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Описание Литургийных чтений
     /// </summary>
     [Serializable]
-    public class Leitourgia : ValueObjectBase
+    public class Leitourgia : DayElementBase
     {
         public Leitourgia() { }
 

@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Описание канона (на утрене, повечерии, полунощнице, молебне и т.д.)
     /// </summary>
     [Serializable]
-    public class Kanonas : ValueObjectBase, IContainingIhos
+    public class Kanonas : DayElementBase, IContainingIhos
     {
         public Kanonas() { }
 

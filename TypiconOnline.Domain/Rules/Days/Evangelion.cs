@@ -12,7 +12,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// <summary>
     /// Евангельское чтение
     /// </summary>
-    public class Evangelion : ValueObjectBase
+    public class Evangelion : DayElementBase
     {
         public Evangelion() { }
 

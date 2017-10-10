@@ -10,7 +10,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 namespace TypiconOnline.Domain.Rules.Days
 {
     [Serializable]
-    public class ApostlesPart : ValueObjectBase
+    public class ApostlesPart : DayElementBase
     {
         public ApostlesPart() { }
 

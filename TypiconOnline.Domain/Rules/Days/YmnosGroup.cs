@@ -17,7 +17,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Песнопения, сгруппированные по подобнам
     /// </summary>
     [Serializable]
-    public class YmnosGroup : ValueObjectBase, IContainingIhos
+    public class YmnosGroup : DayElementBase, IContainingIhos
     {
         public YmnosGroup()
         {

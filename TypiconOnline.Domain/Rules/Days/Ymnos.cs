@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Песнопение
     /// </summary>
     [Serializable]
-    public class Ymnos : ValueObjectBase
+    public class Ymnos : DayElementBase
     {
         public Ymnos() { }
 

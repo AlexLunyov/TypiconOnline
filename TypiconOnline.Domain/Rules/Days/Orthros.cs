@@ -10,7 +10,7 @@ namespace TypiconOnline.Domain.Rules.Days
 {
     [Serializable]
     [XmlRoot(RuleConstants.OrthrosNode)]
-    public class Orthros : ValueObjectBase
+    public class Orthros : DayElementBase
     {
         public Orthros() { }
 

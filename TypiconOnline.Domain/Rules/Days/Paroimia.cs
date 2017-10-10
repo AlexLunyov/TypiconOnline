@@ -11,7 +11,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Паремия
     /// </summary>
     [Serializable]
-    public class Paroimia : ValueObjectBase
+    public class Paroimia : DayElementBase
     {
         public Paroimia() { }
 

@@ -7,7 +7,7 @@ namespace TypiconOnline.Domain.Rules.Days
 {
     [Serializable]
     [XmlRoot(ElementName = RuleConstants.SixHourNode)]
-    public class SixHour : ValueObjectBase
+    public class SixHour : DayElementBase
     {
         public SixHour() { }
 

@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Элемент структуры эксапостилария
     /// </summary>
     [Serializable]
-    public class ExapostilarionItem : ValueObjectBase
+    public class ExapostilarionItem : DayElementBase
     {
         #region Properties
         /// <summary>
