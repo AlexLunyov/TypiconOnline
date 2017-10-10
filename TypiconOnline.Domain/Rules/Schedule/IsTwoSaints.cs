@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// Возвращает true, если в списке текстов 
     /// богослужений присутствуют две службы, не отмеченные признаком Праздника, принадлежащие к Минее.
     /// </summary>
-    public class IsTwoSaints : BooleanExpression, ICustomInterpreted
+    public class IsTwoSaints : BooleanExpression
     {
         public IsTwoSaints(XmlNode node) : base(node)
         {

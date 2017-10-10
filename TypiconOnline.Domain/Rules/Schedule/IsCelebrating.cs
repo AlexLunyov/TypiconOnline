@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// Возвращает true, если в списке текстов 
     /// богослужений присутствует служба Господского или Богородиченого праздника, его предпразднства или попразднства.
     /// </summary>
-    public class IsCelebrating : BooleanExpression, ICustomInterpreted
+    public class IsCelebrating : BooleanExpression
     {
         public IsCelebrating(XmlNode node) : base(node)
         {

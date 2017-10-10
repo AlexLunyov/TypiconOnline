@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// Элемент, возвращающий булевское значение.
     /// Возвращает true, если дочерний элемент ymnos указывает на существующие богослужебные тексты.
     /// </summary>
-    public class IsExists : BooleanExpression, ICustomInterpreted
+    public class IsExists : BooleanExpression
     {
         private YmnosRule _ymnos;
 
