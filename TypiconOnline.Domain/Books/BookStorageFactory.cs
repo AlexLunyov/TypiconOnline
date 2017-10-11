@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.Books
                                     new OldTestamentService(_unitOfWork),
                                     new PsalterService(_unitOfWork),
                                     new OktoikhService(_unitOfWork),
-                                    new IrmologionService(_unitOfWork),
+                                    new ReadOnlyIrmTheotokionService(_unitOfWork),
                                     new EasterService(_unitOfWork));
         }
     }

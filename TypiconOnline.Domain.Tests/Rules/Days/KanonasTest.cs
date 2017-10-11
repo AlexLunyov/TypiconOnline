@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         {
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
             FileReader reader = new FileReader(folderPath);
-            string xml = reader.GetXml("KanonasTest.xml");
+            string xml = reader.Read("KanonasTest.xml");
 
             TypiconSerializer ser = new TypiconSerializer();
             Kanonas element = ser.Deserialize<Kanonas>(xml);

@@ -270,10 +270,13 @@ namespace TypiconOnline.Domain.Rules
         aposticha_orthros_doxastichon,
         aposticha_orthros_theotokion,
         //Irmologion
-        app1,
-        app2,
+        app1_kekragaria,
+        app1_aposticha,
+        app2_esperinos,
+        app2_orthros,
         app3,
-        app4
+        app4_esperinos,
+        app4_orthros
     }
 
     /// <summary>

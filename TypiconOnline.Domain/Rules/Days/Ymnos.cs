@@ -17,7 +17,10 @@ namespace TypiconOnline.Domain.Rules.Days
     [Serializable]
     public class Ymnos : DayElementBase
     {
-        public Ymnos() { }
+        public Ymnos()
+        {
+            Text = new ItemText();
+        }
 
         public Ymnos(Ymnos source)
         {

@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Tests.Days
         {
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
             FileReader reader = new FileReader(folderPath);
-            string xml = reader.GetXml("Esperinos.xml");
+            string xml = reader.Read("Esperinos.xml");
 
             TypiconSerializer ser = new TypiconSerializer();
 

@@ -22,7 +22,7 @@
         <p>
           <item language="cs-ru">choir1</item>
         </p>
-      </choir>      
+      </choir>
     </then>
   </if>
   <if>

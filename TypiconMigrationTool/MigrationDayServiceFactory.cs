@@ -63,14 +63,14 @@ namespace TypiconMigrationTool
             //сначала ищем в папке Menology в надежде, что текст определен (как в последствии и должно быть)
             _fileReader.FolderPath = _folderPath + "Menology\\";
 
-            string definition = _fileReader.GetXml(fileName);
+            string definition = _fileReader.Read(fileName);
 
             if (string.IsNullOrEmpty(definition))
             {
                 //Если его мы не находим, то заменяем текстом по умолчанию, исходя из знака службы
                 _fileReader.FolderPath = _folderPath + "Templates\\";
                 fileName = SignMigrator.Instance(_row.SignID).MajorTemplateName;
-                definition = TransformDefinition(_fileReader.GetXml(fileName), _row.Name, fileName);
+                definition = TransformDefinition(_fileReader.Read(fileName), _row.Name, fileName);
             }
 
             dayService.DayDefinition = definition;

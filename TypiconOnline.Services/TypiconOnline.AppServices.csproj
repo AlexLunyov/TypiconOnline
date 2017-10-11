@@ -48,6 +48,7 @@
     <Compile Include="Common\SignMigrator.cs" />
     <Compile Include="Common\XmlToFileSaver.cs" />
     <Compile Include="Exceptions\ResourceNotFoundException.cs" />
+    <Compile Include="Implementations\Books\IrmologionTheotokionService.cs" />
     <Compile Include="Implementations\DayContainerService.cs" />
     <Compile Include="Implementations\EnrichedTypiconEntityService.cs" />
     <Compile Include="Implementations\FileReader.cs" />
@@ -57,12 +58,22 @@
     <Compile Include="Implementations\TextScheduleDayViewer.cs" />
     <Compile Include="Implementations\TypiconEntityService.cs" />
     <Compile Include="Interfaces\IDayContainerService.cs" />
+    <Compile Include="Interfaces\IFileReader.cs" />
+    <Compile Include="Interfaces\IIrmologionTheotokionService.cs" />
+    <Compile Include="Interfaces\IIrmologionTheotokionFactory.cs" />
+    <Compile Include="Interfaces\IIrmologionTheotokionFileReader.cs" />
     <Compile Include="Interfaces\IScheduleDayViewer.cs" />
     <Compile Include="Interfaces\IScheduleService.cs" />
     <Compile Include="Interfaces\IScheduleWeekViewer.cs" />
     <Compile Include="Interfaces\ITypiconEntityService.cs" />
     <Compile Include="Interfaces\IXmlMigrationService.cs" />
     <Compile Include="Interfaces\IXmlSaver.cs" />
+    <Compile Include="Messaging\Books\DeleteTheotokionRequest.cs" />
+    <Compile Include="Messaging\Books\DeleteTheotokionResponse.cs" />
+    <Compile Include="Messaging\Books\InsertTheotokionRequest.cs" />
+    <Compile Include="Messaging\Books\InsertTheotokionResponse.cs" />
+    <Compile Include="Messaging\Books\UpdateTheotokionRequest.cs" />
+    <Compile Include="Messaging\Books\UpdateTheotokionResponse.cs" />
     <Compile Include="Messaging\Common\CreateItemTextRequest.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleDayRequest.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleDayResponse.cs" />
@@ -77,6 +88,9 @@
     <Compile Include="Messaging\Typicon\UpdateTypiconEntityRequest.cs" />
     <Compile Include="Messaging\Typicon\UpdateTypiconEntityResponse.cs" />
     <Compile Include="Migration\DayDefinitionTemplateService.cs" />
+    <Compile Include="Interfaces\IMigrationManager.cs" />
+    <Compile Include="Migration\IrmologionTheotokionFileReader.cs" />
+    <Compile Include="Migration\IrmologionTheotokionMigrationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

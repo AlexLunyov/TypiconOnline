@@ -61,11 +61,13 @@ namespace TypiconOnline.Repository.EF.DataBase
 
             //modelBuilder.Configurations.Add(new ModifiedTriodionRuleMap());
 
-            modelBuilder.Configurations.Add(new CommonRuleMap()); 
+            modelBuilder.Configurations.Add(new CommonRuleMap());
 
             //modelBuilder.Configurations.Add(new TypiconRuleMap());
 
             //modelBuilder.Configurations.Add(new TypiconDayRuleMap()); 
+
+            modelBuilder.Configurations.Add(new IrmologionTheotokionMap());
         }
 
         #endregion

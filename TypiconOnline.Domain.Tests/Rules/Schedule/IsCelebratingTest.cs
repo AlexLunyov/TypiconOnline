@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
             FileReader reader = new FileReader(folderPath);
-            string xml = reader.GetXml("IsCelebrating_Simple.xml");
+            string xml = reader.Read("IsCelebrating_Simple.xml");
 
             //Ektenis element = RuleFactory.CreateElement(xml) as Ektenis;
 

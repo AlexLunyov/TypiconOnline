@@ -43,7 +43,7 @@ namespace ScheduleForm
                     x.For<IOldTestamentService>().Use<OldTestamentService>();
                     x.For<IPsalterService>().Use<PsalterService>();
                     x.For<IOktoikhService>().Use<OktoikhService>();
-                    x.For<IIrmologionService>().Use<IrmologionService>();
+                    x.For<IReadOnlyIrmTheotokionService>().Use<ReadOnlyIrmTheotokionService>();
                     x.For<IEasterService>().Use<EasterService>();
                 });
         }

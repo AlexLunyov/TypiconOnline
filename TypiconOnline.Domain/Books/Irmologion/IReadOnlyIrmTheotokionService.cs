@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace TypiconOnline.Domain.Books.Irmologion
 {
-    public interface IIrmologionService
+    public interface IReadOnlyIrmTheotokionService
     {
         GetTheotokionResponse GetTheotokion(GetTheotokionRequest request);
+
+        GetAllTheotokionResponse GetAll();
     }
 }

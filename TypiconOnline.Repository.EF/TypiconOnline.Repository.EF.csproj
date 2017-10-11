@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBase\Mapping\CommonRuleMap.cs" />
+    <Compile Include="DataBase\Mapping\IrmologionTheotokionMap.cs" />
     <Compile Include="DataBase\Mapping\DayRuleMap.cs" />
     <Compile Include="DataBase\Mapping\DayServiceMap.cs" />
     <Compile Include="DataBase\Mapping\EasterItemMap.cs" />

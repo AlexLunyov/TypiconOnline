@@ -47,11 +47,14 @@
     <Compile Include="Books\Easter\EasterService.cs" />
     <Compile Include="Books\Evangelion\EvangelionService.cs" />
     <Compile Include="Books\Evangelion\IEvangelionService.cs" />
+    <Compile Include="Books\GetBookElementResponseBase.cs" />
+    <Compile Include="Books\IBookElement.cs" />
     <Compile Include="Books\IBookStorageFactory.cs" />
+    <Compile Include="Books\Irmologion\GetAllTheotokionResponse.cs" />
     <Compile Include="Books\Irmologion\GetTheotokionResponse.cs" />
     <Compile Include="Books\Irmologion\GetTheotokionRequest.cs" />
-    <Compile Include="Books\Irmologion\IIrmologionService.cs" />
-    <Compile Include="Books\Irmologion\IrmologionService.cs" />
+    <Compile Include="Books\Irmologion\IReadOnlyIrmTheotokionService.cs" />
+    <Compile Include="Books\Irmologion\ReadOnlyIrmTheotokionService.cs" />
     <Compile Include="Books\Irmologion\IrmologionTheotokion.cs" />
     <Compile Include="Books\Irmologion\IrmologionTheotokionBusinessConstraint.cs" />
     <Compile Include="Books\Oktoikh\IOktoikhService.cs" />
@@ -267,6 +270,7 @@
     <Folder Include="Books\Menology\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagrams\Everything.cd" />
     <None Include="ClassDiagrams\Basics.cd" />
     <None Include="ClassDiagrams\Handlers.cd" />
     <None Include="ClassDiagrams\Rules.cd" />

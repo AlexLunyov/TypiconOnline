@@ -113,11 +113,11 @@ namespace TypiconOnline.AppServices.Implementations
                 {
                     if (rule.Date.IsEmpty && rule.DateB.IsEmpty)
                     {
-                        rule.RuleDefinition = fileReader.GetXml(rule.Name);
+                        rule.RuleDefinition = fileReader.Read(rule.Name);
                     }
                     else
                     {
-                        rule.RuleDefinition = fileReader.GetXml(rule.DateB.Expression);
+                        rule.RuleDefinition = fileReader.Read(rule.DateB.Expression);
                     }
 
                 }
@@ -128,7 +128,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 foreach (TriodionRule rule in response.TypiconEntity.TriodionRules)
                 {
-                    rule.RuleDefinition = fileReader.GetXml(rule.DaysFromEaster.ToString());
+                    rule.RuleDefinition = fileReader.Read(rule.DaysFromEaster.ToString());
                 }
 
                 setting = folderPath + "\\" + response.TypiconEntity.Name + "\\Sign\\";
@@ -137,7 +137,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 foreach (Sign sign in response.TypiconEntity.Signs)
                 {
-                    sign.RuleDefinition = fileReader.GetXml(sign.Name);
+                    sign.RuleDefinition = fileReader.Read(sign.Name);
                 }
 
                 //commonRules
@@ -154,7 +154,7 @@ namespace TypiconOnline.AppServices.Implementations
 
             FileReader fileReader = new FileReader(folderPath);
 
-            IEnumerable<FilesSearchResponse> files = fileReader.GetXmlsFromDirectory();
+            IEnumerable<FilesSearchResponse> files = fileReader.ReadsFromDirectory();
 
             foreach (FilesSearchResponse file in files)
             {

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<YmnosGroup ihos="4">
+  <prosomoion>
+    <item language="cs-ru">Ки́ими похва́льными.</item>
+  </prosomoion>
+  <ymnos>
+    <stihos>
+      <item language="cs-ru">[item] [sign] Малая вечерня. На стиховне, Стих 1-й стихиры.</item>
+    </stihos>
+    <text>
+      <item language="cs-ru">[item] [sign] Малая вечерня. На стиховне, 1 стихира.</item>
+    </text>
+  </ymnos>
+  <ymnos>
+    <stihos>
+      <item language="cs-ru">[item] [sign] Малая вечерня. На стиховне, Стих 2-й стихиры.</item>
+    </stihos>
+    <text>
+      <item language="cs-ru">[item] [sign] Малая вечерня. На стиховне, 2 стихира.</item>
+    </text>
+  </ymnos>
+  <ymnos>
+    <stihos>
+      <item language="cs-ru">[item] [sign] Малая вечерня. На стиховне, Стих 3-й стихиры.</item>
+    </stihos>
+    <text>
+      <item language="cs-ru">[item] [sign] Малая вечерня. На стиховне, 3 стихира.</item>
+    </text>
+  </ymnos>
+</YmnosGroup>

@@ -25,7 +25,7 @@ namespace TypiconOnline.Repository.EF.Tests
                                     new OldTestamentService(unitOfWork),
                                     new PsalterService(unitOfWork),
                                     new OktoikhService(unitOfWork),
-                                    new IrmologionService(unitOfWork),
+                                    new ReadOnlyIrmTheotokionService(unitOfWork),
                                     new EasterService(unitOfWork));
         }
     }

@@ -6,10 +6,11 @@
 //------------------------------------------------------------------------------
 using TypiconOnline.Infrastructure.Common.Domain;
 
-namespace TypiconOnline.Domain.Days
+namespace TypiconOnline.Domain.Books.Irmologion
 {
     public class IrmologionTheotokionBusinessConstraint
     {
         public static readonly BusinessConstraint InvalidIhos = new BusinessConstraint("Неверно определен глас песнопения.");
+        public static readonly BusinessConstraint EmptyStringDefinition = new BusinessConstraint("Отсутствует определение песнопения.");
     }
 }

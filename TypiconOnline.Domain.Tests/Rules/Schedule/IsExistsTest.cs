@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
             FileReader reader = new FileReader(folderPath);
-            string xml = reader.GetXml("IsExists.xml");
+            string xml = reader.Read("IsExists.xml");
 
             //Дата --01-16 exists - false
             DateTime date = new DateTime(2017, 01, 16);

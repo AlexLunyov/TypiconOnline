@@ -17,7 +17,7 @@ namespace TypiconOnline.AppServices.Migration
 
         }
 
-        public string GetXml(string key)
+        public string Read(string key)
         {
             throw new NotImplementedException();
         }

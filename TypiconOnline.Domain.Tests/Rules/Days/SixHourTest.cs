@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         {
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
             FileReader reader = new FileReader(folderPath);
-            string xml = reader.GetXml("SixHourTest.xml");
+            string xml = reader.Read("SixHourTest.xml");
 
             TypiconSerializer ser = new TypiconSerializer();
             SixHour element = ser.Deserialize<SixHour>(xml);

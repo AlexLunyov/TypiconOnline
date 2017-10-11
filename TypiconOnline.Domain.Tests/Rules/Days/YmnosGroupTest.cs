@@ -8,6 +8,8 @@ using System.Xml;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Days;
+using System.IO;
+using TypiconOnline.AppServices.Implementations;
 
 namespace TypiconOnline.Domain.Tests.Rules.Days
 {
@@ -58,43 +60,12 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         [Test]
         public void YmnosGroupTest_ValidIhos()
         {
-            string xmlString = @"<YmnosGroup ihos=""4"">
-				                    <prosomoion>
-					                    <item language=""cs-ru"">Ки́ими похва́льными.</item>
-				                    </prosomoion>
-                                    <ymnos>
-					                    <stihos>
-						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 1-й стихиры.</item>
-					                    </stihos>
-					                    <text>
-						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 1 стихира.</item>
-					                    </text>
-				                    </ymnos>
-				                    <ymnos>
-					                    <stihos>
-						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 2-й стихиры.</item>
-					                    </stihos>
-					                    <text>
-						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 2 стихира.</item>
-					                    </text>
-				                    </ymnos>
-				                    <ymnos>
-					                    <stihos>
-						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 3-й стихиры.</item>
-					                    </stihos>
-					                    <text>
-						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 3 стихира.</item>
-					                    </text>
-				                    </ymnos>
-			                    </YmnosGroup>";
+            string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
+            FileReader reader = new FileReader(folderPath);
+            string xml = reader.Read("YmnosGroupTest.xml");
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            XmlNode root = xmlDoc.DocumentElement;
-
-            YmnosGroup element = new YmnosGroup(root);// (xmlDoc.FirstChild);
+            TypiconSerializer ser = new TypiconSerializer();
+            YmnosGroup element = ser.Deserialize<YmnosGroup>(xml);
 
             Assert.IsTrue(element.IsValid);
         }

@@ -15,6 +15,9 @@ using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Implementations;
 using System.IO;
+using TypiconOnline.AppServices.Interfaces;
+using TypiconOnline.AppServices.Migration;
+using TypiconOnline.AppServices.Implementations.Books;
 
 namespace TypiconMigrationTool
 {
@@ -40,10 +43,10 @@ namespace TypiconMigrationTool
             Console.WriteLine("MigrateEasters()");
             MigrateEasters();
 
-            Commit();
-        }
+            MigrateTheotokionIrmologion();
 
-        
+            Commit();
+        }               
 
         private void ClearEF()
         {
@@ -119,7 +122,7 @@ namespace TypiconMigrationTool
                     Number = signMigrator.NewId,
                     Priority = signMigrator.Priority,
                     Owner = typiconEntity,
-                    RuleDefinition = fileReader.GetXml(row.Name),
+                    RuleDefinition = fileReader.Read(row.Name),
                     SignName = new ItemText()
                 };
 
@@ -144,6 +147,19 @@ namespace TypiconMigrationTool
             MigrateCommonRules(typiconEntity);
 
             Commit();
+        }
+
+        private void MigrateTheotokionIrmologion()
+        {
+            string folder = Path.Combine(Properties.Settings.Default.FolderPath, @"Books\Irmologion\Theotokion");
+
+            IrmologionTheotokionFileReader reader = new IrmologionTheotokionFileReader(new FileReader(folder));
+
+            IrmologionTheotokionService service = new IrmologionTheotokionService(_unitOfWork);
+
+            IMigrationManager manager = new IrmologionTheotokionMigrationManager(reader, service);
+
+            manager.Migrate();
         }
 
         private void Commit()
@@ -250,8 +266,8 @@ namespace TypiconMigrationTool
 
                     //берем xml-правило из файла
                     menologyRule.RuleDefinition = (!mineinikRow.IsDateBNull())
-                                                    ? fileRuleReader.GetXml(menologyDay.DateB.Expression)
-                                                    : fileRuleReader.GetXml(menologyRule.Name);
+                                                    ? fileRuleReader.Read(menologyDay.DateB.Expression)
+                                                    : fileRuleReader.Read(menologyRule.Name);
                 }
                 else
                 {
@@ -311,7 +327,7 @@ namespace TypiconMigrationTool
                     DaysFromEaster = day.DaysFromEaster,
                     Owner = typiconEntity,
                     Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(row.SignID).NewId),
-                    RuleDefinition = fileReader.GetXml(row.DayFromEaster.ToString())
+                    RuleDefinition = fileReader.Read(row.DayFromEaster.ToString())
                 };
                 rule.DayServices = new List<DayService>() { dayService };
 
@@ -336,7 +352,7 @@ namespace TypiconMigrationTool
 
             FileReader fileReader = new FileReader(folderPath);
 
-            IEnumerable<FilesSearchResponse> files = fileReader.GetXmlsFromDirectory();
+            IEnumerable<FilesSearchResponse> files = fileReader.ReadsFromDirectory();
 
             foreach (FilesSearchResponse file in files)
             {

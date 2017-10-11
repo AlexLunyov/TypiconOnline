@@ -5,15 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using TypiconOnline.AppServices.Interfaces;
 
 namespace TypiconOnline.AppServices.Implementations
 {
     /// <summary>
     /// С помощью класса FileReader можно считывать правила для элементов TypiconOnlie.Domain
     /// </summary>
-    public class FileReader
+    public class FileReader : IFileReader
     {
-        public string FolderPath;
+        public string FolderPath { get; set; }
+
         XmlDocument doc = new XmlDocument();
 
         public FileReader(string folderPath)
@@ -26,7 +28,7 @@ namespace TypiconOnline.AppServices.Implementations
         /// </summary>
         /// <param name="name">Имя файла</param>
         /// <returns></returns>
-        public string GetXml(string name)
+        public string Read(string name)
         {
             try
             {
@@ -58,7 +60,8 @@ namespace TypiconOnline.AppServices.Implementations
 
             return "";
         }
-        public IEnumerable<FilesSearchResponse> GetXmlsFromDirectory()
+
+        public IEnumerable<FilesSearchResponse> ReadsFromDirectory()
         {
             List<FilesSearchResponse> result = new List<FilesSearchResponse>();
 
@@ -81,6 +84,8 @@ namespace TypiconOnline.AppServices.Implementations
 
             return result;
         }
+
+        
     }
 
     public class FilesSearchResponse

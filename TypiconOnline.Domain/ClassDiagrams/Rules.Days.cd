@@ -192,7 +192,7 @@
       <FileName>Rules\Days\SixHourBusinessConstraint.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Days.Ymnos" Collapsed="true">
+  <Class Name="TypiconOnline.Domain.Rules.Days.Ymnos">
     <Position X="27.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAEADAAAAAAAAAgAAAAAAAAAAAAAAACAAAAQA=</HashCode>

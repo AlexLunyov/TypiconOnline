@@ -70,7 +70,7 @@ namespace ScheduleForm
                 container.GetInstance<IOldTestamentService>(),
                 container.GetInstance<IPsalterService>(),
                 container.GetInstance<IOktoikhService>(),
-                container.GetInstance<IIrmologionService>(),
+                container.GetInstance<IReadOnlyIrmTheotokionService>(),
                 container.GetInstance<IEasterService>());
 
             //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();

@@ -35,7 +35,7 @@ namespace TypiconOnline.Domain.Books
         public IOldTestamentService OldTestament { get; private set; }
         public IPsalterService Psalter { get; private set; }
         public IOktoikhService Oktoikh { get; private set; }
-        public IIrmologionService Irmologion { get; private set; }
+        public IReadOnlyIrmTheotokionService Irmologion { get; private set; }
         public IEasterService Easters { get; private set; }
 
         private BookStorage()
@@ -52,7 +52,7 @@ namespace TypiconOnline.Domain.Books
             IOldTestamentService oldTestamentService,
             IPsalterService psalterService,
             IOktoikhService oktoikhService,
-            IIrmologionService irmologionService,
+            IReadOnlyIrmTheotokionService irmologionService,
             IEasterService easterService)
         {
             if (evangelionService == null) throw new ArgumentNullException("evangelionService");
