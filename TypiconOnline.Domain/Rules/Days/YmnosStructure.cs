@@ -144,6 +144,31 @@ namespace TypiconOnline.Domain.Rules.Days
             }
         }
 
+        public int Ihos
+        {
+            get
+            {
+                ThrowExceptionIfInvalid();
+
+                int result = 0;
+
+                if (Groups.Count > 0)
+                {
+                    result = Groups[0].Ihos;
+                }
+                else if (Doxastichon != null)
+                {
+                    result = Doxastichon.Ihos;
+                }
+                else if (Theotokion.Count > 0)
+                {
+                    result = Theotokion[0].Ihos;
+                }
+
+                return result;
+            }
+        }
+
         /// <summary>
         /// Возвращает один богослужебный текст с описанием гласа и подобна.
         /// </summary>

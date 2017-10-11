@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Books;
+using TypiconOnline.Domain.Books.Irmologion;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
@@ -125,6 +126,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 AppendAllBrokenConstraints(_ymnosKind);
             }
 
+            bool sourceIsValid = false;
+
             if (_source == null)
             {
                 AddBrokenConstraint(YmnosRuleBusinessConstraint.SourceRequired, ElementName);
@@ -132,6 +135,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
             else if (!_source.IsValid)
             {
                 AppendAllBrokenConstraints(_source);
+            }
+            else
+            {
+                //первое условие для сопоставления source и place
+                sourceIsValid = true;
             }
 
             if (_place == null)
@@ -141,6 +149,45 @@ namespace TypiconOnline.Domain.Rules.Schedule
             else if (_place.IsValid == false)
             {
                 AppendAllBrokenConstraints(_place);
+            }
+            else if (sourceIsValid)
+            {
+                /* Проверка на сопоставление source и place
+                 * Если source == irmologion, то значения могут быть только сопоставимые ему, и наоборот
+                */
+                if ((_source.Value == YmnosSource.Irmologion)
+                    && (Place.Value != PlaceYmnosSource.app1_aposticha)
+                    && (Place.Value != PlaceYmnosSource.app1_kekragaria)
+                    && (Place.Value != PlaceYmnosSource.app2_esperinos)
+                    && (Place.Value != PlaceYmnosSource.app2_orthros)
+                    && (Place.Value != PlaceYmnosSource.app3)
+                    && (Place.Value != PlaceYmnosSource.app4_esperinos)
+                    && (Place.Value != PlaceYmnosSource.app4_orthros))
+                {
+                    AddBrokenConstraint(YmnosRuleBusinessConstraint.PlaceAndSourceMismatched, ElementName);
+                }
+                else
+                {
+                    if ((_source.Value != YmnosSource.Irmologion)
+                        && (Place.Value != PlaceYmnosSource.kekragaria)
+                        && (Place.Value != PlaceYmnosSource.liti)
+                        && (Place.Value != PlaceYmnosSource.aposticha_esperinos)
+                        && (Place.Value != PlaceYmnosSource.aposticha_orthros)
+                        && (Place.Value != PlaceYmnosSource.ainoi)
+                        && (Place.Value != PlaceYmnosSource.kekragaria_doxastichon)
+                        && (Place.Value != PlaceYmnosSource.liti_doxastichon)
+                        && (Place.Value != PlaceYmnosSource.aposticha_esperinos_doxastichon)
+                        && (Place.Value != PlaceYmnosSource.aposticha_orthros_doxastichon)
+                        && (Place.Value != PlaceYmnosSource.ainoi_doxastichon)
+                        && (Place.Value != PlaceYmnosSource.kekragaria_theotokion)
+                        && (Place.Value != PlaceYmnosSource.liti_theotokion)
+                        && (Place.Value != PlaceYmnosSource.aposticha_esperinos_theotokion)
+                        && (Place.Value != PlaceYmnosSource.aposticha_orthros_theotokion)
+                        && (Place.Value != PlaceYmnosSource.ainoi_theotokion))
+                    {
+                        AddBrokenConstraint(YmnosRuleBusinessConstraint.PlaceAndSourceMismatched, ElementName);
+                    }
+                }
             }
 
             if (_count.IsValid == false)
@@ -160,84 +207,75 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <param name="date"></param>
         /// <param name="handler"></param>
         /// <returns>Если таковые не объявлены в DayService, возвращает NULL.</returns>
-        public YmnosStructure CalculateYmnosStructure(DateTime date, IRuleHandler handler)
+        public virtual YmnosStructure CalculateYmnosStructure(DateTime date, IRuleHandler handler)
         {
-            //ThrowExceptionIfInvalid();
-
             YmnosStructure result = null;
 
-            if (Source.Value == YmnosSource.Irmologion)
+            //разбираемся с source
+            DayService dayService = null;
+            switch (Source.Value)
             {
-                //TODO: добавляем Богородичны из приложений Ирмология
+                case YmnosSource.Item1:
+                    dayService = (handler.Settings.DayServices.Count > 0) ? handler.Settings.DayServices[0] : null;
+                    break;
+                case YmnosSource.Item2:
+                    dayService = (handler.Settings.DayServices.Count > 1) ? handler.Settings.DayServices[1] : null;
+                    break;
+                case YmnosSource.Item3:
+                    dayService = (handler.Settings.DayServices.Count > 2) ? handler.Settings.DayServices[2] : null;
+                    break;
+                case YmnosSource.Oktoikh:
+                    dayService = BookStorage.Instance.Oktoikh.GetOktoikhDay(date);
+                    break;
             }
-            else
+
+            //if (dayService == null)
+            //{
+            //    throw new KeyNotFoundException("YmnosStructureRule source not found: " + Source.Value.ToString());
+            //}
+
+            //не выдаем ошибки, если день не найден
+            if (dayService != null)
             {
-                //разбираемся с source
-                DayService dayService = null;
-                switch (Source.Value)
+                if (Place == null)
                 {
-                    case YmnosSource.Item1:
-                        dayService = (handler.Settings.DayServices.Count > 0) ? handler.Settings.DayServices[0] : null;
-                        break;
-                    case YmnosSource.Item2:
-                        dayService = (handler.Settings.DayServices.Count > 1) ? handler.Settings.DayServices[1] : null;
-                        break;
-                    case YmnosSource.Item3:
-                        dayService = (handler.Settings.DayServices.Count > 2) ? handler.Settings.DayServices[2] : null;
-                        break;
-                    case YmnosSource.Oktoikh:
-                        dayService = BookStorage.Instance.Oktoikh.GetOktoikhDay(date);
-                        break;
+                    //TODO: на случай если будет реализован функционал, когда у ymnosRule может быть не определен place
                 }
 
-                //if (dayService == null)
-                //{
-                //    throw new KeyNotFoundException("YmnosStructureRule source not found: " + Source.Value.ToString());
-                //}
+                //теперь разбираемся с place И kind
 
-                //не выдаем ошибки, если день не найден
-                if (dayService != null)
+                YmnosGroup group = null;
+                List<YmnosGroup> groups = null;
+
+                switch (YmnosKind.Value)
                 {
-                    if (Place == null)
-                    {
-                        //TODO: на случай если будет реализован функционал, когда у ymnosRule может быть не определен place
-                    }
+                    case YmnosRuleKind.YmnosRule:
+                        groups = dayService.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Groups;
+                        if (groups != null)
+                        {
+                            result = new YmnosStructure();
+                            result.Groups.AddRange(groups);
+                        }
 
-                    //теперь разбираемся с place И kind
+                        break;
+                    case YmnosRuleKind.DoxastichonRule:
+                        group = dayService.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Doxastichon;
+                        if (group != null)
+                        {
+                            result = new YmnosStructure();
+                            result.Doxastichon = group;
+                        }
 
-                    YmnosGroup group = null;
-                    List<YmnosGroup> groups = null;
+                        break;
+                    case YmnosRuleKind.TheotokionRule:
+                        groups = dayService.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Theotokion;
+                        if (groups != null)
+                        {
+                            result = new YmnosStructure();
+                            result.Theotokion.AddRange(groups);
+                        }
 
-                    switch (YmnosKind.Value)
-                    {
-                        case YmnosRuleKind.YmnosRule:
-                            groups = dayService.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Groups;
-                            if (groups != null)
-                            {
-                                result = new YmnosStructure();
-                                result.Groups.AddRange(groups);
-                            }
-
-                            break;
-                        case YmnosRuleKind.DoxastichonRule:
-                            group = dayService.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Doxastichon;
-                            if (group != null)
-                            {
-                                result = new YmnosStructure();
-                                result.Doxastichon = group;
-                            }
-
-                            break;
-                        case YmnosRuleKind.TheotokionRule:
-                            groups = dayService.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Theotokion;
-                            if (groups != null)
-                            {
-                                result = new YmnosStructure();
-                                result.Theotokion.AddRange(groups);
-                            }
-
-                            break;
-                    }
+                        break;
                 }
             }
 

@@ -113,7 +113,17 @@ namespace TypiconOnline.Domain.Rules.Factories
         }
 
         /// <summary>
-        /// Фабричный метод создает элменты из xml строки. Игнорирует пробелы и комментарии
+        /// Фабричный generic метод создает элементы из xml строки. Игнорирует пробелы и комментарии
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns></returns>
+        public static T CreateElement<T>(string description) where T : RuleElement
+        {
+            return CreateElement(description) as T;
+        }
+
+        /// <summary>
+        /// Фабричный метод создает элементы из xml строки. Игнорирует пробелы и комментарии
         /// </summary>
         /// <param name="description"></param>
         /// <returns></returns>
@@ -204,10 +214,13 @@ namespace TypiconOnline.Domain.Rules.Factories
                         break;
                     //YmnosRule
                     case RuleConstants.YmnosRuleNode:
-                    case RuleConstants.YmnosRuleTheotokionNode:
                     case RuleConstants.YmnosRuleDoxastichonNode:
                         outputEl = new YmnosRule(node);
-                        break; 
+                        break;
+                    //TheotokionRule
+                    case RuleConstants.YmnosRuleTheotokionNode:
+                        outputEl = new TheotokionRule(node);
+                        break;
                     //Ektenis
                     case RuleConstants.EktenisNode:
                         outputEl = new Ektenis(node);

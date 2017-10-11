@@ -185,6 +185,8 @@
     <Compile Include="Rules\Schedule\Service.cs" />
     <Compile Include="Rules\Schedule\ServiceSequence.cs" />
     <Compile Include="Rules\Schedule\TextHolderBusinessConstraint.cs" />
+    <Compile Include="Rules\Schedule\TheotokionRule.cs" />
+    <Compile Include="Rules\Schedule\TheotokionRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\YmnosRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\ServiceBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\Notice.cs" />

@@ -250,33 +250,33 @@ namespace TypiconOnline.Domain.Rules
     public enum PlaceYmnosSource
     {
         //kekragaria
-        kekragaria,
-        kekragaria_doxastichon,
-        kekragaria_theotokion,
+        kekragaria = 0,
+        kekragaria_doxastichon = 1,
+        kekragaria_theotokion = 2,
         //liti
-        liti,
-        liti_doxastichon,
-        liti_theotokion,
+        liti = 3,
+        liti_doxastichon = 4,
+        liti_theotokion = 5,
         //aposticha_esperinos
-        aposticha_esperinos,
-        aposticha_esperinos_doxastichon,
-        aposticha_esperinos_theotokion,
+        aposticha_esperinos = 6,
+        aposticha_esperinos_doxastichon = 7,
+        aposticha_esperinos_theotokion = 8,
         //ainoi
-        ainoi,
-        ainoi_doxastichon,
-        ainoi_theotokion,
+        ainoi = 9,
+        ainoi_doxastichon = 10,
+        ainoi_theotokion = 11,
         //aposticha_orthros
-        aposticha_orthros,
-        aposticha_orthros_doxastichon,
-        aposticha_orthros_theotokion,
+        aposticha_orthros = 12,
+        aposticha_orthros_doxastichon = 13,
+        aposticha_orthros_theotokion = 14,
         //Irmologion
-        app1_kekragaria,
-        app1_aposticha,
-        app2_esperinos,
-        app2_orthros,
-        app3,
-        app4_esperinos,
-        app4_orthros
+        app1_kekragaria = 15,
+        app1_aposticha = 16,
+        app2_esperinos = 17,
+        app2_orthros = 18,
+        app3 = 19,
+        app4_esperinos = 20,
+        app4_orthros = 21
     }
 
     /// <summary>
