@@ -43,11 +43,14 @@ namespace TypiconOnline.Domain.Serialization
             settings.Indent = false;
             settings.OmitXmlDeclaration = false;
 
+            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+            ns.Add("", "");
+
             using (StringWriter textWriter = new StringWriter())
             {
                 using (XmlWriter xmlWriter = XmlWriter.Create(textWriter, settings))
                 {
-                    serializer.Serialize(xmlWriter, value);
+                    serializer.Serialize(xmlWriter, value, ns);
                 }
                 return textWriter.ToString();
             }
