@@ -157,7 +157,9 @@ namespace TypiconMigrationTool
 
             IrmologionTheotokionService service = new IrmologionTheotokionService(_unitOfWork);
 
-            IMigrationManager manager = new IrmologionTheotokionMigrationManager(reader, service);
+            IrmologionTheotokionFactory factory = new IrmologionTheotokionFactory();
+
+            IMigrationManager manager = new IrmologionTheotokionMigrationManager(factory, reader, service);
 
             manager.Migrate();
         }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" dslVersion="1.0.0.0" Id="0403078a-4f42-4a57-87ab-7465bc5c8bfc" name="IrmologionMigration" linkedPackageId="9221c162-32e3-40ae-b4aa-b3c112af3113" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" dslVersion="1.0.0.0" Id="0403078a-4f42-4a57-87ab-7465bc5c8bfc" name="IrmologionMigration" linkedPackageId="9221c162-32e3-40ae-b4aa-b3c112af3113" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
   <appliedStereotypesInternal>
     <stereotypeInstance Id="be2d4da8-4b90-456d-80af-19f9095f7491" name="namespace" profile="CSharpProfile">
       <elementDefinition Id="e321704d-226b-4f26-bdc5-54fe109e0342" />
@@ -72,32 +72,6 @@
       </propertyInstances>
     </stereotypeInstance>
   </appliedStereotypesInternal>
-  <profileInstances>
-    <packageHasProfileInstances Id="fbebeabf-5aa9-4e0b-83fe-f587388b66b1">
-      <profileInstance Id="e004a1fa-3fbb-47df-9fcb-a2bd6ed95fff" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="70b2cb3d-9699-4226-95c1-05100cdc4276">
-      <profileInstance Id="79c0465b-65ce-4c88-b850-e446c009ede0" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="d36d0a45-98b8-485c-8659-74d8d1c695dd">
-      <profileInstance Id="2d579cc0-6b77-4ed6-92b3-7a2708612b2c" name="CSharpProfile">
-        <elementDefinition Id="5bc90349-0035-4c44-b9e0-b0142e26d846" />
-      </profileInstance>
-      <elementDefinition Id="33a3c42b-8679-4efb-b211-bfc9c2c8ff41" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="61234e05-f76f-41df-9609-d56ced724325">
-      <profileInstance Id="53621a3d-a844-4a07-b05f-c83cf6b761d8" name="TextTemplateBindings">
-        <elementDefinition Id="720db423-718b-4dcc-b796-d7839e4d8330" />
-      </profileInstance>
-      <elementDefinition Id="27dd251c-1566-4ef7-a643-058321303090" />
-    </packageHasProfileInstances>
-  </profileInstances>
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
       <class Id="4f956055-718a-4dda-ad8a-281eaacde997" name="IrmologionTheotokion" isAbstract="false" isLeaf="false" isActiveClass="false">
@@ -164,26 +138,6 @@
           </operation>
           <operation Id="60932845-581d-41f9-a553-3b071fe9e568" name="DeleteTheotokion" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="e52dcb1a-12af-4780-9342-4a47d3a14eb4" />
-          </operation>
-        </ownedOperations>
-      </Interface>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <Interface Id="f3e1f77d-6f1d-43de-ba21-20ad8b994f88" name="IFactory" isAbstract="false" isLeaf="false">
-        <elementDefinition Id="b68e1bc0-b34b-481d-b766-91be6535fb82" />
-        <ownedOperations>
-          <operation Id="001385b6-196a-401e-bd00-1a54a73de1d8" name="Create" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="352bc527-a8bf-4d4e-aef4-941b552aa34c" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="7ebc6a43-30a0-45a2-afef-606b1dab9ace" direction="Return" isUnique="false">
-                  <elementDefinition Id="bcd06f4d-a7cb-47cc-8f68-412b55e78b73" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="02b3dbb1-afd2-477c-b1cb-0d2ffa9d59c8" LastKnownName="ValuObjectBase" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
           </operation>
         </ownedOperations>
       </Interface>
@@ -410,20 +364,36 @@
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
-    <packageHasNamedElement>
-      <referencedType Id="02b3dbb1-afd2-477c-b1cb-0d2ffa9d59c8" name="ValuObjectBase" isAbstract="false" isLeaf="false" cachedFullName="ValuObjectBase">
-        <elementDefinition Id="40a8e618-7119-41b1-b4ac-2bdc8a6025c5" />
-      </referencedType>
-    </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
       <Interface Id="cf164fe7-34b1-4f94-851c-b1a2a64c05be" name="IIrmologionTheotokionFactory" isAbstract="false" isLeaf="false">
         <elementDefinition Id="0d8ff959-ada9-4691-b4ba-80f46ea1b0bc" />
-        <generalsInternal>
-          <generalization Id="72247168-75d1-4179-ae6d-052c2c44970b" isSubstitutable="false">
-            <interfaceMoniker Id="f3e1f77d-6f1d-43de-ba21-20ad8b994f88" LastKnownName="IFactory" />
-            <elementDefinition Id="6f8abdc4-1936-4730-a1aa-4351e3ebca4c" />
-          </generalization>
-        </generalsInternal>
+        <ownedOperations>
+          <operation Id="26898b2a-cb0a-4d6a-a6fd-f911d30ae203" name="IrmologionTheotokion Create" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="94c1839e-be83-4684-a3ad-c095912aeec6" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="58acb3ac-1560-44ec-b4e9-7d785b4da4bd" name="PlaceYmnosSource source" direction="In" isUnique="false">
+                  <elementDefinition Id="75dc2748-35c7-403d-9e1a-93abfa33b4f9" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="bf6b7f52-6730-42f5-94ef-16e872998a04" name="int ihos" direction="In" isUnique="false">
+                  <elementDefinition Id="6bc48855-6e15-4a76-886f-76888e6ba0f3" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="3de67e86-fce7-4eef-aec0-ea570d70a86d" name="DayOfWeek day" direction="In" isUnique="false">
+                  <elementDefinition Id="f771b963-bf7d-41af-bc47-2cb85ed57cef" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="759c9073-1a23-4a8b-917d-c9a9a69f1a2d" name="string stringDefinition" direction="In" isUnique="false">
+                  <elementDefinition Id="32ee1d21-1b26-46bf-be3f-2e0d9214e85f" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
       </Interface>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
@@ -455,15 +425,27 @@
           </dependency>
         </suppliersInternal>
         <ownedOperationsInternal>
-          <operation Id="7f656c34-64f5-470f-8abd-96b5403e19b8" name="Create" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="074752db-940c-49cd-844d-fa68c06b65fd" />
+          <operation Id="7387615f-6582-427f-8fe1-b0ae3d6eaed4" name="IrmologionTheotokion Create" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c165984f-a5bb-4ed7-a73f-9c304ab074a0" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="e9368356-1514-4b5d-b9de-16ce1124043d" direction="Return" isUnique="false">
-                  <elementDefinition Id="77077b3b-4f6a-408d-90aa-b553795b480a" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="02b3dbb1-afd2-477c-b1cb-0d2ffa9d59c8" LastKnownName="ValuObjectBase" />
-                  </type_NamedElement>
+                <parameter Id="74e368aa-59e6-46b3-985b-752cdef6181e" name="PlaceYmnosSource source" direction="In" isUnique="false">
+                  <elementDefinition Id="75c06120-06ff-4ce4-a30f-a17af9bafdc2" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="418f7edd-f395-4c2e-aa4e-dd1b7396ed57" name="int ihos" direction="In" isUnique="false">
+                  <elementDefinition Id="7f17306e-4d73-49cc-953e-049537889f75" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="9afc6999-061a-436a-b153-e69cebe88c57" name="DayOfWeek day" direction="In" isUnique="false">
+                  <elementDefinition Id="8cda17b0-c921-433a-bfa0-ed2e2b73fa43" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="edcd6baf-341e-4134-aa69-572ceb348d6c" name="string stringDefinition" direction="In" isUnique="false">
+                  <elementDefinition Id="5ff5e540-79e6-403e-a0e9-3c73ba62eece" />
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
@@ -479,5 +461,34 @@
   </packagedElements>
   <package Id="9221c162-32e3-40ae-b4aa-b3c112af3113" name="TypiconOnline.Domain">
     <elementDefinition Id="0a315aea-6208-414d-a4c3-8da884879962" />
+    <profileInstances>
+      <packageHasProfileInstances Id="fbebeabf-5aa9-4e0b-83fe-f587388b66b1">
+        <profileInstance Id="e004a1fa-3fbb-47df-9fcb-a2bd6ed95fff" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="70b2cb3d-9699-4226-95c1-05100cdc4276">
+        <profileInstance Id="79c0465b-65ce-4c88-b850-e446c009ede0" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="d36d0a45-98b8-485c-8659-74d8d1c695dd">
+        <profileInstance Id="2d579cc0-6b77-4ed6-92b3-7a2708612b2c" name="CSharpProfile">
+          <elementDefinition Id="5bc90349-0035-4c44-b9e0-b0142e26d846" />
+        </profileInstance>
+        <elementDefinition Id="33a3c42b-8679-4efb-b211-bfc9c2c8ff41" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="61234e05-f76f-41df-9609-d56ced724325">
+        <profileInstance Id="53621a3d-a844-4a07-b05f-c83cf6b761d8" name="TextTemplateBindings">
+          <elementDefinition Id="720db423-718b-4dcc-b796-d7839e4d8330" />
+        </profileInstance>
+        <elementDefinition Id="27dd251c-1566-4ef7-a643-058321303090" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+  <package Id="0f7a9c7a-a2df-4bb6-ae0f-47b6c6fb25cc" name="Books">
+    <elementDefinition Id="7d7502ec-c04a-4975-81d2-3b0fa31839ff" />
   </package>
 </logicalClassDesignerModel>

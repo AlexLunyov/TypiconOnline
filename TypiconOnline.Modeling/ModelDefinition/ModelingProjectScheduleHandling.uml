@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner"
   dslVersion="1.0.0.0"
   Id="0a315aea-6208-414d-a4c3-8da884879962"
   name="TypiconOnline.Domain" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -6399,6 +6399,47 @@
               LastKnownLocation="ModelingProjectScheduleHandling.uml" />
           </generalization>
         </generalsInternal>
+        <ownedOperations>
+          <operation
+            Id="94c1839e-be83-4684-a3ad-c095912aeec6"
+            name="IrmologionTheotokion Create"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="75dc2748-35c7-403d-9e1a-93abfa33b4f9"
+                  name="PlaceYmnosSource source"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="6bc48855-6e15-4a76-886f-76888e6ba0f3"
+                  name="int ihos"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="f771b963-bf7d-41af-bc47-2cb85ed57cef"
+                  name="DayOfWeek day"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="32ee1d21-1b26-46bf-be3f-2e0d9214e85f"
+                  name="string stringDefinition"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
       </Interface>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -6426,8 +6467,8 @@
         </suppliersInternal>
         <ownedOperationsInternal>
           <operation
-            Id="074752db-940c-49cd-844d-fa68c06b65fd"
-            name="Create"
+            Id="c165984f-a5bb-4ed7-a73f-9c304ab074a0"
+            name="IrmologionTheotokion Create"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -6436,16 +6477,31 @@
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="77077b3b-4f6a-408d-90aa-b553795b480a"
-                  direction="Return"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <undefinedTypeMoniker
-                      Id="40a8e618-7119-41b1-b4ac-2bdc8a6025c5"
-                      LastKnownName="ValuObjectBase"
-                      LastKnownLocation="ModelingProjectScheduleHandling.uml" />
-                  </type_NamedElement>
-                </parameter>
+                  Id="75c06120-06ff-4ce4-a30f-a17af9bafdc2"
+                  name="PlaceYmnosSource source"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7f17306e-4d73-49cc-953e-049537889f75"
+                  name="int ihos"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="8cda17b0-c921-433a-bfa0-ed2e2b73fa43"
+                  name="DayOfWeek day"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5ff5e540-79e6-403e-a0e9-3c73ba62eece"
+                  name="string stringDefinition"
+                  direction="In"
+                  isUnique="false" />
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>

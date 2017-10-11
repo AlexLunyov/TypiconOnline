@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="BookStorageFactory.cs" />
     <Compile Include="Common\SignMigratorTest.cs" />
-    <Compile Include="Migration\IrmTheotokionMigrationTest.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -89,6 +88,9 @@
     <Content Include="TestData\app1_kekragaria.1.Sunday.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migration\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

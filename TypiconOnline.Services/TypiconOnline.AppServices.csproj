@@ -89,6 +89,7 @@
     <Compile Include="Messaging\Typicon\UpdateTypiconEntityResponse.cs" />
     <Compile Include="Migration\DayDefinitionTemplateService.cs" />
     <Compile Include="Interfaces\IMigrationManager.cs" />
+    <Compile Include="Migration\IrmologionTheotokionFactory.cs" />
     <Compile Include="Migration\IrmologionTheotokionFileReader.cs" />
     <Compile Include="Migration\IrmologionTheotokionMigrationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

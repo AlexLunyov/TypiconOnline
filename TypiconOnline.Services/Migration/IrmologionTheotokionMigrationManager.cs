@@ -16,19 +16,19 @@ namespace TypiconOnline.AppServices.Migration
     /// </summary>
     public class IrmologionTheotokionMigrationManager : IMigrationManager
     {
-        //public IIrmologionTheotokionFactory Factory { get; private set; }
+        public IIrmologionTheotokionFactory Factory { get; private set; }
         public IIrmologionTheotokionFileReader FileReader { get; private set; }
         public IIrmologionTheotokionService Service { get; private set; }
 
-        public IrmologionTheotokionMigrationManager(/*IIrmologionTheotokionFactory factory,*/
+        public IrmologionTheotokionMigrationManager(IIrmologionTheotokionFactory factory,
                                                     IIrmologionTheotokionFileReader fileReader,
                                                     IIrmologionTheotokionService service)
         {
-            //if (factory == null) throw new ArgumentNullException("factory");
+            if (factory == null) throw new ArgumentNullException("factory");
             if (fileReader == null) throw new ArgumentNullException("fileReader");
             if (service == null) throw new ArgumentNullException("service");
 
-            //Factory = factory;
+            Factory = factory;
             FileReader = fileReader;
             Service = service;
         }
@@ -64,13 +64,7 @@ namespace TypiconOnline.AppServices.Migration
 
             for (int ihos = 1; ihos <= 8; ihos++)
             {
-                request.Theotokion = new IrmologionTheotokion()
-                {
-                    Place = source,
-                    Ihos = ihos,
-                    DayOfWeek = day,
-                    StringDefinition = FileReader.Read(source, ihos, day)
-                };
+                request.Theotokion = Factory.Create(source, ihos, day, FileReader.Read(source, ihos, day));
 
                 Service.InsertTheotokion(request);
             }
