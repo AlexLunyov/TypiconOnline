@@ -25,6 +25,8 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             Kanonas element = ser.Deserialize<Kanonas>(xml);
 
             Assert.IsTrue(element.IsValid);
+            Assert.NotNull(element.Acrostic["cs-cs"]);
+            Assert.NotNull(element.Annotation["cs-cs"]);
             Assert.NotNull(element.Stihos["cs-ru"]);
             Assert.AreEqual(element.Odes.Count, 8);
             Assert.NotNull(element.Odes[7].Katavasia["cs-ru"]);

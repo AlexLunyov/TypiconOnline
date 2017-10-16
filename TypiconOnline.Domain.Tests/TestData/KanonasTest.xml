@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Kanonas ihos="6">
+  <acrostic>
+    <item language="cs-cs">Пeрвое ѓгGлwмъ пёніе</item>
+  </acrostic>
+  <annotation>
+    <item language="cs-cs">Творeніе господи1на fеофaна.</item>
+  </annotation>
   <stihos>
     <item language="cs-ru">[item] [sign] Утреня. Канон 2-й. Припев.</item>
   </stihos>
