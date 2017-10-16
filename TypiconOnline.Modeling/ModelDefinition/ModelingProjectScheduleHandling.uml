@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner"
   dslVersion="1.0.0.0"
   Id="0a315aea-6208-414d-a4c3-8da884879962"
   name="TypiconOnline.Domain" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -5746,7 +5746,7 @@
     <packageHasNamedElement>
       <class
         Id="0c7eac6e-3b00-4bf7-9960-98a90217e036"
-        name="IrmologionTheotokion"
+        name="TheotokionApp"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -5801,7 +5801,7 @@
     <packageHasNamedElement>
       <class
         Id="a4f7df48-f1d0-457e-80b7-9c2b53f13c98"
-        name="IrmologionService"
+        name="TheotokionAppService"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -5810,7 +5810,7 @@
             Id="bf9d2546-7d50-473e-a920-bf6a6c2e5135">
             <interfaceMoniker
               Id="49b7df85-f43a-47c7-a07b-e8bca1deb640"
-              LastKnownName="IIrmologionTheotokionService"
+              LastKnownName="ITheotokionAppService"
               LastKnownLocation="ModelingProjectScheduleHandling.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -5853,7 +5853,7 @@
     <packageHasNamedElement>
       <Interface
         Id="49b7df85-f43a-47c7-a07b-e8bca1deb640"
-        name="IIrmologionTheotokionService"
+        name="ITheotokionAppService"
         isAbstract="false"
         isLeaf="false">
         <suppliersInternal>
@@ -5861,7 +5861,7 @@
             Id="89b2709a-6499-4ecb-9da4-d735b893950f">
             <classMoniker
               Id="0c7eac6e-3b00-4bf7-9960-98a90217e036"
-              LastKnownName="IrmologionTheotokion"
+              LastKnownName="TheotokionApp"
               LastKnownLocation="ModelingProjectScheduleHandling.uml" />
           </dependency>
         </suppliersInternal>
@@ -6005,7 +6005,7 @@
     <packageHasNamedElement>
       <class
         Id="2a0ded7f-8a1c-404b-ae8b-99fe0fd1168a"
-        name="IrmologionTheotokionMigrationManager"
+        name="TheotokionAppMigrationManager"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -6022,19 +6022,19 @@
           <association
             Id="41dc389c-9330-4116-903a-791996c66bbf"
             isDerived="false"
-            sourceEndRoleName="IrmologionTheotokionMigrator"
-            targetEndRoleName="IIrmologionTheotokionFileReader"
+            sourceEndRoleName="TheotokionAppMigrationManager"
+            targetEndRoleName="ITheotokionAppFileReader"
             isLeaf="false"
             isAbstract="false">
             <interfaceMoniker
               Id="750da423-8f2d-4e60-bad5-afd831485508"
-              LastKnownName="IIrmologionTheotokionFileReader"
+              LastKnownName="ITheotokionAppFileReader"
               LastKnownLocation="ModelingProjectScheduleHandling.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd
                   Id="b3f695d4-f5e0-4910-8a45-92c7cb20aba3"
-                  name="IrmologionTheotokionMigrator"
+                  name="TheotokionAppMigrationManager"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
@@ -6047,7 +6047,7 @@
               <associationHasOwnedEnds>
                 <memberEnd
                   Id="ede07369-c708-424a-9a99-b0f95e8e476f"
-                  name="IIrmologionTheotokionFileReader"
+                  name="ITheotokionAppFileReader"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
@@ -6061,19 +6061,19 @@
           <association
             Id="d380f73d-12e5-4616-8a48-048a5742e5b8"
             isDerived="false"
-            sourceEndRoleName="IrmologionTheotokionMigrator"
-            targetEndRoleName="IIrmologionTheotokionService"
+            sourceEndRoleName="TheotokionAppMigrationManager"
+            targetEndRoleName="ITheotokionAppService"
             isLeaf="false"
             isAbstract="false">
             <interfaceMoniker
               Id="49b7df85-f43a-47c7-a07b-e8bca1deb640"
-              LastKnownName="IIrmologionTheotokionService"
+              LastKnownName="ITheotokionAppService"
               LastKnownLocation="ModelingProjectScheduleHandling.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd
                   Id="165af422-fc94-4a08-ac45-c054828b0009"
-                  name="IrmologionTheotokionMigrator"
+                  name="TheotokionAppMigrationManager"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
@@ -6086,7 +6086,7 @@
               <associationHasOwnedEnds>
                 <memberEnd
                   Id="4d74f443-be53-4603-b11e-9a366cc58cc0"
-                  name="IIrmologionTheotokionService"
+                  name="ITheotokionAppService"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
@@ -6100,19 +6100,19 @@
           <association
             Id="e7142387-9cb1-4e66-a63c-906bbec8ec11"
             isDerived="false"
-            sourceEndRoleName="IrmologionTheotokionMigrator"
-            targetEndRoleName="IIrmologionTheotokionFactory"
+            sourceEndRoleName="TheotokionAppMigrationManager"
+            targetEndRoleName="ITheotokionAppFactory"
             isLeaf="false"
             isAbstract="false">
             <interfaceMoniker
               Id="0d8ff959-ada9-4691-b4ba-80f46ea1b0bc"
-              LastKnownName="IIrmologionTheotokionFactory"
+              LastKnownName="ITheotokionAppFactory"
               LastKnownLocation="ModelingProjectScheduleHandling.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd
                   Id="c2cf5732-e8c0-44de-9a2d-e5ad01e6fcf8"
-                  name="IrmologionTheotokionMigrator"
+                  name="TheotokionAppMigrationManager"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
@@ -6125,7 +6125,7 @@
               <associationHasOwnedEnds>
                 <memberEnd
                   Id="685a9eb3-35dd-4bd5-a41f-8b6ce5ef196e"
-                  name="IIrmologionTheotokionFactory"
+                  name="ITheotokionAppFactory"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
@@ -6152,7 +6152,7 @@
             <type_NamedElement>
               <interfaceMoniker
                 Id="750da423-8f2d-4e60-bad5-afd831485508"
-                LastKnownName="IIrmologionTheotokionFileReader"
+                LastKnownName="ITheotokionAppFileReader"
                 LastKnownLocation="ModelingProjectScheduleHandling.uml" />
             </type_NamedElement>
           </property>
@@ -6170,7 +6170,7 @@
             <type_NamedElement>
               <interfaceMoniker
                 Id="0d8ff959-ada9-4691-b4ba-80f46ea1b0bc"
-                LastKnownName="IIrmologionTheotokionFactory"
+                LastKnownName="ITheotokionAppFactory"
                 LastKnownLocation="ModelingProjectScheduleHandling.uml" />
             </type_NamedElement>
           </property>
@@ -6188,7 +6188,7 @@
             <type_NamedElement>
               <interfaceMoniker
                 Id="49b7df85-f43a-47c7-a07b-e8bca1deb640"
-                LastKnownName="IIrmologionTheotokionService"
+                LastKnownName="ITheotokionAppService"
                 LastKnownLocation="ModelingProjectScheduleHandling.uml" />
             </type_NamedElement>
           </property>
@@ -6208,7 +6208,7 @@
     <packageHasNamedElement>
       <Interface
         Id="750da423-8f2d-4e60-bad5-afd831485508"
-        name="IIrmologionTheotokionFileReader"
+        name="ITheotokionAppFileReader"
         isAbstract="false"
         isLeaf="false">
         <ownedOperations>
@@ -6250,7 +6250,7 @@
     <packageHasNamedElement>
       <class
         Id="ef2092da-c505-4be9-8e55-c5d515781df4"
-        name="IrmologionTheotokionFileReader"
+        name="TheotokionAppFileReader"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -6259,15 +6259,25 @@
             Id="353f53a0-5f8e-4ef6-b789-541af7e5009b">
             <interfaceMoniker
               Id="750da423-8f2d-4e60-bad5-afd831485508"
-              LastKnownName="IIrmologionTheotokionFileReader"
+              LastKnownName="ITheotokionAppFileReader"
               LastKnownLocation="ModelingProjectScheduleHandling.uml" />
           </interfaceRealization>
         </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="42f7a9c3-2a42-484d-8011-8bf10bec3c28"
+            isSubstitutable="false">
+            <classMoniker
+              Id="700670a8-8fa4-4b79-aff2-fccdb93464e3"
+              LastKnownName="MigrationFileReaderBase"
+              LastKnownLocation="ModelingProjectScheduleHandling.uml" />
+          </generalization>
+        </generalsInternal>
         <targetEnds>
           <association
             Id="61799e54-a712-4db8-b0e6-aa69172e606f"
             isDerived="false"
-            sourceEndRoleName="IrmologionTheotokionFileReader"
+            sourceEndRoleName="TheotokionAppFileReader"
             targetEndRoleName="IFileReader"
             isLeaf="false"
             isAbstract="false">
@@ -6279,7 +6289,7 @@
               <associationHasOwnedEnds>
                 <memberEnd
                   Id="5677ecb0-75e6-4632-847a-53b8adaa833e"
-                  name="IrmologionTheotokionFileReader"
+                  name="TheotokionAppFileReader"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
@@ -6304,26 +6314,6 @@
             </relationshipOwnedElementsInternal>
           </association>
         </targetEnds>
-        <ownedAttributesInternal>
-          <property
-            Id="f7f424b5-707c-493b-a238-dde010330281"
-            name="FileReader"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false">
-            <type_NamedElement>
-              <interfaceMoniker
-                Id="81577258-6290-4f44-b419-fa5dbaa6edee"
-                LastKnownName="IFileReader"
-                LastKnownLocation="ModelingProjectScheduleHandling.uml" />
-            </type_NamedElement>
-          </property>
-        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
             Id="82de5e5a-8cea-4fbf-93ae-ed20c0a410a2"
@@ -6359,7 +6349,7 @@
           </operation>
           <operation
             Id="c1abd2a2-f9c5-4423-867e-6f8167bfdacc"
-            name="IrmologionTheotokionFileReader"
+            name="TheotokionAppFileReader"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -6368,7 +6358,7 @@
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="fda6cff2-1488-4455-8524-e7a49b417df3"
+                  Id="87d394c4-7704-4d49-b6a5-ed7a0d24cdfa"
                   name="IFileReader fileReader"
                   direction="In"
                   isUnique="false" />
@@ -6386,7 +6376,7 @@
     <packageHasNamedElement>
       <Interface
         Id="0d8ff959-ada9-4691-b4ba-80f46ea1b0bc"
-        name="IIrmologionTheotokionFactory"
+        name="ITheotokionAppFactory"
         isAbstract="false"
         isLeaf="false">
         <generalsInternal>
@@ -6445,7 +6435,7 @@
     <packageHasNamedElement>
       <class
         Id="c2433dc0-4bd4-4f40-9d22-5fe1c687b1e0"
-        name="IrmologionTheotokionFactory"
+        name="TheotokionAppFactory"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -6454,14 +6444,14 @@
             Id="07368685-e30b-45dd-b8c6-94a6ef243ab3">
             <interfaceMoniker
               Id="0d8ff959-ada9-4691-b4ba-80f46ea1b0bc"
-              LastKnownName="IIrmologionTheotokionFactory"
+              LastKnownName="ITheotokionAppFactory"
               LastKnownLocation="ModelingProjectScheduleHandling.uml" />
           </interfaceRealization>
           <dependency
             Id="524d4c2a-441f-4b5e-8189-d9fe0f5342e4">
             <classMoniker
               Id="0c7eac6e-3b00-4bf7-9960-98a90217e036"
-              LastKnownName="IrmologionTheotokion"
+              LastKnownName="TheotokionApp"
               LastKnownLocation="ModelingProjectScheduleHandling.uml" />
           </dependency>
         </suppliersInternal>
@@ -6700,6 +6690,55 @@
                       LastKnownLocation="ModelingProjectScheduleHandling.uml" />
                   </type_NamedElement>
                 </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="700670a8-8fa4-4b79-aff2-fccdb93464e3"
+        name="MigrationFileReaderBase"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="3052caf5-2032-46d5-a5d8-79cbf7b5ed88"
+            name="FileReader"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="true"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="81577258-6290-4f44-b419-fa5dbaa6edee"
+                LastKnownName="IFileReader"
+                LastKnownLocation="ModelingProjectScheduleHandling.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="376f6e36-c867-4147-b3a0-eb8d847d5e2b"
+            name="MigrationFileReaderBase"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="edb33236-4bcd-4f1e-93a4-dcaa9e24ff8d"
+                  name="FileReader fileReader"
+                  direction="In"
+                  isUnique="false" />
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>

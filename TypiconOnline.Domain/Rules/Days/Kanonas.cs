@@ -79,6 +79,12 @@ namespace TypiconOnline.Domain.Rules.Days
         public int Ihos { get; set; }
 
         /// <summary>
+        /// Аннотация
+        /// </summary>
+        [XmlElement(RuleConstants.KanonasAnnotationNode)]
+        public ItemText Annotation { get; set; }
+
+        /// <summary>
         /// Акростих, краегранесие
         /// </summary>
         [XmlElement(RuleConstants.KanonasAcrosticNode)]

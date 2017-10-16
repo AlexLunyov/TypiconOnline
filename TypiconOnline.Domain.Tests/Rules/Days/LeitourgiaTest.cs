@@ -24,7 +24,8 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             TypiconSerializer ser = new TypiconSerializer();
             Leitourgia element = ser.Deserialize<Leitourgia>(xml);
 
-            Assert.AreEqual(element.Makarismi.Count, 2);
+            Assert.AreEqual(element.Makarismi.Links.Count, 2);
+            Assert.AreEqual(element.Makarismi.Ymnis.Ymnis.Count, 6);
             Assert.AreEqual(element.Prokeimenon.Ihos, 7);
             Assert.AreEqual(element.Apostles[0].Number, 213);
             Assert.AreEqual(element.Alleluia.Stihoi.Count, 2);

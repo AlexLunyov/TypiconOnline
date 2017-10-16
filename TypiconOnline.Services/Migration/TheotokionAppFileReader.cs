@@ -10,16 +10,9 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.AppServices.Migration
 {
-    public class TheotokionAppFileReader : ITheotokionAppFileReader
+    public class TheotokionAppFileReader : MigrationFileReaderBase, ITheotokionAppFileReader
     {
-        private IFileReader _fileReader;
-
-        public TheotokionAppFileReader(IFileReader fileReader)
-        {
-            if (fileReader == null) throw new ArgumentNullException("fileReader");
-
-            _fileReader = fileReader;
-        }
+        public TheotokionAppFileReader(IFileReader fileReader) : base(fileReader) { }
 
         public string Read(PlaceYmnosSource place, int ihos, DayOfWeek dayOfWeek)
         {

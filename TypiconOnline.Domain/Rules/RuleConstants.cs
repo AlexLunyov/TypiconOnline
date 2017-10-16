@@ -149,6 +149,7 @@ namespace TypiconOnline.Domain.Rules
         public const string KanonesNode = "kanones";
         public const string KanonasNode = "kanonas"; 
         public const string KanonasAcrosticNode = "acrostic";
+        public const string KanonasAnnotationNode = "annotation";
         public const string KanonasStihosNode = "stihos";
 
         public const string KanonasOdesNode = "odes";
@@ -193,6 +194,7 @@ namespace TypiconOnline.Domain.Rules
         public const string MakarismiOdiNode = "odi";
         public const string MakarismiOdiNumberAttr = "number";
         public const string MakarismiOdiCountAttr = "count";
+        public const string MakarismiYmnisNode = "ymnis";
 
         public const string ApostlesNode = "apostles";
         public const string AlleluiaNode = "alleluia"; 

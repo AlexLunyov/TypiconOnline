@@ -38,12 +38,12 @@
       <SubType>Content</SubType>
       <DependentUpon>Calendar.classdiagram</DependentUpon>
     </Content>
-    <Content Include="IrmologionMigration.classdiagram">
+    <Content Include="TheotokionAppMigration.classdiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="IrmologionMigration.classdiagram.layout">
+    <Content Include="TheotokionAppMigration.classdiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>IrmologionMigration.classdiagram</DependentUpon>
+      <DependentUpon>TheotokionAppMigration.classdiagram</DependentUpon>
     </Content>
     <Content Include="MenologyDay.classdiagram">
       <SubType>Content</SubType>

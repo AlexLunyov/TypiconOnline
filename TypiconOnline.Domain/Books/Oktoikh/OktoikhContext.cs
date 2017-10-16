@@ -8,14 +8,12 @@ using TypiconOnline.Infrastructure.Common.UnitOfWork;
 
 namespace TypiconOnline.Domain.Books.Oktoikh
 {
+    /// <summary>
+    /// Реализация IOktoikhContext, дающая доступ к богослужебным текстам Октоиха
+    /// </summary>
     public class OktoikhContext : BookServiceBase, IOktoikhContext
     {
-        public virtual List<OktoikhGlas> OktoikhGlasSet { get; set; }
-
-        public OktoikhContext(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
-            OktoikhGlasSet = new List<OktoikhGlas>();
-        }
+        public OktoikhContext(IUnitOfWork unitOfWork) : base(unitOfWork) { }
 
         /// <summary>
         /// Возвращает текст богослужения дня и гласа, соответствующих заданной дате
@@ -24,7 +22,9 @@ namespace TypiconOnline.Domain.Books.Oktoikh
         /// <returns></returns>
         public OktoikhDay Get(DateTime date)
         {
-            throw new NotImplementedException();
+            int ihos = OktoikhCalculator.CalculateIhosNumber(date);
+
+            return _unitOfWork.Repository<OktoikhDay>().Get(c => c.Ihos == ihos && c.DayOfWeek == date.DayOfWeek);
         }
     }
 }

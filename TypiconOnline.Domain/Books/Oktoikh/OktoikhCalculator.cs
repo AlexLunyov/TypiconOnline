@@ -15,8 +15,34 @@ namespace TypiconOnline.Domain.Books.Oktoikh
         /// <returns></returns>
         public static int CalculateIhosNumber(DateTime date)
         {
-            int ihos = 0;
-            //TODO: добавить реализацию
+            //если этот день не воскресныйЮ находим ближайшее воскресенье после него
+            while (date.DayOfWeek != DayOfWeek.Sunday)
+                date = date.AddDays(1);
+
+            DateTime dEaster = BookStorage.Instance.Easters.GetCurrentEaster(date.Year);
+            //Пасха в прошлом году
+            DateTime dPastEaster = BookStorage.Instance.Easters.GetCurrentEaster(date.Year - 1);
+
+            //вычисляем количество дней между текущим днем и днем Пасхи
+            int day = date.DayOfYear - dEaster.DayOfYear;
+
+            //вычисляем глас
+            // (остаток от деления на 56) / 7
+
+            int ihos = day;
+            if (day < 0)
+            {
+                //отталкиваемся от Пасхи в прошлом году
+
+                //ниже получаем день относительно прошлой Пасхи
+
+                ihos = 366 + date.DayOfYear - dPastEaster.DayOfYear;
+            }
+            ihos = (ihos % 56) / 7;
+            if (ihos == 0)
+                ihos = 8;
+
+
             return ihos;
         }
 

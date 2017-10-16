@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 15.75, 8.5" name="IrmologionMigration">
+  <logicalClassDesignerModelMoniker Id="0403078a-4f42-4a57-87ab-7465bc5c8bfc" />
+  <nestedChildShapes>
+    <classShape Id="2e74c9ab-997d-4074-8ea1-3fef2a08cb94" absoluteBounds="10, 4.875, 1.75, 1.5429687152306237" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+      <classMoniker Id="4f956055-718a-4dda-ad8a-281eaacde997" LastKnownName="TheotokionApp" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="7bbdc919-6cc1-4dbf-a19f-f0a650762959" absoluteBounds="10.015, 5.2650000000000006, 1.7200000000000002, 0.84179684768120444" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="4f56e0ea-d430-4283-abc2-2c905af8c365" absoluteBounds="10.015, 6.1167968476812042, 1.7200000000000002, 0.20117186754941963" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="87bcd05f-73dd-4b66-bb8b-5d97a51e557c" absoluteBounds="6.875, 6.75, 2.875, 1.5429687152306242" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+      <classMoniker Id="0abb9c65-c3a1-4258-988d-01a9d1b54d11" LastKnownName="TheotokionAppService" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="38c7ec36-bcef-4feb-a93a-056cfdfc9da1" absoluteBounds="6.8900000000000006, 7.1400000000000006, 2.8449999999999998, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="00d6fef6-dd1a-48ed-aae7-4e26fd62c4ad" absoluteBounds="6.8900000000000006, 7.35117186754942, 2.8449999999999998, 0.84179684768120444" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <interfaceShape Id="8d2c6a00-f705-45d1-a3af-4393b8dec107" absoluteBounds="7.25, 4.375, 2.125, 1.5429687152306237" hideQualifiedName="false" increaseHeight="0" customColor="207, 223, 191">
+      <interfaceMoniker Id="fa3899b7-1905-44a2-b202-5e9af2295939" LastKnownName="ITheotokionAppService" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="e3dd26ce-99c3-4539-9a8e-5bb5355a4e02" absoluteBounds="7.265, 4.765, 2.0949999999999998, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="8ac18999-d3dd-449d-8fdc-0940ff2f7fe3" absoluteBounds="7.265, 4.97617186754942, 2.0949999999999998, 0.84179684768120444" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </interfaceShape>
+    <realizationConnector edgePoints="[(8.3125 : 6.75); (8.3125 : 5.91796871523062)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110" showAsLollipop="false">
+      <interfaceRealizationMoniker Id="3c460d10-3019-4425-a38e-c79712614b9a" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="87bcd05f-73dd-4b66-bb8b-5d97a51e557c" />
+        <interfaceShapeMoniker Id="8d2c6a00-f705-45d1-a3af-4393b8dec107" />
+      </nodes>
+    </realizationConnector>
+    <dependencyConnector edgePoints="[(9.375 : 5.39648435761531); (10 : 5.39648435761531)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="Black">
+      <dependencyMoniker Id="34b833b3-5f04-478f-8cb3-403d46cd013e" />
+      <relativeChildShapes />
+      <nodes>
+        <interfaceShapeMoniker Id="8d2c6a00-f705-45d1-a3af-4393b8dec107" />
+        <classShapeMoniker Id="2e74c9ab-997d-4074-8ea1-3fef2a08cb94" />
+      </nodes>
+    </dependencyConnector>
+    <interfaceShape Id="9cfcf59a-75c3-44f5-8534-91d384eb6c0d" absoluteBounds="4.375, 7.25, 1.875, 1.0624999801317849" hideQualifiedName="false" increaseHeight="0" customColor="207, 223, 191">
+      <interfaceMoniker Id="e8e3d8b5-ffec-42cc-bedc-18e7763cc1c2" LastKnownName="IFileReader" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="96c12703-7760-4dda-856d-da00bf7d9176" absoluteBounds="4.39, 7.6400000000000006, 1.8450000000000002, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="c411e47a-f259-492b-b0e6-55d8ed642597" absoluteBounds="4.39, 7.85117186754942, 1.8450000000000002, 0.36132811258236563" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </interfaceShape>
+    <interfaceShape Id="210ce2db-7441-4eae-b309-d121c5ba0dd3" absoluteBounds="8.375, 0.5, 2, 1.0624999801317854" hideQualifiedName="false" increaseHeight="0" customColor="207, 223, 191">
+      <interfaceMoniker Id="871bf5ba-7f90-41fb-8dc3-0729d67ae05c" LastKnownName="IMigrationManager" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="07c0a33c-ecb3-4a8f-b0bc-f8a7a1ef748c" absoluteBounds="8.39, 0.89, 1.9700000000000002, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="85f8797e-7661-446a-a8d4-660e5380b8c8" absoluteBounds="8.39, 1.1011718675494193, 1.9700000000000002, 0.36132811258236563" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </interfaceShape>
+    <classShape Id="a1ceee66-f30e-4041-af9c-e7e1ef37206d" absoluteBounds="8, 2.25, 2.75, 1.5429687152306242" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+      <classMoniker Id="0a164cf4-7a51-4447-a698-20f4e5375253" LastKnownName="TheotokionAppMigrationManager" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="ec71e343-d728-4b23-b470-4ed49b2d5d5e" absoluteBounds="8.015, 2.6399999999999997, 2.7199999999999998, 0.68164060264825821" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="c32142b7-81b0-4a16-9bcf-cd0dd7a98a9c" absoluteBounds="8.015, 3.3316406026482586, 2.7199999999999998, 0.36132811258236575" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <realizationConnector edgePoints="[(9.375 : 2.25); (9.375 : 1.56249998013179)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110" showAsLollipop="false">
+      <interfaceRealizationMoniker Id="f2f27bbc-6c52-4ef0-9553-2babb665a9c2" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="a1ceee66-f30e-4041-af9c-e7e1ef37206d" />
+        <interfaceShapeMoniker Id="210ce2db-7441-4eae-b309-d121c5ba0dd3" />
+      </nodes>
+    </realizationConnector>
+    <associationConnector edgePoints="[(8.6875 : 3.79296871523062); (8.6875 : 4.375)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="113, 111, 110" sourceMultiplicity="1" targetMultiplicity="1">
+      <associationMoniker Id="a3801e69-6a0f-47c6-8cfc-ea4fd5dc4419" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="a1ceee66-f30e-4041-af9c-e7e1ef37206d" />
+        <interfaceShapeMoniker Id="8d2c6a00-f705-45d1-a3af-4393b8dec107" />
+      </nodes>
+    </associationConnector>
+    <interfaceShape Id="b5a94862-cdc5-4ba3-8f29-6e613177d84d" absoluteBounds="3.75, 3.625, 2.75, 1.0624999801317849" hideQualifiedName="false" increaseHeight="0" customColor="207, 223, 191">
+      <interfaceMoniker Id="5bb4bbbb-8e82-448f-9fdf-988abcf14dd9" LastKnownName="ITheotokionAppFileReader" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="c22d8690-201e-4abc-abee-e55fe1364647" absoluteBounds="3.7649999999999997, 4.0150000000000006, 2.7199999999999998, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="d64eaad5-528c-4f0f-9c15-92ff131a610e" absoluteBounds="3.7649999999999997, 4.22617186754942, 2.7199999999999998, 0.36132811258236563" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </interfaceShape>
+    <associationConnector edgePoints="[(8 : 2.9374995); (5.125 : 2.9374995); (5.125 : 3.625)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="113, 111, 110" sourceMultiplicity="1" targetMultiplicity="1">
+      <associationMoniker Id="5c9ad364-a0f7-474b-bef3-08b6ebd5e234" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="a1ceee66-f30e-4041-af9c-e7e1ef37206d" />
+        <interfaceShapeMoniker Id="b5a94862-cdc5-4ba3-8f29-6e613177d84d" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="924228cd-05db-4b48-9227-fdeb88841787" absoluteBounds="3.75, 5, 2.75, 1.2226562251647311" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+      <classMoniker Id="0244e2be-82ce-4fa0-acbb-ef4ff9786744" LastKnownName="TheotokionAppFileReader" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="870074ac-59ff-46aa-9be7-d782873bd3ca" absoluteBounds="3.7649999999999997, 5.39, 2.7199999999999998, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="e9dab76e-8374-4628-9388-4eb20f0fd0b0" absoluteBounds="3.765, 5.60117186754942, 2.7199999999999998, 0.521484357615312" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <realizationConnector edgePoints="[(5.125 : 5); (5.125 : 4.68749998013178)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110" showAsLollipop="false">
+      <interfaceRealizationMoniker Id="9ee866cb-2be1-46e6-9b04-987023680353" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="924228cd-05db-4b48-9227-fdeb88841787" />
+        <interfaceShapeMoniker Id="b5a94862-cdc5-4ba3-8f29-6e613177d84d" />
+      </nodes>
+    </realizationConnector>
+    <associationConnector edgePoints="[(5.3125 : 6.22265622516473); (5.3125 : 7.25)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="113, 111, 110" sourceMultiplicity="1" targetMultiplicity="1">
+      <associationMoniker Id="5a64fdff-13c3-41ab-a07d-3d58c21f0585" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="924228cd-05db-4b48-9227-fdeb88841787" />
+        <interfaceShapeMoniker Id="9cfcf59a-75c3-44f5-8534-91d384eb6c0d" />
+      </nodes>
+    </associationConnector>
+    <interfaceShape Id="74b9c92e-af36-4c72-9174-7946d14216be" absoluteBounds="12.375, 3.5, 3.125, 1.0624999801317854" hideQualifiedName="false" increaseHeight="0" customColor="207, 223, 191">
+      <interfaceMoniker Id="cf164fe7-34b1-4f94-851c-b1a2a64c05be" LastKnownName="ITheotokionAppFactory" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="7e9d9c8b-37c1-4deb-bc32-7aed19fa0824" absoluteBounds="12.39, 3.89, 3.0949999999999998, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="d67e7ee4-d690-4d14-bcef-36761e70f881" absoluteBounds="12.39, 4.10117186754942, 3.0949999999999998, 0.36132811258236563" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </interfaceShape>
+    <associationConnector edgePoints="[(10.75 : 3.64648435761531); (12.375 : 3.64648435761531)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="113, 111, 110" sourceMultiplicity="1" targetMultiplicity="1">
+      <associationMoniker Id="ebbd03a5-1493-4c52-80a4-528de4f6dc5f" />
+      <relativeChildShapes />
+      <moveableDecoratorHostShapes>
+        <moveableDecoratorHostShape manuallyPlaced="true" absoluteBounds="10.745062947273254, 3.3964848576153122, 1.5549370527267463, 0.14800345897674561" shapeFieldName="SourceRoleName" />
+        <moveableDecoratorHostShape manuallyPlaced="true" absoluteBounds="11.532208502292633, 2.7178328082537262, 1.2085864543914795, 0.14800345897674561" shapeFieldName="TargetRoleName" />
+        <moveableDecoratorHostShape manuallyPlaced="true" absoluteBounds="12.143446173518896, 3.8030016802823154, 0.125, 0.14800345897674561" shapeFieldName="TargetMultiplicity" />
+      </moveableDecoratorHostShapes>
+      <nodes>
+        <classShapeMoniker Id="a1ceee66-f30e-4041-af9c-e7e1ef37206d" />
+        <interfaceShapeMoniker Id="74b9c92e-af36-4c72-9174-7946d14216be" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="34a192f6-9dd0-454e-bb3d-1fde7c072344" absoluteBounds="12.5, 5.625, 2.875, 1.0624999801317854" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+      <classMoniker Id="48e54ad1-05a3-44e9-a987-274684c10b9a" LastKnownName="TheotokionAppFactory" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="c9c7666d-e1f2-41c6-96f7-28c428e96373" absoluteBounds="12.515, 6.015, 2.8449999999999998, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="246cbc1b-44a6-4e86-9fde-709de5ce0f8d" absoluteBounds="12.515, 6.22617186754942, 2.8449999999999998, 0.36132811258236563" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <realizationConnector edgePoints="[(13.9375 : 5.625); (13.9375 : 4.56249998013179)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110" showAsLollipop="false">
+      <interfaceRealizationMoniker Id="4fc00304-fa4e-4a33-99b0-cad46ba47d0c" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="34a192f6-9dd0-454e-bb3d-1fde7c072344" />
+        <interfaceShapeMoniker Id="74b9c92e-af36-4c72-9174-7946d14216be" />
+      </nodes>
+    </realizationConnector>
+    <dependencyConnector edgePoints="[(12.5 : 6.02148435761531); (11.75 : 6.02148435761531)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="Black">
+      <dependencyMoniker Id="bdefbcad-911c-4d91-9a86-a1969cd1cb24" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="34a192f6-9dd0-454e-bb3d-1fde7c072344" />
+        <classShapeMoniker Id="2e74c9ab-997d-4074-8ea1-3fef2a08cb94" />
+      </nodes>
+    </dependencyConnector>
+    <classShape Id="4bf5dc20-dc8d-4edd-a3a4-b232240d57a2" absoluteBounds="1.25, 5, 1.875, 1.2226562251647311" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+      <classMoniker Id="4f0210b6-28a4-440f-bb40-78b339e562a3" LastKnownName="MigrationFileReaderBase" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="fd15f4b8-73f8-4b5e-b5a0-73e865be77d5" absoluteBounds="1.265, 5.39, 1.8450000000000002, 0.36132811258236563" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="4571dc41-8a8a-404b-a758-d7d0e8dd65d7" absoluteBounds="1.265, 5.7613281125823654, 1.8450000000000002, 0.36132811258236563" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <generalizationConnector edgePoints="[(3.75 : 5.61132811258237); (3.125 : 5.61132811258237)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="113, 111, 110">
+      <generalizationMoniker Id="7039777f-6402-4999-9d8d-e894579b4024" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="924228cd-05db-4b48-9227-fdeb88841787" />
+        <classShapeMoniker Id="4bf5dc20-dc8d-4edd-a3a4-b232240d57a2" />
+      </nodes>
+    </generalizationConnector>
+  </nestedChildShapes>
+</logicalClassDesignerDiagram>

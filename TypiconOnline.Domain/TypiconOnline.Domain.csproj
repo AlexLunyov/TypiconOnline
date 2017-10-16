@@ -102,6 +102,7 @@
     <Compile Include="Rules\Days\Exapostilarion.cs" />
     <Compile Include="Rules\Days\ExapostilarionItem.cs" />
     <Compile Include="Rules\Days\Kanonas.cs" />
+    <Compile Include="Rules\Days\Makarismi.cs" />
     <Compile Include="Rules\Days\SixHourBusinessConstraint.cs" />
     <Compile Include="Rules\Days\Kontakion.cs" />
     <Compile Include="Rules\Days\KanonasBusinessConstraint.cs" />

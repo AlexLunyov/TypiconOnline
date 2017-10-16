@@ -26,12 +26,18 @@ namespace TypiconOnline.Domain.Rules.Days
 
         #region Properties
 
+        ///// <summary>
+        ///// Блаженны
+        ///// </summary>
+        //[XmlArray(RuleConstants.MakarismiNode)]
+        //[XmlArrayItem(RuleConstants.MakarismiOdiNode)]
+        //public List<MakariosOdi> Makarismi { get; set; }
+
         /// <summary>
         /// Блаженны
         /// </summary>
-        [XmlArray(RuleConstants.MakarismiNode)]
-        [XmlArrayItem(RuleConstants.MakarismiOdiNode)]
-        public List<MakariosOdi> Makarismi { get; set; }
+        [XmlElement(RuleConstants.MakarismiNode)]
+        public Makarismi Makarismi { get; set; }
 
         /// <summary>
         /// Прокимен
@@ -71,12 +77,17 @@ namespace TypiconOnline.Domain.Rules.Days
         {
             if (Makarismi != null)
             {
-                foreach (MakariosOdi odi in Makarismi)
+                foreach (MakariosOdi odi in Makarismi.Links)
                 {
                     if (!odi.IsValid)
                     {
                         AppendAllBrokenConstraints(odi, RuleConstants.MakarismiNode);
                     }
+                }
+
+                if (Makarismi.Ymnis?.IsValid == false)
+                {
+                    AppendAllBrokenConstraints(Makarismi.Ymnis, RuleConstants.MakarismiNode);
                 }
             }
 

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" dslVersion="1.0.0.0" Id="0403078a-4f42-4a57-87ab-7465bc5c8bfc" name="IrmologionMigration" linkedPackageId="9221c162-32e3-40ae-b4aa-b3c112af3113" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" dslVersion="1.0.0.0" Id="0403078a-4f42-4a57-87ab-7465bc5c8bfc" name="IrmologionMigration" linkedPackageId="9221c162-32e3-40ae-b4aa-b3c112af3113" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
   <appliedStereotypesInternal>
     <stereotypeInstance Id="be2d4da8-4b90-456d-80af-19f9095f7491" name="namespace" profile="CSharpProfile">
       <elementDefinition Id="e321704d-226b-4f26-bdc5-54fe109e0342" />
@@ -74,7 +74,7 @@
   </appliedStereotypesInternal>
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
-      <class Id="4f956055-718a-4dda-ad8a-281eaacde997" name="IrmologionTheotokion" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="4f956055-718a-4dda-ad8a-281eaacde997" name="TheotokionApp" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="0c7eac6e-3b00-4bf7-9960-98a90217e036" />
         <ownedAttributesInternal>
           <property Id="aaee9608-abc0-4c82-8d24-6014e344d6e4" name="Place" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -93,11 +93,11 @@
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <class Id="0abb9c65-c3a1-4258-988d-01a9d1b54d11" name="IrmologionService" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="0abb9c65-c3a1-4258-988d-01a9d1b54d11" name="TheotokionAppService" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="a4f7df48-f1d0-457e-80b7-9c2b53f13c98" />
         <suppliersInternal>
           <interfaceRealization Id="3c460d10-3019-4425-a38e-c79712614b9a">
-            <interfaceMoniker Id="fa3899b7-1905-44a2-b202-5e9af2295939" LastKnownName="IIrmologionTheotokionService" />
+            <interfaceMoniker Id="fa3899b7-1905-44a2-b202-5e9af2295939" LastKnownName="ITheotokionAppService" />
             <elementDefinition Id="bf9d2546-7d50-473e-a920-bf6a6c2e5135" />
           </interfaceRealization>
         </suppliersInternal>
@@ -118,11 +118,11 @@
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="fa3899b7-1905-44a2-b202-5e9af2295939" name="IIrmologionTheotokionService" isAbstract="false" isLeaf="false">
+      <Interface Id="fa3899b7-1905-44a2-b202-5e9af2295939" name="ITheotokionAppService" isAbstract="false" isLeaf="false">
         <elementDefinition Id="49b7df85-f43a-47c7-a07b-e8bca1deb640" />
         <suppliersInternal>
           <dependency Id="34b833b3-5f04-478f-8cb3-403d46cd013e">
-            <classMoniker Id="4f956055-718a-4dda-ad8a-281eaacde997" LastKnownName="IrmologionTheotokion" />
+            <classMoniker Id="4f956055-718a-4dda-ad8a-281eaacde997" LastKnownName="TheotokionApp" />
             <elementDefinition Id="89b2709a-6499-4ecb-9da4-d735b893950f" />
           </dependency>
         </suppliersInternal>
@@ -178,7 +178,7 @@
       </Interface>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <class Id="0a164cf4-7a51-4447-a698-20f4e5375253" name="IrmologionTheotokionMigrationManager" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="0a164cf4-7a51-4447-a698-20f4e5375253" name="TheotokionAppMigrationManager" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="2a0ded7f-8a1c-404b-ae8b-99fe0fd1168a" />
         <suppliersInternal>
           <interfaceRealization Id="f2f27bbc-6c52-4ef0-9553-2babb665a9c2">
@@ -187,48 +187,48 @@
           </interfaceRealization>
         </suppliersInternal>
         <targetEnds>
-          <association Id="5c9ad364-a0f7-474b-bef3-08b6ebd5e234" isDerived="false" sourceEndRoleName="IrmologionTheotokionMigrator" targetEndRoleName="IIrmologionTheotokionFileReader" isLeaf="false" isAbstract="false">
-            <interfaceMoniker Id="5bb4bbbb-8e82-448f-9fdf-988abcf14dd9" LastKnownName="IIrmologionTheotokionFileReader" />
+          <association Id="5c9ad364-a0f7-474b-bef3-08b6ebd5e234" isDerived="false" sourceEndRoleName="TheotokionAppMigrationManager" targetEndRoleName="ITheotokionAppFileReader" isLeaf="false" isAbstract="false">
+            <interfaceMoniker Id="5bb4bbbb-8e82-448f-9fdf-988abcf14dd9" LastKnownName="ITheotokionAppFileReader" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
-                <memberEnd Id="35889346-7203-4b20-a1ce-a64345ab26cf" name="IrmologionTheotokionMigrator" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                <memberEnd Id="35889346-7203-4b20-a1ce-a64345ab26cf" name="TheotokionAppMigrationManager" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
                   <elementDefinition Id="b3f695d4-f5e0-4910-8a45-92c7cb20aba3" />
                 </memberEnd>
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
-                <memberEnd Id="42006a6f-88bf-418d-a29b-981e202e7770" name="IIrmologionTheotokionFileReader" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                <memberEnd Id="42006a6f-88bf-418d-a29b-981e202e7770" name="ITheotokionAppFileReader" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
                   <elementDefinition Id="ede07369-c708-424a-9a99-b0f95e8e476f" />
                 </memberEnd>
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
             <elementDefinition Id="41dc389c-9330-4116-903a-791996c66bbf" />
           </association>
-          <association Id="a3801e69-6a0f-47c6-8cfc-ea4fd5dc4419" isDerived="false" sourceEndRoleName="IrmologionTheotokionMigrator" targetEndRoleName="IIrmologionTheotokionService" isLeaf="false" isAbstract="false">
-            <interfaceMoniker Id="fa3899b7-1905-44a2-b202-5e9af2295939" LastKnownName="IIrmologionTheotokionService" />
+          <association Id="a3801e69-6a0f-47c6-8cfc-ea4fd5dc4419" isDerived="false" sourceEndRoleName="TheotokionAppMigrationManager" targetEndRoleName="ITheotokionAppService" isLeaf="false" isAbstract="false">
+            <interfaceMoniker Id="fa3899b7-1905-44a2-b202-5e9af2295939" LastKnownName="ITheotokionAppService" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
-                <memberEnd Id="0a7f104b-8e6b-424a-9e20-00117f2936f9" name="IrmologionTheotokionMigrator" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                <memberEnd Id="0a7f104b-8e6b-424a-9e20-00117f2936f9" name="TheotokionAppMigrationManager" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
                   <elementDefinition Id="165af422-fc94-4a08-ac45-c054828b0009" />
                 </memberEnd>
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
-                <memberEnd Id="a0d36616-5e5f-4e5f-ab90-1b2856f9dab4" name="IIrmologionTheotokionService" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                <memberEnd Id="a0d36616-5e5f-4e5f-ab90-1b2856f9dab4" name="ITheotokionAppService" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
                   <elementDefinition Id="4d74f443-be53-4603-b11e-9a366cc58cc0" />
                 </memberEnd>
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
             <elementDefinition Id="d380f73d-12e5-4616-8a48-048a5742e5b8" />
           </association>
-          <association Id="ebbd03a5-1493-4c52-80a4-528de4f6dc5f" isDerived="false" sourceEndRoleName="IrmologionTheotokionMigrator" targetEndRoleName="IIrmologionTheotokionFactory" isLeaf="false" isAbstract="false">
-            <interfaceMoniker Id="cf164fe7-34b1-4f94-851c-b1a2a64c05be" LastKnownName="IIrmologionTheotokionFactory" />
+          <association Id="ebbd03a5-1493-4c52-80a4-528de4f6dc5f" isDerived="false" sourceEndRoleName="TheotokionAppMigrationManager" targetEndRoleName="ITheotokionAppFactory" isLeaf="false" isAbstract="false">
+            <interfaceMoniker Id="cf164fe7-34b1-4f94-851c-b1a2a64c05be" LastKnownName="ITheotokionAppFactory" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
-                <memberEnd Id="73935ce0-3034-40aa-9d41-eaa529cdb636" name="IrmologionTheotokionMigrator" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                <memberEnd Id="73935ce0-3034-40aa-9d41-eaa529cdb636" name="TheotokionAppMigrationManager" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
                   <elementDefinition Id="c2cf5732-e8c0-44de-9a2d-e5ad01e6fcf8" />
                 </memberEnd>
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
-                <memberEnd Id="2290a041-1d39-4bb7-8d81-b86c447877cf" name="IIrmologionTheotokionFactory" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                <memberEnd Id="2290a041-1d39-4bb7-8d81-b86c447877cf" name="ITheotokionAppFactory" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
                   <elementDefinition Id="685a9eb3-35dd-4bd5-a41f-8b6ce5ef196e" />
                 </memberEnd>
               </associationHasOwnedEnds>
@@ -240,19 +240,19 @@
           <property Id="340aeb09-71f7-4283-b434-95a431f62101" name="FileReader" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="9a57cb80-9ee0-4a15-8967-93f2ba54ba4a" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="cb00633f-f917-4f11-bc4d-d553bdc833e7" LastKnownName="IIrmologionTheotokionFileReader" />
+              <referencedTypeMoniker Id="cb00633f-f917-4f11-bc4d-d553bdc833e7" LastKnownName="ITheotokionAppFileReader" />
             </type_NamedElement>
           </property>
           <property Id="9c862976-83fc-40a2-a74c-65886a1112a2" name="Factory" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="94833a46-6037-4e5b-b586-c1ae9af4fba2" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="919d5826-906c-416d-9d32-7a7f4fb16404" LastKnownName="IIrmologionTheotokionFactory" />
+              <referencedTypeMoniker Id="919d5826-906c-416d-9d32-7a7f4fb16404" LastKnownName="ITheotokionAppFactory" />
             </type_NamedElement>
           </property>
           <property Id="34b0b2f8-56bf-405b-8dc0-58f0944cec90" name="Service" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="a63fcbd9-9795-4574-b3ba-ad54f111c7a1" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="7971f928-a0f5-4427-96f1-be6c97bc7871" LastKnownName="IIrmologionTheotokionService" />
+              <referencedTypeMoniker Id="7971f928-a0f5-4427-96f1-be6c97bc7871" LastKnownName="ITheotokionAppService" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
@@ -269,7 +269,7 @@
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="5bb4bbbb-8e82-448f-9fdf-988abcf14dd9" name="IIrmologionTheotokionFileReader" isAbstract="false" isLeaf="false">
+      <Interface Id="5bb4bbbb-8e82-448f-9fdf-988abcf14dd9" name="ITheotokionAppFileReader" isAbstract="false" isLeaf="false">
         <elementDefinition Id="750da423-8f2d-4e60-bad5-afd831485508" />
         <ownedOperations>
           <operation Id="b4ee6948-6bf4-48df-9606-60feea5ca728" name="Read" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
@@ -296,20 +296,26 @@
       </Interface>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <class Id="0244e2be-82ce-4fa0-acbb-ef4ff9786744" name="IrmologionTheotokionFileReader" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="0244e2be-82ce-4fa0-acbb-ef4ff9786744" name="TheotokionAppFileReader" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="ef2092da-c505-4be9-8e55-c5d515781df4" />
         <suppliersInternal>
           <interfaceRealization Id="9ee866cb-2be1-46e6-9b04-987023680353">
-            <interfaceMoniker Id="5bb4bbbb-8e82-448f-9fdf-988abcf14dd9" LastKnownName="IIrmologionTheotokionFileReader" />
+            <interfaceMoniker Id="5bb4bbbb-8e82-448f-9fdf-988abcf14dd9" LastKnownName="ITheotokionAppFileReader" />
             <elementDefinition Id="353f53a0-5f8e-4ef6-b789-541af7e5009b" />
           </interfaceRealization>
         </suppliersInternal>
+        <generalsInternal>
+          <generalization Id="7039777f-6402-4999-9d8d-e894579b4024" isSubstitutable="false">
+            <classMoniker Id="4f0210b6-28a4-440f-bb40-78b339e562a3" LastKnownName="MigrationFileReaderBase" />
+            <elementDefinition Id="42f7a9c3-2a42-484d-8011-8bf10bec3c28" />
+          </generalization>
+        </generalsInternal>
         <targetEnds>
-          <association Id="5a64fdff-13c3-41ab-a07d-3d58c21f0585" isDerived="false" sourceEndRoleName="IrmologionTheotokionFileReader" targetEndRoleName="IFileReader" isLeaf="false" isAbstract="false">
+          <association Id="5a64fdff-13c3-41ab-a07d-3d58c21f0585" isDerived="false" sourceEndRoleName="TheotokionAppFileReader" targetEndRoleName="IFileReader" isLeaf="false" isAbstract="false">
             <interfaceMoniker Id="e8e3d8b5-ffec-42cc-bedc-18e7763cc1c2" LastKnownName="IFileReader" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
-                <memberEnd Id="cc3061d0-eeb1-493a-97fb-a450957b84ec" name="IrmologionTheotokionFileReader" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                <memberEnd Id="cc3061d0-eeb1-493a-97fb-a450957b84ec" name="TheotokionAppFileReader" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
                   <elementDefinition Id="5677ecb0-75e6-4632-847a-53b8adaa833e" />
                 </memberEnd>
               </associationHasOwnedEnds>
@@ -322,14 +328,6 @@
             <elementDefinition Id="61799e54-a712-4db8-b0e6-aa69172e606f" />
           </association>
         </targetEnds>
-        <ownedAttributesInternal>
-          <property Id="523bda07-3373-46b9-a1a8-52178f9c9439" name="FileReader" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="f7f424b5-707c-493b-a238-dde010330281" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="a0773aaf-550d-4d45-bdc0-7caa4d043eb4" LastKnownName="IFileReader" />
-            </type_NamedElement>
-          </property>
-        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation Id="ce8a4c85-5220-49a1-90ac-57054b74ad78" name="Read" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="82de5e5a-8cea-4fbf-93ae-ed20c0a410a2" />
@@ -351,12 +349,12 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="d6e62175-a234-4f30-bf3a-f65be61950fd" name="IrmologionTheotokionFileReader" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+          <operation Id="d6e62175-a234-4f30-bf3a-f65be61950fd" name="TheotokionAppFileReader" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="c1abd2a2-f9c5-4423-867e-6f8167bfdacc" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="c6f7129b-4d88-4b0a-bced-31de71abe289" name="IFileReader fileReader" direction="In" isUnique="false">
-                  <elementDefinition Id="fda6cff2-1488-4455-8524-e7a49b417df3" />
+                <parameter Id="61afe951-b9cf-4f3b-bd4b-6b41e595b443" name="IFileReader fileReader" direction="In" isUnique="false">
+                  <elementDefinition Id="87d394c4-7704-4d49-b6a5-ed7a0d24cdfa" />
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
@@ -365,7 +363,7 @@
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="cf164fe7-34b1-4f94-851c-b1a2a64c05be" name="IIrmologionTheotokionFactory" isAbstract="false" isLeaf="false">
+      <Interface Id="cf164fe7-34b1-4f94-851c-b1a2a64c05be" name="ITheotokionAppFactory" isAbstract="false" isLeaf="false">
         <elementDefinition Id="0d8ff959-ada9-4691-b4ba-80f46ea1b0bc" />
         <ownedOperations>
           <operation Id="26898b2a-cb0a-4d6a-a6fd-f911d30ae203" name="IrmologionTheotokion Create" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
@@ -397,30 +395,30 @@
       </Interface>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
-      <referencedType Id="919d5826-906c-416d-9d32-7a7f4fb16404" name="IIrmologionTheotokionFactory" isAbstract="false" isLeaf="false" cachedFullName="TypiconOnline.Domain::IIrmologionTheotokionFactory">
+      <referencedType Id="919d5826-906c-416d-9d32-7a7f4fb16404" name="ITheotokionAppFactory" isAbstract="false" isLeaf="false" cachedFullName="TypiconOnline.Domain::ITheotokionAppFactory">
         <elementDefinition Id="0d8ff959-ada9-4691-b4ba-80f46ea1b0bc" />
       </referencedType>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <referencedType Id="cb00633f-f917-4f11-bc4d-d553bdc833e7" name="IIrmologionTheotokionFileReader" isAbstract="false" isLeaf="false" cachedFullName="TypiconOnline.Domain::IIrmologionTheotokionFileReader">
+      <referencedType Id="cb00633f-f917-4f11-bc4d-d553bdc833e7" name="ITheotokionAppFileReader" isAbstract="false" isLeaf="false" cachedFullName="TypiconOnline.Domain::ITheotokionAppFileReader">
         <elementDefinition Id="750da423-8f2d-4e60-bad5-afd831485508" />
       </referencedType>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <referencedType Id="7971f928-a0f5-4427-96f1-be6c97bc7871" name="IIrmologionTheotokionService" isAbstract="false" isLeaf="false" cachedFullName="TypiconOnline.Domain::IIrmologionTheotokionService">
+      <referencedType Id="7971f928-a0f5-4427-96f1-be6c97bc7871" name="ITheotokionAppService" isAbstract="false" isLeaf="false" cachedFullName="TypiconOnline.Domain::ITheotokionAppService">
         <elementDefinition Id="49b7df85-f43a-47c7-a07b-e8bca1deb640" />
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <class Id="48e54ad1-05a3-44e9-a987-274684c10b9a" name="IrmologionTheotokionFactory" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="48e54ad1-05a3-44e9-a987-274684c10b9a" name="TheotokionAppFactory" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="c2433dc0-4bd4-4f40-9d22-5fe1c687b1e0" />
         <suppliersInternal>
           <interfaceRealization Id="4fc00304-fa4e-4a33-99b0-cad46ba47d0c">
-            <interfaceMoniker Id="cf164fe7-34b1-4f94-851c-b1a2a64c05be" LastKnownName="IIrmologionTheotokionFactory" />
+            <interfaceMoniker Id="cf164fe7-34b1-4f94-851c-b1a2a64c05be" LastKnownName="ITheotokionAppFactory" />
             <elementDefinition Id="07368685-e30b-45dd-b8c6-94a6ef243ab3" />
           </interfaceRealization>
           <dependency Id="bdefbcad-911c-4d91-9a86-a1969cd1cb24">
-            <classMoniker Id="4f956055-718a-4dda-ad8a-281eaacde997" LastKnownName="IrmologionTheotokion" />
+            <classMoniker Id="4f956055-718a-4dda-ad8a-281eaacde997" LastKnownName="TheotokionApp" />
             <elementDefinition Id="524d4c2a-441f-4b5e-8189-d9fe0f5342e4" />
           </dependency>
         </suppliersInternal>
@@ -458,6 +456,31 @@
         <elementDefinition Id="81577258-6290-4f44-b419-fa5dbaa6edee" />
       </referencedType>
     </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="4f0210b6-28a4-440f-bb40-78b339e562a3" name="MigrationFileReaderBase" isAbstract="true" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="700670a8-8fa4-4b79-aff2-fccdb93464e3" />
+        <ownedAttributesInternal>
+          <property Id="08e90c30-f2ab-42a5-a554-9dd7e44b1421" name="FileReader" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="3052caf5-2032-46d5-a5d8-79cbf7b5ed88" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="a0773aaf-550d-4d45-bdc0-7caa4d043eb4" LastKnownName="IFileReader" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="c3b547eb-56ad-44f6-90f0-69979880d14e" name="MigrationFileReaderBase" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="376f6e36-c867-4147-b3a0-eb8d847d5e2b" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="a5339aa3-d3ce-461e-849b-82e156b4b9bf" name="FileReader fileReader" direction="In" isUnique="false">
+                  <elementDefinition Id="edb33236-4bcd-4f1e-93a4-dcaa9e24ff8d" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
   </packagedElements>
   <package Id="9221c162-32e3-40ae-b4aa-b3c112af3113" name="TypiconOnline.Domain">
     <elementDefinition Id="0a315aea-6208-414d-a4c3-8da884879962" />
