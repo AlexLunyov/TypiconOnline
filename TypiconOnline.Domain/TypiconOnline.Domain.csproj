@@ -44,12 +44,14 @@
     <Compile Include="Books\Apostol\IApostolService.cs" />
     <Compile Include="Books\BookServiceBase.cs" />
     <Compile Include="Books\BookStorageFactory.cs" />
-    <Compile Include="Books\Easter\EasterService.cs" />
+    <Compile Include="Books\Easter\EasterContext.cs" />
     <Compile Include="Books\Evangelion\EvangelionService.cs" />
     <Compile Include="Books\Evangelion\IEvangelionService.cs" />
     <Compile Include="Books\GetBookElementResponseBase.cs" />
     <Compile Include="Books\IBookElement.cs" />
     <Compile Include="Books\IBookStorageFactory.cs" />
+    <Compile Include="Books\Oktoikh\OktoikhCalculator.cs" />
+    <Compile Include="Books\Oktoikh\OktoikhDayBusinessConstraint.cs" />
     <Compile Include="Books\TheotokionApp\GetAllTheotokionResponse.cs" />
     <Compile Include="Books\TheotokionApp\GetTheotokionResponse.cs" />
     <Compile Include="Books\TheotokionApp\GetTheotokionRequest.cs" />
@@ -57,8 +59,8 @@
     <Compile Include="Books\TheotokionApp\TheotokionAppContext.cs" />
     <Compile Include="Books\TheotokionApp\TheotokionApp.cs" />
     <Compile Include="Books\TheotokionApp\TheotokionAppBusinessConstraint.cs" />
-    <Compile Include="Books\Oktoikh\IOktoikhService.cs" />
-    <Compile Include="Books\Oktoikh\OktoikhService.cs" />
+    <Compile Include="Books\Oktoikh\IOktoikhContext.cs" />
+    <Compile Include="Books\Oktoikh\OktoikhContext.cs" />
     <Compile Include="Books\OldTestament\IOldTestamentService.cs" />
     <Compile Include="Books\OldTestament\OldTestamentBook.cs" />
     <Compile Include="Books\OldTestament\OldTestamentChapter.cs" />
@@ -74,7 +76,8 @@
     <Compile Include="Books\Oktoikh\OktoikhGlas.cs" />
     <Compile Include="Books\Psalter\PsalterService.cs" />
     <Compile Include="Days\Day.cs" />
-    <Compile Include="Books\Easter\IEasterService.cs" />
+    <Compile Include="Books\Easter\IEasterContext.cs" />
+    <Compile Include="DayStructureBase.cs" />
     <Compile Include="Interfaces\IDayContainerFactory.cs" />
     <Compile Include="Interfaces\IDayServiceFactory.cs" />
     <Compile Include="Interfaces\IContainingIhos.cs" />

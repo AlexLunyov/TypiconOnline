@@ -24,9 +24,9 @@ namespace TypiconOnline.Repository.EF.Tests
                                     new ApostolService(unitOfWork),
                                     new OldTestamentService(unitOfWork),
                                     new PsalterService(unitOfWork),
-                                    new OktoikhService(unitOfWork),
+                                    new OktoikhContext(unitOfWork),
                                     new TheotokionAppContext(unitOfWork),
-                                    new EasterService(unitOfWork));
+                                    new EasterContext(unitOfWork));
         }
     }
 }

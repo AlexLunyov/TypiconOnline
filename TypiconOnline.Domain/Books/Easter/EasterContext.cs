@@ -7,9 +7,9 @@ using TypiconOnline.Infrastructure.Common.UnitOfWork;
 
 namespace TypiconOnline.Domain.Books.Easter
 {
-    public class EasterService : BookServiceBase, IEasterService
+    public class EasterContext : BookServiceBase, IEasterContext
     {
-        public EasterService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
+        public EasterContext(IUnitOfWork unitOfWork) : base(unitOfWork) { }
 
         public IEnumerable<EasterItem> GetAll()
         {

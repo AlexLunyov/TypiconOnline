@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Books.Easter
     /// <summary>
     /// Хранилище дней Пасхи
     /// </summary>
-    public class EasterCacheStorage : IEasterService
+    public class EasterCacheStorage : IEasterContext
     {
         private readonly ICacheStorage _cacheStorage;
         private readonly IConfigurationRepository _configurationRepository;

@@ -3,26 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TypiconOnline.Domain.Days;
-using TypiconOnline.Infrastructure.Common.UnitOfWork;
 
 namespace TypiconOnline.Domain.Books.Oktoikh
 {
-    public class OktoikhService : BookServiceBase, IOktoikhService
+    public class OktoikhCalculator
     {
-        public virtual List<OktoikhGlas> OktoikhGlasSet { get; set; }
-
-        public OktoikhService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        /// <summary>
+        /// Вычисляет номер гласа по введенной дате
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static int CalculateIhosNumber(DateTime date)
         {
-            OktoikhGlasSet = new List<OktoikhGlas>();
+            int ihos = 0;
+            //TODO: добавить реализацию
+            return ihos;
         }
+
         /// <summary>
         /// Возвращает строку с наименованием воскресного дня. 
         /// Используется для вставки в ряд воскресного дня в расписании на неделю
         /// </summary>
         /// <param name="date">Вводимая дата</param>
         /// <returns>Возвращает строку с наименованием воскресного дня. </returns>
-        public string GetSundayName(DateTime date)
+        public static string GetSundayName(DateTime date)
         {
             return GetSundayName(date, "");
         }
@@ -34,7 +38,7 @@ namespace TypiconOnline.Domain.Books.Oktoikh
         /// <param name="date">Вводимая дата</param>
         /// <param name="stringToPaste">Строка, которая будет вставлена после названия Недели, перед гласом</param>
         /// <returns>Возвращает строку с наименованием воскресного дня. </returns>
-        public string GetSundayName(DateTime date, string stringToPaste)
+        public static string GetSundayName(DateTime date, string stringToPaste)
         {
             /* Есть три периода: Великий пост, попразднество Пасхи и все после нее.
              * Соответсвенно, имена будут зависить от удаления от дня Пасхи.
@@ -159,7 +163,7 @@ namespace TypiconOnline.Domain.Books.Oktoikh
         /// <param name="date">Дата для проверки</param>
         /// <param name="isShortName">Если true, возвращает краткое название - для файлов.</param
         /// <returns></returns>
-        public string GetWeekName(DateTime date, bool isShortName)
+        public static string GetWeekName(DateTime date, bool isShortName)
         {
             /* Есть три периода: Великий пост, попразднество Пасхи и все после нее.
              * Соответсвенно, имена будут зависить от удаления от дня Пасхи.
@@ -256,16 +260,6 @@ namespace TypiconOnline.Domain.Books.Oktoikh
                 }
             }
             return result;
-        }
-
-        /// <summary>
-        /// Возвращает текст богослужения дня и гласа, соответствующих заданной дате
-        /// </summary>
-        /// <param name="date"></param>
-        /// <returns></returns>
-        public DayService GetOktoikhDay(DateTime date)
-        {
-            throw new NotImplementedException();
         }
     }
 }

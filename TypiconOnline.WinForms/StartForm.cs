@@ -69,9 +69,9 @@ namespace ScheduleForm
                 container.GetInstance<IApostolService>(),
                 container.GetInstance<IOldTestamentService>(),
                 container.GetInstance<IPsalterService>(),
-                container.GetInstance<IOktoikhService>(),
+                container.GetInstance<IOktoikhContext>(),
                 container.GetInstance<ITheotokionAppContext>(),
-                container.GetInstance<IEasterService>());
+                container.GetInstance<IEasterContext>());
 
             //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
@@ -172,7 +172,7 @@ namespace ScheduleForm
         {
             DateTime date = monthCalendarXML.SelectionRange.Start;
 
-            labelNextScheduleWeek.Text = BookStorage.Instance.Oktoikh.GetSundayName(date/*_selectedDate*/);
+            labelNextScheduleWeek.Text = OktoikhCalculator.GetSundayName(date/*_selectedDate*/);
 
             while (monthCalendarXML.SelectionStart.DayOfWeek != DayOfWeek.Monday)
             {
@@ -220,17 +220,17 @@ namespace ScheduleForm
 
                         _selectedDate = date.AddDays(1);
 
-                        labelNextScheduleWeek.Text = BookStorage.Instance.Oktoikh.GetSundayName(_selectedDate);
+                        labelNextScheduleWeek.Text = OktoikhCalculator.GetSundayName(_selectedDate);
                     }
                     catch
                     {
-                        labelNextScheduleWeek.Text = BookStorage.Instance.Oktoikh.GetSundayName(_selectedDate);
+                        labelNextScheduleWeek.Text = OktoikhCalculator.GetSundayName(_selectedDate);
                         _selectedDate = DateTime.Today;
                     }
                 }
                 else
                 {
-                    labelNextScheduleWeek.Text = BookStorage.Instance.Oktoikh.GetSundayName(_selectedDate);
+                    labelNextScheduleWeek.Text = OktoikhCalculator.GetSundayName(_selectedDate);
                     _selectedDate = DateTime.Today;
                 }
             }
@@ -342,7 +342,7 @@ namespace ScheduleForm
         private string GetFileName(DateTime date)
         {
             string result = textBoxFilePath.Text + "\\";
-            result += _scheduleFileStart + date.ToString("yyyy-MM-dd") + " " + date.AddDays(6).ToString("yyyy-MM-dd") + " " + BookStorage.Instance.Oktoikh.GetWeekName(date, true);
+            result += _scheduleFileStart + date.ToString("yyyy-MM-dd") + " " + date.AddDays(6).ToString("yyyy-MM-dd") + " " + OktoikhCalculator.GetWeekName(date, true);
             return result;
         }
 

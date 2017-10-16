@@ -5,6 +5,7 @@ using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Services;
 using TypiconOnline.Domain.Books;
+using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
@@ -161,7 +162,7 @@ namespace TypiconOnline.Domain.Services
 
                 //Если имеется короткое название, то добавляем только его
 
-                result = BookStorage.Instance.Oktoikh.GetSundayName(inputRequest.Date, 
+                result = OktoikhCalculator.GetSundayName(inputRequest.Date, 
                     GetShortName(handlerRequest.DayServices, handlerRequest.Language)) + " " + result;
 
                 //жестко задаем воскресный день
@@ -416,7 +417,7 @@ namespace TypiconOnline.Domain.Services
         {
             ScheduleWeek week = new ScheduleWeek() 
             {
-                Name = BookStorage.Instance.Oktoikh.GetWeekName(request.Date, false)
+                Name = OktoikhCalculator.GetWeekName(request.Date, false)
             };
 
             GetScheduleDayRequest dayRequest = new GetScheduleDayRequest()

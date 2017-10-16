@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TypiconOnline.Domain.Books.Easter
 {
-    public interface IEasterService
+    public interface IEasterContext
     {
         DateTime GetCurrentEaster(int year);
 

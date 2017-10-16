@@ -34,9 +34,9 @@ namespace TypiconOnline.Domain.Books
         public IApostolService Apostol { get; private set; }
         public IOldTestamentService OldTestament { get; private set; }
         public IPsalterService Psalter { get; private set; }
-        public IOktoikhService Oktoikh { get; private set; }
+        public IOktoikhContext Oktoikh { get; private set; }
         public ITheotokionAppContext TheotokionApp { get; private set; }
-        public IEasterService Easters { get; private set; }
+        public IEasterContext Easters { get; private set; }
 
         private BookStorage()
         {
@@ -51,9 +51,9 @@ namespace TypiconOnline.Domain.Books
             IApostolService apostolService,
             IOldTestamentService oldTestamentService,
             IPsalterService psalterService,
-            IOktoikhService oktoikhService,
+            IOktoikhContext oktoikhService,
             ITheotokionAppContext theotokionApp,
-            IEasterService easterService)
+            IEasterContext easterContext)
         {
             if (evangelionService == null) throw new ArgumentNullException("evangelionService");
             if (apostolService == null) throw new ArgumentNullException("apostolService");
@@ -61,7 +61,7 @@ namespace TypiconOnline.Domain.Books
             if (psalterService == null) throw new ArgumentNullException("psalterService");
             if (oktoikhService == null) throw new ArgumentNullException("oktoikhService");
             if (theotokionApp == null) throw new ArgumentNullException("irmologionService");
-            if (easterService == null) throw new ArgumentNullException("irmologionService");
+            if (easterContext == null) throw new ArgumentNullException("irmologionService");
 
             Evangelion = evangelionService;
             Apostol = apostolService;
@@ -69,7 +69,7 @@ namespace TypiconOnline.Domain.Books
             Psalter = psalterService;
             Oktoikh = oktoikhService;
             TheotokionApp = theotokionApp;
-            Easters = easterService;
+            Easters = easterContext;
         }
 
         #region Singletone pattern

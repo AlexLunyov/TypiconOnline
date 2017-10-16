@@ -210,7 +210,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             YmnosStructure result = null;
 
             //разбираемся с source
-            DayService dayService = null;
+            DayStructureBase dayService = null;
             switch (Source.Value)
             {
                 case YmnosSource.Item1:
@@ -223,7 +223,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     dayService = (handler.Settings.DayServices.Count > 2) ? handler.Settings.DayServices[2] : null;
                     break;
                 case YmnosSource.Oktoikh:
-                    dayService = BookStorage.Instance.Oktoikh.GetOktoikhDay(date);
+                    dayService = BookStorage.Instance.Oktoikh.Get(date);
                     break;
             }
 

@@ -6516,6 +6516,196 @@
         isLeaf="false"
         isActiveClass="false" />
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="32895794-ba59-46c7-98a3-c4bbeb662f61"
+        name="IOktoikhContext "
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="62814d4b-8ff1-4570-b2a2-5bb31ef060d5"
+            isDerived="false"
+            sourceEndRoleName="IOktoikhContext "
+            targetEndRoleName="OktoikhDay"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="ee0b27bb-02f1-4f75-880c-b0c3d33428d9"
+              LastKnownName="OktoikhDay"
+              LastKnownLocation="Package2_1852.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ff14208e-3ba3-4850-839b-c1379e63f777"
+                  name="IOktoikhContext "
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a84b5e2d-7bdb-4c1d-8a6c-5cf258463e1c"
+                  name="OktoikhDay"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedOperations>
+          <operation
+            Id="3a40fff9-41e1-4df3-a9e0-3bdbbdaf797a"
+            name="Get"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="49c3cf8f-d561-446f-83e9-372134ae6c76"
+                  name="date"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="1313cbf2-c198-4329-8c3a-9dfa597d28d8"
+        name="OktoikhContext"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <interfaceRealization
+            Id="faaa2a70-8df6-4f08-ac3d-9dfe8ed91823">
+            <interfaceMoniker
+              Id="32895794-ba59-46c7-98a3-c4bbeb662f61"
+              LastKnownName="IOktoikhContext "
+              LastKnownLocation="ModelingProjectScheduleHandling.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <targetEnds>
+          <association
+            Id="90316d29-5c51-4423-be14-7b94add0512c"
+            isDerived="false"
+            sourceEndRoleName="OktoikhContext"
+            targetEndRoleName="OktoikhCalculator"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="00cacf45-e4c1-4d80-9649-8a78296a2036"
+              LastKnownName="OktoikhCalculator"
+              LastKnownLocation="ModelingProjectScheduleHandling.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="70f4c060-7f58-42db-ab61-6ab6c6ea11e6"
+                  name="OktoikhContext"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="539bf4bc-b210-4679-9f9d-ec355737ad0e"
+                  name="OktoikhCalculator"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedOperationsInternal>
+          <operation
+            Id="7f4c1b56-94f5-4325-9ff3-0683d0477963"
+            name="Get"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="f7695106-d32d-43cc-bd62-923ca877fe28"
+                  name="date"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="00cacf45-e4c1-4d80-9649-8a78296a2036"
+        name="OktoikhCalculator"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="070221ab-4880-49c8-ba6e-68f3c84e8c03"
+            name="CalculateIhosNumber"
+            isLeaf="false"
+            isStatic="true"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="a312c474-544a-4263-910e-1dbf330d3246"
+                  name="date"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d552571a-d273-430c-8368-2bb88a979570"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="381dfffd-e149-46f4-ac3c-2d5eb0acd50d"
+                      LastKnownName="int"
+                      LastKnownLocation="ModelingProjectScheduleHandling.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
   </packagedElements>
   <primitiveType
     Id="220a3521-e091-4221-bae9-3ef9018e845c"

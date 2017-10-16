@@ -31,9 +31,9 @@ namespace TypiconOnline.Domain.Books
                                     new ApostolService(_unitOfWork),
                                     new OldTestamentService(_unitOfWork),
                                     new PsalterService(_unitOfWork),
-                                    new OktoikhService(_unitOfWork),
+                                    new OktoikhContext(_unitOfWork),
                                     new TheotokionAppContext(_unitOfWork),
-                                    new EasterService(_unitOfWork));
+                                    new EasterContext(_unitOfWork));
         }
     }
 }

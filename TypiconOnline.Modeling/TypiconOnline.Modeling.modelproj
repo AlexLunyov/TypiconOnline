@@ -24,6 +24,13 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
+    <Content Include="Books\Oktoikh\Oktoikh.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Books\Oktoikh\Oktoikh.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Books\Oktoikh\Oktoikh.classdiagram</DependentUpon>
+    </Content>
     <Content Include="Calendar.classdiagram">
       <SubType>Content</SubType>
     </Content>
@@ -49,6 +56,9 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="ModelDefinition\Package2_1852.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package_1558.uml">
       <SubType>Content</SubType>
     </Content>
     <Content Include="ModelDefinition\Package_1842.uml">
@@ -102,6 +112,7 @@
       <SubType>Content</SubType>
       <DependentUpon>User.classdiagram</DependentUpon>
     </Content>
+    <Folder Include="Books\Oktoikh" />
     <Folder Include="ModelDefinition\" />
     <Content Include="ModelDefinition\ModelingProjectScheduleHandling.uml">
       <SubType>Content</SubType>

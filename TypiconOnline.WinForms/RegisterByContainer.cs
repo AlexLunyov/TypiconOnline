@@ -42,9 +42,9 @@ namespace ScheduleForm
                     x.For<IApostolService>().Use<ApostolService>();
                     x.For<IOldTestamentService>().Use<OldTestamentService>();
                     x.For<IPsalterService>().Use<PsalterService>();
-                    x.For<IOktoikhService>().Use<OktoikhService>();
+                    x.For<IOktoikhContext>().Use<OktoikhContext>();
                     x.For<ITheotokionAppContext>().Use<TheotokionAppContext>();
-                    x.For<IEasterService>().Use<EasterService>();
+                    x.For<IEasterContext>().Use<EasterContext>();
                 });
         }
     }
