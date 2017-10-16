@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Books;
-using TypiconOnline.Domain.Books.Irmologion;
+using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Factories;
@@ -66,7 +66,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             if (Source.Value == YmnosSource.Irmologion)
             {
-                GetTheotokionResponse response = BookStorage.Instance.Irmologion.GetTheotokion(
+                GetTheotokionResponse response = BookStorage.Instance.TheotokionApp.Get(
                     new GetTheotokionRequest() { Place = Place.Value, Ihos = CalculatedIhos });
 
                 if (response.Exception == null && response.BookElement != null)

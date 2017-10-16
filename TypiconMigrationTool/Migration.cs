@@ -153,13 +153,13 @@ namespace TypiconMigrationTool
         {
             string folder = Path.Combine(Properties.Settings.Default.FolderPath, @"Books\Irmologion\Theotokion");
 
-            IrmologionTheotokionFileReader reader = new IrmologionTheotokionFileReader(new FileReader(folder));
+            ITheotokionAppFileReader reader = new TheotokionAppFileReader(new FileReader(folder));
 
-            IrmologionTheotokionService service = new IrmologionTheotokionService(_unitOfWork);
+            ITheotokionAppService service = new TheotokionAppService(_unitOfWork);
 
-            IrmologionTheotokionFactory factory = new IrmologionTheotokionFactory();
+            ITheotokionAppFactory factory = new TheotokionAppFactory();
 
-            IMigrationManager manager = new IrmologionTheotokionMigrationManager(factory, reader, service);
+            IMigrationManager manager = new TheotokionAppMigrationManager(factory, reader, service);
 
             manager.Migrate();
         }

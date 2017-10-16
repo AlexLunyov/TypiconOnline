@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Books.Apostol;
 using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Books.Evangelion;
-using TypiconOnline.Domain.Books.Irmologion;
+using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Psalter;
@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.Books
                                     new OldTestamentService(_unitOfWork),
                                     new PsalterService(_unitOfWork),
                                     new OktoikhService(_unitOfWork),
-                                    new ReadOnlyIrmTheotokionService(_unitOfWork),
+                                    new TheotokionAppContext(_unitOfWork),
                                     new EasterService(_unitOfWork));
         }
     }

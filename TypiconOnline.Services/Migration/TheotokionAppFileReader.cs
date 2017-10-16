@@ -10,11 +10,11 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.AppServices.Migration
 {
-    public class IrmologionTheotokionFileReader : IIrmologionTheotokionFileReader
+    public class TheotokionAppFileReader : ITheotokionAppFileReader
     {
         private IFileReader _fileReader;
 
-        public IrmologionTheotokionFileReader(IFileReader fileReader)
+        public TheotokionAppFileReader(IFileReader fileReader)
         {
             if (fileReader == null) throw new ArgumentNullException("fileReader");
 

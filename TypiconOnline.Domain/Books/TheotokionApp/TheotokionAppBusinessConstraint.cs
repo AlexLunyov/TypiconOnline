@@ -6,9 +6,9 @@
 //------------------------------------------------------------------------------
 using TypiconOnline.Infrastructure.Common.Domain;
 
-namespace TypiconOnline.Domain.Books.Irmologion
+namespace TypiconOnline.Domain.Books.TheotokionApp
 {
-    public class IrmologionTheotokionBusinessConstraint
+    public class TheotokionAppBusinessConstraint
     {
         public static readonly BusinessConstraint InvalidIhos = new BusinessConstraint("Неверно определен глас песнопения.");
         public static readonly BusinessConstraint EmptyStringDefinition = new BusinessConstraint("Отсутствует определение песнопения.");

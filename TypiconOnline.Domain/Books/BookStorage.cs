@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Books.Apostol;
 using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Books.Evangelion;
-using TypiconOnline.Domain.Books.Irmologion;
+using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Psalter;
@@ -35,7 +35,7 @@ namespace TypiconOnline.Domain.Books
         public IOldTestamentService OldTestament { get; private set; }
         public IPsalterService Psalter { get; private set; }
         public IOktoikhService Oktoikh { get; private set; }
-        public IReadOnlyIrmTheotokionService Irmologion { get; private set; }
+        public ITheotokionAppContext TheotokionApp { get; private set; }
         public IEasterService Easters { get; private set; }
 
         private BookStorage()
@@ -52,7 +52,7 @@ namespace TypiconOnline.Domain.Books
             IOldTestamentService oldTestamentService,
             IPsalterService psalterService,
             IOktoikhService oktoikhService,
-            IReadOnlyIrmTheotokionService irmologionService,
+            ITheotokionAppContext theotokionApp,
             IEasterService easterService)
         {
             if (evangelionService == null) throw new ArgumentNullException("evangelionService");
@@ -60,7 +60,7 @@ namespace TypiconOnline.Domain.Books
             if (oldTestamentService == null) throw new ArgumentNullException("oldTestamentService");
             if (psalterService == null) throw new ArgumentNullException("psalterService");
             if (oktoikhService == null) throw new ArgumentNullException("oktoikhService");
-            if (irmologionService == null) throw new ArgumentNullException("irmologionService");
+            if (theotokionApp == null) throw new ArgumentNullException("irmologionService");
             if (easterService == null) throw new ArgumentNullException("irmologionService");
 
             Evangelion = evangelionService;
@@ -68,7 +68,7 @@ namespace TypiconOnline.Domain.Books
             OldTestament = oldTestamentService;
             Psalter = psalterService;
             Oktoikh = oktoikhService;
-            Irmologion = irmologionService;
+            TheotokionApp = theotokionApp;
             Easters = easterService;
         }
 

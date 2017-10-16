@@ -59,9 +59,9 @@
     <Compile Include="Implementations\TypiconEntityService.cs" />
     <Compile Include="Interfaces\IDayContainerService.cs" />
     <Compile Include="Interfaces\IFileReader.cs" />
-    <Compile Include="Interfaces\IIrmologionTheotokionService.cs" />
-    <Compile Include="Interfaces\IIrmologionTheotokionFactory.cs" />
-    <Compile Include="Interfaces\IIrmologionTheotokionFileReader.cs" />
+    <Compile Include="Interfaces\ITheotokionAppService.cs" />
+    <Compile Include="Interfaces\ITheotokionAppFactory.cs" />
+    <Compile Include="Interfaces\ITheotokionAppFileReader.cs" />
     <Compile Include="Interfaces\IScheduleDayViewer.cs" />
     <Compile Include="Interfaces\IScheduleService.cs" />
     <Compile Include="Interfaces\IScheduleWeekViewer.cs" />
@@ -89,9 +89,9 @@
     <Compile Include="Messaging\Typicon\UpdateTypiconEntityResponse.cs" />
     <Compile Include="Migration\DayDefinitionTemplateService.cs" />
     <Compile Include="Interfaces\IMigrationManager.cs" />
-    <Compile Include="Migration\IrmologionTheotokionFactory.cs" />
-    <Compile Include="Migration\IrmologionTheotokionFileReader.cs" />
-    <Compile Include="Migration\IrmologionTheotokionMigrationManager.cs" />
+    <Compile Include="Migration\TheotokionAppFactory.cs" />
+    <Compile Include="Migration\TheotokionAppFileReader.cs" />
+    <Compile Include="Migration\TheotokionAppMigrationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

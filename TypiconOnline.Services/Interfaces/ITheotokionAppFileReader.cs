@@ -7,7 +7,7 @@ using TypiconOnline.Domain.Rules;
 
 namespace TypiconOnline.AppServices.Interfaces
 {
-    public interface IIrmologionTheotokionFileReader 
+    public interface ITheotokionAppFileReader 
     {
         string Read(PlaceYmnosSource place, int ihos, DayOfWeek dayOfWeek);
     }

@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.Domain.Books.Irmologion;
+using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Rules;
 
 namespace TypiconOnline.AppServices.Migration
 {
-    public class IrmologionTheotokionFactory : IIrmologionTheotokionFactory
+    public class TheotokionAppFactory : ITheotokionAppFactory
     {
-        public IrmologionTheotokion Create(PlaceYmnosSource source, int ihos, DayOfWeek day, string stringDefinition)
+        public TheotokionApp Create(PlaceYmnosSource source, int ihos, DayOfWeek day, string stringDefinition)
         {
-            return new IrmologionTheotokion()
+            return new TheotokionApp()
             {
                 Place = source,
                 Ihos = ihos,

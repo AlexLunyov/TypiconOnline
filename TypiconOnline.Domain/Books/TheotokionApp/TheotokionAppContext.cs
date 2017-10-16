@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 
-namespace TypiconOnline.Domain.Books.Irmologion
+namespace TypiconOnline.Domain.Books.TheotokionApp
 {
     /// <summary>
     /// Служба позволяет получить объектную модель Богородична из Ирмология
     /// </summary>
-    public class ReadOnlyIrmTheotokionService : BookServiceBase, IReadOnlyIrmTheotokionService
+    public class TheotokionAppContext : BookServiceBase, ITheotokionAppContext
     {
-        public ReadOnlyIrmTheotokionService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
+        public TheotokionAppContext(IUnitOfWork unitOfWork) : base(unitOfWork) { }
 
-        public GetTheotokionResponse GetTheotokion(GetTheotokionRequest request)
+        public GetTheotokionResponse Get(GetTheotokionRequest request)
         {
             GetTheotokionResponse response = new GetTheotokionResponse();
 
             try
             {
-                IrmologionTheotokion theotokion = _unitOfWork.Repository<IrmologionTheotokion>()
+                TheotokionApp theotokion = _unitOfWork.Repository<TheotokionApp>()
                                             .Get(c => c.Ihos == request.Ihos
                                                     && c.Place == request.Place
                                                     && c.DayOfWeek == request.DayOfWeek);

@@ -1,1 +1,9 @@
-﻿ 
+﻿<?xml version="1.0" encoding="utf-8"?>
+<componentDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="UMLComponentDiagram1">
+  <componentModelMoniker Id="8cec5d12-5be0-4d1b-a832-43d5d40642ea" />
+  <nestedChildShapes>
+    <componentShape Id="68b3d359-efbe-4b2c-b262-efa895b9b70d" absoluteBounds="2.0750000476837158, 2.0499999523162842, 2.3666666666666663, 0.95" customColor="161, 199, 231" whiteBoxBoundsHeight="0" whiteBoxBoundsWidth="0" blackBoxBoundsHeight="0" blackBoxBoundsWidth="0" whiteBoxTopEdgeShapesCount="0" whiteBoxRightEdgeShapesCount="0" whiteBoxBottomEdgeShapesCount="0" whiteBoxLeftEdgeShapesCount="0" blackBoxTopEdgeShapesCount="0" blackBoxRightEdgeShapesCount="0" blackBoxBottomEdgeShapesCount="0" blackBoxLeftEdgeShapesCount="0">
+      <componentMoniker Id="0cd40262-0307-443d-ad16-20db9ededbaf" LastKnownName="TypiconOnline.Domain" />
+    </componentShape>
+  </nestedChildShapes>
+</componentDiagram>

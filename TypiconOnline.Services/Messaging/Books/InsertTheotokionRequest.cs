@@ -1,9 +1,9 @@
-﻿using TypiconOnline.Domain.Books.Irmologion;
+﻿using TypiconOnline.Domain.Books.TheotokionApp;
 
 namespace TypiconOnline.AppServices.Messaging.Books
 {
     public class InsertTheotokionRequest
     {
-        public IrmologionTheotokion Theotokion { get; set; }
+        public TheotokionApp Theotokion { get; set; }
     }
 }

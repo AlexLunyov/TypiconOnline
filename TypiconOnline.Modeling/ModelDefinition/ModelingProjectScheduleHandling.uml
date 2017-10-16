@@ -6508,6 +6508,14 @@
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="0f8a26d6-5e4f-4eff-abf0-8aef0280365c"
+        name="TypiconOnline.Domain"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
   </packagedElements>
   <primitiveType
     Id="220a3521-e091-4221-bae9-3ef9018e845c"

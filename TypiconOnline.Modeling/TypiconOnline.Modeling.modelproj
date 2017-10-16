@@ -106,6 +106,7 @@
     <Content Include="ModelDefinition\ModelingProjectScheduleHandling.uml">
       <SubType>Content</SubType>
     </Content>
+    <Folder Include="Books" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TypiconOnlineLayers.layerdiagram">

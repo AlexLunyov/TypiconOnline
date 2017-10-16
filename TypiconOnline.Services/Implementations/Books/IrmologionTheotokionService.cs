@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Books;
-using TypiconOnline.Domain.Books.Irmologion;
+using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 
 namespace TypiconOnline.AppServices.Implementations.Books
 {
-    public class IrmologionTheotokionService : ReadOnlyIrmTheotokionService, IIrmologionTheotokionService
+    public class TheotokionAppService : TheotokionAppContext, ITheotokionAppService
     {
-        public IrmologionTheotokionService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
+        public TheotokionAppService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
 
         public InsertTheotokionResponse InsertTheotokion(InsertTheotokionRequest request)
         {
@@ -26,7 +26,7 @@ namespace TypiconOnline.AppServices.Implementations.Books
                 }
                 else
                 {
-                    _unitOfWork.Repository<IrmologionTheotokion>().Insert(request.Theotokion);
+                    _unitOfWork.Repository<TheotokionApp>().Insert(request.Theotokion);
                 }
             }
             catch (Exception ex)

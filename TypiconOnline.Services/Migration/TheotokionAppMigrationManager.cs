@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Books;
-using TypiconOnline.Domain.Books.Irmologion;
+using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 
@@ -14,15 +14,15 @@ namespace TypiconOnline.AppServices.Migration
     /// <summary>
     /// Реализует миграцию Богородичных Ирмология
     /// </summary>
-    public class IrmologionTheotokionMigrationManager : IMigrationManager
+    public class TheotokionAppMigrationManager : IMigrationManager
     {
-        public IIrmologionTheotokionFactory Factory { get; private set; }
-        public IIrmologionTheotokionFileReader FileReader { get; private set; }
-        public IIrmologionTheotokionService Service { get; private set; }
+        public ITheotokionAppFactory Factory { get; private set; }
+        public ITheotokionAppFileReader FileReader { get; private set; }
+        public ITheotokionAppService Service { get; private set; }
 
-        public IrmologionTheotokionMigrationManager(IIrmologionTheotokionFactory factory,
-                                                    IIrmologionTheotokionFileReader fileReader,
-                                                    IIrmologionTheotokionService service)
+        public TheotokionAppMigrationManager(ITheotokionAppFactory factory,
+                                                    ITheotokionAppFileReader fileReader,
+                                                    ITheotokionAppService service)
         {
             if (factory == null) throw new ArgumentNullException("factory");
             if (fileReader == null) throw new ArgumentNullException("fileReader");

@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
-using TypiconOnline.Domain.Books.Irmologion;
+using TypiconOnline.Domain.Books.TheotokionApp;
 
-namespace TypiconOnline.Domain.Tests.Books.Irmologion
+namespace TypiconOnline.Domain.Tests.Books.TheotokionApp
 {
     [TestFixture]
-    public class IrmologionServiceTest
+    public class TheotokionAppContextTest
     {
         [Test]
         public void TestMethod()
@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Tests.Books.Irmologion
             FileReader reader = new FileReader(folderPath);
             string xml = reader.Read("YmnosGroupTest.xml");
 
-            IrmologionTheotokion element = new IrmologionTheotokion()
+            Domain.Books.TheotokionApp.TheotokionApp element = new Domain.Books.TheotokionApp.TheotokionApp()
             {
                 //TODO: Доделать!
             };

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TypiconOnline.Domain.Books.Irmologion
+namespace TypiconOnline.Domain.Books.TheotokionApp
 {
-    public interface IReadOnlyIrmTheotokionService
+    public interface ITheotokionAppContext
     {
-        GetTheotokionResponse GetTheotokion(GetTheotokionRequest request);
+        GetTheotokionResponse Get(GetTheotokionRequest request);
 
         GetAllTheotokionResponse GetAll();
     }

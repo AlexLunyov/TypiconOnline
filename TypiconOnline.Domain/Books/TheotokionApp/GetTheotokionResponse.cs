@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Infrastructure.Common.Domain;
 
-namespace TypiconOnline.Domain.Books.Irmologion
+namespace TypiconOnline.Domain.Books.TheotokionApp
 {
     /// <summary>
     /// Запрос для получения Богородична из приложений книги Иромологий
     /// </summary>
-    public class GetTheotokionRequest: ServiceRequestBase
+    public class GetTheotokionResponse : GetBookElementResponseBase<YmnosGroup>
     {
-        public PlaceYmnosSource Place { get; set; }
-        public int Ihos { get; set; }
-        public DayOfWeek DayOfWeek { get; set; }
     }
 }
