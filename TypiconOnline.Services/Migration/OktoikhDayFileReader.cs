@@ -19,7 +19,7 @@ namespace TypiconOnline.AppServices.Migration
             if (string.IsNullOrEmpty(result))
             {
                 //создаем фейковый объект
-                result = _fileReader.Read(string.Format("[template].{0}", dayOfWeek));
+                result = CreateFakeXml(ihos, dayOfWeek);
             }
             
             return result;
@@ -43,7 +43,8 @@ namespace TypiconOnline.AppServices.Migration
             string dayName = new CultureInfo("ru-RU").DateTimeFormat.DayNames[(int)dayOfWeek];
 
             result = result.Replace("[ihos]", string.Format("Глас {0}", ihos)).
-                            Replace("[dayofweek]", dayName);
+                            Replace("[dayofweek]", dayName).
+                            Replace(@"ihos=""1""", string.Format(@"ihos=""{0}""", ihos));
 
             return result;
         }

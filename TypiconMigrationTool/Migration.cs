@@ -45,6 +45,8 @@ namespace TypiconMigrationTool
 
             MigrateTheotokionIrmologion();
 
+            MigrateOktoikh();
+
             Commit();
         }               
 
@@ -160,6 +162,21 @@ namespace TypiconMigrationTool
             ITheotokionAppFactory factory = new TheotokionAppFactory();
 
             IMigrationManager manager = new TheotokionAppMigrationManager(factory, reader, service);
+
+            manager.Migrate();
+        }
+
+        private void MigrateOktoikh()
+        {
+            string folder = Path.Combine(Properties.Settings.Default.FolderPath, @"Books\Oktoikh");
+
+            IOktoikhDayFileReader reader = new OktoikhDayFileReader(new FileReader(folder));
+
+            IOktoikhDayService service = new OktoikhDayService(_unitOfWork);
+
+            IOktoikhDayFactory factory = new OktoikhDayFactory();
+
+            IMigrationManager manager = new OktoikhDayMigrationManager(factory, reader, service);
 
             manager.Migrate();
         }

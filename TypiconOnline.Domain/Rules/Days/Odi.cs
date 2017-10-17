@@ -17,7 +17,10 @@ namespace TypiconOnline.Domain.Rules.Days
     [Serializable]
     public class Odi : DayElementBase
     {
-        public Odi() { }
+        public Odi()
+        {
+            TroparionCollection = new List<Ymnos>();
+        }
 
         public Odi(XmlNode node) 
         {

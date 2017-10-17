@@ -19,21 +19,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         private YmnosRule _ymnos;
 
-        public int CalculatedIhos { get; protected set; }
-
         public TheotokionRule(XmlNode node) : base(node)
         {
             if (node.HasChildNodes && node.FirstChild.Name == RuleConstants.YmnosRuleNode)
             {
                 _ymnos = RuleFactory.CreateYmnosRule(node.FirstChild);
             }
-        }
-
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
-        {
-            base.InnerInterpret(date, handler);
-
-            CalculatedIhos = _ymnos.CalculateYmnosStructure(date, handler).Ihos;
         }
 
         protected override void Validate()
@@ -66,8 +57,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             if (Source.Value == YmnosSource.Irmologion)
             {
+                int calcIhos = _ymnos.CalculateYmnosStructure(date, handler).Ihos;
+
                 GetTheotokionResponse response = BookStorage.Instance.TheotokionApp.Get(
-                    new GetTheotokionRequest() { Place = Place.Value, Ihos = CalculatedIhos });
+                    new GetTheotokionRequest() { Place = Place.Value, Ihos = calcIhos });
 
                 if (response.Exception == null && response.BookElement != null)
                 {
