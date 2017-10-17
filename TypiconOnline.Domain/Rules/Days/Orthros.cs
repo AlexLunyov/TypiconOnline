@@ -44,6 +44,13 @@ namespace TypiconOnline.Domain.Rules.Days
                 SedalenPolyeleos = new YmnosStructure(elementNode);
             }
 
+            //Anavathmos
+            elementNode = node.SelectSingleNode(RuleConstants.AnavathmosNode);
+            if (elementNode != null)
+            {
+                Anavathmos = new YmnosStructure(elementNode);
+            }
+
             //Megalynarion
             string xPath = string.Format("{0}/{1}", RuleConstants.MegalynarionNode, RuleConstants.YmnosStihosNode);
             XmlNodeList megalynarionList = node.SelectNodes(xPath);
@@ -147,6 +154,12 @@ namespace TypiconOnline.Domain.Rules.Days
         /// </summary>
         [XmlElement(RuleConstants.SedalenPolyeleosNode)]
         public YmnosStructure SedalenPolyeleos { get; set; }
+
+        /// <summary>
+        /// Степенны
+        /// </summary>
+        [XmlElement(RuleConstants.AnavathmosNode)]
+        public YmnosStructure Anavathmos { get; set; }
         /// <summary>
         /// Величания
         /// </summary>
@@ -214,6 +227,11 @@ namespace TypiconOnline.Domain.Rules.Days
             if (SedalenPolyeleos?.IsValid == false)
             {
                 AppendAllBrokenConstraints(SedalenPolyeleos, /*ElementName + "." + */RuleConstants.SedalenPolyeleosNode);
+            }
+
+            if (Anavathmos?.IsValid == false)
+            {
+                AppendAllBrokenConstraints(Anavathmos, /*ElementName + "." + */RuleConstants.AnavathmosNode);
             }
 
             if (Megalynarion != null)

@@ -128,8 +128,9 @@ namespace TypiconOnline.Domain.Rules
 
         public const string SedalenKathisma1Node = "sed_1kathisma";
         public const string SedalenKathisma2Node = "sed_2kathisma";
-        public const string SedalenKathisma3Node = "sed_3kathisma";
-        public const string SedalenPolyeleosNode = "sed_polyeleos"; 
+        public const string SedalenKathisma3Node = "sed_3kathisma"; 
+        public const string SedalenPolyeleosNode = "sed_polyeleos";
+        public const string AnavathmosNode = "anavathmos";
         public const string MegalynarionNode = "megalynarion"; 
         public const string EclogarionNode = "eclogarion";
          
@@ -286,14 +287,41 @@ namespace TypiconOnline.Domain.Rules
     /// </summary>
     public enum YmnosKind
     {
+        /// <summary>
+        /// общий, по умолчанию
+        /// </summary>
         [XmlEnum(Name = "ymnos")]
         Ymnos,
+        /// <summary>
+        /// богородичен
+        /// </summary>
         [XmlEnum(Name = "theotokion")]
         Theotokion,
+        /// <summary>
+        /// троичен
+        /// </summary>
         [XmlEnum(Name = "triadiko")]
         Triadiko,
+        /// <summary>
+        /// мученикам
+        /// </summary>
         [XmlEnum(Name = "martyrion")]
-        Martyrion
+        Martyrion,
+        /// <summary>
+        /// святителям
+        /// </summary>
+        [XmlEnum(Name = "ierarhon")]
+        Ierarhon,
+        /// <summary>
+        /// преподобным
+        /// </summary>
+        [XmlEnum(Name = "osion")]
+        Osion,
+        /// <summary>
+        /// заупокойный
+        /// </summary>
+        [XmlEnum(Name = "nekrosimo")]
+        Nekrosimo
     }
 
     /// <summary>
