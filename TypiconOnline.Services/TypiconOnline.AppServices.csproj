@@ -63,6 +63,7 @@
     <Compile Include="Interfaces\IOktoikhDayFactory.cs" />
     <Compile Include="Interfaces\IOktoikhDayFileReader.cs" />
     <Compile Include="Interfaces\IOktoikhDayService.cs" />
+    <Compile Include="Interfaces\ISequenceViewer.cs" />
     <Compile Include="Interfaces\ITheotokionAppService.cs" />
     <Compile Include="Interfaces\ITheotokionAppFactory.cs" />
     <Compile Include="Interfaces\ITheotokionAppFileReader.cs" />
@@ -89,6 +90,8 @@
     <Compile Include="Messaging\Schedule\GetScheduleDayResponse.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleWeekRequest.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleWeekResponse.cs" />
+    <Compile Include="Messaging\Schedule\GetSequenceRequest.cs" />
+    <Compile Include="Messaging\Schedule\GetSequenceResponse.cs" />
     <Compile Include="Messaging\Typicon\DeleteTypiconEntityRequest.cs" />
     <Compile Include="Messaging\Typicon\DeleteTypiconEntityResponse.cs" />
     <Compile Include="Messaging\Typicon\GetTypiconEntitiesResponse.cs" />

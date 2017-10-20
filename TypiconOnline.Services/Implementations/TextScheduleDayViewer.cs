@@ -15,14 +15,8 @@ namespace TypiconOnline.AppServices.Implementations
 
         public void Execute(ScheduleDay day)
         {
-            if (day == null)
-            {
-                throw new ArgumentNullException("ScheduleDay");
-            }
-            if (day.Schedule == null)
-            {
-                throw new ArgumentNullException("ScheduleDay.Schedule");
-            }
+            if (day == null) throw new ArgumentNullException("ScheduleDay");
+            if (day.Schedule == null) throw new ArgumentNullException("ScheduleDay.Schedule");
 
             _resultStringBuilder.Clear();
 
@@ -67,9 +61,9 @@ namespace TypiconOnline.AppServices.Implementations
                     Render(childElement);
                 }
             }
-            else if (element is KekragariaRuleViewModel)
+            else if (element is ContainerViewModel)
             {
-                KekragariaRuleViewModel r = element as KekragariaRuleViewModel;
+                ContainerViewModel r = element as ContainerViewModel;
 
                 foreach (ElementViewModel childElement in r.ChildElements)
                 {

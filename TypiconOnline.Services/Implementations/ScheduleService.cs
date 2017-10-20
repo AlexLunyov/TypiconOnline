@@ -215,6 +215,9 @@ namespace TypiconOnline.Domain.Services
 
             List<ModifiedRule> modAbstractRules = inputRequest.TypiconEntity.GetModifiedRules(inputRequest.Date);
 
+            //находим день Октоиха
+            OktoikhDay oktoikhDay = BookStorage.Instance.Oktoikh.Get(inputRequest.Date);
+
             //создаем выходной объект
             RuleHandlerSettings additionalSettings = null;
 
@@ -244,6 +247,7 @@ namespace TypiconOnline.Domain.Services
                     {
                         Rule = abstrRule.RuleEntity,
                         DayServices = abstrRule.RuleEntity.DayServices.ToList(),
+                        OktoikhDay = oktoikhDay,
                         Mode = inputRequest.Mode,
                         Language = inputRequest.Language,
                         ThrowExceptionIfInvalid = inputRequest.ThrowExceptionIfInvalid,
@@ -338,12 +342,12 @@ namespace TypiconOnline.Domain.Services
                 additionalSettings.DayServices.AddRange(dayServices);
             }
 
-            RuleHandlerSettings outputSettings = GetRecursiveSettings(modAbstractRules[0].RuleEntity, dayServices, inputRequest, additionalSettings);
+            RuleHandlerSettings outputSettings = GetRecursiveSettings(modAbstractRules[0].RuleEntity, dayServices, oktoikhDay, inputRequest, additionalSettings);
 
             return outputSettings;
         }
 
-        private RuleHandlerSettings GetRecursiveSettings(TypiconRule rule, List<DayService> dayServices, GetScheduleDayRequest inputRequest,
+        private RuleHandlerSettings GetRecursiveSettings(TypiconRule rule, List<DayService> dayServices, OktoikhDay oktoikhDay, GetScheduleDayRequest inputRequest,
             RuleHandlerSettings additionalSettings)
         {
             RuleHandlerSettings outputSettings = new RuleHandlerSettings()
@@ -351,6 +355,7 @@ namespace TypiconOnline.Domain.Services
                 Addition = additionalSettings,
                 Rule = rule,
                 DayServices = dayServices.ToList(),
+                OktoikhDay = oktoikhDay,
                 Mode = inputRequest.Mode,
                 Language = inputRequest.Language,
                 ThrowExceptionIfInvalid = inputRequest.ThrowExceptionIfInvalid,
@@ -361,7 +366,7 @@ namespace TypiconOnline.Domain.Services
             if (!string.IsNullOrEmpty(rule.RuleDefinition) && rule.IsAddition && rule.Template != null)
             {
                 //если правило определено и определено как добавление входим в рекурсию
-                outputSettings = GetRecursiveSettings(rule.Template, dayServices, inputRequest, outputSettings);
+                outputSettings = GetRecursiveSettings(rule.Template, dayServices, oktoikhDay, inputRequest, outputSettings);
             }
 
             return outputSettings;

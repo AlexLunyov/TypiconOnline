@@ -27,6 +27,20 @@ namespace TypiconOnline.Domain.Rules.Days
             _groups.Add(new YmnosGroup(group));
         }
 
+        public YmnosStructure(YmnosStructure ymnosStructure)
+        {
+            if (ymnosStructure == null) throw new ArgumentNullException("YmnosStructure");
+
+            ymnosStructure.Groups.ForEach(c => _groups.Add(new YmnosGroup(c)));
+
+            if (ymnosStructure.Doxastichon != null)
+            {
+                Doxastichon = new YmnosGroup(ymnosStructure.Doxastichon);
+            }
+
+            ymnosStructure.Theotokion.ForEach(c => _theotokion.Add(new YmnosGroup(c)));
+        }
+
         public YmnosStructure(XmlNode node) 
         {
             //Groups = new List<YmnosGroup>();

@@ -167,21 +167,13 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 else
                 {
                     if ((_source.Value != YmnosSource.Irmologion)
-                        && (Place.Value != PlaceYmnosSource.kekragaria)
-                        && (Place.Value != PlaceYmnosSource.liti)
-                        && (Place.Value != PlaceYmnosSource.aposticha_esperinos)
-                        && (Place.Value != PlaceYmnosSource.aposticha_orthros)
-                        && (Place.Value != PlaceYmnosSource.ainoi)
-                        && (Place.Value != PlaceYmnosSource.kekragaria_doxastichon)
-                        && (Place.Value != PlaceYmnosSource.liti_doxastichon)
-                        && (Place.Value != PlaceYmnosSource.aposticha_esperinos_doxastichon)
-                        && (Place.Value != PlaceYmnosSource.aposticha_orthros_doxastichon)
-                        && (Place.Value != PlaceYmnosSource.ainoi_doxastichon)
-                        && (Place.Value != PlaceYmnosSource.kekragaria_theotokion)
-                        && (Place.Value != PlaceYmnosSource.liti_theotokion)
-                        && (Place.Value != PlaceYmnosSource.aposticha_esperinos_theotokion)
-                        && (Place.Value != PlaceYmnosSource.aposticha_orthros_theotokion)
-                        && (Place.Value != PlaceYmnosSource.ainoi_theotokion))
+                        && ((Place.Value == PlaceYmnosSource.app1_aposticha)
+                            || (Place.Value == PlaceYmnosSource.app1_kekragaria)
+                            || (Place.Value == PlaceYmnosSource.app2_esperinos)
+                            || (Place.Value == PlaceYmnosSource.app2_orthros)
+                            || (Place.Value == PlaceYmnosSource.app3)
+                            || (Place.Value == PlaceYmnosSource.app4_esperinos)
+                            || (Place.Value == PlaceYmnosSource.app4_orthros)))
                     {
                         AddBrokenConstraint(YmnosRuleBusinessConstraint.PlaceAndSourceMismatched, ElementName);
                     }
@@ -223,7 +215,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     dayService = (handler.Settings.DayServices.Count > 2) ? handler.Settings.DayServices[2] : null;
                     break;
                 case YmnosSource.Oktoikh:
-                    dayService = BookStorage.Instance.Oktoikh.Get(date);
+                    dayService = handler.Settings.OktoikhDay;
                     break;
             }
 

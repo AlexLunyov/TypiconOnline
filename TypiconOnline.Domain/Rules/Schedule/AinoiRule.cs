@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -13,5 +15,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
     public class AinoiRule : KekragariaRule
     {
         public AinoiRule(XmlNode node) : base(node) { }
+
+        public override ElementViewModel CreateViewModel(IRuleHandler handler)
+        {
+            return new AinoiRuleViewModel(this, handler);
+        }
     }
 }

@@ -10,11 +10,11 @@ using TypiconOnline.Domain.ViewModels;
 namespace TypiconOnline.Domain.Rules.Schedule
 {
     /// <summary>
-    /// Правило для стихир на стиховне
+    /// Правило для стихир на стиховне и литии
     /// </summary>
-    public class ApostichaRule : YmnosStructureRule
+    public class TroparionRule : YmnosStructureRule
     {
-        public ApostichaRule(XmlNode node) : base(node) { }
+        public TroparionRule(XmlNode node) : base(node) { }
 
         public override ElementViewModel CreateViewModel(IRuleHandler handler)
         {

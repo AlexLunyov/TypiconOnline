@@ -19,11 +19,18 @@ namespace TypiconOnline.Domain.Rules.Schedule
     public class TextHolder: RuleExecutable, ICustomInterpreted, IViewModelElement
     {
         private ItemEnumType<TextHolderKind> _textHolderKind;
+        private ItemEnumType<TextHolderMark> _textHolderMark;
         private List<ItemText> _paragraphs = new List<ItemText>();
 
         public TextHolder(XmlNode node) : base(node)
         {
             _textHolderKind = new ItemEnumType<TextHolderKind>(node.Name);
+
+            XmlAttribute attr = node.Attributes[RuleConstants.TextHolderMarkAttr];
+            if (attr != null)
+            {
+                _textHolderMark = new ItemEnumType<TextHolderMark>(attr.Name);
+            }
 
             if (node.HasChildNodes)
             {
@@ -41,6 +48,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
             if (item == null) throw new ArgumentNullException("TextHolder");
 
             _textHolderKind = new ItemEnumType<TextHolderKind>(item.ElementName);
+
+            if (item.Mark != null)
+            {
+                _textHolderMark = new ItemEnumType<TextHolderMark>() {  Value = item.Mark.Value};
+            }
 
             foreach (ItemText text in item.Paragraphs)
             {
@@ -67,6 +79,17 @@ namespace TypiconOnline.Domain.Rules.Schedule
             get
             {
                 return _textHolderKind;
+            }
+        }
+
+        /// <summary>
+        /// Пометка текста определенным знаком.
+        /// </summary>
+        public ItemEnumType<TextHolderMark> Mark
+        {
+            get
+            {
+                return _textHolderMark;
             }
         }
 

@@ -14,13 +14,13 @@ namespace TypiconOnline.Domain.ViewModels
 {
     public class KekragariaRuleViewModel : YmnosStructureViewModel
     {
-        private KekragariaRule _rule;
+        //private KekragariaRule _rule;
 
         public KekragariaRuleViewModel(YmnosStructureRule rule, IRuleHandler handler) : base(rule, handler)
         {
             if (!(rule is KekragariaRule)) throw new InvalidCastException("KekragariaRule");
 
-            _rule = rule as KekragariaRule;
+            //_rule = rule as KekragariaRule;
         }
 
         protected override void ConstructForm(IRuleHandler handler)
@@ -68,7 +68,7 @@ namespace TypiconOnline.Domain.ViewModels
 
 
             //вставляем псалмы
-            if (_rule.ShowPsalm.Value)
+            if ((_rule as KekragariaRule).ShowPsalm.Value)
             {
                 _childElements.Add(new TextHolderViewModel(children[2] as TextHolder, handler));
             }

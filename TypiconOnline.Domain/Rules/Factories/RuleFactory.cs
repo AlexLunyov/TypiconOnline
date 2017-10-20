@@ -280,6 +280,9 @@ namespace TypiconOnline.Domain.Rules.Factories
                 case RuleConstants.LitiNode:
                     outputEl = new ApostichaRule(node);
                     break;
+                case RuleConstants.TroparionNode:
+                    outputEl = new TroparionRule(node);
+                    break;
                 case RuleConstants.ServiceNodeName:
                     outputEl = new Service(node);
                     break;                

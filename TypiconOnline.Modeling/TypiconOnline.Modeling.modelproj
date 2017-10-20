@@ -105,6 +105,13 @@
       <SubType>Content</SubType>
       <DependentUpon>UMLComponentDiagram1.componentdiagram</DependentUpon>
     </Content>
+    <Content Include="UseCases\Rules.usecasediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="UseCases\Rules.usecasediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>UseCases\Rules.usecasediagram</DependentUpon>
+    </Content>
     <Content Include="User.classdiagram">
       <SubType>Content</SubType>
     </Content>
@@ -118,6 +125,7 @@
       <SubType>Content</SubType>
     </Content>
     <Folder Include="Books" />
+    <Folder Include="UseCases" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TypiconOnlineLayers.layerdiagram">

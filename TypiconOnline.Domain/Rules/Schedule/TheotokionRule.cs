@@ -37,6 +37,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 && (Place.Value != PlaceYmnosSource.aposticha_esperinos_theotokion)
                 && (Place.Value != PlaceYmnosSource.aposticha_orthros_theotokion)
                 && (Place.Value != PlaceYmnosSource.ainoi_theotokion)
+                && (Place.Value != PlaceYmnosSource.troparion)
                 || (Source.Value == YmnosSource.Irmologion)))
             {
                 //если дочерний элемент не определен, а место указано - либо не имеющее богородична

@@ -15,10 +15,6 @@ namespace TypiconOnline.Domain.Books.Oktoikh
         /// <returns></returns>
         public static int CalculateIhosNumber(DateTime date)
         {
-            //если этот день не воскресныйЮ находим ближайшее воскресенье после него
-            while (date.DayOfWeek != DayOfWeek.Sunday)
-                date = date.AddDays(1);
-
             DateTime dEaster = BookStorage.Instance.Easters.GetCurrentEaster(date.Year);
             //Пасха в прошлом году
             DateTime dPastEaster = BookStorage.Instance.Easters.GetCurrentEaster(date.Year - 1);

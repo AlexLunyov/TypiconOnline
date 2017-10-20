@@ -62,8 +62,9 @@ namespace TypiconOnline.Domain.Rules
         public const string ItemTextLanguageAttr = "language";
         public const string StyleNodeName = "style"; 
         public const string StyleRedNodeName = "red";
-        public const string StyleBoldNodeName = "bold";
+        public const string StyleBoldNodeName = "bold"; 
         public const string StyleHeaderNodeName = "header";
+        public const string ItemTextNoteNode = "note";
 
         public const string CommonRuleNode = "commonrule";
         public const string CommonRuleNameAttr = "name";
@@ -231,6 +232,8 @@ namespace TypiconOnline.Domain.Rules
         public const string TextHolderPriestNode = "priest";
         public const string TextHolderTextNode = "text";
 
+        public const string TextHolderMarkAttr = "mark";
+
         /*
          * Ektenis
          */
@@ -256,6 +259,7 @@ namespace TypiconOnline.Domain.Rules
         kekragaria = 0,
         kekragaria_doxastichon = 1,
         kekragaria_theotokion = 2,
+        kekragaria_stavrostheotokion = 22,
         //liti
         liti = 3,
         liti_doxastichon = 4,
@@ -279,7 +283,9 @@ namespace TypiconOnline.Domain.Rules
         app2_orthros = 18,
         app3 = 19,
         app4_esperinos = 20,
-        app4_orthros = 21
+        app4_orthros = 21,
+        //troparion
+        troparion = 23
     }
 
     /// <summary>
@@ -339,6 +345,19 @@ namespace TypiconOnline.Domain.Rules
     public enum ServiceSequenceKind { MikrosEsperinos, Esperinos, Orthros, Hour, Leitourgia }
 
     public enum TextHolderKind { Choir, Lector, Priest, Deacon, Stihos, Text, Undefined }
+
+    /// <summary>
+    /// Пометка текста определенным знаком.
+    /// В настройках вывода последовательности возможно будет не отображать элемент с определенными пометками
+    /// </summary>
+    public enum TextHolderMark
+    {
+        /// <summary>
+        /// священические молитвы
+        /// </summary>
+        priest_prayers
+    }
+
     [Serializable]
     public enum ProkiemenonKind
     {

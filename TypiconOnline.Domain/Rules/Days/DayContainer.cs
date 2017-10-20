@@ -121,6 +121,13 @@ namespace TypiconOnline.Domain.Rules.Days
             {
                 AppendAllBrokenConstraints(Leitourgia, RuleConstants.LeitourgiaNode);
             }
+
+            //тропарь должен быть определен
+            //bool troparionExists = MikrosEsperinos?.Troparion != null || Esperinos?.Troparion != null;
+            //if (!troparionExists)
+            //{
+            //    AddBrokenConstraint(DayContainerBusinessConstraint.TroparionRequired);
+            //}
         }
 
         
@@ -153,6 +160,15 @@ namespace TypiconOnline.Domain.Rules.Days
                     if (Esperinos?.Kekragaria?.Theotokion != null)
                     {
                         stichera = new YmnosStructure() { Theotokion = Esperinos.Kekragaria.Theotokion };
+                    }
+                    break;
+                case PlaceYmnosSource.kekragaria_stavrostheotokion:
+                    if (Esperinos?.Kekragaria?.Theotokion != null
+                        && Esperinos.Kekragaria.Theotokion.Exists(c => c.Kind == YmnosGroupKind.Stavros))
+                    {
+                        //Оставляем только крестобородичен
+                        stichera = new YmnosStructure() { Theotokion = Esperinos.Kekragaria.Theotokion };
+                        stichera.Theotokion.RemoveAll(c => c.Kind == YmnosGroupKind.Undefined);
                     }
                     break;
                 //liti
@@ -218,6 +234,14 @@ namespace TypiconOnline.Domain.Rules.Days
                     {
                         stichera = new YmnosStructure() { Theotokion = Orthros.Aposticha.Theotokion };
                     }
+                    break;
+                //troparion
+                case PlaceYmnosSource.troparion:
+                    //Выбираем либо из Малой вечерни, либо с Вечерни тропарь
+                    YmnosStructure y = (MikrosEsperinos?.Troparion != null) ? MikrosEsperinos.Troparion
+                                        : Esperinos.Troparion;
+
+                    stichera = new YmnosStructure(y);
                     break;
             }
 

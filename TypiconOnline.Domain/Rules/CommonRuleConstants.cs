@@ -37,7 +37,17 @@ namespace TypiconOnline.Domain.Rules
         /// Подобен
         /// </summary>
         public const string ProsomoionText = "_sys_prosomoion";
-        
+
+        /// <summary>
+        /// Правило для разметки Стихир на стиховне
+        /// </summary>
+        public const string ApostichaRule = "_sys_aposticha";
+
+        /// <summary>
+        /// Правило для разметки Стихир на хвалитех
+        /// </summary>
+        public const string AinoiRule = "_sys_ainoi";
+
     }
 
     

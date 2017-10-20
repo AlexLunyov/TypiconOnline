@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.ViewModels
 {
     public abstract class YmnosStructureViewModel : ContainerViewModel
     {
-        private YmnosStructureRule _rule;
+        protected YmnosStructureRule _rule;
 
         public YmnosStructureKind Kind { get; set; }
 

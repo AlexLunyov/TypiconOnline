@@ -26,7 +26,9 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 typeof(Ektenis),
                 typeof(CommonRuleElement),
                 typeof(KekragariaRule),
-                typeof(AinoiRule)
+                typeof(ApostichaRule),
+                typeof(AinoiRule),
+                typeof(TroparionRule)
             };
         }
 

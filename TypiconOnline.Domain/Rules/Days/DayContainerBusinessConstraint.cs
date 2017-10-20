@@ -11,5 +11,6 @@ namespace TypiconOnline.Domain.Rules.Days
     public class DayContainerBusinessConstraint
     {
         public static readonly BusinessConstraint NameRequired = new BusinessConstraint("Имя обязательно для заполнения.");
+        public static readonly BusinessConstraint TroparionRequired = new BusinessConstraint("Тропарь должен быть определен либо в чине Малой вечерни, либо Вечерни.");
     }
 }

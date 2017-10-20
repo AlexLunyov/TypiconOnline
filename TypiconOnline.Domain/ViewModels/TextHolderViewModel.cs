@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.ViewModels
 
             Kind = textHolder.Kind.Value;
 
-            Paragraphs = textHolder.Paragraphs.Select(c => c.Text[handler.Settings.Language]).ToArray();
+            Paragraphs = textHolder.Paragraphs.Select(c => c[handler.Settings.Language]).ToArray();
 
             //foreach (ItemText itemText in textHolder.Paragraphs)
             //{
