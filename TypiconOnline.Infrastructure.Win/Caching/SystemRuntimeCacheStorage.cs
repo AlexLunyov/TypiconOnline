@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Caching;
 
-namespace TypiconOnline.Infrastructure.Common.Caching
+namespace TypiconOnline.Infrastructure.Win.Caching
 {
     public class SystemRuntimeCacheStorage : ICacheStorage
     {

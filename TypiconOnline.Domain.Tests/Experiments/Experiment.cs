@@ -14,16 +14,16 @@ namespace TypiconOnline.Domain.Tests.Experiments
         [Test]
         public void SimpleLinkingList()
         {
-            List<DayService> list1 = new List<DayService>();
+            List<DayWorship> list1 = new List<DayWorship>();
 
-            list1.Add(new DayService());
-            list1.Add(new DayService());
-            list1.Add(new DayService());
-            list1.Add(new DayService());
+            list1.Add(new DayWorship());
+            list1.Add(new DayWorship());
+            list1.Add(new DayWorship());
+            list1.Add(new DayWorship());
 
-            List<DayService> list2 = list1;
+            List<DayWorship> list2 = list1;
 
-            list2.Add(new DayService());
+            list2.Add(new DayWorship());
 
             Assert.AreEqual(5, list1.Count);
             Assert.AreEqual(5, list2.Count);
@@ -32,16 +32,16 @@ namespace TypiconOnline.Domain.Tests.Experiments
         [Test]
         public void CopyList()
         {
-            List<DayService> list1 = new List<DayService>();
+            List<DayWorship> list1 = new List<DayWorship>();
 
-            list1.Add(new DayService());
-            list1.Add(new DayService());
-            list1.Add(new DayService());
-            list1.Add(new DayService());
+            list1.Add(new DayWorship());
+            list1.Add(new DayWorship());
+            list1.Add(new DayWorship());
+            list1.Add(new DayWorship());
 
-            List<DayService> list2 = list1.ToList();
+            List<DayWorship> list2 = list1.ToList();
 
-            list2.Add(new DayService());
+            list2.Add(new DayWorship());
 
             Assert.AreEqual(4, list1.Count);
             Assert.AreEqual(5, list2.Count);

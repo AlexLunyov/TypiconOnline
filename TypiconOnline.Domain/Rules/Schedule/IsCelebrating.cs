@@ -26,7 +26,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
            _valueCalculated = false;
 
-            foreach (DayService day in handler.Settings.DayServices)
+            foreach (DayWorship day in handler.Settings.DayWorships)
             {
                 if (day.IsCelebrating)
                 {

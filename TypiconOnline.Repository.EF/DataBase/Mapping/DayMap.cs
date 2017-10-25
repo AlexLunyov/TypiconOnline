@@ -14,7 +14,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
         public DayMap()
         {
             //Property(c => c.DayName.StringExpression).IsRequired();
-            HasMany(e => e.DayServices).
+            HasMany(e => e.DayWorships).
                 WithRequired(m => m.Parent);
         }
     }

@@ -28,7 +28,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             //{
                 int i = 0;
 
-                foreach (DayService day in handler.Settings.DayServices)
+                foreach (DayWorship day in handler.Settings.DayWorships)
                 {
                     if (day.Parent is MenologyDay && !day.IsCelebrating)
                     {

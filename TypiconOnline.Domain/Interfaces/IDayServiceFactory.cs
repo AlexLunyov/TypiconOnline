@@ -7,8 +7,8 @@ using TypiconOnline.Domain.Days;
 
 namespace TypiconOnline.Domain.Interfaces
 {
-    public interface IDayServiceFactory
+    public interface IDayWorshipFactory
     {
-        DayService Create();
+        DayWorship Create();
     }
 }

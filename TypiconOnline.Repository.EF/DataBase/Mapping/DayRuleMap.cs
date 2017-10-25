@@ -13,14 +13,15 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
     {
         public DayRuleMap()
         {
-            HasMany(c => c.DayServices).WithMany().
+            HasMany(c => c.DayRuleWorships).
+                WithRequired()/*.
             Map(m =>
             {
-                m.ToTable("DayRuleServices");
+                m.ToTable("DayRuleWorships");
                 // Настройка внешних ключей промежуточной таблицы
                 m.MapLeftKey("DayRuleId");
-                m.MapRightKey("ServiceDayId");
-            });
+                m.MapRightKey("DayWorshipId");
+            })*/;
         }
     }
 }

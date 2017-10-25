@@ -75,6 +75,7 @@
     <Compile Include="Books\Evangelion\EvangelionChapter.cs" />
     <Compile Include="Books\Oktoikh\OktoikhGlas.cs" />
     <Compile Include="Books\Psalter\PsalterService.cs" />
+    <Compile Include="DayRuleWorships.cs" />
     <Compile Include="Days\Day.cs" />
     <Compile Include="Books\Easter\IEasterContext.cs" />
     <Compile Include="DayStructureBase.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="ItemTypes\ItemText.cs" />
     <Compile Include="ItemTypes\ItemTextBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemTextCollection.cs" />
+    <Compile Include="ItemTypes\ItemTextNoted.cs" />
     <Compile Include="ItemTypes\ItemTimeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemTime.cs" />
     <Compile Include="ItemTypes\XmlSerializableDictionary.cs" />
@@ -160,7 +162,7 @@
     <Compile Include="Interfaces\ICustomInterpreted.cs" />
     <Compile Include="RuleEntityBusinessConstraint.cs" />
     <Compile Include="RuleEntity.cs" />
-    <Compile Include="Days\DayService.cs" />
+    <Compile Include="Days\DayWorship.cs" />
     <Compile Include="Days\MenologyDay.cs" />
     <Compile Include="Days\MenologyDayBusinessConstraint.cs" />
     <Compile Include="Interfaces\IScheduleCustomParameter.cs" />
@@ -203,6 +205,7 @@
     <Compile Include="Typicon\CommonRuleService.cs" />
     <Compile Include="Typicon\CommonRuleServiceRequest.cs" />
     <Compile Include="Typicon\DayRule.cs" />
+    <Compile Include="Typicon\DayRuleService.cs" />
     <Compile Include="Typicon\Factories\TypiconEntityFactory.cs" />
     <Compile Include="Typicon\Modifications\ModifiedRule.cs" />
     <Compile Include="Typicon\Modifications\ModifiedYear.cs" />
@@ -210,7 +213,6 @@
     <Compile Include="Typicon\TypiconFolderEntity.cs" />
     <Compile Include="Typicon\TypiconRule.cs" />
     <Compile Include="Books\Easter\EasterItem.cs" />
-    <Compile Include="Books\Easter\EasterCacheStorage.cs" />
     <Compile Include="Books\Oktoikh\OktoikhDay.cs" />
     <Compile Include="Schedule\ScheduleDay.cs" />
     <Compile Include="FolderEntity.cs" />
@@ -279,14 +281,26 @@
     <Folder Include="Books\Menology\" />
   </ItemGroup>
   <ItemGroup>
+    <AdditionalFiles Include="..\TypiconOnline.Modeling\TypiconOnlineLayers.layerdiagram">
+      <Link>TypiconOnlineLayers.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
     <None Include="ClassDiagrams\Everything.cd" />
     <None Include="ClassDiagrams\Basics.cd" />
     <None Include="ClassDiagrams\Handlers.cd" />
     <None Include="ClassDiagrams\Rules.cd" />
     <None Include="ClassDiagrams\Rules.ViewModel.cd" />
     <None Include="ClassDiagrams\Rules.Days.cd" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /y /d $(TargetPath) $(SolutionDir)\lib</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

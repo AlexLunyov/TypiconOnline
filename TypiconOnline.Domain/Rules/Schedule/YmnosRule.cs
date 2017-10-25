@@ -202,30 +202,30 @@ namespace TypiconOnline.Domain.Rules.Schedule
             YmnosStructure result = null;
 
             //разбираемся с source
-            DayStructureBase dayService = null;
+            DayStructureBase dayWorship = null;
             switch (Source.Value)
             {
                 case YmnosSource.Item1:
-                    dayService = (handler.Settings.DayServices.Count > 0) ? handler.Settings.DayServices[0] : null;
+                    dayWorship = (handler.Settings.DayWorships.Count > 0) ? handler.Settings.DayWorships[0] : null;
                     break;
                 case YmnosSource.Item2:
-                    dayService = (handler.Settings.DayServices.Count > 1) ? handler.Settings.DayServices[1] : null;
+                    dayWorship = (handler.Settings.DayWorships.Count > 1) ? handler.Settings.DayWorships[1] : null;
                     break;
                 case YmnosSource.Item3:
-                    dayService = (handler.Settings.DayServices.Count > 2) ? handler.Settings.DayServices[2] : null;
+                    dayWorship = (handler.Settings.DayWorships.Count > 2) ? handler.Settings.DayWorships[2] : null;
                     break;
                 case YmnosSource.Oktoikh:
-                    dayService = handler.Settings.OktoikhDay;
+                    dayWorship = handler.Settings.OktoikhDay;
                     break;
             }
 
-            //if (dayService == null)
+            //if (dayWorship == null)
             //{
             //    throw new KeyNotFoundException("YmnosStructureRule source not found: " + Source.Value.ToString());
             //}
 
             //не выдаем ошибки, если день не найден
-            if (dayService != null)
+            if (dayWorship != null)
             {
                 if (Place == null)
                 {
@@ -240,7 +240,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 switch (YmnosKind.Value)
                 {
                     case YmnosRuleKind.YmnosRule:
-                        groups = dayService.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Groups;
+                        groups = dayWorship.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Groups;
                         if (groups != null)
                         {
                             result = new YmnosStructure();
@@ -249,7 +249,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                         break;
                     case YmnosRuleKind.DoxastichonRule:
-                        group = dayService.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Doxastichon;
+                        group = dayWorship.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Doxastichon;
                         if (group != null)
                         {
                             result = new YmnosStructure();
@@ -258,7 +258,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                         break;
                     case YmnosRuleKind.TheotokionRule:
-                        groups = dayService.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Theotokion;
+                        groups = dayWorship.GetDay().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Theotokion;
                         if (groups != null)
                         {
                             result = new YmnosStructure();

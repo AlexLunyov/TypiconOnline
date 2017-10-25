@@ -8,11 +8,11 @@ using TypiconOnline.Domain.Days;
 
 namespace TypiconOnline.Repository.EF.DataBase.Mapping
 {
-    class DayServiceMap : EntityTypeConfiguration<DayService>
+    class DayServiceMap : EntityTypeConfiguration<DayWorship>
     {
         public DayServiceMap()
         {
-            Property(c => c.ServiceName.StringExpression).IsRequired();
+            Property(c => c.WorshipName.StringExpression).IsRequired();
 
 
             HasRequired(e => e.Parent).

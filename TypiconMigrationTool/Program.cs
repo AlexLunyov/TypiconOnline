@@ -18,6 +18,8 @@ using TypiconOnline.Domain.Rules.Days;
 using System.IO;
 using System.Xml.Serialization;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Repository.EF;
+using TypiconOnline.Repository.EFSQLite;
 
 namespace TypiconMigrationTool
 {
@@ -30,7 +32,7 @@ namespace TypiconMigrationTool
             //{
             var container = new RegisterByContainer().Container;
 
-            var unitOfWork = container.GetInstance<IUnitOfWork>();
+            //var unitOfWork = container.GetInstance<IUnitOfWork>();
 
             while (true)
             {
@@ -42,13 +44,20 @@ namespace TypiconMigrationTool
                 switch (info.KeyChar)
                 {
                     case '1':
-                        Migrate(unitOfWork);
+                        var ef = new EFUnitOfWork();
+                        Migrate(ef);
+                        break;
+                    case '2':
+                        var sqlite = new EFSQLiteUnitOfWork("SQLiteDB.db");
+                        Migrate(sqlite);
                         break;
                     case '3':
-                        TestDate(unitOfWork);
+                        ef = new EFUnitOfWork();
+                        TestDate(ef);
                         break;
                     case '4':
-                        TestBlagoveshenie(unitOfWork);
+                        ef = new EFUnitOfWork();
+                        TestBlagoveshenie(ef);
                         break;
                     case '5':
                         TestXmlSrialization();

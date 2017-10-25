@@ -11,13 +11,13 @@ namespace TypiconOnline.Domain.Typicon
     {
         public DayRule()
         {
-            DayServices = new List<DayService>();
+            DayRuleWorships = new List<DayRuleWorships>();
         }
 
         /// <summary>
         /// Список последований текстов служб для данного дня Устава
         /// </summary>
-        public virtual List<DayService> DayServices { get; set; }
+        public virtual List<DayRuleWorships> DayRuleWorships { get; set; }
 
         /// <summary>
         /// Возвращает объединенную строку всех служб для языка по умолчанию для данного Устава
@@ -30,17 +30,31 @@ namespace TypiconOnline.Domain.Typicon
             }
         }
 
+        private List<DayWorship> _dayWorships;
+
+        public List<DayWorship> DayWorships
+        {
+            get
+            {
+                if (_dayWorships == null)
+                {
+                    _dayWorships = (from drw in DayRuleWorships select drw.DayWorship).ToList();
+                }
+                return _dayWorships;
+            }
+        }
+
         /// <summary>
         /// Возвращает объединенную строку всех служб для определенного языка
         /// </summary>
         public string GetNameByLanguage(string language)
         {
             string result = "";
-            if (DayServices.Count > 0)
+            if (DayWorships.Count > 0)
             {
-                foreach (DayService serv in DayServices)
+                foreach (DayWorship serv in DayWorships)
                 {
-                    result += serv.ServiceName.GetTextByLanguage(language) + " ";
+                    result += serv.WorshipName[language] + " ";
                 }
 
                 result = result.Substring(0, result.Length - 1);

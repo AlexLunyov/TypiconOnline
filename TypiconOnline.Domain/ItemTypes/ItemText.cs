@@ -79,10 +79,7 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }
 
-        /// <summary>
-        /// Примечание. Например, "трижды" к тропарю или другому тексту
-        /// </summary>
-        public ItemText Note { get; set; }
+        
 
         protected override XmlDocument ComposeXml()
         {
@@ -97,17 +94,6 @@ namespace TypiconOnline.Domain.ItemTypes
                 node.Attributes.Append(attr);
 
                 node.InnerText = entry.Value;
-
-                doc.FirstChild.AppendChild(node);
-            }
-
-            if (Note != null)
-            {
-                XmlDocument noteDoc = Note.ComposeXml();
-
-                XmlNode node = doc.CreateElement(RuleConstants.ItemTextNoteNode);
-
-                node.InnerText = noteDoc.FirstChild.InnerXml;
 
                 doc.FirstChild.AppendChild(node);
             }
@@ -127,14 +113,9 @@ namespace TypiconOnline.Domain.ItemTypes
                     AddBrokenConstraint(ItemTextBusinessConstraint.LanguageMismatch, "ItemText");
                 }
             }
-
-            if (Note?.IsValid == false)
-            {
-                AppendAllBrokenConstraints(Note);
-            }
         }
 
-        private bool IsKeyValid(string key)
+        protected bool IsKeyValid(string key)
         {
             //Принимаем только элементы с именем xx-xx
             //TODO: добавить еще валидацию на предустановленные языки
@@ -162,7 +143,7 @@ namespace TypiconOnline.Domain.ItemTypes
             
         }
 
-        private void BuildFromXml(XmlNode node)
+        protected virtual void BuildFromXml(XmlNode node)
         {
             if (node.HasChildNodes)
             {
@@ -182,10 +163,6 @@ namespace TypiconOnline.Domain.ItemTypes
 
                             _isEmpty = false;
                         }
-                    } else if (child.Name == RuleConstants.ItemTextNoteNode)
-                    {
-                        //примечание
-                        Note = new ItemText(child.OuterXml);
                     }
                 }
             }
@@ -283,10 +260,6 @@ namespace TypiconOnline.Domain.ItemTypes
                         XmlSerializer _serializer = new XmlSerializer(typeof(TextStyle), new XmlRootAttribute(RuleConstants.StyleNodeName));
                         Style = _serializer.Deserialize(reader) as TextStyle;
                         break;
-                    case RuleConstants.ItemTextNoteNode:
-                        _serializer = new XmlSerializer(typeof(ItemText), new XmlRootAttribute(RuleConstants.ItemTextNoteNode));
-                        Note = _serializer.Deserialize(reader) as ItemText;
-                        break;
                         //default:
                         //    reader.Read();
                         //    break;
@@ -318,28 +291,13 @@ namespace TypiconOnline.Domain.ItemTypes
                 ns.Add("", "");
                 _serializer.Serialize(writer, Style, ns);
             }
-
-            if (Note != null && !Note.IsEmpty)
-            {
-                XmlSerializer _serializer = new XmlSerializer(typeof(ItemText), new XmlRootAttribute(RuleConstants.ItemTextNoteNode));
-                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-                ns.Add("", "");
-                _serializer.Serialize(writer, Note, ns);
-            }
         }
 
         #endregion
 
         public override string ToString()
         {
-            string result = (_textDict.Count > 0) ? _textDict.First().Value : base.ToString();
-
-            if (Note != null)
-            {
-                result = string.Format("{0} {1}", result, Note);
-            }
-
-            return result;
+            return (_textDict.Count > 0) ? _textDict.First().Value : base.ToString();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         public RuleHandlerSettings Addition { get; set; }
         public TypiconRule Rule { get; set; }
         //public List<DayToHandle> DaysToHandle { get; set; }
-        public List<DayService> DayServices { get; set; }
+        public List<DayWorship> DayWorships { get; set; }
         public OktoikhDay OktoikhDay { get; set; }
         public HandlingMode Mode { get; set; }
         public bool PutSeniorRuleNameToEnd { get; set; }
@@ -37,7 +37,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
         public RuleHandlerSettings()
         {
-            DayServices = new List<DayService>();
+            DayWorships = new List<DayWorship>();
             PutSeniorRuleNameToEnd = false;
             CustomParameters = new List<IScheduleCustomParameter>();
             //UseFullName = true;

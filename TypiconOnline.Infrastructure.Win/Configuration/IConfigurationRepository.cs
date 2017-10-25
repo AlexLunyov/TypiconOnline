@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TypiconOnline.Infrastructure.Common.Configuration
+namespace TypiconOnline.Infrastructure.Win.Configuration
 {
     public interface IConfigurationRepository
     {

@@ -15,13 +15,13 @@ namespace TypiconOnline.Domain.Days
         /// <summary>
         /// Список последований служб
         /// </summary>
-        public virtual List<DayService> DayServices { get; set; }
+        public virtual List<DayWorship> DayWorships { get; set; }
 
         protected override void Validate()
         {
-            if (DayServices != null)
+            if (DayWorships != null)
             {
-                foreach (DayService serv in DayServices)
+                foreach (DayWorship serv in DayWorships)
                 {
                     if (!serv.IsValid)
                     {
@@ -31,16 +31,16 @@ namespace TypiconOnline.Domain.Days
             }
         }
 
-        public void AppendDayService(DayService serv)
+        public void AppendDayService(DayWorship serv)
         {
-            if (DayServices == null)
+            if (DayWorships == null)
             {
-                DayServices = new List<DayService>();
+                DayWorships = new List<DayWorship>();
             }
 
             serv.Parent = this;
 
-            DayServices.Add(serv);
+            DayWorships.Add(serv);
         }
     }
 }

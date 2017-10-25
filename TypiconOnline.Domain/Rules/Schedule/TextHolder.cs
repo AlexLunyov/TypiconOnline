@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         private ItemEnumType<TextHolderKind> _textHolderKind;
         private ItemEnumType<TextHolderMark> _textHolderMark;
-        private List<ItemText> _paragraphs = new List<ItemText>();
+        private List<ItemTextNoted> _paragraphs = new List<ItemTextNoted>();
 
         public TextHolder(XmlNode node) : base(node)
         {
@@ -36,7 +36,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 foreach (XmlNode childNode in node.ChildNodes)
                 {
-                    ItemText item = new ItemText((childNode.Name == RuleConstants.TextHolderPapragraphNode) ? childNode.OuterXml : string.Empty);
+                    ItemTextNoted item = new ItemTextNoted((childNode.Name == RuleConstants.TextHolderPapragraphNode) ? childNode.OuterXml : string.Empty);
 
                     _paragraphs.Add(item);
                 }
@@ -54,9 +54,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 _textHolderMark = new ItemEnumType<TextHolderMark>() {  Value = item.Mark.Value};
             }
 
-            foreach (ItemText text in item.Paragraphs)
+            foreach (ItemTextNoted text in item.Paragraphs)
             {
-                Paragraphs.Add(new ItemText(text.StringExpression));
+                Paragraphs.Add(new ItemTextNoted(text.StringExpression));
             }
         }
 
@@ -93,7 +93,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public List<ItemText> Paragraphs
+        public List<ItemTextNoted> Paragraphs
         {
             get
             {
@@ -118,7 +118,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 AddBrokenConstraint(TextHolderBusinessConstraint.ParagraphRequired, ElementName);
             }
 
-            foreach (ItemText item in _paragraphs)
+            foreach (ItemTextNoted item in _paragraphs)
             {
                 if (item.IsEmpty)
                 {

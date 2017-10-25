@@ -6,6 +6,9 @@
         <dependencyFromLayerToLayer Id="29e9a4a2-1269-44a9-8fab-9f780cbdc3bb" direction="Bidirectional">
           <layerMoniker Id="4f0c922d-653e-48d1-8e48-0fc272f311cf" />
         </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="6dcec204-785e-435f-bde5-6b308a49fea8" direction="Forward">
+          <layerMoniker Id="cf0e5fb6-545e-4191-943b-f870efbb59c0" />
+        </dependencyFromLayerToLayer>
       </dependencyToLayers>
       <references>
         <reference Id="0dbad196-2484-4d38-a13d-d5d12880b443" name="TypiconMigrationTool">

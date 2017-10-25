@@ -19,11 +19,11 @@ namespace TypiconMigrationTool.Tests
 
             ScheduleDBDataSet.MineinikRow row = sh.DataSet.Mineinik.FirstOrDefault();
 
-            MigrationDayServiceFactory factory = new MigrationDayServiceFactory(Properties.Settings.Default.FolderPath);
+            MigrationDayWorshipFactory factory = new MigrationDayWorshipFactory(Properties.Settings.Default.FolderPath);
 
             factory.Initialize(row);
 
-            DayService dayService = factory.Create();
+            DayWorship dayService = factory.Create();
 
             Assert.IsNotEmpty(dayService.DayDefinition);
         }

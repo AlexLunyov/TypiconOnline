@@ -158,27 +158,6 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
             Assert.AreEqual(4, element.Text.Count);
         }
 
-        [Test]
-        public void ItemText_Note()
-        {
-            string xmlString = @"<ItemText>
-	                                <item language=""cs-ru"">Господи помилуй.</item>
-	                                <item language=""cs-cs"">Господи помилуй.</item>
-	                                <item language=""ru-ru"">Господи помилуй.</item>
-	                                <item language=""el-el"">Господи помилуй.</item>
-	                                <note><item language=""cs-cs"">Трижды.</item><style><red/><bold/></style></note>
-                                </ItemText>";
-
-            //XmlDocument xmlDoc = new XmlDocument();
-
-            //xmlDoc.LoadXml(xmlString);
-
-            ItemText element = new ItemText();
-
-            element.StringExpression = xmlString;
-
-            Assert.AreEqual("Господи помилуй. Трижды.", element.ToString());
-            Assert.Pass(element.StringExpression);
-        }
+        
     }
 }

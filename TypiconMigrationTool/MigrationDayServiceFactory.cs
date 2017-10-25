@@ -15,7 +15,7 @@ namespace TypiconMigrationTool
     /// <summary>
     /// Фабрика создает экземпляры класса DayService на основе данных из БД Access, а также файловых xml-документов
     /// </summary>
-    public class MigrationDayServiceFactory : IDayServiceFactory
+    public class MigrationDayWorshipFactory : IDayWorshipFactory
     {
         private ScheduleDBDataSet.MineinikRow _row;
         private string _folderPath;
@@ -26,7 +26,7 @@ namespace TypiconMigrationTool
         /// 
         /// </summary>
         /// <param name="folderPath">Путь к общей папке с документами</param>
-        public MigrationDayServiceFactory(string folderPath)
+        public MigrationDayWorshipFactory(string folderPath)
         {
             if (string.IsNullOrEmpty(folderPath)) throw new ArgumentNullException("folderPath");
 
@@ -41,21 +41,21 @@ namespace TypiconMigrationTool
             _row = mineinikRow;
         }
 
-        public DayService Create()
+        public DayWorship Create()
         {
             if (_row == null) throw new ArgumentNullException("ScheduleDBDataSet.MineinikRow");
 
-            DayService dayService = new DayService();
+            DayWorship dayService = new DayWorship();
 
             //наполняем содержимое текста службы
-            dayService.ServiceName.AddElement("cs-ru", _row.Name);
+            dayService.WorshipName.AddElement("cs-ru", _row.Name);
             dayService.IsCelebrating = !_row.IsIsCelebratingNull() ? _row.IsCelebrating : false;
             dayService.UseFullName = !_row.IsUseFullNameNull() ? _row.UseFullName : false;
 
             if (!_row.IsShortNameNull() && !string.IsNullOrEmpty(_row.ShortName))
             {
                 //dayService.ServiceShortName = new ItemText();
-                dayService.ServiceShortName.AddElement("cs-ru", _row.ShortName);
+                dayService.WorshipShortName.AddElement("cs-ru", _row.ShortName);
             }
 
             string fileName = (!_row.IsDateBNull()) ? new ItemDate(_row.DateB.Month, _row.DateB.Day).Expression + "." + _row.Name : _row.Name;

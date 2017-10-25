@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TypiconOnline.Infrastructure.Common.Caching;
-using TypiconOnline.Infrastructure.Common.Configuration;
+using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Infrastructure.Win.Caching;
+using TypiconOnline.Infrastructure.Win.Configuration;
 
-namespace TypiconOnline.Domain.Books.Easter
+namespace TypiconOnline.WinServices.Books
 {
     /// <summary>
     /// Хранилище дней Пасхи

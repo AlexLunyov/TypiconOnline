@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Typicon;
-using TypiconOnline.Infrastructure.Common.Caching;
-using TypiconOnline.Infrastructure.Common.Configuration;
+using TypiconOnline.Infrastructure.Win.Caching;
+using TypiconOnline.Infrastructure.Win.Configuration;
 
-namespace TypiconOnline.AppServices.Implementations
+namespace TypiconOnline.WinServices.Implementations
 {
     public class EnrichedTypiconEntityService : ITypiconEntityService
     {

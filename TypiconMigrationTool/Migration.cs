@@ -232,13 +232,13 @@ namespace TypiconMigrationTool
             MenologyDay menologyDay = null;
             MenologyRule menologyRule = null;
 
-            MigrationDayServiceFactory factory = new MigrationDayServiceFactory(Properties.Settings.Default.FolderPath);
+            MigrationDayWorshipFactory factory = new MigrationDayWorshipFactory(Properties.Settings.Default.FolderPath);
 
             foreach (ScheduleDBDataSet.MineinikRow mineinikRow in _sh.DataSet.Mineinik.Rows)
             {
                 factory.Initialize(mineinikRow);
 
-                DayService dayService = factory.Create();
+                DayWorship dayWorship = factory.Create();
 
                 ItemDate d = (!mineinikRow.IsDateBNull()) ? new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day) : new ItemDate();
 
@@ -262,7 +262,7 @@ namespace TypiconMigrationTool
                 }
                 
 
-                menologyDay.AppendDayService(dayService);
+                menologyDay.AppendDayService(dayWorship);
 
                 //menologyRule
                 /*смотрим, есть ли уже такой объект с заявленной датой
@@ -279,7 +279,7 @@ namespace TypiconMigrationTool
                         Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(mineinikRow.SignID).NewId),
                     };
 
-                    menologyRule.DayServices.Add(dayService);
+                    menologyRule.DayRuleWorships.Add( new DayRuleWorships() { DayRule = menologyRule, DayWorship = dayWorship } );
 
                     typiconEntity.MenologyRules.Add(menologyRule);
 
@@ -290,7 +290,7 @@ namespace TypiconMigrationTool
                 }
                 else
                 {
-                    menologyRule.DayServices.Add(dayService);
+                    menologyRule.DayRuleWorships.Add(new DayRuleWorships() { DayRule = menologyRule, DayWorship = dayWorship });
                 }
             }
 
@@ -317,12 +317,12 @@ namespace TypiconMigrationTool
                 //req.Style.IsBold = row.IsNameBold;
                 //ItemTextCollection itemTextCol = XmlHelper.CreateItemTextCollection(req);
 
-                DayService dayService = new DayService()
+                DayWorship dayWorship = new DayWorship()
                 {
-                    ServiceName = new ItemText()
+                    WorshipName = new ItemText()
                 };
-                dayService.ServiceName.Style.IsBold = row.IsNameBold;
-                dayService.ServiceName.AddElement("cs-ru", row.Name);
+                dayWorship.WorshipName.Style.IsBold = row.IsNameBold;
+                dayWorship.WorshipName.AddElement("cs-ru", row.Name);
 
                 TriodionDay day = new TriodionDay()
                 {
@@ -331,7 +331,7 @@ namespace TypiconMigrationTool
                     DaysFromEaster = (int) row.DayFromEaster,
                 };
 
-                day.AppendDayService(dayService);
+                day.AppendDayService(dayWorship);
                 //day.Sign = _unitOfWork.Repository<Sign>().Get(c => c.Id == row.SignID);
 
                 _unitOfWork.Repository<TriodionDay>().Insert(day);
@@ -346,9 +346,10 @@ namespace TypiconMigrationTool
                     DaysFromEaster = day.DaysFromEaster,
                     Owner = typiconEntity,
                     Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(row.SignID).NewId),
-                    RuleDefinition = fileReader.Read(row.DayFromEaster.ToString())
+                    RuleDefinition = fileReader.Read(row.DayFromEaster.ToString()),
+                    
                 };
-                rule.DayServices = new List<DayService>() { dayService };
+                rule.DayRuleWorships = new List<DayRuleWorships>() { new DayRuleWorships() { DayRule = rule, DayWorship = dayWorship } };
 
                 //folder.AddRule(rule);
                 typiconEntity.TriodionRules.Add(rule);

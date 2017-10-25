@@ -17,12 +17,12 @@ namespace TypiconOnline.Domain.Tests.Typicon
         [Test]
         public void Typicon_TypiconEntity_Creature()
         {
-            DayService dayService = new DayService();
-            dayService.ServiceName.AddElement("cs-ru", "Благовещение");
+            DayWorship dayService = new DayWorship();
+            dayService.WorshipName.AddElement("cs-ru", "Благовещение");
 
             MenologyDay menologyday = new MenologyDay() {
                 Id = 1,
-                DayServices = new List<DayService>() { dayService },
+                DayWorships = new List<DayWorship>() { dayService },
                 Date = new ItemDate("--04-07"),
                 DateB = new ItemDate("--04-07")
             };
@@ -60,7 +60,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
             {
                 Id = 1,
                 //Name = "Благовещение правило",
-                DayServices = new List<DayService>() { dayService },
+                DayRuleWorships = new List<DayRuleWorships>() { new DayRuleWorships() { DayWorship = dayService } },
                 Template = typiconEntity.Signs[0]
             };
 

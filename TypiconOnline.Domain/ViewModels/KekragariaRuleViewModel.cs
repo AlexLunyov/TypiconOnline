@@ -53,7 +53,7 @@ namespace TypiconOnline.Domain.ViewModels
                     {
                         Ymnos ymnos = group.Ymnis[n];
 
-                        ItemText stihos = psalm.Paragraphs.Last();
+                        ItemTextNoted stihos = psalm.Paragraphs.Last();
 
                         ymnos.Stihoi.Add(stihos);
 

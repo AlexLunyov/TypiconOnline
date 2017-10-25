@@ -129,24 +129,24 @@ namespace TypiconOnline.Domain.Services
 
             string language = inputRequest.TypiconEntity.Settings.DefaultLanguage;
 
-            DayService seniorService = handlerRequest.DayServices[0];
+            DayWorship seniorService = handlerRequest.DayWorships[0];
 
             //собираем все имена текстов, кроме главного
-            if (handlerRequest.DayServices.Count > 1)
+            if (handlerRequest.DayWorships.Count > 1)
             {
-                for (int i = 1; i < handlerRequest.DayServices.Count; i++)
+                for (int i = 1; i < handlerRequest.DayWorships.Count; i++)
                 {
-                    result += handlerRequest.DayServices[i].ServiceName[language] + " ";
+                    result += handlerRequest.DayWorships[i].WorshipName[language] + " ";
                 }
             }
 
             //а теперь разбираемся с главным
 
-            string s = seniorService.ServiceName[language];
+            string s = seniorService.WorshipName[language];
 
             if (inputRequest.Date.DayOfWeek != DayOfWeek.Sunday
                 || (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday 
-                    && (seniorService.UseFullName || seniorService.ServiceShortName.IsTextEmpty)))
+                    && (seniorService.UseFullName || seniorService.WorshipShortName.IsTextEmpty)))
             {
                 result = (handlerRequest.PutSeniorRuleNameToEnd) ?
                         result + s :
@@ -163,7 +163,7 @@ namespace TypiconOnline.Domain.Services
                 //Если имеется короткое название, то добавляем только его
 
                 result = OktoikhCalculator.GetSundayName(inputRequest.Date, 
-                    GetShortName(handlerRequest.DayServices, handlerRequest.Language)) + " " + result;
+                    GetShortName(handlerRequest.DayWorships, handlerRequest.Language)) + " " + result;
 
                 //жестко задаем воскресный день
                 handlerRequest.Rule = inputRequest.TypiconEntity.Settings.TemplateSunday;
@@ -172,13 +172,13 @@ namespace TypiconOnline.Domain.Services
             return result;
         }
 
-        private string GetShortName(List<DayService> dayServices, string language)
+        private string GetShortName(List<DayWorship> dayServices, string language)
         {
             string result = "";
 
             for (int i = 0; i < dayServices.Count; i++)
             {
-                string s = dayServices[i].ServiceShortName[language];
+                string s = dayServices[i].WorshipShortName[language];
 
                 if (!string.IsNullOrEmpty(s))
                 {
@@ -246,7 +246,7 @@ namespace TypiconOnline.Domain.Services
                     additionalSettings = new RuleHandlerSettings()
                     {
                         Rule = abstrRule.RuleEntity,
-                        DayServices = abstrRule.RuleEntity.DayServices.ToList(),
+                        DayWorships = abstrRule.RuleEntity.DayWorships.ToList(),
                         OktoikhDay = oktoikhDay,
                         Mode = inputRequest.Mode,
                         Language = inputRequest.Language,
@@ -333,13 +333,13 @@ namespace TypiconOnline.Domain.Services
             modAbstractRules.Sort();
 
             //получаем коллекцию богослужебных текстов
-            List<DayService> dayServices = GetDayServices(modAbstractRules);
+            List<DayWorship> dayServices = GetDayServices(modAbstractRules);
 
             //смотрим, не созданы ли уже настройки
             if (additionalSettings != null)
             {
                 //созданы - значит был определен элемент для добавления
-                additionalSettings.DayServices.AddRange(dayServices);
+                additionalSettings.DayWorships.AddRange(dayServices);
             }
 
             RuleHandlerSettings outputSettings = GetRecursiveSettings(modAbstractRules[0].RuleEntity, dayServices, oktoikhDay, inputRequest, additionalSettings);
@@ -347,14 +347,14 @@ namespace TypiconOnline.Domain.Services
             return outputSettings;
         }
 
-        private RuleHandlerSettings GetRecursiveSettings(TypiconRule rule, List<DayService> dayServices, OktoikhDay oktoikhDay, GetScheduleDayRequest inputRequest,
+        private RuleHandlerSettings GetRecursiveSettings(TypiconRule rule, List<DayWorship> dayServices, OktoikhDay oktoikhDay, GetScheduleDayRequest inputRequest,
             RuleHandlerSettings additionalSettings)
         {
             RuleHandlerSettings outputSettings = new RuleHandlerSettings()
             {
                 Addition = additionalSettings,
                 Rule = rule,
-                DayServices = dayServices.ToList(),
+                DayWorships = dayServices.ToList(),
                 OktoikhDay = oktoikhDay,
                 Mode = inputRequest.Mode,
                 Language = inputRequest.Language,
@@ -372,11 +372,11 @@ namespace TypiconOnline.Domain.Services
             return outputSettings;
         }
 
-        private List<DayService> GetDayServices(List<ModifiedRule> modRules)
+        private List<DayWorship> GetDayServices(List<ModifiedRule> modRules)
         {
-            List<DayService> result = new List<DayService>();
+            List<DayWorship> result = new List<DayWorship>();
 
-            modRules.ForEach(c => result.AddRange(c.RuleEntity.DayServices));
+            modRules.ForEach(c => result.AddRange(c.RuleEntity.DayWorships));
 
             return result;
         }

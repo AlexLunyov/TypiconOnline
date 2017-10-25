@@ -10,15 +10,15 @@ namespace TypiconOnline.Domain.Rules.Handlers
     /// </summary>
     public class DayToHandle
     {
-        private DayService _dayService;
+        private DayWorship _dayService;
         private DayContainer _dayContainer;
 
-        public DayToHandle(DayService dayService)
+        public DayToHandle(DayWorship dayService)
         {
             DayService = dayService;
         }
 
-        public DayService DayService
+        public DayWorship DayService
         {
             get
             {

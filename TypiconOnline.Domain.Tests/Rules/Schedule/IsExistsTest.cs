@@ -41,7 +41,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             rule.RuleDefinition = xml;
 
             handler.Settings.Rule = rule;
-            handler.Settings.DayServices = rule.DayServices;
+            handler.Settings.DayWorships = rule.DayWorships;
 
             rule.Rule.Interpret(date, handler);
 
@@ -56,7 +56,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             rule.RuleDefinition = xml;
 
             handler.Settings.Rule = rule;
-            handler.Settings.DayServices = rule.DayServices;
+            handler.Settings.DayWorships = rule.DayWorships;
 
             rule.Rule.Interpret(date, handler);
 

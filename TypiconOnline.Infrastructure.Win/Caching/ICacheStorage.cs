@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TypiconOnline.Infrastructure.Common.Caching
+namespace TypiconOnline.Infrastructure.Win.Caching
 {
     public interface ICacheStorage
     {

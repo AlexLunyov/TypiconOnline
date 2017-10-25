@@ -21,7 +21,7 @@ namespace TypiconOnline.AppServices.Implementations
         /// <summary>
         /// Коллекция богослужебных текстов для обработки
         /// </summary>
-        public List<DayService> DayServices { get; set; }
+        public List<DayWorship> DayServices { get; set; }
         /// <summary>
         /// Добавление к текущему правилу, Nullable
         /// </summary>
