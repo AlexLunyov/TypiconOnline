@@ -12,11 +12,6 @@ namespace TypiconOnline.Repository.EFSQLite.DataBase
     {
         private string _databasePath { get; set; }
 
-        public SQLiteDBContext() 
-        {
-            _databasePath = "Filename=SQLiteDB.db";
-        }
-
         public SQLiteDBContext(string connection)
         {
             _databasePath = connection;
@@ -34,6 +29,7 @@ namespace TypiconOnline.Repository.EFSQLite.DataBase
             // настройка полей с помощью Fluent API
 
             modelBuilder.ApplyConfiguration(new TypiconEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new TypiconSettingsConfiguration());
 
             //modelBuilder.ApplyConfiguration(new TypiconRuleConfiguration());
 

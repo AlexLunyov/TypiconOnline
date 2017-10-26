@@ -27,16 +27,16 @@ namespace TypiconOnline.Repository.EFSQlite.DataBase.Mapping
             //HasMany(e => e.ModifiedYears).
             //    WithRequired(m => m.TypiconEntity);
 
-            builder.OwnsOne(e => e.Settings).
-                Ignore(c => c.TemplateSunday);//.WithMany();
+            //builder.OwnsOne(e => e.Settings).
+            //    HasOne(c => c.TemplateSunday).WithOne().HasForeignKey<Sign>("Owner.Id");//.WithMany();
 
             builder.HasMany(c => c.CommonRules).WithOne(d => d.Owner);
             builder.HasMany(c => c.Signs).WithOne(d => d.Owner);
             builder.HasMany(c => c.MenologyRules).WithOne(d => d.Owner);
             builder.HasMany(c => c.TriodionRules).WithOne(d => d.Owner);
 
-            //builder.HasOne(e => e.Settings).
-            //    WithOne().IsRequired();
+            builder.HasOne(e => e.Settings).
+                WithOne().HasForeignKey<TypiconSettings>("TypiconEntity.Id");
 
             //builder.ToTable("TypiconEntities");
             //ToTable("TypiconEntities");

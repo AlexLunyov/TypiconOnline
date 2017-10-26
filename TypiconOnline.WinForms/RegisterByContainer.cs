@@ -14,6 +14,7 @@ using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.Easter;
+using TypiconOnline.Repository.EFSQLite;
 
 namespace ScheduleForm
 {
@@ -33,10 +34,12 @@ namespace ScheduleForm
                         scan.AssemblyContainingType<TypiconEntity>();
                         scan.AssemblyContainingType<IAggregateRoot>();
                         scan.AssemblyContainingType<EFUnitOfWork>();
+                        scan.AssemblyContainingType<EFSQLiteUnitOfWork>();
                         scan.AssemblyContainingType<DocxScheduleWeekViewer>(); 
                         scan.WithDefaultConventions();
                     });
-                    x.For<IUnitOfWork>().Use<EFUnitOfWork>();
+                    x.For<IUnitOfWork>().Use<EFSQLiteUnitOfWork>().SelectConstructor(() => new EFSQLiteUnitOfWork());
+                    //x.For<IUnitOfWork>().Use<EFSQLiteUnitOfWork>();//.SelectConstructor(() => new EFSQLiteUnitOfWork(@"Data\SQLiteDB.db"));
                     x.For<ITypiconEntityService>().Use<TypiconEntityService>();
                     x.For<IEvangelionService>().Use<EvangelionService>();
                     x.For<IApostolService>().Use<ApostolService>();

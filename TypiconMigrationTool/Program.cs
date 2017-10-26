@@ -48,7 +48,7 @@ namespace TypiconMigrationTool
                         Migrate(ef);
                         break;
                     case '2':
-                        var sqlite = new EFSQLiteUnitOfWork("SQLiteDB.db");
+                        var sqlite = new EFSQLiteUnitOfWork(@"data\SQLiteDB.db");
                         Migrate(sqlite);
                         break;
                     case '3':

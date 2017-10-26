@@ -17,35 +17,15 @@ namespace TypiconOnline.Repository.EFSQLite
     {
         SQLiteDBContext _dbContext = null;
 
-        //public EFSQLiteUnitOfWork()
-        //{
-        //    _dbContext = new SQLiteDBContext();
-        //}
+        public EFSQLiteUnitOfWork()
+        {
+            _dbContext = new SQLiteDBContext(@"Data\SQLiteDB.db");
+        }
 
         public EFSQLiteUnitOfWork(string connection)
         {
             _dbContext = new SQLiteDBContext(connection);
         }
-
-        #region Repositories
-
-        //private MenologyDayRepository _menologyDayRepository = null;
-
-        //public MenologyDayRepository MenologyDayRepository
-        //{
-        //    get
-        //    {
-        //        if (_menologyDayRepository == null)
-        //        {
-        //            _menologyDayRepository = new MenologyDayRepository(_dbContext);
-        //        }
-        //        return _menologyDayRepository;
-        //    }
-        //}
-
-
-        #endregion
-
 
         #region Register...
         //public void RegisterDeletion(IAggregateRoot aggregateRoot, IUnitOfWorkRepository repository)
