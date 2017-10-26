@@ -12,6 +12,11 @@ namespace TypiconOnline.Repository.EFSQLite.DataBase
     {
         private string _databasePath { get; set; }
 
+        public SQLiteDBContext() 
+        {
+            _databasePath = @"Data\SQLiteDB.db";
+        }
+
         public SQLiteDBContext(string connection)
         {
             _databasePath = connection;
@@ -44,7 +49,7 @@ namespace TypiconOnline.Repository.EFSQLite.DataBase
             modelBuilder.ApplyConfiguration(new DayRuleConfiguration());
             modelBuilder.ApplyConfiguration(new DayWorshipConfiguration());
             modelBuilder.ApplyConfiguration(new MenologyRuleConfiguration());
-            //modelBuilder.Configurations.Add(new TriodionRuleMap());
+            modelBuilder.ApplyConfiguration(new TriodionRuleConfiguration());
 
             modelBuilder.ApplyConfiguration(new MenologyDayConfiguration());
             modelBuilder.ApplyConfiguration(new TriodionDayConfiguration());
@@ -56,7 +61,7 @@ namespace TypiconOnline.Repository.EFSQLite.DataBase
             modelBuilder.ApplyConfiguration(new ItemDateConfiguration());
             modelBuilder.ApplyConfiguration(new ItemTextConfiguration());
 
-            
+
 
             modelBuilder.Entity<OktoikhDay>();
             modelBuilder.Entity<TheotokionApp>();

@@ -13,7 +13,7 @@ using TypiconOnline.Domain.Rules;
 namespace TypiconMigrationTool.Core.Migrations
 {
     [DbContext(typeof(MigrationContext))]
-    [Migration("20171026102614_Initial")]
+    [Migration("20171026115219_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

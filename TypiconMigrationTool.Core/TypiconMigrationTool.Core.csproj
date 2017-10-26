@@ -17,4 +17,8 @@
     <ProjectReference Include="..\TypiconOnline.Repository.EFSQLite\TypiconOnline.Repository.EFSQLite.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>

@@ -14,7 +14,7 @@ namespace TypiconOnline.Repository.EFSQlite.DataBase.Mapping
         public void Configure(EntityTypeBuilder<TypiconSettings> builder)
         {
 
-            builder.HasOne(c => c.TemplateSunday).WithOne().HasForeignKey<Sign>("OwnerId");//.WithMany();
+            builder.HasOne(c => c.TemplateSunday).WithOne().HasForeignKey<Sign>("Owner.Id");//.WithMany();
 
         }
     }

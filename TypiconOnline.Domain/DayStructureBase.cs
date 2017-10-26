@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Infrastructure.Common.Domain;
@@ -12,7 +13,7 @@ namespace TypiconOnline.Domain
     /// <summary>
     /// Базовый класс для определения богослужебных текстов
     /// </summary>
-    public abstract class DayStructureBase : EntityBase<int>, IAggregateRoot
+    public abstract class DayStructureBase : EntityBase<int>, IAggregateRoot, IBookElement<DayContainer>
     {
         private DayContainer _dayContainer;
         private string _dayDefinition;
@@ -40,7 +41,7 @@ namespace TypiconOnline.Domain
         /// Возвращает объектную модель определения богослужебного текста
         /// </summary>
         /// <returns></returns>
-        public DayContainer GetDay()
+        public DayContainer GetElement()
         {
             ThrowExceptionIfInvalid();
 
