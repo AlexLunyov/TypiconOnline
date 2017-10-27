@@ -13,6 +13,12 @@ namespace TypiconOnline.Repository.EFSQlite.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<TypiconRule> builder)
         {
+            builder.HasKey(c => new { c.Id, c.OwnerId });
+
+            builder.HasOne(e => e.Owner)
+                .WithMany()
+                .HasForeignKey(c => c.OwnerId);
+
             builder.Ignore(c => c.Rule);
 
             //builder.HasOne(e => e.Owner).

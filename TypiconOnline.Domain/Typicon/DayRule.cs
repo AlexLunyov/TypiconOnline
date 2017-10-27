@@ -11,13 +11,13 @@ namespace TypiconOnline.Domain.Typicon
     {
         public DayRule()
         {
-            DayRuleWorships = new List<DayRuleWorships>();
+            DayRuleWorships = new List<DayRuleWorship>();
         }
 
         /// <summary>
         /// Список последований текстов служб для данного дня Устава
         /// </summary>
-        public virtual List<DayRuleWorships> DayRuleWorships { get; set; }
+        public virtual List<DayRuleWorship> DayRuleWorships { get; set; }
 
         /// <summary>
         /// Возвращает объединенную строку всех служб для языка по умолчанию для данного Устава

@@ -39,7 +39,7 @@ namespace ScheduleForm
                         scan.WithDefaultConventions();
                     });
                     x.For<IUnitOfWork>().Use<EFSQLiteUnitOfWork>().SelectConstructor(() => new EFSQLiteUnitOfWork());
-                    //x.For<IUnitOfWork>().Use<EFSQLiteUnitOfWork>();//.SelectConstructor(() => new EFSQLiteUnitOfWork(@"Data\SQLiteDB.db"));
+                    //x.For<IUnitOfWork>().Use<EFUnitOfWork>();
                     x.For<ITypiconEntityService>().Use<TypiconEntityService>();
                     x.For<IEvangelionService>().Use<EvangelionService>();
                     x.For<IApostolService>().Use<ApostolService>();

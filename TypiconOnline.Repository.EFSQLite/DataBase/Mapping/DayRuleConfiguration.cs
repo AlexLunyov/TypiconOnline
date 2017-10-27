@@ -14,7 +14,7 @@ namespace TypiconOnline.Repository.EFSQlite.DataBase.Mapping
         public void Configure(EntityTypeBuilder<DayRule> builder)
         {
             builder.HasMany(c => c.DayRuleWorships).
-                WithOne();
+                WithOne().HasForeignKey(c => c.DayRuleId);
         }
     }
 }

@@ -27,7 +27,9 @@ namespace TypiconOnline.Repository.EFSQLite
         {
             if (predicate != null)
             {
-                return _objectSet.Where(predicate);
+                return new ClassPropertiesIncluder<DomainType>(_objectSet).
+                    GetIncludes().
+                    Where(predicate);
             }
 
             return _objectSet.AsEnumerable();
@@ -35,35 +37,37 @@ namespace TypiconOnline.Repository.EFSQLite
 
         public DomainType Get(Expression<Func<DomainType, bool>> predicate)
         {
+            return new ClassPropertiesIncluder<DomainType>(_objectSet).
+                GetIncludes().
+                Where(predicate).FirstOrDefault();
+
+            //if (typeof(DomainType).Equals(typeof(TypiconEntity)))
+            //{
+            //    //_typiconDBContext.TypiconEntitySet.Include(c => c.RulesFolder)
+            //    //    .Include(c => c.CommonRules)
+            //    //    .Include(c => c.MenologyRules)
+            //    //    .Include(c => c.MenologyRules.Select(m => m.Day))
+            //    //    .Include(c => c.TriodionRules)
+            //    //    .Include(c => c.TriodionRules.Select(m => m.Day))
+            //    //    .Include(c => c.ModifiedYears)
+            //    //    .Include(c => c.Signs)
+            //    //    .Where(predicate).FirstOrDefault();
+            //    return _objectSet.
+            //        Include("CommonRules").
+            //        Include("MenologyRules").
+            //        Include("MenologyRules.Date").
+            //        Include("MenologyRules.DateB").
+            //        Include("MenologyRules.DayRuleWorships").
+            //        Include("TriodionRules").
+            //        Include("TriodionRules.DayRuleWorships").
+            //        Include("ModifiedYears").
+            //        Include("ModifiedYears.ModifiedRules").
+            //        Include("Signs").
+            //        Include("Settings").
+            //        Where(predicate).FirstOrDefault();
+            //}
+
             //return _objectSet.Where(predicate).FirstOrDefault();
-
-            if (typeof(DomainType).Equals(typeof(TypiconEntity)))
-            {
-                //_typiconDBContext.TypiconEntitySet.Include(c => c.RulesFolder)
-                //    .Include(c => c.CommonRules)
-                //    .Include(c => c.MenologyRules)
-                //    .Include(c => c.MenologyRules.Select(m => m.Day))
-                //    .Include(c => c.TriodionRules)
-                //    .Include(c => c.TriodionRules.Select(m => m.Day))
-                //    .Include(c => c.ModifiedYears)
-                //    .Include(c => c.Signs)
-                //    .Where(predicate).FirstOrDefault();
-                return _objectSet.
-                    Include("CommonRules").
-                    Include("MenologyRules").
-                    Include("MenologyRules.Date").
-                    Include("MenologyRules.DateB").
-                    Include("MenologyRules.DayRuleWorships").
-                    Include("TriodionRules").
-                    Include("TriodionRules.DayRuleWorships").
-                    Include("ModifiedYears").
-                    Include("ModifiedYears.ModifiedRules").
-                    Include("Signs").
-                    Include("Settings").
-                    Where(predicate).FirstOrDefault();
-            }
-
-            return _objectSet.Where(predicate).FirstOrDefault();
         }
 
         public void Update(DomainType aggregate)

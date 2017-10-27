@@ -14,13 +14,13 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
     {
         public ModifiedYearMap()
         {
-            HasKey<int>(c => c.Id);
-            Property(c => c.Id).IsRequired();
+            HasKey(u => new { u.Id, u.TypiconEntityId });
 
             Property(c => c.Year).IsRequired();
 
             HasRequired(c => c.TypiconEntity).
-                WithMany(c => c.ModifiedYears);
+                WithMany(c => c.ModifiedYears).
+                HasForeignKey(x => x.TypiconEntityId); 
 
             HasMany(c => c.ModifiedRules);
 

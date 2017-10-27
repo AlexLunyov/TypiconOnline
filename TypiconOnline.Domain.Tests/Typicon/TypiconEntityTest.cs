@@ -60,7 +60,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
             {
                 Id = 1,
                 //Name = "Благовещение правило",
-                DayRuleWorships = new List<DayRuleWorships>() { new DayRuleWorships() { DayWorship = dayService } },
+                DayRuleWorships = new List<DayRuleWorship>() { new DayRuleWorship() { DayWorship = dayService } },
                 Template = typiconEntity.Signs[0]
             };
 

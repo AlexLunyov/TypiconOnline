@@ -7,8 +7,8 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
     {
         public TypiconRuleMap()
         {
-            HasKey<int>(c => c.Id);
-            Property(c => c.Id).IsRequired();
+            HasKey(c => new { c.Id, c.OwnerId });
+
             Property(c => c.Name).HasMaxLength(200);
             //HasOptional(e => e.Folder).
             //    WithMany();
@@ -17,11 +17,12 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
 
             Property(c => c.RuleDefinition).HasColumnType("xml");//("NVARCHAR");
 
-            HasRequired(e => e.Owner).
-                WithMany();
+            HasRequired(e => e.Owner)
+                .WithMany()
+                .HasForeignKey(c => c.OwnerId);
 
-            HasOptional(e => e.Template).
-                WithMany().WillCascadeOnDelete(false);
+            HasOptional(e => e.Template)
+                .WithMany().WillCascadeOnDelete(false);
 
             //Map(m =>
             //{

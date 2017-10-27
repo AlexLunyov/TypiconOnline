@@ -15,21 +15,14 @@ namespace TypiconOnline.AppServices.Implementations
 {
     public class TypiconEntityService : ITypiconEntityService
     {
-        private readonly IUnitOfWork _unitOfWork;
-
         public TypiconEntityService(IUnitOfWork unitOfWork)
         {
-            if (unitOfWork == null) throw new ArgumentNullException("UnitOfWork");
-            _unitOfWork = unitOfWork;
+            UnitOfWork = unitOfWork ?? throw new ArgumentNullException("UnitOfWork");
         }
 
         public IUnitOfWork UnitOfWork
         {
-            get
-            {
-                return _unitOfWork;
-            }
-        }
+            get; }
 
         /// <summary>
         /// Удаляет все переходящие праздники у Устава с заданным Id
@@ -41,16 +34,19 @@ namespace TypiconOnline.AppServices.Implementations
 
             if (response.TypiconEntity != null)
             {
-                while (response.TypiconEntity.ModifiedYears.Count > 0)
-                {
-                    ModifiedYear year = response.TypiconEntity.ModifiedYears[0];
+                response.TypiconEntity.ModifiedYears.ForEach(c => c.TypiconEntity = null);
+                response.TypiconEntity.ModifiedYears.Clear();
 
-                    while (year.ModifiedRules.Count > 0)
-                    {
-                        UnitOfWork.Repository<ModifiedRule>().Delete(year.ModifiedRules[0]);
-                    }
-                    UnitOfWork.Repository<ModifiedYear>().Delete(year);
-                }
+                //while (response.TypiconEntity.ModifiedYears.Count > 0)
+                //{
+                //    ModifiedYear year = response.TypiconEntity.ModifiedYears[0];
+
+                //    while (year.ModifiedRules.Count > 0)
+                //    {
+                //        UnitOfWork.Repository<ModifiedRule>().Delete(year.ModifiedRules[0]);
+                //    }
+                //    UnitOfWork.Repository<ModifiedYear>().Delete(year);
+                //}
 
                 UnitOfWork.Commit();
             }

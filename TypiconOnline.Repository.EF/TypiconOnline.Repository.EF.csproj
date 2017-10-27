@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBase\Mapping\CommonRuleMap.cs" />
+    <Compile Include="DataBase\Mapping\DayRuleWorshipMap.cs" />
     <Compile Include="DataBase\Mapping\OktoikhDayMap.cs" />
     <Compile Include="DataBase\Mapping\IrmologionTheotokionMap.cs" />
     <Compile Include="DataBase\Mapping\DayRuleMap.cs" />
@@ -69,8 +70,6 @@
     <Compile Include="DataBase\Mapping\SignMap.cs" />
     <Compile Include="DataBase\Mapping\TypiconEntityMap.cs" />
     <Compile Include="DataBase\Mapping\MenologyDayMap.cs" />
-    <Compile Include="DataBase\Mapping\FolderEntityMap.cs" />
-    <Compile Include="DataBase\Mapping\TypiconFolderEntityMap.cs" />
     <Compile Include="DataBase\Mapping\TypiconRuleMap.cs" />
     <Compile Include="DataBase\TypiconDBContext.cs" />
     <Compile Include="EFUnitOfWork.cs" />

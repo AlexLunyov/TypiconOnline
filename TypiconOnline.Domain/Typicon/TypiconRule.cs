@@ -13,6 +13,8 @@ namespace TypiconOnline.Domain.Typicon
     public abstract class TypiconRule : RuleEntity
     {
         public virtual Sign Template { get; set; }
+
+        public int OwnerId { get; set; }
         public virtual TypiconEntity Owner { get; set; }
         /// <summary>
         /// Признак, использовать ли определение RuleDefinition как дополнение к шаблону Template

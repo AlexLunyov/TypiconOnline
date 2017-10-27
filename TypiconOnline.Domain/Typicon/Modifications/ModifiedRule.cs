@@ -9,7 +9,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon.Modifications
 {
-    public class ModifiedRule : EntityBase<int>, IAggregateRoot, IComparable<ModifiedRule>
+    public class ModifiedRule : EntityBase<int>/*, IAggregateRoot*/, IComparable<ModifiedRule>
     {
         public virtual DayRule RuleEntity { get; set; }
 

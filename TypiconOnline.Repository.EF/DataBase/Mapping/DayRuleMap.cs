@@ -14,7 +14,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
         public DayRuleMap()
         {
             HasMany(c => c.DayRuleWorships).
-                WithRequired()/*.
+                WithRequired().HasForeignKey(c => c.DayRuleId); /*.
             Map(m =>
             {
                 m.ToTable("DayRuleWorships");

@@ -52,24 +52,6 @@ namespace TypiconMigrationTool
 
         private void ClearEF()
         {
-            IEnumerable<RuleEntity> rulesDaySet = _unitOfWork.Repository<RuleEntity>().GetAll();
-            foreach (RuleEntity element in rulesDaySet)
-            {
-                _unitOfWork.Repository<RuleEntity>().Delete(element);
-            }
-
-            IEnumerable<Sign> dSet = _unitOfWork.Repository<Sign>().GetAll();
-            foreach (Sign element in dSet)
-            {
-                _unitOfWork.Repository<Sign>().Delete(element);
-            }
-
-            IEnumerable<FolderEntity> foldersDaySet = _unitOfWork.Repository<FolderEntity>().GetAll();
-            foreach (FolderEntity element in foldersDaySet)
-            {
-                _unitOfWork.Repository<FolderEntity>().Delete(element);
-            }
-
             IEnumerable<TypiconEntity> typiconEntitySet = _unitOfWork.Repository<TypiconEntity>().GetAll();
             foreach (TypiconEntity element in typiconEntitySet)
             {
@@ -279,7 +261,7 @@ namespace TypiconMigrationTool
                         Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(mineinikRow.SignID).NewId),
                     };
 
-                    menologyRule.DayRuleWorships.Add( new DayRuleWorships() { DayRule = menologyRule, DayWorship = dayWorship } );
+                    menologyRule.DayRuleWorships.Add( new DayRuleWorship() { DayRule = menologyRule, DayWorship = dayWorship } );
 
                     typiconEntity.MenologyRules.Add(menologyRule);
 
@@ -290,7 +272,7 @@ namespace TypiconMigrationTool
                 }
                 else
                 {
-                    menologyRule.DayRuleWorships.Add(new DayRuleWorships() { DayRule = menologyRule, DayWorship = dayWorship });
+                    menologyRule.DayRuleWorships.Add(new DayRuleWorship() { DayRule = menologyRule, DayWorship = dayWorship });
                 }
             }
 
@@ -349,7 +331,7 @@ namespace TypiconMigrationTool
                     RuleDefinition = fileReader.Read(row.DayFromEaster.ToString()),
                     
                 };
-                rule.DayRuleWorships = new List<DayRuleWorships>() { new DayRuleWorships() { DayRule = rule, DayWorship = dayWorship } };
+                rule.DayRuleWorships = new List<DayRuleWorship>() { new DayRuleWorship() { DayRule = rule, DayWorship = dayWorship } };
 
                 //folder.AddRule(rule);
                 typiconEntity.TriodionRules.Add(rule);

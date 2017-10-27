@@ -19,7 +19,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             //    WithRequired(m => m.Owner);
 
             HasMany(e => e.ModifiedYears).
-                WithRequired(m => m.TypiconEntity);
+                WithRequired(m => m.TypiconEntity).HasForeignKey(c => c.TypiconEntityId);
 
             HasRequired(e => e.Settings).
                 WithRequiredPrincipal();

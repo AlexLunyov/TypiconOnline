@@ -19,21 +19,14 @@ namespace TypiconOnline.Repository.EFSQlite.DataBase.Mapping
 
             builder.HasOne(e => e.Template).
                 WithMany().IsRequired(false);
-            //builder. HasOptional(e => e.Template).
-            //    WithMany();
 
             builder.HasMany(e => e.ModifiedYears).
-                WithOne(m => m.TypiconEntity);
-            //HasMany(e => e.ModifiedYears).
-            //    WithRequired(m => m.TypiconEntity);
+                WithOne(m => m.TypiconEntity).HasForeignKey(c => c.TypiconEntityId);
 
-            //builder.OwnsOne(e => e.Settings).
-            //    HasOne(c => c.TemplateSunday).WithOne().HasForeignKey<Sign>("Owner.Id");//.WithMany();
-
-            builder.HasMany(c => c.CommonRules).WithOne(d => d.Owner);
-            builder.HasMany(c => c.Signs).WithOne(d => d.Owner);
-            builder.HasMany(c => c.MenologyRules).WithOne(d => d.Owner);
-            builder.HasMany(c => c.TriodionRules).WithOne(d => d.Owner);
+            builder.HasMany(c => c.CommonRules).WithOne(d => d.Owner).HasForeignKey(c => c.OwnerId);
+            builder.HasMany(c => c.Signs).WithOne(d => d.Owner).HasForeignKey(c => c.OwnerId);
+            builder.HasMany(c => c.MenologyRules).WithOne(d => d.Owner).HasForeignKey(c => c.OwnerId);
+            builder.HasMany(c => c.TriodionRules).WithOne(d => d.Owner).HasForeignKey(c => c.OwnerId);
 
             builder.HasOne(e => e.Settings).
                 WithOne().HasForeignKey<TypiconSettings>("TypiconEntity.Id");

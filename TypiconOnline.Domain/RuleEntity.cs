@@ -11,7 +11,7 @@ namespace TypiconOnline.Domain
     /// <summary>
     /// Базовый класс для всех главных элементов системы: правил компоновки богослужебных текстов
     /// </summary>
-    public abstract class RuleEntity/*<T> */ : EntityBase<int>, IAggregateRoot /*where T : RuleContainer*/
+    public abstract class RuleEntity/*<T> */ : EntityBase<int>//, IAggregateRoot /*where T : RuleContainer*/
     {
         public virtual string Name { get; set; }
         //public string PathName

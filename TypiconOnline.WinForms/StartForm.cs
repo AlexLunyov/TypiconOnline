@@ -58,7 +58,7 @@ namespace ScheduleForm
 
             _unitOfWork = container.GetInstance<IUnitOfWork>();
 
-            _typiconEntityService = container.GetInstance<ITypiconEntityService>();
+            _typiconEntityService = container.With(_unitOfWork).GetInstance<ITypiconEntityService>();
 
             GetTypiconEntityResponse response = _typiconEntityService.GetTypiconEntity(1);// _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
 

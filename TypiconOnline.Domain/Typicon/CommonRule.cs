@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Typicon
     /// </summary>
     public class CommonRule : RuleEntity
     {
-        //public virtual Sign Template { get; set; }
+        public int OwnerId { get; set; }
 
         public virtual TypiconEntity Owner { get; set; }
         

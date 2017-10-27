@@ -10,12 +10,14 @@ namespace TypiconOnline.Domain.Typicon.Modifications
     /// <summary>
     /// Хранилище объектов ModifiedYear, объединенных по году
     /// </summary>
-    public class ModifiedYear : EntityBase<int>, IAggregateRoot
+    public class ModifiedYear : EntityBase<int>//, IAggregateRoot
     {
         public ModifiedYear()
         {
             ModifiedRules = new List<ModifiedRule>();
         }
+
+        public int TypiconEntityId { get; set; }
 
         public virtual TypiconEntity TypiconEntity { get; set; }
 
@@ -23,9 +25,6 @@ namespace TypiconOnline.Domain.Typicon.Modifications
 
         public virtual List<ModifiedRule> ModifiedRules { get; set; }
 
-        protected override void Validate()
-        {
-            throw new NotImplementedException();
-        }
+        protected override void Validate() { }
     }
 }
