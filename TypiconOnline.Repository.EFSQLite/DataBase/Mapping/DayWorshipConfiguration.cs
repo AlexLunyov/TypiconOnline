@@ -13,8 +13,18 @@ namespace TypiconOnline.Repository.EFSQlite.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<DayWorship> builder)
         {
-            //builder.OwnsOne(c => c.WorshipName);
-            //builder.OwnsOne(c => c.WorshipShortName);
+            //builder.HasOne(c => c.WorshipName)
+            //    .WithMany()
+            //    .HasForeignKey("WorshipNameId");
+
+            //builder.HasOne(c => c.WorshipShortName)
+            //    .WithMany()
+            //    .HasForeignKey("WorshipShortNameId");
+
+            builder.HasKey(c => c.Id);
+
+            builder.OwnsOne(c => c.WorshipName, k => k.Ignore(d => d.Style));
+            builder.OwnsOne(c => c.WorshipShortName, k => k.Ignore(d => d.Style));
 
             builder.HasOne(e => e.Parent).
                 WithMany();

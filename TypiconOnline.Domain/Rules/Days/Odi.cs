@@ -22,45 +22,6 @@ namespace TypiconOnline.Domain.Rules.Days
             TroparionCollection = new List<Ymnos>();
         }
 
-        public Odi(XmlNode node) 
-        {
-            //номер песни
-            XmlAttribute numberAttr = node.Attributes[RuleConstants.OdiNumberAttrName];
-            if (numberAttr != null)
-            {
-                int result = default(int);
-                int.TryParse(numberAttr.Value, out result);
-                Number = result;
-            }
-
-            //ирмос
-            XmlNode elemNode = node.SelectSingleNode(RuleConstants.OdiIrmosNode);
-            if (elemNode != null)
-            {
-                Irmos = new Ymnos(elemNode);
-            }
-
-            //тропари
-
-            XmlNodeList tropNodes = node.SelectNodes(RuleConstants.OdiTroparionName);
-            if (tropNodes != null)
-            {
-                TroparionCollection = new List<Ymnos>();
-
-                foreach (XmlNode tropNode in tropNodes)
-                {
-                    TroparionCollection.Add(new Ymnos(tropNode));
-                }
-            }
-
-            //катавасия
-            elemNode = node.SelectSingleNode(RuleConstants.OdiKatavasiaNode);
-            if (elemNode != null)
-            {
-                Katavasia = new ItemText(elemNode.OuterXml);
-            }
-        }
-
         #region Properties
 
         /// <summary>

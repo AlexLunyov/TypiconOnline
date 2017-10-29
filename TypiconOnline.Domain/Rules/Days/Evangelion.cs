@@ -16,8 +16,6 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public Evangelion() { }
 
-        public Evangelion(XmlNode node) { }
-
         #region Properties
 
         public List<EvangelionPart> Parts { get; set; }

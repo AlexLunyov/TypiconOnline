@@ -201,7 +201,7 @@
     </AdditionalFiles>
     <None Include="App.config" />
     <Content Include="data\SQLiteDB.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -48,7 +48,7 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
             TypiconSerializer ser = new TypiconSerializer();
             ItemTextNoted element = ser.Deserialize<ItemTextNoted>(xmlString);
 
-            element.Text["cs-cs"] = "cs-cs Текст измененный";
+            element["cs-cs"] = "cs-cs Текст измененный";
 
             element.Style.Header = HeaderCaption.h1;
             element.Style.IsBold = true;

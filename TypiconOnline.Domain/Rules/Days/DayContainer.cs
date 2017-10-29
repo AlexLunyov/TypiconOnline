@@ -20,41 +20,6 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public DayContainer() { }
 
-        public DayContainer(XmlNode node) 
-        {
-            XmlNode nameNode = node.SelectSingleNode(RuleConstants.DayElementNameNode);
-            if (nameNode != null)
-            {
-                Name = new ItemText(nameNode.OuterXml);
-            }
-
-            //ищем mikrosEsperinos
-            XmlNode mikrosEsperinosNode = node.SelectSingleNode(RuleConstants.MikrosEsperinosNode);
-            if (mikrosEsperinosNode != null)
-            {
-                MikrosEsperinos = new MikrosEsperinos(mikrosEsperinosNode);
-            }
-
-            //ищем esperinos
-            XmlNode esperinosNode = node.SelectSingleNode(RuleConstants.EsperinosNode);
-            if (esperinosNode != null)
-            {
-                Esperinos = new Esperinos(esperinosNode);
-            }
-
-            XmlNode orthrosNode = node.SelectSingleNode(RuleConstants.OrthrosNode);
-            if (orthrosNode != null)
-            {
-                Orthros = new Orthros(orthrosNode);
-            }
-
-            XmlNode leitourgiaNode = node.SelectSingleNode(RuleConstants.LeitourgiaNode);
-            if (leitourgiaNode != null)
-            {
-                Leitourgia = new Leitourgia(leitourgiaNode);
-            }
-        }
-
         #region Properties
 
         /// <summary>

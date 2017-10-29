@@ -146,7 +146,7 @@ namespace TypiconOnline.Domain.Services
 
             if (inputRequest.Date.DayOfWeek != DayOfWeek.Sunday
                 || (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday 
-                    && (seniorService.UseFullName || seniorService.WorshipShortName.IsTextEmpty)))
+                    && (seniorService.UseFullName || seniorService.WorshipShortName.IsEmpty)))
             {
                 result = (handlerRequest.PutSeniorRuleNameToEnd) ?
                         result + s :

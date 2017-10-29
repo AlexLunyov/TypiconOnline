@@ -15,49 +15,30 @@ namespace TypiconOnline.Domain.ItemTypes
     /// <summary>
     /// 
     /// </summary>
-    public class ItemText : ItemStyledType, IXmlSerializable
+    public class ItemText : ItemType, IXmlSerializable
     {
-        protected Dictionary<string, string> _textDict = new Dictionary<string, string>();
+        private Dictionary<string, string> _textDict = new Dictionary<string, string>();
 
         public ItemText() { }
 
-        public ItemText(ItemText source) : base(source)
+        public ItemText(ItemText source)
         {
-            foreach (KeyValuePair<string, string> entry in source.Text)
+            foreach (KeyValuePair<string, string> entry in source._textDict)
             {
                 AddElement(entry.Key, entry.Value);
             }
         }
 
-        public ItemText(string expression) : base(expression)
+        public ItemText(string expression)
         {
             Build(expression);
         }
 
-        public ItemText(XmlNode node)
-        {
-            BuildFromXml(node);
-        }
-
         #region Properties
 
-        public Dictionary<string, string> Text
-        {
-            get
-            {
-                return _textDict;
-            }
-        }
+        protected string TagName {get; private set; } = "text"; 
 
-        public override bool IsEmpty
-        {
-            get
-            {
-                return base.IsEmpty && _textDict.Count == 0;
-            }
-        }
-
-        public bool IsTextEmpty
+        public virtual bool IsEmpty
         {
             get
             {
@@ -65,40 +46,16 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }
 
-        public override string StringExpression
+        public string StringExpression
         {
             get
             {
-                _stringExpression = ComposeXml().InnerXml;
-                return _stringExpression;
+                return ComposeXml().InnerXml;
             }
             set
             {
-                _stringExpression = value;
                 Build(value);
             }
-        }
-
-        
-
-        protected override XmlDocument ComposeXml()
-        {
-            XmlDocument doc = base.ComposeXml();
-
-            foreach(KeyValuePair <string, string> entry in _textDict)
-            {
-                XmlNode node = doc.CreateElement(RuleConstants.ItemTextItemNode);
-
-                XmlAttribute attr = doc.CreateAttribute(RuleConstants.ItemTextLanguageAttr);
-                attr.Value = entry.Key;
-                node.Attributes.Append(attr);
-
-                node.InnerText = entry.Value;
-
-                doc.FirstChild.AppendChild(node);
-            }
-
-            return doc;
         }
 
         #endregion
@@ -124,10 +81,31 @@ namespace TypiconOnline.Domain.ItemTypes
             return rgx.IsMatch(key);
         }
 
-        protected override void Build(string expression)
+        protected virtual XmlDocument ComposeXml()
         {
-            base.Build(expression);
+            XmlDocument doc = new XmlDocument();
 
+            XmlNode root = doc.CreateElement(TagName);
+            doc.AppendChild(root);
+
+            foreach (KeyValuePair<string, string> entry in _textDict)
+            {
+                XmlNode node = doc.CreateElement(RuleConstants.ItemTextItemNode);
+
+                XmlAttribute attr = doc.CreateAttribute(RuleConstants.ItemTextLanguageAttr);
+                attr.Value = entry.Key;
+                node.Attributes.Append(attr);
+
+                node.InnerText = entry.Value;
+
+                root.AppendChild(node);
+            }
+
+            return doc;
+        }
+
+        protected void Build(string expression)
+        {
             if (!string.IsNullOrEmpty(expression))
             {
                 XmlDocument doc = new XmlDocument();
@@ -135,21 +113,18 @@ namespace TypiconOnline.Domain.ItemTypes
 
                 if (doc?.DocumentElement != null)
                 {
-                    XmlNode node = doc.DocumentElement;
-
-                    BuildFromXml(node);
+                    BuildFromXml(doc.DocumentElement);
                 }
             }
-            
         }
 
         protected virtual void BuildFromXml(XmlNode node)
         {
+            TagName = node.Name;
+
             if (node.HasChildNodes)
             {
                 _textDict.Clear();
-
-                _isEmpty = true;
 
                 foreach (XmlNode child in node.ChildNodes)
                 {
@@ -160,8 +135,6 @@ namespace TypiconOnline.Domain.ItemTypes
                         {
                             string language = langAttr.Value;
                             AddElement(language, child.InnerText);
-
-                            _isEmpty = false;
                         }
                     }
                 }
@@ -190,7 +163,7 @@ namespace TypiconOnline.Domain.ItemTypes
         /// </summary>
         /// <param name="language">язык. Пример: "cs-ru"</param>
         /// <returns></returns>
-        public string GetTextByLanguage(string language)
+        private string GetTextByLanguage(string language)
         {
             string result = "";
 
@@ -220,6 +193,10 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 return GetTextByLanguage(language);
             }
+            set
+            {
+                _textDict[language] = value;
+            }
         }
 
         #region IXmlSerializable
@@ -231,66 +208,18 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public virtual void ReadXml(XmlReader reader)
         {
-            bool wasEmpty = reader.IsEmptyElement;
+            XmlDocument doc = new XmlDocument();
+            doc.Load(reader);
 
-            reader.MoveToElement();
-            reader.Read();
-
-            if (wasEmpty)
-                return;
-
-            while (reader.NodeType != XmlNodeType.EndElement)
+            if (doc.HasChildNodes)
             {
-                reader.MoveToContent();
-
-                string name = reader.Name;
-
-                switch (name)
-                {
-                    case RuleConstants.ItemTextItemNode:
-                        string language = reader.GetAttribute(RuleConstants.ItemTextLanguageAttr);
-                        if (IsKeyValid(language))
-                        {
-                            string value = reader.ReadElementContentAsString();
-                            AddElement(language, value);
-                        }
-                        //reader.MoveToElement();
-                        break;
-                    case RuleConstants.StyleNodeName:
-                        XmlSerializer _serializer = new XmlSerializer(typeof(TextStyle), new XmlRootAttribute(RuleConstants.StyleNodeName));
-                        Style = _serializer.Deserialize(reader) as TextStyle;
-                        break;
-                        //default:
-                        //    reader.Read();
-                        //    break;
-                }
+                BuildFromXml(doc.DocumentElement);
             }
-
-            reader.Read();
         }
 
         public virtual void WriteXml(XmlWriter writer)
         {
-            foreach (KeyValuePair<string, string> entry in _textDict)
-            {
-                writer.WriteStartElement(RuleConstants.ItemTextItemNode);
-
-                writer.WriteStartAttribute(RuleConstants.ItemTextLanguageAttr);
-                writer.WriteValue(entry.Key);
-                writer.WriteEndAttribute();
-
-                writer.WriteString(entry.Value);
-
-                writer.WriteEndElement();
-            }
-
-            if (Style != null && !base.IsEmpty)
-            {
-                XmlSerializer _serializer = new XmlSerializer(typeof(TextStyle), new XmlRootAttribute(RuleConstants.StyleNodeName));
-                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-                ns.Add("", "");
-                _serializer.Serialize(writer, Style, ns);
-            }
+            ComposeXml().DocumentElement.WriteContentTo(writer);
         }
 
         #endregion

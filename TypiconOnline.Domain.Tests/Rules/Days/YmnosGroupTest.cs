@@ -17,47 +17,6 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
     public class YmnosGroupTest
     {
         [Test]
-        public void YmnosGroupTest_InvalidIhos()
-        {
-            string xmlString = @"<YmnosGroup ihos=""9"">
-				                    <ymnos>
-					                    <stihos>
-						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 1-й стихиры.</item>
-					                    </stihos>
-					                    <text>
-						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 1 стихира.</item>
-					                    </text>
-				                    </ymnos>
-				                    <ymnos>
-					                    <stihos>
-						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 2-й стихиры.</item>
-					                    </stihos>
-					                    <text>
-						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 2 стихира.</item>
-					                    </text>
-				                    </ymnos>
-				                    <ymnos>
-					                    <stihos>
-						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, Стих 3-й стихиры.</item>
-					                    </stihos>
-					                    <text>
-						                    <item language=""cs-ru"">[item] [sign] Малая вечерня. На стиховне, 3 стихира.</item>
-					                    </text>
-				                    </ymnos>
-			                    </YmnosGroup>";
-
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            XmlNode root = xmlDoc.DocumentElement;
-
-            YmnosGroup element = new YmnosGroup(root);// (xmlDoc.FirstChild);
-
-            Assert.IsFalse(element.IsValid);
-        }
-
-        [Test]
         public void YmnosGroupTest_ValidIhos()
         {
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");

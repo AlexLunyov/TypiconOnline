@@ -107,7 +107,7 @@ namespace TypiconMigrationTool
                     Priority = signMigrator.Priority,
                     Owner = typiconEntity,
                     RuleDefinition = fileReader.Read(row.Name),
-                    SignName = new ItemText()
+                    SignName = new ItemTextStyled()// { StringExpression = row.Name }
                 };
 
                 sign.SignName.AddElement("cs-ru", row.Name);
@@ -301,10 +301,15 @@ namespace TypiconMigrationTool
 
                 DayWorship dayWorship = new DayWorship()
                 {
-                    WorshipName = new ItemText()
+                    WorshipName = new ItemTextStyled()
                 };
                 dayWorship.WorshipName.Style.IsBold = row.IsNameBold;
                 dayWorship.WorshipName.AddElement("cs-ru", row.Name);
+
+                //DayWorship dayWorship = new DayWorship()
+                //{
+                //    WorshipName = new ItemFakeText() { StringExpression = row.Name }
+                //};
 
                 TriodionDay day = new TriodionDay()
                 {

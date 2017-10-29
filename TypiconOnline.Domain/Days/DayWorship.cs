@@ -11,20 +11,16 @@ namespace TypiconOnline.Domain.Days
     /// </summary>
     public class DayWorship : DayStructureBase
     {
-        public DayWorship()
-        {
-            WorshipName = new ItemText();
-            WorshipShortName = new ItemText();
-        }
+        public DayWorship() { }
 
         /// <summary>
         /// Наименование праздника
         /// </summary>
-        public virtual ItemText WorshipName { get; set; }
+        public virtual ItemTextStyled WorshipName { get; set; } = new ItemTextStyled();
         /// <summary>
         /// Краткое наименование праздника (для Недель - используется при формировании расписания)
         /// </summary>
-        public virtual ItemText WorshipShortName { get; set; }
+        public virtual ItemTextStyled WorshipShortName { get; set; } = new ItemTextStyled();
         /// <summary>
         /// Признак, использовать ли полное имя при составлении расписания
         /// Например, имеет значение true для праздника Недели по Рождестве
@@ -43,7 +39,8 @@ namespace TypiconOnline.Domain.Days
         {
             if (!WorshipName.IsValid)//(ServiceName?.IsValid == false)
             {
-                AppendAllBrokenConstraints(WorshipName);
+                //TODO: Исправить
+                //AppendAllBrokenConstraints(WorshipName);
             }
         }
     }

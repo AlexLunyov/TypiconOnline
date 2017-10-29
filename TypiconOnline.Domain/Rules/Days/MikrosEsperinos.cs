@@ -18,31 +18,6 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public MikrosEsperinos() { }
 
-        public MikrosEsperinos(XmlNode node)
-        {
-            //kekragaria
-            XmlNode elementNode = node.SelectSingleNode(RuleConstants.KekragariaNode);
-            if (elementNode != null)
-            {
-                Kekragaria = new YmnosStructure(elementNode);
-            }
-
-            //Aposticha
-            elementNode = node.SelectSingleNode(RuleConstants.ApostichaNode);
-            if (elementNode != null)
-            {
-                Aposticha = new YmnosStructure(elementNode);
-            }
-
-            //Troparion
-            elementNode = node.SelectSingleNode(RuleConstants.TroparionNode);
-            if (elementNode != null)
-            {
-                Troparion = new YmnosStructure(elementNode);
-            }
-
-        }
-
         #region Properties
         /// <summary>
         /// Господи воззвах

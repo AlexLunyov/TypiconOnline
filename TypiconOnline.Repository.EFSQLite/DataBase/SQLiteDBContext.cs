@@ -46,8 +46,9 @@ namespace TypiconOnline.Repository.EFSQLite.DataBase
 
             modelBuilder.ApplyConfiguration(new CommonRuleConfiguration());
 
-            modelBuilder.ApplyConfiguration(new DayRuleConfiguration());
+            modelBuilder.ApplyConfiguration(new DayRuleConfiguration()); 
             modelBuilder.ApplyConfiguration(new DayWorshipConfiguration());
+            modelBuilder.ApplyConfiguration(new DayRuleWorshipConfiguration());
             modelBuilder.ApplyConfiguration(new MenologyRuleConfiguration());
             modelBuilder.ApplyConfiguration(new TriodionRuleConfiguration());
 
@@ -59,7 +60,10 @@ namespace TypiconOnline.Repository.EFSQLite.DataBase
             modelBuilder.ApplyConfiguration(new EasterItemConfiguration());
 
             modelBuilder.ApplyConfiguration(new ItemDateConfiguration());
-            modelBuilder.ApplyConfiguration(new ItemTextConfiguration());
+
+            //modelBuilder.ApplyConfiguration(new ItemTextConfiguration());
+            //modelBuilder.ApplyConfiguration(new ItemFakeTextConfiguration());
+            //modelBuilder.ApplyConfiguration(new ItemTextStyledConfiguration()); 
 
 
 

@@ -45,7 +45,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             Prosomoion element = ser.Deserialize<Prosomoion>(xmlString);
 
             Assert.IsFalse(element.Self);
-            Assert.AreEqual(1, element.Text.Count);
+            Assert.IsFalse(element.IsEmpty);
         }
 
         [Test]

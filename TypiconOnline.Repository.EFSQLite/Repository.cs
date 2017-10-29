@@ -25,21 +25,19 @@ namespace TypiconOnline.Repository.EFSQLite
 
         public IEnumerable<DomainType> GetAll(Expression<Func<DomainType, bool>> predicate = null)
         {
+            IQueryable<DomainType> request = new ClassPropertiesIncluder<DomainType>(_objectSet).GetIncludes();
+
             if (predicate != null)
             {
-                return new ClassPropertiesIncluder<DomainType>(_objectSet).
-                    GetIncludes().
-                    Where(predicate);
+                request = request.Where(predicate);
             }
 
-            return _objectSet.AsEnumerable();
+            return request.AsEnumerable();
         }
 
         public DomainType Get(Expression<Func<DomainType, bool>> predicate)
         {
-            return new ClassPropertiesIncluder<DomainType>(_objectSet).
-                GetIncludes().
-                Where(predicate).FirstOrDefault();
+            return GetAll(predicate).FirstOrDefault();
 
             //if (typeof(DomainType).Equals(typeof(TypiconEntity)))
             //{

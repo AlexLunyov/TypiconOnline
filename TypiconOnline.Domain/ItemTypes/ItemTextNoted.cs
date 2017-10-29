@@ -9,7 +9,7 @@ using TypiconOnline.Domain.Rules;
 
 namespace TypiconOnline.Domain.ItemTypes
 {
-    public class ItemTextNoted : ItemText
+    public class ItemTextNoted : ItemTextStyled
     {
         public ItemTextNoted() : base() { }
 
@@ -20,6 +20,14 @@ namespace TypiconOnline.Domain.ItemTypes
         /// </summary>
         public ItemTextNoted Note { get; set; }
 
+        public override bool IsEmpty
+        {
+            get
+            {
+                return base.IsEmpty && Note.IsEmpty;
+            }
+        }
+
         protected override XmlDocument ComposeXml()
         {
             XmlDocument doc = base.ComposeXml();
@@ -28,11 +36,8 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 XmlDocument noteDoc = Note.ComposeXml();
 
-                XmlNode node = doc.CreateElement(RuleConstants.ItemTextNoteNode);
-
-                node.InnerText = noteDoc.FirstChild.InnerXml;
-
-                doc.FirstChild.AppendChild(node);
+                XmlNode node = doc.ImportNode(noteDoc.DocumentElement, true);
+                doc.DocumentElement.AppendChild(node);
             }
 
             return doc;
@@ -60,73 +65,9 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }
 
-        public override void ReadXml(XmlReader reader)
-        {
-            bool wasEmpty = reader.IsEmptyElement;
-
-            reader.MoveToElement();
-            reader.Read();
-
-            if (wasEmpty)
-                return;
-
-            while (reader.NodeType != XmlNodeType.EndElement)
-            {
-                reader.MoveToContent();
-
-                string name = reader.Name;
-
-                switch (name)
-                {
-                    case RuleConstants.ItemTextItemNode:
-                        string language = reader.GetAttribute(RuleConstants.ItemTextLanguageAttr);
-                        if (IsKeyValid(language))
-                        {
-                            string value = reader.ReadElementContentAsString();
-                            AddElement(language, value);
-                        }
-                        //reader.MoveToElement();
-                        break;
-                    case RuleConstants.StyleNodeName:
-                        XmlSerializer _serializer = new XmlSerializer(typeof(TextStyle), new XmlRootAttribute(RuleConstants.StyleNodeName));
-                        Style = _serializer.Deserialize(reader) as TextStyle;
-                        break;
-                    case RuleConstants.ItemTextNoteNode:
-                        _serializer = new XmlSerializer(typeof(ItemTextNoted), new XmlRootAttribute(RuleConstants.ItemTextNoteNode));
-                        Note = _serializer.Deserialize(reader) as ItemTextNoted;
-                        break;
-                        //default:
-                        //    reader.Read();
-                        //    break;
-                }
-            }
-
-            reader.Read();
-        }
-
-        public override void WriteXml(XmlWriter writer)
-        {
-            base.WriteXml(writer);
-
-            if (Note != null && !Note.IsEmpty)
-            {
-                XmlSerializer _serializer = new XmlSerializer(typeof(ItemTextNoted), new XmlRootAttribute(RuleConstants.ItemTextNoteNode));
-                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-                ns.Add("", "");
-                _serializer.Serialize(writer, Note, ns);
-            }
-        }
-
         public override string ToString()
         {
-            string result = base.ToString();
-
-            if (Note != null)
-            {
-                result = string.Format("{0} {1}", result, Note);
-            }
-
-            return result;
+            return (Note != null) ? string.Format($"{base.ToString()} {Note}") : base.ToString();
         }
     }
 }

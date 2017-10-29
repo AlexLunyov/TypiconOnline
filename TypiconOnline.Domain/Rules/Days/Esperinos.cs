@@ -18,42 +18,6 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public Esperinos() { }
 
-        public Esperinos(XmlNode node) : base(node)
-        {
-            //Prokeimeni
-            string xPath = string.Format("{0}/{1}", RuleConstants.ProkeimeniNode, RuleConstants.ProkeimenonNode);
-            XmlNodeList prokiemenonList = node.SelectNodes(xPath);
-            if (prokiemenonList != null)
-            {
-                Prokeimeni = new List<Prokeimenon>();
-
-                foreach (XmlNode prokiemenonItemNode in prokiemenonList)
-                {
-                    Prokeimeni.Add(new Prokeimenon(prokiemenonItemNode));
-                }
-            }
-
-            //Paroimies
-            xPath = string.Format("{0}/{1}", RuleConstants.ParoimiesNode, RuleConstants.ParoimiaNode);
-            XmlNodeList paroimiaList = node.SelectNodes(xPath);
-            if (paroimiaList != null)
-            {
-                Paroimies = new List<Paroimia>();
-
-                foreach (XmlNode peroimiaItemNode in paroimiaList)
-                {
-                    Paroimies.Add(new Paroimia(peroimiaItemNode));
-                }
-            }
-
-            //Liti
-            XmlNode elementNode = node.SelectSingleNode(RuleConstants.LitiNode);
-            if (elementNode != null)
-            {
-                Liti = new YmnosStructure(elementNode);
-            }
-        }
-
         #region Properties
 
         /// <summary>

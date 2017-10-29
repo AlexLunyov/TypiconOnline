@@ -41,38 +41,6 @@ namespace TypiconOnline.Domain.Rules.Days
             ymnosStructure.Theotokion.ForEach(c => _theotokion.Add(new YmnosGroup(c)));
         }
 
-        public YmnosStructure(XmlNode node) 
-        {
-            //Groups = new List<YmnosGroup>();
-
-            //группы стихир
-            XmlNodeList groupList = node.SelectNodes(RuleConstants.YmnosStructureGroupNode);
-            if (groupList != null)
-            {
-                foreach (XmlNode groupItemNode in groupList)
-                {
-                    Groups.Add(new YmnosGroup(groupItemNode));
-                }
-            }
-
-            //славник
-            XmlNode doxastichonNode = node.SelectSingleNode(RuleConstants.YmnosStructureDoxastichonNode);
-            if (doxastichonNode != null)
-            {
-                Doxastichon = new YmnosGroup(doxastichonNode);
-            }
-
-            //богородичен
-            XmlNodeList theotokionList = node.SelectNodes(RuleConstants.YmnosStructureTheotokionNode);
-            if (theotokionList != null)
-            {
-                foreach (XmlNode itemNode in theotokionList)
-                {
-                    Theotokion.Add(new YmnosGroup(itemNode));
-                }
-            }
-        }
-
         #region Properties
         [XmlElement(RuleConstants.YmnosStructureGroupNode)]
         public List<YmnosGroup> Groups

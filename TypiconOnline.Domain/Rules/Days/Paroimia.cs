@@ -15,30 +15,6 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public Paroimia() { }
 
-        public Paroimia(XmlNode node)
-        {
-            //цитата
-            XmlAttribute quoteAttr = node.Attributes[RuleConstants.ParoimiaQuoteAttr];
-            if (quoteAttr != null)
-            {
-                Quote = quoteAttr.Value;
-            }
-
-            //название книги
-            XmlNode bookNameNode = node.SelectSingleNode(RuleConstants.AnnotationNode);
-            BookName = (bookNameNode != null) ? new ItemText(bookNameNode.OuterXml) : new ItemText();
-
-            //стихи
-            XmlNodeList stihoiList = node.SelectNodes(RuleConstants.YmnosStihosNode);
-            if (stihoiList != null)
-            {
-                foreach (XmlNode stihosItemNode in stihoiList)
-                {
-                    Stihoi.Add(new ItemText(stihosItemNode));
-                }
-            }
-        }
-
         /// <summary>
         /// Цитата Священного писания, например "1.15-17"
         /// </summary>

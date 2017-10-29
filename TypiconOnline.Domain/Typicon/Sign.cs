@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.Typicon
         /// <summary>
         /// Наимнование знака службы на нескольких языках
         /// </summary>
-        public ItemText SignName { get; set; }
+        public ItemTextStyled SignName { get; set; }
 
         public override string Name
         {

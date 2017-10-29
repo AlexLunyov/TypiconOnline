@@ -6,12 +6,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Repository.EFSQLite
 {
     /// <summary>
-    /// Класс проходит все свойства ссылочного типа введенного объекта и добавляет их в выборку
+    /// Класс добавляет выборку для классов IAggregateRoot 
     /// </summary>
     internal class ClassPropertiesIncluder<DomainType> where DomainType : class, IAggregateRoot
     {
@@ -25,22 +27,87 @@ namespace TypiconOnline.Repository.EFSQLite
         {
             IQueryable<DomainType> request = _dbSet.AsNoTracking();
 
-            foreach (PropertyInfo propertyInfo in ((TypeInfo)typeof(DomainType)).DeclaredProperties)
+            Type type = typeof(DomainType);
+            switch (true)
             {
-                if (propertyInfo.DeclaringType.IsClass)
-                {
-                    //если это класс - получаем его theninclude
-                    //Expression<Func<DomainType, object>> propertyOfJoin;// = c => c = propertyInfo;
-                    //request = request.GetIncludeThen(propertyOfJoin); // (propertyInfo.Name).ThenInclude(c => c.);
-                }
+                case bool _ when type == typeof(TypiconEntity):
+                    request = GetTypiconEntityIncludes();
+                    break;
+                case bool _ when type == typeof(DayWorship):
+                    request = GetDayWorshipIncludes();
+                    break;
+                case bool _ when type == typeof(MenologyDay):
+                    request = GetMenologyDayIncludes();
+                    break;
             }
 
             return request;
         }
 
-        private IQueryable<DomainType> GetIncludeThen(Expression<Func<DomainType, object>> includeProperty)
+        private IQueryable<MenologyDay> MenologyDayInc(IQueryable<MenologyDay> request)
         {
-            throw new NotImplementedException();
+            return request
+                .Include(c => c.Date)
+                .Include(c => c.DateB)
+                .Include(c => c.DayWorships);
+        }
+
+        private IQueryable<DomainType> GetMenologyDayIncludes()
+        {
+            return (_dbSet as DbSet<MenologyDay>)
+                .Include(c => c.Date)
+                .Include(c => c.DateB)
+                .Include(c => c.DayWorships)
+                    .ThenInclude(c => c.WorshipName)
+                .Include(c => c.DayWorships)
+                    .ThenInclude(c => c.WorshipShortName)
+                as IQueryable<DomainType>;
+        }
+
+        private IQueryable<DayWorship> DayWorshipInc(IQueryable<DayWorship> request)
+        {
+            return request
+                .Include(c => c.WorshipName)
+                .Include(c => c.WorshipShortName)
+                as IQueryable<DayWorship>;
+        }
+
+        private IQueryable<DomainType> GetDayWorshipIncludes()
+        {
+            return (_dbSet as DbSet<DayWorship>)
+                .Include(c => c.WorshipName)
+                .Include(c => c.WorshipShortName)
+                as IQueryable<DomainType>;
+        }
+
+        private IQueryable<DomainType> GetTypiconEntityIncludes()
+        {
+            return (_dbSet as DbSet<TypiconEntity>)
+                .Include(c => c.Template)
+                .Include(c => c.Signs)
+                    .ThenInclude(c => c.SignName)
+                .Include(c => c.CommonRules)
+                .Include(c => c.MenologyRules)
+                    .ThenInclude(c => c.Date)
+                .Include(c => c.MenologyRules)
+                    .ThenInclude(c => c.DateB)
+                .Include(c => c.MenologyRules)
+                    .ThenInclude(c => c.DayRuleWorships)
+                        .ThenInclude(k => k.DayWorship)
+                            .ThenInclude(k => k.WorshipName)
+                .Include(c => c.MenologyRules)
+                    .ThenInclude(c => c.DayRuleWorships)
+                        .ThenInclude(k => k.DayWorship)
+                            .ThenInclude(k => k.WorshipShortName)
+                .Include(c => c.TriodionRules)
+                    .ThenInclude(c => c.DayRuleWorships)
+                        .ThenInclude(k => k.DayWorship)
+                            .ThenInclude(k => k.WorshipName)
+                .Include(c => c.TriodionRules)
+                    .ThenInclude(c => c.DayRuleWorships)
+                        .ThenInclude(k => k.DayWorship)
+                            .ThenInclude(k => k.WorshipShortName)
+                .Include(c => c.Settings) as IQueryable<DomainType>;
         }
     }
 }

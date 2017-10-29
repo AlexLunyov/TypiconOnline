@@ -17,32 +17,12 @@ namespace TypiconOnline.Domain.Rules.Days
     [XmlRoot(ElementName = RuleConstants.ProsomoionNode)]
     public class Prosomoion : ItemText
     {
-        public Prosomoion(Prosomoion source)
+        public Prosomoion(Prosomoion source) : base(source)
         {
-            if (source == null) throw new ArgumentNullException("Prosomoion");
-
             Self = source.Self;
-            Build(source.StringExpression);
         }
 
-        public Prosomoion() : base()
-        {
-        }
-
-        public Prosomoion(XmlNode node)
-        {
-            //самоподобен?
-            XmlAttribute selfAttr = node.Attributes[RuleConstants.ProsomoionSelfAttr];
-
-            if (selfAttr != null)
-            {
-                bool result = false;
-                bool.TryParse(selfAttr.Value, out result);
-                Self = result;
-            }
-
-            Build(node.OuterXml);
-        }
+        public Prosomoion() : base() { }
 
         /// <summary>
         /// Если true, то самоподобен
@@ -55,22 +35,36 @@ namespace TypiconOnline.Domain.Rules.Days
             return base.Equals(item) && Self.Equals(item.Self);
         }
 
-        #region IXmlSerializable
+        #region Serialization
 
-        public override void ReadXml(XmlReader reader)
+        protected override XmlDocument ComposeXml()
         {
-            if (reader.MoveToAttribute(RuleConstants.ProsomoionSelfAttr))
+            XmlDocument doc = base.ComposeXml();
+
+            if (Self)
             {
-                string val = reader.Value;
+                XmlAttribute selfAttr = doc.CreateAttribute(RuleConstants.ProsomoionSelfAttr);
+                selfAttr.Value = Self.ToString();
 
-                bool result = false;
-                bool.TryParse(val, out result);
-                Self = result;
-
-                reader.MoveToElement();
+                doc.DocumentElement.Attributes.Append(selfAttr);
             }
 
-            base.ReadXml(reader);
+            return doc;
+        }
+
+
+        protected override void BuildFromXml(XmlNode node)
+        {
+            base.BuildFromXml(node);
+
+            //самоподобен?
+            XmlAttribute selfAttr = node.Attributes[RuleConstants.ProsomoionSelfAttr];
+
+            if (selfAttr != null)
+            {
+                bool.TryParse(selfAttr.Value, out bool result);
+                Self = result;
+            }
         }
 
         public override void WriteXml(XmlWriter writer)

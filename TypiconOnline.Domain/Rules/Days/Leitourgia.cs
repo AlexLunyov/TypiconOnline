@@ -19,11 +19,6 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public Leitourgia() { }
 
-        public Leitourgia(XmlNode node) 
-        {
-            //TODO: игнорирую реализацию в надежде, что не придется ее использовать
-        }
-
         #region Properties
 
         ///// <summary>

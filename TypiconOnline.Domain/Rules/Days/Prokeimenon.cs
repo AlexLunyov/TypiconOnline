@@ -20,39 +20,6 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public Prokeimenon() { }
 
-        public Prokeimenon(XmlNode node)// : base(node)
-        {
-            //глас
-            XmlAttribute ihosAttr = node.Attributes[RuleConstants.YmnosIhosAttrName];
-            if (ihosAttr != null)
-            {
-                int result = default(int);
-                int.TryParse(ihosAttr.Value, out result);
-                Ihos = result;
-            }
-
-            XmlAttribute kindAttr = node.Attributes[RuleConstants.ProkeimenonKindAttr];
-            if (kindAttr != null)
-            {
-                ProkiemenonKind kind;
-
-                if (Enum.TryParse(kindAttr.Value, out kind))
-                {
-                    Kind = kind;
-                }
-            }
-
-            //стихи
-            XmlNodeList stihoiList = node.SelectNodes(RuleConstants.YmnosStihosNode);
-            if (stihoiList != null)
-            {
-                foreach (XmlNode stihosItemNode in stihoiList)
-                {
-                    Stihoi.Add(new ItemText(stihosItemNode));
-                }
-            }
-        }
-
         #region Properties
 
         /// <summary>

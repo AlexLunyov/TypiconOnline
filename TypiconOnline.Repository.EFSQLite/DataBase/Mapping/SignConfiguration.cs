@@ -13,13 +13,17 @@ namespace TypiconOnline.Repository.EFSQlite.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<Sign> builder)
         {
+            builder.HasBaseType((Type)null);
+
+            builder.HasKey(c => c.Id);
+
             builder.Property(c => c.Number).IsRequired();
 
             builder.Property(c => c.Priority).IsRequired();
 
             builder.HasOne(c => c.Owner).WithMany();
 
-            //builder.OwnsOne(c => c.SignName);
+            builder.OwnsOne(c => c.SignName, k => k.Ignore(d => d.Style));
 
             builder.Ignore(c => c.IsTemplate);
         }

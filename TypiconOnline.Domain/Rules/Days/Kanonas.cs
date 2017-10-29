@@ -17,59 +17,6 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public Kanonas() { }
 
-        public Kanonas(XmlNode node) 
-        {
-            //глас
-            XmlAttribute ihosAttr = node.Attributes[RuleConstants.YmnosIhosAttrName];
-            if (ihosAttr != null)
-            {
-                int result = default(int);
-                int.TryParse(ihosAttr.Value, out result);
-                Ihos = result;
-            }
-
-            XmlNode elemNode = node.SelectSingleNode(RuleConstants.KanonasAcrosticNode);
-            if (elemNode != null)
-            {
-                Acrostic = new ItemText(elemNode.OuterXml);
-            }
-
-            elemNode = node.SelectSingleNode(RuleConstants.KanonasStihosNode);
-            if (elemNode != null)
-            {
-                Stihos = new ItemText(elemNode.OuterXml);
-            }
-
-            XmlNodeList odiNodes = node.SelectNodes(RuleConstants.KanonasOdiNode);
-            if (odiNodes != null)
-            {
-                Odes = new List<Odi>();
-
-                foreach (XmlNode odiNode in odiNodes)
-                {
-                    Odes.Add(new Odi(odiNode));
-                }
-            }
-
-            elemNode = node.SelectSingleNode(RuleConstants.KanonasSedalenNode);
-            if (elemNode != null)
-            {
-                Sedalen = new YmnosStructure(elemNode);
-            }
-
-            //elemNode = node.SelectSingleNode(RuleConstants.KanonasKontakionNode);
-            //if (elemNode != null)
-            //{
-            //    Kontakion = new Kontakion(elemNode);
-            //}
-
-            //elemNode = node.SelectSingleNode(RuleConstants.KanonasExapostilarionNode);
-            //if (elemNode != null)
-            //{
-            //    Exapostilarion = new Exapostilarion(elemNode);
-            //}
-        }
-
         #region Properties
 
         /// <summary>

@@ -15,11 +15,6 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public MakariosOdi() { }
 
-        public MakariosOdi(XmlNode node) 
-        {
-
-        }
-
         #region Properties
         /// <summary>
         /// Номер песни

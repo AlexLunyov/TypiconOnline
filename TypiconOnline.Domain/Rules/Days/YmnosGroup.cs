@@ -42,40 +42,6 @@ namespace TypiconOnline.Domain.Rules.Days
             source.Ymnis.ForEach(c => Ymnis.Add(new Ymnos(c)));
         }
 
-        public YmnosGroup(XmlNode node) 
-        {
-            ////глас
-            //XmlAttribute ihosAttr = node.Attributes[RuleConstants.YmnosIhosAttrName];
-            //Ihos = (ihosAttr != null) ? new ItemInt(ihosAttr.Value) : new ItemInt();
-
-            //глас
-            XmlAttribute ihosAttr = node.Attributes[RuleConstants.YmnosIhosAttrName];
-            if (ihosAttr != null)
-            {
-                int result = default(int);
-                int.TryParse(ihosAttr.Value, out result);
-                Ihos = result;
-            }
-
-            //подобен
-            XmlNode prosomoionNode = node.SelectSingleNode(RuleConstants.ProsomoionNode);
-            Prosomoion = (prosomoionNode != null) ? new Prosomoion(prosomoionNode) : new Prosomoion();
-
-            //доп описание
-            XmlNode annotationNode = node.SelectSingleNode(RuleConstants.AnnotationNode);
-            Annotation = (annotationNode != null) ? new ItemText(annotationNode.OuterXml) : new ItemText();
-
-            //песнопения
-            XmlNodeList ymnisList = node.SelectNodes(RuleConstants.YmnosNode);
-            if (ymnisList != null)
-            {
-                foreach (XmlNode ymnosItemNode in ymnisList)
-                {
-                    Ymnis.Add(new Ymnos(ymnosItemNode));
-                }
-            }
-        }
-
         #region Properties
 
         /// <summary>

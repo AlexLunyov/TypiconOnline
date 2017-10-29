@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Factories
             switch (node.Name)
             {
                 case RuleConstants.DayElementNode:
-                    outputEl = new DayContainer(node);
+                    //outputEl = new DayContainer(node);
                     break;
             }
             return outputEl;

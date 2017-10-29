@@ -11,21 +11,6 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public EvangelionPart() { }
 
-        public EvangelionPart(XmlNode node) : base(node)
-        {
-            //BookName
-            XmlAttribute bookNameAttr = node.Attributes[RuleConstants.EvangelionBookNameAttr];
-            if (bookNameAttr != null)
-            {
-                EvangelionBook book;
-
-                if (Enum.TryParse(bookNameAttr.Value, out book))
-                {
-                    BookName = book;
-                }
-            }
-        }
-
         #region Properties
 
         /// <summary>

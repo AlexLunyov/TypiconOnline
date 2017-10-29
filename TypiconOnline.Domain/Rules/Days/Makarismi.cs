@@ -13,11 +13,6 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public Makarismi() { }
 
-        public Makarismi(XmlNode node)
-        {
-            //TODO: игнорирую реализацию в надежде, что не придется ее использовать
-        }
-
         /// <summary>
         /// Блаженны
         /// </summary>

@@ -14,18 +14,6 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public ApostlesPart() { }
 
-        public ApostlesPart(XmlNode node)
-        {
-            //номер
-            XmlAttribute numberAttr = node.Attributes[RuleConstants.EvangelionPartNumberAttr];
-            if (numberAttr != null)
-            {
-                int result = default(int);
-                int.TryParse(numberAttr.Value, out result);
-                Number = result;
-            }
-        }
-
         /// <summary>
         /// Ноемр зачала
         /// </summary>

@@ -34,33 +34,6 @@ namespace TypiconOnline.Domain.Rules.Days
             Text = new ItemText(source.Text.StringExpression);
         }
 
-        public Ymnos(XmlNode node) //: base(node)
-        {
-            //ymnos
-            XmlNode elemNode = node.SelectSingleNode(RuleConstants.YmnosTextNode);
-            Text =  new ItemText((elemNode != null) ? elemNode.OuterXml : string.Empty);
-
-            XmlAttribute kindAttr = node.Attributes[RuleConstants.OdiTroparionKindAttr];
-            if (kindAttr != null)
-            {
-                YmnosKind kind;
-
-                if (Enum.TryParse(kindAttr.Value, out kind))
-                {
-                    Kind = kind;
-                }
-            }
-
-            XmlNodeList stihoiList = node.SelectNodes(RuleConstants.YmnosStihosNode);
-            if (stihoiList != null)
-            {
-                foreach (XmlNode stihosItemNode in stihoiList)
-                {
-                    Stihoi.Add(new ItemText(stihosItemNode));
-                }
-            }
-        }
-
         /// <summary>
         /// Разновидность песнопения (троичен, богородиен, мученичен...)
         /// </summary>
