@@ -24,17 +24,13 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 	                                <item language=""ru-ru"">Блажен муж, который не пошел на совет нечестивых, и на путь грешных не вступил, и не сидел в сборище губителей;</item>
 	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
 	                                <style>
-		                                <bold/>
-		                                <red/>
+		                                <bold>true</bold>
+		                                <red>true</red>
 		                                <header>h1</header>
 	                                </style>
                                 </ItemText>";
 
-            //XmlDocument xmlDoc = new XmlDocument();
-
-            //xmlDoc.LoadXml(xmlString);
-
-            ItemTextStyled element = new ItemTextStyled(xmlString);// (xmlDoc.FirstChild);
+            ItemTextStyled element = new ItemTextStyled(xmlString);
 
             Assert.AreEqual(element.Style.Header, HeaderCaption.h1);
         }
@@ -49,17 +45,15 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
                                 </ItemText>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            ItemText element = new ItemText(xmlString);
 
-            xmlDoc.LoadXml(xmlString);
+            string expr = element.StringExpression;
 
-            ItemText element = new ItemText(xmlString);// (xmlDoc.FirstChild);
-
-            Assert.AreEqual(element.IsValid, false);
+            Assert.Pass(expr);
         }
 
         [Test]
-        public void ItemTextStyled_ComposeXml()
+        public void ItemTextStyled_StringExpression_Get()
         {
             string xmlString = @"<ItemText>
 	                                <item language=""cs-ru"">Блажен муж, иже не иде на совет нечестивых и на пути грешных не ста, и на седалищи губителей не седе,</item>
@@ -79,11 +73,9 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 
             element.Style.IsBold = false;
 
-            string newXmlStrng = element.StringExpression;
+            string newXmlString = element.StringExpression;
 
-            Assert.Pass(newXmlStrng);
-
-            Assert.AreEqual(element.IsValid, false);
+            Assert.IsNotEmpty(newXmlString);
         }
 
         [Test]
@@ -140,9 +132,9 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 	                                <item language=""ru-ru"">Блажен муж, который не пошел на совет нечестивых, и на путь грешных не вступил, и не сидел в сборище губителей;</item>
 	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
 	                                <style>
-		                                <bold/>
-		                                <red/>
-		                                <header>h1</header>
+		                                <bold>true</bold>
+                                        <red>true</red>
+                                        <header>h1</header>
 	                                </style>
                                 </ItemText>";
 
@@ -150,9 +142,10 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 
             //xmlDoc.LoadXml(xmlString);
 
-            ItemTextStyled element = new ItemTextStyled();
-
-            element.StringExpression = xmlString;
+            ItemTextStyled element = new ItemTextStyled
+            {
+                StringExpression = xmlString
+            };
 
             Assert.AreEqual(element.Style.Header, HeaderCaption.h1);
             Assert.IsFalse(element.IsEmpty);

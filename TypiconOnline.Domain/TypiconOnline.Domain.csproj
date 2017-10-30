@@ -88,10 +88,10 @@
     <Compile Include="ItemTypes\ItemEnumTypeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemEnumType.cs" />
     <Compile Include="ItemTypes\ItemFakeText.cs" />
+    <Compile Include="ItemTypes\ItemStyledType.cs" />
     <Compile Include="ItemTypes\ItemTextStyled.cs" />
     <Compile Include="ItemTypes\ItemText.cs" />
     <Compile Include="ItemTypes\ItemTextBusinessConstraint.cs" />
-    <Compile Include="ItemTypes\ItemTextCollection.cs" />
     <Compile Include="ItemTypes\ItemTextNoted.cs" />
     <Compile Include="ItemTypes\ItemTimeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemTime.cs" />

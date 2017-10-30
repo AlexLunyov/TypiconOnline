@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -31,7 +32,7 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public ItemText(string expression)
         {
-            Build(expression);
+            StringExpression = expression;
         }
 
         #region Properties
@@ -46,15 +47,41 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }
 
+        /// <summary>
+        /// Строкове выражение многоязычного текста
+        /// </summary>
         public string StringExpression
         {
             get
             {
-                return ComposeXml().InnerXml;
+                StringBuilder builder = new StringBuilder();
+
+                using (XmlWriter writer = XmlWriter.Create(builder))
+                {
+                    writer.WriteStartElement(TagName);
+
+                    WriteXml(writer);
+
+                    writer.WriteEndElement();
+                    writer.Close();
+
+                    return builder.ToString();
+                }
             }
             set
             {
-                Build(value);
+                using (XmlReader xmlReader = XmlReader.Create(new StringReader(value)))
+                {
+                    bool wasEmpty = xmlReader.IsEmptyElement;
+
+                    xmlReader.MoveToElement();
+                    xmlReader.Read();
+
+                    if (!wasEmpty)
+                    {
+                        ReadXml(xmlReader);
+                    }
+                }
             }
         }
 
@@ -81,66 +108,6 @@ namespace TypiconOnline.Domain.ItemTypes
             return rgx.IsMatch(key);
         }
 
-        protected virtual XmlDocument ComposeXml()
-        {
-            XmlDocument doc = new XmlDocument();
-
-            XmlNode root = doc.CreateElement(TagName);
-            doc.AppendChild(root);
-
-            foreach (KeyValuePair<string, string> entry in _textDict)
-            {
-                XmlNode node = doc.CreateElement(RuleConstants.ItemTextItemNode);
-
-                XmlAttribute attr = doc.CreateAttribute(RuleConstants.ItemTextLanguageAttr);
-                attr.Value = entry.Key;
-                node.Attributes.Append(attr);
-
-                node.InnerText = entry.Value;
-
-                root.AppendChild(node);
-            }
-
-            return doc;
-        }
-
-        protected void Build(string expression)
-        {
-            if (!string.IsNullOrEmpty(expression))
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(expression);
-
-                if (doc?.DocumentElement != null)
-                {
-                    BuildFromXml(doc.DocumentElement);
-                }
-            }
-        }
-
-        protected virtual void BuildFromXml(XmlNode node)
-        {
-            TagName = node.Name;
-
-            if (node.HasChildNodes)
-            {
-                _textDict.Clear();
-
-                foreach (XmlNode child in node.ChildNodes)
-                {
-                    if (child.Name == RuleConstants.ItemTextItemNode)
-                    {
-                        XmlAttribute langAttr = child.Attributes[RuleConstants.ItemTextLanguageAttr];
-                        if (langAttr != null)
-                        {
-                            string language = langAttr.Value;
-                            AddElement(language, child.InnerText);
-                        }
-                    }
-                }
-            }
-        }
-
         /// <summary>
         /// Добавляет текст к коллекции
         /// </summary>
@@ -163,35 +130,22 @@ namespace TypiconOnline.Domain.ItemTypes
         /// </summary>
         /// <param name="language">язык. Пример: "cs-ru"</param>
         /// <returns></returns>
-        private string GetTextByLanguage(string language)
-        {
-            string result = "";
-
-            if (_textDict.ContainsKey(language))
-            {
-                result = _textDict[language];// + " ";
-            }
-            else if (_textDict.Count > 0)
-            {
-                result = _textDict.Values.First();// + " ";
-            }
-
-            return result;
-
-            //return (itemText.Text.ContainsKey(language)) 
-            //    ? itemText.Text[language] + " " : "";
-        }
-
-        /// <summary>
-        /// Возвращает значение по заданному языку. Если результат нулевой, возвраает первый попавшийся вариант
-        /// </summary>
-        /// <param name="language">язык. Пример: "cs-ru"</param>
-        /// <returns></returns>
         public string this[string language]
         {
             get
             {
-                return GetTextByLanguage(language);
+                string result = "";
+
+                if (_textDict.ContainsKey(language))
+                {
+                    result = _textDict[language];// + " ";
+                }
+                else if (_textDict.Count > 0)
+                {
+                    result = _textDict.Values.First();// + " ";
+                }
+
+                return result;
             }
             set
             {
@@ -208,18 +162,63 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public virtual void ReadXml(XmlReader reader)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(reader);
+            bool wasEmpty = reader.IsEmptyElement;
 
-            if (doc.HasChildNodes)
+            reader.MoveToElement();
+            reader.Read();
+
+            if (wasEmpty)
+                return;
+
+            while (reader.NodeType != XmlNodeType.EndElement)
             {
-                BuildFromXml(doc.DocumentElement);
+                reader.MoveToContent();
+
+                ReadNode(reader);
             }
+
+            reader.Read();
         }
 
         public virtual void WriteXml(XmlWriter writer)
         {
-            ComposeXml().DocumentElement.WriteContentTo(writer);
+            foreach (KeyValuePair<string, string> entry in _textDict)
+            {
+                writer.WriteStartElement(RuleConstants.ItemTextItemNode);
+
+                writer.WriteStartAttribute(RuleConstants.ItemTextLanguageAttr);
+                writer.WriteValue(entry.Key);
+                writer.WriteEndAttribute();
+
+                writer.WriteString(entry.Value);
+
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <summary>
+        /// Метод, который должен переопределяться у наследников, в котором будет совершаться десериализация их собственных свойств
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        protected virtual bool ReadNode(XmlReader reader)
+        {
+            bool isRead = false;
+
+            //string nodeName = reader.Name;
+
+            if (RuleConstants.ItemTextItemNode == reader.Name)
+            {
+                string language = reader.GetAttribute(RuleConstants.ItemTextLanguageAttr);
+                string value = reader.ReadElementContentAsString();
+                if (IsKeyValid(language))
+                {
+                    AddElement(language, value);
+                }
+
+                isRead = true;
+            }
+            return isRead;
         }
 
         #endregion

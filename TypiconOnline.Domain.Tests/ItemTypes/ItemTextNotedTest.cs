@@ -20,16 +20,17 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 	                                <item language=""cs-cs"">Господи помилуй.</item>
 	                                <item language=""ru-ru"">Господи помилуй.</item>
 	                                <item language=""el-el"">Господи помилуй.</item>
-	                                <note><item language=""cs-cs"">Трижды.</item><style><red/><bold/></style></note>
+	                                <note><item language=""cs-cs"">Трижды.</item><style><red>true</red><bold>true</bold></style></note>
                                 </ItemText>";
 
             //XmlDocument xmlDoc = new XmlDocument();
 
             //xmlDoc.LoadXml(xmlString);
 
-            ItemTextNoted element = new ItemTextNoted();
-
-            element.StringExpression = xmlString;
+            ItemTextNoted element = new ItemTextNoted
+            {
+                StringExpression = xmlString
+            };
 
             Assert.AreEqual("Господи помилуй. Трижды.", element.ToString());
             Assert.Pass(element.StringExpression);

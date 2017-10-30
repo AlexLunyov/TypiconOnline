@@ -28,32 +28,33 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }
 
-        protected override XmlDocument ComposeXml()
+        protected override bool ReadNode(XmlReader reader)
         {
-            XmlDocument doc = base.ComposeXml();
+            bool isRead = base.ReadNode(reader);
 
-            if (Note != null)
+            if (!isRead && RuleConstants.ItemTextNoteNode == reader.Name)
             {
-                XmlDocument noteDoc = Note.ComposeXml();
+                XmlSerializer _serializer = new XmlSerializer(typeof(ItemTextNoted), new XmlRootAttribute(RuleConstants.ItemTextNoteNode));
+                Note = _serializer.Deserialize(reader) as ItemTextNoted;
 
-                XmlNode node = doc.ImportNode(noteDoc.DocumentElement, true);
-                doc.DocumentElement.AppendChild(node);
+                isRead = true;
             }
 
-            return doc;
+            return isRead;
         }
-
-        protected override void BuildFromXml(XmlNode node)
+        public override void WriteXml(XmlWriter writer)
         {
-            base.BuildFromXml(node);
+            base.WriteXml(writer);
 
-            XmlNode noteNode = node.SelectSingleNode(RuleConstants.ItemTextNoteNode);
-
-            if (noteNode != null)
+            if (Note != null && !Note.IsEmpty)
             {
-                Note = new ItemTextNoted(noteNode.OuterXml);
+                XmlSerializer _serializer = new XmlSerializer(typeof(ItemTextNoted), new XmlRootAttribute(RuleConstants.ItemTextNoteNode));
+                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+                ns.Add("", "");
+                _serializer.Serialize(writer, Note, ns);
             }
         }
+
 
         protected override void Validate()
         {

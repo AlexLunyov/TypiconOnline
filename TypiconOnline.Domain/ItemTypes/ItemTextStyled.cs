@@ -49,74 +49,88 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }
 
-        //public override string StringExpression
-        //{
-        //    get
-        //    {
-        //        _stringExpression = ComposeXml().InnerXml;
-        //        return _stringExpression;
-        //    }
-        //    set
-        //    {
-        //        _stringExpression = value;
-        //        Build(value);
-        //    }
-        //}
-
         #endregion
 
         #region Serialization
 
-        protected override XmlDocument ComposeXml()
+        //protected override XmlDocument ComposeXml()
+        //{
+        //    XmlDocument doc = base.ComposeXml();
+
+        //    if (!IsStyleEmpty)
+        //    {
+        //        XmlNode styleNode = doc.CreateElement(RuleConstants.StyleNodeName);
+
+        //        if (Style.IsRed)
+        //        {
+        //            styleNode.AppendChild(doc.CreateElement(RuleConstants.StyleRedNodeName));
+        //        }
+
+        //        if (Style.IsBold)
+        //        {
+        //            styleNode.AppendChild(doc.CreateElement(RuleConstants.StyleBoldNodeName));
+        //        }
+
+        //        if (Style.Header != HeaderCaption.NotDefined)
+        //        {
+        //            styleNode.AppendChild(doc.CreateElement(Enum.GetName(typeof(HeaderCaption), Style.Header)));
+        //        }
+        //        doc.FirstChild.AppendChild(styleNode);
+        //    }
+
+        //    return doc;
+        //}
+
+
+        //protected override void BuildFromXml(XmlNode node)
+        //{
+        //    base.BuildFromXml(node);
+
+        //    XmlNode styleNode =  node.SelectSingleNode(RuleConstants.StyleNodeName);
+
+        //    if (styleNode?.HasChildNodes == true)
+        //    {
+        //        //парсим стиль
+        //        Style.IsBold = styleNode.SelectSingleNode(RuleConstants.StyleBoldNodeName) != null;
+        //        Style.IsRed = styleNode.SelectSingleNode(RuleConstants.StyleRedNodeName) != null;
+
+        //        XmlNode headerNode = styleNode.SelectSingleNode(RuleConstants.StyleHeaderNodeName);
+
+        //        if (headerNode != null)
+        //        {
+        //            Enum.TryParse(headerNode.InnerText, out HeaderCaption caption);
+
+        //            Style.Header = caption;
+        //        }
+        //    }
+        //}
+
+        public override void WriteXml(XmlWriter writer)
         {
-            XmlDocument doc = base.ComposeXml();
+            base.WriteXml(writer);
 
             if (!IsStyleEmpty)
             {
-                XmlNode styleNode = doc.CreateElement(RuleConstants.StyleNodeName);
-
-                if (Style.IsRed)
-                {
-                    styleNode.AppendChild(doc.CreateElement(RuleConstants.StyleRedNodeName));
-                }
-
-                if (Style.IsBold)
-                {
-                    styleNode.AppendChild(doc.CreateElement(RuleConstants.StyleBoldNodeName));
-                }
-
-                if (Style.Header != HeaderCaption.NotDefined)
-                {
-                    styleNode.AppendChild(doc.CreateElement(Enum.GetName(typeof(HeaderCaption), Style.Header)));
-                }
-                doc.FirstChild.AppendChild(styleNode);
+                XmlSerializer _serializer = new XmlSerializer(typeof(TextStyle), new XmlRootAttribute(RuleConstants.StyleNodeName));
+                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+                ns.Add("", "");
+                _serializer.Serialize(writer, Style, ns);
             }
-
-            return doc;
         }
 
-
-        protected override void BuildFromXml(XmlNode node)
+        protected override bool ReadNode(XmlReader reader)
         {
-            base.BuildFromXml(node);
+            bool isRead = base.ReadNode(reader);
 
-            XmlNode styleNode =  node.SelectSingleNode(RuleConstants.StyleNodeName);
-
-            if (styleNode?.HasChildNodes == true)
+            if (!isRead && RuleConstants.StyleNodeName == reader.Name)
             {
-                //парсим стиль
-                Style.IsBold = styleNode.SelectSingleNode(RuleConstants.StyleBoldNodeName) != null;
-                Style.IsRed = styleNode.SelectSingleNode(RuleConstants.StyleRedNodeName) != null;
+                XmlSerializer _serializer = new XmlSerializer(typeof(TextStyle), new XmlRootAttribute(RuleConstants.StyleNodeName));
+                Style = _serializer.Deserialize(reader) as TextStyle;
 
-                XmlNode headerNode = styleNode.SelectSingleNode(RuleConstants.StyleHeaderNodeName);
-
-                if (headerNode != null)
-                {
-                    Enum.TryParse(headerNode.InnerText, out HeaderCaption caption);
-
-                    Style.Header = caption;
-                }
+                isRead = true;
             }
+
+            return isRead;
         }
 
         #endregion

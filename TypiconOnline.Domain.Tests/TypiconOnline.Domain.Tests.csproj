@@ -55,8 +55,8 @@
     <Compile Include="Days\DayServiceTest.cs" />
     <Compile Include="Days\EsperinosTest.cs" />
     <Compile Include="Experiments\Experiment.cs" />
-    <Compile Include="ItemTypes\ItemTextCollectionTest.cs" />
     <Compile Include="ItemTypes\ItemTextNotedTest.cs" />
+    <Compile Include="ItemTypes\ItemTextTest.cs" />
     <Compile Include="ItemTypes\ItemTimeTest.cs" />
     <Compile Include="ItemTypes\ItemTextStyledTest.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

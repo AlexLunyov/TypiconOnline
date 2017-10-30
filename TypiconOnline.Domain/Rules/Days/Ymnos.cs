@@ -44,23 +44,11 @@ namespace TypiconOnline.Domain.Rules.Days
         /// </summary>
         [XmlElement(RuleConstants.AnnotationNode)]
         public ItemText Annotation { get; set; }
-
-        private List<ItemText> _stihoi = new List<ItemText>();
         /// <summary>
         /// Стих, предваряющий песнопение
         /// </summary>
         [XmlElement(RuleConstants.YmnosStihosNode)]
-        public List<ItemText> Stihoi
-        {
-            get
-            {
-                return _stihoi;
-            }
-            set
-            {
-                _stihoi = value;
-            }
-        }
+        public List<ItemText> Stihoi { get; set; } = new List<ItemText>();
         /// <summary>
         /// Текст песнопения
         /// </summary>

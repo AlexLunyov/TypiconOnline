@@ -35,36 +35,20 @@ namespace TypiconOnline.Domain.Rules.Days
             return base.Equals(item) && Self.Equals(item.Self);
         }
 
-        #region Serialization
+        #region IXmlSerializable
 
-        protected override XmlDocument ComposeXml()
+        public override void ReadXml(XmlReader reader)
         {
-            XmlDocument doc = base.ComposeXml();
-
-            if (Self)
+            if (reader.MoveToAttribute(RuleConstants.ProsomoionSelfAttr))
             {
-                XmlAttribute selfAttr = doc.CreateAttribute(RuleConstants.ProsomoionSelfAttr);
-                selfAttr.Value = Self.ToString();
+                bool.TryParse(reader.Value, out bool result);
 
-                doc.DocumentElement.Attributes.Append(selfAttr);
-            }
-
-            return doc;
-        }
-
-
-        protected override void BuildFromXml(XmlNode node)
-        {
-            base.BuildFromXml(node);
-
-            //самоподобен?
-            XmlAttribute selfAttr = node.Attributes[RuleConstants.ProsomoionSelfAttr];
-
-            if (selfAttr != null)
-            {
-                bool.TryParse(selfAttr.Value, out bool result);
                 Self = result;
+
+                reader.MoveToElement();
             }
+
+            base.ReadXml(reader);
         }
 
         public override void WriteXml(XmlWriter writer)
