@@ -56,7 +56,8 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 StringBuilder builder = new StringBuilder();
 
-                using (XmlWriter writer = XmlWriter.Create(builder))
+                using (XmlWriter writer = XmlWriter.Create(builder, 
+                    new XmlWriterSettings() { OmitXmlDeclaration = true, ConformanceLevel = ConformanceLevel.Auto, Indent = true }))
                 {
                     writer.WriteStartElement(TagName);
 
@@ -70,7 +71,8 @@ namespace TypiconOnline.Domain.ItemTypes
             }
             set
             {
-                using (XmlReader xmlReader = XmlReader.Create(new StringReader(value)))
+                using (XmlReader xmlReader = XmlReader.Create(new StringReader(value), 
+                    new XmlReaderSettings() { DtdProcessing = DtdProcessing.Ignore } ))
                 {
                     bool wasEmpty = xmlReader.IsEmptyElement;
 
