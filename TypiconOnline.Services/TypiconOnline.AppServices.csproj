@@ -49,6 +49,7 @@
     <Compile Include="Implementations\BypassSequenceViewer.cs" />
     <Compile Include="Implementations\DayContainerService.cs" />
     <Compile Include="Implementations\FileReader.cs" />
+    <Compile Include="Implementations\HtmlInnerScheduleWeekViewer.cs" />
     <Compile Include="Implementations\HtmlScheduleWeekViewer.cs" />
     <Compile Include="Implementations\RuleToHandle.cs" />
     <Compile Include="Implementations\ScheduleService.cs" />

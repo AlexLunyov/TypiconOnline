@@ -107,7 +107,10 @@ namespace TypiconOnline.Repository.EFSQLite
                     .ThenInclude(c => c.DayRuleWorships)
                         .ThenInclude(k => k.DayWorship)
                             .ThenInclude(k => k.WorshipShortName)
-                .Include(c => c.Settings) as IQueryable<DomainType>;
+                .Include(c => c.Settings)
+                .Include(c => c.ModifiedYears)
+                    .ThenInclude(k => k.ModifiedRules)
+                        .ThenInclude(c => c.RuleEntity) as IQueryable<DomainType>;
         }
     }
 }

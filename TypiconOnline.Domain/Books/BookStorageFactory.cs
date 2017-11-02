@@ -20,9 +20,7 @@ namespace TypiconOnline.Domain.Books
 
         public BookStorageFactory(IUnitOfWork unitOfWork)
         {
-            if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
-
-            _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork");
         }
 
         public BookStorage Create()
@@ -34,6 +32,11 @@ namespace TypiconOnline.Domain.Books
                                     new OktoikhContext(_unitOfWork),
                                     new TheotokionAppContext(_unitOfWork),
                                     new EasterContext(_unitOfWork));
+        }
+
+        public static BookStorage Create(IUnitOfWork unitOfWork)
+        {
+            return new BookStorageFactory(unitOfWork).Create();
         }
     }
 }

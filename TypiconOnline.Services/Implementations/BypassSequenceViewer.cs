@@ -53,18 +53,19 @@ namespace TypiconOnline.AppServices.Implementations
 
             TypiconEntity typicon = resp.TypiconEntity ?? throw new NullReferenceException("TypiconEntity");
 
-            ScheduleService service = new ScheduleService();
 
-            GetScheduleWeekResponse weekResponse = service.GetScheduleWeek(new GetScheduleWeekRequest()
+            GetScheduleWeekResponse weekResponse = new ScheduleService().GetScheduleWeek(new GetScheduleWeekRequest()
             {
-                Date = new DateTime(2017, 10, 21),
+                Date = request.Date,
                 TypiconEntity = typicon,
                 Mode = HandlingMode.AstronimicDay,
                 Handler = new ScheduleHandler(),
                 Language = "cs-ru",
             });
 
-            HtmlScheduleWeekViewer viewer = new HtmlScheduleWeekViewer();
+            _unitOfWork.Commit();
+
+            HtmlInnerScheduleWeekViewer viewer = new HtmlInnerScheduleWeekViewer();
 
             viewer.Execute(weekResponse.Week);
 

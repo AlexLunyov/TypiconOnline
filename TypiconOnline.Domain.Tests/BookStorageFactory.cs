@@ -12,14 +12,17 @@ using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Repository.EF;
+using TypiconOnline.Infrastructure.Common.UnitOfWork;
 
 namespace TypiconOnline.Domain.Tests
 {
     public static class BookStorageFactory
     {
-        public static BookStorage Create()
+        public static BookStorage Create() => Create(new EFUnitOfWork());
+
+        public static BookStorage Create(IUnitOfWork unitOfWork)
         {
-            EFUnitOfWork unitOfWork = new EFUnitOfWork();
+            if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
 
             return new BookStorage(new EvangelionService(unitOfWork),
                                     new ApostolService(unitOfWork),
