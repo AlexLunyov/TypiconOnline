@@ -218,7 +218,7 @@ namespace TypiconOnline.Domain.Typicon
 
             if (modifiedYear == null)
             {
-                modifiedYear = new ModifiedYear() { Year = request.Date.Year };
+                modifiedYear = new ModifiedYear() { Year = request.Date.Year, TypiconEntity = this };
                 ModifiedYears.Add(modifiedYear);
             }
 

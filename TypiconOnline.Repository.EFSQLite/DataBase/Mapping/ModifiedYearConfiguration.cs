@@ -14,7 +14,7 @@ namespace TypiconOnline.Repository.EFSQlite.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<ModifiedYear> builder)
         {
-            builder.HasKey(u => new { u.Id, u.TypiconEntityId });
+            builder.HasKey(u => new { u.Id });//, u.TypiconEntityId });
 
             builder.Property(c => c.Year).IsRequired();
 

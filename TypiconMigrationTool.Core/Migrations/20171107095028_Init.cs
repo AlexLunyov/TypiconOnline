@@ -143,13 +143,14 @@ namespace TypiconMigrationTool.Core.Migrations
                 name: "ModifiedYear",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false),
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     TypiconEntityId = table.Column<int>(type: "INTEGER", nullable: false),
                     Year = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModifiedYear", x => new { x.Id, x.TypiconEntityId });
+                    table.PrimaryKey("PK_ModifiedYear", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ModifiedYear_TypiconEntity_TypiconEntityId",
                         column: x => x.TypiconEntityId,
@@ -316,7 +317,6 @@ namespace TypiconMigrationTool.Core.Migrations
                     IsAddition = table.Column<bool>(type: "INTEGER", nullable: false),
                     IsLastName = table.Column<bool>(type: "INTEGER", nullable: false),
                     ModifiedYearId = table.Column<int>(type: "INTEGER", nullable: true),
-                    ModifiedYearTypiconEntityId = table.Column<int>(type: "INTEGER", nullable: true),
                     Priority = table.Column<int>(type: "INTEGER", nullable: false),
                     RuleEntityId = table.Column<int>(type: "INTEGER", nullable: true),
                     ShortName = table.Column<string>(type: "TEXT", nullable: true),
@@ -326,16 +326,16 @@ namespace TypiconMigrationTool.Core.Migrations
                 {
                     table.PrimaryKey("PK_ModifiedRule", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_ModifiedRule_ModifiedYear_ModifiedYearId",
+                        column: x => x.ModifiedYearId,
+                        principalTable: "ModifiedYear",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_ModifiedRule_DayRule_RuleEntityId",
                         column: x => x.RuleEntityId,
                         principalTable: "DayRule",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ModifiedRule_ModifiedYear_ModifiedYearId_ModifiedYearTypiconEntityId",
-                        columns: x => new { x.ModifiedYearId, x.ModifiedYearTypiconEntityId },
-                        principalTable: "ModifiedYear",
-                        principalColumns: new[] { "Id", "TypiconEntityId" },
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -432,14 +432,14 @@ namespace TypiconMigrationTool.Core.Migrations
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ModifiedRule_ModifiedYearId",
+                table: "ModifiedRule",
+                column: "ModifiedYearId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ModifiedRule_RuleEntityId",
                 table: "ModifiedRule",
                 column: "RuleEntityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ModifiedRule_ModifiedYearId_ModifiedYearTypiconEntityId",
-                table: "ModifiedRule",
-                columns: new[] { "ModifiedYearId", "ModifiedYearTypiconEntityId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ModifiedYear_TypiconEntityId",

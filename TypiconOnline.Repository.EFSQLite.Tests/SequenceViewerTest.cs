@@ -30,5 +30,23 @@ namespace TypiconOnline.Repository.EFSQLite.Tests
             Assert.IsNotEmpty(result);
             Assert.Pass(result);
         }
+
+        [Test]
+        public void BypassSequenceViewer_Test2()
+        {
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"Data\SQLiteDB.db");
+            EFSQLiteUnitOfWork unitOfWork = new EFSQLiteUnitOfWork(path);
+
+            BookStorage.Instance = BookStorageFactory.Create(unitOfWork);
+
+            ISequenceViewer viewer = new BypassSequenceViewer(unitOfWork);
+
+            string result = viewer.GetSequence(new GetSequenceRequest() { TypiconId = 1, Date = new DateTime(2017, 11, 7) }).Sequence;
+
+            result = viewer.GetSequence(new GetSequenceRequest() { TypiconId = 1, Date = new DateTime(2017, 12, 26) }).Sequence;
+
+            Assert.IsNotEmpty(result);
+            Assert.Pass(result);
+        }
     }
 }

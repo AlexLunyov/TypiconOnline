@@ -195,8 +195,6 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<int?>("ModifiedYearId");
 
-                    b.Property<int?>("ModifiedYearTypiconEntityId");
-
                     b.Property<int>("Priority");
 
                     b.Property<int?>("RuleEntityId");
@@ -207,22 +205,23 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RuleEntityId");
+                    b.HasIndex("ModifiedYearId");
 
-                    b.HasIndex("ModifiedYearId", "ModifiedYearTypiconEntityId");
+                    b.HasIndex("RuleEntityId");
 
                     b.ToTable("ModifiedRule");
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Modifications.ModifiedYear", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("TypiconEntityId");
 
                     b.Property<int>("Year");
 
-                    b.HasKey("Id", "TypiconEntityId");
+                    b.HasKey("Id");
 
                     b.HasIndex("TypiconEntityId");
 
@@ -443,13 +442,13 @@ namespace TypiconMigrationTool.Core.Migrations
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Modifications.ModifiedRule", b =>
                 {
+                    b.HasOne("TypiconOnline.Domain.Typicon.Modifications.ModifiedYear")
+                        .WithMany("ModifiedRules")
+                        .HasForeignKey("ModifiedYearId");
+
                     b.HasOne("TypiconOnline.Domain.Typicon.DayRule", "RuleEntity")
                         .WithMany()
                         .HasForeignKey("RuleEntityId");
-
-                    b.HasOne("TypiconOnline.Domain.Typicon.Modifications.ModifiedYear")
-                        .WithMany("ModifiedRules")
-                        .HasForeignKey("ModifiedYearId", "ModifiedYearTypiconEntityId");
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Modifications.ModifiedYear", b =>
