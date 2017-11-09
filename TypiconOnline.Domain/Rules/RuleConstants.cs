@@ -126,6 +126,7 @@ namespace TypiconOnline.Domain.Rules
         public const string ApostichaNode = "aposticha";
         public const string LitiNode = "liti"; 
         public const string TroparionNode = "troparion"; 
+        public const string SedalenNode = "sedalen"; 
 
         public const string SedalenKathisma1Node = "sed_1kathisma";
         public const string SedalenKathisma2Node = "sed_2kathisma";
@@ -285,7 +286,17 @@ namespace TypiconOnline.Domain.Rules
         app4_esperinos = 20,
         app4_orthros = 21,
         //troparion
-        troparion = 23
+        troparion = 23,
+        //Sedalen
+        sedalen1,
+        sedalen1_doxastichon,
+        sedalen1_theotokion,
+        sedalen2,
+        sedalen2_doxastichon,
+        sedalen2_theotokion,
+        sedalen3,
+        sedalen3_doxastichon,
+        sedalen3_theotokion
     }
 
     /// <summary>

@@ -283,6 +283,9 @@ namespace TypiconOnline.Domain.Rules.Factories
                 case RuleConstants.TroparionNode:
                     outputEl = new TroparionRule(node);
                     break;
+                case RuleConstants.SedalenNode:
+                    outputEl = new SedalenRule(node);
+                    break;
                 case RuleConstants.ServiceNodeName:
                     outputEl = new Service(node);
                     break;                

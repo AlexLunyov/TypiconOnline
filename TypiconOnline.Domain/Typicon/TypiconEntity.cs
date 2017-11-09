@@ -193,7 +193,7 @@ namespace TypiconOnline.Domain.Typicon
                     });
             }
 
-            return modifiedYear.ModifiedRules.FindAll(d => d.Date == date);
+            return modifiedYear.ModifiedRules.FindAll(d => d.Date.Date == date.Date);
         }
 
         private void InterpretMenologyRule(MenologyRule menologyRule, DateTime date, int year)

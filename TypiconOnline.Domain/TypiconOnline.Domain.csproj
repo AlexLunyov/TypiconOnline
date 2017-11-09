@@ -177,6 +177,7 @@
     <Compile Include="Rules\Handlers\ScheduleHandler.cs" />
     <Compile Include="Rules\CommonRuleConstants.cs" />
     <Compile Include="Rules\Schedule\AinoiRule.cs" />
+    <Compile Include="Rules\Schedule\SedalenRule.cs" />
     <Compile Include="Rules\Schedule\TroparionRule.cs" />
     <Compile Include="Rules\Schedule\ApostichaRule.cs" />
     <Compile Include="Rules\Schedule\CommonRuleElement.cs" />
@@ -257,6 +258,7 @@
     <Compile Include="Typicon\TypiconEntity.cs" />
     <Compile Include="Typicon\TypiconSettings.cs" />
     <Compile Include="ViewModels\AinoiRuleViewModel.cs" />
+    <Compile Include="ViewModels\SedalenRuleViewModel.cs" />
     <Compile Include="ViewModels\ApostichaViewModel.cs" />
     <Compile Include="ViewModels\ContainerViewModel.cs" />
     <Compile Include="ViewModels\EktenisViewModel.cs" />

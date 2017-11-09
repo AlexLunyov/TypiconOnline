@@ -208,6 +208,57 @@ namespace TypiconOnline.Domain.Rules.Days
 
                     stichera = new YmnosStructure(y);
                     break;
+
+                //sedalen1
+                case PlaceYmnosSource.sedalen1:
+                    stichera = Orthros?.SedalenKathisma1?.GetYmnosStructure(count, startFrom);
+                    break;
+                case PlaceYmnosSource.sedalen1_doxastichon:
+                    if (Orthros?.SedalenKathisma1?.Doxastichon != null)
+                    {
+                        stichera = new YmnosStructure() { Doxastichon = new YmnosGroup(Orthros.SedalenKathisma1.Doxastichon) };
+                    }
+                    break;
+                case PlaceYmnosSource.sedalen1_theotokion:
+                    if (Orthros?.SedalenKathisma1?.Theotokion != null)
+                    {
+                        stichera = new YmnosStructure() { Theotokion = Orthros.SedalenKathisma1.Theotokion };
+                    }
+                    break;
+
+                //sedalen2
+                case PlaceYmnosSource.sedalen2:
+                    stichera = Orthros?.SedalenKathisma2?.GetYmnosStructure(count, startFrom);
+                    break;
+                case PlaceYmnosSource.sedalen2_doxastichon:
+                    if (Orthros?.SedalenKathisma2?.Doxastichon != null)
+                    {
+                        stichera = new YmnosStructure() { Doxastichon = new YmnosGroup(Orthros.SedalenKathisma2.Doxastichon) };
+                    }
+                    break;
+                case PlaceYmnosSource.sedalen2_theotokion:
+                    if (Orthros?.SedalenKathisma2?.Theotokion != null)
+                    {
+                        stichera = new YmnosStructure() { Theotokion = Orthros.SedalenKathisma2.Theotokion };
+                    }
+                    break;
+
+                //sedalen3
+                case PlaceYmnosSource.sedalen3:
+                    stichera = Orthros?.SedalenKathisma3?.GetYmnosStructure(count, startFrom);
+                    break;
+                case PlaceYmnosSource.sedalen3_doxastichon:
+                    if (Orthros?.SedalenKathisma3?.Doxastichon != null)
+                    {
+                        stichera = new YmnosStructure() { Doxastichon = new YmnosGroup(Orthros.SedalenKathisma3.Doxastichon) };
+                    }
+                    break;
+                case PlaceYmnosSource.sedalen3_theotokion:
+                    if (Orthros?.SedalenKathisma3?.Theotokion != null)
+                    {
+                        stichera = new YmnosStructure() { Theotokion = Orthros.SedalenKathisma3.Theotokion };
+                    }
+                    break;
             }
 
             return stichera;

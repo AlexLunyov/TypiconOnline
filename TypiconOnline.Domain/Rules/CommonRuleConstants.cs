@@ -39,9 +39,14 @@ namespace TypiconOnline.Domain.Rules
         public const string ProsomoionText = "_sys_prosomoion";
 
         /// <summary>
-        /// Правило для разметки Стихир на стиховне
+        /// Правило для разметки Стихир на стиховне 
         /// </summary>
         public const string ApostichaRule = "_sys_aposticha";
+
+        /// <summary>
+        /// Правило для разметки Седальна после кафизмы на утрене
+        /// </summary>
+        public const string SedalenRule = "_sys_sedalen";
 
         /// <summary>
         /// Правило для разметки Стихир на хвалитех

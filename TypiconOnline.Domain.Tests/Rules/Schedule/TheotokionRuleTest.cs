@@ -99,9 +99,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             rule.Rule.Interpret(date, handler);
 
             KekragariaRuleViewModel model = (rule.Rule as KekragariaRule).CreateViewModel(handler) as KekragariaRuleViewModel;
-
-            Assert.IsNotNull(model);
+            
             Assert.Pass(model.ToString());
+            Assert.IsNotNull(model);
         }
     }
 }

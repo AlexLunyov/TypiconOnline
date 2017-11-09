@@ -194,7 +194,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Возвращает коллекцию богослужебных текстов
         /// </summary>
-        /// <param name="count">Количество</param>
+        /// <param name="count">Количество. Если = 0, то выдаем все без фильтрации</param>
         /// <param name="startFrom">стартовый индекс (1 - ориентированный)</param>
         /// <returns></returns>
         public YmnosStructure GetYmnosStructure(int count, int startFrom)
@@ -210,6 +210,17 @@ namespace TypiconOnline.Domain.Rules.Days
             }
 
             ThrowExceptionIfInvalid();
+
+            if (count == 0)
+            {
+                //выдаем все без фильтрации
+                YmnosStructure result = new YmnosStructure();
+                foreach (YmnosGroup group in Groups)
+                {
+                    result.Groups.Add(new YmnosGroup(group));
+                }
+                return result;
+            }
 
             YmnosStructure ymnis = new YmnosStructure();
 
