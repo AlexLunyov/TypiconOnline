@@ -177,6 +177,8 @@
     <Compile Include="Rules\Handlers\ScheduleHandler.cs" />
     <Compile Include="Rules\CommonRuleConstants.cs" />
     <Compile Include="Rules\Schedule\AinoiRule.cs" />
+    <Compile Include="Rules\Schedule\KanonasItem.cs" />
+    <Compile Include="Rules\Schedule\KanonasRule.cs" />
     <Compile Include="Rules\Schedule\SedalenRule.cs" />
     <Compile Include="Rules\Schedule\TroparionRule.cs" />
     <Compile Include="Rules\Schedule\ApostichaRule.cs" />
@@ -196,6 +198,7 @@
     <Compile Include="Rules\Schedule\TextHolderBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\TheotokionRule.cs" />
     <Compile Include="Rules\Schedule\TheotokionRuleBusinessConstraint.cs" />
+    <Compile Include="Rules\Schedule\KanonasItemBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\YmnosRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\ServiceBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\Notice.cs" />

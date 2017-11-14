@@ -126,7 +126,19 @@ namespace TypiconOnline.Domain.Rules
         public const string ApostichaNode = "aposticha";
         public const string LitiNode = "liti"; 
         public const string TroparionNode = "troparion"; 
-        public const string SedalenNode = "sedalen"; 
+        public const string SedalenNode = "sedalen";
+
+        public const string KanonasRuleNode = "kanonasrule";
+
+        /*
+         * Константы для описания атрибутов элемента KanonasItem
+        */
+        public const string KanonasItemNode = "kanonas";
+        public const string KanonasSourceAttrName = "source"; 
+        public const string KanonasPlaceAttrName = "place";
+        public const string KanonasCountAttrName = "count"; 
+        public const string KanonasMartyrionAttrName = "martyrion";
+        public const string KanonasIrmosCountAttrName = "irmoscount";
 
         public const string SedalenKathisma1Node = "sed_1kathisma";
         public const string SedalenKathisma2Node = "sed_2kathisma";
@@ -338,7 +350,17 @@ namespace TypiconOnline.Domain.Rules
         /// заупокойный
         /// </summary>
         [XmlEnum(Name = "nekrosimo")]
-        Nekrosimo
+        Nekrosimo,
+        /// <summary>
+        /// ирмос у песни канона
+        /// </summary>
+        [XmlEnum(Name = "irmos")]
+        Irmos,
+        /// <summary>
+        /// катавасия у песни канона
+        /// </summary>
+        [XmlEnum(Name = "katavasia")]
+        Katavasia
     }
 
     /// <summary>
@@ -356,6 +378,28 @@ namespace TypiconOnline.Domain.Rules
     public enum ServiceSequenceKind { MikrosEsperinos, Esperinos, Orthros, Hour, Leitourgia }
 
     public enum TextHolderKind { Choir, Lector, Priest, Deacon, Stihos, Text, Undefined }
+
+    /// <summary>
+    /// Опредения места канона в богослужебном тексте
+    /// </summary>
+    public enum KanonasPlaceKand
+    {
+        Apodipno,
+        Mesoniktiko,
+        Orthros1,
+        Orthros2,
+        Orthros3
+    }
+
+    /// <summary>
+    /// Разновидность библейских канона утрени
+    /// </summary>
+    public enum BibleOdiKind
+    {
+        Undefined,
+        Poem_Gospodevi,
+        Gospodevi_poem
+    }
 
     /// <summary>
     /// Пометка текста определенным знаком.

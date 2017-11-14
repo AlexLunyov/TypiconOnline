@@ -20,7 +20,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
     public class YmnosRule : RuleExecutable, ICustomInterpreted
     {
         private ItemEnumType<YmnosRuleKind> _ymnosKind;
-        private ItemEnumType<YmnosSource> _source;
         private ItemEnumType<PlaceYmnosSource> _place;
         private ItemInt _count;
         private ItemInt _startFrom;
@@ -31,7 +30,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             _ymnosKind = new ItemEnumType<YmnosRuleKind>(node.Name);
 
             XmlAttribute attr = node.Attributes[RuleConstants.YmnosRuleSourceAttrName];
-            _source = (attr != null) ? new ItemEnumType<YmnosSource>(attr.Value) : null;
+            Source = (attr != null) ? new ItemEnumType<YmnosSource>(attr.Value) : null;
 
             attr = node.Attributes[RuleConstants.YmnosRulePlaceAttrName];
             _place = (attr != null) ? new ItemEnumType<PlaceYmnosSource>(attr.Value) : null;
@@ -65,11 +64,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// </summary>
         public ItemEnumType<YmnosSource> Source
         {
-            get
-            {
-                return _source;
-            }
-        }
+            get; }
 
         /// <summary>
         /// Источник книги, откуда брать текст
@@ -126,13 +121,13 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             bool sourceIsValid = false;
 
-            if (_source == null)
+            if (Source == null)
             {
                 AddBrokenConstraint(YmnosRuleBusinessConstraint.SourceRequired, ElementName);
             }
-            else if (!_source.IsValid)
+            else if (!Source.IsValid)
             {
-                AppendAllBrokenConstraints(_source);
+                AppendAllBrokenConstraints(Source);
             }
             else
             {
@@ -153,7 +148,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 /* Проверка на сопоставление source и place
                  * Если source == irmologion, то значения могут быть только сопоставимые ему, и наоборот
                 */
-                if ((_source.Value == YmnosSource.Irmologion)
+                if ((Source.Value == YmnosSource.Irmologion)
                     && (Place.Value != PlaceYmnosSource.app1_aposticha)
                     && (Place.Value != PlaceYmnosSource.app1_kekragaria)
                     && (Place.Value != PlaceYmnosSource.app2_esperinos)
@@ -166,7 +161,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 }
                 else
                 {
-                    if ((_source.Value != YmnosSource.Irmologion)
+                    if ((Source.Value != YmnosSource.Irmologion)
                         && ((Place.Value == PlaceYmnosSource.app1_aposticha)
                             || (Place.Value == PlaceYmnosSource.app1_kekragaria)
                             || (Place.Value == PlaceYmnosSource.app2_esperinos)

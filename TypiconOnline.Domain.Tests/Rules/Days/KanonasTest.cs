@@ -29,7 +29,8 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             Assert.NotNull(element.Annotation["cs-cs"]);
             Assert.NotNull(element.Stihos["cs-ru"]);
             Assert.AreEqual(element.Odes.Count, 8);
-            Assert.NotNull(element.Odes[7].Katavasia["cs-ru"]);
+            //Assert.NotNull(element.Odes[7].Irmos);
+            //Assert.NotNull(element.Odes[7].Katavasia);
 
             Assert.AreEqual(element.Sedalen.Theotokion.Count, 2);
             Assert.NotNull(element.Exapostilarion.Ymnis[0].Text["cs-ru"]);

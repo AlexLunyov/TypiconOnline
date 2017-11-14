@@ -24,11 +24,8 @@ namespace TypiconOnline.Domain.ViewModels
 
         public ContainerViewModel(ExecContainer container, IRuleHandler handler) //: this()
         {
-            if (container == null) throw new ArgumentNullException("Rule");
-            if (handler == null) throw new ArgumentNullException("handler");
-
-            _container = container;
-            _handler = handler;
+            _container = container ?? throw new ArgumentNullException("Rule");
+            _handler = handler ?? throw new ArgumentNullException("handler");
         }
 
         public virtual List<ElementViewModel> ChildElements

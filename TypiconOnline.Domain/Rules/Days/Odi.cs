@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Rules.Days
     {
         public Odi()
         {
-            TroparionCollection = new List<Ymnos>();
+            Troparia = new List<Ymnos>();
         }
 
         #region Properties
@@ -31,20 +31,28 @@ namespace TypiconOnline.Domain.Rules.Days
         public int Number { get; set; }
 
         /// <summary>
-        /// Ирмос
-        /// </summary>
-        [XmlElement(RuleConstants.OdiIrmosNode)]
-        public Ymnos Irmos { get; set; }
-        /// <summary>
         /// Тропари песни канона
         /// </summary>
         [XmlElement(RuleConstants.OdiTroparionName)]
-        public List<Ymnos> TroparionCollection { get; set; }
-        /// <summary>
-        /// Ирмос
-        /// </summary>
-        [XmlElement(RuleConstants.OdiKatavasiaNode)]
-        public ItemText Katavasia { get; set; }
+        public List<Ymnos> Troparia { get; set; }
+
+        //[XmlIgnore()]
+        //public Ymnos Irmos
+        //{
+        //    get
+        //    {
+        //        return Troparia.FirstOrDefault(c => c.Kind == YmnosKind.Irmos);
+        //    }
+        //}
+
+        //[XmlIgnore()]
+        //public Ymnos Katavasia
+        //{
+        //    get
+        //    {
+        //        return Troparia.FirstOrDefault(c => c.Kind == YmnosKind.Katavasia);
+        //    }
+        //}
 
         #endregion
 
@@ -56,26 +64,26 @@ namespace TypiconOnline.Domain.Rules.Days
                 AddBrokenConstraint(OdiBusinessConstraint.InvalidNumber, RuleConstants.KanonasOdiNode);
             }
 
-            if (Irmos == null)
+            //тропари должны быть
+            if (Troparia.Count == 0)
             {
-                AddBrokenConstraint(OdiBusinessConstraint.IrmosRequired);
+                AddBrokenConstraint(OdiBusinessConstraint.TroparionRequired, RuleConstants.KanonasOdiNode);
             }
-            else if (!Irmos.IsValid)
+            else
             {
-                AppendAllBrokenConstraints(Irmos, RuleConstants.OdiIrmosNode);
-            }
-
-            foreach (Ymnos trop in TroparionCollection)
-            {
-                if (!trop.IsValid)
+                foreach (Ymnos trop in Troparia)
                 {
-                    AppendAllBrokenConstraints(trop, RuleConstants.OdiTroparionName);
+                    if (!trop.IsValid)
+                    {
+                        AppendAllBrokenConstraints(trop, RuleConstants.OdiTroparionName);
+                    }
                 }
             }
 
-            if (Katavasia?.IsValid == false)
+            //ирмос должен быть
+            if (!Troparia.Exists(c => c.Kind == YmnosKind.Irmos))
             {
-                AppendAllBrokenConstraints(Katavasia, RuleConstants.OdiKatavasiaNode);
+                AddBrokenConstraint(OdiBusinessConstraint.IrmosRequired);
             }
         }
     }
