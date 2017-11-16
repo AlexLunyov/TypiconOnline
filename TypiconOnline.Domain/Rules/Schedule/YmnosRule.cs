@@ -11,19 +11,19 @@ using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Factories;
+using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
     /// <summary>
     /// Описание правил для использования текстов песнопений
     /// </summary>
-    public class YmnosRule : RuleExecutable, ICustomInterpreted
+    public class YmnosRule : RuleExecutable, ICalcStructureElement/*<YmnosStructure>*/, ICustomInterpreted
     {
         private ItemEnumType<YmnosRuleKind> _ymnosKind;
         private ItemEnumType<PlaceYmnosSource> _place;
         private ItemInt _count;
         private ItemInt _startFrom;
-        private YmnosRule _childElement;
 
         public YmnosRule(XmlNode node) : base(node)
         {
@@ -40,11 +40,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             attr = node.Attributes[RuleConstants.YmnosRuleStartFromAttrName];
             _startFrom = new ItemInt((attr != null) ? attr.Value : "1");
-
-            if (node.HasChildNodes)
-            {
-                _childElement = RuleFactory.CreateYmnosRule(node.FirstChild);
-            }
         }
 
         #region Properties
@@ -192,7 +187,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <param name="date"></param>
         /// <param name="handler"></param>
         /// <returns>Если таковые не объявлены в DayService, возвращает NULL.</returns>
-        public virtual YmnosStructure CalculateYmnosStructure(DateTime date, IRuleHandler handler)
+        public virtual DayElementBase Calculate(DateTime date, RuleHandlerSettings settings)
         {
             YmnosStructure result = null;
 
@@ -201,16 +196,16 @@ namespace TypiconOnline.Domain.Rules.Schedule
             switch (Source.Value)
             {
                 case YmnosSource.Item1:
-                    dayWorship = (handler.Settings.DayWorships.Count > 0) ? handler.Settings.DayWorships[0] : null;
+                    dayWorship = (settings.DayWorships.Count > 0) ? settings.DayWorships[0] : null;
                     break;
                 case YmnosSource.Item2:
-                    dayWorship = (handler.Settings.DayWorships.Count > 1) ? handler.Settings.DayWorships[1] : null;
+                    dayWorship = (settings.DayWorships.Count > 1) ? settings.DayWorships[1] : null;
                     break;
                 case YmnosSource.Item3:
-                    dayWorship = (handler.Settings.DayWorships.Count > 2) ? handler.Settings.DayWorships[2] : null;
+                    dayWorship = (settings.DayWorships.Count > 2) ? settings.DayWorships[2] : null;
                     break;
                 case YmnosSource.Oktoikh:
-                    dayWorship = handler.Settings.OktoikhDay;
+                    dayWorship = settings.OktoikhDay;
                     break;
             }
 

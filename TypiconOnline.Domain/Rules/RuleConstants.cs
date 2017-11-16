@@ -133,12 +133,26 @@ namespace TypiconOnline.Domain.Rules
         /*
          * Константы для описания атрибутов элемента KanonasItem
         */
-        public const string KanonasItemNode = "kanonas";
-        public const string KanonasSourceAttrName = "source"; 
-        public const string KanonasPlaceAttrName = "place";
+        public const string KanonasItemNode = "k_kanonas";
+        //public const string KanonasSourceAttrName = "source"; 
+        //public const string KanonasPlaceAttrName = "place";
         public const string KanonasCountAttrName = "count"; 
         public const string KanonasMartyrionAttrName = "martyrion";
         public const string KanonasIrmosCountAttrName = "irmoscount";
+
+        /*
+         * Константы для описания атрибутов элемента KKontakionRule
+        */
+        public const string KKontakionNode = "k_kontakion";
+        public const string KKontakionSourceAttrName = "source";
+        public const string KKontakionKanonasAttrName = "kanonas";
+
+        /*
+         * Константы для описания атрибутов элемента KSedalenRule
+        */
+        public const string KSedalenNode = "k_sedalen";
+        public const string KSedalenPlaceAttrName = "place";
+
 
         public const string SedalenKathisma1Node = "sed_1kathisma";
         public const string SedalenKathisma2Node = "sed_2kathisma";
@@ -259,9 +273,14 @@ namespace TypiconOnline.Domain.Rules
     }
 
     /// <summary>
-    /// Перечисление источников (богослуебных книг) для текстов богослужения
+    /// Перечисление источников (богослужебных книг) для текстов богослужения
     /// </summary>
     public enum YmnosSource { Oktoikh = 0, Item1 = 1, Item2 = 2, Item3 = 3, Irmologion = 4 }
+
+    /// <summary>
+    /// Перечисление источников (богослужебных книг) для канонов
+    /// </summary>
+    public enum KanonasSource { Oktoikh = 0, Item1 = 1, Item2 = 2, Item3 = 3}
 
     /// <summary>
     /// Перечисление мест в богослужебных книгах для текстов богослужения
@@ -382,13 +401,24 @@ namespace TypiconOnline.Domain.Rules
     /// <summary>
     /// Опредения места канона в богослужебном тексте
     /// </summary>
-    public enum KanonasPlaceKand
+    public enum KanonasKind
     {
         Apodipno,
         Mesoniktiko,
         Orthros1,
         Orthros2,
         Orthros3
+    }
+
+    /// <summary>
+    /// Опредения места в каноне в богослужебном тексте
+    /// </summary>
+    public enum KanonasPlaceKind
+    {
+        sedalen,
+        sedalen_theotokion,
+        sedalen_stavrostheotokion,
+        kontakion
     }
 
     /// <summary>

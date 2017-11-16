@@ -83,19 +83,19 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                 if (container != null)
                 {
-                    CalculateYmnosStructure(date, handler, container);
+                    CalculateYmnosStructure(date, handler.Settings, container);
                 }
 
                 handler.Execute(this);
             }
         }
 
-        private void CalculateYmnosStructure(DateTime date, IRuleHandler handler, ExecContainer container)
+        private void CalculateYmnosStructure(DateTime date, RuleHandlerSettings settings, ExecContainer container)
         {
             _stichera = new YmnosStructure();
             foreach (YmnosRule ymnosRule in container.ChildElements)
             {
-                YmnosStructure s = ymnosRule.CalculateYmnosStructure(date, handler);
+                YmnosStructure s = ymnosRule.Calculate(date, settings) as YmnosStructure;
                 if (s != null)
                 {
                     switch (ymnosRule.YmnosKind.Value)

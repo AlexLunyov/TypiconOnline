@@ -79,6 +79,7 @@
     <Compile Include="Days\Day.cs" />
     <Compile Include="Books\Easter\IEasterContext.cs" />
     <Compile Include="DayStructureBase.cs" />
+    <Compile Include="Interfaces\ICalcStructureElement.cs" />
     <Compile Include="Interfaces\IDayContainerFactory.cs" />
     <Compile Include="Interfaces\IDayServiceFactory.cs" />
     <Compile Include="Interfaces\IContainingIhos.cs" />
@@ -179,6 +180,10 @@
     <Compile Include="Rules\Schedule\AinoiRule.cs" />
     <Compile Include="Rules\Schedule\KanonasItem.cs" />
     <Compile Include="Rules\Schedule\KanonasRule.cs" />
+    <Compile Include="Rules\Schedule\KKontakionRule.cs" />
+    <Compile Include="Rules\Schedule\KSedalenRuleBusinessConstraint.cs" />
+    <Compile Include="Rules\Schedule\KSedalenRule.cs" />
+    <Compile Include="Rules\Schedule\KSedalenTheotokionRule.cs" />
     <Compile Include="Rules\Schedule\SedalenRule.cs" />
     <Compile Include="Rules\Schedule\TroparionRule.cs" />
     <Compile Include="Rules\Schedule\ApostichaRule.cs" />
@@ -199,6 +204,7 @@
     <Compile Include="Rules\Schedule\TheotokionRule.cs" />
     <Compile Include="Rules\Schedule\TheotokionRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\KanonasItemBusinessConstraint.cs" />
+    <Compile Include="Rules\Schedule\KKontakionRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\YmnosRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\ServiceBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\Notice.cs" />

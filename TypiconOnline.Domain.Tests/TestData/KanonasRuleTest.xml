@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<kanonasrule>
+  <if>
+    <!-- если два святых-->
+    <expression>
+      <istwosaints/>
+    </expression>
+    <then>
+      <if>
+        <expression>
+          <!-- если предпразднество или попразднество-->
+          <iscelebrating/>
+        </expression>
+        <then>
+          <kanonas source="item1" place="orthros1" count="6" irmoscount="2"/>
+          <kanonas source="item2" place="orthros1" count="4"/>
+          <kanonas source="item3" place="orthros1" count="4"/>
+        </then>
+        <else>
+          <if>
+            <expression>
+              <!-- среда или пятница-->
+              <or>
+                <equals>
+                  <getdayofweek>
+                    <date/>
+                  </getdayofweek>
+                  <getdayofweek name="среда"/>
+                </equals>
+                <equals>
+                  <getdayofweek>
+                    <date/>
+                  </getdayofweek>
+                  <getdayofweek name="пятница"/>
+                </equals>
+              </or>
+            </expression>
+            <then>
+              <kanonas source="oktoikh" place="orthros1" count="4" irmoscount="1" martyrion="false"/>
+              <kanonas source="oktoikh" place="orthros2" count="4"/>
+              <kanonas source="item1" place="orthros1" count="3"/>
+              <kanonas source="item2" place="orthros1" count="3"/>
+            </then>
+            <else>
+              <kanonas source="oktoikh" place="orthros1" count="6" irmoscount="1"/>
+              <kanonas source="item1" place="orthros1" count="4"/>
+              <kanonas source="item2" place="orthros1" count="4"/>
+            </else>
+          </if>
+        </else>
+      </if>
+    </then>
+  </if>
+</kanonasrule>

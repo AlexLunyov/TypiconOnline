@@ -11,6 +11,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
     public class IsExistsBusinessConstraint
     {
         public static readonly BusinessConstraint YmnosRuleReqiured 
-            = new BusinessConstraint(string.Format("Отсутствуют дочерний элемент {0}.", RuleConstants.YmnosRuleNode));
+            = new BusinessConstraint($"Отсутствуют дочерний элемент {RuleConstants.YmnosRuleNode}.");
     }
 }

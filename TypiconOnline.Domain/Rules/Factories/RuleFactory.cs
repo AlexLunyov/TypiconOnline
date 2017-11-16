@@ -229,6 +229,18 @@ namespace TypiconOnline.Domain.Rules.Factories
                     case RuleConstants.CommonRuleNode:
                         outputEl = new CommonRuleElement(node);
                         break;
+                    //KanonasItem
+                    case RuleConstants.KanonasItemNode:
+                        outputEl = new KanonasItem(node);
+                        break;
+                    //KKontakionRule
+                    case RuleConstants.KKontakionNode:
+                        outputEl = new KKontakionRule(node);
+                        break;
+                    //KSedalenRule
+                    case RuleConstants.KSedalenNode:
+                        outputEl = new KSedalenRule(node);
+                        break;
                 }
             }
             return outputEl;
@@ -237,6 +249,33 @@ namespace TypiconOnline.Domain.Rules.Factories
         public static YmnosRule CreateYmnosRule(XmlNode node)
         {
             return (node.Name == RuleConstants.YmnosRuleNode) ? new YmnosRule(node) : null;
+        }
+
+        public static ICalcStructureElement CreateCalcStructureElement(XmlNode node)
+        {
+            ICalcStructureElement outputEl = null;
+
+            switch (node.Name)
+            {
+                //YmnosRule
+                case RuleConstants.YmnosRuleNode:
+                    outputEl = new YmnosRule(node);
+                    break;
+                //KanonasItem
+                case RuleConstants.KanonasItemNode:
+                    outputEl = new KanonasItem(node);
+                    break;
+                //KKontakionRule
+                case RuleConstants.KKontakionNode:
+                    outputEl = new KKontakionRule(node);
+                    break;
+                //KSedalenRule
+                case RuleConstants.KSedalenNode:
+                    outputEl = new KSedalenRule(node);
+                    break;
+            }
+
+            return outputEl;
         }
 
         //public static RuleContainer CreateRuleContainer(XmlNode node) 

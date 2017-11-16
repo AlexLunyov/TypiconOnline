@@ -18,19 +18,19 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class IsExists : BooleanExpression
     {
-        private YmnosRule _ymnos;
+        private ICalcStructureElement _ymnos;
 
         public IsExists(XmlNode node) : base(node)
         {
             if (node.HasChildNodes && node.FirstChild.Name == RuleConstants.YmnosRuleNode)
             {
-                _ymnos = RuleFactory.CreateYmnosRule(node.FirstChild);
+                _ymnos = RuleFactory.CreateCalcStructureElement(node.FirstChild);
             }
         }
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            _valueCalculated = _ymnos.CalculateYmnosStructure(date, handler) != null;
+            _valueCalculated = _ymnos.Calculate(date, handler?.Settings) != null;
         }
 
         protected override void Validate()
@@ -39,9 +39,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 AddBrokenConstraint(IsExistsBusinessConstraint.YmnosRuleReqiured);
             }
-            else if (!_ymnos.IsValid)
+            else if (_ymnos is RuleElement r && !r.IsValid)
             {
-                AppendAllBrokenConstraints(_ymnos);
+                AppendAllBrokenConstraints(r);
             }
         }
     }

@@ -55,21 +55,13 @@ namespace TypiconOnline.Domain.Books
             ITheotokionAppContext theotokionApp,
             IEasterContext easterContext)
         {
-            if (evangelionService == null) throw new ArgumentNullException("evangelionService");
-            if (apostolService == null) throw new ArgumentNullException("apostolService");
-            if (oldTestamentService == null) throw new ArgumentNullException("oldTestamentService");
-            if (psalterService == null) throw new ArgumentNullException("psalterService");
-            if (oktoikhService == null) throw new ArgumentNullException("oktoikhService");
-            if (theotokionApp == null) throw new ArgumentNullException("irmologionService");
-            if (easterContext == null) throw new ArgumentNullException("irmologionService");
-
-            Evangelion = evangelionService;
-            Apostol = apostolService;
-            OldTestament = oldTestamentService;
-            Psalter = psalterService;
-            Oktoikh = oktoikhService;
-            TheotokionApp = theotokionApp;
-            Easters = easterContext;
+            Evangelion = evangelionService ?? throw new ArgumentNullException("evangelionService");
+            Apostol = apostolService ?? throw new ArgumentNullException("apostolService");
+            OldTestament = oldTestamentService ?? throw new ArgumentNullException("oldTestamentService");
+            Psalter = psalterService ?? throw new ArgumentNullException("psalterService");
+            Oktoikh = oktoikhService ?? throw new ArgumentNullException("oktoikhService");
+            TheotokionApp = theotokionApp ?? throw new ArgumentNullException("irmologionService");
+            Easters = easterContext ?? throw new ArgumentNullException("irmologionService");
         }
 
         #region Singletone pattern

@@ -97,6 +97,7 @@
     <Compile Include="Rules\Schedule\IsExistsTest.cs" />
     <Compile Include="Rules\Schedule\IsTwoSaintsTest.cs" />
     <Compile Include="Rules\Schedule\IsCelebratingTest.cs" />
+    <Compile Include="Rules\Schedule\KanonasRuleTest.cs" />
     <Compile Include="Rules\Schedule\NoticeTest.cs" />
     <Compile Include="Rules\Schedule\TextHolderTest.cs" />
     <Compile Include="Rules\Schedule\YmnosStructureRuleTest.cs" />
@@ -145,6 +146,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="TestData\CommonRuleElement_Simple.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\KanonasRuleTest.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\YmnosStructureRuleTest.xml">

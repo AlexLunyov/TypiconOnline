@@ -9,6 +9,7 @@ using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Factories;
+using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -38,6 +39,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 && (Place.Value != PlaceYmnosSource.aposticha_orthros_theotokion)
                 && (Place.Value != PlaceYmnosSource.ainoi_theotokion)
                 && (Place.Value != PlaceYmnosSource.troparion)
+                && (Place.Value != PlaceYmnosSource.sedalen1_theotokion)
+                && (Place.Value != PlaceYmnosSource.sedalen2_theotokion)
+                && (Place.Value != PlaceYmnosSource.sedalen3_theotokion)
                 || (Source.Value == YmnosSource.Irmologion)))
             {
                 //если дочерний элемент не определен, а место указано - либо не имеющее богородична
@@ -52,16 +56,16 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         }
 
-        public override YmnosStructure CalculateYmnosStructure(DateTime date, IRuleHandler handler)
+        public override DayElementBase Calculate(DateTime date, RuleHandlerSettings settings)
         {
             YmnosStructure result = null;
 
             if (Source.Value == YmnosSource.Irmologion)
             {
-                int calcIhos = _ymnos.CalculateYmnosStructure(date, handler).Ihos;
+                int calcIhos = (_ymnos.Calculate(date, settings) as YmnosStructure).Ihos;
 
                 GetTheotokionResponse response = BookStorage.Instance.TheotokionApp.Get(
-                    new GetTheotokionRequest() { Place = Place.Value, Ihos = calcIhos });
+                    new GetTheotokionRequest() { Place = Place.Value, Ihos = calcIhos, DayOfWeek = date.DayOfWeek });
 
                 if (response.Exception == null && response.BookElement != null)
                 {
@@ -71,7 +75,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
             else
             {
-                result = base.CalculateYmnosStructure(date, handler);
+                result = base.Calculate(date, settings) as YmnosStructure;
             }
 
             return result;
