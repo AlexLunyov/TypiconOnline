@@ -19,10 +19,36 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         public KanonasRule(XmlNode node) : base(node)
         {
+            XmlAttribute attr = node.Attributes[RuleConstants.KanonasRuleEktenis3AttrName];
+            Ektenis3 = (attr != null) ? new CommonRuleElement(attr.Value) : null;
 
+            attr = node.Attributes[RuleConstants.KanonasRuleEktenis6AttrName];
+            Ektenis6 = (attr != null) ? new CommonRuleElement(attr.Value) : null;
+
+            attr = node.Attributes[RuleConstants.KanonasRuleEktenis9AttrName];
+            Ektenis9 = (attr != null) ? new CommonRuleElement(attr.Value) : null;
+
+            attr = node.Attributes[RuleConstants.KanonasRulePanagiasAttrName];
+            Panagias = (attr != null) ? new CommonRuleElement(attr.Value) : null;
         }
 
         #region Properties
+        /// <summary>
+        /// CommonRule описывающее ектению по 3-ей песне канона
+        /// </summary>
+        public CommonRuleElement Ektenis3 { get; set; }
+        /// <summary>
+        /// CommonRule описывающее ектению по 6-ей песне канона
+        /// </summary>
+        public CommonRuleElement Ektenis6 { get; set; }
+        /// <summary>
+        /// CommonRule описывающее ектению по 9-ей песне канона
+        /// </summary>
+        public CommonRuleElement Ektenis9 { get; set; }
+        /// <summary>
+        /// CommonRule описывающее Честнейшую
+        /// </summary>
+        public CommonRuleElement Panagias { get; set; }
 
         public Kanonas KanonasCalculated { get; private set; }
 
@@ -80,6 +106,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     CalculateKontakionStructure(date, handler, container);
                 }
 
+                //CommonRules
+                Ektenis3?.Interpret(date, handler);
+                Ektenis6?.Interpret(date, handler);
+                Ektenis9?.Interpret(date, handler);
+                Panagias?.Interpret(date, handler);
+
                 handler.Execute(this);
             }
         }
@@ -118,10 +150,17 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         private void CalculateOdesStructure(DateTime date, IRuleHandler handler, ExecContainer container)
         {
+            bool first = true;
             foreach (KanonasItem item in container.ChildElements)
             {
                 if (item.Calculate(date, handler.Settings) is Kanonas k)
                 {
+                    if (first)
+                    {
+                        KanonasCalculated.Acrostic = k.Acrostic;
+                        first = false;
+                    }
+
                     foreach (Odi odi in k.Odes)
                     {
                         Odi currentOdi = KanonasCalculated.Odes.FirstOrDefault(c => c.Number == odi.Number);

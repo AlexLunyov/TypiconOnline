@@ -10,6 +10,7 @@ using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Psalter;
+using TypiconOnline.Domain.Books.Katavasia;
 
 namespace TypiconOnline.Domain.Books
 {
@@ -37,6 +38,7 @@ namespace TypiconOnline.Domain.Books
         public IOktoikhContext Oktoikh { get; private set; }
         public ITheotokionAppContext TheotokionApp { get; private set; }
         public IEasterContext Easters { get; private set; }
+        public IKatavasiaContext Katavasia { get; private set; }
 
         private BookStorage()
         {
@@ -53,15 +55,17 @@ namespace TypiconOnline.Domain.Books
             IPsalterService psalterService,
             IOktoikhContext oktoikhService,
             ITheotokionAppContext theotokionApp,
-            IEasterContext easterContext)
+            IEasterContext easterContext,
+            IKatavasiaContext katavasia)
         {
             Evangelion = evangelionService ?? throw new ArgumentNullException("evangelionService");
             Apostol = apostolService ?? throw new ArgumentNullException("apostolService");
             OldTestament = oldTestamentService ?? throw new ArgumentNullException("oldTestamentService");
             Psalter = psalterService ?? throw new ArgumentNullException("psalterService");
             Oktoikh = oktoikhService ?? throw new ArgumentNullException("oktoikhService");
-            TheotokionApp = theotokionApp ?? throw new ArgumentNullException("irmologionService");
-            Easters = easterContext ?? throw new ArgumentNullException("irmologionService");
+            TheotokionApp = theotokionApp ?? throw new ArgumentNullException("theotokionApp");
+            Easters = easterContext ?? throw new ArgumentNullException("easterContext");
+            Katavasia = katavasia ?? throw new ArgumentNullException("katavasia");
         }
 
         #region Singletone pattern

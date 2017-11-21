@@ -11,6 +11,7 @@ using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Psalter;
+using TypiconOnline.Domain.Books.Katavasia;
 
 namespace TypiconOnline.Repository.EF.Tests
 {
@@ -26,7 +27,8 @@ namespace TypiconOnline.Repository.EF.Tests
                                     new PsalterService(unitOfWork),
                                     new OktoikhContext(unitOfWork),
                                     new TheotokionAppContext(unitOfWork),
-                                    new EasterContext(unitOfWork));
+                                    new EasterContext(unitOfWork),
+                                    new KatavasiaContext(unitOfWork));
         }
     }
 }

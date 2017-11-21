@@ -21,6 +21,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         //public List<RuleElement> ChildElements { get; set; }
 
+        public CommonRuleElement(string name): base()
+        {
+            Name = name;
+        }
+
         public CommonRuleElement(XmlNode node) : base(node)
         {
             ChildElements = new List<RuleElement>();

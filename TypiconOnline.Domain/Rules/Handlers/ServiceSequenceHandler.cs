@@ -28,7 +28,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 typeof(KekragariaRule),
                 typeof(ApostichaRule),
                 typeof(AinoiRule),
-                typeof(TroparionRule)
+                typeof(TroparionRule),
+                typeof(KanonasRule)
             };
         }
 

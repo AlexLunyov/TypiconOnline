@@ -13,9 +13,7 @@ namespace TypiconOnline.Domain.Books
 
         public BookServiceBase(IUnitOfWork unitOfWork)
         {
-            if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
-
-            _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork");
         }
     }
 }

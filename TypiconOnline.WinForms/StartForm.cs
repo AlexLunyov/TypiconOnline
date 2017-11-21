@@ -29,6 +29,7 @@ using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.OldTestament;
+using TypiconOnline.Domain.Books.Katavasia;
 
 namespace ScheduleForm
 {
@@ -71,7 +72,8 @@ namespace ScheduleForm
                 container.GetInstance<IPsalterService>(),
                 container.GetInstance<IOktoikhContext>(),
                 container.GetInstance<ITheotokionAppContext>(),
-                container.GetInstance<IEasterContext>());
+                container.GetInstance<IEasterContext>(),
+                container.GetInstance<IKatavasiaContext>());
 
             //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 

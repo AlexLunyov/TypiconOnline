@@ -50,6 +50,13 @@
     <Compile Include="Books\GetBookElementResponseBase.cs" />
     <Compile Include="Books\IBookElement.cs" />
     <Compile Include="Books\IBookStorageFactory.cs" />
+    <Compile Include="Books\Katavasia\GetAllKatavasiaResponse.cs" />
+    <Compile Include="Books\Katavasia\GetKatavasiaRequest.cs" />
+    <Compile Include="Books\Katavasia\GetKatavasiaResponse.cs" />
+    <Compile Include="Books\Katavasia\IKatavasiaContext.cs" />
+    <Compile Include="Books\Katavasia\Katavasia.cs" />
+    <Compile Include="Books\Katavasia\KatavasiaContext.cs" />
+    <Compile Include="Books\Katavasia\KatavasiaBusinessConstraint.cs" />
     <Compile Include="Books\Oktoikh\OktoikhCalculator.cs" />
     <Compile Include="Books\Oktoikh\OktoikhDayBusinessConstraint.cs" />
     <Compile Include="Books\TheotokionApp\GetAllTheotokionResponse.cs" />
@@ -73,7 +80,6 @@
     <Compile Include="Books\BookStorage.cs" />
     <Compile Include="Books\Evangelion\EvangelionBook.cs" />
     <Compile Include="Books\Evangelion\EvangelionChapter.cs" />
-    <Compile Include="Books\Oktoikh\OktoikhGlas.cs" />
     <Compile Include="Books\Psalter\PsalterService.cs" />
     <Compile Include="DayRuleWorship.cs" />
     <Compile Include="Days\Day.cs" />
@@ -180,7 +186,9 @@
     <Compile Include="Rules\Schedule\AinoiRule.cs" />
     <Compile Include="Rules\Schedule\KanonasItem.cs" />
     <Compile Include="Rules\Schedule\KanonasRule.cs" />
+    <Compile Include="Rules\Schedule\KKatavasiaRule.cs" />
     <Compile Include="Rules\Schedule\KKontakionRule.cs" />
+    <Compile Include="Rules\Schedule\KKatavasiaRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\KSedalenRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\KSedalenRule.cs" />
     <Compile Include="Rules\Schedule\KSedalenTheotokionRule.cs" />
@@ -216,7 +224,6 @@
     <Compile Include="Typicon\CommonRuleService.cs" />
     <Compile Include="Typicon\CommonRuleServiceRequest.cs" />
     <Compile Include="Typicon\DayRule.cs" />
-    <Compile Include="Typicon\DayRuleService.cs" />
     <Compile Include="Typicon\Factories\TypiconEntityFactory.cs" />
     <Compile Include="Typicon\Modifications\ModifiedRule.cs" />
     <Compile Include="Typicon\Modifications\ModifiedYear.cs" />

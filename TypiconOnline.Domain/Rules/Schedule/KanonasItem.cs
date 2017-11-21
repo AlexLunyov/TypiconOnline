@@ -120,6 +120,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                     //добавляем тропари
                     o.Troparia.AddRange(GetYmnis(odi));
+                    //добавляем саму песнь
+                    result.Odes.Add(o);
                 }
             }
 
@@ -141,9 +143,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 return result;
             }
 
-            if (ymnis.Count >= Count.Value)
+            //если есть ирмосы, вычитаем их количество
+            int count = Count.Value - IrmosCount.Value;
+
+            if (ymnis.Count >= count)
             {
-                result.AddRange(ymnis.Take(Count.Value));
+                result.AddRange(ymnis.Take(count));
             }
             else
             {
@@ -156,11 +161,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                 int i = 0;
 
-                while (appendedCount < Count.Value)
+                while (appendedCount < count)
                 {
                     //округляем в большую сторону результат деления count на YmnosStructureCount
                     //в результате получаем, сколько раз необходимо повторять песнопение
-                    int b = (int)Math.Ceiling((double)(Count.Value - appendedCount) / (ymnis.Count - i));
+                    int b = (int)Math.Ceiling((double)(count - appendedCount) / (ymnis.Count - i));
 
                     Ymnos ymnosToAdd = ymnis[i];
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using TypiconOnline.Domain.Books.Katavasia;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Days;
@@ -69,6 +70,7 @@ namespace TypiconOnline.Repository.EFSQLite.DataBase
 
             modelBuilder.Entity<OktoikhDay>();
             modelBuilder.Entity<TheotokionApp>();
+            modelBuilder.Entity<Katavasia>();
 
 
             base.OnModelCreating(modelBuilder);

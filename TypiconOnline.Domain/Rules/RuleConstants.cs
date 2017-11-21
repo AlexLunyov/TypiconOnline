@@ -128,7 +128,14 @@ namespace TypiconOnline.Domain.Rules
         public const string TroparionNode = "troparion"; 
         public const string SedalenNode = "sedalen";
 
+        /*
+         * Константы для описания атрибутов элемента KanonasRule
+        */
         public const string KanonasRuleNode = "kanonasrule";
+        public const string KanonasRuleEktenis3AttrName = "ektenis3";
+        public const string KanonasRuleEktenis6AttrName = "ektenis6";
+        public const string KanonasRuleEktenis9AttrName = "ektenis9";
+        public const string KanonasRulePanagiasAttrName = "panagias";
 
         /*
          * Константы для описания атрибутов элемента KanonasItem
@@ -152,6 +159,17 @@ namespace TypiconOnline.Domain.Rules
         */
         public const string KSedalenNode = "k_sedalen";
         public const string KSedalenPlaceAttrName = "place";
+
+        /*
+         * Константы для описания атрибутов элемента KSedalenTheotokionRule
+        */
+        public const string KSedalenTheotokionNode = "k_sedalentheotokion";
+
+        /*
+         * Константы для описания атрибутов элемента KSedalenTheotokionRule
+        */
+        public const string KKatavasiaNode = "k_katavasia";
+        public const string KKatavasiaNameAttr = "name";
 
 
         public const string SedalenKathisma1Node = "sed_1kathisma";

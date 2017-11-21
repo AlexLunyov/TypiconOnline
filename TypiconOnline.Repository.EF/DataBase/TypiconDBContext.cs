@@ -69,6 +69,7 @@ namespace TypiconOnline.Repository.EF.DataBase
 
             modelBuilder.Configurations.Add(new IrmologionTheotokionMap());
             modelBuilder.Configurations.Add(new OktoikhDayMap());
+            modelBuilder.Configurations.Add(new KatavasiaMap()); 
         }
 
         #endregion

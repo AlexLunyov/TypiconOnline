@@ -77,9 +77,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
                             //конвертируем структуру кондака в YmnosGroup
                             YmnosGroup group = new YmnosGroup()
                             {
-                                Annotation = new ItemText(kanonas.Kontakion.Annotation),
+                                Annotation = (kanonas.Kontakion.Annotation != null) ? new ItemText(kanonas.Kontakion.Annotation) : null,
                                 Ihos = kanonas.Kontakion.Ihos,
-                                Prosomoion = new Prosomoion(kanonas.Kontakion.Prosomoion),
+                                Prosomoion = (kanonas.Kontakion.Prosomoion != null) ? new Prosomoion(kanonas.Kontakion.Prosomoion) : null,
                                 Ymnis = new List<Ymnos>()
                                 {
                                     new Ymnos() { Text = kanonas.Kontakion.Ymnos },

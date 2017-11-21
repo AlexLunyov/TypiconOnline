@@ -61,31 +61,28 @@ namespace TypiconOnline.AppServices.Implementations
             return "";
         }
 
-        public IEnumerable<FilesSearchResponse> ReadsFromDirectory()
+        public IEnumerable<(string name, string content)> ReadAllFromDirectory()
         {
-            List<FilesSearchResponse> result = new List<FilesSearchResponse>();
+            List<(string name, string content)> result = new List<(string name, string content)>();
 
             string[] files = Directory.GetFiles(FolderPath, "*.xml");
 
             foreach (string fileName in files)
             {
                 FileInfo fileInfo = new FileInfo(fileName);
-                FilesSearchResponse response = new FilesSearchResponse();
-
-                response.Name = Path.GetFileNameWithoutExtension(fileInfo.Name);
 
                 doc.Load(fileName);
                 XmlNode node = doc.DocumentElement;
 
-                response.Xml = (node != null) ? node.OuterXml : string.Empty;
+                string xml = (node != null) ? node.OuterXml : string.Empty;
+
+                var response = (Path.GetFileNameWithoutExtension(fileInfo.Name), xml);
 
                 result.Add(response);
             }
 
             return result;
         }
-
-        
     }
 
     public class FilesSearchResponse

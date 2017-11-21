@@ -98,6 +98,7 @@
     <Compile Include="Rules\Schedule\IsTwoSaintsTest.cs" />
     <Compile Include="Rules\Schedule\IsCelebratingTest.cs" />
     <Compile Include="Rules\Schedule\KanonasRuleTest.cs" />
+    <Compile Include="Rules\Schedule\KKatavasiaRuleTest.cs" />
     <Compile Include="Rules\Schedule\NoticeTest.cs" />
     <Compile Include="Rules\Schedule\TextHolderTest.cs" />
     <Compile Include="Rules\Schedule\YmnosStructureRuleTest.cs" />

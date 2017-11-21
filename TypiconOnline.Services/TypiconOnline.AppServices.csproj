@@ -32,6 +32,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +47,7 @@
     <Compile Include="Common\SignMigrator.cs" />
     <Compile Include="Common\XmlToFileSaver.cs" />
     <Compile Include="Exceptions\ResourceNotFoundException.cs" />
+    <Compile Include="Implementations\Books\KatavasiaService.cs" />
     <Compile Include="Implementations\Books\OktoikhDayService.cs" />
     <Compile Include="Implementations\Books\TheotokionAppService.cs" />
     <Compile Include="Implementations\BypassSequenceViewer.cs" />
@@ -57,6 +61,8 @@
     <Compile Include="Implementations\TypiconEntityService.cs" />
     <Compile Include="Interfaces\IDayContainerService.cs" />
     <Compile Include="Interfaces\IFileReader.cs" />
+    <Compile Include="Interfaces\IKatavasiaFactory.cs" />
+    <Compile Include="Interfaces\IKatavasiaService.cs" />
     <Compile Include="Interfaces\IOktoikhDayFactory.cs" />
     <Compile Include="Interfaces\IOktoikhDayFileReader.cs" />
     <Compile Include="Interfaces\IOktoikhDayService.cs" />
@@ -71,16 +77,22 @@
     <Compile Include="Interfaces\IXmlMigrationService.cs" />
     <Compile Include="Interfaces\IXmlSaver.cs" />
     <Compile Include="Messaging\Books\DeleteOktoikhRequest.cs" />
+    <Compile Include="Messaging\Books\DeleteKatavasiaRequest.cs" />
     <Compile Include="Messaging\Books\DeleteTheotokionRequest.cs" />
     <Compile Include="Messaging\Books\DeleteOktoikhResponse.cs" />
+    <Compile Include="Messaging\Books\DeleteKatavasiaResponse.cs" />
     <Compile Include="Messaging\Books\DeleteTheotokionResponse.cs" />
     <Compile Include="Messaging\Books\InsertOktoikhRequest.cs" />
+    <Compile Include="Messaging\Books\InsertKatavasiaRequest.cs" />
     <Compile Include="Messaging\Books\InsertTheotokionRequest.cs" />
     <Compile Include="Messaging\Books\InsertOktoikhResponse.cs" />
+    <Compile Include="Messaging\Books\InsertKatavasiaResponse.cs" />
     <Compile Include="Messaging\Books\InsertTheotokionResponse.cs" />
     <Compile Include="Messaging\Books\UpdateOktoikhRequest.cs" />
+    <Compile Include="Messaging\Books\UpdateKatavasiaRequest.cs" />
     <Compile Include="Messaging\Books\UpdateTheotokionRequest.cs" />
     <Compile Include="Messaging\Books\UpdateOktoikhResponse.cs" />
+    <Compile Include="Messaging\Books\UpdateKatavasiaResponse.cs" />
     <Compile Include="Messaging\Books\UpdateTheotokionResponse.cs" />
     <Compile Include="Messaging\Common\CreateItemTextRequest.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleDayRequest.cs" />
@@ -99,6 +111,8 @@
     <Compile Include="Messaging\Typicon\UpdateTypiconEntityResponse.cs" />
     <Compile Include="Migration\DayDefinitionTemplateService.cs" />
     <Compile Include="Interfaces\IMigrationManager.cs" />
+    <Compile Include="Migration\KatavasiaFactory.cs" />
+    <Compile Include="Migration\KatavasiaMigrationManager.cs" />
     <Compile Include="Migration\MigrationFileReaderBase.cs" />
     <Compile Include="Migration\OktoikhDayFactory.cs" />
     <Compile Include="Migration\OktoikhDayFileReader.cs" />

@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="DataBase\Mapping\CommonRuleMap.cs" />
     <Compile Include="DataBase\Mapping\DayRuleWorshipMap.cs" />
+    <Compile Include="DataBase\Mapping\KatavasiaMap.cs" />
     <Compile Include="DataBase\Mapping\OktoikhDayMap.cs" />
     <Compile Include="DataBase\Mapping\IrmologionTheotokionMap.cs" />
     <Compile Include="DataBase\Mapping\DayRuleMap.cs" />

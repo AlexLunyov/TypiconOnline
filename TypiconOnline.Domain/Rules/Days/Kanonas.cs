@@ -13,6 +13,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Описание канона (на утрене, повечерии, полунощнице, молебне и т.д.)
     /// </summary>
     [Serializable]
+    [XmlRoot(RuleConstants.KanonasNode)]
     public class Kanonas : DayElementBase, IContainingIhos
     {
         public Kanonas() { }
@@ -48,7 +49,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// </summary>
         [XmlArray(RuleConstants.KanonasOdesNode)]
         [XmlArrayItem(ElementName = RuleConstants.KanonasOdiNode, Type = typeof(Odi))]
-        public List<Odi> Odes { get; set; }
+        public List<Odi> Odes { get; set; } = new List<Odi>();
         /// <summary>
         /// седален по 3-ой песне
         /// </summary>

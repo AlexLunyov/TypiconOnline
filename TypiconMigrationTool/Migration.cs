@@ -42,10 +42,12 @@ namespace TypiconMigrationTool
 
             Console.WriteLine("MigrateEasters()");
             MigrateEasters();
-
+            Console.WriteLine("MigrateTheotokionIrmologion()");
             MigrateTheotokionIrmologion();
-
+            Console.WriteLine("MigrateOktoikh()");
             MigrateOktoikh();
+            Console.WriteLine("MigrateKatavasia()");
+            MigrateKatavasia();
 
             Commit();
         }               
@@ -159,6 +161,21 @@ namespace TypiconMigrationTool
             IOktoikhDayFactory factory = new OktoikhDayFactory();
 
             IMigrationManager manager = new OktoikhDayMigrationManager(factory, reader, service);
+
+            manager.Migrate();
+        }
+
+        private void MigrateKatavasia()
+        {
+            string folder = Path.Combine(Properties.Settings.Default.FolderPath, @"Books\Katavasia");
+
+            IFileReader reader = new FileReader(folder);
+
+            IKatavasiaService service = new KatavasiaService(_unitOfWork);
+
+            IKatavasiaFactory factory = new KatavasiaFactory();
+
+            IMigrationManager manager = new KatavasiaMigrationManager(factory, reader, service);
 
             manager.Migrate();
         }
@@ -359,14 +376,14 @@ namespace TypiconMigrationTool
 
             FileReader fileReader = new FileReader(folderPath);
 
-            IEnumerable<FilesSearchResponse> files = fileReader.ReadsFromDirectory();
+            IEnumerable<(string name, string content)> files = fileReader.ReadAllFromDirectory();
 
-            foreach (FilesSearchResponse file in files)
+            foreach ((string name, string content) file in files)
             {
                 CommonRule commonRule = new CommonRule()
                 {
-                    Name = file.Name,
-                    RuleDefinition = file.Xml,
+                    Name = file.name,
+                    RuleDefinition = file.content,
                     Owner = typiconEntity
                 };
                 typiconEntity.CommonRules.Add(commonRule);

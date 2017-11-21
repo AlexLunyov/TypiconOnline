@@ -241,6 +241,14 @@ namespace TypiconOnline.Domain.Rules.Factories
                     case RuleConstants.KSedalenNode:
                         outputEl = new KSedalenRule(node);
                         break;
+                    //KSedalenTheotokionRule
+                    case RuleConstants.KSedalenTheotokionNode:
+                        outputEl = new KSedalenTheotokionRule(node);
+                        break;
+                    //KKatavasiaRule
+                    case RuleConstants.KKatavasiaNode:
+                        outputEl = new KKatavasiaRule(node);
+                        break;
                 }
             }
             return outputEl;

@@ -24,13 +24,9 @@ namespace TypiconOnline.AppServices.Migration
                                                     ITheotokionAppFileReader fileReader,
                                                     ITheotokionAppService service)
         {
-            if (factory == null) throw new ArgumentNullException("factory");
-            if (fileReader == null) throw new ArgumentNullException("fileReader");
-            if (service == null) throw new ArgumentNullException("service");
-
-            Factory = factory;
-            FileReader = fileReader;
-            Service = service;
+            Factory = factory ?? throw new ArgumentNullException("factory");
+            FileReader = fileReader ?? throw new ArgumentNullException("fileReader");
+            Service = service ?? throw new ArgumentNullException("service");
         }
 
         public void Migrate()

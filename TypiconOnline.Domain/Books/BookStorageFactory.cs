@@ -11,6 +11,7 @@ using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Domain.Books.Katavasia;
 
 namespace TypiconOnline.Domain.Books
 {
@@ -31,7 +32,8 @@ namespace TypiconOnline.Domain.Books
                                     new PsalterService(_unitOfWork),
                                     new OktoikhContext(_unitOfWork),
                                     new TheotokionAppContext(_unitOfWork),
-                                    new EasterContext(_unitOfWork));
+                                    new EasterContext(_unitOfWork),
+                                    new KatavasiaContext(_unitOfWork));
         }
 
         public static BookStorage Create(IUnitOfWork unitOfWork)

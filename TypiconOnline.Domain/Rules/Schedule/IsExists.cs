@@ -22,7 +22,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         public IsExists(XmlNode node) : base(node)
         {
-            if (node.HasChildNodes && node.FirstChild.Name == RuleConstants.YmnosRuleNode)
+            if (node.HasChildNodes)// && node.FirstChild.Name == RuleConstants.YmnosRuleNode)
             {
                 _ymnos = RuleFactory.CreateCalcStructureElement(node.FirstChild);
             }

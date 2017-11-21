@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Books.Katavasia;
 
 namespace TypiconOnline.AppServices.Interfaces
 {
-    public interface IFileReader
+    public interface IKatavasiaFactory
     {
-        string Read(string fileName);
-        IEnumerable<(string name, string content)> ReadAllFromDirectory();
+        Katavasia Create(string name, string definition);
     }
 }

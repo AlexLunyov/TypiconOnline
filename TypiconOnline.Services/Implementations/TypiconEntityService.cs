@@ -150,25 +150,25 @@ namespace TypiconOnline.AppServices.Implementations
 
             FileReader fileReader = new FileReader(folderPath);
 
-            IEnumerable<FilesSearchResponse> files = fileReader.ReadsFromDirectory();
+            IEnumerable<(string name, string content)> files = fileReader.ReadAllFromDirectory();
 
-            foreach (FilesSearchResponse file in files)
+            foreach ((string name, string content) file in files)
             {
-                CommonRule commonRule = typiconEntity.GetCommonRule(c => c.Name == file.Name);
+                CommonRule commonRule = typiconEntity.GetCommonRule(c => c.Name == file.name);
 
                 if (commonRule == null)
                 {
                     commonRule = new CommonRule()
                     {
-                        Name = file.Name,
-                        RuleDefinition = file.Xml,
+                        Name = file.name,
+                        RuleDefinition = file.content,
                         Owner = typiconEntity
                     };
                     typiconEntity.CommonRules.Add(commonRule);
                 }
                 else
                 {
-                    commonRule.RuleDefinition = file.Xml;
+                    commonRule.RuleDefinition = file.content;
                 }
             }
         }

@@ -63,7 +63,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 AddBrokenConstraint(KKontakionRuleBusinessConstraint.KanonasRequired, ElementName);
             }
-            else if (!Source.IsValid)
+            else if (!Kanonas.IsValid)
             {
                 AppendAllBrokenConstraints(Kanonas);
             }
