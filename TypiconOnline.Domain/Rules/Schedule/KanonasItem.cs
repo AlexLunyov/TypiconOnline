@@ -46,6 +46,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// </summary>
         public ItemInt IrmosCount { get; set; }
 
+        /// <summary>
+        /// Если true, добавляет в конец 3-,6,8 и 9-х песен ирмосы канона, в качестве катавасий.
+        /// По умолчанию, false
+        /// </summary>
+        public bool IncludeKatavasia { get; set; } = false;
+
         #endregion
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
@@ -111,15 +117,29 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     Odi o = new Odi() { Number = odi.Number };
 
                     //добавляем ирмос(ы)
+                    Ymnos irmos = odi.Troparia.Find(c => c.Kind == YmnosKind.Irmos);
+
                     int troparia = IrmosCount.Value;
                     while (troparia > 0)
                     {
-                        o.Troparia.Add(odi.Troparia.Find(c => c.Kind == YmnosKind.Irmos));
+                        o.Troparia.Add(irmos);
                         troparia--;
                     }
 
                     //добавляем тропари
                     o.Troparia.AddRange(GetYmnis(odi));
+
+                    if (IncludeKatavasia
+                         && (odi.Number == 3 || odi.Number == 6 || odi.Number == 8 || odi.Number == 9))
+                    {
+                        //добавляем ирмос в качестве катавасии
+                        Ymnos katavasia = new Ymnos(irmos)
+                        {
+                            Kind = YmnosKind.Katavasia
+                        };
+                        o.Troparia.Add(katavasia);
+                    }
+
                     //добавляем саму песнь
                     result.Odes.Add(o);
                 }
