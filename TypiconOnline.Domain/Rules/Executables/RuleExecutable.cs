@@ -19,6 +19,7 @@ namespace TypiconOnline.Domain.Rules.Executables
     public abstract class RuleExecutable : RuleElement
     {
         public RuleExecutable() { }
+        public RuleExecutable(string name) : base(name) { }
         public RuleExecutable(XmlNode node) : base(node)
         {
         }

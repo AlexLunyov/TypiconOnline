@@ -49,7 +49,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             KanonasRule kanonasRule = (rule.Rule as KanonasRule);
 
-            Assert.AreEqual(3, kanonasRule.KanonesCalculated.Count());
+            Assert.AreEqual(4, kanonasRule.KanonesCalculated.Count());
             Assert.IsNotNull(kanonasRule.SedalenCalculated);
         }
     }

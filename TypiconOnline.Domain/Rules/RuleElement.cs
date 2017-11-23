@@ -14,6 +14,11 @@ namespace TypiconOnline.Domain.Rules
 
         public RuleElement() { }
 
+        public RuleElement(string name)
+        {
+            ElementName = name;
+        }
+
         public RuleElement(XmlNode node)
         {
             if (node == null)

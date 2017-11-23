@@ -3,9 +3,9 @@ using TypiconOnline.Domain.Rules;
 
 namespace TypiconOnline.Domain.Interfaces
 {
-    interface IRuleFactory
+    public interface IRuleFactory<T> where T: RuleElement
     {
         IEnumerable<string> ElementNames { get; }
-        RuleElement Create(string description);
+        T Create(IDescriptor descriptor);
     }
 }

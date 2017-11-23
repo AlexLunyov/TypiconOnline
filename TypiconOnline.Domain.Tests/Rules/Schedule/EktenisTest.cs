@@ -24,7 +24,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             FileReader reader = new FileReader(folderPath);
             string xml = reader.Read("Ektenis_CalculatedElements.xml");
 
-            Ektenis element = RuleFactory.CreateElement(xml) as Ektenis;
+            Ektenis element = RuleFactory.CreateElement<Ektenis>(xml);
 
             ServiceSequenceHandler handler = new ServiceSequenceHandler();
 
@@ -43,7 +43,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             FileReader reader = new FileReader(folderPath);
             string xml = reader.Read("Ektenis_CalculatedElements.xml");
 
-            Ektenis element = RuleFactory.CreateElement(xml) as Ektenis;
+            Ektenis element = RuleFactory.CreateElement<Ektenis>(xml);
 
             ServiceSequenceHandler handler = new ServiceSequenceHandler();
 

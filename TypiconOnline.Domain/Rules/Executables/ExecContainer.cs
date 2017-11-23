@@ -17,15 +17,12 @@ namespace TypiconOnline.Domain.Rules.Executables
 {
     public class ExecContainer : RuleExecutable
     {
-        public ExecContainer()
-        {
-            ChildElements = new List<RuleElement>();
-        }
+        public ExecContainer() { }
+
+        public ExecContainer(string name) : base(name) { }
 
         public ExecContainer(XmlNode xmlNode) : base(xmlNode)
         {
-            ChildElements = new List<RuleElement>();
-
             if (xmlNode.HasChildNodes)
             {
                 //ParentElement = null;
@@ -42,7 +39,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         //public RuleElement ParentElement { get; set; }
 
-        public virtual List<RuleElement> ChildElements { get; set; }
+        public virtual List<RuleElement> ChildElements { get; set; } = new List<RuleElement>();
 
         #endregion
 

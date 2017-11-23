@@ -46,6 +46,7 @@
               <k_kanonas source="oktoikh" kanonas="orthros1" count="6" irmoscount="1"/>
               <k_kanonas source="item1" kanonas="orthros1" count="4"/>
               <k_kanonas source="item2" kanonas="orthros1" count="4"/>
+              <k_katavasia name="отверзу_уста_моя"/>
             </else>
           </if>
         </else>

@@ -53,7 +53,7 @@ namespace TypiconOnline.Domain.Books
             IApostolService apostolService,
             IOldTestamentService oldTestamentService,
             IPsalterService psalterService,
-            IOktoikhContext oktoikhService,
+            IOktoikhContext oktoikhContext,
             ITheotokionAppContext theotokionApp,
             IEasterContext easterContext,
             IKatavasiaContext katavasia)
@@ -62,7 +62,7 @@ namespace TypiconOnline.Domain.Books
             Apostol = apostolService ?? throw new ArgumentNullException("apostolService");
             OldTestament = oldTestamentService ?? throw new ArgumentNullException("oldTestamentService");
             Psalter = psalterService ?? throw new ArgumentNullException("psalterService");
-            Oktoikh = oktoikhService ?? throw new ArgumentNullException("oktoikhService");
+            Oktoikh = oktoikhContext ?? throw new ArgumentNullException("oktoikhContext");
             TheotokionApp = theotokionApp ?? throw new ArgumentNullException("theotokionApp");
             Easters = easterContext ?? throw new ArgumentNullException("easterContext");
             Katavasia = katavasia ?? throw new ArgumentNullException("katavasia");

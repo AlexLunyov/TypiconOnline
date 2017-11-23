@@ -104,6 +104,8 @@
     <Compile Include="Rules\Schedule\YmnosStructureRuleTest.cs" />
     <Compile Include="Rules\Schedule\TheotokionRuleTest.cs" />
     <Compile Include="Rules\Schedule\YmnosRuleTest.cs" />
+    <Compile Include="Rules\Serialization\XElementCreatorTest.cs" />
+    <Compile Include="Rules\Serialization\XmlNodeCreatorTest.cs" />
     <Compile Include="Services\ScheduleServiceTest.cs" />
     <Compile Include="Typicon\BerlukiRuTest.cs" />
     <Compile Include="Typicon\TriodionRuleFolderTest.cs" />
@@ -143,8 +145,9 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Esperinos.xml">
+    <Content Include="TestData\Esperinos.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\CommonRuleElement_Simple.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

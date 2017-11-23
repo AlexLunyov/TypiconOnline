@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             string xmlString = @"<k_katavasia source=""item1"" kanonas=""orthros1""/>";
 
-            KKatavasiaRule element = RuleFactory.CreateElement(xmlString) as KKatavasiaRule;
+            KKatavasiaRule element = RuleFactory.CreateElement<KKatavasiaRule>(xmlString);
 
             Assert.IsTrue(element.IsValid);
         }
@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             string xmlString = @"<k_katavasia source=""item1""/>";
 
-            KKatavasiaRule element = RuleFactory.CreateElement(xmlString) as KKatavasiaRule;
+            KKatavasiaRule element = RuleFactory.CreateElement<KKatavasiaRule>(xmlString);
 
             Assert.IsFalse(element.IsValid);
         }
@@ -39,7 +39,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             string xmlString = @"<k_katavasia kanonas=""orthros1""/>";
 
-            KKatavasiaRule element = RuleFactory.CreateElement(xmlString) as KKatavasiaRule;
+            KKatavasiaRule element = RuleFactory.CreateElement<KKatavasiaRule>(xmlString);
 
             Assert.IsFalse(element.IsValid);
         }
@@ -51,7 +51,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             string xmlString = @"<k_katavasia name=""invalid""/>";
 
-            KKatavasiaRule element = RuleFactory.CreateElement(xmlString) as KKatavasiaRule;
+            KKatavasiaRule element = RuleFactory.CreateElement<KKatavasiaRule>(xmlString);
 
             Assert.IsFalse(element.IsValid);
         }
@@ -63,7 +63,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             string xmlString = @"<k_katavasia name=""отверзу_уста_моя""/>";
 
-            KKatavasiaRule element = RuleFactory.CreateElement(xmlString) as KKatavasiaRule;
+            KKatavasiaRule element = RuleFactory.CreateElement<KKatavasiaRule>(xmlString);
 
             Assert.IsTrue(element.IsValid);
         }

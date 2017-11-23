@@ -71,8 +71,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// Кондак по 6-ой песне
         /// </summary>
         public Kontakion KontakionCalculated { get; private set; }
-
-        //public Kanonas KanonasCalculated { get; private set; }
+        /// <summary>
+        /// Эксапостиларий по 9-ой песне
+        /// </summary>
+        public Exapostilarion ExapostilarionCalculated { get; private set; }
 
         #endregion
 

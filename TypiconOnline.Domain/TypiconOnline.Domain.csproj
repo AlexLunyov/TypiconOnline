@@ -87,8 +87,12 @@
     <Compile Include="DayStructureBase.cs" />
     <Compile Include="Interfaces\ICalcStructureElement.cs" />
     <Compile Include="Interfaces\IDayContainerFactory.cs" />
-    <Compile Include="Interfaces\IDayServiceFactory.cs" />
+    <Compile Include="Interfaces\IDayWorshipFactory.cs" />
     <Compile Include="Interfaces\IContainingIhos.cs" />
+    <Compile Include="Interfaces\IDescriptor T.cs" />
+    <Compile Include="Interfaces\IDescriptor.cs" />
+    <Compile Include="Interfaces\IRuleFactory T.cs" />
+    <Compile Include="Interfaces\IRuleFactoryUnitOfWork.cs" />
     <Compile Include="Interfaces\IStructedElement.cs" />
     <Compile Include="Interfaces\IViewModelElement.cs" />
     <Compile Include="Interfaces\IXmlSerializer.cs" />
@@ -136,7 +140,9 @@
     <Compile Include="Rules\Days\Ymnos.cs" />
     <Compile Include="Rules\Days\YmnosStructure.cs" />
     <Compile Include="Rules\Days\YmnosGroup.cs" />
+    <Compile Include="Rules\Executables\ExecContainerFactory.cs" />
     <Compile Include="Rules\Executables\If.cs" />
+    <Compile Include="Rules\Executables\IfFactory.cs" />
     <Compile Include="Rules\Executables\ModifyDay.cs" />
     <Compile Include="Rules\Executables\ModifyReplacedDayBusinessConstraint.cs" />
     <Compile Include="Rules\Executables\ModifyDayBusinessConstraint.cs" />
@@ -161,6 +167,10 @@
     <Compile Include="Rules\Expressions\LogicalExpression.cs" />
     <Compile Include="Rules\Factories\DayContainerFactory.cs" />
     <Compile Include="Rules\Factories\RuleDayFactory.cs" />
+    <Compile Include="Rules\Factories\RuleFactoryUnitOfWork.cs" />
+    <Compile Include="Rules\Factories\RuleXmlFactoryBase.cs" />
+    <Compile Include="Rules\Factories\RuleXmlFactoryContainer T.cs" />
+    <Compile Include="Rules\Factories\XmlDescriptor.cs" />
     <Compile Include="Rules\Handlers\BypassHandler.cs" />
     <Compile Include="Rules\Handlers\CollectorRuleHandler.cs" />
     <Compile Include="Rules\Handlers\CustomParameters\CustomParameterBase T.cs" />
@@ -220,6 +230,8 @@
     <Compile Include="Rules\Schedule\YmnosRule.cs" />
     <Compile Include="Schedule\ScheduleWeek.cs" />
     <Compile Include="Serialization\TypiconSerializer.cs" />
+    <Compile Include="Serialization\XElementCreator.cs" />
+    <Compile Include="Serialization\XmlNodeCreator.cs" />
     <Compile Include="Typicon\CommonRule.cs" />
     <Compile Include="Typicon\CommonRuleService.cs" />
     <Compile Include="Typicon\CommonRuleServiceRequest.cs" />
@@ -257,7 +269,7 @@
     <Compile Include="Rules\Expressions\Int.cs" />
     <Compile Include="Rules\Expressions\RuleExpression.cs" />
     <Compile Include="Rules\Expressions\IntExpression.cs" />
-    <Compile Include="Rules\Factories\RuleContainerFactory.cs" />
+    <Compile Include="Rules\Factories\RuleBaseFactoryContainer T.cs" />
     <Compile Include="Rules\Factories\RuleFactory.cs" />
     <Compile Include="Rules\RuleElement.cs" />
     <Compile Include="Rules\RuleConstants.cs" />
