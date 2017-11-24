@@ -49,7 +49,7 @@ namespace TypiconOnline.Domain.Tests.Services
 
             builder.AppendLine(response.Day.Date.ToShortDateString() + " " + response.Day.Name);
 
-            foreach (ServiceViewModel service in response.Day.Schedule.ChildElements)
+            foreach (WorshipRuleViewModel service in response.Day.Schedule.ChildElements)
             {
                 builder.AppendLine(service.Time + " " + service.Text);
             }

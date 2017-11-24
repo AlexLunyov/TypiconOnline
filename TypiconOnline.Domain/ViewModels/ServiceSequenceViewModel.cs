@@ -10,13 +10,13 @@ using TypiconOnline.Domain.Rules.Schedule;
 
 namespace TypiconOnline.Domain.ViewModels
 {
-    public class ServiceSequenceViewModel : ContainerViewModel
+    public class WorshipSequenceViewModel : ContainerViewModel
     {
-        public ServiceSequenceKind Kind { get; set; }
+        public WorshipSequenceKind Kind { get; set; }
 
-        public ServiceSequenceViewModel(ServiceSequence rule, IRuleHandler handler) : base(rule, handler)
+        public WorshipSequenceViewModel(WorshipSequence rule, IRuleHandler handler) : base(rule, handler)
         {
-            Kind = rule.ServiceSequenceKind;
+            Kind = rule.Kind;
         }
     }
 }

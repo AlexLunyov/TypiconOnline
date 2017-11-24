@@ -8,9 +8,9 @@ using TypiconOnline.Domain.Rules.Schedule;
 
 namespace TypiconOnline.Domain.ViewModels
 {
-    public class NoticeViewModel : ServiceViewModel
+    public class NoticeViewModel : WorshipRuleViewModel
     {
-        public NoticeViewModel(Service item, RuleHandlerBase handler) : base(item, handler)
+        public NoticeViewModel(WorshipRule item, RuleHandlerBase handler) : base(item, handler)
         {
         }
     }

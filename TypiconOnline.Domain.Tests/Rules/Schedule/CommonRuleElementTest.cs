@@ -36,11 +36,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             FileReader reader = new FileReader(folderPath);
             string xml = reader.Read("CommonRuleElement_Simple.xml");
 
-            ServiceSequence element = RuleFactory.CreateElement(xml) as ServiceSequence;
+            WorshipSequence element = RuleFactory.CreateElement(xml) as WorshipSequence;
 
             element.Interpret(DateTime.Today, handler);
 
-            ServiceSequenceViewModel model = new ServiceSequenceViewModel(element, handler);
+            WorshipSequenceViewModel model = new WorshipSequenceViewModel(element, handler);
 
             Assert.AreEqual(4, model.ChildElements.Count);
         }

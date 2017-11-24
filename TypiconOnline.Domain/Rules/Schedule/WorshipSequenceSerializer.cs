@@ -10,9 +10,9 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class ServiceSequenceSerializer : ExecContainerSerializer
+    public class WorshipSequenceSerializer : ExecContainerSerializer
     {
-        public ServiceSequenceSerializer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork)
+        public WorshipSequenceSerializer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork)
         {
             ElementNames = new string[] {
                 RuleConstants.MikrosEsperinosNode,
@@ -23,16 +23,16 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override ExecContainer CreateObject(XmlDescriptor d)
         {
-            return new ServiceSequence(d.GetElementName());
+            return new WorshipSequence(d.GetElementName());
         }
 
         protected override void FillObject(XmlDescriptor d, ExecContainer container)
         {
             base.FillObject(d, container);
 
-            if (Enum.TryParse(d.GetElementName(), true, out ServiceSequenceKind kind))
+            if (Enum.TryParse(d.GetElementName(), true, out WorshipSequenceKind kind))
             {
-                (container as ServiceSequence).ServiceSequenceKind = kind;
+                (container as WorshipSequence).Kind = kind;
             }
         }
     }

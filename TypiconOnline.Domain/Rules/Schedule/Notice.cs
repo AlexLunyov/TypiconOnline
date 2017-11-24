@@ -10,7 +10,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class Notice : Service
+    public class Notice : WorshipRule
     {
         public Notice(XmlNode node) : base(node) { }
 

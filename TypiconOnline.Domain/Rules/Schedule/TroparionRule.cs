@@ -14,6 +14,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class TroparionRule : YmnosStructureRule
     {
+        public TroparionRule(string name) : base(name) { }
         public TroparionRule(XmlNode node) : base(node) { }
 
         public override ElementViewModel CreateViewModel(IRuleHandler handler)

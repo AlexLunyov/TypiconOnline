@@ -412,7 +412,7 @@ namespace TypiconOnline.Domain.Rules
     
     public enum YmnosStructureKind { Kekragaria, Aposticha, Liti, Ainoi }
 
-    public enum ServiceSequenceKind { MikrosEsperinos, Esperinos, Orthros, Hour, Leitourgia }
+    public enum WorshipSequenceKind { MikrosEsperinos, Esperinos, Orthros, Hour, Leitourgia }
 
     public enum TextHolderKind { Choir, Lector, Priest, Deacon, Stihos, Text, Undefined }
 

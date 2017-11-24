@@ -12,16 +12,13 @@ namespace TypiconOnline.Domain.ItemTypes
 {
     public class ItemTime : ItemType
     {
-        private int _hour = 0;
-        private int _minute = 0;
-
         private string _stringExpression = "";
 
         public ItemTime() { }
         public ItemTime(int hour, int minute)
         {
-            _hour = hour;
-            _minute = minute;
+            Hour = hour;
+            Minute = minute;
 
             _stringExpression = hour.ToString("00") + "." + minute.ToString("00");
         }
@@ -33,19 +30,11 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public int Hour
         {
-            get
-            {
-                return _hour;
-            }
-        }
+            get; private set; } = 0;
 
         public int Minute
         {
-            get
-            {
-                return _minute;
-            }
-        }
+            get; private set; } = 0;
 
         public string Expression
         {
@@ -60,8 +49,8 @@ namespace TypiconOnline.Domain.ItemTypes
                 DateTime date = new DateTime();
                 if (DateTime.TryParseExact(_stringExpression, RuleConstants.ItemTimeParsing, new CultureInfo("ru-RU"), DateTimeStyles.None, out date))
                 {
-                    _hour = date.Hour;
-                    _minute = date.Minute;
+                    Hour = date.Hour;
+                    Minute = date.Minute;
                 }
             }
         }
@@ -72,7 +61,7 @@ namespace TypiconOnline.Domain.ItemTypes
         /// <returns></returns>
         public override string ToString()
         {
-            string result = _hour.ToString("00") + "."+_minute.ToString("00");
+            string result = Hour.ToString("00") + "."+Minute.ToString("00");
             return result;
         }
 

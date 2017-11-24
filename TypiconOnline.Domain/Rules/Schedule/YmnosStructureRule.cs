@@ -21,24 +21,21 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public abstract class YmnosStructureRule : ExecContainer, ICustomInterpreted, IViewModelElement
     {
-        private YmnosStructure _stichera;
-
-        private ItemEnumType<YmnosStructureKind> _ymnosStructureKind;
-
         public YmnosStructureRule(string name) : base(name) { }
-
-        public YmnosStructureRule(ExecContainer c)
-        {
-            ChildElements = c.ChildElements;
-        }
 
         public YmnosStructureRule(XmlNode node) : base(node)
         {
-            _ymnosStructureKind = new ItemEnumType<YmnosStructureKind>(node.Name);
+            if (Enum.TryParse(node.Name, true, out YmnosStructureKind kind))
+            {
+                Kind = kind;
+            }
 
             XmlAttribute attr = node.Attributes[RuleConstants.TotalCountAttribute];
 
-            TotalYmnosCount = new ItemInt((attr != null) ? attr.Value : string.Empty);
+            if (int.TryParse(attr?.Value, out int count))
+            {
+                TotalYmnosCount = count;
+            }
         }
 
         #region Properties
@@ -46,29 +43,17 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <summary>
         /// Тип структуры (Господи воззвах, стихиры на стиховне и т.д.)
         /// </summary>
-        public ItemEnumType<YmnosStructureKind> YmnosStructureKind
-        {
-            get
-            {
-                return _ymnosStructureKind;
-            }
-        }
+        public YmnosStructureKind Kind { get; set; }
 
         /// <summary>
         /// Общее количество песнопений (ограничение)
         /// </summary>
-        public ItemInt TotalYmnosCount { get; set; }
+        public int TotalYmnosCount { get; set; }
 
         /// <summary>
         /// Вычисленная последовательность богослужебных текстов
         /// </summary>
-        public YmnosStructure CalculatedYmnosStructure
-        {
-            get
-            {
-                return _stichera;
-            }
-        }
+        public YmnosStructure CalculatedYmnosStructure { get; private set; }
 
         #endregion
 
@@ -98,7 +83,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         private void CalculateYmnosStructure(DateTime date, RuleHandlerSettings settings, ExecContainer container)
         {
-            _stichera = new YmnosStructure();
+            CalculatedYmnosStructure = new YmnosStructure();
             foreach (YmnosRule ymnosRule in container.ChildElements)
             {
                 YmnosStructure s = ymnosRule.Calculate(date, settings) as YmnosStructure;
@@ -107,13 +92,13 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     switch (ymnosRule.YmnosKind.Value)
                     {
                         case YmnosRuleKind.YmnosRule:
-                            _stichera.Groups.AddRange(s.Groups);
+                            CalculatedYmnosStructure.Groups.AddRange(s.Groups);
                             break;
                         case YmnosRuleKind.DoxastichonRule:
-                            _stichera.Doxastichon = s.Doxastichon;
+                            CalculatedYmnosStructure.Doxastichon = s.Doxastichon;
                             break;
                         case YmnosRuleKind.TheotokionRule:
-                            _stichera.Theotokion = s.Theotokion;
+                            CalculatedYmnosStructure.Theotokion = s.Theotokion;
                             break;
                     }
                 }

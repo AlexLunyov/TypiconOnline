@@ -322,13 +322,13 @@ namespace ScheduleForm
                 textBoxResult.AppendText("Знак службы: " + day.SignName + Environment.NewLine);
                 foreach (ElementViewModel element in day.Schedule.ChildElements)
                 {
-                    if (element is NoticeViewModel)
+                    if (element is NoticeViewModel n)
                     {
-                        textBoxResult.AppendText((element as NoticeViewModel).Text + " " + (element as NoticeViewModel).AdditionalName + Environment.NewLine);
+                        textBoxResult.AppendText(n.Text + " " + n.AdditionalName + Environment.NewLine);
                     }
-                    else if (element is ServiceViewModel)
+                    else if (element is WorshipRuleViewModel w)
                     {
-                        textBoxResult.AppendText((element as ServiceViewModel).Time + " " + (element as ServiceViewModel).Text + " " + (element as ServiceViewModel).AdditionalName + Environment.NewLine);
+                        textBoxResult.AppendText(w.Time + " " + w.Text + " " + w.AdditionalName + Environment.NewLine);
                     }
                 }
             }
@@ -464,13 +464,13 @@ namespace ScheduleForm
             textBoxTesting.AppendText(dayResponse.Day.Name + ". " + daysFromEaster + " дней до Пасхи." +Environment.NewLine);
             foreach (ElementViewModel element in dayResponse.Day.Schedule.ChildElements)
             {
-                if (element is NoticeViewModel)
+                if (element is NoticeViewModel n)
                 {
-                    textBoxTesting.AppendText((element as NoticeViewModel).Text + " " + (element as NoticeViewModel).AdditionalName + Environment.NewLine);
+                    textBoxTesting.AppendText(n.Text + " " + n.AdditionalName + Environment.NewLine);
                 }
-                else if (element is ServiceViewModel)
+                else if (element is WorshipRuleViewModel w)
                 {
-                    textBoxTesting.AppendText((element as ServiceViewModel).Time + " " + (element as ServiceViewModel).Text + " " + (element as ServiceViewModel).AdditionalName + Environment.NewLine);
+                    textBoxTesting.AppendText(w.Time + " " + w.Text + " " + w.AdditionalName + Environment.NewLine);
                 }
             }
         }

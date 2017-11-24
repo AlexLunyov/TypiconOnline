@@ -28,9 +28,8 @@ namespace TypiconOnline.AppServices.Implementations
 
         private void Render(ElementViewModel element)
         {
-            if (element is ServiceViewModel)
+            if (element is WorshipRuleViewModel r)
             {
-                ServiceViewModel r = element as ServiceViewModel;
                 _resultStringBuilder.AppendFormat("{0} {1} {2}", r.Time, r.Text, r.AdditionalName);
                 _resultStringBuilder.AppendLine();
 
@@ -39,64 +38,58 @@ namespace TypiconOnline.AppServices.Implementations
                     Render(childElement);
                 }
             }
-            else if (element is ServiceSequenceViewModel)
+            else if (element is WorshipSequenceViewModel s)
             {
-                ServiceSequenceViewModel r = element as ServiceSequenceViewModel;
-                _resultStringBuilder.AppendFormat("[ {0} ]", r.Kind);
+                _resultStringBuilder.AppendFormat("[ {0} ]", s.Kind);
                 _resultStringBuilder.AppendLine();
 
-                foreach (ElementViewModel childElement in r.ChildElements)
+                foreach (ElementViewModel childElement in s.ChildElements)
                 {
                     Render(childElement);
                 }
             }
-            else if (element is YmnosStructureViewModel)
+            else if (element is YmnosStructureViewModel y)
             {
-                YmnosStructureViewModel r = element as YmnosStructureViewModel;
-                _resultStringBuilder.AppendFormat("[ {0}. {1} {2}]", r.Kind, r.IhosText, r.Ihos);
+                _resultStringBuilder.AppendFormat("[ {0}. {1} {2}]", y.Kind, y.IhosText, y.Ihos);
                 _resultStringBuilder.AppendLine();
 
-                foreach (ElementViewModel childElement in r.ChildElements)
+                foreach (ElementViewModel childElement in y.ChildElements)
                 {
                     Render(childElement);
                 }
             }
-            else if (element is ContainerViewModel)
+            else if (element is ContainerViewModel c)
             {
-                ContainerViewModel r = element as ContainerViewModel;
-
-                foreach (ElementViewModel childElement in r.ChildElements)
+                foreach (ElementViewModel childElement in c.ChildElements)
                 {
                     Render(childElement);
                 }
             }
-            else if (element is YmnosGroupViewModel)
+            else if (element is YmnosGroupViewModel yg)
             {
-                YmnosGroupViewModel r = element as YmnosGroupViewModel;
-                _resultStringBuilder.AppendFormat("[ {0} {1}. ", r.IhosText, r.Ihos);
+                _resultStringBuilder.AppendFormat("[ {0} {1}. ", yg.IhosText, yg.Ihos);
 
-                if (!string.IsNullOrEmpty(r.Self))
+                if (!string.IsNullOrEmpty(yg.Self))
                 {
-                    _resultStringBuilder.AppendFormat(". {0}", r.Self);
+                    _resultStringBuilder.AppendFormat(". {0}", yg.Self);
                 }
-                else if (!string.IsNullOrEmpty(r.Prosomoion))
+                else if (!string.IsNullOrEmpty(yg.Prosomoion))
                 {
-                    _resultStringBuilder.AppendFormat(". {0}", r.Prosomoion);
+                    _resultStringBuilder.AppendFormat(". {0}", yg.Prosomoion);
                 }
                 _resultStringBuilder.AppendLine("]");
 
-                foreach (ElementViewModel childElement in r.ChildElements)
+                foreach (ElementViewModel childElement in yg.ChildElements)
                 {
                     Render(childElement);
                 }
             }
-            else if (element is TextHolderViewModel)
+            else if (element is TextHolderViewModel t)
             {
-                TextHolderViewModel r = element as TextHolderViewModel;
-                _resultStringBuilder.AppendFormat("[ {0} ]", r.Kind);
+                _resultStringBuilder.AppendFormat("[ {0} ]", t.Kind);
                 _resultStringBuilder.AppendLine();
 
-                foreach (string p in r.Paragraphs)
+                foreach (string p in t.Paragraphs)
                 {
                     _resultStringBuilder.AppendLine(p);
                 }

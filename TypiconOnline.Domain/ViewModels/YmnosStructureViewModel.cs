@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.ViewModels
             _rule = rule;
             _handler = handler;
 
-            Kind = _rule.YmnosStructureKind.Value;
+            Kind = _rule.Kind;
         }
 
         protected override void FillChildElements()

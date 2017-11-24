@@ -14,9 +14,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class SedalenRule : YmnosStructureRule
     {
-        public SedalenRule(XmlNode node) : base(node)
-        {
-        }
+        public SedalenRule(string name) : base(name) { }
+        public SedalenRule(XmlNode node) : base(node) { }
 
         public override ElementViewModel CreateViewModel(IRuleHandler handler)
         {

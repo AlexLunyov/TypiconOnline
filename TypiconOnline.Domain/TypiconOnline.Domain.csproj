@@ -167,9 +167,16 @@
     <Compile Include="Rules\Expressions\LogicalExpression.cs" />
     <Compile Include="Rules\Factories\DayContainerFactory.cs" />
     <Compile Include="Rules\Factories\RuleDayFactory.cs" />
+    <Compile Include="Rules\Schedule\AinoiRuleSerializer.cs" />
+    <Compile Include="Rules\Schedule\WorshipRuleSerializer.cs" />
+    <Compile Include="Rules\Schedule\KanonasRuleSerializer.cs" />
+    <Compile Include="Rules\Schedule\SedalenRuleSerializer.cs" />
+    <Compile Include="Rules\Schedule\ApostichaRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\KekragariaRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\KKontakionRuleSerializer.cs" />
-    <Compile Include="Rules\Schedule\ServiceSequenceSerializer.cs" />
+    <Compile Include="Rules\Schedule\WorshipSequenceSerializer.cs" />
+    <Compile Include="Rules\Schedule\TroparionRuleSerializer.cs" />
+    <Compile Include="Rules\Schedule\WorshipSequence.cs" />
     <Compile Include="Rules\Schedule\YmnosRuleSerializer.cs" />
     <Compile Include="Serialization\RuleSerializerUnitOfWork.cs" />
     <Compile Include="Serialization\RuleXmlSerializerBase.cs" />
@@ -221,8 +228,7 @@
     <Compile Include="Rules\Schedule\TextHolder.cs" />
     <Compile Include="Rules\Schedule\IsCelebrating.cs" />
     <Compile Include="Rules\Schedule\KekragariaRule.cs" />
-    <Compile Include="Rules\Schedule\Service.cs" />
-    <Compile Include="Rules\Schedule\ServiceSequence.cs" />
+    <Compile Include="Rules\Schedule\WorshipRule.cs" />
     <Compile Include="Rules\Schedule\TextHolderBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\TheotokionRule.cs" />
     <Compile Include="Rules\Schedule\TheotokionRuleBusinessConstraint.cs" />
@@ -233,7 +239,7 @@
     <Compile Include="Rules\Schedule\Notice.cs" />
     <Compile Include="Rules\Schedule\YmnosStructureRule.cs" />
     <Compile Include="Rules\Schedule\YmnosRule.cs" />
-    <Compile Include="Rules\Schedule\YmnosStructureRuleFactory.cs" />
+    <Compile Include="Rules\Schedule\YmnosStructureRuleSerializer.cs" />
     <Compile Include="Schedule\ScheduleWeek.cs" />
     <Compile Include="Serialization\TypiconSerializer.cs" />
     <Compile Include="Serialization\XElementCreator.cs" />
@@ -300,8 +306,8 @@
     <Compile Include="ViewModels\KekragariaRuleViewModel.cs" />
     <Compile Include="ViewModels\NoticeViewModel.cs" />
     <Compile Include="ViewModels\ServiceSequenceViewModel.cs" />
-    <Compile Include="ViewModels\ServiceViewModel.cs" />
     <Compile Include="ViewModels\TextHolderViewModel.cs" />
+    <Compile Include="ViewModels\WorshipRuleViewModel.cs" />
     <Compile Include="ViewModels\YmnosGroupViewModel.cs" />
     <Compile Include="ViewModels\YmnosStructureViewModel.cs" />
   </ItemGroup>

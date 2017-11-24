@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         {
             AuthorizedTypes = new List<Type>()
             {
-                typeof(Service),
+                typeof(WorshipRule),
                 typeof(Notice)
             };
 
@@ -41,18 +41,18 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
         public override void Execute(ICustomInterpreted element)
         {
-            if ((element is Service) || (element is Notice))
+            if ((element is WorshipRule) || (element is Notice))
             {
                 if ((_settings.Mode == HandlingMode.All) ||
-                    ((_settings.Mode == HandlingMode.DayBefore) && ((element as Service).IsDayBefore.Value)) ||
-                    ((_settings.Mode == HandlingMode.ThisDay) && (!(element as Service).IsDayBefore.Value)))
+                    ((_settings.Mode == HandlingMode.DayBefore) && ((element as WorshipRule).IsDayBefore)) ||
+                    ((_settings.Mode == HandlingMode.ThisDay) && (!(element as WorshipRule).IsDayBefore)))
                 {
                     //if (_executingResult == null)
                     //{
                     //    _executingResult = new ContainerViewModel();
                     //}
 
-                    ServiceViewModel renderService = new ServiceViewModel(element as Service, this);
+                    WorshipRuleViewModel renderService = new WorshipRuleViewModel(element as WorshipRule, this);
                     //renderService.CopyOnlyValues(element as Service);
 
                     ExecutingResult.ChildElements.Add(renderService);

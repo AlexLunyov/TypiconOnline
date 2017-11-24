@@ -18,6 +18,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KanonasRule : ExecContainer, ICustomInterpreted, IViewModelElement
     {
+        public KanonasRule(string name) : base(name) { }
+
         public KanonasRule(XmlNode node) : base(node)
         {
             XmlAttribute attr = node.Attributes[RuleConstants.KanonasRuleEktenis3AttrName];

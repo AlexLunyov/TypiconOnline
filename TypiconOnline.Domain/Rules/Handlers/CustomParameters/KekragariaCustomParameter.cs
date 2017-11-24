@@ -25,7 +25,7 @@ namespace TypiconOnline.Domain.Rules.Handlers.CustomParameters
 
             if (TotalYmnosCount != null)
             {
-                element.TotalYmnosCount.Value = (int) TotalYmnosCount;
+                element.TotalYmnosCount = (int) TotalYmnosCount;
             }
         }
     }

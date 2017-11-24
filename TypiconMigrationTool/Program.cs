@@ -175,7 +175,7 @@ namespace TypiconMigrationTool
                         StringBuilder stringBuilder = new StringBuilder();
                         stringBuilder.AppendLine(day.Date.ToShortDateString());
                         stringBuilder.AppendLine(day.Name);
-                        foreach (ServiceViewModel service in day.Schedule.ChildElements)
+                        foreach (WorshipRuleViewModel service in day.Schedule.ChildElements)
                         {
                             stringBuilder.AppendLine(service.Time + " " + service.Text + " " + service.AdditionalName);
                         }

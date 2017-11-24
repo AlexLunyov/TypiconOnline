@@ -315,7 +315,7 @@ namespace TypiconOnline.Domain.Rules.Factories
                 case RuleConstants.EsperinosNode:
                 case RuleConstants.OrthrosNode:
                 case RuleConstants.LeitourgiaNode:
-                    outputEl = new ServiceSequence(node);
+                    outputEl = new WorshipSequence(node);
                     break;
                 case RuleConstants.KekragariaRuleNode:
                     outputEl = new KekragariaRule(node);
@@ -337,7 +337,7 @@ namespace TypiconOnline.Domain.Rules.Factories
                     outputEl = new KanonasRule(node);
                     break;
                 case RuleConstants.ServiceNodeName:
-                    outputEl = new Service(node);
+                    outputEl = new WorshipRule(node);
                     break;                
             }
             return outputEl;

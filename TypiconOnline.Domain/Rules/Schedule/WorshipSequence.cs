@@ -15,27 +15,27 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Правило для службы (Вечерня, Утреня, Литургия и т.д.)
     /// </summary>
-    public class ServiceSequence : ExecContainer, ICustomInterpreted, IViewModelElement
+    public class WorshipSequence : ExecContainer, ICustomInterpreted, IViewModelElement
     {
-        public ServiceSequence(string name) : base(name) { }
+        public WorshipSequence(string name) : base(name) { }
 
-        public ServiceSequence(XmlNode node) : base(node)
+        public WorshipSequence(XmlNode node) : base(node)
         {
-            if (Enum.TryParse(node.Name, true, out ServiceSequenceKind kind))
+            if (Enum.TryParse(node.Name, true, out WorshipSequenceKind kind))
             {
-                ServiceSequenceKind = kind;
+                Kind = kind;
             }
         }
 
         #region Properties
 
-        public ServiceSequenceKind ServiceSequenceKind { get; set; }
+        public WorshipSequenceKind Kind { get; set; }
 
         #endregion
 
         public ElementViewModel CreateViewModel(IRuleHandler handler)
         {
-            return new ServiceSequenceViewModel(this, handler);
+            return new WorshipSequenceViewModel(this, handler);
         }
     }
 }

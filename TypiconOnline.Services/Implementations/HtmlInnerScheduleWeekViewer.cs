@@ -85,7 +85,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 _resultString += "<table border=0>";
 
-                foreach (ServiceViewModel service in day.Schedule.ChildElements)
+                foreach (WorshipRuleViewModel service in day.Schedule.ChildElements)
                 {
                     _resultString += "<tr><td>";
 

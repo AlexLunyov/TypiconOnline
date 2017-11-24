@@ -18,11 +18,11 @@ namespace TypiconOnline.Domain.Rules.Handlers
         {
             AuthorizedTypes = new List<Type>()
             {
-                typeof(Service),
+                typeof(WorshipRule),
                 //typeof(Notice),
                 typeof(TextHolder),
                 typeof(YmnosStructureRule),
-                typeof(ServiceSequence),
+                typeof(WorshipSequence),
                 typeof(Ektenis),
                 typeof(CommonRuleElement),
                 typeof(KekragariaRule),

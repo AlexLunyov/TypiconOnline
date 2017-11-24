@@ -9,15 +9,15 @@ using TypiconOnline.Domain.Rules.Schedule;
 
 namespace TypiconOnline.Domain.ViewModels
 {
-    public class ServiceViewModel : ContainerViewModel
+    public class WorshipRuleViewModel : ContainerViewModel
     {
-        public ServiceViewModel() { }
+        public WorshipRuleViewModel() { }
 
-        public ServiceViewModel(Service service, RuleHandlerBase handler) : base(service, handler)
+        public WorshipRuleViewModel(WorshipRule service, RuleHandlerBase handler) : base(service, handler)
         {
             Text = service.Name;
             Time = service.Time.Expression;
-            IsDayBefore = service.IsDayBefore.Value;
+            IsDayBefore = service.IsDayBefore;
             AdditionalName = service.AdditionalName;
         }
 
