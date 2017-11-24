@@ -93,6 +93,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\Factories\RuleFactoryUnitOfWorkTest.cs" />
     <Compile Include="Rules\Handlers\ServiceSequenceHandlerTest.cs" />
+    <Compile Include="Rules\RuleTestBase.cs" />
     <Compile Include="Rules\Schedule\CommonRuleElementTest.cs" />
     <Compile Include="Rules\Schedule\EktenisTest.cs" />
     <Compile Include="Rules\Schedule\IsExistsTest.cs" />

@@ -59,7 +59,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
                                 </rule>";
             #endregion
 
-            var unitOfWork = new RuleSerializerRoot();
+            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
 
             var element = unitOfWork.Factory<ExecContainer>()
                 .CreateElement(new XmlDescriptor() { Description = xmlString });

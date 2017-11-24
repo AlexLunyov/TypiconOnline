@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = "<int>--13-06</int>";
 
-            var unitOfWork = new RuleSerializerRoot();
+            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
 
             var element = unitOfWork.Factory<Int>()
                 .CreateElement(new XmlDescriptor() { Description = xmlString });
@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = "<int>-15</int>";
 
-            var unitOfWork = new RuleSerializerRoot();
+            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
 
             var element = unitOfWork.Factory<Int>()
                 .CreateElement(new XmlDescriptor() { Description = xmlString });

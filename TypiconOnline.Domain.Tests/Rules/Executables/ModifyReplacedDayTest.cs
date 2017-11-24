@@ -25,7 +25,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         {
             string xmlString = @"<modifyreplacedday daymove=""0"" kind=""menology""/>";
 
-            var unitOfWork = new RuleSerializerRoot();
+            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
 
             var element = unitOfWork.Factory<ModifyReplacedDay>()
                 .CreateElement(new XmlDescriptor() { Description = xmlString });
