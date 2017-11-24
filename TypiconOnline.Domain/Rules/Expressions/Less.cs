@@ -34,9 +34,8 @@ namespace TypiconOnline.Domain.Rules.Expressions
     /// </summary>
     public class Less : ComparisonExpression
     {
-        public Less(XmlNode valNode) : base(valNode)
-        {
-        }
+        public Less(string name) : base(name) { }
+        public Less(XmlNode valNode) : base(valNode) { }
 
         protected override bool Operate(RuleExpression exp1, RuleExpression exp2, bool? previousValue)
         {

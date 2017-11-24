@@ -12,9 +12,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public abstract class YmnosStructureRuleSerializer : ExecContainerSerializer
     {
-        public YmnosStructureRuleSerializer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork) { }
+        public YmnosStructureRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork) { }
 
-        protected override void FillObject(XmlDescriptor d, ExecContainer container)
+        protected override void FillObject(XmlDescriptor d, RuleElement container)
         {
             base.FillObject(d, container);
 

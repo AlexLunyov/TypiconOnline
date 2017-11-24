@@ -8,7 +8,7 @@ using TypiconOnline.Domain.Rules;
 
 namespace TypiconOnline.Domain.Serialization
 {
-    public class RuleSerializerUnitOfWork : IRuleSerializerUnitOfWork
+    public class RuleSerializerRoot : IRuleSerializerRoot
     {
         protected Dictionary<string, object> factories = new Dictionary<string, object>();
 
@@ -17,14 +17,14 @@ namespace TypiconOnline.Domain.Serialization
         /// </summary>
         /// <typeparam name="T">Елемент правила. Также учитываются все его наследники</typeparam>
         /// <returns></returns>
-        public RuleBaseSerializerContainer<T> Factory<T>() where T : RuleElement
+        public RuleSerializerContainerBase<T> Factory<T>() where T : RuleElement
         {
             string key = typeof(T).Name;
             if (factories.Keys.Contains(key) == true)
             {
-                return factories[key] as RuleBaseSerializerContainer<T>;
+                return factories[key] as RuleSerializerContainerBase<T>;
             }
-            RuleBaseSerializerContainer<T> factory = new RuleXmlSerializerContainer<T>(this);
+            RuleSerializerContainerBase<T> factory = new RuleXmlSerializerContainer<T>(this);
             factories.Add(key, factory);
             return factory;        
         }
@@ -34,15 +34,15 @@ namespace TypiconOnline.Domain.Serialization
         /// <typeparam name="T">Елемент правила. Также учитываются все его наследники</typeparam>
         /// <typeparam name="U">Второе условие</typeparam>
         /// <returns></returns>
-        public RuleBaseSerializerContainer<T> Factory<T, U>() where T : RuleElement
+        public RuleSerializerContainerBase<T> Factory<T, U>() where T : RuleElement
         {
             string key = typeof(T).Name + typeof(U).Name;
 
             if (factories.Keys.Contains(key) == true)
             {
-                return factories[key] as RuleBaseSerializerContainer<T>;
+                return factories[key] as RuleSerializerContainerBase<T>;
             }
-            RuleBaseSerializerContainer<T> factory = new RuleXmlSerializerContainer<T, U>(this);
+            RuleSerializerContainerBase<T> factory = new RuleXmlSerializerContainer<T, U>(this);
             factories.Add(key, factory);
             return factory;
         }

@@ -11,42 +11,28 @@ namespace TypiconOnline.Domain.Rules.Executables
 {
     public class ModifyReplacedDay : ModifyDay
     {
-        private RuleConstants.KindOfReplacedDay _kind = RuleConstants.KindOfReplacedDay.undefined;
-        private DateTime _dateToReplaceCalculated;
+        public ModifyReplacedDay(string name) : base(name) { }
 
         public ModifyReplacedDay(XmlNode node) : base(node)
         {
-            if (node.Attributes != null)
-            {
-                XmlAttribute attr = node.Attributes[RuleConstants.KindAttrName];
+            XmlAttribute attr = node.Attributes[RuleConstants.KindAttrName];
 
-                if (attr != null)
-                {
-                    Enum.TryParse(attr.Value, out _kind);
-                }
+            if (Enum.TryParse(attr.Value, true, out KindOfReplacedDay value))
+            {
+                Kind = value;
             }
         }
 
         #region Properties
 
-        public RuleConstants.KindOfReplacedDay Kind
-        {
-            get
-            {
-                return _kind;
-            }
-        }
+        public KindOfReplacedDay Kind { get; set; }
 
         /// <summary>
         /// Дата, по которой будет совершаться поиск правила для модификации
         /// </summary>
         public DateTime DateToReplaceCalculated
         {
-            get
-            {
-                return _dateToReplaceCalculated;
-            }
-        }
+            get; private set; }
 
         #endregion
 
@@ -54,24 +40,12 @@ namespace TypiconOnline.Domain.Rules.Executables
         {
             InterpretChildDateExp(date, handler);
 
-            _dateToReplaceCalculated = date;
+            DateToReplaceCalculated = date;
 
             handler.Execute(this);
 
-            if (_modifyReplacedDay != null)
-            {
-                _modifyReplacedDay.Interpret(MoveDateCalculated, handler);
-            }
+            ModifyReplacedDay?.Interpret(MoveDateCalculated, handler);
         }
 
-        protected override void Validate()
-        {
-            base.Validate();
-
-            if (_kind == RuleConstants.KindOfReplacedDay.undefined)
-            {
-                AddBrokenConstraint(ModifyReplacedDayBusinessConstraint.KindUndefined, ElementName);
-            }
-        }
     }
 }

@@ -11,17 +11,23 @@ namespace TypiconOnline.Domain.Rules.Executables
 {
     public class IfSerializer : RuleXmlSerializerBase, IRuleSerializer<If>
     {
-        public IfSerializer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork)
+        public IfSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
         {
             ElementNames = new string[] { RuleConstants.IfNodeName };
         }
 
-        public RuleElement Deserialize(IDescriptor descriptor)
+
+        public override string Serialize(RuleElement element)
         {
             throw new NotImplementedException();
         }
 
-        public string Serialize(RuleElement element)
+        protected override RuleElement CreateObject(XmlDescriptor d)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void FillObject(XmlDescriptor d, RuleElement element)
         {
             throw new NotImplementedException();
         }

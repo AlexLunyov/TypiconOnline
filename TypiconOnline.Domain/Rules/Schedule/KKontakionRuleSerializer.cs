@@ -11,17 +11,22 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class KKontakionRuleSerializer : RuleXmlSerializerBase, IRuleSerializer<KKontakionRule>
     {
-        public KKontakionRuleSerializer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork)
+        public KKontakionRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
         {
             ElementNames = new string[] { RuleConstants.KKontakionNode };
         }
 
-        public RuleElement Deserialize(IDescriptor descriptor)
+        public override string Serialize(RuleElement element)
         {
             throw new NotImplementedException();
         }
 
-        public string Serialize(RuleElement element)
+        protected override RuleElement CreateObject(XmlDescriptor d)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void FillObject(XmlDescriptor d, RuleElement element)
         {
             throw new NotImplementedException();
         }

@@ -11,13 +11,13 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class SedalenRuleSerializer : YmnosStructureRuleSerializer
     {
-        public SedalenRuleSerializer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork)
+        public SedalenRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
         {
             ElementNames = new string[] {
                 RuleConstants.SedalenNode };
         }
 
-        protected override ExecContainer CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(XmlDescriptor d)
         {
             return new SedalenRule(d.GetElementName());
         }

@@ -11,14 +11,14 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class ApostichaRuleSerializer : YmnosStructureRuleSerializer
     {
-        public ApostichaRuleSerializer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork)
+        public ApostichaRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
         {
             ElementNames = new string[] {
                 RuleConstants.ApostichaNode,
                 RuleConstants.LitiNode };
         }
 
-        protected override ExecContainer CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(XmlDescriptor d)
         {
             return new ApostichaRule(d.GetElementName());
         }

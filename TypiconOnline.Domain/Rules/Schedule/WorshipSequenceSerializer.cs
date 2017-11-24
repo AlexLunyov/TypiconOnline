@@ -12,7 +12,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class WorshipSequenceSerializer : ExecContainerSerializer
     {
-        public WorshipSequenceSerializer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork)
+        public WorshipSequenceSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
         {
             ElementNames = new string[] {
                 RuleConstants.MikrosEsperinosNode,
@@ -21,12 +21,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.LeitourgiaNode };
         }
 
-        protected override ExecContainer CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(XmlDescriptor d)
         {
             return new WorshipSequence(d.GetElementName());
         }
 
-        protected override void FillObject(XmlDescriptor d, ExecContainer container)
+        protected override void FillObject(XmlDescriptor d, RuleElement container)
         {
             base.FillObject(d, container);
 

@@ -19,39 +19,38 @@ namespace TypiconOnline.Domain.Rules.Expressions
     /// </summary>
     public class DateByDaysFromEaster : DateExpression
     {
-        private IntExpression _daysFromEaster;
+        public DateByDaysFromEaster(string name) : base(name) { }
 
         public DateByDaysFromEaster(XmlNode node) : base(node)
         {
             if (node.HasChildNodes)
             {
-                _daysFromEaster = Factories.RuleFactory.CreateIntExpression(node.FirstChild);
+                ChildExpression = Factories.RuleFactory.CreateIntExpression(node.FirstChild);
             }
         }
 
+        public IntExpression ChildExpression { get; set; }
+
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            _daysFromEaster.Interpret(date, handler);
+            ChildExpression.Interpret(date, handler);
 
             DateTime easterDate = BookStorage.Instance.Easters.GetCurrentEaster(date.Year);
 
-            _valueCalculated = easterDate.AddDays((int)_daysFromEaster.ValueCalculated);
+            ValueCalculated = easterDate.AddDays((int)ChildExpression.ValueCalculated);
         }
 
         protected override void Validate()
         {
-            if (_daysFromEaster == null)
+            if (ChildExpression == null)
             {
                 AddBrokenConstraint(DateByDaysFromEasterBusinessConstraint.IntAbsense, ElementName);
             }
             else
             {
-                if (!_daysFromEaster.IsValid)
+                if (!ChildExpression.IsValid)
                 {
-                    foreach (BusinessConstraint brokenRule in _daysFromEaster.GetBrokenConstraints())
-                    {
-                        AddBrokenConstraint(brokenRule, ElementName + "." + RuleConstants.DateByDaysFromEasterNodeName + "." + brokenRule.ConstraintPath);
-                    }
+                    AppendAllBrokenConstraints(ChildExpression, ElementName);
                 }
             }
         }

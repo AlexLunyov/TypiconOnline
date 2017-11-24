@@ -18,9 +18,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class IsTwoSaints : BooleanExpression
     {
-        public IsTwoSaints(XmlNode node) : base(node)
-        {
-        }
+        public IsTwoSaints(string name) : base(name) { }
+        public IsTwoSaints(XmlNode node) : base(node) { }
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
@@ -35,7 +34,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                        i++;
                     }
                 }
-                _valueCalculated = (i > 1);
+                ValueCalculated = (i > 1);
             //}
         }
 

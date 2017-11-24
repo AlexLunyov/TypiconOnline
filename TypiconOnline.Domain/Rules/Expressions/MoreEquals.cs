@@ -33,9 +33,8 @@ namespace TypiconOnline.Domain.Rules.Expressions
     /// </summary>
     public class MoreEquals : ComparisonExpression
     {
-        public MoreEquals(XmlNode valNode) : base(valNode)
-        {
-        }
+        public MoreEquals(string name) : base(name) { }
+        public MoreEquals(XmlNode valNode) : base(valNode) { }
 
         protected override bool Operate(RuleExpression exp1, RuleExpression exp2, bool? previousValue)
         {

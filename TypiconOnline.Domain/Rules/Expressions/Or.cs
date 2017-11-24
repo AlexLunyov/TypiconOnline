@@ -12,9 +12,8 @@ namespace TypiconOnline.Domain.Rules.Expressions
     /// </summary>
     public class Or : LogicalOperation
     {
-        public Or(XmlNode node) : base(node)
-        {
-        }
+        public Or(string name) : base(name) { }
+        public Or(XmlNode node) : base(node) { }
 
         protected override bool Operate(RuleExpression exp1, RuleExpression exp2, bool? previousValue)
         {

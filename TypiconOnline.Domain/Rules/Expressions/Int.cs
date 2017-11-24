@@ -18,8 +18,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class Int : IntExpression
     {
-        //private int _value;
-        //private string _stringValue;
+        public Int(string name) : base(name) { }
 
         public Int(XmlNode valNode) : base(valNode)
         {
@@ -29,13 +28,22 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
             //int.TryParse(valNode.InnerText, out _outputaValue);
 
-            _valueExpression = new ItemInt(valNode.InnerText);
+            ValueExpression = new ItemInt(valNode.InnerText);
+        }
 
-            int i;
 
-            int.TryParse(valNode.InnerText, out i);
+        public override object ValueExpression
+        {
+            get
+            {
+                return base.ValueExpression;
+            }
+            set
+            {
+                base.ValueExpression = value;
 
-            _valueCalculated = i;
+                ValueCalculated = (value as ItemInt)?.Value;
+            }
         }
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
@@ -62,9 +70,9 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override void Validate()
         {
-            if (!((ItemInt)_valueExpression).IsValid)
+            if ((ValueExpression as ItemInt)?.IsValid == false)
             {
-                foreach (BusinessConstraint brokenRule in ((ItemInt)_valueExpression).GetBrokenConstraints())
+                foreach (BusinessConstraint brokenRule in ((ItemInt)ValueExpression).GetBrokenConstraints())
                 {
                     AddBrokenConstraint(brokenRule, ElementName);
                 }

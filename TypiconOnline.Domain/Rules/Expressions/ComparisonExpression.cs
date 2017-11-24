@@ -34,15 +34,14 @@ namespace TypiconOnline.Domain.Rules.Expressions
     /// </summary>
     public abstract class ComparisonExpression : LogicalExpression
     {
-        public ComparisonExpression(XmlNode valNode) : base(valNode)
-        {
-        }
+        public ComparisonExpression(string name) : base(name) { }
+        public ComparisonExpression(XmlNode valNode) : base(valNode) { }
 
         protected override void Validate()
         {
             base.Validate();
 
-            foreach (RuleExpression exp in _childElements)
+            foreach (RuleExpression exp in ChildElements)
             {
                 //Проверяем, элемент с каким выходным типом значения
                 //Должен быть только целочисленным

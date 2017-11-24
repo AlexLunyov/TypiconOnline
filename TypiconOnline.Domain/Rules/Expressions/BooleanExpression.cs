@@ -10,13 +10,10 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public abstract class BooleanExpression : RuleExpression
     {
-        public BooleanExpression(XmlNode node) : base(node)
-        {
-        }
+        public BooleanExpression(string name) : base(name) { }
+        public BooleanExpression(XmlNode node) : base(node) { }
 
         //protected int _outputValue;
-
-        #region Properties
 
         public override Type ExpressionType
         {
@@ -31,6 +28,5 @@ namespace TypiconOnline.Domain.Rules.Expressions
         //    get { return _outputValue; }
         //}
 
-        #endregion
     }
 }

@@ -33,9 +33,8 @@ namespace TypiconOnline.Domain.Rules.Expressions
     /// </summary>
     public class Equals : LogicalExpression
     {
-        public Equals(XmlNode valNode) : base(valNode)
-        {
-        }
+        public Equals(string name) : base(name) { }
+        public Equals(XmlNode valNode) : base(valNode) { }
 
         protected override bool Operate(RuleExpression exp1, RuleExpression exp2, bool? previousValue)
         {

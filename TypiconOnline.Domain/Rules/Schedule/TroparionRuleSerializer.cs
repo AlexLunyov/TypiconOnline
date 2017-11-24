@@ -11,13 +11,13 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class TroparionRuleSerializer : YmnosStructureRuleSerializer
     {
-        public TroparionRuleSerializer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork)
+        public TroparionRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
         {
             ElementNames = new string[] {
                 RuleConstants.TroparionNode };
         }
 
-        protected override ExecContainer CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(XmlDescriptor d)
         {
             return new TroparionRule(d.GetElementName());
         }

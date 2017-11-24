@@ -14,22 +14,18 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class Case : RuleExpression
     {
-        private List<RuleExpression> _valuesElements;
-        private ExecContainer _actionElement;
-
+        public Case(string name) : base(name) { }
 
         public Case(XmlNode caseNode) : base(caseNode)
         {
             XmlNode valuesNode = caseNode.SelectSingleNode(RuleConstants.ValuesNodeName);
-
-            _valuesElements = new List<RuleExpression>();
 
             if ((valuesNode != null) && (valuesNode.ChildNodes != null))
             {
                 foreach (XmlNode valueNode in valuesNode.ChildNodes)
                 {
                     RuleExpression valueElement = Factories.RuleFactory.CreateExpression(valueNode);
-                    _valuesElements.Add(valueElement);
+                    ValuesElements.Add(valueElement);
                 }
             }
 
@@ -37,27 +33,15 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
             if (actionNode != null)
             {
-                _actionElement = Factories.RuleFactory.CreateExecContainer(actionNode);
+                ActionElement = Factories.RuleFactory.CreateExecContainer(actionNode);
             }
         }
 
         #region Properties
 
-        public List<RuleExpression> ValuesElements
-        {
-            get
-            {
-                return _valuesElements;
-            }
-        }
+        public List<RuleExpression> ValuesElements { get; set; } = new List<RuleExpression>();
 
-        public ExecContainer ActionElement
-        {
-            get
-            {
-                return _actionElement;
-            }
-        }
+        public ExecContainer ActionElement { get; set; }
 
         public override Type ExpressionType
         {
@@ -102,13 +86,13 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override void Validate()
         {
-            if (_valuesElements.Count == 0)
+            if (ValuesElements.Count == 0)
             {
                 AddBrokenConstraint(CaseBusinessConstraint.ValuesRequired, ElementName);
             }
 
             RuleExpression prevValueElement = null;
-            foreach (RuleExpression valueElement in _valuesElements)
+            foreach (RuleExpression valueElement in ValuesElements)
             {
                 //проверяем, одного ли типа элементы
                 if (prevValueElement != null)
@@ -116,16 +100,14 @@ namespace TypiconOnline.Domain.Rules.Expressions
                     if (prevValueElement.ExpressionType != valueElement.ExpressionType)
                     {
                         AddBrokenConstraint(CaseBusinessConstraint.ValuesTypeMismatch, ElementName);
-                        //throw new DefinitionsParsingException("Ошибка: значения элемента " + valuesNode.Name + " должны быть одного типа");
                     }
                 }
                 prevValueElement = valueElement;
             }
 
-            if (_actionElement == null)
+            if (ActionElement == null)
             {
                 AddBrokenConstraint(CaseBusinessConstraint.ActionsRequired, ElementName);
-                //throw new DefinitionsParsingException("Ошибка: отсутствует элемент " + DefinitionsConstants.ActionNodeName + " в элементе " + DefinitionsConstants.CaseNodeName);
             }
         }
 

@@ -11,7 +11,7 @@ namespace TypiconOnline.Domain.Serialization
 {
     public class RuleXmlSerializerContainer<T, U> : RuleXmlSerializerContainer<T> where T : RuleElement
     {
-        public RuleXmlSerializerContainer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork) { }
+        public RuleXmlSerializerContainer(IRuleSerializerRoot unitOfWork) : base(unitOfWork) { }
 
         protected override IEnumerable<Type> GetTypes()
         {

@@ -20,9 +20,8 @@ namespace TypiconOnline.Domain.Rules.Expressions
     /// </summary>
     public class And : LogicalOperation
     {
-        public And(XmlNode node) : base(node)
-        {
-        }
+        public And(string name) : base(name) { }
+        public And(XmlNode node) : base(node) { }
 
         protected override bool Operate(RuleExpression exp1, RuleExpression exp2, bool? previousValue)
         {

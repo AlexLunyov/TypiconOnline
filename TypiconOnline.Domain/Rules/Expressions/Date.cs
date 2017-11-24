@@ -19,9 +19,10 @@ namespace TypiconOnline.Domain.Rules.Expressions
     /// </summary>
     public class Date : DateExpression
     {
+        public Date(string name) : base(name) { }
         public Date(XmlNode node) : base(node)
         {
-            _valueExpression = new ItemDate(node.InnerText);
+            ValueExpression = new ItemDate(node.InnerText);
         }
 
         public override object ValueCalculated
@@ -36,14 +37,14 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
             //если значение выражения пустое, просто передаем текущую дату
             //из вводимой даты берем только год
-            _valueCalculated = (((ItemDate)_valueExpression).IsEmpty) ? date : new DateTime(date.Year, ((ItemDate)_valueExpression).Month, ((ItemDate)_valueExpression).Day);
+            ValueCalculated = (((ItemDate)ValueExpression).IsEmpty) ? date : new DateTime(date.Year, ((ItemDate)ValueExpression).Month, ((ItemDate)ValueExpression).Day);
         }
 
         protected override void Validate()
         {
-            if (!((ItemDate)_valueExpression).IsValid)
+            if (!((ItemDate)ValueExpression).IsValid)
             {
-                foreach (BusinessConstraint brokenRule in ((ItemDate)_valueExpression).GetBrokenConstraints())
+                foreach (BusinessConstraint brokenRule in ((ItemDate)ValueExpression).GetBrokenConstraints())
                 {
                     AddBrokenConstraint(brokenRule, ElementName);
                 }

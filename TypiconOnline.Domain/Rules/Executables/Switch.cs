@@ -22,6 +22,8 @@ namespace TypiconOnline.Domain.Rules.Executables
     {
         //public RuleElement ParentElement { get; set; }
 
+        public Switch(string name) : base(name) { }
+
         public Switch(XmlNode node) : base(node)
         {
             //ищем expression
@@ -30,7 +32,7 @@ namespace TypiconOnline.Domain.Rules.Executables
             if (expressionNode != null)
             {
                 XmlNode valNode = expressionNode.FirstChild;
-                _expression = Factories.RuleFactory.CreateExpression(valNode);
+                Expression = Factories.RuleFactory.CreateExpression(valNode);
             }
             
             //ищем элементы case
@@ -38,12 +40,12 @@ namespace TypiconOnline.Domain.Rules.Executables
 
             if (casesList != null)
             {
-                _caseElements = new List<Case>();
+                CaseElements = new List<Case>();
 
                 foreach (XmlNode caseNode in casesList)
                 {
                     Case caseElement = new Case(caseNode);
-                    _caseElements.Add(caseElement);
+                    CaseElements.Add(caseElement);
                 }
             }
 
@@ -51,43 +53,17 @@ namespace TypiconOnline.Domain.Rules.Executables
             XmlNode defaultNode = node.SelectSingleNode(RuleConstants.DefaultNodeName);
             if (defaultNode != null)
             {
-                _default = new ExecContainer(defaultNode);
-
-                
+                Default = new ExecContainer(defaultNode);
             }
         }
 
         #region Properties
 
-        private RuleExpression _expression;
-        public RuleExpression Expression
-        {
-            get
-            {
-                return _expression;
-            }
-        }
+        public RuleExpression Expression { get; set; }
 
-        private List<Case> _caseElements;
+        public List<Case> CaseElements { get; set; }
 
-
-        //public List<Case> CaseElements
-        //{
-        //    get
-        //    {
-        //        return _caseElements;
-        //    }
-        //}
-
-        private ExecContainer _default;
-
-        //public RuleExecutable Default
-        //{
-        //    get
-        //    {
-        //        return _default;
-        //    }
-        //}
+        public ExecContainer Default { get; set; }
 
         #endregion
 
@@ -97,7 +73,7 @@ namespace TypiconOnline.Domain.Rules.Executables
         {
             Expression.Interpret(date, settings);
 
-            foreach (Case caseElement in _caseElements)
+            foreach (Case caseElement in CaseElements)
             {
                 caseElement.Interpret(date, settings);
 
@@ -115,42 +91,39 @@ namespace TypiconOnline.Domain.Rules.Executables
             }
 
             //если мы здесь, значит совпадений не было
-            if (_default != null)
-            {
-                _default.Interpret(date, settings);
-            }
+            Default?.Interpret(date, settings);
         }
 
         protected override void Validate()
         {
-            if (_expression == null)
+            if (Expression == null)
             {
                 AddBrokenConstraint(SwitchBusinessBusinessConstraint.ConditionRequired, ElementName);
             }
             else
             {
                 //добавляем ломаные правила к родителю
-                if (!_expression.IsValid)
+                if (!Expression.IsValid)
                 {
-                    AppendAllBrokenConstraints(_expression, ElementName);
+                    AppendAllBrokenConstraints(Expression, ElementName);
                 }
             }
 
-            if (_caseElements == null)
+            if (CaseElements == null)
             {
                 AddBrokenConstraint(SwitchBusinessBusinessConstraint.CaseRequired, ElementName);
             }
             else
             {
                 //добавляем ломаные правила к родителю
-                foreach (Case caseElement in _caseElements)
+                foreach (Case caseElement in CaseElements)
                 {
                     if (!caseElement.IsValid)
                     {
                         AppendAllBrokenConstraints(caseElement, string.Format("{0}.{1}", ElementName, RuleConstants.CaseNodeName));
                     }
 
-                    if (_expression?.ExpressionType != caseElement.ExpressionType)
+                    if (Expression?.ExpressionType != caseElement.ExpressionType)
                     {
                         AddBrokenConstraint(SwitchBusinessBusinessConstraint.ConditionsTypeMismatch, ElementName);
                     }
@@ -158,9 +131,9 @@ namespace TypiconOnline.Domain.Rules.Executables
             }
 
             //добавляем ломаные правила к родителю
-            if (_default?.IsValid == false)
+            if (Default?.IsValid == false)
             {
-                AppendAllBrokenConstraints(_default, string.Format("{0}.{1}", ElementName, RuleConstants.DefaultNodeName));
+                AppendAllBrokenConstraints(Default, string.Format("{0}.{1}", ElementName, RuleConstants.DefaultNodeName));
             }
         }
 

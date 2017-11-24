@@ -18,19 +18,18 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class IsCelebrating : BooleanExpression
     {
-        public IsCelebrating(XmlNode node) : base(node)
-        {
-        }
+        public IsCelebrating(string name) : base(name) { }
+        public IsCelebrating(XmlNode node) : base(node) { }
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-           _valueCalculated = false;
+           ValueCalculated = false;
 
-            foreach (DayWorship day in handler.Settings.DayWorships)
+            foreach (DayWorship day in handler?.Settings?.DayWorships)
             {
                 if (day.IsCelebrating)
                 {
-                    _valueCalculated = true;
+                    ValueCalculated = true;
                     break;
                 }
             }

@@ -17,149 +17,82 @@ namespace TypiconOnline.Domain.Rules.Executables
     //
     //  <modifyday daymove="0" priority="2" islastname="true"/>
 
+    /// <summary>
+    /// Элемент, используемый для переноса богослужебных дней
+    /// </summary>
     public class ModifyDay : RuleExecutable, ICustomInterpreted
     {
-        private string _shortName;
-        private ItemBoolean _isLastName;
-        private ItemBoolean _asAddition;
-        private ItemBoolean _useFullName;
-        private ItemInt _dayMoveCount;
-        private DateTime _moveDateCalculated;
-        private ItemInt _priority;
-        private DateExpression _childDateExp;
-        protected ModifyReplacedDay _modifyReplacedDay;
+        public ModifyDay(string name) : base(name) { }
 
         public ModifyDay(XmlNode node) : base(node)
         {
-            if (node.Attributes != null)
+            XmlAttribute attr = node.Attributes[RuleConstants.ShortNameAttrName];
+            ShortName = attr?.Value;
+
+            attr = node.Attributes[RuleConstants.IsLastNameAttrName];
+            IsLastName = bool.TryParse(attr?.Value, out bool value) ? value : false;
+
+            attr = node.Attributes[RuleConstants.AsAdditionAttrName];
+            AsAddition = bool.TryParse(attr?.Value, out value) ? value : false;
+
+            attr = node.Attributes[RuleConstants.UseFullNameAttrName];
+            UseFullName = bool.TryParse(attr?.Value, out value) ? value : true;
+
+            attr = node.Attributes[RuleConstants.DayMoveAttrName];
+            if (int.TryParse(attr?.Value, out int intValue))
             {
-                string _attrString = "false";
-
-                XmlAttribute attr = node.Attributes[RuleConstants.ShortNameAttrName];
-
-                if (attr != null)
-                {
-                    _shortName = attr.Value;
-                }
-
-                _attrString = "false";
-
-                attr = node.Attributes[RuleConstants.IsLastNameAttrName];
-
-                if (attr != null)
-                {
-                    _attrString = attr.Value;
-                }
-
-                _isLastName = new ItemBoolean(_attrString);
-
-                _attrString = "false";
-
-                attr = node.Attributes[RuleConstants.AsAdditionAttrName];
-
-                if (attr != null)
-                {
-                    _attrString = attr.Value;
-                }
-
-                _asAddition = new ItemBoolean(_attrString);
-
-                _attrString = "true";
-
-                attr = node.Attributes[RuleConstants.UseFullNameAttrName];
-
-                if (attr != null)
-                {
-                    _attrString = attr.Value;
-                }
-
-                _useFullName = new ItemBoolean(_attrString);
-
-                attr = node.Attributes[RuleConstants.DayMoveAttrName];
-
-                if (attr != null)
-                {
-                    _dayMoveCount = new ItemInt(attr.Value);
-                }
-
-                _attrString = "0";
-
-                attr = node.Attributes[RuleConstants.PriorityAttrName];
-
-                if (attr != null)
-                {
-                    _attrString = attr.Value;
-                }
-
-                _priority = new ItemInt(_attrString);
-
+                DayMoveCount = intValue;
             }
 
-            if (node.HasChildNodes)
+            attr = node.Attributes[RuleConstants.PriorityAttrName];
+            Priority = int.TryParse(attr?.Value, out intValue) ? intValue : 0;
+
+            foreach (XmlNode childNode in node.ChildNodes)
             {
-                foreach (XmlNode childNode in node.ChildNodes)
+                if (childNode.Name == RuleConstants.ModifyReplacedDayNodeName)
                 {
-                    if (childNode.Name == RuleConstants.ModifyReplacedDayNodeName)
-                    {
-                        _modifyReplacedDay = Factories.RuleFactory.CreateExecutable(childNode) as ModifyReplacedDay;
-                    }
-                    else
-                    {
-                        _childDateExp = Factories.RuleFactory.CreateDateExpression(childNode);
-                    }
+                    ModifyReplacedDay = Factories.RuleFactory.CreateExecutable(childNode) as ModifyReplacedDay;
+                }
+                else
+                {
+                    ChildDateExp = Factories.RuleFactory.CreateDateExpression(childNode);
                 }
             }
         }
 
         #region Properties
-
-        public ItemInt DayMoveCount
-        {
-            get
-            {
-                return _dayMoveCount;
-            }
-        }
-
-        public ItemInt Priority
-        {
-            get
-            {
-                return _priority;
-            }
-        }
-
-        public string ShortName
-        {
-            get
-            {
-                return _shortName;
-            }
-        }
-
-        public ItemBoolean IsLastName
-        {
-            get
-            {
-                return _isLastName;
-            }
-        }
-
-        public ItemBoolean AsAddition
-        {
-            get
-            {
-                return _asAddition;
-            }
-        }
-
-        public ItemBoolean UseFullName
-        {
-            get
-            {
-                return _useFullName;
-            }
-        }
+        /// <summary>
+        /// Количество дней, на которые необходимо перенести день. Может иметь отрицательное значение
+        /// </summary>
+        public int? DayMoveCount { get; set; }
+        /// <summary>
+        /// Выставляемый приоритет изменяемому дню
+        /// </summary>
+        public int Priority { get; set; }
+        /// <summary>
+        /// Краткое наименование правздника
+        /// </summary>
+        public string ShortName { get; set; }
+        /// <summary>
+        /// Если true, в Расписании имя дня указывается последним
+        /// </summary>
+        public bool IsLastName { get; set; } 
+        /// <summary>
+        /// Используется как дополнение к имеющимся Правилам, не замещая их
+        /// </summary>
+        public bool AsAddition { get; set; } 
+        /// <summary>
+        /// Признак, использовать ли полное имя
+        /// </summary>
+        public bool UseFullName { get; set; } 
+        /// <summary>
+        /// Вычисляемое выражение для переноса даты
+        /// </summary>
+        public DateExpression ChildDateExp { get; set; }
+        /// <summary>
+        /// Правило для дня, который будет перемещен
+        /// </summary>
+        public ModifyReplacedDay ModifyReplacedDay { get; set; }
 
         public ItemDate MoveDateExpression
         {
@@ -171,17 +104,29 @@ namespace TypiconOnline.Domain.Rules.Executables
                 //if (!IsInterpreted || (_childDateExp == null))
                 //    return DateTime.MinValue;
 
-                return (ItemDate)_childDateExp.ValueExpression;
+                return ChildDateExp?.ValueExpression as ItemDate;
             }
         }
 
-        public DateTime MoveDateCalculated
+        /// <summary>
+        /// Возвращает true, если все свойства имеют значения по умолчанию
+        /// </summary>
+        public bool IsEmpty
         {
             get
             {
-                return _moveDateCalculated;
+                return (DayMoveCount == null
+                    && Priority == 0
+                    && string.IsNullOrEmpty(ShortName)
+                    && !IsLastName
+                    && !AsAddition
+                    && UseFullName
+                    && ChildDateExp == null
+                    && ModifyReplacedDay == null);
             }
         }
+
+        public DateTime MoveDateCalculated { get; private set; }
 
         #endregion
 
@@ -197,10 +142,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 
                 //обработка ModifyReplacedDay
 
-                if (_modifyReplacedDay != null)
-                {
-                    _modifyReplacedDay.Interpret(_moveDateCalculated, handler);
-                }
+                ModifyReplacedDay?.Interpret(MoveDateCalculated, handler);
             }
         }
 
@@ -211,56 +153,57 @@ namespace TypiconOnline.Domain.Rules.Executables
         /// <param name="handler"></param>
         protected void InterpretChildDateExp(DateTime date, IRuleHandler handler)
         {
-            if (_childDateExp != null)
+            if (ChildDateExp != null)
             {
-                _childDateExp.Interpret(date, handler);
-                _moveDateCalculated = (DateTime)_childDateExp.ValueCalculated;
+                ChildDateExp.Interpret(date, handler);
+                MoveDateCalculated = (DateTime)ChildDateExp.ValueCalculated;
             }
             else
             {
-                _moveDateCalculated = date.AddDays(DayMoveCount.Value);
+                MoveDateCalculated = date.AddDays((int) DayMoveCount);
             }
         }
 
         protected override void Validate()
         {
-            if (!_isLastName.IsValid)
+            //if (!_isLastName.IsValid)
+            //{
+            //    AddBrokenConstraint(ModifyDayBusinessConstraint.IsLastNameTypeMismatch, ElementName);
+            //}
+
+            //if (!_asAddition.IsValid)
+            //{
+            //    AddBrokenConstraint(ModifyDayBusinessConstraint.IsLastNameTypeMismatch, ElementName);
+            //}
+
+            //if (!_useFullName.IsValid)
+            //{
+            //    AddBrokenConstraint(ModifyDayBusinessConstraint.UseFullNameTypeMismatch, ElementName);
+            //}
+
+            if (IsEmpty)
             {
-                AddBrokenConstraint(ModifyDayBusinessConstraint.IsLastNameTypeMismatch, ElementName);
+                AddBrokenConstraint(ModifyDayBusinessConstraint.EmptyElement, ElementName);
             }
 
-            if (!_asAddition.IsValid)
-            {
-                AddBrokenConstraint(ModifyDayBusinessConstraint.IsLastNameTypeMismatch, ElementName);
-            }
-
-            if (!_useFullName.IsValid)
-            {
-                AddBrokenConstraint(ModifyDayBusinessConstraint.UseFullNameTypeMismatch, ElementName);
-            }
-
-
-            if ((_dayMoveCount != null) && (_childDateExp != null))
+            if ((DayMoveCount != null) && (ChildDateExp != null))
             {
                 AddBrokenConstraint(ModifyDayBusinessConstraint.DateDoubleDefinition, ElementName);
             }
-            else if((_dayMoveCount == null) && (_childDateExp == null))
+            else if ((DayMoveCount == null) && (ChildDateExp == null))
             {
                 AddBrokenConstraint(ModifyDayBusinessConstraint.DateAbsense, ElementName);
             }
-            else if (((_dayMoveCount == null) || !_dayMoveCount.IsValid) &&
-                    (_childDateExp == null))
-            {
-                AddBrokenConstraint(ModifyDayBusinessConstraint.DayMoveTypeMismatch, ElementName);
-            }
 
             //добавляем ломаные правила к родителю
-            if ((_childDateExp != null) && !_childDateExp.IsValid)
+            if (ChildDateExp?.IsValid == false)
             {
-                foreach (BusinessConstraint brokenRule in _childDateExp.GetBrokenConstraints())
-                {
-                    AddBrokenConstraint(brokenRule, ElementName + "." + RuleConstants.DateNodeName + "." + brokenRule.ConstraintPath);
-                }
+                AppendAllBrokenConstraints(ChildDateExp, ElementName);
+            }
+
+            if (ModifyReplacedDay?.IsValid == false)
+            {
+                AppendAllBrokenConstraints(ModifyReplacedDay, ElementName);
             }
         }
 

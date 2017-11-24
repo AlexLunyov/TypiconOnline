@@ -10,6 +10,7 @@ using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Repository.EF;
@@ -24,13 +25,12 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         {
             string xmlString = @"<modifyreplacedday daymove=""0"" kind=""menology""/>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var unitOfWork = new RuleSerializerRoot();
 
-            xmlDoc.LoadXml(xmlString);
+            var element = unitOfWork.Factory<ModifyReplacedDay>()
+                .CreateElement(new XmlDescriptor() { Description = xmlString });
 
-            ModifyReplacedDay element = RuleFactory.CreateElement(xmlDoc.FirstChild) as ModifyReplacedDay;
-
-            Assert.AreEqual(RuleConstants.KindOfReplacedDay.menology, element.Kind);
+            Assert.AreEqual(KindOfReplacedDay.Menology, element.Kind);
         }
     }
 }

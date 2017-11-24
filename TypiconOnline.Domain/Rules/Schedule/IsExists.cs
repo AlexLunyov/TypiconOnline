@@ -18,28 +18,30 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class IsExists : BooleanExpression
     {
-        private ICalcStructureElement _ymnos;
+        public IsExists(string name) : base(name) { }
 
         public IsExists(XmlNode node) : base(node)
         {
             if (node.HasChildNodes)// && node.FirstChild.Name == RuleConstants.YmnosRuleNode)
             {
-                _ymnos = RuleFactory.CreateCalcStructureElement(node.FirstChild);
+                ChildElement = RuleFactory.CreateCalcStructureElement(node.FirstChild);
             }
         }
 
+        public ICalcStructureElement ChildElement { get; set; }
+
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            _valueCalculated = _ymnos.Calculate(date, handler?.Settings) != null;
+            ValueCalculated = ChildElement.Calculate(date, handler?.Settings) != null;
         }
 
         protected override void Validate()
         {
-            if (_ymnos == null)
+            if (ChildElement == null)
             {
                 AddBrokenConstraint(IsExistsBusinessConstraint.YmnosRuleReqiured);
             }
-            else if (_ymnos is RuleElement r && !r.IsValid)
+            else if (ChildElement is RuleElement r && !r.IsValid)
             {
                 AppendAllBrokenConstraints(r);
             }

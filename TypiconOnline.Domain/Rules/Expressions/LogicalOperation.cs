@@ -13,16 +13,14 @@ namespace TypiconOnline.Domain.Rules.Expressions
     /// </summary>
     public abstract class LogicalOperation : LogicalExpression
     {
-        public LogicalOperation(XmlNode node) : base(node)
-        {
-        }
-
+        public LogicalOperation(string name) : base(name) { }
+        public LogicalOperation(XmlNode node) : base(node) { }
 
         protected override void Validate()
         {
             base.Validate();
 
-            foreach (RuleExpression exp in _childElements)
+            foreach (RuleExpression exp in ChildElements)
             {
                 //Проверяем, элемент с каким выходным типом значения
                 //Должен быть только булевским

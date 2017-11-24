@@ -12,18 +12,18 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class KanonasRuleSerializer : YmnosStructureRuleSerializer
     {
-        public KanonasRuleSerializer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork)
+        public KanonasRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
         {
             ElementNames = new string[] {
                 RuleConstants.KanonasRuleNode };
         }
 
-        protected override ExecContainer CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(XmlDescriptor d)
         {
             return new KanonasRule(d.GetElementName());
         }
 
-        protected override void FillObject(XmlDescriptor d, ExecContainer container)
+        protected override void FillObject(XmlDescriptor d, RuleElement container)
         {
             base.FillObject(d, container);
 

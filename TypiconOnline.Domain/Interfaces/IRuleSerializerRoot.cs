@@ -9,8 +9,9 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Interfaces
 {
-    public interface IRuleSerializerUnitOfWork
+    public interface IRuleSerializerRoot
     {
-        RuleBaseSerializerContainer<T> Factory<T>() where T : RuleElement;
+        RuleSerializerContainerBase<T> Factory<T>() where T : RuleElement;
+        RuleSerializerContainerBase<T> Factory<T, U>() where T : RuleElement;
     }
 }

@@ -89,7 +89,7 @@
     <Compile Include="Rules\Expressions\GetClosestDayTest.cs" />
     <Compile Include="Rules\Expressions\GetDayOfWeekTest.cs" />
     <Compile Include="Rules\Expressions\AndTest.cs" />
-    <Compile Include="Rules\Expressions\IntTests.cs" />
+    <Compile Include="Rules\Expressions\IntTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\Factories\RuleFactoryUnitOfWorkTest.cs" />
     <Compile Include="Rules\Handlers\ServiceSequenceHandlerTest.cs" />

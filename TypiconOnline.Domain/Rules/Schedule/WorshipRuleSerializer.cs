@@ -13,18 +13,18 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class WorshipRuleSerializer : YmnosStructureRuleSerializer
     {
-        public WorshipRuleSerializer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork)
+        public WorshipRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
         {
             ElementNames = new string[] {
                 RuleConstants.ServiceNodeName };
         }
 
-        protected override ExecContainer CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(XmlDescriptor d)
         {
             return new WorshipRule(d.GetElementName());
         }
 
-        protected override void FillObject(XmlDescriptor d, ExecContainer container)
+        protected override void FillObject(XmlDescriptor d, RuleElement container)
         {
             base.FillObject(d, container);
 

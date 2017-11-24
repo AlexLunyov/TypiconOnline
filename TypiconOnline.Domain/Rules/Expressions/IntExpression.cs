@@ -10,27 +10,9 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public abstract class IntExpression : RuleExpression
     {
-        public IntExpression(XmlNode node) : base(node)
-        {
-        }
+        public IntExpression(string name) : base(name) { }
+        public IntExpression(XmlNode node) : base(node) { }
 
-        //protected int _outputValue;
-
-        #region Properties
-
-        public override Type ExpressionType
-        {
-            get
-            {
-                return typeof(int);
-            }
-        }
-
-        //public override int OutputValue
-        //{
-        //    get { return _outputValue; }
-        //}
-
-        #endregion
+        public override Type ExpressionType => typeof(int);
     }
 }

@@ -12,42 +12,28 @@ namespace TypiconOnline.Domain.Rules.Executables
 {
     public class ExecContainerSerializer : RuleXmlSerializerBase, IRuleSerializer<ExecContainer>
     {
-        public ExecContainerSerializer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork)
+        public ExecContainerSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
         {
             ElementNames = new string[] { RuleConstants.ExecContainerNodeName,
                                           RuleConstants.ActionNodeName };
         }
 
-        public virtual RuleElement Deserialize(IDescriptor descriptor)
-        {
-            ExecContainer element = null;
-
-            if (descriptor is XmlDescriptor d)
-            {
-                element = CreateObject(d);
-
-                FillObject(d, element);
-            }
-
-            return element;
-        }
-
-        public string Serialize(RuleElement element)
+        public override string Serialize(RuleElement element)
         {
             throw new NotImplementedException();
         }
 
-        protected virtual ExecContainer CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(XmlDescriptor d)
         {
             return new ExecContainer(d.GetElementName());
         }
 
-        protected virtual void FillObject(XmlDescriptor d, ExecContainer container)
+        protected override void FillObject(XmlDescriptor d, RuleElement element)
         {
             foreach (XmlNode childNode in d.Element.ChildNodes)
             {
                 RuleElement child = _unitOfWork.Factory<RuleElement>().CreateElement(new XmlDescriptor() { Element = childNode });
-                container.ChildElements.Add(child);
+                (element as ExecContainer).ChildElements.Add(child);
             }
         }
     }

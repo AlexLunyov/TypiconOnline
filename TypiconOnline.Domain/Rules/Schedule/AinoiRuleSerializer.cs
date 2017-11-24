@@ -11,13 +11,13 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class AinoiRuleSerializer : KekragariaRuleSerializer
     {
-        public AinoiRuleSerializer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork)
+        public AinoiRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
         {
             ElementNames = new string[] {
                 RuleConstants.AinoiNode };
         }
 
-        protected override ExecContainer CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(XmlDescriptor d)
         {
             return new AinoiRule(d.GetElementName());
         }

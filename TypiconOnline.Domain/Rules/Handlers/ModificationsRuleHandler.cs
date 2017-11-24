@@ -43,7 +43,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
                 TypiconRule ruleToModify;
 
-                if ((element as ModifyReplacedDay).Kind == RuleConstants.KindOfReplacedDay.menology)
+                if ((element as ModifyReplacedDay).Kind == KindOfReplacedDay.Menology)
                 {
                     ruleToModify = typiconEntity.GetMenologyRule((element as ModifyReplacedDay).DateToReplaceCalculated);
                 }
@@ -52,7 +52,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
                     ruleToModify = typiconEntity.GetTriodionRule((element as ModifyReplacedDay).DateToReplaceCalculated);
                 }
 
-                int priority = (element as ModifyReplacedDay).Priority.Value;
+                int priority = (element as ModifyReplacedDay).Priority;
 
                 if (priority == 0)
                 {
@@ -65,9 +65,9 @@ namespace TypiconOnline.Domain.Rules.Handlers
                     Date = (element as ModifyReplacedDay).MoveDateCalculated,
                     Priority = priority,
                     ShortName = (element as ModifyReplacedDay).ShortName,
-                    AsAddition = (element as ModifyReplacedDay).AsAddition.Value,
-                    IsLastName = (element as ModifyReplacedDay).IsLastName.Value,
-                    UseFullName = (element as ModifyReplacedDay).UseFullName.Value
+                    AsAddition = (element as ModifyReplacedDay).AsAddition,
+                    IsLastName = (element as ModifyReplacedDay).IsLastName,
+                    UseFullName = (element as ModifyReplacedDay).UseFullName
                 };
 
                 typiconEntity.AddModifiedRule(request);
@@ -75,7 +75,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
             else if ((element is ModifyDay) 
                 && ((element as ModifyDay).MoveDateCalculated.Year == _yearToModify))
             {
-                int priority = (element as ModifyDay).Priority.Value;
+                int priority = (element as ModifyDay).Priority;
 
                 //TypiconRule seniorTypiconRule = Rules[0];
 
@@ -90,9 +90,9 @@ namespace TypiconOnline.Domain.Rules.Handlers
                     Date = (element as ModifyDay).MoveDateCalculated,
                     Priority = priority,
                     ShortName = (element as ModifyDay).ShortName,
-                    AsAddition = (element as ModifyDay).AsAddition.Value,
-                    IsLastName = (element as ModifyDay).IsLastName.Value,
-                    UseFullName = (element as ModifyDay).UseFullName.Value
+                    AsAddition = (element as ModifyDay).AsAddition,
+                    IsLastName = (element as ModifyDay).IsLastName,
+                    UseFullName = (element as ModifyDay).UseFullName
                 };
 
                 TypiconEntity typiconEntity = /*seniorTypicon*/_settings.Rule.Owner;//Folder.GetOwner();

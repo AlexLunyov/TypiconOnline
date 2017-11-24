@@ -11,9 +11,9 @@ namespace TypiconOnline.Domain.Rules.Expressions
     
     public abstract class DateExpression : RuleExpression
     {
-        public DateExpression(XmlNode node) : base(node)
-        {
-        }
+        public DateExpression(string name) : base(name) { }
+
+        public DateExpression(XmlNode node) : base(node) { }
 
         //protected DateTime _outputDate = DateTime.MinValue;
 

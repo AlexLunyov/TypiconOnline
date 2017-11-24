@@ -287,8 +287,13 @@ namespace TypiconOnline.Domain.Rules
 
         public enum DefinitionsDayOfWeek { понедельник=1, вторник=2, среда=3, четверг=4, пятница=5, суббота=6, воскресенье=7 };
 
-        public enum KindOfReplacedDay { undefined=0, menology=1, triodion=2 };
+        
     }
+
+    /// <summary>
+    /// Используется в классе ModifyReplacedDay
+    /// </summary>
+    public enum KindOfReplacedDay { Menology, Triodion };
 
     /// <summary>
     /// Перечисление источников (богослужебных книг) для текстов богослужения

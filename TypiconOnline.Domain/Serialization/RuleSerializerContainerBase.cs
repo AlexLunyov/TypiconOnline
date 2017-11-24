@@ -14,15 +14,15 @@ namespace TypiconOnline.Domain.Serialization
     /// Абстрактный контейнер для сериализаторов для создания элементов правил
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class RuleBaseSerializerContainer<T> where T: RuleElement
+    public abstract class RuleSerializerContainerBase<T> where T: RuleElement
     {
         protected Dictionary<string, IRuleSerializer> _factories = new Dictionary<string, IRuleSerializer>();
 
-        protected IRuleSerializerUnitOfWork _unitOfWork;
+        protected IRuleSerializerRoot _unitOfWork;
 
         protected IDescriptor _descriptor;
 
-        public RuleBaseSerializerContainer(IRuleSerializerUnitOfWork unitOfWork, IDescriptor descriptor)
+        public RuleSerializerContainerBase(IRuleSerializerRoot unitOfWork, IDescriptor descriptor)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork");
             _descriptor = descriptor ?? throw new ArgumentNullException("descriptor");
@@ -31,20 +31,6 @@ namespace TypiconOnline.Domain.Serialization
         }
 
         protected abstract void LoadFactories();
-
-        //public T CreateElement(string description)
-        //{
-        //    _descriptor.Description = description;
-
-        //    string elementName = _descriptor.GetElementName();
-
-        //    if (_factories.ContainsKey(elementName))
-        //    {
-        //        return _factories[elementName].Create(_descriptor);
-        //    }
-
-        //    return null;
-        //}
 
         public T CreateElement(IDescriptor descriptor)
         {

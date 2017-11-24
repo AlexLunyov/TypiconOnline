@@ -26,71 +26,56 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
     public class GetClosestDay : DateExpression
     {
-        private ItemDayOfWeek _dayOfWeek;
-        private ItemInt _weekCount;
-        private DateExpression _childDateExp;
+        public GetClosestDay(string name) : base(name) { }
 
         public GetClosestDay(XmlNode valNode) : base(valNode)
         {
-            if (valNode.Attributes.Count > 0)
+            XmlAttribute attr = valNode.Attributes[RuleConstants.DayOfWeekAttrName];
+            if (attr != null)
             {
-                XmlAttribute attr = valNode.Attributes[RuleConstants.DayOfWeekAttrName];
-                if (attr != null)
-                {
-                    _dayOfWeek = new ItemDayOfWeek(attr.Value);
-                }
-                
-                attr = valNode.Attributes[RuleConstants.WeekCountAttrName];
+                DayOfWeek = new ItemDayOfWeek(attr.Value);
+            }
 
-                if (attr != null)
-                {
-                    _weekCount = new ItemInt(attr.Value);
-                }                
+            attr = valNode.Attributes[RuleConstants.WeekCountAttrName];
+
+            if (int.TryParse(attr?.Value, out int count))
+            {
+                WeekCount = count;
             }
 
             if (valNode.HasChildNodes)
             {
-                _childDateExp = Factories.RuleFactory.CreateDateExpression(valNode.FirstChild);
+                ChildDateExp = Factories.RuleFactory.CreateDateExpression(valNode.FirstChild);
             }
         }
 
-        public virtual ItemDayOfWeek DayOfWeek
-        {
-            get
-            {
-                return _dayOfWeek;
-            }
-        }
+        public virtual ItemDayOfWeek DayOfWeek { get; set; }
 
-        public virtual ItemInt WeekCount
-        {
-            get
-            {
-                return _weekCount;
-            }
-        }
+        public virtual int WeekCount { get; set; }
+
+        public DateExpression ChildDateExp { get; set; }
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            _childDateExp.Interpret(date, handler);
+            ChildDateExp.Interpret(date, handler);
 
-            if (WeekCount.Value != 0)
+            if (WeekCount != 0)
             {
-                int i = (WeekCount.Value > 0) ? 1 : -1;
+                int i = (WeekCount > 0) ? 1 : -1;
 
-                _valueCalculated = _childDateExp.ValueCalculated;
-                while (((DateTime)_valueCalculated).DayOfWeek != DayOfWeek.Value)
+                ValueCalculated = ChildDateExp.ValueCalculated;
+                while (((DateTime)ValueCalculated).DayOfWeek != DayOfWeek.Value)
                 {
-                    _valueCalculated = ((DateTime)_valueCalculated).AddDays(i);
+                    ValueCalculated = ((DateTime)ValueCalculated).AddDays(i);
                 }
 
-                if (_valueCalculated != _childDateExp.ValueCalculated)
-                    i = (WeekCount.Value > 0) ? (WeekCount.Value - 1) : (WeekCount.Value + 1);
+                if (ValueCalculated != ChildDateExp.ValueCalculated)
+                    i = (WeekCount > 0) ? (WeekCount - 1) : (WeekCount + 1);
                 else
-                    i = WeekCount.Value;
+                    i = WeekCount;
 
                 if (i != 0)
-                    _valueCalculated = ((DateTime)_valueCalculated).AddDays(i * 7);
+                    ValueCalculated = ((DateTime)ValueCalculated).AddDays(i * 7);
             }
             else
             {
@@ -98,7 +83,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
                 int forward = 0;
                 int backward = 0;
 
-                DateTime exp = (DateTime)_childDateExp.ValueCalculated;
+                DateTime exp = (DateTime)ChildDateExp.ValueCalculated;
 
                 while (exp.DayOfWeek != DayOfWeek.Value)
                 {
@@ -106,7 +91,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
                     forward++;
                 }
 
-                exp = (DateTime)_childDateExp.ValueCalculated;
+                exp = (DateTime)ChildDateExp.ValueCalculated;
 
                 while (exp.DayOfWeek != DayOfWeek.Value)
                 {
@@ -114,47 +99,35 @@ namespace TypiconOnline.Domain.Rules.Expressions
                     backward++;
                 }
 
-                _valueCalculated = (forward < backward) ? ((DateTime)_childDateExp.ValueCalculated).AddDays(forward) :
-                                                            ((DateTime)_childDateExp.ValueCalculated).AddDays(backward * -1);
+                ValueCalculated = (forward < backward) ? ((DateTime)ChildDateExp.ValueCalculated).AddDays(forward) :
+                                                            ((DateTime)ChildDateExp.ValueCalculated).AddDays(backward * -1);
             }
         }
 
         protected override void Validate()
         {
-            if (_dayOfWeek == null)
+            if (DayOfWeek == null)
             {
                 AddBrokenConstraint(GetClosestDayBusinessConstraint.DayOfWeekRequired, ElementName);
             }
             else
             {
-                if (!_dayOfWeek.IsValid)
+                if (!DayOfWeek.IsValid)
                 {
                     AddBrokenConstraint(GetClosestDayBusinessConstraint.DayOfWeekWrongDefinition, ElementName);
                 }
             }
 
-            if (_weekCount == null)
-            {
-                AddBrokenConstraint(GetClosestDayBusinessConstraint.WeekCountRequired, ElementName);
-            }
-            else
-            {
-                if (!_weekCount.IsValid)
-                {
-                    AddBrokenConstraint(GetClosestDayBusinessConstraint.WeekCountWrongDefinition, ElementName);
-                }
-            }
-
-            if (_childDateExp == null)
+            if (ChildDateExp == null)
             {
                 AddBrokenConstraint(GetClosestDayBusinessConstraint.DateRequired, ElementName);
             }
             else
             {
                 //добавляем ломаные правила к родителю
-                if (!_childDateExp.IsValid)
+                if (!ChildDateExp.IsValid)
                 {
-                    foreach (BusinessConstraint brokenRule in _childDateExp.GetBrokenConstraints())
+                    foreach (BusinessConstraint brokenRule in ChildDateExp.GetBrokenConstraints())
                     {
                         AddBrokenConstraint(brokenRule, ElementName + "." + brokenRule.ConstraintPath);
                     }

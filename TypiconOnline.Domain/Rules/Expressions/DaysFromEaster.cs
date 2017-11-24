@@ -19,39 +19,41 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class DaysFromEaster : Int
     {
-        private DateExpression _childDateExp;
+        public DaysFromEaster(string name) : base(name) { }
 
         public DaysFromEaster(XmlNode node) : base(node)
         {
             if (node.HasChildNodes)
             {
-                _childDateExp = Factories.RuleFactory.CreateDateExpression(node.FirstChild);
+                ChildExpression = Factories.RuleFactory.CreateDateExpression(node.FirstChild);
             }
         }
+
+        public DateExpression ChildExpression { get; set; }
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
             DateTime easterDate = BookStorage.Instance.Easters.GetCurrentEaster(date.Year);
 
-            _childDateExp.Interpret(date, handler);
+            ChildExpression.Interpret(date, handler);
 
             //DateTime easterDate = handler.GetCurrentEaster(date.Year);
 
-            _valueCalculated = ((DateTime)_childDateExp.ValueCalculated).Subtract(easterDate).Days;
-            _valueExpression = new ItemInt((int)_valueCalculated);
+            ValueCalculated = ((DateTime)ChildExpression.ValueCalculated).Subtract(easterDate).Days;
+            ValueExpression = new ItemInt((int)ValueCalculated);
         }
 
         protected override void Validate()
         {
-            if (_childDateExp == null)
+            if (ChildExpression == null)
             {
                 AddBrokenConstraint(DaysFromEasterBusinessConstraint.DateAbsense, ElementName);
             }
             else
             {
-                if (_childDateExp.IsValid)
+                if (ChildExpression.IsValid)
                 {
-                    foreach (BusinessConstraint brokenRule in _childDateExp.GetBrokenConstraints())
+                    foreach (BusinessConstraint brokenRule in ChildExpression.GetBrokenConstraints())
                     {
                         AddBrokenConstraint(brokenRule, ElementName + "." + RuleConstants.DateNodeName + "." + brokenRule.ConstraintPath);
                     }

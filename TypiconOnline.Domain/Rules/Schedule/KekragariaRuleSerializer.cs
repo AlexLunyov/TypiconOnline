@@ -13,18 +13,18 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class KekragariaRuleSerializer : YmnosStructureRuleSerializer
     {
-        public KekragariaRuleSerializer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork)
+        public KekragariaRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
         {
             ElementNames = new string[] {
                 RuleConstants.KekragariaRuleNode };
         }
 
-        protected override ExecContainer CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(XmlDescriptor d)
         {
             return new KekragariaRule(d.GetElementName());
         }
 
-        protected override void FillObject(XmlDescriptor d, ExecContainer container)
+        protected override void FillObject(XmlDescriptor d, RuleElement container)
         {
             base.FillObject(d, container);
 

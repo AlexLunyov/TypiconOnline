@@ -11,19 +11,24 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class YmnosRuleSerializer : RuleXmlSerializerBase, IRuleSerializer<YmnosRule>
     {
-        public YmnosRuleSerializer(IRuleSerializerUnitOfWork unitOfWork) : base(unitOfWork)
+        public YmnosRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
         {
             ElementNames = new string[] {
                 RuleConstants.YmnosRuleNode,
                 RuleConstants.YmnosRuleDoxastichonNode };
         }
 
-        public RuleElement Deserialize(IDescriptor descriptor)
+        public override string Serialize(RuleElement element)
         {
             throw new NotImplementedException();
         }
 
-        public string Serialize(RuleElement element)
+        protected override RuleElement CreateObject(XmlDescriptor d)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void FillObject(XmlDescriptor d, RuleElement element)
         {
             throw new NotImplementedException();
         }

@@ -12,6 +12,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class Notice : WorshipRule
     {
+        public Notice(string name) : base(name) { }
         public Notice(XmlNode node) : base(node) { }
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)

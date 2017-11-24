@@ -15,18 +15,19 @@ namespace TypiconOnline.Domain.Rules.Expressions
     /// </summary>
     public abstract class LogicalExpression : BooleanExpression
     {
-        protected List<RuleExpression> _childElements = new List<RuleExpression>();
-
+        public LogicalExpression(string name) : base(name) { }
         public LogicalExpression(XmlNode node) : base(node)
         {
             if (node.HasChildNodes)
             {
                 foreach (XmlNode childNode in node.ChildNodes)
                 {
-                    _childElements.Add(RuleFactory.CreateExpression(childNode));
+                    ChildElements.Add(RuleFactory.CreateExpression(childNode));
                 }
             }
         }
+
+        public List<RuleExpression> ChildElements { get; set; } = new List<RuleExpression>();
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
@@ -35,9 +36,9 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
             bool? expValue = null;
 
-            for (int i = 0; i < _childElements.Count; i++)
+            for (int i = 0; i < ChildElements.Count; i++)
             {
-                exp2 = _childElements[i];
+                exp2 = ChildElements[i];
                 exp2.Interpret(date, handler);
                     
                 if (exp1 != null)
@@ -48,7 +49,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
                 exp1 = exp2;
             }
 
-            _valueCalculated = expValue;
+            ValueCalculated = expValue;
         }
 
         /// <summary>
@@ -60,11 +61,11 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override void Validate()
         {
-            if (_childElements.Count == 0)
+            if (ChildElements.Count == 0)
             {
                 AddBrokenConstraint(LogicalExpressionBusinessConstraint.ChildrenRequired, ElementName);
             }
-            if (_childElements.Count < 2)
+            if (ChildElements.Count < 2)
             {
                 AddBrokenConstraint(LogicalExpressionBusinessConstraint.NotEnoughChildren, ElementName);
             }
@@ -72,9 +73,9 @@ namespace TypiconOnline.Domain.Rules.Expressions
             RuleExpression exp1 = null;
             RuleExpression exp2 = null;
 
-            for (int i = 0; i < _childElements.Count; i++)
+            for (int i = 0; i < ChildElements.Count; i++)
             {
-                exp2 = _childElements[i];
+                exp2 = ChildElements[i];
                 if (exp2 == null)
                 {
                     AddBrokenConstraint(LogicalExpressionBusinessConstraint.InvalidChild, ElementName);
