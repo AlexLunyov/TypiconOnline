@@ -5,22 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Executables;
 
-namespace TypiconOnline.Domain.Rules.Factories
+namespace TypiconOnline.Domain.Serialization
 {
     /// <summary>
-    /// Абстрактная фабрика для создания элементов правил
+    /// Абстрактный контейнер для сериализаторов для создания элементов правил
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class RuleBaseFactoryContainer<T> where T: RuleElement
+    public abstract class RuleBaseSerializerContainer<T> where T: RuleElement
     {
-        protected Dictionary<string, IRuleFactory<T>> _factories;
+        protected Dictionary<string, IRuleSerializer> _factories = new Dictionary<string, IRuleSerializer>();
+
+        protected IRuleSerializerUnitOfWork _unitOfWork;
 
         protected IDescriptor _descriptor;
 
-        public RuleBaseFactoryContainer(IDescriptor descriptor)
+        public RuleBaseSerializerContainer(IRuleSerializerUnitOfWork unitOfWork, IDescriptor descriptor)
         {
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork");
             _descriptor = descriptor ?? throw new ArgumentNullException("descriptor");
 
             LoadFactories();
@@ -50,10 +54,28 @@ namespace TypiconOnline.Domain.Rules.Factories
 
             if (_factories.ContainsKey(elementName))
             {
-                return _factories[elementName].Create(descriptor);
+                return _factories[elementName].Deserialize(descriptor) as T;
             }
 
             return null;
+        }
+
+        public string Serialize(T element)
+        {
+            string result = "";
+
+            if (_factories.ContainsKey(element.ElementName))
+            {
+                result = _factories[element.ElementName].Serialize(element);
+            }
+
+            return result;
+        }
+
+        public override string ToString()
+        {
+            int count = (_factories != null) ? _factories.Count : 0;
+            return $"{GetType().Name}; Factories count: {count}";
         }
     }
 }

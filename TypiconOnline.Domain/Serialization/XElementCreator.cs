@@ -29,8 +29,8 @@ namespace TypiconOnline.Domain.Serialization
             {
                 return XElement.Parse(xml);
             }
-            catch (InvalidOperationException ex) { }
-            catch (XmlException ex) { }
+            catch (InvalidOperationException) { }
+            catch (XmlException) { }
 
             return null;
         }

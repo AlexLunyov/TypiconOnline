@@ -9,7 +9,7 @@ using System.Xml.Linq;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
 
-namespace TypiconOnline.Domain.Rules.Factories
+namespace TypiconOnline.Domain.Serialization
 {
     /// <summary>
     /// Читает строку как xml и возвращает имя главного узла
@@ -17,6 +17,8 @@ namespace TypiconOnline.Domain.Rules.Factories
     public class XmlDescriptor : IDescriptor<XmlNode>
     {
         string description;
+
+        XmlNodeCreator creator = new XmlNodeCreator();
 
         public string Description
         {
@@ -27,7 +29,7 @@ namespace TypiconOnline.Domain.Rules.Factories
             set
             {
                 description = value;
-                node = null;
+                node = creator.Create(description);
             }
         }
 
@@ -37,10 +39,6 @@ namespace TypiconOnline.Domain.Rules.Factories
         {
             get
             {
-                if (node == null)
-                {
-                    node = new XmlNodeCreator().Create(description);
-                }
                 return node;
             }
             set

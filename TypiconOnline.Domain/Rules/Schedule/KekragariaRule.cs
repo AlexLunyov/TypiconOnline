@@ -20,6 +20,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         private ItemBoolean _showPsalm;
 
+        public KekragariaRule(string name) : base(name) { }
 
         public KekragariaRule(XmlNode node) : base(node)
         {
@@ -33,23 +34,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <summary>
         /// Признак, показывать ли 140 псалом
         /// </summary>
-        public ItemBoolean ShowPsalm
-        {
-            get
-            {
-                return _showPsalm;
-            }
-        }
-
-        private List<RuleElement> _outputForm = null;
-
-        public List<RuleElement> OutputForm
-        {
-            get
-            {
-                return _outputForm;
-            }
-        }
+        public bool ShowPsalm { get; set; }
 
         #endregion
 
@@ -61,15 +46,15 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        protected override void Validate()
-        {
-            base.Validate();
+        //protected override void Validate()
+        //{
+        //    base.Validate();
 
-            if (!_showPsalm.IsValid)
-            {
-                AppendAllBrokenConstraints(_showPsalm);
-            }
-        }
+        //    if (!_showPsalm.IsValid)
+        //    {
+        //        AppendAllBrokenConstraints(_showPsalm);
+        //    }
+        //}
 
         public override ElementViewModel CreateViewModel(IRuleHandler handler)
         {

@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.Serialization
             {
                 doc.Load(reader);
             }
-            catch (XmlException ex) { }
+            catch (XmlException) { }
 
             return doc.DocumentElement;
         }

@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Factories;
+using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Interfaces
 {
-    public interface IRuleFactoryUnitOfWork
+    public interface IRuleSerializerUnitOfWork
     {
-        RuleBaseFactoryContainer<T> Factory<T>() where T : RuleElement;
+        RuleBaseSerializerContainer<T> Factory<T>() where T : RuleElement;
     }
 }

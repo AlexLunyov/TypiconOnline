@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
 
-namespace TypiconOnline.Domain.Rules.Factories
+namespace TypiconOnline.Domain.Serialization
 {
-    public abstract class RuleXmlFactoryBase
+    public abstract class RuleXmlSerializerBase
     {
-        protected IRuleFactoryUnitOfWork _unitOfWork;
+        protected IRuleSerializerUnitOfWork _unitOfWork;
 
-        public RuleXmlFactoryBase(IRuleFactoryUnitOfWork unitOfWork)
+        public RuleXmlSerializerBase(IRuleSerializerUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException("RuleFactoryUnitOfWork");
         }

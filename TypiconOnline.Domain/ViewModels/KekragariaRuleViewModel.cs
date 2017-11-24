@@ -68,7 +68,7 @@ namespace TypiconOnline.Domain.ViewModels
 
 
             //вставляем псалмы
-            if ((_rule as KekragariaRule).ShowPsalm.Value)
+            if ((_rule as KekragariaRule).ShowPsalm)
             {
                 _childElements.Add(new TextHolderViewModel(children[2] as TextHolder, handler));
             }

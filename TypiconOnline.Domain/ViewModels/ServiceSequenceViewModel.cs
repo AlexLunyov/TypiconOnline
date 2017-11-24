@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.ViewModels
 
         public ServiceSequenceViewModel(ServiceSequence rule, IRuleHandler handler) : base(rule, handler)
         {
-            Kind = rule.ServiceSequenceKind.Value;
+            Kind = rule.ServiceSequenceKind;
         }
     }
 }

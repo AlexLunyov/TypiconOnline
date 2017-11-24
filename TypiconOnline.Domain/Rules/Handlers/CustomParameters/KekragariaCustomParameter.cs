@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Rules.Handlers.CustomParameters
         {
             if (ShowPsalm != null)
             {
-                element.ShowPsalm.Value = (bool) ShowPsalm;
+                element.ShowPsalm = (bool) ShowPsalm;
             }
 
             if (TotalYmnosCount != null)

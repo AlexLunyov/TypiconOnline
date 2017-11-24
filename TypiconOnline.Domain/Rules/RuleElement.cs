@@ -10,7 +10,7 @@ namespace TypiconOnline.Domain.Rules
     {
         //RuleElement ParentElement { get;set; }
 
-        protected string ElementName { get; set; }
+        public string ElementName { get; private set; }
 
         public RuleElement() { }
 

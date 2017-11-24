@@ -17,38 +17,25 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class ServiceSequence : ExecContainer, ICustomInterpreted, IViewModelElement
     {
-        private ItemEnumType<ServiceSequenceKind> _serviceSequenceKind;
-
+        public ServiceSequence(string name) : base(name) { }
 
         public ServiceSequence(XmlNode node) : base(node)
         {
-            _serviceSequenceKind = new ItemEnumType<ServiceSequenceKind>(node.Name);
+            if (Enum.TryParse(node.Name, true, out ServiceSequenceKind kind))
+            {
+                ServiceSequenceKind = kind;
+            }
         }
 
         #region Properties
 
-        public ItemEnumType<ServiceSequenceKind> ServiceSequenceKind
-        {
-            get
-            {
-                return _serviceSequenceKind;
-            }
-        }
+        public ServiceSequenceKind ServiceSequenceKind { get; set; }
+
+        #endregion
 
         public ElementViewModel CreateViewModel(IRuleHandler handler)
         {
             return new ServiceSequenceViewModel(this, handler);
-        }
-        #endregion
-
-        protected override void Validate()
-        {
-            base.Validate();
-
-            if (!_serviceSequenceKind.IsValid)
-            {
-                AppendAllBrokenConstraints(_serviceSequenceKind);
-            }
         }
     }
 }

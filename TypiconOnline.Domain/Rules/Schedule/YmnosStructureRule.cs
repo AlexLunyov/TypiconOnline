@@ -25,6 +25,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         private ItemEnumType<YmnosStructureKind> _ymnosStructureKind;
 
+        public YmnosStructureRule(string name) : base(name) { }
+
+        public YmnosStructureRule(ExecContainer c)
+        {
+            ChildElements = c.ChildElements;
+        }
 
         public YmnosStructureRule(XmlNode node) : base(node)
         {
