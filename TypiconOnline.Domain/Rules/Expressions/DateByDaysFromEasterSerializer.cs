@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class DateByDaysFromEasterSerializer : RuleXmlSerializerBase, IRuleSerializer<DateByDaysFromEaster>
     {
-        public DateByDaysFromEasterSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public DateByDaysFromEasterSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.DateByDaysFromEasterNodeName };
         }
@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
             if (d.Element.HasChildNodes)
             {
-                (element as DateByDaysFromEaster).ChildExpression = _unitOfWork.Factory<IntExpression>()
+                (element as DateByDaysFromEaster).ChildExpression = SerializerRoot.Factory<IntExpression>()
                     .CreateElement(new XmlDescriptor() { Element = d.Element.FirstChild });
             }
         }

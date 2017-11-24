@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class AndSerializer : LogicalExpressionSerializer, IRuleSerializer<And>
     {
-        public AndSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public AndSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.AndNodeName };
         }

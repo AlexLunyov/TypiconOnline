@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class IntSerializer : RuleXmlSerializerBase, IRuleSerializer<Int>
     {
-        public IntSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public IntSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.IntNodeName };
         }

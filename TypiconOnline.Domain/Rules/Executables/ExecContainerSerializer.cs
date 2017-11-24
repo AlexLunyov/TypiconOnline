@@ -12,7 +12,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 {
     public class ExecContainerSerializer : RuleXmlSerializerBase, IRuleSerializer<ExecContainer>
     {
-        public ExecContainerSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public ExecContainerSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.ExecContainerNodeName,
                                           RuleConstants.ActionNodeName };
@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.Rules.Executables
         {
             foreach (XmlNode childNode in d.Element.ChildNodes)
             {
-                RuleElement child = _unitOfWork.Factory<RuleElement>().CreateElement(new XmlDescriptor() { Element = childNode });
+                RuleElement child = SerializerRoot.Factory<RuleElement>().CreateElement(new XmlDescriptor() { Element = childNode });
                 (element as ExecContainer).ChildElements.Add(child);
             }
         }

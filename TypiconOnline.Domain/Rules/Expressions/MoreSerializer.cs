@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class MoreSerializer : LogicalExpressionSerializer, IRuleSerializer<More>
     {
-        public MoreSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public MoreSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.MoreNodeName };
         }

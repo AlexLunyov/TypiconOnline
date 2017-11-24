@@ -11,9 +11,9 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class WorshipRuleSerializer : YmnosStructureRuleSerializer
+    public class WorshipRuleSerializer : YmnosStructureRuleSerializer, IRuleSerializer<WorshipRule>
     {
-        public WorshipRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public WorshipRuleSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] {
                 RuleConstants.ServiceNodeName };

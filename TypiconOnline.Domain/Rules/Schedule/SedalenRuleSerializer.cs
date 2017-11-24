@@ -9,9 +9,9 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class SedalenRuleSerializer : YmnosStructureRuleSerializer
+    public class SedalenRuleSerializer : YmnosStructureRuleSerializer, IRuleSerializer<SedalenRule>
     {
-        public SedalenRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public SedalenRuleSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] {
                 RuleConstants.SedalenNode };

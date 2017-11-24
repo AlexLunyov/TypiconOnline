@@ -33,21 +33,21 @@ namespace TypiconOnline.Domain.ViewModels
             List<RuleElement> children = CommonRuleService.Instance.GetCommonRuleChildren(
                 new CommonRuleServiceRequest() { Handler = handler, Key = key });
 
-            if (_rule.CalculatedYmnosStructure.Groups.Count > 0)
+            if (_rule.Structure.Groups.Count > 0)
             {
                 //заполняем header - вставляем номер гласа
                 ItemText header = (children[0] as TextHolder).Paragraphs[0];
                 string headerText = header.StringExpression;
-                header.StringExpression = headerText.Replace("[ihos]", _rule.CalculatedYmnosStructure.Groups[0].Ihos.ToString());
+                header.StringExpression = headerText.Replace("[ihos]", _rule.Structure.Groups[0].Ihos.ToString());
 
                 //а теперь отсчитываем от последней стихиры и добавляем к ней стих из псалма
                 //сам стих удаляем из псалма
 
                 TextHolder psalm = new TextHolder(children[2] as TextHolder);
 
-                for (int i = _rule.CalculatedYmnosStructure.Groups.Count - 1; i >= 0; i--)
+                for (int i = _rule.Structure.Groups.Count - 1; i >= 0; i--)
                 {
-                    YmnosGroup group = _rule.CalculatedYmnosStructure.Groups[i];
+                    YmnosGroup group = _rule.Structure.Groups[i];
 
                     for (int n = group.Ymnis.Count - 1; n >= 0; n--)
                     {

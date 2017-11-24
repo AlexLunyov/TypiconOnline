@@ -460,6 +460,7 @@ namespace TypiconOnline.Domain.Rules
     /// </summary>
     public enum TextHolderMark
     {
+        undefined,
         /// <summary>
         /// священические молитвы
         /// </summary>

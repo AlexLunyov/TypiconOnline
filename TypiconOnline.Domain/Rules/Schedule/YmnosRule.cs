@@ -18,28 +18,34 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Описание правил для использования текстов песнопений
     /// </summary>
-    public class YmnosRule : RuleExecutable, ICalcStructureElement/*<YmnosStructure>*/, ICustomInterpreted
+    public class YmnosRule : RuleExecutable, ICalcStructureElement, ICustomInterpreted
     {
-        private ItemEnumType<YmnosRuleKind> _ymnosKind;
-        private ItemEnumType<PlaceYmnosSource> _place;
-        private ItemInt _count;
-        private ItemInt _startFrom;
+        public YmnosRule(string name) : base(name) { }
 
         public YmnosRule(XmlNode node) : base(node)
         {
-            _ymnosKind = new ItemEnumType<YmnosRuleKind>(node.Name);
+            if (Enum.TryParse(node.Name, true, out YmnosRuleKind kind))
+            {
+                Kind = kind;
+            }
 
             XmlAttribute attr = node.Attributes[RuleConstants.YmnosRuleSourceAttrName];
-            Source = (attr != null) ? new ItemEnumType<YmnosSource>(attr.Value) : null;
+            if (Enum.TryParse(attr?.Value, true, out YmnosSource source))
+            {
+                Source = source;
+            }
 
             attr = node.Attributes[RuleConstants.YmnosRulePlaceAttrName];
-            _place = (attr != null) ? new ItemEnumType<PlaceYmnosSource>(attr.Value) : null;
+            if (Enum.TryParse(attr?.Value, true, out PlaceYmnosSource place))
+            {
+                Place = place;
+            }
 
             attr = node.Attributes[RuleConstants.YmnosRuleCountAttrName];
-            _count = new ItemInt((attr != null) ? attr.Value : "1");
+            Count = int.TryParse(attr?.Value, out int intValue) ? intValue : 0;
 
             attr = node.Attributes[RuleConstants.YmnosRuleStartFromAttrName];
-            _startFrom = new ItemInt((attr != null) ? attr.Value : "1");
+            StartFrom = int.TryParse(attr?.Value, out intValue) ? intValue : 0;
         }
 
         #region Properties
@@ -47,51 +53,24 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <summary>
         /// Тип песнопения (общий, славник, богородичен...)
         /// </summary>
-        public ItemEnumType<YmnosRuleKind> YmnosKind
-        {
-            get
-            {
-                return _ymnosKind;
-            }
-        }
+        public YmnosRuleKind Kind { get; set; }
         /// <summary>
         /// Источник книги, откуда брать текст
         /// </summary>
-        public ItemEnumType<YmnosSource> Source
-        {
-            get; }
+        public YmnosSource Source { get; set; }
 
         /// <summary>
         /// Источник книги, откуда брать текст
         /// </summary>
-        public ItemEnumType<PlaceYmnosSource> Place
-        {
-            get
-            {
-                return _place;
-            }
-        }
+        public PlaceYmnosSource Place { get; set; }
         /// <summary>
         /// Количество стихир, которые берутся из выбранного источника. По умолчанию - 1
         /// </summary>
-        public ItemInt Count
-        {
-            get
-            {
-                return _count;
-            }
-        }
+        public int Count { get; set; } = 1;
         /// <summary>
         /// Начало индекса (1 - ориентированного), начиная с которого необходимо брать стихиры выбранного источника. По умолчанию - 1
         /// </summary>
-        public ItemInt StartFrom
-        {
-            get
-            {
-                return _startFrom;
-            }
-        }
-        
+        public int StartFrom { get; set; } = 1;
 
         #endregion
 
@@ -105,79 +84,79 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void Validate()
         {
-            if (_ymnosKind == null)
-            {
-                AddBrokenConstraint(YmnosRuleBusinessConstraint.KindMismatch, ElementName);
-            }
-            else if (!_ymnosKind.IsValid)
-            {
-                AppendAllBrokenConstraints(_ymnosKind);
-            }
+            //if (_ymnosKind == null)
+            //{
+            //    AddBrokenConstraint(YmnosRuleBusinessConstraint.KindMismatch, ElementName);
+            //}
+            //else if (!_ymnosKind.IsValid)
+            //{
+            //    AppendAllBrokenConstraints(_ymnosKind);
+            //}
 
-            bool sourceIsValid = false;
+            //bool sourceIsValid = false;
 
-            if (Source == null)
-            {
-                AddBrokenConstraint(YmnosRuleBusinessConstraint.SourceRequired, ElementName);
-            }
-            else if (!Source.IsValid)
-            {
-                AppendAllBrokenConstraints(Source);
-            }
-            else
-            {
-                //первое условие для сопоставления source и place
-                sourceIsValid = true;
-            }
+            //if (Source == null)
+            //{
+            //    AddBrokenConstraint(YmnosRuleBusinessConstraint.SourceRequired, ElementName);
+            //}
+            //else if (!Source.IsValid)
+            //{
+            //    AppendAllBrokenConstraints(Source);
+            //}
+            //else
+            //{
+            //    //первое условие для сопоставления source и place
+            //    sourceIsValid = true;
+            //}
 
-            if (_place == null)
-            {
-                AddBrokenConstraint(YmnosRuleBusinessConstraint.PlaceRequired, ElementName);
-            }
-            else if (_place.IsValid == false)
-            {
-                AppendAllBrokenConstraints(_place);
-            }
-            else if (sourceIsValid)
-            {
+            //if (_place == null)
+            //{
+            //    AddBrokenConstraint(YmnosRuleBusinessConstraint.PlaceRequired, ElementName);
+            //}
+            //else if (_place.IsValid == false)
+            //{
+            //    AppendAllBrokenConstraints(_place);
+            //}
+            //else if (sourceIsValid)
+            //{
                 /* Проверка на сопоставление source и place
                  * Если source == irmologion, то значения могут быть только сопоставимые ему, и наоборот
                 */
-                if ((Source.Value == YmnosSource.Irmologion)
-                    && (Place.Value != PlaceYmnosSource.app1_aposticha)
-                    && (Place.Value != PlaceYmnosSource.app1_kekragaria)
-                    && (Place.Value != PlaceYmnosSource.app2_esperinos)
-                    && (Place.Value != PlaceYmnosSource.app2_orthros)
-                    && (Place.Value != PlaceYmnosSource.app3)
-                    && (Place.Value != PlaceYmnosSource.app4_esperinos)
-                    && (Place.Value != PlaceYmnosSource.app4_orthros))
+                if ((Source == YmnosSource.Irmologion)
+                    && (Place != PlaceYmnosSource.app1_aposticha)
+                    && (Place != PlaceYmnosSource.app1_kekragaria)
+                    && (Place != PlaceYmnosSource.app2_esperinos)
+                    && (Place != PlaceYmnosSource.app2_orthros)
+                    && (Place != PlaceYmnosSource.app3)
+                    && (Place != PlaceYmnosSource.app4_esperinos)
+                    && (Place != PlaceYmnosSource.app4_orthros))
                 {
                     AddBrokenConstraint(YmnosRuleBusinessConstraint.PlaceAndSourceMismatched, ElementName);
                 }
                 else
                 {
-                    if ((Source.Value != YmnosSource.Irmologion)
-                        && ((Place.Value == PlaceYmnosSource.app1_aposticha)
-                            || (Place.Value == PlaceYmnosSource.app1_kekragaria)
-                            || (Place.Value == PlaceYmnosSource.app2_esperinos)
-                            || (Place.Value == PlaceYmnosSource.app2_orthros)
-                            || (Place.Value == PlaceYmnosSource.app3)
-                            || (Place.Value == PlaceYmnosSource.app4_esperinos)
-                            || (Place.Value == PlaceYmnosSource.app4_orthros)))
+                    if ((Source != YmnosSource.Irmologion)
+                        && ((Place == PlaceYmnosSource.app1_aposticha)
+                            || (Place == PlaceYmnosSource.app1_kekragaria)
+                            || (Place == PlaceYmnosSource.app2_esperinos)
+                            || (Place == PlaceYmnosSource.app2_orthros)
+                            || (Place == PlaceYmnosSource.app3)
+                            || (Place == PlaceYmnosSource.app4_esperinos)
+                            || (Place == PlaceYmnosSource.app4_orthros)))
                     {
                         AddBrokenConstraint(YmnosRuleBusinessConstraint.PlaceAndSourceMismatched, ElementName);
                     }
                 }
+            //}
+
+            if (Count < 1)
+            {
+                AddBrokenConstraint(YmnosRuleBusinessConstraint.InvalidCount, ElementName);
             }
 
-            if (_count.IsValid == false)
+            if (StartFrom < 1)
             {
-                AppendAllBrokenConstraints(_count);
-            }
-
-            if (_startFrom.IsValid == false)
-            {
-                AppendAllBrokenConstraints(_startFrom);
+                AddBrokenConstraint(YmnosRuleBusinessConstraint.InvalidStartFrom, ElementName);
             }
         }
 
@@ -193,7 +172,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             //разбираемся с source
             DayStructureBase dayWorship = null;
-            switch (Source.Value)
+            switch (Source)
             {
                 case YmnosSource.Item1:
                     dayWorship = (settings.DayWorships.Count > 0) ? settings.DayWorships[0] : null;
@@ -211,26 +190,21 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             //if (dayWorship == null)
             //{
-            //    throw new KeyNotFoundException("YmnosStructureRule source not found: " + Source.Value.ToString());
+            //    throw new KeyNotFoundException("YmnosStructureRule source not found: " + Source.ToString());
             //}
 
             //не выдаем ошибки, если день не найден
             if (dayWorship != null)
             {
-                if (Place == null)
-                {
-                    //TODO: на случай если будет реализован функционал, когда у ymnosRule может быть не определен place
-                }
-
                 //теперь разбираемся с place И kind
 
                 YmnosGroup group = null;
                 List<YmnosGroup> groups = null;
 
-                switch (YmnosKind.Value)
+                switch (Kind)
                 {
                     case YmnosRuleKind.YmnosRule:
-                        groups = dayWorship.GetElement().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Groups;
+                        groups = dayWorship.GetElement().GetYmnosStructure(Place, Count, StartFrom)?.Groups;
                         if (groups != null)
                         {
                             result = new YmnosStructure();
@@ -239,7 +213,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                         break;
                     case YmnosRuleKind.DoxastichonRule:
-                        group = dayWorship.GetElement().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Doxastichon;
+                        group = dayWorship.GetElement().GetYmnosStructure(Place, Count, StartFrom)?.Doxastichon;
                         if (group != null)
                         {
                             result = new YmnosStructure();
@@ -248,7 +222,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                         break;
                     case YmnosRuleKind.TheotokionRule:
-                        groups = dayWorship.GetElement().GetYmnosStructure(Place.Value, Count.Value, StartFrom.Value)?.Theotokion;
+                        groups = dayWorship.GetElement().GetYmnosStructure(Place, Count, StartFrom)?.Theotokion;
                         if (groups != null)
                         {
                             result = new YmnosStructure();

@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 {
     public class ModifyDaySerializer : RuleXmlSerializerBase, IRuleSerializer<ModifyDay>
     {
-        public ModifyDaySerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public ModifyDaySerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.ModifyDayNodeName };
         }
@@ -47,12 +47,12 @@ namespace TypiconOnline.Domain.Rules.Executables
             {
                 if (childNode.Name == RuleConstants.ModifyReplacedDayNodeName)
                 {
-                    (element as ModifyDay).ModifyReplacedDay = _unitOfWork.Factory<ModifyReplacedDay>()
+                    (element as ModifyDay).ModifyReplacedDay = SerializerRoot.Factory<ModifyReplacedDay>()
                         .CreateElement(new XmlDescriptor() { Element = childNode });
                 }
                 else
                 {
-                    (element as ModifyDay).ChildDateExp = _unitOfWork.Factory<DateExpression>()
+                    (element as ModifyDay).ChildDateExp = SerializerRoot.Factory<DateExpression>()
                         .CreateElement(new XmlDescriptor() { Element = childNode });
                 }
             }

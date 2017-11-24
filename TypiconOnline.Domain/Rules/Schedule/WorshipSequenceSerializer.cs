@@ -10,9 +10,9 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class WorshipSequenceSerializer : ExecContainerSerializer
+    public class WorshipSequenceSerializer : ExecContainerSerializer, IRuleSerializer<WorshipSequence>
     {
-        public WorshipSequenceSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public WorshipSequenceSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] {
                 RuleConstants.MikrosEsperinosNode,

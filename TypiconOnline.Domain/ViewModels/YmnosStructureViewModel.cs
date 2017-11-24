@@ -26,7 +26,7 @@ namespace TypiconOnline.Domain.ViewModels
 
         public YmnosStructureViewModel(YmnosStructureRule rule, IRuleHandler handler) 
         {
-            if (rule == null || rule.CalculatedYmnosStructure == null) throw new ArgumentNullException("YmnosStructureRule");
+            if (rule == null || rule.Structure == null) throw new ArgumentNullException("YmnosStructureRule");
             if (handler == null) throw new ArgumentNullException("handler");
 
             _rule = rule;
@@ -41,7 +41,7 @@ namespace TypiconOnline.Domain.ViewModels
             ConstructForm(_handler);
 
             //а теперь добавляем стихиры, общие для всех наследников данного класса
-            YmnosStructure ymnosStructure = _rule.CalculatedYmnosStructure;
+            YmnosStructure ymnosStructure = _rule.Structure;
 
             //Groups
             for (int i = 0; i < ymnosStructure.Groups.Count; i++)

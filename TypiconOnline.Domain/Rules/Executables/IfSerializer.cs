@@ -11,7 +11,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 {
     public class IfSerializer : RuleXmlSerializerBase, IRuleSerializer<If>
     {
-        public IfSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public IfSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.IfNodeName };
         }

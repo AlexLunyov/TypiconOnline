@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class GetDayOfWeekSerializer : RuleXmlSerializerBase, IRuleSerializer<GetDayOfWeek>
     {
-        public GetDayOfWeekSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public GetDayOfWeekSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.GetDayOfWeekNodeName };
         }
@@ -35,7 +35,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
             if (d.Element.HasChildNodes)
             {
-                (element as GetDayOfWeek).ChildDateExp = _unitOfWork.Factory<DateExpression>()
+                (element as GetDayOfWeek).ChildDateExp = SerializerRoot.Factory<DateExpression>()
                     .CreateElement(new XmlDescriptor() { Element = d.Element.FirstChild });
             }
         }

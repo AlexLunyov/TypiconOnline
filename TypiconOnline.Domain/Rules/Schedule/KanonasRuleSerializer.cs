@@ -10,9 +10,9 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class KanonasRuleSerializer : YmnosStructureRuleSerializer
+    public class KanonasRuleSerializer : YmnosStructureRuleSerializer, IRuleSerializer<KanonasRule>
     {
-        public KanonasRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public KanonasRuleSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] {
                 RuleConstants.KanonasRuleNode };

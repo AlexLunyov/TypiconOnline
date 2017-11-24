@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class LessEqualsSerializer : LogicalExpressionSerializer, IRuleSerializer<LessEquals>
     {
-        public LessEqualsSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public LessEqualsSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.LessEqualsNodeName };
         }

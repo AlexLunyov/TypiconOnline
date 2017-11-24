@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class DateSerializer : RuleXmlSerializerBase, IRuleSerializer<Date>
     {
-        public DateSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public DateSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.DateNodeName };
         }

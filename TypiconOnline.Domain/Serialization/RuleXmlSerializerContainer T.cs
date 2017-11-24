@@ -43,14 +43,14 @@ namespace TypiconOnline.Domain.Serialization
 
         protected virtual IEnumerable<Type> GetTypes()
         {
-            return from type in Assembly.GetExecutingAssembly().GetTypes()
+            return (from type in Assembly.GetExecutingAssembly().GetTypes()
                    from z in type.GetInterfaces()
                    where type.IsSubclassOf(typeof(RuleXmlSerializerBase))
-                         
+                         && !type.IsAbstract
                          && z.Name == typeof(IRuleSerializer<T>).Name
                          && (z.GenericTypeArguments[0].Equals(typeof(T))
                              || z.GenericTypeArguments[0].IsSubclassOf(typeof(T)))
-                   select type;
+                   select type).Distinct();
         }
     }
 }

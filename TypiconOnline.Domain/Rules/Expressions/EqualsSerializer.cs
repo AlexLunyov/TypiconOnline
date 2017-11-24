@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class EqualsSerializer : LogicalExpressionSerializer, IRuleSerializer<Equals>
     {
-        public EqualsSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public EqualsSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.EqualsNodeName };
         }

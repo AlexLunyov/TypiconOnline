@@ -14,6 +14,7 @@ namespace TypiconOnline.Domain.ViewModels
     public class TextHolderViewModel : ElementViewModel
     {
         public TextHolderKind Kind { get; set; }
+        public TextHolderMark Mark { get; set; }
         public IEnumerable<string> Paragraphs { get; set; } 
             
         public TextHolderViewModel()
@@ -28,7 +29,8 @@ namespace TypiconOnline.Domain.ViewModels
 
             textHolder.ThrowExceptionIfInvalid();
 
-            Kind = textHolder.Kind.Value;
+            Kind = textHolder.Kind;
+            Mark = textHolder.Mark;
 
             Paragraphs = textHolder.Paragraphs.Select(c => c[handler.Settings.Language]).ToArray();
 

@@ -18,39 +18,48 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class TheotokionRule : YmnosRule
     {
-        private YmnosRule _ymnos;
+        ITheotokionAppContext theotokionApp;
+
+        public TheotokionRule(string name, ITheotokionAppContext context) : base(name)
+        {
+            theotokionApp = context ?? throw new ArgumentNullException("ITheotokionAppContext");
+        }
 
         public TheotokionRule(XmlNode node) : base(node)
         {
             if (node.HasChildNodes && node.FirstChild.Name == RuleConstants.YmnosRuleNode)
             {
-                _ymnos = RuleFactory.CreateYmnosRule(node.FirstChild);
+                ReferenceYmnos = RuleFactory.CreateYmnosRule(node.FirstChild);
             }
+
+            theotokionApp = BookStorage.Instance.TheotokionApp;
         }
+
+        public YmnosRule ReferenceYmnos { get; set; }
 
         protected override void Validate()
         {
             base.Validate();
 
-            if (_ymnos == null 
-                && ((Place.Value != PlaceYmnosSource.kekragaria_theotokion)
-                && (Place.Value != PlaceYmnosSource.liti_theotokion)
-                && (Place.Value != PlaceYmnosSource.aposticha_esperinos_theotokion)
-                && (Place.Value != PlaceYmnosSource.aposticha_orthros_theotokion)
-                && (Place.Value != PlaceYmnosSource.ainoi_theotokion)
-                && (Place.Value != PlaceYmnosSource.troparion)
-                && (Place.Value != PlaceYmnosSource.sedalen1_theotokion)
-                && (Place.Value != PlaceYmnosSource.sedalen2_theotokion)
-                && (Place.Value != PlaceYmnosSource.sedalen3_theotokion)
-                || (Source.Value == YmnosSource.Irmologion)))
+            if (ReferenceYmnos == null 
+                && ((Place != PlaceYmnosSource.kekragaria_theotokion)
+                && (Place != PlaceYmnosSource.liti_theotokion)
+                && (Place != PlaceYmnosSource.aposticha_esperinos_theotokion)
+                && (Place != PlaceYmnosSource.aposticha_orthros_theotokion)
+                && (Place != PlaceYmnosSource.ainoi_theotokion)
+                && (Place != PlaceYmnosSource.troparion)
+                && (Place != PlaceYmnosSource.sedalen1_theotokion)
+                && (Place != PlaceYmnosSource.sedalen2_theotokion)
+                && (Place != PlaceYmnosSource.sedalen3_theotokion)
+                || (Source == YmnosSource.Irmologion)))
             {
                 //если дочерний элемент не определен, а место указано - либо не имеющее богородична
                 //либо из ирмология - где нет привязки к гласу
                 AddBrokenConstraint(TheotokionRuleBusinessConstraint.ChildRequired, ElementName);
             }
-            else if (_ymnos?.IsValid == false)
+            else if (ReferenceYmnos?.IsValid == false)
             {
-                AppendAllBrokenConstraints(_ymnos, ElementName);
+                AppendAllBrokenConstraints(ReferenceYmnos, ElementName);
             }
 
 
@@ -60,12 +69,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             YmnosStructure result = null;
 
-            if (Source.Value == YmnosSource.Irmologion)
+            if (Source == YmnosSource.Irmologion)
             {
-                int calcIhos = (_ymnos.Calculate(date, settings) as YmnosStructure).Ihos;
+                int calcIhos = (ReferenceYmnos.Calculate(date, settings) as YmnosStructure).Ihos;
 
-                GetTheotokionResponse response = BookStorage.Instance.TheotokionApp.Get(
-                    new GetTheotokionRequest() { Place = Place.Value, Ihos = calcIhos, DayOfWeek = date.DayOfWeek });
+                GetTheotokionResponse response = theotokionApp.Get(
+                    new GetTheotokionRequest() { Place = Place, Ihos = calcIhos, DayOfWeek = date.DayOfWeek });
 
                 if (response.Exception == null && response.BookElement != null)
                 {

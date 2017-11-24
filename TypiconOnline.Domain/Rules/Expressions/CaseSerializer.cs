@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class CaseSerializer : RuleXmlSerializerBase, IRuleSerializer<Case>
     {
-        public CaseSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public CaseSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.CaseNodeName };
         }
@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
             {
                 foreach (XmlNode valueNode in valuesNode.ChildNodes)
                 {
-                    RuleExpression valueElement = _unitOfWork.Factory<RuleExpression>()
+                    RuleExpression valueElement = SerializerRoot.Factory<RuleExpression>()
                     .CreateElement(new XmlDescriptor() { Element = valueNode });
 
                     (element as Case).ValuesElements.Add(valueElement);
@@ -43,7 +43,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
             if (actionNode != null)
             {
-                (element as Case).ActionElement = _unitOfWork.Factory<ExecContainer>()
+                (element as Case).ActionElement = SerializerRoot.Factory<ExecContainer>()
                     .CreateElement(new XmlDescriptor() { Element = actionNode });
             }
         }

@@ -11,34 +11,27 @@ using TypiconOnline.Domain.Rules.Expressions;
 using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Serialization;
 
-namespace TypiconOnline.Domain.Rules.Schedule
+namespace TypiconOnline.Domain.Rules.Expressions
 {
-    public class IsExistsSerializer : RuleXmlSerializerBase, IRuleSerializer<IsExists>
+    public class IsTwoSaintsSerializer : RuleXmlSerializerBase, IRuleSerializer<IsTwoSaints>
     {
-        public IsExistsSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public IsTwoSaintsSerializer(IRuleSerializerRoot root) : base(root)
         {
-            ElementNames = new string[] { RuleConstants.IsExistsNodeName };
+            ElementNames = new string[] { RuleConstants.IsTwoSaintsNodeName };
         }
 
         protected override RuleElement CreateObject(XmlDescriptor d)
         {
-            return new IsExists(d.GetElementName());
+            return new IsTwoSaints(d.GetElementName());
         }
 
         protected override void FillObject(XmlDescriptor d, RuleElement element)
         {
-            if (d.Element.HasChildNodes)// && node.FirstChild.Name == RuleConstants.YmnosRuleNode)
-            {
-                (element as IsExists).ChildElement = _unitOfWork.Factory<RuleExecutable, ICalcStructureElement>()
-                    .CreateElement(new XmlDescriptor() { Element = d.Element.FirstChild }) as ICalcStructureElement;
-            }
         }
 
         public override string Serialize(RuleElement element)
         {
             throw new NotImplementedException();
         }
-
-        
     }
 }

@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public abstract class LogicalExpressionSerializer : RuleXmlSerializerBase, IRuleSerializer<LogicalExpression>
     {
-        public LogicalExpressionSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public LogicalExpressionSerializer(IRuleSerializerRoot root) : base(root)
         {
         }
 
@@ -23,7 +23,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
             foreach (XmlNode childNode in d.Element.ChildNodes)
             {
-                var exp = _unitOfWork.Factory<RuleExpression>()
+                var exp = SerializerRoot.Factory<RuleExpression>()
                     .CreateElement(new XmlDescriptor() { Element = childNode });
 
                 (element as LogicalExpression).ChildElements.Add(exp);

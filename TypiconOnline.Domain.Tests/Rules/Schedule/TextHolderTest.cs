@@ -9,6 +9,7 @@ using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Schedule;
+using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Tests.Rules.Schedule
 {
@@ -18,6 +19,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void TextHolder_Creature()
         {
+            #region xml
             string xmlString = @"<rule>
 	                                <deacon>
 		                                <p>
@@ -55,20 +57,20 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 		                                </p>
 	                                </lector>
                                 </rule>";
+            #endregion
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var unitOfWork = new RuleSerializerRoot();
 
-            xmlDoc.LoadXml(xmlString);
-
-            ExecContainer element = (ExecContainer) RuleFactory.CreateElement(xmlDoc.FirstChild);
+            var element = unitOfWork.Factory<ExecContainer>()
+                .CreateElement(new XmlDescriptor() { Description = xmlString });
             //3
-            int choirCount = element.ChildElements.Where(c => (c is TextHolder) && (c as TextHolder).Kind.Value == TextHolderKind.Choir).Count();
+            int choirCount = element.ChildElements.Where(c => (c is TextHolder) && (c as TextHolder).Kind == TextHolderKind.Choir).Count();
             //2
-            int deaconCount = element.ChildElements.Where(c => (c is TextHolder) && (c as TextHolder).Kind.Value == TextHolderKind.Deacon).Count();
+            int deaconCount = element.ChildElements.Where(c => (c is TextHolder) && (c as TextHolder).Kind == TextHolderKind.Deacon).Count();
             //1
-            int priestCount = element.ChildElements.Where(c => (c is TextHolder) && (c as TextHolder).Kind.Value == TextHolderKind.Priest).Count();
+            int priestCount = element.ChildElements.Where(c => (c is TextHolder) && (c as TextHolder).Kind == TextHolderKind.Priest).Count();
             //1
-            int lectorCount = element.ChildElements.Where(c => (c is TextHolder) && (c as TextHolder).Kind.Value == TextHolderKind.Lector).Count();
+            int lectorCount = element.ChildElements.Where(c => (c is TextHolder) && (c as TextHolder).Kind == TextHolderKind.Lector).Count();
 
             Assert.AreEqual(choirCount, 3);
             Assert.AreEqual(deaconCount, 2);

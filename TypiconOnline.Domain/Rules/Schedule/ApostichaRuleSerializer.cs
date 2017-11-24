@@ -9,9 +9,9 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class ApostichaRuleSerializer : YmnosStructureRuleSerializer
+    public class ApostichaRuleSerializer : YmnosStructureRuleSerializer, IRuleSerializer<ApostichaRule>
     {
-        public ApostichaRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public ApostichaRuleSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] {
                 RuleConstants.ApostichaNode,

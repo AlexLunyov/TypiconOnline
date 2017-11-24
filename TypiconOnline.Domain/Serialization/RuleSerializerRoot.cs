@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 
@@ -11,6 +12,13 @@ namespace TypiconOnline.Domain.Serialization
     public class RuleSerializerRoot : IRuleSerializerRoot
     {
         protected Dictionary<string, object> factories = new Dictionary<string, object>();
+
+        public RuleSerializerRoot(BookStorage bookStorage)
+        {
+            BookStorage = bookStorage ?? throw new ArgumentNullException("BookStorage");
+        }
+
+        public BookStorage BookStorage { get; }
 
         /// <summary>
         /// Контейнер фабрик для элемента Правила или его наследников

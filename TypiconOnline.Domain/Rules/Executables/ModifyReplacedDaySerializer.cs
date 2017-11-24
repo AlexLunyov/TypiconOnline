@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 {
     public class ModifyReplacedDaySerializer : ModifyDaySerializer, IRuleSerializer<ModifyReplacedDay>
     {
-        public ModifyReplacedDaySerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public ModifyReplacedDaySerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.ModifyReplacedDayNodeName };
         }

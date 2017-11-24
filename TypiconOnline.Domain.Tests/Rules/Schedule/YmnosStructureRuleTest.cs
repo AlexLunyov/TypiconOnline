@@ -54,8 +54,8 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             SedalenRuleViewModel model = (rule.Rule as SedalenRule).CreateViewModel(handler) as SedalenRuleViewModel;
 
-            Assert.AreEqual(3, (rule.Rule as SedalenRule).CalculatedYmnosStructure.YmnosStructureCount);
-            Assert.Pass((rule.Rule as SedalenRule).CalculatedYmnosStructure.YmnosStructureCount.ToString());
+            Assert.AreEqual(3, (rule.Rule as SedalenRule).Structure.YmnosStructureCount);
+            Assert.Pass((rule.Rule as SedalenRule).Structure.YmnosStructureCount.ToString());
         }
     }
 }

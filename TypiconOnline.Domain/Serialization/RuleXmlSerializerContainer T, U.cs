@@ -11,15 +11,11 @@ namespace TypiconOnline.Domain.Serialization
 {
     public class RuleXmlSerializerContainer<T, U> : RuleXmlSerializerContainer<T> where T : RuleElement
     {
-        public RuleXmlSerializerContainer(IRuleSerializerRoot unitOfWork) : base(unitOfWork) { }
+        public RuleXmlSerializerContainer(IRuleSerializerRoot root) : base(root) { }
 
         protected override IEnumerable<Type> GetTypes()
         {
-            if (typeof(U).IsInterface)
-            {
-
-            }
-            return from type in Assembly.GetExecutingAssembly().GetTypes()
+            return (from type in Assembly.GetExecutingAssembly().GetTypes()
                    from z in type.GetInterfaces()
                    where type.IsSubclassOf(typeof(RuleXmlSerializerBase))
                          
@@ -29,7 +25,7 @@ namespace TypiconOnline.Domain.Serialization
                          && (z.GenericTypeArguments[0].Equals(typeof(U))
                             || z.GenericTypeArguments[0].IsSubclassOf(typeof(U))
                             || z.GenericTypeArguments[0].GetInterface(typeof(U).ToString()) != null)
-                   select type;
+                   select type).Distinct();
         }
     }
 }

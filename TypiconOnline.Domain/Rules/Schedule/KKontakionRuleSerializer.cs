@@ -11,7 +11,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class KKontakionRuleSerializer : RuleXmlSerializerBase, IRuleSerializer<KKontakionRule>
     {
-        public KKontakionRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public KKontakionRuleSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.KKontakionNode };
         }

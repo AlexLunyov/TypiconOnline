@@ -11,9 +11,9 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class KekragariaRuleSerializer : YmnosStructureRuleSerializer
+    public class KekragariaRuleSerializer : YmnosStructureRuleSerializer, IRuleSerializer<KekragariaRule>
     {
-        public KekragariaRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public KekragariaRuleSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] {
                 RuleConstants.KekragariaRuleNode };

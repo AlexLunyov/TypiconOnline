@@ -10,12 +10,12 @@ namespace TypiconOnline.Domain.Serialization
 {
     public abstract class RuleXmlSerializerBase : IRuleSerializer
     {
-        protected IRuleSerializerRoot _unitOfWork;
-
-        public RuleXmlSerializerBase(IRuleSerializerRoot unitOfWork)
+        public RuleXmlSerializerBase(IRuleSerializerRoot root)
         {
-            _unitOfWork = unitOfWork ?? throw new ArgumentNullException("RuleFactoryUnitOfWork");
+            SerializerRoot = root ?? throw new ArgumentNullException("RuleSerializerRoot");
         }
+
+        protected IRuleSerializerRoot SerializerRoot { get; }
 
         public IEnumerable<string> ElementNames { get; protected set; }
 

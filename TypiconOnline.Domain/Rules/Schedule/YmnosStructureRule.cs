@@ -53,7 +53,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <summary>
         /// Вычисленная последовательность богослужебных текстов
         /// </summary>
-        public YmnosStructure CalculatedYmnosStructure { get; private set; }
+        public YmnosStructure Structure { get; private set; }
 
         #endregion
 
@@ -83,22 +83,21 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         private void CalculateYmnosStructure(DateTime date, RuleHandlerSettings settings, ExecContainer container)
         {
-            CalculatedYmnosStructure = new YmnosStructure();
+            Structure = new YmnosStructure();
             foreach (YmnosRule ymnosRule in container.ChildElements)
             {
-                YmnosStructure s = ymnosRule.Calculate(date, settings) as YmnosStructure;
-                if (s != null)
+                if (ymnosRule.Calculate(date, settings) is YmnosStructure s)
                 {
-                    switch (ymnosRule.YmnosKind.Value)
+                    switch (ymnosRule.Kind)
                     {
                         case YmnosRuleKind.YmnosRule:
-                            CalculatedYmnosStructure.Groups.AddRange(s.Groups);
+                            Structure.Groups.AddRange(s.Groups);
                             break;
                         case YmnosRuleKind.DoxastichonRule:
-                            CalculatedYmnosStructure.Doxastichon = s.Doxastichon;
+                            Structure.Doxastichon = s.Doxastichon;
                             break;
                         case YmnosRuleKind.TheotokionRule:
-                            CalculatedYmnosStructure.Theotokion = s.Theotokion;
+                            Structure.Theotokion = s.Theotokion;
                             break;
                     }
                 }

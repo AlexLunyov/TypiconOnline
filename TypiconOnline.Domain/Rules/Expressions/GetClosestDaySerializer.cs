@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class GetClosestDaySerializer : RuleXmlSerializerBase, IRuleSerializer<GetClosestDay>
     {
-        public GetClosestDaySerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public GetClosestDaySerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.GetClosestDayNodeName };
         }
@@ -42,7 +42,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
             if (d.Element.HasChildNodes)
             {
-                (element as GetClosestDay).ChildDateExp = _unitOfWork.Factory<DateExpression>()
+                (element as GetClosestDay).ChildDateExp = SerializerRoot.Factory<DateExpression>()
                     .CreateElement(new XmlDescriptor() { Element = d.Element.FirstChild });
             }
         }

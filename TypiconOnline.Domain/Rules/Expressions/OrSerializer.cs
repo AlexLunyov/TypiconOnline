@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class OrSerializer : LogicalExpressionSerializer, IRuleSerializer<Or>
     {
-        public OrSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public OrSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.OrNodeName };
         }

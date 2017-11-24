@@ -9,9 +9,9 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class AinoiRuleSerializer : KekragariaRuleSerializer
+    public class AinoiRuleSerializer : KekragariaRuleSerializer, IRuleSerializer<AinoiRule>
     {
-        public AinoiRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public AinoiRuleSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] {
                 RuleConstants.AinoiNode };

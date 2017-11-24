@@ -18,28 +18,26 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class TextHolder: RuleExecutable, ICustomInterpreted, IViewModelElement
     {
-        private ItemEnumType<TextHolderKind> _textHolderKind;
-        private ItemEnumType<TextHolderMark> _textHolderMark;
-        private List<ItemTextNoted> _paragraphs = new List<ItemTextNoted>();
+        public TextHolder(string name) : base(name) { }
 
         public TextHolder(XmlNode node) : base(node)
         {
-            _textHolderKind = new ItemEnumType<TextHolderKind>(node.Name);
-
-            XmlAttribute attr = node.Attributes[RuleConstants.TextHolderMarkAttr];
-            if (attr != null)
+            if (Enum.TryParse(node.Name, true, out TextHolderKind kind))
             {
-                _textHolderMark = new ItemEnumType<TextHolderMark>(attr.Name);
+                Kind = kind;
             }
 
-            if (node.HasChildNodes)
+            XmlAttribute attr = node.Attributes[RuleConstants.TextHolderMarkAttr];
+            if (Enum.TryParse(attr?.Value, true, out TextHolderMark mark))
             {
-                foreach (XmlNode childNode in node.ChildNodes)
-                {
-                    ItemTextNoted item = new ItemTextNoted((childNode.Name == RuleConstants.TextHolderPapragraphNode) ? childNode.OuterXml : string.Empty);
+                Mark = mark;
+            }
 
-                    _paragraphs.Add(item);
-                }
+            foreach (XmlNode childNode in node.ChildNodes)
+            {
+                ItemTextNoted item = new ItemTextNoted((childNode.Name == RuleConstants.TextHolderPapragraphNode) ? childNode.OuterXml : string.Empty);
+
+                Paragraphs.Add(item);
             }
         }
 
@@ -47,12 +45,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             if (item == null) throw new ArgumentNullException("TextHolder");
 
-            _textHolderKind = new ItemEnumType<TextHolderKind>(item.ElementName);
-
-            if (item.Mark != null)
-            {
-                _textHolderMark = new ItemEnumType<TextHolderMark>() {  Value = item.Mark.Value};
-            }
+            Kind = item.Kind;
+            Mark = item.Mark;
 
             foreach (ItemTextNoted text in item.Paragraphs)
             {
@@ -60,46 +54,28 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public TextHolder(Ymnos ymnos)
-        {
-            if (ymnos == null) throw new ArgumentNullException("Ymnos");
+        //public TextHolder(Ymnos ymnos)
+        //{
+        //    if (ymnos == null) throw new ArgumentNullException("Ymnos");
 
-            _textHolderKind = new ItemEnumType<TextHolderKind>() { Value = TextHolderKind.Choir };
+        //    _textHolderKind = new ItemEnumType<TextHolderKind>() { Value = TextHolderKind.Choir };
             
-            if (ymnos.Annotation != null)
-            {
+        //    if (ymnos.Annotation != null)
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
         #region Properties
 
-        public ItemEnumType<TextHolderKind> Kind
-        {
-            get
-            {
-                return _textHolderKind;
-            }
-        }
+        public TextHolderKind Kind { get; set; }
 
         /// <summary>
         /// Пометка текста определенным знаком.
         /// </summary>
-        public ItemEnumType<TextHolderMark> Mark
-        {
-            get
-            {
-                return _textHolderMark;
-            }
-        }
+        public TextHolderMark Mark { get; set; } = TextHolderMark.undefined;
 
-        public List<ItemTextNoted> Paragraphs
-        {
-            get
-            {
-                return _paragraphs;
-            }
-        }
+        public List<ItemTextNoted> Paragraphs { get; set; } = new List<ItemTextNoted>();
 
         #endregion
 
@@ -113,12 +89,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void Validate()
         {
-            if (_paragraphs.Count == 0)
+            if (Paragraphs.Count == 0)
             {
                 AddBrokenConstraint(TextHolderBusinessConstraint.ParagraphRequired, ElementName);
             }
 
-            foreach (ItemTextNoted item in _paragraphs)
+            foreach (ItemTextNoted item in Paragraphs)
             {
                 if (item.IsEmpty)
                 {

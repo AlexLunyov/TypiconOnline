@@ -9,9 +9,9 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class TroparionRuleSerializer : YmnosStructureRuleSerializer
+    public class TroparionRuleSerializer : YmnosStructureRuleSerializer, IRuleSerializer<TroparionRule>
     {
-        public TroparionRuleSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public TroparionRuleSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] {
                 RuleConstants.TroparionNode };

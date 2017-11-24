@@ -11,18 +11,18 @@ using TypiconOnline.Domain.Rules.Expressions;
 using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Serialization;
 
-namespace TypiconOnline.Domain.Rules.Schedule
+namespace TypiconOnline.Domain.Rules.Expressions
 {
-    public class IsTwoSaintsSerializer : RuleXmlSerializerBase, IRuleSerializer<IsTwoSaints>
+    public class IsCelebratingSerializer : RuleXmlSerializerBase, IRuleSerializer<IsCelebrating>
     {
-        public IsTwoSaintsSerializer(IRuleSerializerRoot unitOfWork) : base(unitOfWork)
+        public IsCelebratingSerializer(IRuleSerializerRoot root) : base(root)
         {
-            ElementNames = new string[] { RuleConstants.IsTwoSaintsNodeName };
+            ElementNames = new string[] { RuleConstants.IsCelebratingNodeName };
         }
 
         protected override RuleElement CreateObject(XmlDescriptor d)
         {
-            return new IsTwoSaints(d.GetElementName());
+            return new IsCelebrating(d.GetElementName());
         }
 
         protected override void FillObject(XmlDescriptor d, RuleElement element)
@@ -33,5 +33,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }
