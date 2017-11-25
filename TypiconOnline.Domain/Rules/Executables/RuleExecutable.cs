@@ -20,9 +20,6 @@ namespace TypiconOnline.Domain.Rules.Executables
     {
         public RuleExecutable() { }
         public RuleExecutable(string name) : base(name) { }
-        public RuleExecutable(XmlNode node) : base(node)
-        {
-        }
     }
 }
 

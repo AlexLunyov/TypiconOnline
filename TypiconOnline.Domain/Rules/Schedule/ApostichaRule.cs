@@ -15,7 +15,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
     public class ApostichaRule : YmnosStructureRule
     {
         public ApostichaRule(string name) : base(name) { }
-        public ApostichaRule(XmlNode node) : base(node) { }
 
         public override ElementViewModel CreateViewModel(IRuleHandler handler)
         {

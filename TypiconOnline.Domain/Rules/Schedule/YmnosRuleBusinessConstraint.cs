@@ -13,11 +13,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
         public static readonly BusinessConstraint PlaceAndSourceMismatched = new BusinessConstraint("Источник песнопений (книга) и место в источнике имеют несопоставимые значения.");
         public static readonly BusinessConstraint InvalidCount = new BusinessConstraint("Количество должно иметь положительное значение.");
         public static readonly BusinessConstraint InvalidStartFrom = new BusinessConstraint("Начало должно иметь положительное значение.");
+        public static readonly BusinessConstraint SourceRequired = new BusinessConstraint("Отсутствует или не верно определен источник песнопения (книги).");
+        public static readonly BusinessConstraint PlaceRequired = new BusinessConstraint("Отсутствуют или не верно определено место в источнике песнопения (книги).");
 
         //public static readonly BusinessConstraint KindMismatch = new BusinessConstraint("Отсутствуют определение типа песнопения (обычный, славник, богородичен...).");
-        //public static readonly BusinessConstraint SourceRequired = new BusinessConstraint("Отсутствуют определение источника песнопения (книги).");
         //public static readonly BusinessConstraint SourceInvalid = new BusinessConstraint("Неверный источник песнопения (книги).");
-        //public static readonly BusinessConstraint PlaceRequired = new BusinessConstraint("Отсутствуют определение места в источнике песнопения (книги).");
         //public static readonly BusinessConstraint PlaceInvalid = new BusinessConstraint("Неверно определено место в источнике песнопения (книги).");
     }
 }

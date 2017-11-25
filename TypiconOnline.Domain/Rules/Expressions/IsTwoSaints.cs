@@ -19,7 +19,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     public class IsTwoSaints : BooleanExpression
     {
         public IsTwoSaints(string name) : base(name) { }
-        public IsTwoSaints(XmlNode node) : base(node) { }
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {

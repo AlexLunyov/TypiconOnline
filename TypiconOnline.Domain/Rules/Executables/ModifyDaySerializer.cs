@@ -47,13 +47,13 @@ namespace TypiconOnline.Domain.Rules.Executables
             {
                 if (childNode.Name == RuleConstants.ModifyReplacedDayNodeName)
                 {
-                    (element as ModifyDay).ModifyReplacedDay = SerializerRoot.Factory<ModifyReplacedDay>()
-                        .CreateElement(new XmlDescriptor() { Element = childNode });
+                    (element as ModifyDay).ModifyReplacedDay = SerializerRoot.Container<ModifyReplacedDay>()
+                        .Deserialize(new XmlDescriptor() { Element = childNode });
                 }
                 else
                 {
-                    (element as ModifyDay).ChildDateExp = SerializerRoot.Factory<DateExpression>()
-                        .CreateElement(new XmlDescriptor() { Element = childNode });
+                    (element as ModifyDay).ChildDateExp = SerializerRoot.Container<DateExpression>()
+                        .Deserialize(new XmlDescriptor() { Element = childNode });
                 }
             }
         }

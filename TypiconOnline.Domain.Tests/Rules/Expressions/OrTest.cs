@@ -18,11 +18,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 		                            <more><int>2</int><int>1</int></more>
 	                            </or>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            And element = new And(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<Or>(xmlString);
             element.Interpret(DateTime.Today, BypassHandler.Instance);
 
             Assert.IsTrue(element.IsValid);
@@ -37,11 +33,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
                                     <less><int>2</int><int>15</int></less>
 	                            </or>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            Or element = new Or(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<Or>(xmlString);
             element.Interpret(DateTime.Today, BypassHandler.Instance);
 
             Assert.IsTrue((bool)element.ValueCalculated);
@@ -56,11 +48,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
                                     <less><int>22</int><int>15</int></less>
 	                            </or>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            And element = new And(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<Or>(xmlString);
             element.Interpret(DateTime.Today, BypassHandler.Instance);
 
             Assert.IsFalse((bool)element.ValueCalculated);

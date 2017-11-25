@@ -61,8 +61,8 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
 
-            var element = unitOfWork.Factory<ExecContainer>()
-                .CreateElement(new XmlDescriptor() { Description = xmlString });
+            var element = unitOfWork.Container<ExecContainer>()
+                .Deserialize(new XmlDescriptor() { Description = xmlString });
             //3
             int choirCount = element.ChildElements.Where(c => (c is TextHolder) && (c as TextHolder).Kind == TextHolderKind.Choir).Count();
             //2

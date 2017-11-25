@@ -24,44 +24,11 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         public Switch(string name) : base(name) { }
 
-        public Switch(XmlNode node) : base(node)
-        {
-            //ищем expression
-            XmlNode expressionNode = node.SelectSingleNode(RuleConstants.ExpressionNodeName);
-
-            if (expressionNode != null)
-            {
-                XmlNode valNode = expressionNode.FirstChild;
-                Expression = Factories.RuleFactory.CreateExpression(valNode);
-            }
-            
-            //ищем элементы case
-            XmlNodeList casesList = node.SelectNodes(RuleConstants.CaseNodeName);
-
-            if (casesList != null)
-            {
-                CaseElements = new List<Case>();
-
-                foreach (XmlNode caseNode in casesList)
-                {
-                    Case caseElement = new Case(caseNode);
-                    CaseElements.Add(caseElement);
-                }
-            }
-
-            //ищем default
-            XmlNode defaultNode = node.SelectSingleNode(RuleConstants.DefaultNodeName);
-            if (defaultNode != null)
-            {
-                Default = new ExecContainer(defaultNode);
-            }
-        }
-
         #region Properties
 
         public RuleExpression Expression { get; set; }
 
-        public List<Case> CaseElements { get; set; }
+        public ICollection<Case> CaseElements { get; set; } = new List<Case>();
 
         public ExecContainer Default { get; set; }
 
@@ -109,24 +76,17 @@ namespace TypiconOnline.Domain.Rules.Executables
                 }
             }
 
-            if (CaseElements == null)
+            //добавляем ломаные правила к родителю
+            foreach (Case caseElement in CaseElements)
             {
-                AddBrokenConstraint(SwitchBusinessBusinessConstraint.CaseRequired, ElementName);
-            }
-            else
-            {
-                //добавляем ломаные правила к родителю
-                foreach (Case caseElement in CaseElements)
+                if (!caseElement.IsValid)
                 {
-                    if (!caseElement.IsValid)
-                    {
-                        AppendAllBrokenConstraints(caseElement, string.Format("{0}.{1}", ElementName, RuleConstants.CaseNodeName));
-                    }
+                    AppendAllBrokenConstraints(caseElement, string.Format("{0}.{1}", ElementName, RuleConstants.CaseNodeName));
+                }
 
-                    if (Expression?.ExpressionType != caseElement.ExpressionType)
-                    {
-                        AddBrokenConstraint(SwitchBusinessBusinessConstraint.ConditionsTypeMismatch, ElementName);
-                    }
+                if (Expression?.ExpressionType != caseElement.ExpressionType)
+                {
+                    AddBrokenConstraint(SwitchBusinessBusinessConstraint.ConditionsTypeMismatch, ElementName);
                 }
             }
 

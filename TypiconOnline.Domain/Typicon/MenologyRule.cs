@@ -30,22 +30,6 @@ namespace TypiconOnline.Domain.Typicon
             set;
         }
 
-        /// <summary>
-        /// Строка сожержит номера имен Дня, использующихся в Правиле, разделенных запятою
-        /// Пример: 
-        /// 1,3
-        /// 1,2,3
-        /// </summary>
-        //public virtual string SelectedNames { get; set; }
-
-        //public override string Name
-        //{
-        //    get
-        //    {
-        //        return GetName(Day, SelectedNames);
-        //    }
-        //}
-
         protected override void Validate()
         {
             base.Validate();

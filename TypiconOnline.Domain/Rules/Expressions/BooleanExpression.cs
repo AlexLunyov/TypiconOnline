@@ -11,7 +11,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     public abstract class BooleanExpression : RuleExpression
     {
         public BooleanExpression(string name) : base(name) { }
-        public BooleanExpression(XmlNode node) : base(node) { }
 
         //protected int _outputValue;
 

@@ -23,7 +23,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 typeof(TextHolder),
                 typeof(YmnosStructureRule),
                 typeof(WorshipSequence),
-                typeof(Ektenis),
+                typeof(EktenisRule),
                 typeof(CommonRuleElement),
                 typeof(KekragariaRule),
                 typeof(ApostichaRule),

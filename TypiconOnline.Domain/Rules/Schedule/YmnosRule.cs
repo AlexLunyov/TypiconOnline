@@ -22,47 +22,20 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         public YmnosRule(string name) : base(name) { }
 
-        public YmnosRule(XmlNode node) : base(node)
-        {
-            if (Enum.TryParse(node.Name, true, out YmnosRuleKind kind))
-            {
-                Kind = kind;
-            }
-
-            XmlAttribute attr = node.Attributes[RuleConstants.YmnosRuleSourceAttrName];
-            if (Enum.TryParse(attr?.Value, true, out YmnosSource source))
-            {
-                Source = source;
-            }
-
-            attr = node.Attributes[RuleConstants.YmnosRulePlaceAttrName];
-            if (Enum.TryParse(attr?.Value, true, out PlaceYmnosSource place))
-            {
-                Place = place;
-            }
-
-            attr = node.Attributes[RuleConstants.YmnosRuleCountAttrName];
-            Count = int.TryParse(attr?.Value, out int intValue) ? intValue : 0;
-
-            attr = node.Attributes[RuleConstants.YmnosRuleStartFromAttrName];
-            StartFrom = int.TryParse(attr?.Value, out intValue) ? intValue : 0;
-        }
-
         #region Properties
 
         /// <summary>
         /// Тип песнопения (общий, славник, богородичен...)
         /// </summary>
-        public YmnosRuleKind Kind { get; set; }
+        public YmnosRuleKind Kind { get; set; } = YmnosRuleKind.YmnosRule;
         /// <summary>
         /// Источник книги, откуда брать текст
         /// </summary>
-        public YmnosSource Source { get; set; }
-
+        public YmnosSource? Source { get; set; }
         /// <summary>
         /// Источник книги, откуда брать текст
         /// </summary>
-        public PlaceYmnosSource Place { get; set; }
+        public PlaceYmnosSource? Place { get; set; }
         /// <summary>
         /// Количество стихир, которые берутся из выбранного источника. По умолчанию - 1
         /// </summary>
@@ -95,10 +68,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             //bool sourceIsValid = false;
 
-            //if (Source == null)
-            //{
-            //    AddBrokenConstraint(YmnosRuleBusinessConstraint.SourceRequired, ElementName);
-            //}
+            if (Source == null)
+            {
+                AddBrokenConstraint(YmnosRuleBusinessConstraint.SourceRequired, ElementName);
+            }
             //else if (!Source.IsValid)
             //{
             //    AppendAllBrokenConstraints(Source);
@@ -109,20 +82,20 @@ namespace TypiconOnline.Domain.Rules.Schedule
             //    sourceIsValid = true;
             //}
 
-            //if (_place == null)
-            //{
-            //    AddBrokenConstraint(YmnosRuleBusinessConstraint.PlaceRequired, ElementName);
-            //}
+            if (Place == null)
+            {
+                AddBrokenConstraint(YmnosRuleBusinessConstraint.PlaceRequired, ElementName);
+            }
             //else if (_place.IsValid == false)
             //{
             //    AppendAllBrokenConstraints(_place);
             //}
             //else if (sourceIsValid)
             //{
-                /* Проверка на сопоставление source и place
-                 * Если source == irmologion, то значения могут быть только сопоставимые ему, и наоборот
-                */
-                if ((Source == YmnosSource.Irmologion)
+            /* Проверка на сопоставление source и place
+             * Если source == irmologion, то значения могут быть только сопоставимые ему, и наоборот
+            */
+            if ((Source == YmnosSource.Irmologion)
                     && (Place != PlaceYmnosSource.app1_aposticha)
                     && (Place != PlaceYmnosSource.app1_kekragaria)
                     && (Place != PlaceYmnosSource.app2_esperinos)
@@ -149,7 +122,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 }
             //}
 
-            if (Count < 1)
+            if (Count < 0)
             {
                 AddBrokenConstraint(YmnosRuleBusinessConstraint.InvalidCount, ElementName);
             }
@@ -168,6 +141,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <returns>Если таковые не объявлены в DayService, возвращает NULL.</returns>
         public virtual DayElementBase Calculate(DateTime date, RuleHandlerSettings settings)
         {
+            if (!IsValid)
+            {
+                return null;
+            }
+
             YmnosStructure result = null;
 
             //разбираемся с source
@@ -204,7 +182,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 switch (Kind)
                 {
                     case YmnosRuleKind.YmnosRule:
-                        groups = dayWorship.GetElement().GetYmnosStructure(Place, Count, StartFrom)?.Groups;
+                        groups = dayWorship.GetElement().GetYmnosStructure(Place.Value, Count, StartFrom)?.Groups;
                         if (groups != null)
                         {
                             result = new YmnosStructure();
@@ -213,7 +191,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                         break;
                     case YmnosRuleKind.DoxastichonRule:
-                        group = dayWorship.GetElement().GetYmnosStructure(Place, Count, StartFrom)?.Doxastichon;
+                        group = dayWorship.GetElement().GetYmnosStructure(Place.Value, Count, StartFrom)?.Doxastichon;
                         if (group != null)
                         {
                             result = new YmnosStructure();
@@ -222,7 +200,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                         break;
                     case YmnosRuleKind.TheotokionRule:
-                        groups = dayWorship.GetElement().GetYmnosStructure(Place, Count, StartFrom)?.Theotokion;
+                        groups = dayWorship.GetElement().GetYmnosStructure(Place.Value, Count, StartFrom)?.Theotokion;
                         if (groups != null)
                         {
                             result = new YmnosStructure();

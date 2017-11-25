@@ -19,15 +19,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = "<date>--04-06</date>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var element = TestRuleSerializer.Deserialize<Date>(xmlString);
 
-            xmlDoc.LoadXml(xmlString);
+            element.Interpret(new DateTime(1900, 05, 23), BypassHandler.Instance);
 
-            Date date = new Date(xmlDoc.FirstChild);
-
-            date.Interpret(new DateTime(1900, 05, 23), BypassHandler.Instance);
-
-            string result = ((DateTime)date.ValueCalculated).ToString("dd-MM-yyyy");
+            string result = ((DateTime)element.ValueCalculated).ToString("dd-MM-yyyy");
 
             Assert.AreEqual("06-04-1900", result);
         }
@@ -37,14 +33,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = "<date>--13-06</date>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var element = TestRuleSerializer.Deserialize<Date>(xmlString);
 
-            xmlDoc.LoadXml(xmlString);
-
-            Date date = new Date(xmlDoc.FirstChild);
-            //date.Interpret(DateTime.Today, BypassHandler.Instance);
-
-            Assert.IsFalse(date.IsValid);
+            Assert.IsFalse(element.IsValid);
 
             //bool isValid = true;
 
@@ -66,14 +57,10 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = "<date>-13-06</date>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            Date date = new Date(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<Date>(xmlString);
             //date.Interpret(DateTime.Today, BypassHandler.Instance);
 
-            Assert.IsFalse(date.IsValid);
+            Assert.IsFalse(element.IsValid);
 
             //bool isValid = true;
 

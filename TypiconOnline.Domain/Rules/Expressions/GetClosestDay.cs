@@ -28,27 +28,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     {
         public GetClosestDay(string name) : base(name) { }
 
-        public GetClosestDay(XmlNode valNode) : base(valNode)
-        {
-            XmlAttribute attr = valNode.Attributes[RuleConstants.DayOfWeekAttrName];
-            if (attr != null)
-            {
-                DayOfWeek = new ItemDayOfWeek(attr.Value);
-            }
-
-            attr = valNode.Attributes[RuleConstants.WeekCountAttrName];
-
-            if (int.TryParse(attr?.Value, out int count))
-            {
-                WeekCount = count;
-            }
-
-            if (valNode.HasChildNodes)
-            {
-                ChildDateExp = Factories.RuleFactory.CreateDateExpression(valNode.FirstChild);
-            }
-        }
-
         public virtual ItemDayOfWeek DayOfWeek { get; set; }
 
         public virtual int WeekCount { get; set; }

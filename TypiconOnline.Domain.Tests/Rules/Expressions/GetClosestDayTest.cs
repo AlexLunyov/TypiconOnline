@@ -19,11 +19,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = @"<getclosestday><date>--11-08</date></getclosestday>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            GetClosestDay element = new GetClosestDay(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
 
             Assert.IsFalse(element.IsValid);
 
@@ -40,15 +36,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         [Test]
         public void GetClosestDay_WeekCount()
         {
-            string xmlString = @"<getclosestday dayofweek=""суббота"" weekcount="" - 2""><date>--11-08</date></getclosestday>";
+            string xmlString = @"<getclosestday dayofweek=""суббота"" weekcount=""-2""><date>--11-08</date></getclosestday>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
 
-            xmlDoc.LoadXml(xmlString);
-
-            GetClosestDay element = new GetClosestDay(xmlDoc.FirstChild);
-
-            Assert.IsFalse(element.IsValid);
+            Assert.IsTrue(element.IsValid);
 
             //try
             //{
@@ -65,11 +57,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = @"<getclosestday dayofweek=""воскресенье"" weekcount=""-2""><date>--11-08</date></getclosestday>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            GetClosestDay element = new GetClosestDay(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
 
             Assert.Pass("DayOfWeek " + element.DayOfWeek + ", WeekCount " + element.WeekCount);
         }
@@ -79,11 +67,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = @"<getclosestday dayofweek=""суббота"" weekcount=""-1""><date>--04-16</date></getclosestday>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            GetClosestDay element = new GetClosestDay(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
 
             element.Interpret(DateTime.Today, BypassHandler.Instance);
 
@@ -95,11 +79,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = @"<getclosestday dayofweek=""воскресенье"" weekcount=""-2""><date>--04-16</date></getclosestday>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            GetClosestDay element = new GetClosestDay(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
 
             element.Interpret(DateTime.Today, BypassHandler.Instance);
 
@@ -111,11 +91,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = @"<getclosestday dayofweek=""воскресенье"" weekcount=""1""><date>--04-27</date></getclosestday>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            GetClosestDay element = new GetClosestDay(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
 
             element.Interpret(DateTime.Today, BypassHandler.Instance);
 
@@ -127,11 +103,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = @"<getclosestday dayofweek=""воскресенье"" weekcount=""0""><date>--10-24</date></getclosestday>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            GetClosestDay element = new GetClosestDay(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
 
             element.Interpret(new DateTime(2014, 12, 12), BypassHandler.Instance);
 
@@ -143,11 +115,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = @"<getclosestday dayofweek=""воскресенье"" weekcount=""0""><date>--05-07</date></getclosestday>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            GetClosestDay element = new GetClosestDay(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
 
             element.Interpret(new DateTime(2017, 12, 12), BypassHandler.Instance);
 
@@ -159,11 +127,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = @"<getclosestday dayofweek=""понедельник"" weekcount=""0""><date>--05-07</date></getclosestday>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            GetClosestDay element = new GetClosestDay(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
 
             element.Interpret(new DateTime(2017, 12, 12), BypassHandler.Instance);
 

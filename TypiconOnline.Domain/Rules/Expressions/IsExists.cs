@@ -20,14 +20,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     {
         public IsExists(string name) : base(name) { }
 
-        public IsExists(XmlNode node) : base(node)
-        {
-            if (node.HasChildNodes)// && node.FirstChild.Name == RuleConstants.YmnosRuleNode)
-            {
-                ChildElement = RuleFactory.CreateCalcStructureElement(node.FirstChild);
-            }
-        }
-
         public ICalcStructureElement ChildElement { get; set; }
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)

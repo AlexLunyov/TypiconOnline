@@ -44,9 +44,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             handler.Settings.Rule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
 
-            rule.Rule.Interpret(DateTime.Today, handler);
+            rule.GetRule(TestRuleSerializer.Root).Interpret(DateTime.Today, handler);
 
-            EktenisViewModel model = (rule.Rule as Ektenis).CreateViewModel(handler) as EktenisViewModel;
+            EktenisViewModel model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
 
             Assert.AreEqual(1, model.ChildElements.Count);
 
@@ -61,9 +61,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             handler.Settings.Rule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
 
-            rule.Rule.Interpret(DateTime.Today, handler);
+            rule.GetRule(TestRuleSerializer.Root).Interpret(DateTime.Today, handler);
 
-            model = (rule.Rule as Ektenis).CreateViewModel(handler) as EktenisViewModel;
+            model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
 
             Assert.AreEqual(1, model.ChildElements.Count);
 
@@ -74,9 +74,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             handler.Settings.Rule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
 
-            rule.Rule.Interpret(DateTime.Today, handler);
+            rule.GetRule(TestRuleSerializer.Root).Interpret(DateTime.Today, handler);
 
-            model = (rule.Rule as Ektenis).CreateViewModel(handler) as EktenisViewModel;
+            model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
 
             Assert.AreEqual(2, model.ChildElements.Count);
         }

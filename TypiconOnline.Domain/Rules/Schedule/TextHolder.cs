@@ -20,27 +20,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         public TextHolder(string name) : base(name) { }
 
-        public TextHolder(XmlNode node) : base(node)
-        {
-            if (Enum.TryParse(node.Name, true, out TextHolderKind kind))
-            {
-                Kind = kind;
-            }
-
-            XmlAttribute attr = node.Attributes[RuleConstants.TextHolderMarkAttr];
-            if (Enum.TryParse(attr?.Value, true, out TextHolderMark mark))
-            {
-                Mark = mark;
-            }
-
-            foreach (XmlNode childNode in node.ChildNodes)
-            {
-                ItemTextNoted item = new ItemTextNoted((childNode.Name == RuleConstants.TextHolderPapragraphNode) ? childNode.OuterXml : string.Empty);
-
-                Paragraphs.Add(item);
-            }
-        }
-
         public TextHolder(TextHolder item)
         {
             if (item == null) throw new ArgumentNullException("TextHolder");

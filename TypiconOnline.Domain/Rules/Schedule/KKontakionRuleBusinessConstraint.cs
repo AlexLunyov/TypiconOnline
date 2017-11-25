@@ -11,7 +11,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     public class KKontakionRuleBusinessConstraint
     {
         
-        public static readonly BusinessConstraint SourceRequired = new BusinessConstraint("Отсутствуют определение источника песнопения (книги).");
-        public static readonly BusinessConstraint KanonasRequired = new BusinessConstraint("Отсутствуют определение канона в источнике песнопения (книги).");
+        public static readonly BusinessConstraint SourceRequired = new BusinessConstraint("Отсутствует или не верно определен источник песнопения (книги).");
+        public static readonly BusinessConstraint KanonasRequired = new BusinessConstraint("Отсутствует или не верно определен канон в источнике песнопения (книги).");
     }
 }

@@ -20,25 +20,22 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override RuleElement CreateObject(XmlDescriptor d)
         {
-            return new KanonasRule(d.GetElementName());
+            return new KanonasRule(d.GetElementName(), SerializerRoot);
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement container)
+        protected override void FillObject(XmlDescriptor d, RuleElement element)
         {
-            base.FillObject(d, container);
+            base.FillObject(d, element);
 
-            XmlAttribute attr = d.Element.Attributes[RuleConstants.KanonasRuleEktenis3AttrName];
-            (container as KanonasRule).Ektenis3 = (attr != null) ? new CommonRuleElement(attr.Value) : null;
+            SetValues((element as KanonasRule).Ektenis3, d.Element.Attributes[RuleConstants.KanonasRuleEktenis3AttrName]);
+            SetValues((element as KanonasRule).Ektenis6, d.Element.Attributes[RuleConstants.KanonasRuleEktenis6AttrName]);
+            SetValues((element as KanonasRule).Ektenis9, d.Element.Attributes[RuleConstants.KanonasRuleEktenis9AttrName]);
+            SetValues((element as KanonasRule).Panagias, d.Element.Attributes[RuleConstants.KanonasRulePanagiasAttrName]);
 
-            attr = d.Element.Attributes[RuleConstants.KanonasRuleEktenis6AttrName];
-            (container as KanonasRule).Ektenis6 = (attr != null) ? new CommonRuleElement(attr.Value) : null;
-
-            attr = d.Element.Attributes[RuleConstants.KanonasRuleEktenis9AttrName];
-            (container as KanonasRule).Ektenis9 = (attr != null) ? new CommonRuleElement(attr.Value) : null;
-
-            attr = d.Element.Attributes[RuleConstants.KanonasRulePanagiasAttrName];
-            (container as KanonasRule).Panagias = (attr != null) ? new CommonRuleElement(attr.Value) : null;
-
+            void SetValues(CommonRuleElement el, XmlAttribute attr)
+            {
+                el = (attr != null) ? new CommonRuleElement(SerializerRoot) { CommonRuleName = attr.Value } : null;
+            }
         }
     }
 }

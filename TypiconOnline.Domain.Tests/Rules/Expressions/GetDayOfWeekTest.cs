@@ -19,15 +19,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = @"<getdayofweek name=""воскресенье""></getdayofweek>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var element = TestRuleSerializer.Deserialize<GetDayOfWeek>(xmlString);
 
-            xmlDoc.LoadXml(xmlString);
+            element.Interpret(new DateTime(1900, 05, 23), BypassHandler.Instance);
 
-            GetDayOfWeek date = new GetDayOfWeek(xmlDoc.FirstChild);
-
-            date.Interpret(new DateTime(1900, 05, 23), BypassHandler.Instance);
-
-            Assert.AreEqual((DayOfWeek)date.ValueCalculated, DayOfWeek.Sunday);
+            Assert.AreEqual((DayOfWeek)element.ValueCalculated, DayOfWeek.Sunday);
         }
 
         [Test]
@@ -35,15 +31,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = "<getdayofweek><date>--05-20</date></getdayofweek>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var element = TestRuleSerializer.Deserialize<GetDayOfWeek>(xmlString);
 
-            xmlDoc.LoadXml(xmlString);
+            element.Interpret(new DateTime(2017, 05, 23), BypassHandler.Instance);
 
-            GetDayOfWeek date = new GetDayOfWeek(xmlDoc.FirstChild);
-
-            date.Interpret(new DateTime(2017, 05, 23), BypassHandler.Instance);
-
-            Assert.AreEqual((DayOfWeek)date.ValueCalculated, DayOfWeek.Saturday);
+            Assert.AreEqual((DayOfWeek)element.ValueCalculated, DayOfWeek.Saturday);
         }
 
         [Test]
@@ -51,15 +43,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = @"<getdayofweek><getclosestday dayofweek=""суббота"" weekcount=""0""><date>--05-18</date></getclosestday></getdayofweek>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var element = TestRuleSerializer.Deserialize<GetDayOfWeek>(xmlString);
 
-            xmlDoc.LoadXml(xmlString);
+            element.Interpret(new DateTime(2017, 05, 23), BypassHandler.Instance);
 
-            GetDayOfWeek date = new GetDayOfWeek(xmlDoc.FirstChild);
-
-            date.Interpret(new DateTime(2017, 05, 23), BypassHandler.Instance);
-
-            Assert.AreEqual((DayOfWeek)date.ValueCalculated, DayOfWeek.Saturday);
+            Assert.AreEqual((DayOfWeek)element.ValueCalculated, DayOfWeek.Saturday);
         }
     }
 }

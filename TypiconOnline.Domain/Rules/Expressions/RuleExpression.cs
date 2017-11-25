@@ -10,7 +10,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     public abstract class RuleExpression : RuleElement
     {
         public RuleExpression(string name) : base(name) { }
-        public RuleExpression(XmlNode node) : base(node) { }
 
         public virtual object ValueExpression { get; set; }
 

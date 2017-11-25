@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KSedalenTheotokionRule : KSedalenRule
     {
-        public KSedalenTheotokionRule(XmlNode node) : base(node) { }
+        public KSedalenTheotokionRule(string name) : base(name) { }
 
         public override DayElementBase Calculate(DateTime date, RuleHandlerSettings settings)
         {
@@ -25,7 +25,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             if (kanonas != null)
             {
-                switch (Place.Value)
+                switch (Place)
                 {
                     case KanonasPlaceKind.sedalen:
                         if (kanonas.Sedalen?.Groups?.Count > 0

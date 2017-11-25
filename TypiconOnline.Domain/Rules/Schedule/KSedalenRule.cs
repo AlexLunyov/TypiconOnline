@@ -17,18 +17,14 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KSedalenRule : KKontakionRule, ICalcStructureElement//<YmnosStructure>
     {
-        public KSedalenRule(XmlNode node) : base(node)
-        {
-            XmlAttribute attr = node.Attributes[RuleConstants.KSedalenPlaceAttrName];
-            Place = (attr != null) ? new ItemEnumType<KanonasPlaceKind>(attr.Value) : null;
-        }
+        public KSedalenRule(string name) : base(name) { }
 
         #region Properties
 
         /// <summary>
         /// Место в тексте богослужения для выбора канона
         /// </summary>
-        public ItemEnumType<KanonasPlaceKind> Place { get; }
+        public KanonasPlaceKind Place { get; set; }
 
         #endregion
 
@@ -40,20 +36,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        protected override void Validate()
-        {
-            base.Validate();
-
-            if (Place == null)
-            {
-                AddBrokenConstraint(KSedalenRuleBusinessConstraint.PlaceRequired, ElementName);
-            }
-            else if (!Place.IsValid)
-            {
-                AppendAllBrokenConstraints(Place);
-            }
-        }
-
         public override DayElementBase Calculate(DateTime date, RuleHandlerSettings settings)
         {
             YmnosStructure result = null;
@@ -62,7 +44,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             if (kanonas != null)
             {
-                switch (Place.Value)
+                switch (Place)
                 {
                     case KanonasPlaceKind.sedalen:
                         if (kanonas.Sedalen != null)

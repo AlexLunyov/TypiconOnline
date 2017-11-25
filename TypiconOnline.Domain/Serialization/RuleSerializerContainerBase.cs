@@ -32,9 +32,14 @@ namespace TypiconOnline.Domain.Serialization
 
         protected abstract void LoadFactories();
 
-        public T CreateElement(IDescriptor descriptor)
+        public T Deserialize(string description)
         {
-            if (string.IsNullOrEmpty(descriptor?.GetElementName())) throw new ArgumentException("descriptor"); 
+            return Deserialize(_descriptor.CreateInstance(description));
+        }
+
+        public T Deserialize(IDescriptor descriptor)
+        {
+            if (descriptor == null) throw new ArgumentNullException("descriptor"); 
 
             string elementName = descriptor.GetElementName();
 
@@ -43,7 +48,7 @@ namespace TypiconOnline.Domain.Serialization
                 return _factories[elementName].Deserialize(descriptor) as T;
             }
 
-            return null;
+            return default(T);
         }
 
         public string Serialize(T element)

@@ -21,20 +21,6 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         public ExecContainer(string name) : base(name) { }
 
-        public ExecContainer(XmlNode xmlNode) : base(xmlNode)
-        {
-            if (xmlNode.HasChildNodes)
-            {
-                //ParentElement = null;
-
-                foreach (XmlNode childNode in xmlNode.ChildNodes)
-                {
-                    RuleElement element = Factories.RuleFactory.CreateElement(childNode);
-                    ChildElements.Add(element);
-                }
-            }
-        }
-
         #region Properties
 
         //public RuleElement ParentElement { get; set; }

@@ -19,14 +19,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         public WorshipSequence(string name) : base(name) { }
 
-        public WorshipSequence(XmlNode node) : base(node)
-        {
-            if (Enum.TryParse(node.Name, true, out WorshipSequenceKind kind))
-            {
-                Kind = kind;
-            }
-        }
-
         #region Properties
 
         public WorshipSequenceKind Kind { get; set; }

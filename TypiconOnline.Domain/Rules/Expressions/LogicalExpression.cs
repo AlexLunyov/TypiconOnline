@@ -16,16 +16,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     public abstract class LogicalExpression : BooleanExpression
     {
         public LogicalExpression(string name) : base(name) { }
-        public LogicalExpression(XmlNode node) : base(node)
-        {
-            if (node.HasChildNodes)
-            {
-                foreach (XmlNode childNode in node.ChildNodes)
-                {
-                    ChildElements.Add(RuleFactory.CreateExpression(childNode));
-                }
-            }
-        }
 
         public List<RuleExpression> ChildElements { get; set; } = new List<RuleExpression>();
 

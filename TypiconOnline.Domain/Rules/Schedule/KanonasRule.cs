@@ -16,24 +16,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Правило для составления канонов
     /// </summary>
-    public class KanonasRule : ExecContainer, ICustomInterpreted, IViewModelElement
+    public class KanonasRule : IncludingRulesElement, ICustomInterpreted, IViewModelElement
     {
-        public KanonasRule(string name) : base(name) { }
-
-        public KanonasRule(XmlNode node) : base(node)
-        {
-            XmlAttribute attr = node.Attributes[RuleConstants.KanonasRuleEktenis3AttrName];
-            Ektenis3 = (attr != null) ? new CommonRuleElement(attr.Value) : null;
-
-            attr = node.Attributes[RuleConstants.KanonasRuleEktenis6AttrName];
-            Ektenis6 = (attr != null) ? new CommonRuleElement(attr.Value) : null;
-
-            attr = node.Attributes[RuleConstants.KanonasRuleEktenis9AttrName];
-            Ektenis9 = (attr != null) ? new CommonRuleElement(attr.Value) : null;
-
-            attr = node.Attributes[RuleConstants.KanonasRulePanagiasAttrName];
-            Panagias = (attr != null) ? new CommonRuleElement(attr.Value) : null;
-        }
+        public KanonasRule(string name, IRuleSerializerRoot serializerRoot) : base(name, serializerRoot) { }
 
         #region Properties
         /// <summary>
@@ -98,7 +83,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                 //используем специальный обработчик для KanonasItem,
                 //чтобы создать список источников канонов на обработку
-                CollectorRuleHandler<KanonasItem> kanonasHandler = new CollectorRuleHandler<KanonasItem>() { Settings = handler.Settings };
+                CollectorRuleHandler<KKanonasItemRule> kanonasHandler = new CollectorRuleHandler<KKanonasItemRule>() { Settings = handler.Settings };
 
                 foreach (RuleElement elem in ChildElements)
                 {
@@ -207,7 +192,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             for (int i = 0; i < container.ChildElements.Count; i++)
             {
-                KanonasItem item = container.ChildElements[i] as KanonasItem;
+                KKanonasItemRule item = container.ChildElements[i] as KKanonasItemRule;
 
                 //определение катавасии отсутствует и канон последний
                 item.IncludeKatavasia = (!katavasiaExists && i == container.ChildElements.Count - 1);

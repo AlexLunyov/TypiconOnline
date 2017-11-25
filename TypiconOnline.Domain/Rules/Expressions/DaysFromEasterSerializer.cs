@@ -22,15 +22,15 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override RuleElement CreateObject(XmlDescriptor d)
         {
-            return new DaysFromEaster(d.GetElementName());
+            return new DaysFromEaster(d.GetElementName(), SerializerRoot.BookStorage.Easters);
         }
 
         protected override void FillObject(XmlDescriptor d, RuleElement element)
         {
             if (d.Element.HasChildNodes)
             {
-                (element as DaysFromEaster).ChildExpression = SerializerRoot.Factory<DateExpression>()
-                    .CreateElement(new XmlDescriptor() { Element = d.Element.FirstChild });
+                (element as DaysFromEaster).ChildExpression = SerializerRoot.Container<DateExpression>()
+                    .Deserialize(new XmlDescriptor() { Element = d.Element.FirstChild });
             }
         }
 

@@ -16,27 +16,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     {
         public Case(string name) : base(name) { }
 
-        public Case(XmlNode caseNode) : base(caseNode)
-        {
-            XmlNode valuesNode = caseNode.SelectSingleNode(RuleConstants.ValuesNodeName);
-
-            if ((valuesNode != null) && (valuesNode.ChildNodes != null))
-            {
-                foreach (XmlNode valueNode in valuesNode.ChildNodes)
-                {
-                    RuleExpression valueElement = Factories.RuleFactory.CreateExpression(valueNode);
-                    ValuesElements.Add(valueElement);
-                }
-            }
-
-            XmlNode actionNode = caseNode.SelectSingleNode(RuleConstants.ActionNodeName);
-
-            if (actionNode != null)
-            {
-                ActionElement = Factories.RuleFactory.CreateExecContainer(actionNode);
-            }
-        }
-
         #region Properties
 
         public List<RuleExpression> ValuesElements { get; set; } = new List<RuleExpression>();

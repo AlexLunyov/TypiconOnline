@@ -52,5 +52,7 @@ namespace TypiconOnline.Domain.Serialization
         {
             return (Element != null) ? Element.Name : string.Empty;
         }
+
+        public IDescriptor CreateInstance(string description) => new XmlDescriptor() { Description = description };
     }
 }

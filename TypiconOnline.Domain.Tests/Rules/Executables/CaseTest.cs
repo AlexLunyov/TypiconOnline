@@ -26,11 +26,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
                                     </action>
                                 </case> ";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            Case element = new Case(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<Case>(xmlString);
 
             Assert.Pass("Success");
         }
@@ -48,11 +44,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
                                     </action>
                                 </case> ";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            Case element = new Case(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<Case>(xmlString);
 
             Assert.IsFalse(element.IsValid);
 

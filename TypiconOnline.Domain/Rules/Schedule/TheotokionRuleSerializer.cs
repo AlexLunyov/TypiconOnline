@@ -28,8 +28,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             if (d.Element.SelectSingleNode(RuleConstants.YmnosRuleNode) is XmlNode ymnosNode)
             {
-                (element as TheotokionRule).ReferenceYmnos = SerializerRoot.Factory<YmnosRule>()
-                    .CreateElement(new XmlDescriptor() { Element = ymnosNode });
+                (element as TheotokionRule).ReferenceYmnos = SerializerRoot.Container<YmnosRule>()
+                    .Deserialize(new XmlDescriptor() { Element = ymnosNode });
             }
         }
 

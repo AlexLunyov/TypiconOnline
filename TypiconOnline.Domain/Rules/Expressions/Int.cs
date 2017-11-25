@@ -20,18 +20,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     {
         public Int(string name) : base(name) { }
 
-        public Int(XmlNode valNode) : base(valNode)
-        {
-            //_outputaValue = 0;
-
-            //_stringValue = valNode.InnerText;
-
-            //int.TryParse(valNode.InnerText, out _outputaValue);
-
-            ValueExpression = new ItemInt(valNode.InnerText);
-        }
-
-
         public override object ValueExpression
         {
             get

@@ -15,39 +15,30 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Правило для определения конкретного канона 
     /// </summary>
-    public class KanonasItem : KKontakionRule, ICustomInterpreted
+    public class KKanonasItemRule : KKontakionRule, ICustomInterpreted
     {
-        public KanonasItem(XmlNode node) : base(node)
-        {
-            XmlAttribute attr = node.Attributes[RuleConstants.KanonasCountAttrName];
-            Count = new ItemInt((attr != null) ? attr.Value : "");
-
-            attr = node.Attributes[RuleConstants.KanonasMartyrionAttrName];
-            Martyrion = new ItemBoolean((attr != null) ? attr.Value : "true");
-
-            attr = node.Attributes[RuleConstants.KanonasIrmosCountAttrName];
-            IrmosCount = new ItemInt((attr != null) ? attr.Value : "0");
-        }
+        public KKanonasItemRule(string name) : base(name) { }
 
         #region Properties
 
         /// <summary>
         /// Количество тропарей, которые берутся из выбранного источника
         /// </summary>
-        public ItemInt Count { get; set; }
+        public int Count { get; set; }
 
         /// <summary>
         /// Признак, использовать ли мученичны в каноне. По умолчанию - true
         /// </summary>
-        public ItemBoolean Martyrion { get; set; }
+        public bool UseMartyrion { get; set; } = true;
 
         /// <summary>
         /// Количество ирмосов, которые берутся из выбранного источника. По умолчанию - 0
         /// </summary>
-        public ItemInt IrmosCount { get; set; }
+        public int IrmosCount { get; set; } = 0;
 
         /// <summary>
         /// Если true, добавляет в конец 3-,6,8 и 9-х песен ирмосы канона, в качестве катавасий.
+        /// Вычисляемое. Определяется в KanonasRule
         /// По умолчанию, false
         /// </summary>
         public bool IncludeKatavasia { get; set; } = false;
@@ -56,7 +47,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            if (handler.IsAuthorized<KanonasItem>())
+            if (handler.IsAuthorized<KKanonasItemRule>())
             {
                 handler.Execute(this);
             }
@@ -66,34 +57,14 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             base.Validate();
 
-            if (!Count.IsValid)
+            if (Count < 1)
             {
-                AppendAllBrokenConstraints(Count);
-            }
-            else
-            {
-                if (Count.Value < 1)
-                {
-                    AddBrokenConstraint(KanonasItemBusinessConstraint.CountInvalid, ElementName);
-                }
+                AddBrokenConstraint(KanonasItemBusinessConstraint.CountInvalid, ElementName);
             }
 
-            if (!IrmosCount.IsValid)
+            if (IrmosCount < 0)
             {
-                AppendAllBrokenConstraints(Count);
-            }
-            else
-            {
-
-                if (IrmosCount.Value < 0)
-                {
-                    AddBrokenConstraint(KanonasItemBusinessConstraint.IrmosCountInvalid, ElementName);
-                }
-            }
-
-            if (!Martyrion.IsValid)
-            {
-                AppendAllBrokenConstraints(Martyrion);
+                AddBrokenConstraint(KanonasItemBusinessConstraint.IrmosCountInvalid, ElementName);
             }
         }
 
@@ -119,7 +90,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     //добавляем ирмос(ы)
                     Ymnos irmos = odi.Troparia.Find(c => c.Kind == YmnosKind.Irmos);
 
-                    int troparia = IrmosCount.Value;
+                    int troparia = IrmosCount;
                     while (troparia > 0)
                     {
                         o.Troparia.Add(irmos);
@@ -154,7 +125,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             //включаем фильтрацию
             //не берем ирмосы, катавасии и мученичны - если указано 
-            List<Ymnos> ymnis = odi.Troparia.FindAll(c => (Martyrion.Value)
+            List<Ymnos> ymnis = odi.Troparia.FindAll(c => (UseMartyrion)
                                         ? c.Kind != YmnosKind.Irmos && c.Kind != YmnosKind.Katavasia 
                                         : c.Kind != YmnosKind.Irmos && c.Kind != YmnosKind.Katavasia && c.Kind != YmnosKind.Martyrion);
 
@@ -164,7 +135,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
 
             //если есть ирмосы, вычитаем их количество
-            int count = Count.Value - IrmosCount.Value;
+            int count = Count - IrmosCount;
 
             if (ymnis.Count >= count)
             {

@@ -18,15 +18,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = @"<daysfromeaster><date>--04-07</date></daysfromeaster>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var element = TestRuleSerializer.Deserialize<DaysFromEaster>(xmlString);
 
-            xmlDoc.LoadXml(xmlString);
-
-            DaysFromEaster element = new DaysFromEaster(xmlDoc.FirstChild);
-
-            BypassHandler handler = new BypassHandler();
-
-            element.Interpret(DateTime.Today, handler);
+            element.Interpret(DateTime.Today, new BypassHandler());
 
             Assert.AreEqual(-9, element.ValueCalculated);
             

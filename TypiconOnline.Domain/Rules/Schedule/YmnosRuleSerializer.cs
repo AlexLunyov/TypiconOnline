@@ -41,10 +41,16 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
 
             attr = d.Element.Attributes[RuleConstants.YmnosRuleCountAttrName];
-            (element as YmnosRule).Count = int.TryParse(attr?.Value, out int intValue) ? intValue : 0;
+            if (int.TryParse(attr?.Value, out int intValue))
+            {
+                (element as YmnosRule).Count = intValue;
+            }
 
             attr = d.Element.Attributes[RuleConstants.YmnosRuleStartFromAttrName];
-            (element as YmnosRule).StartFrom = int.TryParse(attr?.Value, out intValue) ? intValue : 0;
+            if (int.TryParse(attr?.Value, out intValue))
+            {
+                (element as YmnosRule).StartFrom = intValue;
+            }
         }
 
         public override string Serialize(RuleElement element)

@@ -23,21 +23,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         public YmnosStructureRule(string name) : base(name) { }
 
-        public YmnosStructureRule(XmlNode node) : base(node)
-        {
-            if (Enum.TryParse(node.Name, true, out YmnosStructureKind kind))
-            {
-                Kind = kind;
-            }
-
-            XmlAttribute attr = node.Attributes[RuleConstants.TotalCountAttribute];
-
-            if (int.TryParse(attr?.Value, out int count))
-            {
-                TotalYmnosCount = count;
-            }
-        }
-
         #region Properties
 
         /// <summary>

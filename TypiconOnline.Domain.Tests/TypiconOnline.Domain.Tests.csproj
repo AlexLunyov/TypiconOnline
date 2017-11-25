@@ -91,9 +91,8 @@
     <Compile Include="Rules\Expressions\AndTest.cs" />
     <Compile Include="Rules\Expressions\IntTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rules\Factories\RuleFactoryUnitOfWorkTest.cs" />
+    <Compile Include="Rules\Factories\RuleSerializerRootTest.cs" />
     <Compile Include="Rules\Handlers\ServiceSequenceHandlerTest.cs" />
-    <Compile Include="Rules\RuleTestBase.cs" />
     <Compile Include="Rules\Schedule\CommonRuleElementTest.cs" />
     <Compile Include="Rules\Schedule\EktenisTest.cs" />
     <Compile Include="Rules\Schedule\IsExistsTest.cs" />
@@ -108,6 +107,7 @@
     <Compile Include="Rules\Schedule\YmnosRuleTest.cs" />
     <Compile Include="Rules\Serialization\XElementCreatorTest.cs" />
     <Compile Include="Rules\Serialization\XmlNodeCreatorTest.cs" />
+    <Compile Include="Rules\TestRuleSerializer.cs" />
     <Compile Include="Services\ScheduleServiceTest.cs" />
     <Compile Include="Typicon\BerlukiRuTest.cs" />
     <Compile Include="Typicon\TriodionRuleFolderTest.cs" />

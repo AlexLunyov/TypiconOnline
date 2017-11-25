@@ -15,46 +15,40 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Элемент, являющийся ссылкой на общее правило CommonRule
     /// </summary>
-    public class CommonRuleElement : ExecContainer, ICustomInterpreted, IViewModelElement
+    public class CommonRuleElement : IncludingRulesElement, ICustomInterpreted, IViewModelElement
     {
-        public string Name { get; set; }
+        public string CommonRuleName { get; set; }
 
-        //public List<RuleElement> ChildElements { get; set; }
+        public CommonRuleElement(IRuleSerializerRoot serializerRoot) : base(string.Empty, serializerRoot) { }
 
-        public CommonRuleElement(string name): base()
-        {
-            Name = name;
-        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name">Имя элемента</param>
+        public CommonRuleElement(string name, IRuleSerializerRoot serializerRoot) : base(name, serializerRoot) { }
 
-        public CommonRuleElement(XmlNode node) : base(node)
-        {
-            ChildElements = new List<RuleElement>();
-
-            Name = node.Attributes[RuleConstants.CommonRuleNameAttr]?.Value;
-        }
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
             if (handler.IsAuthorized<CommonRuleElement>())
             {
                 //находим правило
-                CommonRule commonRule = handler.Settings.Rule.Owner.GetCommonRule(c => c.Name == Name);
+                CommonRule commonRule = handler.Settings.Rule.Owner.GetCommonRule(c => c.Name == CommonRuleName);
 
-                if (commonRule?.Rule?.IsValid == true && commonRule?.Rule is ExecContainer)
+                var container = commonRule?.GetRule<ExecContainer>(SerializerRoot);
+
+                if (container?.IsValid == true)
                 {
                     //имеется Правило и оно верно составлено
                     //значит просто включаем его
-                    ChildElements = (commonRule.Rule as ExecContainer).ChildElements.ToList();
-
-                    ChildElements.ForEach(c => c.Interpret(date, handler));
+                    container.ChildElements.ForEach(c => c.Interpret(date, handler));
                 }
-                
             }
         }
 
         protected override void Validate()
         {
-            if (string.IsNullOrEmpty(Name))
+            if (string.IsNullOrEmpty(CommonRuleName))
             {
                 AddBrokenConstraint(CommonRuleBusinessConstraint.NameReqiured);
             }

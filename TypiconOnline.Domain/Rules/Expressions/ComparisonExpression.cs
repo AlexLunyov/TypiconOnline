@@ -35,7 +35,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     public abstract class ComparisonExpression : LogicalExpression
     {
         public ComparisonExpression(string name) : base(name) { }
-        public ComparisonExpression(XmlNode valNode) : base(valNode) { }
 
         protected override void Validate()
         {

@@ -22,10 +22,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         {
             string xmlString = @"<modifyday daymove=""0""/>";
 
-            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
-
-            var element = unitOfWork.Factory<ModifyDay>()
-                .CreateElement(new XmlDescriptor() { Description = xmlString });
+            var element = TestRuleSerializer.Deserialize<ModifyDay>(xmlString);
 
             Assert.AreEqual(0, element.DayMoveCount);
         }
@@ -35,10 +32,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         {
             string xmlString = @"<modifyday daymove=""0""><date>--11-08</date></modifyday>";
 
-            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
-
-            var element = unitOfWork.Factory<ModifyDay>()
-                .CreateElement(new XmlDescriptor() { Description = xmlString });
+            var element = TestRuleSerializer.Deserialize<ModifyDay>(xmlString);
 
             Assert.IsFalse(element.IsValid);
 
@@ -57,10 +51,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         {
             string xmlString = @"<modifyday><date>--11-08</date></modifyday>";
 
-            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
-
-            var element = unitOfWork.Factory<ModifyDay>()
-                .CreateElement(new XmlDescriptor() { Description = xmlString });
+            var element = TestRuleSerializer.Deserialize<ModifyDay>(xmlString);
 
             DateTime date = element.MoveDateCalculated;
 
@@ -81,10 +72,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         {
             string xmlString = @"<modifyday><date>--11-08</date></modifyday>";
 
-            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
-
-            var element = unitOfWork.Factory<ModifyDay>()
-                .CreateElement(new XmlDescriptor() { Description = xmlString });
+            var element = TestRuleSerializer.Deserialize<ModifyDay>(xmlString);
 
             //InterpretingSettings settings = new InterpretingSettings(InterpretingMode.ModificationDayOnly);
 
@@ -102,10 +90,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         {
             string xmlString = @"<modifyday><date>--13-08</date></modifyday>";
 
-            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
-
-            var element = unitOfWork.Factory<ModifyDay>()
-                .CreateElement(new XmlDescriptor() { Description = xmlString });
+            var element = TestRuleSerializer.Deserialize<ModifyDay>(xmlString);
 
             Assert.IsFalse(element.IsValid);
         }
@@ -115,10 +100,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         {
             string xmlString = @"<modifyday></modifyday>";
 
-            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
-
-            var element = unitOfWork.Factory<ModifyDay>()
-                .CreateElement(new XmlDescriptor() { Description = xmlString });
+            var element = TestRuleSerializer.Deserialize<ModifyDay>(xmlString);
 
             Assert.IsFalse(element.IsValid);
         }
@@ -126,18 +108,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         [Test]
         public void ModifyDay_DateBydaysFromEaster()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-
-            BookStorage.Instance = BookStorageFactory.Create();
-
-            //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
-
             string xmlString = @"<modifyday><datebydaysfromeaster><int>-43</int></datebydaysfromeaster></modifyday>";
 
-            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
-
-            var element = unitOfWork.Factory<ModifyDay>()
-                .CreateElement(new XmlDescriptor() { Description = xmlString });
+            var element = TestRuleSerializer.Deserialize<ModifyDay>(xmlString);
 
             Assert.IsTrue(element.IsValid);
         }
@@ -147,10 +120,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         {
             string xmlString = @"<modifyday daymove = ""0"" priority=""3""/>";
 
-            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
-
-            var element = unitOfWork.Factory<ModifyDay>()
-                .CreateElement(new XmlDescriptor() { Description = xmlString });
+            var element = TestRuleSerializer.Deserialize<ModifyDay>(xmlString);
 
             Assert.IsTrue(element.UseFullName);
         }

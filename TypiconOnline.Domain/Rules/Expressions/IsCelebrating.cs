@@ -19,7 +19,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     public class IsCelebrating : BooleanExpression
     {
         public IsCelebrating(string name) : base(name) { }
-        public IsCelebrating(XmlNode node) : base(node) { }
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {

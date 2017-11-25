@@ -35,8 +35,8 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
             if (d.Element.HasChildNodes)
             {
-                (element as GetDayOfWeek).ChildDateExp = SerializerRoot.Factory<DateExpression>()
-                    .CreateElement(new XmlDescriptor() { Element = d.Element.FirstChild });
+                (element as GetDayOfWeek).ChildDateExp = SerializerRoot.Container<DateExpression>()
+                    .Deserialize(new XmlDescriptor() { Element = d.Element.FirstChild });
             }
         }
 

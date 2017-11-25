@@ -40,11 +40,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 	                                </switch>
                                 </rule>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            ExecContainer container = new ExecContainer(xmlDoc.FirstChild);
+            ExecContainer container = TestRuleSerializer.Deserialize<ExecContainer>(xmlString);
 
             xmlString = @"<case>
 			                <values>
@@ -56,9 +52,8 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 				                </modifyday>
 			                </action>
 		                </case>";
-            xmlDoc.LoadXml(xmlString);
 
-            ModifyDay dayModification = new ModifyDay(xmlDoc.FirstChild);
+            ModifyDay dayModification = TestRuleSerializer.Deserialize<ModifyDay>(xmlString);
 
             container.ChildElements.Add(dayModification);
 

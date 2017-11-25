@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Interfaces
     public interface IRuleSerializerRoot
     {
         BookStorage BookStorage { get; }
-        RuleSerializerContainerBase<T> Factory<T>() where T : RuleElement;
-        RuleSerializerContainerBase<T> Factory<T, U>() where T : RuleElement;
+        RuleSerializerContainerBase<T> Container<T>() where T : RuleElement;
+        RuleSerializerContainerBase<T> Container<T, U>() where T : RuleElement;
     }
 }

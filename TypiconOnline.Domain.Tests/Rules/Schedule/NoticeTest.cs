@@ -17,11 +17,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             string xmlString = @"<notice time=""11.00""/> ";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            Notice element = new Notice(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<Notice>(xmlString);
 
             Assert.IsFalse(element.IsValid);
         }

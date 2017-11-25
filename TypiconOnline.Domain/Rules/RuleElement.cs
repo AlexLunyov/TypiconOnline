@@ -10,21 +10,13 @@ namespace TypiconOnline.Domain.Rules
     {
         //RuleElement ParentElement { get;set; }
 
-        public string ElementName { get; private set; }
+        public string ElementName { get; }
 
         public RuleElement() { }
 
         public RuleElement(string name)
         {
             ElementName = name;
-        }
-
-        public RuleElement(XmlNode node)
-        {
-            if (node == null)
-                throw new ArgumentNullException("RuleElement");         
-               
-            ElementName = node.Name;
         }
 
         private bool _isInterpreted = false;

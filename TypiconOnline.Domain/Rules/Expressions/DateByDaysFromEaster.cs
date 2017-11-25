@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Books;
+using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -19,14 +20,11 @@ namespace TypiconOnline.Domain.Rules.Expressions
     /// </summary>
     public class DateByDaysFromEaster : DateExpression
     {
-        public DateByDaysFromEaster(string name) : base(name) { }
+        IEasterContext easterContext;
 
-        public DateByDaysFromEaster(XmlNode node) : base(node)
+        public DateByDaysFromEaster(string name, IEasterContext context) : base(name)
         {
-            if (node.HasChildNodes)
-            {
-                ChildExpression = Factories.RuleFactory.CreateIntExpression(node.FirstChild);
-            }
+            easterContext = context ?? throw new ArgumentNullException("IEasterContext");
         }
 
         public IntExpression ChildExpression { get; set; }
@@ -35,7 +33,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
             ChildExpression.Interpret(date, handler);
 
-            DateTime easterDate = BookStorage.Instance.Easters.GetCurrentEaster(date.Year);
+            DateTime easterDate = easterContext.GetCurrentEaster(date.Year);
 
             ValueCalculated = easterDate.AddDays((int)ChildExpression.ValueCalculated);
         }

@@ -22,20 +22,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     {
         public GetDayOfWeek(string name) : base(name) { }
 
-        public GetDayOfWeek(XmlNode node) : base(node)
-        {
-            XmlAttribute attr = node.Attributes[RuleConstants.GetDayOfWeekAttrName];
-            if (attr != null)
-            {
-                DayOfWeek = new ItemDayOfWeek(attr.Value);
-            }
-
-            if (node.HasChildNodes)
-            {
-                ChildDateExp = Factories.RuleFactory.CreateDateExpression(node.FirstChild);
-            }
-        }
-
         public ItemDayOfWeek DayOfWeek { get; set; }
 
         public DateExpression ChildDateExp { get; set; }

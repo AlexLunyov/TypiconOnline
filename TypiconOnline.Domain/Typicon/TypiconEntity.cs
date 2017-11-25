@@ -224,33 +224,16 @@ namespace TypiconOnline.Domain.Typicon
 
             //ModifiedRule
 
-            if (request.Caller is MenologyRule)
+            modifiedYear.ModifiedRules.Add(new ModifiedRule()
             {
-                modifiedYear.ModifiedRules.Add(new ModifiedRule()
-                {
-                    Date = request.Date,
-                    RuleEntity = (MenologyRule)request.Caller,
-                    Priority = request.Priority,
-                    IsLastName = request.IsLastName,
-                    IsAddition = request.AsAddition,
-                    ShortName = request.ShortName,
-                    UseFullName = request.UseFullName
-                });
-            }
-
-            if (request.Caller is TriodionRule)
-            {
-                modifiedYear.ModifiedRules.Add(new ModifiedRule()
-                {
-                    Date = request.Date,
-                    RuleEntity = (TriodionRule)request.Caller,
-                    Priority = request.Priority,
-                    IsLastName = request.IsLastName,
-                    IsAddition = request.AsAddition,
-                    ShortName = request.ShortName,
-                    UseFullName = request.UseFullName
-                });
-            }
+                Date = request.Date,
+                RuleEntity = request.Caller,
+                Priority = request.Priority,
+                IsLastName = request.IsLastName,
+                IsAddition = request.AsAddition,
+                ShortName = request.ShortName,
+                UseFullName = request.UseFullName
+            });
         }
         #endregion
 

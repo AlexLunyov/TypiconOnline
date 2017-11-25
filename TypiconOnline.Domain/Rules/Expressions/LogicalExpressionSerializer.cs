@@ -23,8 +23,8 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
             foreach (XmlNode childNode in d.Element.ChildNodes)
             {
-                var exp = SerializerRoot.Factory<RuleExpression>()
-                    .CreateElement(new XmlDescriptor() { Element = childNode });
+                var exp = SerializerRoot.Container<RuleExpression>()
+                    .Deserialize(new XmlDescriptor() { Element = childNode });
 
                 (element as LogicalExpression).ChildElements.Add(exp);
             }

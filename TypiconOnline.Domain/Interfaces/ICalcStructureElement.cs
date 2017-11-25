@@ -11,8 +11,7 @@ namespace TypiconOnline.Domain.Interfaces
     /// <summary>
     /// Интерфейс для элементов правил, которые возвращают тексты богослужений
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface ICalcStructureElement//<T> where T: DayElementBase
+    public interface ICalcStructureElement
     {
         DayElementBase Calculate(DateTime date, RuleHandlerSettings settings);
     }

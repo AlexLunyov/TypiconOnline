@@ -13,53 +13,53 @@ using TypiconOnline.Domain.Serialization;
 namespace TypiconOnline.Domain.Tests.Rules.Factories
 {
     [TestFixture]
-    public class RuleFactoryUnitOfWorkTest
+    public class RuleSerializerRootTest
     {
         [Test]
-        public void RuleFactoryUnitOfWork_ExecContainer()
+        public void RuleSerializerRoot_ExecContainer()
         {
             var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
 
-            var factoryContainer = unitOfWork.Factory<ExecContainer>();
+            var factoryContainer = unitOfWork.Container<ExecContainer>();
 
             Assert.IsNotNull(factoryContainer);
             Assert.Pass(factoryContainer.ToString());
         }
 
         [Test]
-        public void RuleFactoryUnitOfWork_RuleElement()
+        public void RuleSerializerRoot_RuleElement()
         {
             var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
 
-            var factoryContainer = unitOfWork.Factory<RuleElement>();
+            var factoryContainer = unitOfWork.Container<RuleElement>();
 
             Assert.IsNotNull(factoryContainer);
             Assert.Pass(factoryContainer.ToString());
         }
 
         [Test]
-        public void RuleFactoryUnitOfWork_If()
+        public void RuleSerializerRoot_If()
         {
             var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
 
-            var factoryContainer = unitOfWork.Factory<If>();
+            var factoryContainer = unitOfWork.Container<If>();
 
             Assert.IsNotNull(factoryContainer);
             Assert.Pass(factoryContainer.ToString());
         }
 
         [Test]
-        public void RuleFactoryUnitOfWork_TypeTesting()
+        public void RuleSerializerRoot_TypeTesting()
         {
             Assert.IsTrue(typeof(ExecContainer).IsSubclassOf((typeof(RuleElement))));
         }
 
         [Test]
-        public void RuleFactoryUnitOfWork_Additional()
+        public void RuleSerializerRoot_Additional()
         {
             var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
 
-            var factoryContainer = unitOfWork.Factory<RuleExecutable, ICalcStructureElement>();
+            var factoryContainer = unitOfWork.Container<RuleExecutable, ICalcStructureElement>();
 
             Assert.IsNotNull(factoryContainer);
             Assert.Pass(factoryContainer.ToString());

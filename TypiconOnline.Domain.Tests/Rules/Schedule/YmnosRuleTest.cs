@@ -22,7 +22,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             xmlDoc.LoadXml(xmlString);
 
-            YmnosRule element = RuleFactory.CreateYmnosRule(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<YmnosRule>(xmlString);
 
             Assert.IsTrue(element.IsValid);
         }
@@ -36,7 +36,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             xmlDoc.LoadXml(xmlString);
 
-            YmnosRule element = RuleFactory.CreateYmnosRule(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<YmnosRule>(xmlString);
 
             Assert.IsFalse(element.IsValid);
             Assert.AreEqual(element.GetBrokenConstraints().Count, 1);
@@ -51,7 +51,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             xmlDoc.LoadXml(xmlString);
 
-            YmnosRule element = RuleFactory.CreateYmnosRule(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<YmnosRule>(xmlString);
 
             Assert.IsFalse(element.IsValid);
             Assert.AreEqual(element.GetBrokenConstraints().Count, 1);
@@ -66,7 +66,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             xmlDoc.LoadXml(xmlString);
 
-            YmnosRule element = RuleFactory.CreateYmnosRule(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<YmnosRule>(xmlString);
 
             Assert.IsFalse(element.IsValid);
             Assert.AreEqual(element.GetBrokenConstraints().Count, 1);
@@ -81,7 +81,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             xmlDoc.LoadXml(xmlString);
 
-            YmnosRule element = RuleFactory.CreateYmnosRule(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<YmnosRule>(xmlString);
 
             Assert.IsFalse(element.IsValid);
             Assert.AreEqual(element.GetBrokenConstraints().Count, 1);
@@ -96,7 +96,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             xmlDoc.LoadXml(xmlString);
 
-            YmnosRule element = RuleFactory.CreateYmnosRule(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<YmnosRule>(xmlString);
 
             Assert.IsFalse(element.IsValid);
             Assert.AreEqual(element.GetBrokenConstraints().Count, 1);

@@ -14,8 +14,13 @@ namespace TypiconOnline.Domain.Rules.Executables
     {
         public ExecContainerSerializer(IRuleSerializerRoot root) : base(root)
         {
-            ElementNames = new string[] { RuleConstants.ExecContainerNodeName,
-                                          RuleConstants.ActionNodeName };
+            ElementNames = new string[] {
+                RuleConstants.ExecContainerNodeName,
+                RuleConstants.ActionNodeName,
+                RuleConstants.DefaultNodeName,
+                RuleConstants.ThenNodeName,
+                RuleConstants.ElseNodeName
+            };
         }
 
         public override string Serialize(RuleElement element)
@@ -32,7 +37,7 @@ namespace TypiconOnline.Domain.Rules.Executables
         {
             foreach (XmlNode childNode in d.Element.ChildNodes)
             {
-                RuleElement child = SerializerRoot.Factory<RuleElement>().CreateElement(new XmlDescriptor() { Element = childNode });
+                RuleElement child = SerializerRoot.Container<RuleElement>().Deserialize(new XmlDescriptor() { Element = childNode });
                 (element as ExecContainer).ChildElements.Add(child);
             }
         }

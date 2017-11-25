@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Easter;
+using TypiconOnline.Domain.Tests.Rules;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Repository.EF;
 
@@ -25,7 +26,7 @@ namespace TypiconOnline.Domain.Tests.Days
 
             MenologyRule menologyRule = typiconEntity.GetMenologyRule(new DateTime(2017, 09, 28));
 
-            Assert.NotNull(menologyRule.Rule);
+            Assert.NotNull(menologyRule.GetRule(TestRuleSerializer.Root));
         }
     }
 }

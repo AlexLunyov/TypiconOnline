@@ -13,16 +13,6 @@ namespace TypiconOnline.Domain.Rules.Executables
     {
         public ModifyReplacedDay(string name) : base(name) { }
 
-        public ModifyReplacedDay(XmlNode node) : base(node)
-        {
-            XmlAttribute attr = node.Attributes[RuleConstants.KindAttrName];
-
-            if (Enum.TryParse(attr.Value, true, out KindOfReplacedDay value))
-            {
-                Kind = value;
-            }
-        }
-
         #region Properties
 
         public KindOfReplacedDay Kind { get; set; }

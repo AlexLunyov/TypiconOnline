@@ -8,6 +8,7 @@ using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Repository.EF;
 using System.Linq;
 using TypiconOnline.Domain.Books;
+using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Tests.Rules.Expressions
 {
@@ -22,11 +23,8 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
                                     <int>1</int>
                                  </more>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
 
-            xmlDoc.LoadXml(xmlString);
-
-            BooleanExpression element = RuleFactory.CreateBooleanExpression(xmlDoc.FirstChild);
             element.Interpret(DateTime.Today, BypassHandler.Instance);
 
             Assert.IsTrue(element.IsValid);
@@ -41,11 +39,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
                                     <int>-11</int>
                                  </more>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            BooleanExpression element = RuleFactory.CreateBooleanExpression(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
             element.Interpret(DateTime.Today, BypassHandler.Instance);
 
             Assert.IsTrue((bool)element.ValueCalculated);
@@ -63,11 +57,8 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
                                     <daysfromeaster><date>--04-15</date></daysfromeaster>
                                  </more>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
 
-            xmlDoc.LoadXml(xmlString);
-
-            BooleanExpression element = RuleFactory.CreateBooleanExpression(xmlDoc.FirstChild);
             element.Interpret(new DateTime(2017, 4, 15), BypassHandler.Instance);
 
             Assert.IsFalse((bool)element.ValueCalculated);
@@ -82,11 +73,8 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
                                     <int>2</int>
                                  </moreequals>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
 
-            xmlDoc.LoadXml(xmlString);
-
-            BooleanExpression element = RuleFactory.CreateBooleanExpression(xmlDoc.FirstChild);
             element.Interpret(DateTime.Today, BypassHandler.Instance);
 
             Assert.IsTrue((bool)element.ValueCalculated);
@@ -101,11 +89,8 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
                                     <int>15</int>
                                  </less>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
 
-            xmlDoc.LoadXml(xmlString);
-
-            BooleanExpression element = RuleFactory.CreateBooleanExpression(xmlDoc.FirstChild);
             element.Interpret(DateTime.Today, BypassHandler.Instance);
 
             Assert.IsTrue((bool)element.ValueCalculated);
@@ -120,11 +105,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
                                     <int>1</int>
                                  </lessequals>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            BooleanExpression element = RuleFactory.CreateBooleanExpression(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
             element.Interpret(DateTime.Today, BypassHandler.Instance);
 
             Assert.IsTrue((bool)element.ValueCalculated);

@@ -24,42 +24,6 @@ namespace TypiconOnline.Domain.Rules.Executables
     {
         public ModifyDay(string name) : base(name) { }
 
-        public ModifyDay(XmlNode node) : base(node)
-        {
-            XmlAttribute attr = node.Attributes[RuleConstants.ShortNameAttrName];
-            ShortName = attr?.Value;
-
-            attr = node.Attributes[RuleConstants.IsLastNameAttrName];
-            IsLastName = bool.TryParse(attr?.Value, out bool value) ? value : false;
-
-            attr = node.Attributes[RuleConstants.AsAdditionAttrName];
-            AsAddition = bool.TryParse(attr?.Value, out value) ? value : false;
-
-            attr = node.Attributes[RuleConstants.UseFullNameAttrName];
-            UseFullName = bool.TryParse(attr?.Value, out value) ? value : true;
-
-            attr = node.Attributes[RuleConstants.DayMoveAttrName];
-            if (int.TryParse(attr?.Value, out int intValue))
-            {
-                DayMoveCount = intValue;
-            }
-
-            attr = node.Attributes[RuleConstants.PriorityAttrName];
-            Priority = int.TryParse(attr?.Value, out intValue) ? intValue : 0;
-
-            foreach (XmlNode childNode in node.ChildNodes)
-            {
-                if (childNode.Name == RuleConstants.ModifyReplacedDayNodeName)
-                {
-                    ModifyReplacedDay = Factories.RuleFactory.CreateExecutable(childNode) as ModifyReplacedDay;
-                }
-                else
-                {
-                    ChildDateExp = Factories.RuleFactory.CreateDateExpression(childNode);
-                }
-            }
-        }
-
         #region Properties
         /// <summary>
         /// Количество дней, на которые необходимо перенести день. Может иметь отрицательное значение

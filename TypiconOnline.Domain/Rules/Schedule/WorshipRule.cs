@@ -15,24 +15,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         public WorshipRule(string name) : base(name) { }
 
-        public WorshipRule(XmlNode node) : base(node)
-        {
-            XmlAttribute attr = node.Attributes[RuleConstants.ServiceTimeAttrName];
-            Time = new ItemTime((attr != null) ? attr.Value : string.Empty);
-
-            attr = node.Attributes[RuleConstants.ServiceNameAttrName];
-            Name = (attr != null) ? attr.Value : string.Empty;
-
-            attr = node.Attributes[RuleConstants.ServiceIsDayBeforeAttrName];
-            if (bool.TryParse(attr?.Value, out bool showPsalm))
-            {
-                IsDayBefore = showPsalm;
-            }
-
-            attr = node.Attributes[RuleConstants.ServiceAdditionalNameAttrName];
-            AdditionalName = (attr != null) ? attr.Value : string.Empty;
-        }
-
         #region Properties
 
         public ItemTime Time { get; set; }

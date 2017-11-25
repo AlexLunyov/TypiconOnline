@@ -22,11 +22,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
                                     <int>2</int>
                                  </equals>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            BooleanExpression element = RuleFactory.CreateBooleanExpression(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
             element.Interpret(DateTime.Today, BypassHandler.Instance);
 
             Assert.IsTrue(element.IsValid);
@@ -39,11 +35,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
                                     <int>1</int>
                                  </equals>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            BooleanExpression element = RuleFactory.CreateBooleanExpression(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
 
             Assert.IsFalse(element.IsValid);
         }
@@ -55,11 +47,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
                                     
                                  </equals>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            BooleanExpression element = RuleFactory.CreateBooleanExpression(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
 
             Assert.IsFalse(element.IsValid);
         }
@@ -71,11 +59,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
                                     <case>11</case>
                                  </equals>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            BooleanExpression element = RuleFactory.CreateBooleanExpression(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
 
             Assert.IsFalse(element.IsValid);
         }
@@ -88,11 +72,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
                                     <getclosestday dayofweek=""saturday"" weekcount=""-2""><date>--11-08</date></getclosestday>
                                    </equals>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            BooleanExpression element = RuleFactory.CreateBooleanExpression(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
 
             Assert.IsFalse(element.IsValid);
         }
@@ -101,18 +81,12 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
        [Test]
         public void Rules_Expressions_And_Calculating_Correct()
         {
-            BookStorage.Instance = BookStorageFactory.Create();
-
             string xmlString = @"<equals>
                                     <int>-1</int>
                                     <daysfromeaster><date>--04-15</date></daysfromeaster>
                                  </equals>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            BooleanExpression element = RuleFactory.CreateBooleanExpression(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
             element.Interpret(new DateTime(2017, 4, 15), BypassHandler.Instance);
 
             Assert.IsTrue((bool)element.ValueCalculated);
@@ -120,18 +94,13 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         [Test]
         public void Rules_Expressions_And_Dates()
         {
-            BookStorage.Instance = BookStorageFactory.Create();
-
             string xmlString = @"<equals>
                                     <date/>
                                     <date>--04-15</date>
                                  </equals>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
 
-            xmlDoc.LoadXml(xmlString);
-
-            BooleanExpression element = RuleFactory.CreateBooleanExpression(xmlDoc.FirstChild);
             element.Interpret(new DateTime(2017, 4, 15), BypassHandler.Instance);
 
             Assert.IsTrue((bool)element.ValueCalculated);

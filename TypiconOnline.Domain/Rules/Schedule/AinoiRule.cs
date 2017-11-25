@@ -16,8 +16,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         public AinoiRule(string name) : base(name) { }
 
-        public AinoiRule(XmlNode node) : base(node) { }
-
         public override ElementViewModel CreateViewModel(IRuleHandler handler)
         {
             return new AinoiRuleViewModel(this, handler);

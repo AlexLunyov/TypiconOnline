@@ -25,7 +25,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             string xmlString = @"<theotokionrule source=""irmologion"" place=""kekragaria"" count=""3"" startfrom=""2""/>";
 
-            TheotokionRule element = RuleFactory.CreateElement<TheotokionRule>(xmlString);
+            var element = TestRuleSerializer.Deserialize<TheotokionRule>(xmlString);
 
             Assert.IsFalse(element.IsValid);
         }
@@ -35,7 +35,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             string xmlString = @"<theotokionrule source=""item1"" place=""app1_aposticha"" count=""3"" startfrom=""2""/>";
 
-            TheotokionRule element = RuleFactory.CreateElement<TheotokionRule>(xmlString);
+            var element = TestRuleSerializer.Deserialize<TheotokionRule>(xmlString);
 
             Assert.IsFalse(element.IsValid);
             Assert.AreEqual(2, element.GetBrokenConstraints().Count);
@@ -46,7 +46,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             string xmlString = @"<theotokionrule source=""item1"" place=""kekragaria_theotokion"" count=""3"" startfrom=""2""/>";
 
-            TheotokionRule element = RuleFactory.CreateElement<TheotokionRule>(xmlString);
+            var element = TestRuleSerializer.Deserialize<TheotokionRule>(xmlString);
 
             Assert.IsTrue(element.IsValid);
         }
@@ -56,7 +56,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             string xmlString = @"<theotokionrule source=""irmologion"" place=""app1_aposticha"" count=""3"" startfrom=""2""/>";
 
-            TheotokionRule element = RuleFactory.CreateElement<TheotokionRule>(xmlString);
+            var element = TestRuleSerializer.Deserialize<TheotokionRule>(xmlString);
 
             Assert.IsFalse(element.IsValid);
         }
@@ -68,7 +68,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
                                     <ymnosrule source=""item1"" place=""kekragaria"" count=""3"" startfrom=""2""/>
                                  </theotokionrule>";
 
-            TheotokionRule element = RuleFactory.CreateElement<TheotokionRule>(xmlString);
+            var element = TestRuleSerializer.Deserialize<TheotokionRule>(xmlString);
 
             Assert.IsTrue(element.IsValid);
         }
@@ -96,9 +96,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             handler.Settings.Rule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
 
-            rule.Rule.Interpret(date, handler);
+            rule.GetRule(TestRuleSerializer.Root).Interpret(date, handler);
 
-            KekragariaRuleViewModel model = (rule.Rule as KekragariaRule).CreateViewModel(handler) as KekragariaRuleViewModel;
+            KekragariaRuleViewModel model = rule.GetRule<KekragariaRule>(TestRuleSerializer.Root).CreateViewModel(handler) as KekragariaRuleViewModel;
             
             Assert.Pass(model.ToString());
             Assert.IsNotNull(model);

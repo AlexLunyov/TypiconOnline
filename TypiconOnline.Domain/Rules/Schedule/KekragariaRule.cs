@@ -18,16 +18,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KekragariaRule : YmnosStructureRule
     {
-        private ItemBoolean _showPsalm;
-
         public KekragariaRule(string name) : base(name) { }
-
-        public KekragariaRule(XmlNode node) : base(node)
-        {
-            XmlAttribute attr = node.Attributes[RuleConstants.ShowPsalmAttribute];
-
-            _showPsalm = new ItemBoolean((attr != null) ? attr.Value : "false");
-        }
 
         #region Properties
 

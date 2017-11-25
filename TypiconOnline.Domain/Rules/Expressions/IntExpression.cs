@@ -11,7 +11,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     public abstract class IntExpression : RuleExpression
     {
         public IntExpression(string name) : base(name) { }
-        public IntExpression(XmlNode node) : base(node) { }
 
         public override Type ExpressionType => typeof(int);
     }

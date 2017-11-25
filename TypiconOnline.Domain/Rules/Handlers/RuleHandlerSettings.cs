@@ -47,7 +47,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// 
         /// </summary>
         /// <param name="seniorTypiconRule">Главное правило для обработки</param>
-        public RuleHandlerSettings(TypiconRule seniorTypiconRule) : this()
+        public RuleHandlerSettings(DayRule seniorTypiconRule) : this()
         {
             Rule = seniorTypiconRule;
         }

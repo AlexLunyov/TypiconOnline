@@ -15,46 +15,15 @@ namespace TypiconOnline.Domain.Rules.Executables
     /// </summary>
     public class If : RuleExecutable
     {
-        public If(XmlNode node): base(node)
-        {
-            //ищем condition
-            XmlNode elementNode = node.SelectSingleNode(RuleConstants.ExpressionIfNodeName);
-
-            if (elementNode != null)
-            {
-                XmlNode valNode = elementNode.FirstChild;
-                _expression = Factories.RuleFactory.CreateBooleanExpression(valNode);
-            }
-
-            //ищем then
-            elementNode = node.SelectSingleNode(RuleConstants.ThenNodeName);
-            if (elementNode != null)
-            {
-                _then = new ExecContainer(elementNode);
-            }
-
-            //ищем else
-            elementNode = node.SelectSingleNode(RuleConstants.ElseNodeName);
-            if (elementNode != null)
-            {
-                _else = new ExecContainer(elementNode);
-            }
-        }
+        public If(string name) : base(name) { }
 
         #region Properties
 
-        private BooleanExpression _expression;
-        public BooleanExpression Expression
-        {
-            get
-            {
-                return _expression;
-            }
-        }
+        public BooleanExpression Expression { get; set; }
 
-        private ExecContainer _then;
+        public ExecContainer ThenElement { get; set; }
 
-        private ExecContainer _else;
+        public ExecContainer ElseElement { get; set; }
 
         #endregion
 
@@ -66,45 +35,45 @@ namespace TypiconOnline.Domain.Rules.Executables
 
             if ((bool)Expression.ValueCalculated)
             {
-                _then.Interpret(date, handler);
+                ThenElement.Interpret(date, handler);
             }
-            else if (_else != null)
+            else
             {
-                _else.Interpret(date, handler);
+                ElseElement?.Interpret(date, handler);
             }
         }
 
         protected override void Validate()
         {
-            if (_expression == null)
+            if (Expression == null)
             {
                 AddBrokenConstraint(IfBusinessBusinessConstraint.ConditionRequired, ElementName);
             }
             else
             {
                 //добавляем ломаные правила к родителю
-                if (!_expression.IsValid)
+                if (!Expression.IsValid)
                 {
-                    AppendAllBrokenConstraints(_expression);
+                    AppendAllBrokenConstraints(Expression);
                 }
             }
 
-            if (_then == null)
+            if (ThenElement == null)
             {
                 AddBrokenConstraint(IfBusinessBusinessConstraint.ThenRequired, ElementName);
             }
             else
             {
                 //добавляем ломаные правила к родителю
-                if (!_then.IsValid)
+                if (!ThenElement.IsValid)
                 {
-                    AppendAllBrokenConstraints(_then);
+                    AppendAllBrokenConstraints(ThenElement);
                 }
             }
 
-            if (_else?.IsValid == false)
+            if (ElseElement?.IsValid == false)
             {
-                AppendAllBrokenConstraints(_else);
+                AppendAllBrokenConstraints(ElseElement);
             }
         }
 

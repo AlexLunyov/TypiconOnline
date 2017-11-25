@@ -30,8 +30,8 @@ namespace TypiconOnline.Domain.Rules.Executables
 
             if (expressionNode?.HasChildNodes == true)
             {
-                (element as Switch).Expression = SerializerRoot.Factory<RuleExpression>()
-                    .CreateElement(new XmlDescriptor() { Element = expressionNode.FirstChild });
+                (element as Switch).Expression = SerializerRoot.Container<RuleExpression>()
+                    .Deserialize(new XmlDescriptor() { Element = expressionNode.FirstChild });
             }
 
             //ищем элементы case
@@ -39,11 +39,9 @@ namespace TypiconOnline.Domain.Rules.Executables
 
             if (casesList != null)
             {
-                (element as Switch).CaseElements = new List<Case>();
-
                 foreach (XmlNode caseNode in casesList)
                 {
-                    Case caseElement = SerializerRoot.Factory<Case>().CreateElement(new XmlDescriptor() { Element = caseNode });
+                    Case caseElement = SerializerRoot.Container<Case>().Deserialize(new XmlDescriptor() { Element = caseNode });
                     (element as Switch).CaseElements.Add(caseElement);
                 }
             }
@@ -52,8 +50,8 @@ namespace TypiconOnline.Domain.Rules.Executables
             XmlNode defaultNode = d.Element.SelectSingleNode(RuleConstants.DefaultNodeName);
             if (defaultNode != null)
             {
-                (element as Switch).Default = SerializerRoot.Factory<ExecContainer>()
-                    .CreateElement(new XmlDescriptor() { Element = defaultNode });
+                (element as Switch).Default = SerializerRoot.Container<ExecContainer>()
+                    .Deserialize(new XmlDescriptor() { Element = defaultNode });
             }
         }
 

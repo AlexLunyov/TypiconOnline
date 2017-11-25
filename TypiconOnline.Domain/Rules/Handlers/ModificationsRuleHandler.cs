@@ -35,24 +35,24 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
         public override void Execute(ICustomInterpreted element)
         {
-            if (element is ModifyReplacedDay)
+            if (element is ModifyReplacedDay modifyReplacedDay)
             {
                 //
 
                 TypiconEntity typiconEntity = _settings.Rule.Owner; //Rules[0].Owner;
 
-                TypiconRule ruleToModify;
+                DayRule ruleToModify;
 
-                if ((element as ModifyReplacedDay).Kind == KindOfReplacedDay.Menology)
+                if (modifyReplacedDay.Kind == KindOfReplacedDay.Menology)
                 {
-                    ruleToModify = typiconEntity.GetMenologyRule((element as ModifyReplacedDay).DateToReplaceCalculated);
+                    ruleToModify = typiconEntity.GetMenologyRule(modifyReplacedDay.DateToReplaceCalculated);
                 }
                 else //if ((element as ModifyReplacedDay).Kind == RuleConstants.KindOfReplacedDay.triodion)
                 {
-                    ruleToModify = typiconEntity.GetTriodionRule((element as ModifyReplacedDay).DateToReplaceCalculated);
+                    ruleToModify = typiconEntity.GetTriodionRule(modifyReplacedDay.DateToReplaceCalculated);
                 }
 
-                int priority = (element as ModifyReplacedDay).Priority;
+                int priority = modifyReplacedDay.Priority;
 
                 if (priority == 0)
                 {
@@ -62,20 +62,20 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 ModificationsRuleRequest request = new ModificationsRuleRequest()
                 {
                     Caller = ruleToModify,
-                    Date = (element as ModifyReplacedDay).MoveDateCalculated,
+                    Date = modifyReplacedDay.MoveDateCalculated,
                     Priority = priority,
-                    ShortName = (element as ModifyReplacedDay).ShortName,
-                    AsAddition = (element as ModifyReplacedDay).AsAddition,
-                    IsLastName = (element as ModifyReplacedDay).IsLastName,
-                    UseFullName = (element as ModifyReplacedDay).UseFullName
+                    ShortName = modifyReplacedDay.ShortName,
+                    AsAddition = modifyReplacedDay.AsAddition,
+                    IsLastName = modifyReplacedDay.IsLastName,
+                    UseFullName = modifyReplacedDay.UseFullName
                 };
 
                 typiconEntity.AddModifiedRule(request);
             }
-            else if ((element is ModifyDay) 
-                && ((element as ModifyDay).MoveDateCalculated.Year == _yearToModify))
+            else if ((element is ModifyDay modifyDay) 
+                && (modifyDay.MoveDateCalculated.Year == _yearToModify))
             {
-                int priority = (element as ModifyDay).Priority;
+                int priority = modifyDay.Priority;
 
                 //TypiconRule seniorTypiconRule = Rules[0];
 
@@ -86,13 +86,13 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
                 ModificationsRuleRequest request = new ModificationsRuleRequest()
                 {
-                    Caller = /*seniorTypicon*/_settings.Rule,
-                    Date = (element as ModifyDay).MoveDateCalculated,
+                    Caller = /*seniorTypicon*/(DayRule)_settings.Rule,
+                    Date = modifyDay.MoveDateCalculated,
                     Priority = priority,
-                    ShortName = (element as ModifyDay).ShortName,
-                    AsAddition = (element as ModifyDay).AsAddition,
-                    IsLastName = (element as ModifyDay).IsLastName,
-                    UseFullName = (element as ModifyDay).UseFullName
+                    ShortName = modifyDay.ShortName,
+                    AsAddition = modifyDay.AsAddition,
+                    IsLastName = modifyDay.IsLastName,
+                    UseFullName = modifyDay.UseFullName
                 };
 
                 TypiconEntity typiconEntity = /*seniorTypicon*/_settings.Rule.Owner;//Folder.GetOwner();

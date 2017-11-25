@@ -13,5 +13,6 @@ namespace TypiconOnline.Domain.Interfaces
     {
         string Description { get; set; }
         string GetElementName();
+        IDescriptor CreateInstance(string description);
     }
 }

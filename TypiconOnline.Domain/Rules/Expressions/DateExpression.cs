@@ -13,8 +13,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     {
         public DateExpression(string name) : base(name) { }
 
-        public DateExpression(XmlNode node) : base(node) { }
-
         //protected DateTime _outputDate = DateTime.MinValue;
 
         #region Properties

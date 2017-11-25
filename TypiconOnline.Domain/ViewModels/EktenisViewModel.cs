@@ -11,7 +11,7 @@ namespace TypiconOnline.Domain.ViewModels
 {
     public class EktenisViewModel : ContainerViewModel
     {
-        public EktenisViewModel(Ektenis rule, IRuleHandler handler) : base()
+        public EktenisViewModel(EktenisRule rule, IRuleHandler handler) : base()
         {
             if (rule == null || rule.CalculatedElements == null) throw new ArgumentNullException("Ektenis");
             if (handler == null) throw new ArgumentNullException("handler");

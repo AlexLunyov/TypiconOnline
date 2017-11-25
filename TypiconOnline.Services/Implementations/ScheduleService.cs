@@ -44,12 +44,12 @@ namespace TypiconOnline.Domain.Services
 
             inputRequest.Handler.Settings = handlerSettings;
 
-            ScheduleDay scheduleDay = new ScheduleDay();
-
-            //задаем имя дню
-            scheduleDay.Name = ComposeServiceName(inputRequest, handlerSettings);
-
-            scheduleDay.Date = inputRequest.Date;
+            ScheduleDay scheduleDay = new ScheduleDay
+            {
+                //задаем имя дню
+                Name = ComposeServiceName(inputRequest, handlerSettings),
+                Date = inputRequest.Date
+            };
 
             Sign sign = (handlerSettings.Rule is Sign) ? handlerSettings.Rule as Sign : GetTemplateSign(handlerSettings.Rule.Template);
 

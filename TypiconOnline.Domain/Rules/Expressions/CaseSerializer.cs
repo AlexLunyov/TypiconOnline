@@ -32,8 +32,8 @@ namespace TypiconOnline.Domain.Rules.Expressions
             {
                 foreach (XmlNode valueNode in valuesNode.ChildNodes)
                 {
-                    RuleExpression valueElement = SerializerRoot.Factory<RuleExpression>()
-                    .CreateElement(new XmlDescriptor() { Element = valueNode });
+                    RuleExpression valueElement = SerializerRoot.Container<RuleExpression>()
+                    .Deserialize(new XmlDescriptor() { Element = valueNode });
 
                     (element as Case).ValuesElements.Add(valueElement);
                 }
@@ -43,8 +43,8 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
             if (actionNode != null)
             {
-                (element as Case).ActionElement = SerializerRoot.Factory<ExecContainer>()
-                    .CreateElement(new XmlDescriptor() { Element = actionNode });
+                (element as Case).ActionElement = SerializerRoot.Container<ExecContainer>()
+                    .Deserialize(new XmlDescriptor() { Element = actionNode });
             }
         }
 

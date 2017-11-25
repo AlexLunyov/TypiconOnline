@@ -20,10 +20,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     public class Date : DateExpression
     {
         public Date(string name) : base(name) { }
-        public Date(XmlNode node) : base(node)
-        {
-            ValueExpression = new ItemDate(node.InnerText);
-        }
 
         public override object ValueCalculated
         {

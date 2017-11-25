@@ -36,8 +36,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     {
         public More(string name) : base(name) { }
 
-        public More(XmlNode valNode) : base(valNode) { }
-
         protected override bool Operate(RuleExpression exp1, RuleExpression exp2, bool? previousValue)
         {
             bool result = (int)exp1.ValueCalculated > (int)exp2.ValueCalculated;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -36,6 +37,16 @@ namespace TypiconOnline.Domain.Typicon
             }
         }
 
-        
+        public override T GetRule<T>(IRuleSerializerRoot serializerRoot)
+        {
+            T baseRule = base.GetRule<T>(serializerRoot);
+
+            if ((baseRule == null) && string.IsNullOrEmpty(RuleDefinition))
+            {
+                return Template.GetRule<T>(serializerRoot);
+            }
+
+            return baseRule;
+        }
     }
 }

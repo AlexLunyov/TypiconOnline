@@ -50,12 +50,12 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             handler.Settings.OktoikhDay = oktoikhDay;
 
-            rule.Rule.Interpret(date, handler);
+            rule.GetRule(TestRuleSerializer.Root).Interpret(date, handler);
 
-            SedalenRuleViewModel model = (rule.Rule as SedalenRule).CreateViewModel(handler) as SedalenRuleViewModel;
+            SedalenRuleViewModel model = rule.GetRule<SedalenRule>(TestRuleSerializer.Root).CreateViewModel(handler) as SedalenRuleViewModel;
 
-            Assert.AreEqual(3, (rule.Rule as SedalenRule).Structure.YmnosStructureCount);
-            Assert.Pass((rule.Rule as SedalenRule).Structure.YmnosStructureCount.ToString());
+            Assert.AreEqual(3, rule.GetRule<SedalenRule>(TestRuleSerializer.Root).Structure.YmnosStructureCount);
+            Assert.Pass(rule.GetRule<SedalenRule>(TestRuleSerializer.Root).Structure.YmnosStructureCount.ToString());
         }
     }
 }

@@ -42,8 +42,8 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
             if (d.Element.HasChildNodes)
             {
-                (element as GetClosestDay).ChildDateExp = SerializerRoot.Factory<DateExpression>()
-                    .CreateElement(new XmlDescriptor() { Element = d.Element.FirstChild });
+                (element as GetClosestDay).ChildDateExp = SerializerRoot.Container<DateExpression>()
+                    .Deserialize(new XmlDescriptor() { Element = d.Element.FirstChild });
             }
         }
 

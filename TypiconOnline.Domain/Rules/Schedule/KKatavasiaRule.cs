@@ -18,10 +18,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KKatavasiaRule : KKontakionRule, ICustomInterpreted, ICalcStructureElement
     {
-        public KKatavasiaRule(XmlNode node): base(node)
+        IKatavasiaContext katavasiaContext;
+
+        public KKatavasiaRule(string name, IKatavasiaContext context) : base(name)
         {
-            XmlAttribute attr = node.Attributes[RuleConstants.KKatavasiaNameAttr];
-            Name = (attr != null) ? attr.Value : "";
+            katavasiaContext = context ?? throw new ArgumentNullException("IKatavasiaContext");
         }
 
         #region Properties
@@ -70,7 +71,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             if (_katavasia == null)
             {
-                GetKatavasiaResponse response = BookStorage.Instance.Katavasia.Get(
+                GetKatavasiaResponse response = katavasiaContext.Get(
                     new GetKatavasiaRequest() { Name = Name });
 
                 if (response.Exception == null && response.BookElement != null)

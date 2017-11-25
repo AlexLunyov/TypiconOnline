@@ -14,19 +14,17 @@ using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Books;
+using TypiconOnline.Domain.Books.Easter;
 
 namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class DaysFromEaster : Int
     {
-        public DaysFromEaster(string name) : base(name) { }
+        IEasterContext easterContext;
 
-        public DaysFromEaster(XmlNode node) : base(node)
+        public DaysFromEaster(string name, IEasterContext context) : base(name)
         {
-            if (node.HasChildNodes)
-            {
-                ChildExpression = Factories.RuleFactory.CreateDateExpression(node.FirstChild);
-            }
+            easterContext = context ?? throw new ArgumentNullException("IEasterContext");
         }
 
         public DateExpression ChildExpression { get; set; }

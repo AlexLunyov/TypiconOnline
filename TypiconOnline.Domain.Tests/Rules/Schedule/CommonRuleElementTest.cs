@@ -36,7 +36,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             FileReader reader = new FileReader(folderPath);
             string xml = reader.Read("CommonRuleElement_Simple.xml");
 
-            WorshipSequence element = RuleFactory.CreateElement(xml) as WorshipSequence;
+            var element = TestRuleSerializer.Deserialize<WorshipSequence>(xml);
 
             element.Interpret(DateTime.Today, handler);
 

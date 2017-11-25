@@ -14,7 +14,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     public abstract class LogicalOperation : LogicalExpression
     {
         public LogicalOperation(string name) : base(name) { }
-        public LogicalOperation(XmlNode node) : base(node) { }
 
         protected override void Validate()
         {

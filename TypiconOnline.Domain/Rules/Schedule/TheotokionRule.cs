@@ -25,16 +25,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
             theotokionApp = context ?? throw new ArgumentNullException("ITheotokionAppContext");
         }
 
-        public TheotokionRule(XmlNode node) : base(node)
-        {
-            if (node.HasChildNodes && node.FirstChild.Name == RuleConstants.YmnosRuleNode)
-            {
-                ReferenceYmnos = RuleFactory.CreateYmnosRule(node.FirstChild);
-            }
-
-            theotokionApp = BookStorage.Instance.TheotokionApp;
-        }
-
         public YmnosRule ReferenceYmnos { get; set; }
 
         protected override void Validate()
@@ -69,12 +59,17 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             YmnosStructure result = null;
 
+            if (!IsValid)
+            {
+                return null;
+            }
+
             if (Source == YmnosSource.Irmologion)
             {
                 int calcIhos = (ReferenceYmnos.Calculate(date, settings) as YmnosStructure).Ihos;
 
                 GetTheotokionResponse response = theotokionApp.Get(
-                    new GetTheotokionRequest() { Place = Place, Ihos = calcIhos, DayOfWeek = date.DayOfWeek });
+                    new GetTheotokionRequest() { Place = Place.Value, Ihos = calcIhos, DayOfWeek = date.DayOfWeek });
 
                 if (response.Exception == null && response.BookElement != null)
                 {

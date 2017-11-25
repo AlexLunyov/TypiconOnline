@@ -17,26 +17,19 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KKontakionRule : RuleExecutable, ICustomInterpreted, ICalcStructureElement//<Kontakion>
     {
-        public KKontakionRule(XmlNode node) : base(node)
-        {
-            XmlAttribute attr = node.Attributes[RuleConstants.KKontakionSourceAttrName];
-            Source = (attr != null) ? new ItemEnumType<KanonasSource>(attr.Value) : null;
-
-            attr = node.Attributes[RuleConstants.KKontakionKanonasAttrName];
-            Kanonas = (attr != null) ? new ItemEnumType<KanonasKind>(attr.Value) : null;
-        }
+        public KKontakionRule(string name) : base(name) { }
 
         #region Properties
 
         /// <summary>
         /// Источник книги, откуда брать текст
         /// </summary>
-        public ItemEnumType<KanonasSource> Source { get; }
+        public KanonasSource? Source { get; set; }
 
         /// <summary>
         /// Место в тексте богослужения для выбора канона
         /// </summary>
-        public ItemEnumType<KanonasKind> Kanonas { get; }
+        public KanonasKind? Kanonas { get; set; }
 
         #endregion
 
@@ -54,24 +47,24 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 AddBrokenConstraint(KKontakionRuleBusinessConstraint.SourceRequired, ElementName);
             }
-            else if (!Source.IsValid)
-            {
-                AppendAllBrokenConstraints(Source);
-            }
+            //else if (!Source.IsValid)
+            //{
+            //    AppendAllBrokenConstraints(Source);
+            //}
 
             if (Kanonas == null)
             {
                 AddBrokenConstraint(KKontakionRuleBusinessConstraint.KanonasRequired, ElementName);
             }
-            else if (!Kanonas.IsValid)
-            {
-                AppendAllBrokenConstraints(Kanonas);
-            }
+            //else if (!Kanonas.IsValid)
+            //{
+            //    AppendAllBrokenConstraints(Kanonas);
+            //}
         }
 
         public virtual DayElementBase Calculate(DateTime date, RuleHandlerSettings settings)
         {
-            return GetKanonas(settings)?.Kontakion;
+            return (IsValid) ? GetKanonas(settings)?.Kontakion : null;
         }
 
         protected Kanonas GetKanonas(RuleHandlerSettings settings)
@@ -80,7 +73,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             //разбираемся с source
             DayStructureBase dayWorship = null;
-            switch (Source.Value)
+            switch (Source)
             {
                 case KanonasSource.Item1:
                     dayWorship = (settings.DayWorships.Count > 0) ? settings.DayWorships[0] : null;
@@ -98,7 +91,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             if (dayWorship != null)
             {
-                switch (Kanonas.Value)
+                switch (Kanonas)
                 {
                     case KanonasKind.Apodipno:
                         //TODO: добавить реализацию

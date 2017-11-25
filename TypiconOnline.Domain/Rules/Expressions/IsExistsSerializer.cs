@@ -29,8 +29,8 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
             if (d.Element.HasChildNodes)// && node.FirstChild.Name == RuleConstants.YmnosRuleNode)
             {
-                (element as IsExists).ChildElement = SerializerRoot.Factory<RuleExecutable, ICalcStructureElement>()
-                    .CreateElement(new XmlDescriptor() { Element = d.Element.FirstChild }) as ICalcStructureElement;
+                (element as IsExists).ChildElement = SerializerRoot.Container<RuleExecutable, ICalcStructureElement>()
+                    .Deserialize(new XmlDescriptor() { Element = d.Element.FirstChild }) as ICalcStructureElement;
             }
         }
 

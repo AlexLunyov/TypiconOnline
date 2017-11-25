@@ -45,9 +45,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             OktoikhDay oktoikhDay = BookStorage.Instance.Oktoikh.Get(date);
             handler.Settings.OktoikhDay = oktoikhDay;
 
-            rule.Rule.Interpret(date, handler);
+            rule.GetRule(TestRuleSerializer.Root).Interpret(date, handler);
 
-            KanonasRule kanonasRule = (rule.Rule as KanonasRule);
+            KanonasRule kanonasRule = rule.GetRule<KanonasRule>(TestRuleSerializer.Root);
 
             Assert.AreEqual(4, kanonasRule.KanonesCalculated.Count());
             Assert.IsNotNull(kanonasRule.SedalenCalculated);

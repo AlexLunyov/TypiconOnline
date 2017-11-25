@@ -10,7 +10,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
 {
     public class ModificationsRuleRequest: ServiceRequestBase
     {
-        public TypiconRule Caller;
+        public DayRule Caller;
         public DateTime Date;
         public int Priority;
         public bool IsLastName;

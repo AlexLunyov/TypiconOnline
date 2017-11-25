@@ -63,6 +63,7 @@
     <Compile Include="Interfaces\IFileReader.cs" />
     <Compile Include="Interfaces\IKatavasiaFactory.cs" />
     <Compile Include="Interfaces\IKatavasiaService.cs" />
+    <Compile Include="Interfaces\IModifiedRuleService.cs" />
     <Compile Include="Interfaces\IOktoikhDayFactory.cs" />
     <Compile Include="Interfaces\IOktoikhDayFileReader.cs" />
     <Compile Include="Interfaces\IOktoikhDayService.cs" />

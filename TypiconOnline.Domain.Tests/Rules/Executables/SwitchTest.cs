@@ -40,13 +40,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 	                                </switch>
                                 </rule>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            BookStorage.Instance = BookStorageFactory.Create();
-
-            xmlDoc.LoadXml(xmlString);
-
-            ExecContainer element = new ExecContainer(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<ExecContainer>(xmlString);
 
             element.Interpret(DateTime.Today, BypassHandler.Instance);
 
@@ -81,11 +75,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 	                                </switch>
                                 </rule>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            ExecContainer element = new ExecContainer(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<ExecContainer>(xmlString);
 
             element.Interpret(DateTime.Today, BypassHandler.Instance);
 
@@ -118,11 +108,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 	                                </switch>
                                 </rule>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            ExecContainer element = new ExecContainer(xmlDoc.FirstChild);
+            var element = TestRuleSerializer.Deserialize<ExecContainer>(xmlString);
 
             Assert.IsFalse(element.IsValid);
 
@@ -163,13 +149,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 	                                </switch>
                                 </rule>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var element = TestRuleSerializer.Deserialize<ExecContainer>(xmlString);
 
-            xmlDoc.LoadXml(xmlString);
-
-            ExecContainer element = new ExecContainer(xmlDoc.FirstChild);
-
-            Assert.IsFalse(element.IsValid);
+            Assert.IsTrue(element.IsValid);
         }
     }
 }

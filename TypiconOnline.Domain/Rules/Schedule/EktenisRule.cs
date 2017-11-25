@@ -15,48 +15,19 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Правило для ектений
     /// </summary>
-    public class Ektenis : ExecContainer, ICustomInterpreted, IViewModelElement
+    public class EktenisRule : ExecContainer, ICustomInterpreted, IViewModelElement
     {
-        private List<TextHolder> _calculatedText;
-
-        public Ektenis(XmlNode node) : base(node) { }
-
-        //public Ektenis(XmlNode node) : base(node)
-        //{
-        //    ChildElements = new List<RuleElement>();
-
-        //    if (node.HasChildNodes)
-        //    {
-        //        foreach (XmlNode childNode in node.ChildNodes)
-        //        {
-        //            if (childNode.Name == RuleConstants.EktenisNameNode)
-        //            {
-        //                Name = new ItemText(childNode.OuterXml);
-        //            }
-        //            else
-        //            {
-        //                RuleElement element = Factories.RuleFactory.CreateElement(childNode);
-        //                ChildElements.Add(element);
-        //            }
-        //        }
-        //    }
-        //}
+        public EktenisRule(string name) : base(name) { } 
 
         //public ItemText Name { get; set; }
 
-        //public virtual List<RuleElement> ChildElements { get; set; }
-
         public List<TextHolder> CalculatedElements
         {
-            get
-            {
-                return _calculatedText;
-            }
-        }
+            get; private set; }
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
         {
-            if (handler.IsAuthorized<Ektenis>())
+            if (handler.IsAuthorized<EktenisRule>())
             {
                 //используем специальный обработчик для Ektenis,
                 //чтобы создать вычисленный список элементов TextHolder
@@ -69,7 +40,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                 ExecContainer container = structHandler.GetResult();
 
-                _calculatedText = container?.ChildElements.Cast<TextHolder>().ToList();
+                CalculatedElements = container?.ChildElements.Cast<TextHolder>().ToList();
             }
         }
 
