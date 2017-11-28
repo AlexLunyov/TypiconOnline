@@ -29,18 +29,18 @@ namespace TypiconOnline.Domain
         //public virtual FolderEntity Folder { get; set; }
 
         //
-        public virtual RuleElement Rule
-        {
-            get
-            {
-                if ((_rule == null) && !string.IsNullOrEmpty(_ruleDefinition))
-                {
-                    //_rule = RuleFactory.CreateElement(_ruleDefinition);//RuleContainerFactory.CreateRuleContainer(_ruleDefinition);
-                }
+        //public virtual RuleElement Rule
+        //{
+        //    get
+        //    {
+        //        if ((_rule == null) && !string.IsNullOrEmpty(_ruleDefinition))
+        //        {
+        //            //_rule = RuleFactory.CreateElement(_ruleDefinition);//RuleContainerFactory.CreateRuleContainer(_ruleDefinition);
+        //        }
 
-                return _rule;
-            }
-        }
+        //        return _rule;
+        //    }
+        //}
 
         protected string _ruleDefinition;
         public virtual string RuleDefinition

@@ -28,8 +28,6 @@ namespace TypiconOnline.Domain.Rules
         /// <param name="handler"></param>
         public virtual void Interpret(DateTime date, IRuleHandler handler)
         {
-            handler.Settings.ApplyCustomParameters(this);
-
             //Проверка для всех элементов правил. 
             //Если неверно составлен, то либо выкидывается исключение (в случае соответствующей настройки),
             //либо просто ничего не обрабатывается
@@ -37,6 +35,8 @@ namespace TypiconOnline.Domain.Rules
             {
                 return;
             }
+
+            handler?.Settings?.ApplyCustomParameters(this);
 
             InnerInterpret(date, handler);
             _isInterpreted = true;
@@ -67,10 +67,10 @@ namespace TypiconOnline.Domain.Rules
         {
             if (!IsValid)
             {
-                if (handler.Settings.ThrowExceptionIfInvalid)
-                {
-                    ThrowExceptionIfInvalid();
-                }
+                //if (handler.Settings.ThrowExceptionIfInvalid)
+                //{
+                //    ThrowExceptionIfInvalid();
+                //}
                 return true;
             }
 

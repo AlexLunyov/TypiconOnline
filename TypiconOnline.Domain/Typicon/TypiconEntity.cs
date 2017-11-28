@@ -131,110 +131,110 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         /// <param name="date">Конкретная дата</param>
         /// <returns></returns>
-        public List<ModifiedRule> GetModifiedRules(DateTime date)
-        {
-            ModifiedYear modifiedYear = ModifiedYears.FirstOrDefault(m => m.Year == date.Year);
+        //public List<ModifiedRule> GetModifiedRules(DateTime date)
+        //{
+        //    ModifiedYear modifiedYear = ModifiedYears.FirstOrDefault(m => m.Year == date.Year);
 
-            if (modifiedYear == null)
-            {
-                //По умолчанию добавляем год, пусть он и останется пустым
-                modifiedYear = new ModifiedYear() { Year = date.Year };
+        //    if (modifiedYear == null)
+        //    {
+        //        //По умолчанию добавляем год, пусть он и останется пустым
+        //        modifiedYear = new ModifiedYear() { Year = date.Year };
 
-                ModifiedYears.Add(modifiedYear);
+        //        ModifiedYears.Add(modifiedYear);
 
-                DateTime indexDate = new DateTime(date.Year, 1, 1);
+        //        DateTime indexDate = new DateTime(date.Year, 1, 1);
 
-                //формируем список дней для изменения до 1 января будущего года
-                DateTime endDate = new DateTime(date.Year + 1, 1, 1);
-                while (indexDate != endDate)
-                {
-                    //Menology
+        //        //формируем список дней для изменения до 1 января будущего года
+        //        DateTime endDate = new DateTime(date.Year + 1, 1, 1);
+        //        while (indexDate != endDate)
+        //        {
+        //            //Menology
 
-                    //находим правило для конкретного дня Минеи
-                    MenologyRule menologyRule = GetMenologyRule(indexDate);
+        //            //находим правило для конкретного дня Минеи
+        //            MenologyRule menologyRule = GetMenologyRule(indexDate);
 
-                    if (menologyRule == null)
-                        throw new ArgumentNullException("MenologyRule");
+        //            if (menologyRule == null)
+        //                throw new ArgumentNullException("MenologyRule");
 
-                    InterpretMenologyRule(menologyRule, indexDate, date.Year);
+        //            InterpretMenologyRule(menologyRule, indexDate, date.Year);
 
-                    indexDate = indexDate.AddDays(1);
-                }
+        //            indexDate = indexDate.AddDays(1);
+        //        }
 
-                //теперь обрабатываем переходящие минейные праздники
-                //у них не должны быть определены даты. так их и найдем
+        //        //теперь обрабатываем переходящие минейные праздники
+        //        //у них не должны быть определены даты. так их и найдем
 
-                MenologyRules.FindAll(c => (c.Date.IsEmpty && c.DateB.IsEmpty)).
-                    ForEach(a =>
-                    {
-                        InterpretMenologyRule(a, date, date.Year);
+        //        MenologyRules.FindAll(c => (c.Date.IsEmpty && c.DateB.IsEmpty)).
+        //            ForEach(a =>
+        //            {
+        //                InterpretMenologyRule(a, date, date.Year);
 
-                        //не нашел другого способа, как только два раза вычислять изменяемые дни
-                        InterpretMenologyRule(a, date.AddYears(1), date.Year);
-                    });
+        //                //не нашел другого способа, как только два раза вычислять изменяемые дни
+        //                InterpretMenologyRule(a, date.AddYears(1), date.Year);
+        //            });
 
-                //Triodion
+        //        //Triodion
 
-                //найти текущую Пасху
-                //Для каждого правила выполнять interpret(), где date = текущая Пасха. AddDays(Day.DaysFromEaster)
-                DateTime easter = BookStorage.Instance.Easters.GetCurrentEaster(date.Year);
+        //        //найти текущую Пасху
+        //        //Для каждого правила выполнять interpret(), где date = текущая Пасха. AddDays(Day.DaysFromEaster)
+        //        DateTime easter = BookStorage.Instance.Easters.GetCurrentEaster(date.Year);
 
-                TriodionRules.
-                    ForEach(a =>
-                    {
-                        if (a.Rule != null)
-                        {
-                            ModificationsRuleHandler handler = new ModificationsRuleHandler(
-                                new RuleHandlerSettings(a), date.Year);
+        //        TriodionRules.
+        //            ForEach(a =>
+        //            {
+        //                if (a.Rule != null)
+        //                {
+        //                    ModificationsRuleHandler handler = new ModificationsRuleHandler(
+        //                        new RuleHandlerSettings(a), date.Year);
 
-                            int i = a.DaysFromEaster;
-                            a.Rule.Interpret(easter.AddDays(i), handler);
-                        }
-                    });
-            }
+        //                    int i = a.DaysFromEaster;
+        //                    a.Rule.Interpret(easter.AddDays(i), handler);
+        //                }
+        //            });
+        //    }
 
-            return modifiedYear.ModifiedRules.FindAll(d => d.Date.Date == date.Date);
-        }
+        //    return modifiedYear.ModifiedRules.FindAll(d => d.Date.Date == date.Date);
+        //}
 
-        private void InterpretMenologyRule(MenologyRule menologyRule, DateTime date, int year)
-        {
-            if (menologyRule != null)
-            {
-                ModificationsRuleHandler handler = new ModificationsRuleHandler(
-                    new RuleHandlerSettings(menologyRule), year);
-                //выполняем его
-                menologyRule.Rule.Interpret(date, handler);
-            }
-        }
+        //private void InterpretMenologyRule(MenologyRule menologyRule, DateTime date, int year)
+        //{
+        //    if (menologyRule != null)
+        //    {
+        //        ModificationsRuleHandler handler = new ModificationsRuleHandler(
+        //            new RuleHandlerSettings(menologyRule), year);
+        //        //выполняем его
+        //        menologyRule.Rule.Interpret(date, handler);
+        //    }
+        //}
 
-        /// <summary>
-        /// Добавляет измененное правило.
-        /// Вызывается из метода Execute класса ModificationsRuleHandler
-        /// </summary>
-        /// <param name="request"></param>
-        internal void AddModifiedRule(ModificationsRuleRequest request)
-        {
-            ModifiedYear modifiedYear = ModifiedYears.FirstOrDefault(m => m.Year == request.Date.Year);
+        ///// <summary>
+        ///// Добавляет измененное правило.
+        ///// Вызывается из метода Execute класса ModificationsRuleHandler
+        ///// </summary>
+        ///// <param name="request"></param>
+        //internal void AddModifiedRule(ModificationsRuleRequest request)
+        //{
+        //    ModifiedYear modifiedYear = ModifiedYears.FirstOrDefault(m => m.Year == request.Date.Year);
 
-            if (modifiedYear == null)
-            {
-                modifiedYear = new ModifiedYear() { Year = request.Date.Year, TypiconEntity = this };
-                ModifiedYears.Add(modifiedYear);
-            }
+        //    if (modifiedYear == null)
+        //    {
+        //        modifiedYear = new ModifiedYear() { Year = request.Date.Year, TypiconEntity = this };
+        //        ModifiedYears.Add(modifiedYear);
+        //    }
 
-            //ModifiedRule
+        //    //ModifiedRule
 
-            modifiedYear.ModifiedRules.Add(new ModifiedRule()
-            {
-                Date = request.Date,
-                RuleEntity = request.Caller,
-                Priority = request.Priority,
-                IsLastName = request.IsLastName,
-                IsAddition = request.AsAddition,
-                ShortName = request.ShortName,
-                UseFullName = request.UseFullName
-            });
-        }
+        //    modifiedYear.ModifiedRules.Add(new ModifiedRule()
+        //    {
+        //        Date = request.Date,
+        //        RuleEntity = request.Caller,
+        //        Priority = request.Priority,
+        //        IsLastName = request.IsLastName,
+        //        IsAddition = request.AsAddition,
+        //        ShortName = request.ShortName,
+        //        UseFullName = request.UseFullName
+        //    });
+        //}
         #endregion
 
         #region GetRule methods

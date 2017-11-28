@@ -30,17 +30,11 @@ namespace TypiconOnline.Domain.Typicon
             }
         }
 
-        private List<DayWorship> _dayWorships;
-
         public List<DayWorship> DayWorships
         {
             get
             {
-                if (_dayWorships == null)
-                {
-                    _dayWorships = (from drw in DayRuleWorships select drw.DayWorship).ToList();
-                }
-                return _dayWorships;
+                return (from drw in DayRuleWorships select drw.DayWorship).ToList();
             }
         }
 

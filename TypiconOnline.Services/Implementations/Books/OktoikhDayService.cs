@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Books;
+using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 
@@ -12,7 +13,7 @@ namespace TypiconOnline.AppServices.Implementations.Books
 {
     public class OktoikhDayService : OktoikhContext, IOktoikhDayService
     {
-        public OktoikhDayService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
+        public OktoikhDayService(IUnitOfWork unitOfWork, IEasterContext easterContext) : base(unitOfWork, easterContext) { }
 
         public DeleteOktoikhResponse DeleteOktoikh(DeleteOktoikhRequest request)
         {

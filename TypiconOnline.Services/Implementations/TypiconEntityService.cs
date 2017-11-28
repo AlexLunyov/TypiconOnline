@@ -15,14 +15,12 @@ namespace TypiconOnline.AppServices.Implementations
 {
     public class TypiconEntityService : ITypiconEntityService
     {
+        private IUnitOfWork _unitOfWork;
+
         public TypiconEntityService(IUnitOfWork unitOfWork)
         {
-            UnitOfWork = unitOfWork ?? throw new ArgumentNullException("UnitOfWork");
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException("_unitOfWork");
         }
-
-        public IUnitOfWork UnitOfWork
-        {
-            get; }
 
         /// <summary>
         /// Удаляет все переходящие праздники у Устава с заданным Id
@@ -43,23 +41,22 @@ namespace TypiconOnline.AppServices.Implementations
 
                 //    while (year.ModifiedRules.Count > 0)
                 //    {
-                //        UnitOfWork.Repository<ModifiedRule>().Delete(year.ModifiedRules[0]);
+                //        _unitOfWork.Repository<ModifiedRule>().Delete(year.ModifiedRules[0]);
                 //    }
-                //    UnitOfWork.Repository<ModifiedYear>().Delete(year);
+                //    _unitOfWork.Repository<ModifiedYear>().Delete(year);
                 //}
 
-                UnitOfWork.Commit();
+                _unitOfWork.Commit();
             }
         }
 
         public GetTypiconEntityResponse GetTypiconEntity(int id)
         {
-            GetTypiconEntityResponse response = new GetTypiconEntityResponse();
+            var response = new GetTypiconEntityResponse();
 
-            TypiconEntity typicon = null;
             try
             {
-                typicon = UnitOfWork.Repository<TypiconEntity>().Get(x => x.Id == id);
+                var typicon = _unitOfWork.Repository<TypiconEntity>().Get(x => x.Id == id);
 
                 if (typicon == null)
                 {
@@ -85,7 +82,7 @@ namespace TypiconOnline.AppServices.Implementations
 
             try
             {
-                allTypiconEntities = UnitOfWork.Repository<TypiconEntity>().GetAll();
+                allTypiconEntities = _unitOfWork.Repository<TypiconEntity>().GetAll();
                 getTypiconEntitiesResponse.TypiconEntities = allTypiconEntities;
             }
             catch (Exception ex)
@@ -140,7 +137,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 ReloadCommonRules(response.TypiconEntity, folderPath);
 
-                UnitOfWork.Commit();
+                _unitOfWork.Commit();
             }
         }
 

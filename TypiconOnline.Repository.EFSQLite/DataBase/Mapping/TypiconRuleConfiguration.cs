@@ -19,8 +19,6 @@ namespace TypiconOnline.Repository.EFSQlite.DataBase.Mapping
                 .WithMany()
                 .HasForeignKey(c => c.OwnerId);
 
-            builder.Ignore(c => c.Rule);
-
             //builder.HasOne(e => e.Owner).
             //    WithMany();
 

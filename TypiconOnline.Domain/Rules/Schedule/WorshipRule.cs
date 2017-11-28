@@ -21,6 +21,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
         public string Name { get; set; }
         public bool IsDayBefore { get; set; } = false;
         public string AdditionalName { get; set; }
+        /// <summary>
+        /// Значение заполняется при обработке Правила с помощью CustomParmeter
+        /// </summary>
+        public HandlingMode ModeFromHandler { get; set; } = HandlingMode.All;
 
         #endregion
 
@@ -28,12 +32,14 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             if (handler.IsAuthorized<WorshipRule>())
             {
-                base.InnerInterpret(date, handler);
+                if ((handler.Settings.Mode == HandlingMode.All) ||
+                    ((handler.Settings.Mode == HandlingMode.DayBefore) && (IsDayBefore)) ||
+                    ((handler.Settings.Mode == HandlingMode.ThisDay) && (!IsDayBefore)))
+                {
+                    base.InnerInterpret(date, handler);
 
-                handler.Execute(this);
-
-                //обработка дочерних элементов совершается в handler.Execute(this);
-                //base.InnerInterpret(date, handler);
+                    handler.Execute(this);
+                }
             }
         }
 

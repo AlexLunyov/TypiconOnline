@@ -10,5 +10,7 @@ namespace TypiconOnline.Domain.Books.Oktoikh
     public interface IOktoikhContext
     {
         OktoikhDay Get(DateTime date);
+        int CalculateIhosNumber(DateTime date);
+        string GetSundayName(DateTime date, string language, string stringToPaste = null);
     }
 }

@@ -53,20 +53,20 @@ namespace TypiconOnline.Repository.EF.Tests
             Assert.Pass("Deleted.");
         }
 
-        [Test]
-        public void TypiconEntity_GetModifiedRule()
-        {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+        //[Test]
+        //public void TypiconEntity_GetModifiedRule()
+        //{
+        //    EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            BookStorage.Instance = BookStorageFactory.Create();
+        //    BookStorage.Instance = BookStorageFactory.Create();
 
-            TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
-            List<ModifiedRule> modifiedDays = typiconEntity.GetModifiedRules(new DateTime(2017, 10, 28));
+        //    TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
+        //    List<ModifiedRule> modifiedDays = typiconEntity.GetModifiedRules(new DateTime(2017, 10, 28));
 
-            _unitOfWork.Commit();
+        //    _unitOfWork.Commit();
 
-            Assert.AreEqual(modifiedDays.Count, 1);
-        }
+        //    Assert.AreEqual(modifiedDays.Count, 1);
+        //}
 
         //[Test]
         //public void TypiconEntity_ClearModifiedRules()

@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override RuleElement CreateObject(XmlDescriptor d)
         {
-            return new SedalenRule(d.GetElementName());
+            return new SedalenRule(SerializerRoot, d.GetElementName());
         }
     }
 }

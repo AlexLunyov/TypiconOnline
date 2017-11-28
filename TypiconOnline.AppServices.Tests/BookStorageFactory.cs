@@ -20,16 +20,18 @@ namespace TypiconOnline.AppServices.Tests
     {
         public static BookStorage Create()
         {
-            EFUnitOfWork unitOfWork = new EFUnitOfWork();
+            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            return new BookStorage(new EvangelionService(unitOfWork),
-                                    new ApostolService(unitOfWork),
-                                    new OldTestamentService(unitOfWork),
-                                    new PsalterService(unitOfWork),
-                                    new OktoikhContext(unitOfWork),
-                                    new TheotokionAppContext(unitOfWork),
-                                    new EasterContext(unitOfWork),
-                                    new KatavasiaContext(unitOfWork));
+            var easters = new EasterContext(_unitOfWork);
+
+            return new BookStorage(new EvangelionContext(_unitOfWork),
+                                    new ApostolContext(_unitOfWork),
+                                    new OldTestamentContext(_unitOfWork),
+                                    new PsalterContext(_unitOfWork),
+                                    new OktoikhContext(_unitOfWork, easters),
+                                    new TheotokionAppContext(_unitOfWork),
+                                    new EasterContext(_unitOfWork),
+                                    new KatavasiaContext(_unitOfWork));
         }
     }
 }

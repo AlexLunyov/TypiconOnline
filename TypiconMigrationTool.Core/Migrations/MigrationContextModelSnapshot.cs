@@ -30,6 +30,20 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.ToTable("EasterItem");
                 });
 
+            modelBuilder.Entity("TypiconOnline.Domain.Books.Katavasia.Katavasia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Definition");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Katavasia");
+                });
+
             modelBuilder.Entity("TypiconOnline.Domain.Books.Oktoikh.OktoikhDay", b =>
                 {
                     b.Property<int>("Id")
@@ -235,6 +249,8 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<bool>("IsAddition");
 
+                    b.Property<bool>("IsTemplate");
+
                     b.Property<int>("Number");
 
                     b.Property<int?>("Owner.Id");
@@ -286,8 +302,6 @@ namespace TypiconMigrationTool.Core.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("DefaultLanguage");
-
-                    b.Property<bool>("IsExceptionThrownWhenInvalid");
 
                     b.Property<int?>("TypiconEntity.Id");
 

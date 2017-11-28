@@ -40,13 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Books\Apostol\ApostolService.cs" />
-    <Compile Include="Books\Apostol\IApostolService.cs" />
+    <Compile Include="Books\Apostol\ApostolContext.cs" />
+    <Compile Include="Books\Apostol\IApostolContext.cs" />
     <Compile Include="Books\BookServiceBase.cs" />
     <Compile Include="Books\BookStorageFactory.cs" />
     <Compile Include="Books\Easter\EasterContext.cs" />
-    <Compile Include="Books\Evangelion\EvangelionService.cs" />
-    <Compile Include="Books\Evangelion\IEvangelionService.cs" />
+    <Compile Include="Books\Evangelion\EvangelionContext.cs" />
+    <Compile Include="Books\Evangelion\IEvangelionContext.cs" />
     <Compile Include="Books\GetBookElementResponseBase.cs" />
     <Compile Include="Books\IBookElement.cs" />
     <Compile Include="Books\IBookStorageFactory.cs" />
@@ -59,6 +59,10 @@
     <Compile Include="Books\Katavasia\KatavasiaBusinessConstraint.cs" />
     <Compile Include="Books\Oktoikh\OktoikhCalculator.cs" />
     <Compile Include="Books\Oktoikh\OktoikhDayBusinessConstraint.cs" />
+    <Compile Include="Books\OldTestament\IOldTestamentContext.cs" />
+    <Compile Include="Books\OldTestament\OldTestamentContext.cs" />
+    <Compile Include="Books\Psalter\IPsalterContext.cs" />
+    <Compile Include="Books\Psalter\PsalterContext.cs" />
     <Compile Include="Books\TheotokionApp\GetAllTheotokionResponse.cs" />
     <Compile Include="Books\TheotokionApp\GetTheotokionResponse.cs" />
     <Compile Include="Books\TheotokionApp\GetTheotokionRequest.cs" />
@@ -68,11 +72,8 @@
     <Compile Include="Books\TheotokionApp\TheotokionAppBusinessConstraint.cs" />
     <Compile Include="Books\Oktoikh\IOktoikhContext.cs" />
     <Compile Include="Books\Oktoikh\OktoikhContext.cs" />
-    <Compile Include="Books\OldTestament\IOldTestamentService.cs" />
     <Compile Include="Books\OldTestament\OldTestamentBook.cs" />
     <Compile Include="Books\OldTestament\OldTestamentChapter.cs" />
-    <Compile Include="Books\OldTestament\OldTestamentService.cs" />
-    <Compile Include="Books\Psalter\IPsalterService.cs" />
     <Compile Include="Books\Psalter\Kathisma.cs" />
     <Compile Include="Books\Psalter\Psalm.cs" />
     <Compile Include="Books\Apostol\ApostolBook.cs" />
@@ -80,11 +81,11 @@
     <Compile Include="Books\BookStorage.cs" />
     <Compile Include="Books\Evangelion\EvangelionBook.cs" />
     <Compile Include="Books\Evangelion\EvangelionChapter.cs" />
-    <Compile Include="Books\Psalter\PsalterService.cs" />
     <Compile Include="DayRuleWorship.cs" />
     <Compile Include="Days\Day.cs" />
     <Compile Include="Books\Easter\IEasterContext.cs" />
     <Compile Include="DayStructureBase.cs" />
+    <Compile Include="Interfaces\IBookStorage.cs" />
     <Compile Include="Interfaces\ICalcStructureElement.cs" />
     <Compile Include="Interfaces\IDayContainerFactory.cs" />
     <Compile Include="Interfaces\IDayWorshipFactory.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="Rules\Expressions\LogicalExpression.cs" />
     <Compile Include="Rules\Factories\DayContainerFactory.cs" />
     <Compile Include="Rules\Factories\RuleDayFactory.cs" />
+    <Compile Include="Rules\Handlers\CustomParameters\WorshipRuleCustomParameter.cs" />
     <Compile Include="Rules\Schedule\AinoiRuleSerializer.cs" />
     <Compile Include="Rules\Expressions\IsExistsSerializer.cs" />
     <Compile Include="Rules\Expressions\IsTwoSaintsSerializer.cs" />
@@ -232,9 +234,7 @@
     <Compile Include="Rules\Handlers\RenderHandler.cs" />
     <Compile Include="Rules\Handlers\ServiceSequenceHandler.cs" />
     <Compile Include="Rules\Handlers\YmnosStructureRuleHandler.cs" />
-    <Compile Include="Rules\Handlers\ModificationsRuleHandler.cs" />
     <Compile Include="Rules\Handlers\RuleHandlerBase.cs" />
-    <Compile Include="Rules\Handlers\ModificationsRuleRequest.cs" />
     <Compile Include="Rules\Handlers\RuleHandlerSettings.cs" />
     <Compile Include="Rules\Handlers\ScheduleHandler.cs" />
     <Compile Include="Rules\CommonRuleConstants.cs" />
@@ -276,7 +276,7 @@
     <Compile Include="Serialization\XElementCreator.cs" />
     <Compile Include="Serialization\XmlNodeCreator.cs" />
     <Compile Include="Typicon\CommonRule.cs" />
-    <Compile Include="Typicon\CommonRuleService.cs" />
+    <Compile Include="Typicon\CommonRuleExtensions.cs" />
     <Compile Include="Typicon\CommonRuleServiceRequest.cs" />
     <Compile Include="Typicon\DayRule.cs" />
     <Compile Include="Typicon\Factories\TypiconEntityFactory.cs" />

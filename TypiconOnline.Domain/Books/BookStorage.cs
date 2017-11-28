@@ -31,10 +31,10 @@ namespace TypiconOnline.Domain.Books
         //Ветхий Завет 
         //public virtual List<OldTestamentBook> OldTestament { get; set; }
 
-        public IEvangelionService Evangelion { get; private set; }
-        public IApostolService Apostol { get; private set; }
-        public IOldTestamentService OldTestament { get; private set; }
-        public IPsalterService Psalter { get; private set; }
+        public IEvangelionContext Evangelion { get; private set; }
+        public IApostolContext Apostol { get; private set; }
+        public IOldTestamentContext OldTestament { get; private set; }
+        public IPsalterContext Psalter { get; private set; }
         public IOktoikhContext Oktoikh { get; private set; }
         public ITheotokionAppContext TheotokionApp { get; private set; }
         public IEasterContext Easters { get; private set; }
@@ -49,10 +49,10 @@ namespace TypiconOnline.Domain.Books
             //OldTestament = new List<OldTestamentBook>();
         }
 
-        public BookStorage(IEvangelionService evangelionService, 
-            IApostolService apostolService,
-            IOldTestamentService oldTestamentService,
-            IPsalterService psalterService,
+        public BookStorage(IEvangelionContext evangelionService, 
+            IApostolContext apostolService,
+            IOldTestamentContext oldTestamentService,
+            IPsalterContext psalterService,
             IOktoikhContext oktoikhContext,
             ITheotokionAppContext theotokionApp,
             IEasterContext easterContext,

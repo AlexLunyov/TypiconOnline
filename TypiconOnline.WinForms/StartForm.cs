@@ -30,6 +30,7 @@ using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Katavasia;
+using TypiconOnline.AppServices.Services;
 
 namespace ScheduleForm
 {
@@ -37,11 +38,11 @@ namespace ScheduleForm
     {
         //private ScheduleHandling.ScheduleHandler _sh = null;
         private IUnitOfWork _unitOfWork;
-        private ScheduleService _scheduleService;
+        private IScheduleService _scheduleService;
         TypiconEntity _typiconEntity;
         ITypiconEntityService _typiconEntityService;
 
-        List<IScheduleCustomParameter> CustomParameters { get; set; }
+        List<IScheduleCustomParameter> CustomParameters { get; set; } = new List<IScheduleCustomParameter>();
 
         private DateTime _selectedDate;
         private const string _scheduleFileStart = "РАСПИСАНИЕ ";
@@ -66,19 +67,21 @@ namespace ScheduleForm
             _typiconEntity = response.TypiconEntity;
 
             BookStorage.Instance = new BookStorage(
-                container.GetInstance<IEvangelionService>(),
-                container.GetInstance<IApostolService>(),
-                container.GetInstance<IOldTestamentService>(),
-                container.GetInstance<IPsalterService>(),
-                container.GetInstance<IOktoikhContext>(),
-                container.GetInstance<ITheotokionAppContext>(),
-                container.GetInstance<IEasterContext>(),
-                container.GetInstance<IKatavasiaContext>());
+                container.With(_unitOfWork).GetInstance<IEvangelionContext>(),
+                container.With(_unitOfWork).GetInstance<IApostolContext>(),
+                container.With(_unitOfWork).GetInstance<IOldTestamentContext>(),
+                container.With(_unitOfWork).GetInstance<IPsalterContext>(),
+                container.With(_unitOfWork).GetInstance<IOktoikhContext>(),
+                container.With(_unitOfWork).GetInstance<ITheotokionAppContext>(),
+                container.With(_unitOfWork).GetInstance<IEasterContext>(),
+                container.With(_unitOfWork).GetInstance<IKatavasiaContext>());
 
             //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
-            _scheduleService = new ScheduleService();
+            IRuleSerializerRoot serializerRoot = container.With(BookStorage.Instance).GetInstance<IRuleSerializerRoot>();
 
+            _scheduleService = container.With(serializerRoot).GetInstance<IScheduleService>();
+            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -251,11 +254,12 @@ namespace ScheduleForm
                 GetScheduleWeekRequest weekRequest = new GetScheduleWeekRequest()
                 {
                     Date = SelectedDate,
-                    TypiconEntity = _typiconEntity,
+                    Typicon = _typiconEntity,
                     Mode = HandlingMode.AstronimicDay,
                     Handler = new ScheduleHandler(),
                     Language = "cs-ru",
-                    ThrowExceptionIfInvalid = checkBoxException.Checked
+                    ThrowExceptionIfInvalid = checkBoxException.Checked,
+                    CustomParameters = CustomParameters
                 };
 
                 GetScheduleWeekResponse weekResponse = _scheduleService.GetScheduleWeek(weekRequest);
@@ -404,15 +408,15 @@ namespace ScheduleForm
 
         private void buttonExecute_Click(object sender, EventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 Execute();
-            }
-            catch (Exception ex)
-            {
-                textBoxResult.Clear();
-                textBoxResult.AppendText(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    textBoxResult.Clear();
+            //    textBoxResult.AppendText(ex.Message);
+            //}
         }
 
         private void btnClearModifiedYears_Click(object sender, EventArgs e)
@@ -445,7 +449,7 @@ namespace ScheduleForm
             GetScheduleDayRequest dayRequest = new GetScheduleDayRequest()
             {
                 Date = dateTimePickerTesting.Value,
-                TypiconEntity = _typiconEntity,
+                Typicon = _typiconEntity,
                 Mode = HandlingMode.AstronimicDay,
                 Handler = new ScheduleHandler()
             };
@@ -527,7 +531,7 @@ namespace ScheduleForm
                 GetScheduleDayRequest request = new GetScheduleDayRequest()
                 {
                     Date = monthCalendarSequence.SelectionStart,
-                    TypiconEntity = _typiconEntity,
+                    Typicon = _typiconEntity,
                     Mode = HandlingMode.All,
                     Handler = new ServiceSequenceHandler(),
                     Language = "cs-ru",

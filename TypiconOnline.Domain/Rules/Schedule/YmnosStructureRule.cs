@@ -21,7 +21,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public abstract class YmnosStructureRule : ExecContainer, ICustomInterpreted, IViewModelElement
     {
-        public YmnosStructureRule(string name) : base(name) { }
+        public YmnosStructureRule(IRuleSerializerRoot serializer, string name) : base(name)
+        {
+            Serializer = serializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
+        }
 
         #region Properties
 
@@ -39,6 +42,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// Вычисленная последовательность богослужебных текстов
         /// </summary>
         public YmnosStructure Structure { get; private set; }
+
+        public IRuleSerializerRoot Serializer { get; }
 
         #endregion
 

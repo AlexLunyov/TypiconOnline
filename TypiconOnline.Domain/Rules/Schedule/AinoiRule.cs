@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class AinoiRule : KekragariaRule
     {
-        public AinoiRule(string name) : base(name) { }
+        public AinoiRule(IRuleSerializerRoot serializer, string name) : base(serializer, name) { }
 
         public override ElementViewModel CreateViewModel(IRuleHandler handler)
         {

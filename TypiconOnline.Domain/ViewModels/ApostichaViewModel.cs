@@ -17,8 +17,8 @@ namespace TypiconOnline.Domain.ViewModels
 
         protected override void ConstructForm(IRuleHandler handler)
         {
-            TextHolder header = CommonRuleService.Instance.GetCommonRuleChildren(
-                new CommonRuleServiceRequest() { Handler = handler, Key = CommonRuleConstants.ApostichaRule })
+            TextHolder header = handler.Settings.Rule.Owner.GetCommonRuleChildren(
+                new CommonRuleServiceRequest() { Key = CommonRuleConstants.ApostichaRule, RuleSerializer = Serializer })
                 .FirstOrDefault() as TextHolder;
 
             _childElements.Add(new TextHolderViewModel(header, handler));

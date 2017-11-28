@@ -25,7 +25,7 @@ namespace TypiconOnline.Repository.EFSQlite.DataBase.Mapping
 
             builder.OwnsOne(c => c.SignName, k => k.Ignore(d => d.Style));
 
-            builder.Ignore(c => c.IsTemplate);
+            //builder.Ignore(c => c.IsTemplate);
         }
     }
 }

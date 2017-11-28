@@ -174,6 +174,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookStorageFactory.cs" />
     <Compile Include="Experiments\Context.cs" />
     <Compile Include="Experiments\GenericTest.cs" />
     <Compile Include="Experiments\TestClass1.cs" />
@@ -181,7 +182,7 @@
     <Compile Include="Experiments\XmlSerialization\BoolExpression.cs" />
     <Compile Include="Experiments\XmlSerialization\Monastery.cs" />
     <Compile Include="Migration.cs" />
-    <Compile Include="MigrationDayServiceFactory.cs" />
+    <Compile Include="MigrationDayWorshipFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -191,6 +192,7 @@
     </Compile>
     <Compile Include="RegisterByContainer.cs" />
     <Compile Include="RuleHandler.cs" />
+    <Compile Include="Tests\EasterFakeContext.cs" />
     <Compile Include="Tests\MigrationDayServiceFactoryTest.cs" />
     <Compile Include="Timer.cs" />
   </ItemGroup>

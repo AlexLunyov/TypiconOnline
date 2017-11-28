@@ -139,10 +139,10 @@ namespace TypiconOnline.Domain.Books.Oktoikh
 
                     if (!string.IsNullOrEmpty(stringToPaste))
                     {
-                        result = stringToPaste;
+                        result = $"{stringToPaste} ";
                     }
 
-                    result += " Глас " + glas.ToString() + "-й.";
+                    result += "Глас " + glas.ToString() + "-й.";
                     //week = (day + 55) / 7;
                     //result = "Седмица " + week.ToString() + "-ая Великого поста";
                 }

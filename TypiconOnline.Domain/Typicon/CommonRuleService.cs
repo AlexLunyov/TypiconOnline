@@ -37,16 +37,9 @@ namespace TypiconOnline.Domain.Typicon
         /// <returns></returns>
         public ItemText GetItemTextValue(CommonRuleServiceRequest request)
         {
-            List<RuleElement> children = GetCommonRuleChildren(request);
+            TextHolder textHolder = (TextHolder)GetCommonRuleChildren(request).FirstOrDefault();
 
-            TextHolder textHolder = (TextHolder)children[0];
-
-            if (textHolder.Paragraphs?.Count == 0)
-            {
-                throw new ArgumentException("CommonRule");
-            }
-
-            return textHolder.Paragraphs[0];
+            return (textHolder?.Paragraphs.Count > 0) ? textHolder.Paragraphs[0] : new ItemText();
         }
 
         /// <summary>
@@ -54,9 +47,9 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public string GetTextValue(CommonRuleServiceRequest request)
+        public string GetTextValue(CommonRuleServiceRequest request, string language)
         {
-            return GetItemTextValue(request)[request.Handler.Settings.Language];
+            return GetItemTextValue(request)[language];
         }
 
         /// <summary>
@@ -64,32 +57,31 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public List<RuleElement> GetCommonRuleChildren(CommonRuleServiceRequest request)
+        public IEnumerable<RuleElement> GetCommonRuleChildren(CommonRuleServiceRequest request)
         {
-            if (request == null || request.Handler == null) throw new ArgumentNullException();
+            if (request == null 
+                || request.RuleSerializer == null
+                || request.Typicon == null) throw new ArgumentNullException("CommonRuleServiceRequest");
 
-            CommonRule commonRule = request.Handler.Settings.Rule.Owner.GetCommonRule(c => c.Name == request.Key);
+            CommonRule commonRule = request.Typicon.GetCommonRule(c => c.Name == request.Key);
 
             if (commonRule == null) throw new NullReferenceException("CommonRule");
 
             if (!commonRule.IsValid)
             {
-                if (request.Handler.Settings.ThrowExceptionIfInvalid)
-                {
-                    commonRule.ThrowExceptionIfInvalid();
-                }
-                else
-                {
+                //if (request.Handler.Settings.ThrowExceptionIfInvalid)
+                //{
+                //    commonRule.ThrowExceptionIfInvalid();
+                //}
+                //else
+                //{
                     return new List<RuleElement>();
-                }
+                //}
             }
 
-            if (!(commonRule.Rule is ExecContainer) || (commonRule.Rule as ExecContainer).ChildElements.Count == 0)
-            {
-                throw new ArgumentException("CommonRule");
-            }
+            var container = commonRule.GetRule<ExecContainer>(request.RuleSerializer);
 
-            return (commonRule.Rule as ExecContainer).ChildElements.ToList();
+            return (container != null) ? container.ChildElements : new List<RuleElement>();
         }
     }
 }

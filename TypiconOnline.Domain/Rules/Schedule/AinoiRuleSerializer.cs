@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override RuleElement CreateObject(XmlDescriptor d)
         {
-            return new AinoiRule(d.GetElementName());
+            return new AinoiRule(SerializerRoot, d.GetElementName());
         }
     }
 }

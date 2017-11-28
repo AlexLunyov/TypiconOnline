@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override RuleElement CreateObject(XmlDescriptor d)
         {
-            return new KekragariaRule(d.GetElementName());
+            return new KekragariaRule(SerializerRoot, d.GetElementName());
         }
 
         protected override void FillObject(XmlDescriptor d, RuleElement container)

@@ -26,11 +26,13 @@ namespace TypiconOnline.Domain.Books
 
         public BookStorage Create()
         {
-            return new BookStorage(new EvangelionService(_unitOfWork),
-                                    new ApostolService(_unitOfWork),
-                                    new OldTestamentService(_unitOfWork),
-                                    new PsalterService(_unitOfWork),
-                                    new OktoikhContext(_unitOfWork),
+            var easters = new EasterContext(_unitOfWork);
+
+            return new BookStorage(new EvangelionContext(_unitOfWork),
+                                    new ApostolContext(_unitOfWork),
+                                    new OldTestamentContext(_unitOfWork),
+                                    new PsalterContext(_unitOfWork),
+                                    new OktoikhContext(_unitOfWork, easters),
                                     new TheotokionAppContext(_unitOfWork),
                                     new EasterContext(_unitOfWork),
                                     new KatavasiaContext(_unitOfWork));

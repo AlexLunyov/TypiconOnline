@@ -22,7 +22,7 @@ namespace TypiconOnline.Domain.Schedule
         /// <summary>
         /// Номер знака службы
         /// </summary>
-        public int Sign { get; set; }
+        public int SignNumber { get; set; }
         /// <summary>
         /// Наименование знака службы
         /// </summary>

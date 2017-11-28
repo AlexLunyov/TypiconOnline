@@ -36,7 +36,7 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 _resultString += "<div style=\"margin - top:10px; \">";
 
-                int sign = SignMigrator.GetOldId(k => k.Value.NewID == day.Sign);
+                int sign = SignMigrator.GetOldId(k => k.Value.NewID == day.SignNumber);
 
                 _resultString += "[sign cat=\"" + sign.ToString() + "\"]<strong>";
 

@@ -62,7 +62,7 @@ namespace TypiconOnline.WinServices
                 foreach (ScheduleDay day in week.Days)
                 {
                     Table dayTable = new Table();
-                    int sign = InterpretSignNumber(day.Sign);
+                    int sign = InterpretSignNumber(day.SignNumber);
                     //в зависимости от того, какой знак дня - берем для заполнения шаблона соответствующую таблицу в templateTables
                     Table dayTemplateTable = templateTables[sign];
 

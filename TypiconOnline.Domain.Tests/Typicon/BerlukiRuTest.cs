@@ -40,12 +40,12 @@ namespace TypiconOnline.Domain.Tests.Typicon
             GetScheduleWeekRequest weekRequest = new GetScheduleWeekRequest()
             {
                 Date = date,
-                TypiconEntity = typiconEntity,
+                Typicon = typiconEntity,
                 Mode = HandlingMode.AstronimicDay,
                 Handler = new ScheduleHandler()
             };
 
-            ScheduleService scheduleService = new ScheduleService();
+            ScheduleService scheduleService = ScheduleServiceFactory.Create();
 
             GetScheduleWeekResponse weekResponse = scheduleService.GetScheduleWeek(weekRequest);
 
@@ -80,11 +80,11 @@ namespace TypiconOnline.Domain.Tests.Typicon
                 Date = date,
                 Mode = HandlingMode.AstronimicDay,
                 Handler = new ScheduleHandler(),
-                TypiconEntity = typiconEntity,
+                Typicon = typiconEntity,
                 CustomParameters = new List<IScheduleCustomParameter>(),
             };
 
-            ScheduleService scheduleService = new ScheduleService();
+            ScheduleService scheduleService = ScheduleServiceFactory.Create();
 
             GetScheduleDayResponse dayResponse1 = scheduleService.GetScheduleDay(dayRequest1);
 
@@ -92,7 +92,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
             GetScheduleDayRequest dayRequest2 = new GetScheduleDayRequest()
             {
                 Date = date,
-                TypiconEntity = typiconEntity,
+                Typicon = typiconEntity,
                 Handler = new ScheduleHandler(),
                 Mode = HandlingMode.AstronimicDay,
                 ConvertSignToHtmlBinding = true
@@ -103,7 +103,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
             GetScheduleWeekRequest weekRequest = new GetScheduleWeekRequest()
             {
                 Date = date,
-                TypiconEntity = typiconEntity,
+                Typicon = typiconEntity,
                 Mode = HandlingMode.AstronimicDay,
                 Handler = new ScheduleHandler()
             };

@@ -14,7 +14,8 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
     {
         public ModifiedYearMap()
         {
-            HasKey(u => new { u.Id, u.TypiconEntityId });
+            HasKey(u => u.Id);
+            //HasKey(u => new { u.Id, u.TypiconEntityId });
 
             Property(c => c.Year).IsRequired();
 

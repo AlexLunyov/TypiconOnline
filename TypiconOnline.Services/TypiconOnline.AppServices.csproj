@@ -55,7 +55,12 @@
     <Compile Include="Implementations\FileReader.cs" />
     <Compile Include="Implementations\HtmlInnerScheduleWeekViewer.cs" />
     <Compile Include="Implementations\HtmlScheduleWeekViewer.cs" />
+    <Compile Include="Implementations\ModificationsRuleHandler.cs" />
+    <Compile Include="Implementations\TypiconEntityModifiedRuleExtensions.cs" />
+    <Compile Include="Messaging\Schedule\ModificationsRuleRequest.cs" />
+    <Compile Include="Implementations\RuleHandlerSettingsFactory.cs" />
     <Compile Include="Implementations\RuleToHandle.cs" />
+    <Compile Include="Implementations\ScheduleDayNameComposer.cs" />
     <Compile Include="Implementations\ScheduleService.cs" />
     <Compile Include="Implementations\TextScheduleDayViewer.cs" />
     <Compile Include="Implementations\TypiconEntityService.cs" />
@@ -63,10 +68,11 @@
     <Compile Include="Interfaces\IFileReader.cs" />
     <Compile Include="Interfaces\IKatavasiaFactory.cs" />
     <Compile Include="Interfaces\IKatavasiaService.cs" />
-    <Compile Include="Interfaces\IModifiedRuleService.cs" />
     <Compile Include="Interfaces\IOktoikhDayFactory.cs" />
     <Compile Include="Interfaces\IOktoikhDayFileReader.cs" />
     <Compile Include="Interfaces\IOktoikhDayService.cs" />
+    <Compile Include="Interfaces\IRuleHandlerSettingsFactory.cs" />
+    <Compile Include="Interfaces\IScheduleDayNameComposer.cs" />
     <Compile Include="Interfaces\ISequenceViewer.cs" />
     <Compile Include="Interfaces\ITheotokionAppService.cs" />
     <Compile Include="Interfaces\ITheotokionAppFactory.cs" />
@@ -96,6 +102,7 @@
     <Compile Include="Messaging\Books\UpdateKatavasiaResponse.cs" />
     <Compile Include="Messaging\Books\UpdateTheotokionResponse.cs" />
     <Compile Include="Messaging\Common\CreateItemTextRequest.cs" />
+    <Compile Include="Messaging\Schedule\GetRuleSettingsRequest.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleDayRequest.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleDayResponse.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleWeekRequest.cs" />

@@ -20,6 +20,8 @@ namespace TypiconOnline.Domain.Serialization
         /// <returns></returns>
         public XmlNode Create(string xml)
         {
+            if (string.IsNullOrEmpty(xml)) return null;
+
             var settings = new XmlReaderSettings() { IgnoreComments = true, IgnoreWhitespace = true };
 
             XmlReader reader = XmlReader.Create(new StringReader(xml), settings);

@@ -33,13 +33,16 @@ namespace TypiconOnline.Domain.ViewModels
         /// </summary>
         public string Self { get; set; }
 
-        public YmnosGroupViewModel(YmnosGroup group, IRuleHandler handler)
+        public IRuleSerializerRoot Serializer { get; }
+
+        public YmnosGroupViewModel(YmnosGroup group, IRuleHandler handler, IRuleSerializerRoot serializer)
         {
             if (group == null || group.Ymnis == null) throw new ArgumentNullException("YmnosGroup");
-            if (handler == null) throw new ArgumentNullException("handler");
-
             _group = group;
-            _handler = handler;
+
+            _handler = handler ?? throw new ArgumentNullException("handler");
+
+            Serializer = serializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
 
             Ihos = group.Ihos;
 
@@ -49,15 +52,15 @@ namespace TypiconOnline.Domain.ViewModels
             }
 
             //текст "Глас"
-            CommonRuleServiceRequest req = new CommonRuleServiceRequest() { Handler = handler };
+            CommonRuleServiceRequest req = new CommonRuleServiceRequest() { RuleSerializer = Serializer };
             req.Key = CommonRuleConstants.IhosText;
-            IhosText = CommonRuleService.Instance.GetTextValue(req);
+            IhosText = handler.Settings.Rule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language);
 
             //если подобен
             if (group.Prosomoion?.IsEmpty == false)
             {
                 req.Key = CommonRuleConstants.ProsomoionText;
-                Prosomoion = CommonRuleService.Instance.GetTextValue(req);
+                Prosomoion = handler.Settings.Rule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language);
 
                 Prosomoion = string.Format(@"{0}: ""{1}""", Prosomoion, group.Prosomoion[handler.Settings.Language]);
             }
@@ -65,7 +68,7 @@ namespace TypiconOnline.Domain.ViewModels
             if (group.Prosomoion?.Self == true)
             {
                 req.Key = CommonRuleConstants.SelfText;
-                Self = CommonRuleService.Instance.GetTextValue(req);
+                Self = handler.Settings.Rule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language);
             }
         }
 

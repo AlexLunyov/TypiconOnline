@@ -25,11 +25,13 @@ namespace TypiconOnline.Domain.Tests
         {
             if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
 
-            return new BookStorage(new EvangelionService(unitOfWork),
-                                    new ApostolService(unitOfWork),
-                                    new OldTestamentService(unitOfWork),
-                                    new PsalterService(unitOfWork),
-                                    new OktoikhContext(unitOfWork),
+            var easters = new EasterContext(unitOfWork);
+
+            return new BookStorage(new EvangelionContext(unitOfWork),
+                                    new ApostolContext(unitOfWork),
+                                    new OldTestamentContext(unitOfWork),
+                                    new PsalterContext(unitOfWork),
+                                    new OktoikhContext(unitOfWork, easters),
                                     new TheotokionAppContext(unitOfWork),
                                     new EasterContext(unitOfWork),
                                     new KatavasiaContext(unitOfWork));

@@ -20,7 +20,8 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
             Language = "cs-ru";
             ThrowExceptionIfInvalid = false;
         }
-        public TypiconEntity TypiconEntity { get; set; }
+        //public int TypiconId { get; set; }
+        public TypiconEntity Typicon { get; set; }
         public virtual DateTime Date { get; set; }
         
         //TODO: ???? нужен ли? - не нужен при первой возможности УДАЛИТЬ

@@ -43,20 +43,10 @@ namespace TypiconOnline.Domain.Rules.Handlers
         {
             if ((element is WorshipRule) || (element is Notice))
             {
-                if ((_settings.Mode == HandlingMode.All) ||
-                    ((_settings.Mode == HandlingMode.DayBefore) && ((element as WorshipRule).IsDayBefore)) ||
-                    ((_settings.Mode == HandlingMode.ThisDay) && (!(element as WorshipRule).IsDayBefore)))
-                {
-                    //if (_executingResult == null)
-                    //{
-                    //    _executingResult = new ContainerViewModel();
-                    //}
+                WorshipRuleViewModel renderService = new WorshipRuleViewModel(element as WorshipRule, this);
+                //renderService.CopyOnlyValues(element as Service);
 
-                    WorshipRuleViewModel renderService = new WorshipRuleViewModel(element as WorshipRule, this);
-                    //renderService.CopyOnlyValues(element as Service);
-
-                    ExecutingResult.ChildElements.Add(renderService);
-                }
+                ExecutingResult.ChildElements.Add(renderService);
             }
         }
 

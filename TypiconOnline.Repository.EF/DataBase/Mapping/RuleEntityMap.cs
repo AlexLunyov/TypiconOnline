@@ -15,8 +15,6 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
 
             //Property(c => c.Name).HasMaxLength(200);//.IsRequired();
 
-            Ignore(c => c.Rule);
-
             Property(c => c.RuleDefinition).HasColumnType("xml");//("NVARCHAR");
 
             //ToTable("RuleEntity");

@@ -108,6 +108,7 @@
     <Compile Include="Rules\Serialization\XElementCreatorTest.cs" />
     <Compile Include="Rules\Serialization\XmlNodeCreatorTest.cs" />
     <Compile Include="Rules\TestRuleSerializer.cs" />
+    <Compile Include="ScheduleServiceFactory.cs" />
     <Compile Include="Services\ScheduleServiceTest.cs" />
     <Compile Include="Typicon\BerlukiRuTest.cs" />
     <Compile Include="Typicon\TriodionRuleFolderTest.cs" />

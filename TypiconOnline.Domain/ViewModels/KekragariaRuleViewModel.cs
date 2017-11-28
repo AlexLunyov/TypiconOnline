@@ -30,8 +30,8 @@ namespace TypiconOnline.Domain.ViewModels
 
         protected virtual void ConstructWithCommonRule(IRuleHandler handler, string key)
         {
-            List<RuleElement> children = CommonRuleService.Instance.GetCommonRuleChildren(
-                new CommonRuleServiceRequest() { Handler = handler, Key = key });
+            IList<RuleElement> children = handler.Settings.Rule.Owner.GetCommonRuleChildren(
+                new CommonRuleServiceRequest() { Key = key, RuleSerializer = Serializer }).ToList();
 
             if (_rule.Structure.Groups.Count > 0)
             {

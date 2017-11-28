@@ -15,6 +15,10 @@ using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Repository.EFSQLite;
+using TypiconOnline.AppServices.Services;
+using TypiconOnline.Domain.Services;
+using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Serialization;
 
 namespace ScheduleForm
 {
@@ -38,16 +42,18 @@ namespace ScheduleForm
                         scan.AssemblyContainingType<DocxScheduleWeekViewer>(); 
                         scan.WithDefaultConventions();
                     });
-                    x.For<IUnitOfWork>().Use<EFSQLiteUnitOfWork>().SelectConstructor(() => new EFSQLiteUnitOfWork());
-                    //x.For<IUnitOfWork>().Use<EFUnitOfWork>();
+                    //x.For<IUnitOfWork>().Use<EFSQLiteUnitOfWork>().SelectConstructor(() => new EFSQLiteUnitOfWork()).Singleton();
+                    x.For<IUnitOfWork>().Use<EFUnitOfWork>().Singleton();
                     x.For<ITypiconEntityService>().Use<TypiconEntityService>();
-                    x.For<IEvangelionService>().Use<EvangelionService>();
-                    x.For<IApostolService>().Use<ApostolService>();
-                    x.For<IOldTestamentService>().Use<OldTestamentService>();
-                    x.For<IPsalterService>().Use<PsalterService>();
+                    x.For<IEvangelionContext>().Use<EvangelionContext>();
+                    x.For<IApostolContext>().Use<ApostolContext>();
+                    x.For<IOldTestamentContext>().Use<OldTestamentContext>();
+                    x.For<IPsalterContext>().Use<PsalterContext>();
                     x.For<IOktoikhContext>().Use<OktoikhContext>();
                     x.For<ITheotokionAppContext>().Use<TheotokionAppContext>();
-                    x.For<IEasterContext>().Use<EasterContext>();
+                    x.For<IEasterContext>().Use<EasterContext>(); 
+                    x.For<IScheduleService>().Use<ScheduleService>(); 
+                    x.For<IRuleSerializerRoot>().Use<RuleSerializerRoot>();
                 });
         }
     }

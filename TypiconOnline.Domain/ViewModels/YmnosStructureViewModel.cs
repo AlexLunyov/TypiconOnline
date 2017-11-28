@@ -16,24 +16,34 @@ namespace TypiconOnline.Domain.ViewModels
     {
         protected YmnosStructureRule _rule;
 
-        public YmnosStructureKind Kind { get; set; }
-
-        public int Ihos { get; set; }
-        /// <summary>
-        /// "Глас" текст
-        /// </summary>
-        public string IhosText { get; set; }
-
         public YmnosStructureViewModel(YmnosStructureRule rule, IRuleHandler handler) 
         {
             if (rule == null || rule.Structure == null) throw new ArgumentNullException("YmnosStructureRule");
-            if (handler == null) throw new ArgumentNullException("handler");
-
             _rule = rule;
-            _handler = handler;
 
-            Kind = _rule.Kind;
+            Serializer = rule.Serializer;
+
+            _handler = handler ?? throw new ArgumentNullException("handler");
         }
+        
+        /// <summary>
+        /// Номер гласа структуры песнопений
+        /// </summary>
+        public int Ihos { get; private set; }
+        /// <summary>
+        /// "Глас" текст
+        /// </summary>
+        public string IhosText { get; private set; }
+
+        public YmnosStructureKind Kind
+        {
+            get
+            {
+                return (_rule != null) ? _rule.Kind : default(YmnosStructureKind);
+            }
+        }
+
+        public IRuleSerializerRoot Serializer { get; }
 
         protected override void FillChildElements()
         {
@@ -48,7 +58,7 @@ namespace TypiconOnline.Domain.ViewModels
             {
                 YmnosGroup group = ymnosStructure.Groups[i];
 
-                YmnosGroupViewModel item = new YmnosGroupViewModel(group, _handler);
+                YmnosGroupViewModel item = new YmnosGroupViewModel(group, _handler, Serializer);
 
                 if (i == 0)
                 {
@@ -59,35 +69,36 @@ namespace TypiconOnline.Domain.ViewModels
                 _childElements.AddRange(item.ChildElements);
             }
 
-            SetStringCommonRules(ymnosStructure, _handler);
+            SetStringCommonRules(ymnosStructure);
 
             //Doxastichon
             if (ymnosStructure.Doxastichon != null)
             {
-                _childElements.AddRange(new YmnosGroupViewModel(ymnosStructure.Doxastichon, _handler).ChildElements);
+                _childElements.AddRange(new YmnosGroupViewModel(ymnosStructure.Doxastichon, _handler, Serializer).ChildElements);
             }
             //Theotokion
             if (ymnosStructure.Theotokion?.Count > 0)
             {
-                _childElements.AddRange(new YmnosGroupViewModel(ymnosStructure.Theotokion[0], _handler).ChildElements);
+                _childElements.AddRange(new YmnosGroupViewModel(ymnosStructure.Theotokion[0], _handler, Serializer).ChildElements);
             }
         }
 
-        private void SetStringCommonRules(YmnosStructure ymnosStructure, IRuleHandler handler)
+        private void SetStringCommonRules(YmnosStructure ymnosStructure)
         {
-            CommonRuleServiceRequest req = new CommonRuleServiceRequest() { Handler = handler };
+            TypiconEntity typicon =  _handler.Settings.Rule.Owner;
+            CommonRuleServiceRequest req = new CommonRuleServiceRequest() { RuleSerializer = Serializer };
 
             //добавляем стихи к славнику и богородичну
             if (ymnosStructure.Doxastichon != null)
             {
                 //слава
                 req.Key = CommonRuleConstants.SlavaText;
-                ymnosStructure.Doxastichon.Ymnis[0].Stihoi.Add(CommonRuleService.Instance.GetItemTextValue(req));
+                ymnosStructure.Doxastichon.Ymnis[0].Stihoi.Add(typicon.GetCommonRuleItemTextValue(req));
                 //и ныне
                 if (ymnosStructure.Theotokion?.Count > 0)
                 {
                     req.Key = CommonRuleConstants.InyneText;
-                    ymnosStructure.Theotokion[0].Ymnis[0].Stihoi.Add(CommonRuleService.Instance.GetItemTextValue(req));
+                    ymnosStructure.Theotokion[0].Ymnis[0].Stihoi.Add(typicon.GetCommonRuleItemTextValue(req));
                 }
             }
             else
@@ -96,7 +107,7 @@ namespace TypiconOnline.Domain.ViewModels
                 if (ymnosStructure.Theotokion?.Count > 0)
                 {
                     req.Key = CommonRuleConstants.SlavaInyneText;
-                    ymnosStructure.Theotokion[0].Ymnis[0].Stihoi.Add(CommonRuleService.Instance.GetItemTextValue(req));
+                    ymnosStructure.Theotokion[0].Ymnis[0].Stihoi.Add(typicon.GetCommonRuleItemTextValue(req));
                 }
             }
         }

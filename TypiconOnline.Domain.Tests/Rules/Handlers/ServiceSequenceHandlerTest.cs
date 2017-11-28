@@ -32,10 +32,10 @@ namespace TypiconOnline.Domain.Tests.Rules.Handlers
                 Date = new DateTime(2018, 5, 21),//DateTime.Today,
                 Mode = HandlingMode.AstronimicDay,
                 Handler = new ServiceSequenceHandler(),
-                TypiconEntity = typiconEntity
+                Typicon = typiconEntity
             };
 
-            ScheduleService scheduleService = new ScheduleService();
+            ScheduleService scheduleService = ScheduleServiceFactory.Create();
 
             GetScheduleDayResponse response = scheduleService.GetScheduleDay(request);
         }

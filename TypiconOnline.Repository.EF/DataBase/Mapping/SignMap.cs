@@ -33,7 +33,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
 
             Property(c => c.Priority).IsRequired();
 
-            Ignore(c => c.IsTemplate);
+            //Ignore(c => c.IsTemplate);
 
             //HasOptional(e => e.Template).
             //    WithMany().WillCascadeOnDelete(false);

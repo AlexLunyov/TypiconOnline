@@ -6,8 +6,19 @@ using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Messaging.Typicon;
+using TypiconOnline.Domain.Books;
+using TypiconOnline.Domain.Books.Apostol;
+using TypiconOnline.Domain.Books.Easter;
+using TypiconOnline.Domain.Books.Evangelion;
+using TypiconOnline.Domain.Books.Katavasia;
+using TypiconOnline.Domain.Books.Oktoikh;
+using TypiconOnline.Domain.Books.OldTestament;
+using TypiconOnline.Domain.Books.Psalter;
+using TypiconOnline.Domain.Books.TheotokionApp;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
@@ -54,10 +65,10 @@ namespace TypiconOnline.AppServices.Implementations
             TypiconEntity typicon = resp.TypiconEntity ?? throw new NullReferenceException("TypiconEntity");
 
 
-            GetScheduleWeekResponse weekResponse = new ScheduleService().GetScheduleWeek(new GetScheduleWeekRequest()
+            GetScheduleWeekResponse weekResponse = CreateScheduleService().GetScheduleWeek(new GetScheduleWeekRequest()
             {
                 Date = request.Date,
-                TypiconEntity = typicon,
+                Typicon = typicon,
                 Mode = HandlingMode.AstronimicDay,
                 Handler = new ScheduleHandler(),
                 Language = "cs-ru",
@@ -72,6 +83,24 @@ namespace TypiconOnline.AppServices.Implementations
             GetSequenceResponse response = new GetSequenceResponse() { Sequence = viewer.ResultString };
 
             return response;
+        }
+
+        private ScheduleService CreateScheduleService()
+        {
+            var easters = new EasterContext(_unitOfWork);
+
+            BookStorage bookStorage = new BookStorage(new EvangelionContext(_unitOfWork),
+                                    new ApostolContext(_unitOfWork),
+                                    new OldTestamentContext(_unitOfWork),
+                                    new PsalterContext(_unitOfWork),
+                                    new OktoikhContext(_unitOfWork, easters),
+                                    new TheotokionAppContext(_unitOfWork),
+                                    new EasterContext(_unitOfWork),
+                                    new KatavasiaContext(_unitOfWork));
+
+            IRuleSerializerRoot serializerRoot = new RuleSerializerRoot(bookStorage);
+
+            return new ScheduleService(serializerRoot);
         }
     }
 }

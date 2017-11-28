@@ -24,18 +24,18 @@ namespace TypiconOnline.Domain.Typicon
         /// <summary>
         /// Возвращает Правило: либо свое, либо шаблонное
         /// </summary>
-        public override RuleElement Rule
-        {
-            get
-            {
-                if ((base.Rule == null) && string.IsNullOrEmpty(RuleDefinition))
-                {
-                    return Template.Rule;
-                }
+        //public override RuleElement Rule
+        //{
+        //    get
+        //    {
+        //        if ((base.Rule == null) && string.IsNullOrEmpty(RuleDefinition))
+        //        {
+        //            return Template.Rule;
+        //        }
 
-                return base.Rule;//(string.IsNullOrEmpty(RuleDefinition)) ? Template.Rule : null;
-            }
-        }
+        //        return base.Rule;//(string.IsNullOrEmpty(RuleDefinition)) ? Template.Rule : null;
+        //    }
+        //}
 
         public override T GetRule<T>(IRuleSerializerRoot serializerRoot)
         {

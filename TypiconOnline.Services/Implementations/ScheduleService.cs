@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using TypiconOnline.AppServices.Common;
+using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Services;
 using TypiconOnline.Domain.Books;
@@ -19,388 +21,100 @@ namespace TypiconOnline.Domain.Services
 {
     public class ScheduleService : IScheduleService
     {
-        public GetScheduleDayResponse GetScheduleDay(GetScheduleDayRequest inputRequest)
+        //ITypiconEntityService _typiconEntityService;
+        IRuleHandlerSettingsFactory _settingsFactory = new RuleHandlerSettingsFactory();
+        //IModifiedRuleService _modifiedRuleService;
+        //IRuleHandler _ruleHandler;
+        //BookStorage _bookStorage;
+        IScheduleDayNameComposer nameComposer;
+        IRuleSerializerRoot _ruleSerializer;
+
+        public ScheduleService(/*ITypiconEntityService typiconEntityService
+            , IRuleHandlerSettingsFactory settingsFactory
+            ,*/ IRuleSerializerRoot ruleSerializer
+            //, IModifiedRuleService modifiedRuleService
+            //, IRuleHandler ruleHandler
+            )
         {
-            //смотрим, есть ли ModifiedRules с таким годом, как у date
-            //формируем этот список
-            //на основании MenologyRule, TriodionRule и ModifiedRule (если имеется таковой) 
-            //возвращаем ScheduleHandled Day
+            //_typiconEntityService = typiconEntityService ?? throw new ArgumentNullException("ITypiconEntityService");
+            //_settingsFactory = settingsFactory ?? throw new ArgumentNullException("IRuleHandlerSettingsFactory");
+            //_modifiedRuleService = modifiedRuleService ?? throw new ArgumentNullException("modifiedRuleService");
+            _ruleSerializer = ruleSerializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
 
-            if (inputRequest.TypiconEntity == null)
-                throw new ArgumentNullException("TypiconEntity");
+            nameComposer = new ScheduleDayNameComposer(_ruleSerializer.BookStorage.Oktoikh);
 
-            if (inputRequest.Handler == null)
-                throw new ArgumentNullException("RuleHandler");
+            //_ruleHandler = ruleHandler ?? throw new ArgumentNullException("IRuleHandler");
+        }
 
-            HandlingMode inputMode = inputRequest.Mode;
-
-            if (inputMode == HandlingMode.AstronimicDay)
-            {
-                inputRequest.Mode = HandlingMode.ThisDay;
-            }
-
+        public GetScheduleDayResponse GetScheduleDay(GetScheduleDayRequest request)
+        {
             //Формируем данные для обработки
-            RuleHandlerSettings handlerSettings = ComposeRuleHandlerSettings(inputRequest);
-
-            inputRequest.Handler.Settings = handlerSettings;
-
-            ScheduleDay scheduleDay = new ScheduleDay
+            var settingsRequest = new GetRuleSettingsRequest()
             {
-                //задаем имя дню
-                Name = ComposeServiceName(inputRequest, handlerSettings),
-                Date = inputRequest.Date
+                Date = request.Date,
+                Mode = (request.Mode == HandlingMode.AstronimicDay) ? HandlingMode.ThisDay : request.Mode,
+                Language = request.Language,
+                CustomParameters = request.CustomParameters
             };
 
-            Sign sign = (handlerSettings.Rule is Sign) ? handlerSettings.Rule as Sign : GetTemplateSign(handlerSettings.Rule.Template);
+            ScheduleDay scheduleDay = GetOrFillScheduleDay(settingsRequest, request.Typicon, request.Handler, request.ConvertSignToHtmlBinding);
 
-            scheduleDay.Sign = sign.Number;
-            scheduleDay.SignName = sign.SignName[handlerSettings.Language];
-            //scheduleDay.Sign = (handlerSettings.Rule is Sign) ? (handlerSettings.Rule as Sign).Number : GetTemplateSignID(handlerSettings.Rule.Template);
-
-            if (inputRequest.ConvertSignToHtmlBinding)
+            if (request.Mode == HandlingMode.AstronimicDay)
             {
-                scheduleDay.Sign = SignMigrator.GetOldId(k => k.Value.NewID == scheduleDay.Sign);
+                //ищем службы следующего дня с маркером IsDayBefore == true
+                settingsRequest.Date = request.Date.AddDays(1);
+                settingsRequest.Mode = HandlingMode.DayBefore;
+
+                scheduleDay = GetOrFillScheduleDay(settingsRequest, request.Typicon, request.Handler, request.ConvertSignToHtmlBinding, scheduleDay);
             }
 
-            //наполняем
-            handlerSettings.Rule.Rule.Interpret(inputRequest.Date, inputRequest.Handler);
+            return new GetScheduleDayResponse()
+            {
+                Day = scheduleDay
+            };
+        }
 
-            ContainerViewModel container = inputRequest.Handler.GetResult();
+        private ScheduleDay GetOrFillScheduleDay(GetRuleSettingsRequest request, TypiconEntity typicon,
+            ScheduleHandler handler, bool convertSignNumber, ScheduleDay scheduleDay = null)
+        {
+            //заполняем Правила и день Октоиха
+            request.MenologyRule = typicon.GetMenologyRule(request.Date);
+            request.TriodionRule = typicon.GetTriodionRule(request.Date);
+            request.ModifiedRule = typicon.GetModifiedRuleHighestPriority(request.Date, _ruleSerializer);
+            request.OktoikhDay = _ruleSerializer.BookStorage.Oktoikh.Get(request.Date);
+
+            //Формируем данные для обработки
+            var settings = _settingsFactory.Create(request);
+
+            handler.Settings = settings;
+
+            settings.Rule.GetRule(_ruleSerializer).Interpret(request.Date, handler);
+
+            ContainerViewModel container = handler.GetResult();
+
+            if (scheduleDay == null)
+            {
+                //Sign sign = (settings.Rule is Sign s) ? s : GetTemplateSign(settings.Rule.Template);
+                Sign sign = GetRootAdditionSign(settings);
+
+                int signNumber = (convertSignNumber) ? SignMigrator.GetOldId(k => k.Value.NewID == sign.Number) : sign.Number;
+
+                scheduleDay = new ScheduleDay
+                {
+                    //задаем имя дню
+                    Name = nameComposer.Compose(settings, request.Date),
+                    Date = request.Date,
+                    SignNumber = signNumber,
+                    SignName = sign.SignName[settings.Language],
+                };
+            }
 
             if (container != null)
             {
                 scheduleDay.Schedule.ChildElements.AddRange(container.ChildElements);
             }
 
-            if (inputMode == HandlingMode.AstronimicDay)
-            {
-                //ищем службы следующего дня с маркером IsDayBefore == true
-
-                inputRequest.Date = inputRequest.Date.AddDays(1);
-                inputRequest.Mode = HandlingMode.DayBefore;
-
-                handlerSettings = ComposeRuleHandlerSettings(inputRequest);
-
-                if ((handlerSettings.Rule is MenologyRule) &&
-                    (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday))
-                {
-                    //если нет Триоди и воскресенье
-                    //жестко задаем воскресный день
-                    handlerSettings.Rule = inputRequest.TypiconEntity.Settings.TemplateSunday;
-                }
-
-                inputRequest.Handler.Settings = handlerSettings;
-
-                //наполняем
-                handlerSettings.Rule.Rule.Interpret(inputRequest.Date, inputRequest.Handler);
-
-                container = inputRequest.Handler.GetResult();
-
-                if (container != null)
-                {
-                    scheduleDay.Schedule.ChildElements.AddRange(container.ChildElements);
-                }
-
-                //возвращаем назад изменение даты
-                inputRequest.Date = inputRequest.Date.AddDays(-1);
-                
-            }
-
-            //возвращаем назад
-            inputRequest.Mode = inputMode;
-
-            GetScheduleDayResponse response = new GetScheduleDayResponse()
-            {
-                Day = scheduleDay
-            };
-
-            return response;
-        }
-
-        private string ComposeServiceName(GetScheduleDayRequest inputRequest, RuleHandlerSettings handlerRequest)
-        {
-            //находим самое последнее правило - добавление
-            while (handlerRequest.Addition != null)
-            {
-                handlerRequest = handlerRequest.Addition;
-            }
-
-            string result = "";
-
-            string language = inputRequest.TypiconEntity.Settings.DefaultLanguage;
-
-            DayWorship seniorService = handlerRequest.DayWorships[0];
-
-            //собираем все имена текстов, кроме главного
-            if (handlerRequest.DayWorships.Count > 1)
-            {
-                for (int i = 1; i < handlerRequest.DayWorships.Count; i++)
-                {
-                    result += handlerRequest.DayWorships[i].WorshipName[language] + " ";
-                }
-            }
-
-            //а теперь разбираемся с главным
-
-            string s = seniorService.WorshipName[language];
-
-            if (inputRequest.Date.DayOfWeek != DayOfWeek.Sunday
-                || (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday 
-                    && (seniorService.UseFullName || seniorService.WorshipShortName.IsEmpty)))
-            {
-                result = (handlerRequest.PutSeniorRuleNameToEnd) ?
-                        result + s :
-                        s + " " + result;
-            }
-
-            if ((handlerRequest.Rule is MenologyRule) 
-                && (inputRequest.Date.DayOfWeek == DayOfWeek.Sunday)
-                && (handlerRequest.Rule.Template.Priority > 1))
-            {
-                //Если Триоди нет и воскресенье, находим название Недели из Октоиха
-                //и добавляем название Недели в начало Name
-
-                //Если имеется короткое название, то добавляем только его
-
-                result = OktoikhCalculator.GetSundayName(inputRequest.Date, 
-                    GetShortName(handlerRequest.DayWorships, handlerRequest.Language)) + " " + result;
-
-                //жестко задаем воскресный день
-                handlerRequest.Rule = inputRequest.TypiconEntity.Settings.TemplateSunday;
-            }
-
-            return result;
-        }
-
-        private string GetShortName(List<DayWorship> dayServices, string language)
-        {
-            string result = "";
-
-            for (int i = 0; i < dayServices.Count; i++)
-            {
-                string s = dayServices[i].WorshipShortName[language];
-
-                if (!string.IsNullOrEmpty(s))
-                {
-                    result = (!string.IsNullOrEmpty(result)) ? result + ", " + s : s;
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Формирует запрос для дальнейшей обработки: главную и второстепенную службу, HandlingMode
-        /// Процесс описан в документации
-        /// </summary>
-        /// <param name="inputRequest"></param>
-        /// <returns></returns>
-        private RuleHandlerSettings ComposeRuleHandlerSettings(GetScheduleDayRequest inputRequest)
-        {
-            //находим MenologyRule
-
-            MenologyRule menologyRule = inputRequest.TypiconEntity.GetMenologyRule(inputRequest.Date);
-
-            if (menologyRule == null)
-                throw new ArgumentNullException("MenologyRule");
-
-            //находим TriodionRule
-
-            TriodionRule triodionRule = inputRequest.TypiconEntity.GetTriodionRule(inputRequest.Date);
-
-            //находим ModifiedRule
-
-            ModifiedRule modMenologyRule = null;
-            ModifiedRule modTriodionRule = null;
-
-            List<ModifiedRule> modAbstractRules = inputRequest.TypiconEntity.GetModifiedRules(inputRequest.Date);
-
-            //находим день Октоиха
-            OktoikhDay oktoikhDay = BookStorage.Instance.Oktoikh.Get(inputRequest.Date);
-
-            //создаем выходной объект
-            RuleHandlerSettings additionalSettings = null;
-
-            //рассматриваем полученные измененные правила
-            //и выбираем одно - с максимальным приоритетом
-            if (modAbstractRules?.Count > 0)
-            {
-                //выбираем измененное правило, максимальное по приоритету
-                ModifiedRule abstrRule = modAbstractRules.Min();
-
-                if (!abstrRule.IsAddition)
-                {
-                    if (abstrRule.RuleEntity is MenologyRule)
-                    {
-                        modMenologyRule = abstrRule;
-                    }
-
-                    if (abstrRule.RuleEntity is TriodionRule)
-                    {
-                        modTriodionRule = abstrRule;
-                    }
-                }
-                else
-                {
-                    //создаем первый объект, который в дальнейшем станет ссылкой Addition у выбранного правила
-                    additionalSettings = new RuleHandlerSettings()
-                    {
-                        Rule = abstrRule.RuleEntity,
-                        DayWorships = abstrRule.RuleEntity.DayWorships.ToList(),
-                        OktoikhDay = oktoikhDay,
-                        Mode = inputRequest.Mode,
-                        Language = inputRequest.Language,
-                        ThrowExceptionIfInvalid = inputRequest.ThrowExceptionIfInvalid,
-                        CustomParameters = inputRequest.CustomParameters,
-                        PutSeniorRuleNameToEnd = abstrRule.IsLastName
-                    };
-
-                    modAbstractRules.Clear();
-                }
-            }
-
-            #region Вычисление приоритетов и наполнение списка modAbstractRules
-
-            //определяем приоритет и находим, какие объекты будем обрабатывать
-
-            int menologyPriority = (modMenologyRule != null) ? modMenologyRule.Priority : menologyRule.Template.Priority;
-
-            int triodionPriority = int.MaxValue;
-
-            //по умолчанию задаем выходному значению Триодь
-            if (modTriodionRule != null)
-            {
-                triodionPriority = modTriodionRule.Priority;
-            }
-            else
-            {
-                if (triodionRule != null)
-                {
-                    triodionPriority = triodionRule.Template.Priority;
-                }
-            }
-
-            int result = menologyPriority - triodionPriority;
-
-            switch (result)
-            {
-                case 1:
-                case 0:
-                    //senior Triodion, junior Menology
-                    if (modTriodionRule == null)
-                    {
-                        AddFakeModRule(modAbstractRules, triodionRule);
-                    }
-                    if (modMenologyRule == null)
-                    {
-                        AddFakeModRule(modAbstractRules, menologyRule);
-                    }
-                    break;
-                case -1:
-                    //senior Menology, junior Triodion
-                    if (modMenologyRule == null)
-                    {
-                        AddFakeModRule(modAbstractRules, menologyRule);
-                    }
-                    if (modTriodionRule == null)
-                    {
-                        AddFakeModRule(modAbstractRules, triodionRule);
-                    }
-                    break;
-                default:
-                    if (result < -1)
-                    {
-                        //только Минея
-                        if (modMenologyRule == null)
-                        {
-                            AddFakeModRule(modAbstractRules, menologyRule);
-                        }
-                    }
-                    else
-                    {
-                        //только Триодь
-                        if (modTriodionRule == null)
-                        {
-                            AddFakeModRule(modAbstractRules, triodionRule);
-                        }
-                    }
-                    break;
-            }
-
-            #endregion
-
-            //сортируем полученный список по приоритетам
-            modAbstractRules.Sort();
-
-            //получаем коллекцию богослужебных текстов
-            List<DayWorship> dayServices = GetDayServices(modAbstractRules);
-
-            //смотрим, не созданы ли уже настройки
-            if (additionalSettings != null)
-            {
-                //созданы - значит был определен элемент для добавления
-                additionalSettings.DayWorships.AddRange(dayServices);
-            }
-
-            RuleHandlerSettings outputSettings = GetRecursiveSettings(modAbstractRules[0].RuleEntity, dayServices, oktoikhDay, inputRequest, additionalSettings);
-
-            return outputSettings;
-        }
-
-        private RuleHandlerSettings GetRecursiveSettings(TypiconRule rule, List<DayWorship> dayServices, OktoikhDay oktoikhDay, GetScheduleDayRequest inputRequest,
-            RuleHandlerSettings additionalSettings)
-        {
-            RuleHandlerSettings outputSettings = new RuleHandlerSettings()
-            {
-                Addition = additionalSettings,
-                Rule = rule,
-                DayWorships = dayServices.ToList(),
-                OktoikhDay = oktoikhDay,
-                Mode = inputRequest.Mode,
-                Language = inputRequest.Language,
-                ThrowExceptionIfInvalid = inputRequest.ThrowExceptionIfInvalid,
-                CustomParameters = inputRequest.CustomParameters
-            };
-
-            
-            if (!string.IsNullOrEmpty(rule.RuleDefinition) && rule.IsAddition && rule.Template != null)
-            {
-                //если правило определено и определено как добавление входим в рекурсию
-                outputSettings = GetRecursiveSettings(rule.Template, dayServices, oktoikhDay, inputRequest, outputSettings);
-            }
-
-            return outputSettings;
-        }
-
-        private List<DayWorship> GetDayServices(List<ModifiedRule> modRules)
-        {
-            List<DayWorship> result = new List<DayWorship>();
-
-            modRules.ForEach(c => result.AddRange(c.RuleEntity.DayWorships));
-
-            return result;
-        }
-
-        /// <summary>
-        /// Метод добавляет в modAbstractRules подложный ModifiedRule, содержащий typiconRule и его приоритет
-        /// Испольуется для дальнейшей сортировки списка выходных правил метода ComposeRuleHandlerSettings
-        /// </summary>
-        /// <param name="modAbstractRules">список измененных правил</param>
-        /// <param name="typiconRule"></param>
-        private void AddFakeModRule(List<ModifiedRule> modAbstractRules, DayRule typiconRule)
-        {
-            if (modAbstractRules == null)
-            {
-                modAbstractRules = new List<ModifiedRule>();
-            }
-
-            ModifiedRule modRule = new ModifiedRule()
-            {
-                Priority = typiconRule.Template.Priority,
-                RuleEntity = typiconRule
-            };
-
-            modAbstractRules.Insert(0, modRule);
+            return scheduleDay;
         }
 
         /// <summary>
@@ -413,9 +127,25 @@ namespace TypiconOnline.Domain.Services
             return (sign.Template == null) ? sign.Number : GetTemplateSignID(sign.Template);
         }
 
+        /// <summary>
+        /// Возвращает Знак службы, помеченный как Шаблон
+        /// Используется для отображения предустановленных знаков службы в расписании
+        /// </summary>
+        /// <param name="sign"></param>
+        /// <returns></returns>
         private Sign GetTemplateSign(Sign sign)
         {
-            return (sign.Template == null) ? sign : GetTemplateSign(sign.Template);
+            return (sign.IsTemplate || sign.Template == null) ? sign : GetTemplateSign(sign.Template);
+        }
+
+        private Sign GetRootAdditionSign(RuleHandlerSettings settings)
+        {
+            if (settings.Addition == null)
+            {
+                return GetTemplateSign((settings.Rule is Sign s) ? s : settings.Rule.Template);
+            }
+            
+            return GetRootAdditionSign(settings.Addition);
         }
 
         public GetScheduleWeekResponse GetScheduleWeek(GetScheduleWeekRequest request)
@@ -428,11 +158,12 @@ namespace TypiconOnline.Domain.Services
             GetScheduleDayRequest dayRequest = new GetScheduleDayRequest()
             {
                 Date = request.Date,
+                Typicon = request.Typicon,
                 Mode = request.Mode,
                 Handler = request.Handler,
-                TypiconEntity = request.TypiconEntity,
                 Language = request.Language,
                 ThrowExceptionIfInvalid = request.ThrowExceptionIfInvalid,
+                ConvertSignToHtmlBinding = request.ConvertSignToHtmlBinding,
                 CustomParameters = request.CustomParameters,
             };
 

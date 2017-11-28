@@ -46,5 +46,20 @@ namespace TypiconOnline.Domain.Tests.Experiments
             Assert.AreEqual(4, list1.Count);
             Assert.AreEqual(5, list2.Count);
         }
+
+        [Test]
+        public void LinkPropertiesTest()
+        {
+            DayWorship dayWorship = new DayWorship();
+
+            SetNullObject(dayWorship);
+
+            Assert.IsNotNull(dayWorship);
+
+            void SetNullObject(DayWorship w)
+            {
+                w = null;
+            }
+        }
     }
 }

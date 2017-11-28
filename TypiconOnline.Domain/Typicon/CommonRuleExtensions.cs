@@ -1,0 +1,68 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Rules.Executables;
+using TypiconOnline.Domain.Rules.Schedule;
+
+namespace TypiconOnline.Domain.Typicon
+{
+    public static class CommonRuleExtensions
+    {
+        /// <summary>
+        /// Возвращает строку из системного правила, где определен только один элемент ItemText
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static ItemText GetCommonRuleItemTextValue(this TypiconEntity typicon, CommonRuleServiceRequest request)
+        {
+            TextHolder textHolder = (TextHolder)GetCommonRuleChildren(typicon, request).FirstOrDefault();
+
+            return (textHolder?.Paragraphs.Count > 0) ? textHolder.Paragraphs[0] : new ItemText();
+        }
+
+        /// <summary>
+        /// Возвращает строку из системного правила, где определен только один элемент ItemText
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static string GetCommonRuleTextValue(this TypiconEntity typicon, CommonRuleServiceRequest request, string language)
+        {
+            return GetCommonRuleItemTextValue(typicon, request)[language];
+        }
+
+        /// <summary>
+        /// Возвращает коллекцию RuleElement запрашиваемого общего правила.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static IEnumerable<RuleElement> GetCommonRuleChildren(this TypiconEntity typicon, CommonRuleServiceRequest request)
+        {
+            if (request == null 
+                || request.RuleSerializer == null) throw new ArgumentNullException("CommonRuleServiceRequest");
+
+            CommonRule commonRule = typicon.GetCommonRule(c => c.Name == request.Key);
+
+            if (commonRule == null) throw new NullReferenceException("CommonRule");
+
+            if (!commonRule.IsValid)
+            {
+                //if (request.Handler.Settings.ThrowExceptionIfInvalid)
+                //{
+                //    commonRule.ThrowExceptionIfInvalid();
+                //}
+                //else
+                //{
+                    return new List<RuleElement>();
+                //}
+            }
+
+            var container = commonRule.GetRule<ExecContainer>(request.RuleSerializer);
+
+            return (container != null) ? container.ChildElements : new List<RuleElement>();
+        }
+    }
+}

@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KekragariaRule : YmnosStructureRule
     {
-        public KekragariaRule(string name) : base(name) { }
+        public KekragariaRule(IRuleSerializerRoot serializer, string name) : base(serializer, name) { }
 
         #region Properties
 

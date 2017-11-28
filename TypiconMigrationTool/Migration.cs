@@ -83,7 +83,7 @@ namespace TypiconMigrationTool
                 Settings = new TypiconSettings()
                 {
                     DefaultLanguage = "cs-ru",
-                    IsExceptionThrownWhenInvalid = true
+                    //IsExceptionThrownWhenInvalid = true
                 }
             };
 
@@ -108,6 +108,7 @@ namespace TypiconMigrationTool
                     Number = signMigrator.NewId,
                     Priority = signMigrator.Priority,
                     Owner = typiconEntity,
+                    IsTemplate = row.IsTemplate,
                     RuleDefinition = fileReader.Read(row.Name),
                     SignName = new ItemTextStyled()// { StringExpression = row.Name }
                 };
@@ -117,6 +118,7 @@ namespace TypiconMigrationTool
                 if (signMigrator.TemplateId != null)
                 {
                     sign.Template = typiconEntity.Signs.First(c => c.Number == signMigrator.TemplateId);
+                    sign.IsAddition = true;
                 }
 
                 typiconEntity.Signs.Add(sign);
@@ -156,7 +158,9 @@ namespace TypiconMigrationTool
 
             IOktoikhDayFileReader reader = new OktoikhDayFileReader(new FileReader(folder));
 
-            IOktoikhDayService service = new OktoikhDayService(_unitOfWork);
+            IEasterContext easterContext = new EasterContext(_unitOfWork);
+
+            IOktoikhDayService service = new OktoikhDayService(_unitOfWork, easterContext);
 
             IOktoikhDayFactory factory = new OktoikhDayFactory();
 
@@ -275,6 +279,7 @@ namespace TypiconMigrationTool
                         Date = menologyDay.Date,
                         DateB = menologyDay.DateB,
                         Owner = typiconEntity,
+                        //IsAddition = true,
                         Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(mineinikRow.SignID).NewId),
                     };
 
@@ -349,6 +354,7 @@ namespace TypiconMigrationTool
                     //Name = day.Name,
                     DaysFromEaster = day.DaysFromEaster,
                     Owner = typiconEntity,
+                    //IsAddition = true,
                     Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(row.SignID).NewId),
                     RuleDefinition = fileReader.Read(row.DayFromEaster.ToString()),
                     

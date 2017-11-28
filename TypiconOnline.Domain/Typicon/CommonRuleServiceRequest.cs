@@ -12,6 +12,7 @@ namespace TypiconOnline.Domain.Typicon
     public class CommonRuleServiceRequest: ServiceRequestBase
     {
         public string Key { get; set; }
-        public IRuleHandler Handler { get; set; }
+        //public IRuleHandler Handler { get; set; }
+        public IRuleSerializerRoot RuleSerializer { get; set; }
     }
 }
