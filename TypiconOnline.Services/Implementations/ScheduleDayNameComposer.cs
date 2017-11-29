@@ -29,6 +29,11 @@ namespace TypiconOnline.AppServices.Implementations
                 settings = settings.Addition;
             }
 
+            if (settings.DayWorships == null || settings.DayWorships.Count() == 0)
+            {
+                return string.Empty;
+            }
+
             string result = "";
 
             DayWorship seniorService = settings.DayWorships[0];

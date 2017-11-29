@@ -164,5 +164,65 @@ namespace ScheduleForm.Properties {
                 this["RulesFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("data\\BigTemplate.docx")]
+        public string BigTemplateFilePath {
+            get {
+                return ((string)(this["BigTemplateFilePath"]));
+            }
+            set {
+                this["BigTemplateFilePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("РАСПИСАНИЕ ")]
+        public string ScheduleFileStart {
+            get {
+                return ((string)(this["ScheduleFileStart"]));
+            }
+            set {
+                this["ScheduleFileStart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("РАСПИСАНИЕ Б ")]
+        public string BigScheduleFileStart {
+            get {
+                return ((string)(this["BigScheduleFileStart"]));
+            }
+            set {
+                this["BigScheduleFileStart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsBigDocxChecked {
+            get {
+                return ((bool)(this["IsBigDocxChecked"]));
+            }
+            set {
+                this["IsBigDocxChecked"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsBigDocxOpen {
+            get {
+                return ((bool)(this["IsBigDocxOpen"]));
+            }
+            set {
+                this["IsBigDocxOpen"] = value;
+            }
+        }
     }
 }

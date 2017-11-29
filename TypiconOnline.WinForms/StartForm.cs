@@ -31,6 +31,8 @@ using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Katavasia;
 using TypiconOnline.AppServices.Services;
+using TypiconOnline.WinServices.Interfaces;
+using TypiconOnline.WinServices.Messaging;
 
 namespace ScheduleForm
 {
@@ -41,6 +43,7 @@ namespace ScheduleForm
         private IScheduleService _scheduleService;
         TypiconEntity _typiconEntity;
         ITypiconEntityService _typiconEntityService;
+        IDocxTemplateService _docxTemplateService;
 
         List<IScheduleCustomParameter> CustomParameters { get; set; } = new List<IScheduleCustomParameter>();
 
@@ -81,7 +84,8 @@ namespace ScheduleForm
             IRuleSerializerRoot serializerRoot = container.With(BookStorage.Instance).GetInstance<IRuleSerializerRoot>();
 
             _scheduleService = container.With(serializerRoot).GetInstance<IScheduleService>();
-            
+
+            _docxTemplateService = container.With(BookStorage.Instance.Oktoikh).GetInstance<IDocxTemplateService>();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -102,6 +106,9 @@ namespace ScheduleForm
             checkBoxIsDocxOpen.Enabled = Properties.Settings.Default.IsDocxChecked;
             if (checkBoxIsDocxOpen.Enabled)
                 checkBoxIsDocxOpen.Checked = Properties.Settings.Default.IsDocxOpen;
+            checkBoxIsBigDocxOpen.Enabled = Properties.Settings.Default.IsBigDocxChecked;
+            if (checkBoxIsBigDocxOpen.Enabled)
+                checkBoxIsBigDocxOpen.Checked = Properties.Settings.Default.IsBigDocxOpen;
             checkBoxTxt.Checked = Properties.Settings.Default.IsTxtChecked;
             checkBoxWordpress.Enabled = Properties.Settings.Default.IsTxtChecked;
             if (checkBoxWordpress.Enabled)
@@ -152,6 +159,8 @@ namespace ScheduleForm
             Properties.Settings.Default.Password = textBoxPassword.Text;
             Properties.Settings.Default.IsDocxChecked = checkBoxDocx.Checked;
             Properties.Settings.Default.IsDocxOpen = checkBoxIsDocxOpen.Checked;
+            Properties.Settings.Default.IsBigDocxChecked = checkBoxBigDocx.Checked;
+            Properties.Settings.Default.IsBigDocxOpen = checkBoxIsBigDocxOpen.Checked;
             Properties.Settings.Default.IsTxtChecked = checkBoxTxt.Checked;
             Properties.Settings.Default.IsWrodpressChecked = checkBoxWordpress.Checked;
 
@@ -218,6 +227,17 @@ namespace ScheduleForm
                     IOrderedEnumerable<string> allSortedFoundFiles = allFoundFiles.OrderByDescending(k => k);
 
                     string foundFile = Path.GetFileName(allSortedFoundFiles.First());
+
+                    //удаляем "РАСПИСАНИЕ " и "РАСПИСАНИЕ Б"
+                    if (foundFile.StartsWith(Properties.Settings.Default.BigScheduleFileStart))
+                    {
+                        foundFile = foundFile.Replace(Properties.Settings.Default.BigScheduleFileStart, "");
+                    }
+                    if (foundFile.StartsWith(Properties.Settings.Default.ScheduleFileStart))
+                    {
+                        foundFile = foundFile.Replace(Properties.Settings.Default.ScheduleFileStart, "");
+                    }
+
                     string[] splittedFileName = foundFile.Split(new Char[] { ' ' });
                     try
                     {
@@ -249,8 +269,8 @@ namespace ScheduleForm
                 return;
             }
 
-            //try
-            //{
+            try
+            {
                 GetScheduleWeekRequest weekRequest = new GetScheduleWeekRequest()
                 {
                     Date = SelectedDate,
@@ -266,38 +286,111 @@ namespace ScheduleForm
 
                 _unitOfWork.Commit();
 
-                string messageString = "";
+                //string messageString = "";
 
                 if (checkBoxDocx.Checked)
                 {
-                    if (textBoxTemplatePath.Text == "")
+                    HandleTemplateRequest request = new HandleTemplateRequest()
                     {
-                        MessageBox.Show("Определите файл docx шаблона.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        FileTemplateName = Properties.Settings.Default.TemplateFilePath,
+                        OutputFolderPath = Properties.Settings.Default.OutputDirectoryPath,
+                        ScheduleFileStart = Properties.Settings.Default.ScheduleFileStart,
+                        ScheduleWeek = weekResponse.Week,
+                        OpenFileAfterHandling = checkBoxIsDocxOpen.Checked,
+                    };
+
+                    var response = _docxTemplateService.Operate(request);
+
+                    if (response.Exception != null)
+                    {
+                        MessageBox.Show(response.Exception.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
 
-                    string fileTemplateName = textBoxTemplatePath.Text;
-                    string fileOutputName = GetFileName(_selectedDate) + ".docx";
+                    //if (textBoxTemplatePath.Text == "")
+                    //{
+                    //    MessageBox.Show("Определите файл docx шаблона.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //    return;
+                    //}
 
-                    if (File.Exists(fileOutputName))
-                        File.Delete(fileOutputName);
-                    File.Copy(fileTemplateName, fileOutputName);
+                    //string fileTemplateName = textBoxTemplatePath.Text;
+                    //string fileOutputName = GetFileName(_selectedDate) + ".docx";
 
-                    DocxScheduleWeekViewer docxViewer = new DocxScheduleWeekViewer(fileOutputName);
+                    //if (File.Exists(fileOutputName))
+                    //    File.Delete(fileOutputName);
+                    //string dirPath = Path.GetDirectoryName(fileOutputName);
+                    //if (!Directory.Exists(dirPath))
+                    //    Directory.CreateDirectory(dirPath);
+                    //File.Copy(fileTemplateName, fileOutputName);
 
-                    docxViewer.Execute(weekResponse.Week);
+                    //DocxScheduleWeekViewer docxViewer = new DocxScheduleWeekViewer(fileOutputName);
 
-                    messageString += "\nПечатная версия была успешно сохранена. ";
+                    //docxViewer.Execute(weekResponse.Week);
+
+                    //messageString += "\nПечатная версия была успешно сохранена. ";
 
                     FillDateCaptions();
 
-                    if (checkBoxIsDocxOpen.Checked)
+                    //if (checkBoxIsDocxOpen.Checked)
+                    //{
+                    //    System.Diagnostics.Process proc = new System.Diagnostics.Process();
+                    //    proc.StartInfo.FileName = fileOutputName;
+                    //    proc.StartInfo.UseShellExecute = true;
+                    //    proc.Start();
+                    //}
+                }
+
+                if (checkBoxBigDocx.Checked)
+                {
+                    HandleTemplateRequest request = new HandleTemplateRequest()
                     {
-                        System.Diagnostics.Process proc = new System.Diagnostics.Process();
-                        proc.StartInfo.FileName = fileOutputName;
-                        proc.StartInfo.UseShellExecute = true;
-                        proc.Start();
+                        FileTemplateName = Properties.Settings.Default.BigTemplateFilePath,
+                        OutputFolderPath = Properties.Settings.Default.OutputDirectoryPath,
+                        ScheduleFileStart = Properties.Settings.Default.BigScheduleFileStart,
+                        DaysPerTable = 4,
+                        ScheduleWeek = weekResponse.Week,
+                        OpenFileAfterHandling = checkBoxIsBigDocxOpen.Checked,
+                    };
+
+                    var response = _docxTemplateService.Operate(request);
+
+                    if (response.Exception != null)
+                    {
+                        MessageBox.Show(response.Exception.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
+
+                    //if (textBoxTemplatePath.Text == "")
+                    //{
+                    //    MessageBox.Show("Определите файл docx шаблона.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //    return;
+                    //}
+
+                    //string fileTemplateName = textBoxTemplatePath.Text;
+                    //string fileOutputName = GetFileName(_selectedDate) + ".docx";
+
+                    //if (File.Exists(fileOutputName))
+                    //    File.Delete(fileOutputName);
+                    //string dirPath = Path.GetDirectoryName(fileOutputName);
+                    //if (!Directory.Exists(dirPath))
+                    //    Directory.CreateDirectory(dirPath);
+                    //File.Copy(fileTemplateName, fileOutputName);
+
+                    //DocxScheduleWeekViewer docxViewer = new DocxScheduleWeekViewer(fileOutputName);
+
+                    //docxViewer.Execute(weekResponse.Week);
+
+                    //messageString += "\nПечатная версия была успешно сохранена. ";
+
+                    FillDateCaptions();
+
+                    //if (checkBoxIsDocxOpen.Checked)
+                    //{
+                    //    System.Diagnostics.Process proc = new System.Diagnostics.Process();
+                    //    proc.StartInfo.FileName = fileOutputName;
+                    //    proc.StartInfo.UseShellExecute = true;
+                    //    proc.Start();
+                    //}
                 }
 
                 if (checkBoxTxt.Checked)
@@ -337,12 +430,12 @@ namespace ScheduleForm
                 }
             }
 
-            #endregion
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private string GetFileName(DateTime date)
@@ -354,7 +447,7 @@ namespace ScheduleForm
 
         private void CheckEnablingExecuteButton()
         {
-            buttonExecute.Enabled = checkBoxDocx.Checked || checkBoxTxt.Checked;
+            buttonExecute.Enabled = checkBoxDocx.Checked || checkBoxBigDocx.Checked|| checkBoxTxt.Checked;
         }
 
         private void PostToWordPress(string title, string content, DateTime publishDate)
@@ -565,6 +658,15 @@ namespace ScheduleForm
                     CustomParameters = dialog.CustomParameters.ToList();
                 }
             }
+        }
+
+        private void checkBoxBigDocx_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBoxIsBigDocxOpen.Enabled = checkBoxBigDocx.Checked;
+            if (!checkBoxBigDocx.Checked)
+                checkBoxIsBigDocxOpen.Checked = false;
+
+            CheckEnablingExecuteButton();
         }
     }
 }

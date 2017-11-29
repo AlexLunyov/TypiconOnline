@@ -12,5 +12,6 @@ namespace TypiconOnline.Domain.Books.Oktoikh
         OktoikhDay Get(DateTime date);
         int CalculateIhosNumber(DateTime date);
         string GetSundayName(DateTime date, string language, string stringToPaste = null);
+        string GetWeekName(DateTime date, bool isShortName);
     }
 }

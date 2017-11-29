@@ -85,6 +85,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// </summary>
         public void ApplyCustomParameters(RuleElement element)
         {
+            if (CustomParameters == null) return;
+
             foreach (var param in CustomParameters)
             {
                 param.Apply(element);

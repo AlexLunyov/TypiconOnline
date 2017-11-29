@@ -17,11 +17,13 @@ namespace TypiconOnline.WinServices
 {
     public class DocxScheduleWeekViewer : IScheduleWeekViewer
     {
-        private string _fileName;
+        string _fileName;
+        int _daysPerPage;
 
-        public DocxScheduleWeekViewer(string fileName)
+        public DocxScheduleWeekViewer(string fileName, int daysPerPage)
         {
             _fileName = fileName;
+            _daysPerPage = daysPerPage;
         }
 
         public void Execute(ScheduleWeek week)
@@ -50,71 +52,36 @@ namespace TypiconOnline.WinServices
                 //создаем коллекцию таблиц, которые будут результирующим содержанием выходного документа
                 List<OpenXmlElement> resultElements = new List<OpenXmlElement>();
 
-                //шапка
-                Table headerTable = templateTables[0];
+                int i = _daysPerPage;
 
-                //Название седмицы
-                //table[2]->tr[1]->td[1]->p[1]->r[1]->t[1]
-                TableCell tdWeekName = (TableCell)headerTable.ChildElements[2].ChildElements[1];
-                SetTextToCell(tdWeekName, week.Name, false, false);
-                resultElements.Add(headerTable);
+                bool firstTime = true;
 
                 foreach (ScheduleDay day in week.Days)
                 {
-                    Table dayTable = new Table();
-                    int sign = InterpretSignNumber(day.SignNumber);
-                    //в зависимости от того, какой знак дня - берем для заполнения шаблона соответствующую таблицу в templateTables
-                    Table dayTemplateTable = templateTables[sign];
-
-                    TableRow tr = (TableRow)dayTemplateTable.ChildElements[2].Clone();
-                    TableCell tdDayofweek = (TableCell)tr.ChildElements[2];
-                    TableCell tdName = (TableCell)tr.ChildElements[3];
-                    string sDayofweek = day.Date.ToString("dddd").ToUpper();
-                    string sName = day.Name;
-                    //TODO: реализовать функционал
-                    bool bIsNameBold = false;//(dayNode.SelectSingleNode("name").Attributes["isbold"] != null);
-
-                    SetTextToCell(tdDayofweek, sDayofweek, false, false);
-                    SetTextToCell(tdName, sName, bIsNameBold, false);
-                    dayTable.AppendChild(tr);
-
-                    tr = (TableRow)dayTemplateTable.ChildElements[3].Clone();
-                    TableCell tdDate = (TableCell)tr.ChildElements[2];
-                    string sDate = day.Date.ToString("dd MMMM yyyy г.");
-                    SetTextToCell(tdDate, sDate, false, false);
-                    dayTable.AppendChild(tr);
-
-                    foreach (WorshipRuleViewModel service in day.Schedule.ChildElements)
+                    //шапка
+                    if (i == _daysPerPage)
                     {
-                        tr = (TableRow)dayTemplateTable.ChildElements[4].Clone();
-                        TableCell tdTime = (TableCell)tr.ChildElements[2];
-                        TableCell tdSName = (TableCell)tr.ChildElements[3];
-
-                        string sTime = service.Time.ToString();
-                        string sSName = service.Text;
-
-                        bool bIsTimeBold = false; //(serviceNode.Attributes["istimebold"] != null);
-                        bool bIsTimeRed = false; //(serviceNode.Attributes["istimered"] != null);
-
-                        bool bIsServiceNameBold = false; //(serviceNode.Attributes["isnamebold"] != null);
-                        bool bIsServiceNameRed = false; //(serviceNode.Attributes["isnamered"] != null);
-
-
-                        SetTextToCell(tdTime, sTime, bIsTimeBold, bIsTimeRed);
-                        SetTextToCell(tdSName, sSName, bIsServiceNameBold, bIsServiceNameRed);
-
-                        //additionalName
-                        if (!string.IsNullOrEmpty(service.AdditionalName))
+                        if (!firstTime)
                         {
-                            AppendTextToCell(tdSName, service.AdditionalName, true, false);
+                            //вставляем разрыв страницы
+                            resultElements.Add(GetPageBreak());
                         }
+                        firstTime = false;
 
-                        //tr.ChildElements[1].InnerXml = dayNode.SelectSingleNode("time").InnerText;
-                        //tr.ChildElements[2].InnerXml = dayNode.SelectSingleNode("name").InnerText;
-                        dayTable.AppendChild(tr);
+                        //Название седмицы
+                        //table[2]->tr[1]->td[1]->p[1]->r[1]->t[1]
+                        Table headerTable = GetHeaderTable(templateTables[0], week.Name);
+                        resultElements.Add(headerTable);
                     }
+                    Table dayTable = GetDayTable(day, templateTables);
                     //добавляем таблицу к выходной коллекции
                     resultElements.Add(dayTable);
+
+                    i--;
+                    if (i == 0)
+                    {
+                        i = _daysPerPage;
+                    }
                 }
 
                 //в конце удаляем все из документа, оставляя только колонтитулы (прописаны в SectionProperties) и результирующие таблицы
@@ -136,6 +103,83 @@ namespace TypiconOnline.WinServices
 
                 doc.MainDocumentPart.Document.Save();
             }
+        }
+
+        private Paragraph GetPageBreak()
+        {
+            Paragraph paragraph232 = new Paragraph(
+              new Run(
+                new Break() { Type = BreakValues.Page }));
+
+            return paragraph232;
+        }
+
+        private Table GetHeaderTable(Table sourceTable, string weekName)
+        {
+            var header = sourceTable.CloneNode(true);
+
+            TableCell tdWeekName = (TableCell)header.ChildElements[2].ChildElements[1];
+            SetTextToCell(tdWeekName, weekName, false, false);
+
+            return (Table) header;
+        }
+
+        private Table GetDayTable(ScheduleDay day, List<Table> templateTables)
+        {
+            Table dayTable = new Table();
+            int sign = InterpretSignNumber(day.SignNumber);
+            //в зависимости от того, какой знак дня - берем для заполнения шаблона соответствующую таблицу в templateTables
+            Table dayTemplateTable = templateTables[sign];
+
+            TableRow tr = (TableRow)dayTemplateTable.ChildElements[2].Clone();
+            TableCell tdDayofweek = (TableCell)tr.ChildElements[2];
+            TableCell tdName = (TableCell)tr.ChildElements[3];
+            string sDayofweek = day.Date.ToString("dddd").ToUpper();
+            string sName = day.Name;
+            //TODO: реализовать функционал
+            bool bIsNameBold = false;//(dayNode.SelectSingleNode("name").Attributes["isbold"] != null);
+
+            SetTextToCell(tdDayofweek, sDayofweek, false, false);
+            SetTextToCell(tdName, sName, bIsNameBold, false);
+            dayTable.AppendChild(tr);
+
+            tr = (TableRow)dayTemplateTable.ChildElements[3].Clone();
+            TableCell tdDate = (TableCell)tr.ChildElements[2];
+            string sDate = day.Date.ToString("dd MMMM yyyy г.");
+            SetTextToCell(tdDate, sDate, false, false);
+            dayTable.AppendChild(tr);
+
+            foreach (WorshipRuleViewModel service in day.Schedule.ChildElements)
+            {
+                tr = (TableRow)dayTemplateTable.ChildElements[4].Clone();
+                TableCell tdTime = (TableCell)tr.ChildElements[2];
+                TableCell tdSName = (TableCell)tr.ChildElements[3];
+
+                string sTime = service.Time.ToString();
+                string sSName = service.Text;
+
+                bool bIsTimeBold = false; //(serviceNode.Attributes["istimebold"] != null);
+                bool bIsTimeRed = false; //(serviceNode.Attributes["istimered"] != null);
+
+                bool bIsServiceNameBold = false; //(serviceNode.Attributes["isnamebold"] != null);
+                bool bIsServiceNameRed = false; //(serviceNode.Attributes["isnamered"] != null);
+
+
+                SetTextToCell(tdTime, sTime, bIsTimeBold, bIsTimeRed);
+                SetTextToCell(tdSName, sSName, bIsServiceNameBold, bIsServiceNameRed);
+
+                //additionalName
+                if (!string.IsNullOrEmpty(service.AdditionalName))
+                {
+                    AppendTextToCell(tdSName, service.AdditionalName, true, false);
+                }
+
+                //tr.ChildElements[1].InnerXml = dayNode.SelectSingleNode("time").InnerText;
+                //tr.ChildElements[2].InnerXml = dayNode.SelectSingleNode("name").InnerText;
+                dayTable.AppendChild(tr);
+            }
+
+            return dayTable;
         }
 
         /// <summary>

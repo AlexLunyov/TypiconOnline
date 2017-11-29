@@ -99,6 +99,11 @@ namespace TypiconOnline.Domain.Services
 
                 int signNumber = (convertSignNumber) ? SignMigrator.GetOldId(k => k.Value.NewID == sign.Number) : sign.Number;
 
+                if (request.Date.DayOfWeek == DayOfWeek.Sunday && sign.Priority > 1)
+                {
+                    signNumber = 6;// SignMigrator.GetOldId(k => k.Value.Name == "Воскресный день");
+                }
+
                 scheduleDay = new ScheduleDay
                 {
                     //задаем имя дню
