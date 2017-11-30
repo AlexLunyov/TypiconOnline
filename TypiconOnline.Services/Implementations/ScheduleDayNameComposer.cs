@@ -55,9 +55,7 @@ namespace TypiconOnline.AppServices.Implementations
                 || (date.DayOfWeek == DayOfWeek.Sunday
                     && (seniorService.UseFullName || seniorService.WorshipShortName.IsEmpty)))
             {
-                result = (settings.PutSeniorRuleNameToEnd) ?
-                        result + s :
-                        s + " " + result;
+                result = $"{s} {result}";
             }
 
             int priority = (settings.Rule is Sign sign) ? sign.Priority : settings.Rule.Template.Priority;

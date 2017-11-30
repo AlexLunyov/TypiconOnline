@@ -52,10 +52,10 @@ namespace TypiconOnline.Domain.ViewModels
         {
             foreach (RuleElement element in _container.ChildElements)
             {
-                if ((element is IViewModelElement)
-                    && (element is ICustomInterpreted) && _handler.IsTypeAuthorized(element as ICustomInterpreted))
+                if ((element is IViewModelElement v)
+                    && (element is ICustomInterpreted c) && _handler.IsTypeAuthorized(c))
                 {
-                    _childElements.Add((element as IViewModelElement).CreateViewModel(_handler));
+                    _childElements.Add(v.CreateViewModel(_handler));
                 }
             }
         }

@@ -28,13 +28,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <summary>
         /// Вычисленные каноны правила
         /// </summary>
-        public IEnumerable<Kanonas> KanonesCalculated
-        {
-            get
-            {
-                return _kanonesCalc.AsEnumerable();
-            }
-        }
+        public IEnumerable<Kanonas> Kanones => _kanonesCalc.AsEnumerable();
 
         /// <summary>
         /// Коллекция дочерних элементов, описывающих правила после n-ой песни канона
@@ -44,15 +38,15 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <summary>
         /// Седален по 3-й песне
         /// </summary>
-        public YmnosStructure SedalenCalculated { get; private set; }
+        public YmnosStructure Sedalen { get; private set; }
         /// <summary>
         /// Кондак по 6-ой песне
         /// </summary>
-        public Kontakion KontakionCalculated { get; private set; }
+        public Kontakion Kontakion { get; private set; }
         /// <summary>
         /// Эксапостиларий по 9-ой песне
         /// </summary>
-        public Exapostilarion ExapostilarionCalculated { get; private set; }
+        public Exapostilarion Exapostilarion { get; private set; }
 
         #endregion
 
@@ -160,14 +154,14 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 }
             }
 
-            SedalenCalculated = sedalen;
+            Sedalen = sedalen;
         }
 
         private void CalculateKontakionStructure(DateTime date, IRuleHandler handler, ExecContainer container)
         {
             if (container?.ChildElements.FirstOrDefault() is KKontakionRule item)
             {
-                KontakionCalculated = item.Calculate(date, handler.Settings) as Kontakion;
+                Kontakion = item.Calculate(date, handler.Settings) as Kontakion;
             }
         }
 

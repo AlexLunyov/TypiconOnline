@@ -21,6 +21,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         public RuleHandlerBase() { }
 
         protected List<Type> AuthorizedTypes { get; set; }
+        protected List<Type> ResctrictedTypes { get; set; }
 
         public virtual RuleHandlerSettings Settings
         {
@@ -38,12 +39,26 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
         public bool IsTypeAuthorized(ICustomInterpreted t) 
         {
-            return AuthorizedTypes.Contains(t.GetType());
+            return IsTypeAuthorized(t.GetType());
         }
 
         public bool IsAuthorized<T>() where T : ICustomInterpreted
         {
-            return AuthorizedTypes.Contains(typeof(T));
+            return IsTypeAuthorized(typeof(T));
+        }
+
+        private bool IsTypeAuthorized(Type type)
+        {
+            bool isAuthorized = false;
+            if (AuthorizedTypes != null)
+            {
+                isAuthorized = AuthorizedTypes.Contains(type);
+            }
+            else if (ResctrictedTypes != null)
+            {
+                isAuthorized = !ResctrictedTypes.Contains(type);
+            }
+            return isAuthorized;
         }
 
         /// <summary>

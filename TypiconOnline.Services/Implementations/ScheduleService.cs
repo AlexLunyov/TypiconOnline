@@ -101,6 +101,7 @@ namespace TypiconOnline.Domain.Services
 
                 if (request.Date.DayOfWeek == DayOfWeek.Sunday && sign.Priority > 3)
                 {
+                    //TODO: жесткая привязка к номеру знака воскресного дня
                     signNumber = 6;// SignMigrator.GetOldId(k => k.Value.Name == "Воскресный день");
                 }
 

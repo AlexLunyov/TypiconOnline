@@ -337,9 +337,9 @@
     <Compile Include="ViewModels\ElementViewModel.cs" />
     <Compile Include="ViewModels\KekragariaRuleViewModel.cs" />
     <Compile Include="ViewModels\NoticeViewModel.cs" />
-    <Compile Include="ViewModels\ServiceSequenceViewModel.cs" />
     <Compile Include="ViewModels\TextHolderViewModel.cs" />
     <Compile Include="ViewModels\WorshipRuleViewModel.cs" />
+    <Compile Include="ViewModels\WorshipSequenceViewModel.cs" />
     <Compile Include="ViewModels\YmnosGroupViewModel.cs" />
     <Compile Include="ViewModels\YmnosStructureViewModel.cs" />
   </ItemGroup>
