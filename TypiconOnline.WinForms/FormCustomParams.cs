@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 
-namespace ScheduleForm
+namespace TypiconOnline.WinForms
 {
     public partial class FormCustomParams : Form
     {

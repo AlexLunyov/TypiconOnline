@@ -132,9 +132,6 @@ namespace TypiconOnline.Domain.Rules
          * Константы для описания атрибутов элемента KanonasRule
         */
         public const string KanonasRuleNode = "kanonasrule";
-        public const string KanonasRuleEktenis3AttrName = "ektenis3";
-        public const string KanonasRuleEktenis6AttrName = "ektenis6";
-        public const string KanonasRuleEktenis9AttrName = "ektenis9";
         public const string KanonasRulePanagiasAttrName = "panagias";
 
         /*
@@ -171,6 +168,11 @@ namespace TypiconOnline.Domain.Rules
         public const string KKatavasiaNode = "k_katavasia";
         public const string KKatavasiaNameAttr = "name";
 
+        /*
+         * Константы для описания атрибутов элемента KAfterRule
+        */
+        public const string KAfterNode = "k_after";
+        public const string KAfterOdiNumberAttrName = "odinumber";
 
         public const string SedalenKathisma1Node = "sed_1kathisma";
         public const string SedalenKathisma2Node = "sed_2kathisma";

@@ -44,7 +44,7 @@ namespace TypiconOnline.Domain.Rules.Executables
             if (ChildElements.Count == 0)
             {
                 //HACK: убрана проверка на обязательное наличие дочерних элементов. В дальнейшем надо ее вернуть, когда будут заполнены все правила
-                //AddBrokenConstraint(ExecContainerBusinessConstraint.ExecContainerChildrenRequired);
+                AddBrokenConstraint(ExecContainerBusinessConstraint.ExecContainerChildrenRequired);
             }
             else
             {

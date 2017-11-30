@@ -1,4 +1,4 @@
-﻿namespace ScheduleForm
+﻿namespace TypiconOnline.WinForms
 {
     partial class FormCustomParams
     {

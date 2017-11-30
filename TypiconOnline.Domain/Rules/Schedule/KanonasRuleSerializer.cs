@@ -27,9 +27,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             base.FillObject(d, element);
 
-            SetValues((element as KanonasRule).Ektenis3, d.Element.Attributes[RuleConstants.KanonasRuleEktenis3AttrName]);
-            SetValues((element as KanonasRule).Ektenis6, d.Element.Attributes[RuleConstants.KanonasRuleEktenis6AttrName]);
-            SetValues((element as KanonasRule).Ektenis9, d.Element.Attributes[RuleConstants.KanonasRuleEktenis9AttrName]);
             SetValues((element as KanonasRule).Panagias, d.Element.Attributes[RuleConstants.KanonasRulePanagiasAttrName]);
 
             void SetValues(CommonRuleElement el, XmlAttribute attr)

@@ -21,24 +21,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
         public KanonasRule(string name, IRuleSerializerRoot serializerRoot) : base(name, serializerRoot) { }
 
         #region Properties
-        /// <summary>
-        /// CommonRule описывающее ектению по 3-ей песне канона
-        /// </summary>
-        public CommonRuleElement Ektenis3 { get; set; }
-        /// <summary>
-        /// CommonRule описывающее ектению по 6-ей песне канона
-        /// </summary>
-        public CommonRuleElement Ektenis6 { get; set; }
-        /// <summary>
-        /// CommonRule описывающее ектению по 9-ей песне канона
-        /// </summary>
-        public CommonRuleElement Ektenis9 { get; set; }
-        /// <summary>
-        /// CommonRule описывающее Честнейшую
-        /// </summary>
         public CommonRuleElement Panagias { get; set; }
 
-        private List<Kanonas> _kanonesCalc;
+        private List<Kanonas> _kanonesCalc = new List<Kanonas>();
 
         /// <summary>
         /// Вычисленные каноны правила
@@ -50,6 +35,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 return _kanonesCalc.AsEnumerable();
             }
         }
+
+        /// <summary>
+        /// Коллекция дочерних элементов, описывающих правила после n-ой песни канона
+        /// </summary>
+        public IEnumerable<KAfterRule> AfterRules { get; private set; }
+
         /// <summary>
         /// Седален по 3-й песне
         /// </summary>
@@ -69,32 +60,16 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             if (handler.IsAuthorized<KanonasRule>())
             {
-                _kanonesCalc = new List<Kanonas>();
-
-                //используем специальный обработчик для KKatavasiaRule
-                CollectorRuleHandler<KKatavasiaRule> katavasiaHandler = new CollectorRuleHandler<KKatavasiaRule>() { Settings = handler.Settings };
-
-                foreach (RuleElement elem in ChildElements)
-                {
-                    elem.Interpret(date, katavasiaHandler);
-                }
-
-                ExecContainer katavasiaContainer = katavasiaHandler.GetResult();
+                ///используем специальный обработчик для KKatavasiaRule
+                var katavasiaContainer = GetChildElements<KKatavasiaRule>(date, handler);
 
                 //используем специальный обработчик для KanonasItem,
                 //чтобы создать список источников канонов на обработку
-                CollectorRuleHandler<KKanonasItemRule> kanonasHandler = new CollectorRuleHandler<KKanonasItemRule>() { Settings = handler.Settings };
+                var kanonasItemContainer = GetChildElements<KKanonasItemRule>(date, handler);
 
-                foreach (RuleElement elem in ChildElements)
+                if (kanonasItemContainer != null)
                 {
-                    elem.Interpret(date, kanonasHandler);
-                }
-
-                ExecContainer container = kanonasHandler.GetResult();
-
-                if (container != null)
-                {
-                    CalculateOdesStructure(date, handler, container, (katavasiaContainer != null));
+                    CalculateOdesStructure(date, handler, kanonasItemContainer, (katavasiaContainer != null));
                 }
 
                 if (katavasiaContainer != null)
@@ -103,43 +78,51 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 }
 
                 //используем специальный обработчик для KSedalenRule
-                CollectorRuleHandler<KSedalenRule> sedalenHandler = new CollectorRuleHandler<KSedalenRule>() { Settings = handler.Settings };
+                var sedalenContainer = GetChildElements<KSedalenRule>(date, handler);
 
-                foreach (RuleElement elem in ChildElements)
+                if (sedalenContainer != null)
                 {
-                    elem.Interpret(date, sedalenHandler);
-                }
-
-                container = sedalenHandler.GetResult();
-
-                if (container != null)
-                {
-                    CalculateSedalenStructure(date, handler, container);
+                    CalculateSedalenStructure(date, handler, sedalenContainer);
                 }
 
                 //используем специальный обработчик для KKontakionRule
-                CollectorRuleHandler<KKontakionRule> kontakionHandler = new CollectorRuleHandler<KKontakionRule>() { Settings = handler.Settings };
+                var kontakionContainer = GetChildElements<KKontakionRule>(date, handler);
 
-                foreach (RuleElement elem in ChildElements)
+                if (kontakionContainer != null)
                 {
-                    elem.Interpret(date, kontakionHandler);
+                    CalculateKontakionStructure(date, handler, kontakionContainer);
                 }
 
-                container = kontakionHandler.GetResult();
+                //находим KAfterRules
+                var afterContainer = GetChildElements<KAfterRule>(date, handler);
 
-                if (container != null)
+                if (afterContainer != null)
                 {
-                    CalculateKontakionStructure(date, handler, container);
+                    AfterRules = afterContainer.ChildElements.Cast<KAfterRule>();
+
+                    //_afterRules.ForEach(c => c.Interpret(date, handler));
                 }
+                
 
                 //CommonRules
-                Ektenis3?.Interpret(date, handler);
-                Ektenis6?.Interpret(date, handler);
-                Ektenis9?.Interpret(date, handler);
                 Panagias?.Interpret(date, handler);
 
                 handler.Execute(this);
             }
+        }
+
+        private ExecContainer GetChildElements<T>(DateTime date, IRuleHandler handler) where T : RuleExecutable, ICustomInterpreted
+        {
+            //используем специальный обработчик для KanonasItem,
+            //чтобы создать список источников канонов на обработку
+            var childrenHandler = new CollectorRuleHandler<T>() { Settings = handler.Settings };
+
+            foreach (RuleElement elem in ChildElements)
+            {
+                elem.Interpret(date, childrenHandler);
+            }
+
+            return childrenHandler.GetResult();
         }
 
         /// <summary>

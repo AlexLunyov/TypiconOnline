@@ -193,7 +193,9 @@
     <Compile Include="Rules\Schedule\EktenisRule.cs" />
     <Compile Include="Rules\Schedule\CommonRuleElementSerializer.cs" />
     <Compile Include="Rules\Schedule\IncludingRulesElement.cs" />
+    <Compile Include="Rules\Schedule\KAfterRule.cs" />
     <Compile Include="Rules\Schedule\KKanonasItemRule.cs" />
+    <Compile Include="Rules\Schedule\KAfterRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\KKatavasiaRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\KSedalenTheotokionRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\KSedalenRuleSerializer.cs" />

@@ -20,7 +20,7 @@ using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
 
-namespace ScheduleForm
+namespace TypiconOnline.WinForms
 {
     public class RegisterByContainer
     {

@@ -34,7 +34,7 @@ using TypiconOnline.AppServices.Services;
 using TypiconOnline.WinServices.Interfaces;
 using TypiconOnline.WinServices.Messaging;
 
-namespace ScheduleForm
+namespace TypiconOnline.WinForms
 {
     public partial class StartForm : Form
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ScheduleForm
+namespace TypiconOnline.WinForms
 {
     public partial class FormPassword : Form
     {

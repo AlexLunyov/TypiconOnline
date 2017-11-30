@@ -71,7 +71,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 //Если имеется короткое название, то добавляем только его
 
-                result = oktoikhContext.GetSundayName(date,
+                result = oktoikhContext.GetSundayName(date, settings.Language,
                     GetShortName(settings.DayWorships, settings.Language)) + " " + result;
 
                 //жестко задаем воскресный день

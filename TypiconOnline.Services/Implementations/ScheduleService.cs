@@ -99,7 +99,7 @@ namespace TypiconOnline.Domain.Services
 
                 int signNumber = (convertSignNumber) ? SignMigrator.GetOldId(k => k.Value.NewID == sign.Number) : sign.Number;
 
-                if (request.Date.DayOfWeek == DayOfWeek.Sunday && sign.Priority > 1)
+                if (request.Date.DayOfWeek == DayOfWeek.Sunday && sign.Priority > 3)
                 {
                     signNumber = 6;// SignMigrator.GetOldId(k => k.Value.Name == "Воскресный день");
                 }
@@ -133,7 +133,7 @@ namespace TypiconOnline.Domain.Services
         }
 
         /// <summary>
-        /// Возвращает Знак службы, помеченный как Шаблон
+        /// Возвращает Знак службы, помеченный как Предустановленный
         /// Используется для отображения предустановленных знаков службы в расписании
         /// </summary>
         /// <param name="sign"></param>
