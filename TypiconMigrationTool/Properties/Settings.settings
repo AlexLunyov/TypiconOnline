@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="FolderPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\Монастырь\Documents\programming\XML\</Value>
+      <Value Profile="(Default)">E:\Programming\Documentation\TypiconOnline.Documentation\XML</Value>
     </Setting>
   </Settings>
 </SettingsFile>

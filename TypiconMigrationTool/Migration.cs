@@ -89,7 +89,7 @@ namespace TypiconMigrationTool
 
             //typiconEntity.RulesFolder = new TypiconFolderEntity() { Name = "Правила", Owner = typiconEntity };
 
-            string folderPath = Properties.Settings.Default.FolderPath + typiconEntity.Name + "\\Sign\\"; 
+            string folderPath = Path.Combine(Properties.Settings.Default.FolderPath, typiconEntity.Name, "Sign"); 
 
             FileReader fileReader = new FileReader(folderPath);
 
@@ -228,7 +228,7 @@ namespace TypiconMigrationTool
 
             //folder.AddFolder(childFolder);
 
-            string folderRulePath = Properties.Settings.Default.FolderPath + typiconEntity.Name + "\\Menology\\";
+            string folderRulePath = Path.Combine(Properties.Settings.Default.FolderPath, typiconEntity.Name, "Menology");
 
             FileReader fileRuleReader = new FileReader(folderRulePath);
 
@@ -345,7 +345,7 @@ namespace TypiconMigrationTool
 
                 _unitOfWork.Repository<TriodionDay>().Insert(day);
 
-                string folderPath = Properties.Settings.Default.FolderPath + typiconEntity.Name + "\\Triodion\\";
+                string folderPath = Path.Combine(Properties.Settings.Default.FolderPath, typiconEntity.Name, "Triodion");
 
                 FileReader fileReader = new FileReader(folderPath);
 
@@ -378,7 +378,7 @@ namespace TypiconMigrationTool
             Timer timer = new Timer();
             timer.Start();
 
-            string folderPath = Properties.Settings.Default.FolderPath + typiconEntity.Name + "\\Common\\";
+            string folderPath = Path.Combine(Properties.Settings.Default.FolderPath, typiconEntity.Name, "Common");
 
             FileReader fileReader = new FileReader(folderPath);
 

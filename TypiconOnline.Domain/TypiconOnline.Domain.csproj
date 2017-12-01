@@ -92,6 +92,9 @@
     <Compile Include="Interfaces\IContainingIhos.cs" />
     <Compile Include="Interfaces\IDescriptor T.cs" />
     <Compile Include="Interfaces\IDescriptor.cs" />
+    <Compile Include="Interfaces\IRuleCheckParameter.cs" />
+    <Compile Include="Interfaces\IRuleApplyParameter.cs" />
+    <Compile Include="Interfaces\IRuleCustomParameter.cs" />
     <Compile Include="Interfaces\IRuleSerializer T.cs" />
     <Compile Include="Interfaces\IRuleSerializerRoot.cs" />
     <Compile Include="Interfaces\IStructedElement.cs" />
@@ -185,6 +188,9 @@
     <Compile Include="Rules\Expressions\LogicalExpression.cs" />
     <Compile Include="Rules\Factories\DayContainerFactory.cs" />
     <Compile Include="Rules\Factories\RuleDayFactory.cs" />
+    <Compile Include="Rules\Handlers\CustomParameters\CheckParameterBase.cs" />
+    <Compile Include="Rules\Handlers\CustomParameters\CustomParamsCollection.cs" />
+    <Compile Include="Rules\Handlers\CustomParameters\RuleCheckParameterExtensions.cs" />
     <Compile Include="Rules\Handlers\CustomParameters\WorshipRuleCustomParameter.cs" />
     <Compile Include="Rules\Schedule\AinoiRuleSerializer.cs" />
     <Compile Include="Rules\Expressions\IsExistsSerializer.cs" />
@@ -222,7 +228,7 @@
     <Compile Include="Serialization\XmlDescriptor.cs" />
     <Compile Include="Rules\Handlers\BypassHandler.cs" />
     <Compile Include="Rules\Handlers\CollectorRuleHandler.cs" />
-    <Compile Include="Rules\Handlers\CustomParameters\CustomParameterBase T.cs" />
+    <Compile Include="Rules\Handlers\CustomParameters\ApplyParameterBase.cs" />
     <Compile Include="Rules\Handlers\CustomParameters\KekragariaCustomParameter.cs" />
     <Compile Include="Rules\Handlers\DayToHandle.cs" />
     <Compile Include="Interfaces\IRuleHandler.cs" />
@@ -232,7 +238,6 @@
     <Compile Include="Days\DayWorship.cs" />
     <Compile Include="Days\MenologyDay.cs" />
     <Compile Include="Days\MenologyDayBusinessConstraint.cs" />
-    <Compile Include="Interfaces\IScheduleCustomParameter.cs" />
     <Compile Include="Rules\Handlers\RenderHandler.cs" />
     <Compile Include="Rules\Handlers\ServiceSequenceHandler.cs" />
     <Compile Include="Rules\Handlers\YmnosStructureRuleHandler.cs" />
@@ -330,6 +335,7 @@
     <Compile Include="Typicon\TypiconEntity.cs" />
     <Compile Include="Typicon\TypiconSettings.cs" />
     <Compile Include="ViewModels\AinoiRuleViewModel.cs" />
+    <Compile Include="ViewModels\KanonasRuleViewModel.cs" />
     <Compile Include="ViewModels\SedalenRuleViewModel.cs" />
     <Compile Include="ViewModels\ApostichaViewModel.cs" />
     <Compile Include="ViewModels\ContainerViewModel.cs" />

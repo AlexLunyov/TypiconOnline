@@ -10,6 +10,8 @@ using TypiconOnline.Domain.Rules;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.AppServices.Services;
 using TypiconMigrationTool.Tests;
+using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
+using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconMigrationTool
 {
@@ -45,9 +47,9 @@ namespace TypiconMigrationTool
             GetScheduleDayRequest request = new GetScheduleDayRequest()
             {
                 Date = date,
-                Mode = HandlingMode.All,
                 Typicon = _typiconEntity,
-                Handler = new ScheduleHandler()
+                Handler = new ScheduleHandler(),
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.All)
             };
 
             GetScheduleDayResponse response = _scheduleService.GetScheduleDay(request);

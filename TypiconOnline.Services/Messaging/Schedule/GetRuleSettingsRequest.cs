@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
 
@@ -20,7 +21,7 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
         //public TypiconEntity Typicon { get; set; }
         public DateTime Date { get; set; }
         public string Language { get; set; }
-        public HandlingMode Mode { get; set; }
-        public IEnumerable<IScheduleCustomParameter> CustomParameters { get; set; }
+        public CustomParamsCollection<IRuleApplyParameter> ApplyParameters { get; set; }
+        public CustomParamsCollection<IRuleCheckParameter> CheckParameters { get; set; }
     }
 }

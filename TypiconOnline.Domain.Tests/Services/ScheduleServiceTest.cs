@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TypiconOnline.AppServices.Messaging.Schedule;
@@ -7,6 +8,7 @@ using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
@@ -32,9 +34,9 @@ namespace TypiconOnline.Domain.Tests.Services
             GetScheduleDayRequest request = new GetScheduleDayRequest()
             {
                 Date = new DateTime(2018, 5, 21),//DateTime.Today,
-                Mode = HandlingMode.AstronimicDay,
                 Handler = new ScheduleHandler(),
-                Typicon = typiconEntity
+                Typicon = typiconEntity,
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
             };
 
             ScheduleService scheduleService = ScheduleServiceFactory.Create();

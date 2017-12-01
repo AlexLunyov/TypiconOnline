@@ -203,10 +203,10 @@ namespace TypiconOnline.AppServices.Implementations
                 Rule = rule,
                 DayWorships = dayServices.ToList(),
                 OktoikhDay = oktoikhDay,
-                Mode = req.Mode,
                 Language = req.Language,
                 //ThrowExceptionIfInvalid = req.ThrowExceptionIfInvalid,
-                CustomParameters = req.CustomParameters
+                ApplyParameters = req.ApplyParameters,
+                CheckParameters = req.CheckParameters
             };
         }
     }

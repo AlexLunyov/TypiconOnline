@@ -25,7 +25,7 @@ namespace TypiconMigrationTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Монастырь\\Documents\\programming\\XML\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("E:\\Programming\\Documentation\\TypiconOnline.Documentation\\XML")]
         public string FolderPath {
             get {
                 return ((string)(this["FolderPath"]));

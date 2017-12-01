@@ -18,7 +18,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class TextHolder: RuleExecutable, ICustomInterpreted, IViewModelElement
     {
-        public TextHolder(string name) : base(name) { }
+        public TextHolder(IRuleSerializerRoot serializer, string name) : base(name)
+        {
+            Serializer = serializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
+        }
 
         public TextHolder(TextHolder item)
         {
@@ -55,6 +58,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
         public TextHolderMark Mark { get; set; } = TextHolderMark.undefined;
 
         public List<ItemTextNoted> Paragraphs { get; set; } = new List<ItemTextNoted>();
+
+        public IRuleSerializerRoot Serializer { get; }
 
         #endregion
 

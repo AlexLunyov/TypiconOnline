@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.Domain;
 
@@ -26,7 +28,6 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
         
         //TODO: ???? нужен ли? - не нужен при первой возможности УДАЛИТЬ
         public ScheduleHandler Handler { get; set; }
-        public HandlingMode Mode { get; set; }
         /// <summary>
         /// Язык службы
         /// </summary>
@@ -41,6 +42,7 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
         public bool ThrowExceptionIfInvalid { get; set; }
 
         //TODO: реализовать. Либо можно будет обойтись только RuleHandler ???
-        public List<IScheduleCustomParameter> CustomParameters { get; set; }
+        public CustomParamsCollection<IRuleApplyParameter> ApplyParameters { get; set; } = new CustomParamsCollection<IRuleApplyParameter>();
+        public CustomParamsCollection<IRuleCheckParameter> CheckParameters { get; set; } = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.All);
     }
 }

@@ -7,7 +7,7 @@ using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Handlers.CustomParameters
 {
-    public abstract class CustomParameterBase<T> : IScheduleCustomParameter where T: RuleElement
+    public abstract class ApplyParameterBase<T> : IRuleApplyParameter where T: RuleElement
     {
         //protected Type _type;
         //public CustomParameterBase(Type type)

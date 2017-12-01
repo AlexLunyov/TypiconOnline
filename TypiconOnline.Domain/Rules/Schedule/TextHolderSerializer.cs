@@ -24,7 +24,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.TextHolderTextNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d) => new TextHolder(d.GetElementName());
+        protected override RuleElement CreateObject(XmlDescriptor d) => new TextHolder(SerializerRoot, d.GetElementName());
 
         protected override void FillObject(XmlDescriptor d, RuleElement element)
         {

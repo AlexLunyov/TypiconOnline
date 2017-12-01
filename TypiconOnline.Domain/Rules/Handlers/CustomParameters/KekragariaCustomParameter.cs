@@ -10,7 +10,7 @@ namespace TypiconOnline.Domain.Rules.Handlers.CustomParameters
     /// <summary>
     /// кастомная настройка для класса KekragariaRule
     /// </summary>
-    public class KekragariaCustomParameter : CustomParameterBase<KekragariaRule>
+    public class KekragariaCustomParameter : ApplyParameterBase<KekragariaRule>
     {
         public bool? ShowPsalm { get; set; }
 

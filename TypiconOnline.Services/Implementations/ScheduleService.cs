@@ -12,6 +12,7 @@ using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Schedule;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
@@ -48,22 +49,26 @@ namespace TypiconOnline.Domain.Services
 
         public GetScheduleDayResponse GetScheduleDay(GetScheduleDayRequest request)
         {
+            //находим метод обработки дня
+            HandlingMode mode = request.CheckParameters.GetMode();
+            
             //Формируем данные для обработки
             var settingsRequest = new GetRuleSettingsRequest()
             {
                 Date = request.Date,
-                Mode = (request.Mode == HandlingMode.AstronimicDay) ? HandlingMode.ThisDay : request.Mode,
                 Language = request.Language,
-                CustomParameters = request.CustomParameters
+                ApplyParameters = request.ApplyParameters,
+                CheckParameters = request.CheckParameters
+                    .SetModeParam((mode == HandlingMode.AstronimicDay) ? HandlingMode.ThisDay : mode)
             };
 
             ScheduleDay scheduleDay = GetOrFillScheduleDay(settingsRequest, request.Typicon, request.Handler, request.ConvertSignToHtmlBinding);
 
-            if (request.Mode == HandlingMode.AstronimicDay)
+            if (mode == HandlingMode.AstronimicDay)
             {
                 //ищем службы следующего дня с маркером IsDayBefore == true
                 settingsRequest.Date = request.Date.AddDays(1);
-                settingsRequest.Mode = HandlingMode.DayBefore;
+                settingsRequest.CheckParameters = settingsRequest.CheckParameters.SetModeParam(HandlingMode.DayBefore);
 
                 scheduleDay = GetOrFillScheduleDay(settingsRequest, request.Typicon, request.Handler, request.ConvertSignToHtmlBinding, scheduleDay);
             }
@@ -73,6 +78,8 @@ namespace TypiconOnline.Domain.Services
                 Day = scheduleDay
             };
         }
+
+        
 
         private ScheduleDay GetOrFillScheduleDay(GetRuleSettingsRequest request, TypiconEntity typicon,
             ScheduleHandler handler, bool convertSignNumber, ScheduleDay scheduleDay = null)
@@ -165,12 +172,12 @@ namespace TypiconOnline.Domain.Services
             {
                 Date = request.Date,
                 Typicon = request.Typicon,
-                Mode = request.Mode,
                 Handler = request.Handler,
                 Language = request.Language,
                 ThrowExceptionIfInvalid = request.ThrowExceptionIfInvalid,
                 ConvertSignToHtmlBinding = request.ConvertSignToHtmlBinding,
-                CustomParameters = request.CustomParameters,
+                ApplyParameters = request.ApplyParameters,
+                CheckParameters = request.CheckParameters
             };
 
             int i = 0;

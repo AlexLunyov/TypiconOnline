@@ -14,13 +14,13 @@ namespace TypiconOnline.WinForms
 {
     public partial class FormCustomParams : Form
     {
-        public List<IScheduleCustomParameter> CustomParameters { get; set; }
+        public CustomParamsCollection<IRuleApplyParameter> CustomParameters { get; set; }
 
         public FormCustomParams()
         {
             InitializeComponent();
 
-            CustomParameters = new List<IScheduleCustomParameter>();
+            CustomParameters = new CustomParamsCollection<IRuleApplyParameter>();
         }
 
         private void btnOk_Click(object sender, EventArgs e)

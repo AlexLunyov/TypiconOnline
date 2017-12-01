@@ -10,13 +10,15 @@ namespace TypiconOnline.Domain.Rules.Handlers.CustomParameters
     /// <summary>
     /// кастомная настройка для класса KekragariaRule
     /// </summary>
-    public class WorshipRuleCustomParameter : CustomParameterBase<WorshipRule>
+    public class WorshipRuleCheckModeParameter : CheckParameterBase<WorshipRule>
     {
         public HandlingMode Mode { get; set; } = HandlingMode.All;
 
-        protected override void InnerApply(WorshipRule element)
+        protected override bool InnerCheck(WorshipRule element)
         {
-            element.ModeFromHandler = Mode;
+            return ((Mode == HandlingMode.All) 
+                    || ((Mode == HandlingMode.DayBefore) && (element.IsDayBefore))
+                    || ((Mode == HandlingMode.ThisDay) && (!element.IsDayBefore)));
         }
     }
 }

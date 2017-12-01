@@ -53,6 +53,30 @@ namespace TypiconOnline.Domain.Rules
         /// </summary>
         public const string AinoiRule = "_sys_ainoi";
 
+        /// <summary>
+        /// Правило для разметки роли Хор для каждого текста
+        /// </summary>
+        public const string ChoirRule = "_sys_choir";
+
+        /// <summary>
+        /// Правило для разметки роли Хор для каждого текста
+        /// </summary>
+        public const string LectorRule = "_sys_lector";
+
+        /// <summary>
+        /// Правило для разметки роли Хор для каждого текста
+        /// </summary>
+        public const string PriestRule = "_sys_priest";
+
+        /// <summary>
+        /// Правило для разметки роли Хор для каждого текста
+        /// </summary>
+        public const string DeaconRule = "_sys_deacon";
+        
+        /// <summary>
+        /// Правило для разметки роли Хор для каждого текста
+        /// </summary>
+        public const string StihosRule = "_sys_stihos";
     }
 
     

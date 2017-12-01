@@ -32,14 +32,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             if (handler.IsAuthorized<WorshipRule>())
             {
-                if ((handler.Settings.Mode == HandlingMode.All) ||
-                    ((handler.Settings.Mode == HandlingMode.DayBefore) && (IsDayBefore)) ||
-                    ((handler.Settings.Mode == HandlingMode.ThisDay) && (!IsDayBefore)))
-                {
-                    base.InnerInterpret(date, handler);
+                base.InnerInterpret(date, handler);
 
-                    handler.Execute(this);
-                }
+                handler.Execute(this);
             }
         }
 

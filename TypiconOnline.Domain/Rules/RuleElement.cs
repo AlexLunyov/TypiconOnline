@@ -38,8 +38,13 @@ namespace TypiconOnline.Domain.Rules
 
             handler?.Settings?.ApplyCustomParameters(this);
 
-            InnerInterpret(date, handler);
-            _isInterpreted = true;
+            bool? check = handler?.Settings?.CheckCustomParameters(this);
+
+            if (check != false)
+            {
+                InnerInterpret(date, handler);
+                _isInterpreted = true;
+            }
         }
 
 

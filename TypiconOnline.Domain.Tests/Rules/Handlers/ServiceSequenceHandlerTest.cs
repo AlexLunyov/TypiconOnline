@@ -12,6 +12,7 @@ using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Repository.EF;
+using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 
 namespace TypiconOnline.Domain.Tests.Rules.Handlers
 {
@@ -30,9 +31,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Handlers
             GetScheduleDayRequest request = new GetScheduleDayRequest()
             {
                 Date = new DateTime(2018, 5, 21),//DateTime.Today,
-                Mode = HandlingMode.AstronimicDay,
                 Handler = new ServiceSequenceHandler(),
-                Typicon = typiconEntity
+                Typicon = typiconEntity,
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
             };
 
             ScheduleService scheduleService = ScheduleServiceFactory.Create();

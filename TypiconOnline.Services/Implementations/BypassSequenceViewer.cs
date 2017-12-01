@@ -18,6 +18,7 @@ using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
@@ -69,10 +70,11 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 Date = request.Date,
                 Typicon = typicon,
-                Mode = HandlingMode.AstronimicDay,
                 Handler = new ScheduleHandler(),
                 Language = "cs-ru",
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
             });
+
 
             _unitOfWork.Commit();
 

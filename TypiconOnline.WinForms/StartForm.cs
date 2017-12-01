@@ -33,6 +33,7 @@ using TypiconOnline.Domain.Books.Katavasia;
 using TypiconOnline.AppServices.Services;
 using TypiconOnline.WinServices.Interfaces;
 using TypiconOnline.WinServices.Messaging;
+using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 
 namespace TypiconOnline.WinForms
 {
@@ -45,7 +46,7 @@ namespace TypiconOnline.WinForms
         ITypiconEntityService _typiconEntityService;
         IDocxTemplateService _docxTemplateService;
 
-        List<IScheduleCustomParameter> CustomParameters { get; set; } = new List<IScheduleCustomParameter>();
+        CustomParamsCollection<IRuleApplyParameter> CustomParameters { get; set; } = new CustomParamsCollection<IRuleApplyParameter>();
 
         private DateTime _selectedDate;
         private const string _scheduleFileStart = "РАСПИСАНИЕ ";
@@ -275,11 +276,11 @@ namespace TypiconOnline.WinForms
                 {
                     Date = SelectedDate,
                     Typicon = _typiconEntity,
-                    Mode = HandlingMode.AstronimicDay,
                     Handler = new ScheduleHandler(),
                     Language = "cs-ru",
                     ThrowExceptionIfInvalid = checkBoxException.Checked,
-                    CustomParameters = CustomParameters
+                    ApplyParameters = CustomParameters,
+                    CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
                 };
 
                 GetScheduleWeekResponse weekResponse = _scheduleService.GetScheduleWeek(weekRequest);
@@ -543,8 +544,8 @@ namespace TypiconOnline.WinForms
             {
                 Date = dateTimePickerTesting.Value,
                 Typicon = _typiconEntity,
-                Mode = HandlingMode.AstronimicDay,
-                Handler = new ScheduleHandler()
+                Handler = new ScheduleHandler(),
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
             };
 
             GetScheduleDayResponse dayResponse = _scheduleService.GetScheduleDay(dayRequest);
@@ -625,10 +626,10 @@ namespace TypiconOnline.WinForms
                 {
                     Date = monthCalendarSequence.SelectionStart,
                     Typicon = _typiconEntity,
-                    Mode = HandlingMode.All,
                     Handler = new ServiceSequenceHandler(),
                     Language = "cs-ru",
-                    CustomParameters = CustomParameters
+                    ApplyParameters = CustomParameters,
+                    CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.All)
                 };
 
             request.Handler.Settings.Language = "cs-ru";
@@ -655,7 +656,7 @@ namespace TypiconOnline.WinForms
                 // Show testDialog as a modal dialog and determine if DialogResult = OK.
                 if (dialog.ShowDialog(this) == DialogResult.OK)
                 {
-                    CustomParameters = dialog.CustomParameters.ToList();
+                    CustomParameters = dialog.CustomParameters;
                 }
             }
         }

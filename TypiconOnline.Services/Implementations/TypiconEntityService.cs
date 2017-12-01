@@ -98,7 +98,7 @@ namespace TypiconOnline.AppServices.Implementations
 
             if (response.TypiconEntity != null)
             {
-                string setting = folderPath + "\\" + response.TypiconEntity.Name + "\\Menology\\";
+                string setting = Path.Combine(folderPath, response.TypiconEntity.Name, "Menology");
 
                 FileReader fileReader = new FileReader(setting);
 
@@ -115,7 +115,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 }
 
-                setting = folderPath + "\\" + response.TypiconEntity.Name + "\\Triodion\\";
+                setting = Path.Combine(folderPath, response.TypiconEntity.Name, "Triodion");
 
                 fileReader.FolderPath = setting;
 
@@ -124,7 +124,7 @@ namespace TypiconOnline.AppServices.Implementations
                     rule.RuleDefinition = fileReader.Read(rule.DaysFromEaster.ToString());
                 }
 
-                setting = folderPath + "\\" + response.TypiconEntity.Name + "\\Sign\\";
+                setting = Path.Combine(folderPath, response.TypiconEntity.Name, "Sign");
 
                 fileReader.FolderPath = setting;
 

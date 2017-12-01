@@ -16,6 +16,9 @@ namespace TypiconOnline.Domain.ViewModels
     {
         private YmnosGroup _group;
 
+        private string _kindChoirValue;
+        private string _kindStihosValue;
+
         /// <summary>
         /// Глас
         /// </summary>
@@ -70,6 +73,13 @@ namespace TypiconOnline.Domain.ViewModels
                 req.Key = CommonRuleConstants.SelfText;
                 Self = handler.Settings.Rule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language);
             }
+
+            //находим Стих и Хор для дальнешей вставки
+            req.Key = CommonRuleConstants.StihosRule;
+            _kindStihosValue = handler.Settings.Rule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language);
+
+            req.Key = CommonRuleConstants.ChoirRule;
+            _kindChoirValue = handler.Settings.Rule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language);
         }
 
         protected override void FillChildElements()
@@ -79,16 +89,18 @@ namespace TypiconOnline.Domain.ViewModels
                 //добавляем стих и песнопение как отдельные объекты
                 foreach (ItemText stihos in ymnos.Stihoi)
                 {
-                    _childElements.Add(new TextHolderViewModel()
+                    _childElements.Add(new TextHolderViewModel(Serializer)
                     {
                         Kind = TextHolderKind.Stihos,
+                        KindStringValue = _kindStihosValue,
                         Paragraphs = new string[] { stihos[_handler.Settings.Language] }
                     });
                 }
 
-                _childElements.Add(new TextHolderViewModel()
+                _childElements.Add(new TextHolderViewModel(Serializer)
                 {
                     Kind = TextHolderKind.Choir,
+                    KindStringValue = _kindChoirValue,
                     Paragraphs = new string[] { ymnos.Text[_handler.Settings.Language] }
                 });
             }

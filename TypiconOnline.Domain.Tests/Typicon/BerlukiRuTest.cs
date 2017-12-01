@@ -15,6 +15,7 @@ using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Books;
+using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 
 namespace TypiconOnline.Domain.Tests.Typicon
 {
@@ -41,8 +42,8 @@ namespace TypiconOnline.Domain.Tests.Typicon
             {
                 Date = date,
                 Typicon = typiconEntity,
-                Mode = HandlingMode.AstronimicDay,
-                Handler = new ScheduleHandler()
+                Handler = new ScheduleHandler(),
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
             };
 
             ScheduleService scheduleService = ScheduleServiceFactory.Create();
@@ -78,24 +79,23 @@ namespace TypiconOnline.Domain.Tests.Typicon
             GetScheduleDayRequest dayRequest1 = new GetScheduleDayRequest()
             {
                 Date = date,
-                Mode = HandlingMode.AstronimicDay,
                 Handler = new ScheduleHandler(),
                 Typicon = typiconEntity,
-                CustomParameters = new List<IScheduleCustomParameter>(),
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
             };
 
             ScheduleService scheduleService = ScheduleServiceFactory.Create();
 
             GetScheduleDayResponse dayResponse1 = scheduleService.GetScheduleDay(dayRequest1);
 
-            //теперь как TyppiconController
+            //теперь как TypiconController
             GetScheduleDayRequest dayRequest2 = new GetScheduleDayRequest()
             {
                 Date = date,
                 Typicon = typiconEntity,
                 Handler = new ScheduleHandler(),
-                Mode = HandlingMode.AstronimicDay,
-                ConvertSignToHtmlBinding = true
+                ConvertSignToHtmlBinding = true,
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
             };
 
             GetScheduleDayResponse dayResponse2 = scheduleService.GetScheduleDay(dayRequest2);
@@ -104,8 +104,8 @@ namespace TypiconOnline.Domain.Tests.Typicon
             {
                 Date = date,
                 Typicon = typiconEntity,
-                Mode = HandlingMode.AstronimicDay,
-                Handler = new ScheduleHandler()
+                Handler = new ScheduleHandler(),
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
             };
 
             GetScheduleWeekResponse weekResponse = scheduleService.GetScheduleWeek(weekRequest);

@@ -7,6 +7,7 @@ using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Executables;
+using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
 
@@ -25,9 +26,9 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// Правило для обработки
         /// </summary>
         public TypiconRule Rule { get; set; }
-        public List<DayWorship> DayWorships { get; set; }
+        public List<DayWorship> DayWorships { get; set; } = new List<DayWorship>();
         public OktoikhDay OktoikhDay { get; set; }
-        public HandlingMode Mode { get; set; }
+        //public HandlingMode Mode { get; set; }
         //public string ShortName { get; set; }
         //public bool UseFullName { get; set; }
         /// <summary>
@@ -35,14 +36,12 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// </summary>
         public string Language { get; set; }
 
-        public IEnumerable<IScheduleCustomParameter> CustomParameters { get; set; }
+        public CustomParamsCollection<IRuleApplyParameter> ApplyParameters { get; set; } = new CustomParamsCollection<IRuleApplyParameter>();
+        public CustomParamsCollection<IRuleCheckParameter> CheckParameters { get; set; } = new CustomParamsCollection<IRuleCheckParameter>();
 
         public RuleHandlerSettings()
         {
-            DayWorships = new List<DayWorship>();
-            //PutSeniorRuleNameToEnd = false;
-            CustomParameters = new List<IScheduleCustomParameter>();
-            //UseFullName = true;
+
         }
 
         /// <summary>
@@ -84,12 +83,12 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// </summary>
         public void ApplyCustomParameters(RuleElement element)
         {
-            if (CustomParameters == null) return;
+            ApplyParameters?.ForEach(c => c.Apply(element));
+        }
 
-            foreach (var param in CustomParameters)
-            {
-                param.Apply(element);
-            }
+        public bool CheckCustomParameters(RuleElement element)
+        {
+            return (CheckParameters != null) ? CheckParameters.TrueForAll(c => c.Check(element)) : true;
         }
     }
 }
