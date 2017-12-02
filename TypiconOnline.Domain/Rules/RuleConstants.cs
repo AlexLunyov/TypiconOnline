@@ -43,6 +43,7 @@ namespace TypiconOnline.Domain.Rules
         public const string ElseNodeName = "else";
 
         public const string ServiceNodeName = "service";
+        public const string ServiceIdAttrName = "id";
         public const string ServiceTimeAttrName = "time";
         public const string ServiceNameAttrName = "name";
         public const string ServiceIsDayBeforeAttrName = "isdaybefore";
@@ -99,7 +100,8 @@ namespace TypiconOnline.Domain.Rules
         public const string DayElementNode = "dayservice";
         public const string DayElementNameNode = "name";
 
-        public const string MikrosEsperinosNode = "mikrosesperinos"; 
+        public const string MikrosEsperinosNode = "mikrosesperinos";
+        public const string MegalisEsperinosNode = "megalisesperinos";
         public const string EsperinosNode = "esperinos";
         public const string OrthrosNode = "orthros"; 
         public const string SixHourNode = "sixhour";
@@ -419,7 +421,7 @@ namespace TypiconOnline.Domain.Rules
     
     public enum YmnosStructureKind { Kekragaria, Aposticha, Liti, Ainoi }
 
-    public enum WorshipSequenceKind { MikrosEsperinos, Esperinos, Orthros, Hour, Leitourgia }
+    public enum WorshipSequenceKind { MikrosEsperinos, Esperinos, MegalisEsperinos, MikrosApodipno, MegalisApodipno, Mesoniktiko, Orthros, Hour, Leitourgia }
 
     public enum TextHolderKind { Choir, Lector, Priest, Deacon, Stihos, Text, Undefined }
 

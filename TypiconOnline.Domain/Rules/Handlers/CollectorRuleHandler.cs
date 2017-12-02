@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
     /// Обработчик правил собирает в коллекцию элементы определенного типа
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class CollectorRuleHandler<T> : RuleHandlerBase where T : RuleElement, ICustomInterpreted
+    public class CollectorRuleHandler<T> : RuleHandlerBase //where T : RuleElement, ICustomInterpreted
     {
         protected ExecContainer _executingResult;
 
@@ -27,17 +27,25 @@ namespace TypiconOnline.Domain.Rules.Handlers
             _executingResult = null;
         }
 
-        public override void Execute(ICustomInterpreted element)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element">Существует ограничение на то, чтобы элемент был наследником класса RuleElement</param>
+        /// <returns></returns>
+        public override bool Execute(ICustomInterpreted element)
         {
-            if (element is T)
+            if (element is T && element is RuleElement r)
             {
                 if (_executingResult == null)
                 {
                     _executingResult = new ExecContainer();
                 }
 
-                _executingResult.ChildElements.Add(element as T);
+                _executingResult.ChildElements.Add(r);
+
+                return true;
             }
+            return false;
         }
 
         public ExecContainer GetResult()

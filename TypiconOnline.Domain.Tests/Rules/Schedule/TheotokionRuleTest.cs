@@ -98,7 +98,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             rule.GetRule(TestRuleSerializer.Root).Interpret(date, handler);
 
-            KekragariaRuleViewModel model = rule.GetRule<KekragariaRule>(TestRuleSerializer.Root).CreateViewModel(handler) as KekragariaRuleViewModel;
+            var model = handler.GetResult();
+
+            //KekragariaRuleViewModel model = rule.GetRule<KekragariaRule>(TestRuleSerializer.Root).CreateViewModel(handler) as KekragariaRuleViewModel;
             
             Assert.Pass(model.ToString());
             Assert.IsNotNull(model);

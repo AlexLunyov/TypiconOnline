@@ -13,6 +13,7 @@ using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.ViewModels.Messaging;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -21,9 +22,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public abstract class YmnosStructureRule : ExecContainer, ICustomInterpreted, IViewModelElement
     {
-        public YmnosStructureRule(IRuleSerializerRoot serializer, string name) : base(name)
+        public YmnosStructureRule(IElementViewModelFactory<YmnosStructureRule> viewModelFactory, IRuleSerializerRoot serializer, string name) : base(name)
         {
             Serializer = serializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
+            ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException("IElementViewModelFactory in YmnosStructureRule");
         }
 
         #region Properties
@@ -45,6 +47,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         public IRuleSerializerRoot Serializer { get; }
 
+        protected IElementViewModelFactory<YmnosStructureRule> ViewModelFactory { get; }
+
         #endregion
 
         protected override void InnerInterpret(DateTime date, IRuleHandler handler)
@@ -53,14 +57,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 //используем специальный обработчик для YmnosStructureRule,
                 //чтобы создать список источников стихир на обработку
-                CollectorRuleHandler<YmnosRule> structHandler = new CollectorRuleHandler<YmnosRule>() { Settings = handler.Settings };
-
-                foreach (RuleElement elem in ChildElements)
-                {
-                    elem.Interpret(date, structHandler);
-                }
-
-                ExecContainer container = structHandler.GetResult();
+                ExecContainer container = GetChildElements<ICalcStructureElement>(date, handler); 
 
                 if (container != null)
                 {
@@ -74,23 +71,48 @@ namespace TypiconOnline.Domain.Rules.Schedule
         private void CalculateYmnosStructure(DateTime date, RuleHandlerSettings settings, ExecContainer container)
         {
             Structure = new YmnosStructure();
-            foreach (YmnosRule ymnosRule in container.ChildElements)
+            foreach (ICalcStructureElement element in container.ChildElements)
             {
-                if (ymnosRule.Calculate(date, settings) is YmnosStructure s)
+                if (element.Calculate(date, settings) is YmnosStructure s)
                 {
-                    switch (ymnosRule.Kind)
+                    switch (element)
                     {
-                        case YmnosRuleKind.YmnosRule:
-                            Structure.Groups.AddRange(s.Groups);
+                        case YmnosRule r:
+                            AsYmnosRule(r, s);
                             break;
-                        case YmnosRuleKind.DoxastichonRule:
-                            Structure.Doxastichon = s.Doxastichon;
-                            break;
-                        case YmnosRuleKind.TheotokionRule:
-                            Structure.Theotokion = s.Theotokion;
+                        case KSedalenRule r:
+                            AsSedalenRule(r, s);
                             break;
                     }
                 }
+            }
+        }
+
+        private void AsYmnosRule(YmnosRule r, YmnosStructure s)
+        {
+            switch (r.Kind)
+            {
+                case YmnosRuleKind.YmnosRule:
+                    Structure.Groups.AddRange(s.Groups);
+                    break;
+                case YmnosRuleKind.DoxastichonRule:
+                    Structure.Doxastichon = s.Doxastichon;
+                    break;
+                case YmnosRuleKind.TheotokionRule:
+                    Structure.Theotokion = s.Theotokion;
+                    break;
+            }
+        }
+
+        private void AsSedalenRule(KSedalenRule r, YmnosStructure s)
+        {
+            if (r is KSedalenTheotokionRule)
+            {
+                Structure.Theotokion = s.Theotokion;
+            }
+            else
+            {
+                Structure.Groups.AddRange(s.Groups);
             }
         }
 
@@ -100,6 +122,14 @@ namespace TypiconOnline.Domain.Rules.Schedule
             //TODO: добавить проверку на наличие элементов stichira в дочерних элементах
         }
 
-        public abstract ElementViewModel CreateViewModel(IRuleHandler handler);
+        public virtual void CreateViewModel(IRuleHandler handler, Action<ElementViewModel> append)
+        {
+            ViewModelFactory.Create(new CreateViewModelRequest<YmnosStructureRule>()
+            {
+                Element = this,
+                Handler = handler,
+                AppendModelAction = append
+            });
+        }
     }
 }

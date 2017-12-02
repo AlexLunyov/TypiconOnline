@@ -14,12 +14,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class ApostichaRule : YmnosStructureRule
     {
-        public ApostichaRule(IRuleSerializerRoot serializer, string name) : base(serializer, name) { }
-
-        public override ElementViewModel CreateViewModel(IRuleHandler handler)
-        {
-            return new ApostichaViewModel(this, handler);
-        }
+        public ApostichaRule(IElementViewModelFactory<YmnosStructureRule> viewModelFactory, 
+            IRuleSerializerRoot serializer, string name) : base(viewModelFactory, serializer, name) { }
 
     }
 }

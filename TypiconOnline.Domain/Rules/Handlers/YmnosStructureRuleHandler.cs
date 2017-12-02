@@ -24,7 +24,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
             _executingResult = null;
         }
 
-        public override void Execute(ICustomInterpreted element)
+        public override bool Execute(ICustomInterpreted element)
         {
             if (element is YmnosRule)
             {
@@ -34,7 +34,10 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 }
 
                 _executingResult.ChildElements.Add(element as YmnosRule);
+
+                return true;
             }
+            return false;
         }
 
         public ExecContainer GetResult()

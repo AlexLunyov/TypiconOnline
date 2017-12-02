@@ -418,16 +418,13 @@ namespace TypiconOnline.WinForms
                 textBoxResult.AppendText(day.Date.ToShortDateString() + Environment.NewLine);
                 textBoxResult.AppendText(day.Name + Environment.NewLine);
                 textBoxResult.AppendText("Знак службы: " + day.SignName + Environment.NewLine);
-                foreach (ElementViewModel element in day.Schedule.ChildElements)
+                foreach (WorshipRuleViewModel el in day.Schedule)
                 {
-                    if (element is NoticeViewModel n)
-                    {
-                        textBoxResult.AppendText(n.Text + " " + n.AdditionalName + Environment.NewLine);
-                    }
-                    else if (element is WorshipRuleViewModel w)
-                    {
-                        textBoxResult.AppendText(w.Time + " " + w.Text + " " + w.AdditionalName + Environment.NewLine);
-                    }
+                    string str = !string.IsNullOrEmpty(el.Time) ? $"{el.Time} " : "";
+                 
+                    str += $"{el.Name} {el.AdditionalName + Environment.NewLine}";
+
+                    textBoxResult.AppendText(str);
                 }
             }
 
@@ -560,16 +557,13 @@ namespace TypiconOnline.WinForms
 
             textBoxTesting.AppendText(dayResponse.Day.Date.ToShortDateString() + Environment.NewLine);
             textBoxTesting.AppendText(dayResponse.Day.Name + ". " + daysFromEaster + " дней до Пасхи." +Environment.NewLine);
-            foreach (ElementViewModel element in dayResponse.Day.Schedule.ChildElements)
+            foreach (WorshipRuleViewModel el in dayResponse.Day.Schedule)
             {
-                if (element is NoticeViewModel n)
-                {
-                    textBoxTesting.AppendText(n.Text + " " + n.AdditionalName + Environment.NewLine);
-                }
-                else if (element is WorshipRuleViewModel w)
-                {
-                    textBoxTesting.AppendText(w.Time + " " + w.Text + " " + w.AdditionalName + Environment.NewLine);
-                }
+                string str = string.IsNullOrEmpty(el.Time) ? $"{el.Time} " : "";
+                 
+                str += $"{el.Name} {el.AdditionalName + Environment.NewLine}";
+
+                textBoxTesting.AppendText(str);
             }
         }
 

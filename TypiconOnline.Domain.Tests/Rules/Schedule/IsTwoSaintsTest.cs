@@ -46,9 +46,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             rule.GetRule(TestRuleSerializer.Root).Interpret(DateTime.Today, handler);
 
-            EktenisViewModel model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
+            var model = handler.GetResult();
 
-            Assert.AreEqual(1, model.ChildElements.Count);
+            //EktenisViewModel model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
+
+            Assert.AreEqual(1, model.FirstOrDefault()?.Count);
 
             //Триодь, Минея - 1 святой
             rule = typiconEntity.GetMenologyRule(new DateTime(2017, 3, 16));
@@ -63,9 +65,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             rule.GetRule(TestRuleSerializer.Root).Interpret(DateTime.Today, handler);
 
-            model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
+            model = handler.GetResult();
 
-            Assert.AreEqual(1, model.ChildElements.Count);
+            //model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
+
+            Assert.AreEqual(1, model.FirstOrDefault()?.Count);
 
             //а теперь находим правило НЕ праздничное, 2 святых
             rule = typiconEntity.GetMenologyRule(new DateTime(2017, 5, 31));
@@ -76,9 +80,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             rule.GetRule(TestRuleSerializer.Root).Interpret(DateTime.Today, handler);
 
-            model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
+            model = handler.GetResult();
 
-            Assert.AreEqual(2, model.ChildElements.Count);
+            //model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
+
+            Assert.AreEqual(2, model.FirstOrDefault()?.Count);
         }
     }
 }

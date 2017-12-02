@@ -48,6 +48,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             rule.GetRule(TestRuleSerializer.Root).Interpret(date, handler);
 
             KanonasRule kanonasRule = rule.GetRule<KanonasRule>(TestRuleSerializer.Root);
+            kanonasRule.Interpret(date, handler);
 
             Assert.AreEqual(4, kanonasRule.Kanones.Count());
             Assert.IsNotNull(kanonasRule.Sedalen);

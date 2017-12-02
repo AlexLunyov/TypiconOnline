@@ -15,19 +15,17 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Правило для службы (Вечерня, Утреня, Литургия и т.д.)
     /// </summary>
-    public class WorshipSequence : ExecContainer, ICustomInterpreted, IViewModelElement
+    public class WorshipSequence : ExecContainer, ICustomInterpreted
     {
-        public WorshipSequence(string name) : base(name) { }
-
+        public WorshipSequence(IRuleSerializerRoot serializer, string name) : base(name)
+        {
+            Serializer = serializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
+        }
         #region Properties
 
         public WorshipSequenceKind Kind { get; set; }
 
+        public IRuleSerializerRoot Serializer { get; }
         #endregion
-
-        public ElementViewModel CreateViewModel(IRuleHandler handler)
-        {
-            return new WorshipSequenceViewModel(this, handler);
-        }
     }
 }

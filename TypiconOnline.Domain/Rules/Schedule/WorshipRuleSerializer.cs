@@ -28,7 +28,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             base.FillObject(d, container);
 
-            XmlAttribute attr = d.Element.Attributes[RuleConstants.ServiceTimeAttrName];
+            XmlAttribute attr = d.Element.Attributes[RuleConstants.ServiceIdAttrName];
+            (container as WorshipRule).Id = (attr != null) ? attr.Value : string.Empty;
+
+            attr = d.Element.Attributes[RuleConstants.ServiceTimeAttrName];
             (container as WorshipRule).Time = new ItemTime((attr != null) ? attr.Value : string.Empty);
 
             attr = d.Element.Attributes[RuleConstants.ServiceNameAttrName];

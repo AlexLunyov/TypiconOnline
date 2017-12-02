@@ -55,12 +55,12 @@ namespace TypiconOnline.AppServices.Implementations
 
                 _resultString += "<table border=0>";
 
-                foreach (WorshipRuleViewModel service in day.Schedule.ChildElements)
+                foreach (WorshipRuleViewModel service in day.Schedule)
                 {
                     _resultString += "<tr><td>";
 
                     _resultString += service.Time.ToString() + "&nbsp;</td><td>";
-                    _resultString += service.Text;
+                    _resultString += service.Name;
 
                     //additionalName
                     if (!string.IsNullOrEmpty(service.AdditionalName))

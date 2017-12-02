@@ -10,6 +10,7 @@ using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.ViewModels.Messaging;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -18,9 +19,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class TextHolder: RuleExecutable, ICustomInterpreted, IViewModelElement
     {
-        public TextHolder(IRuleSerializerRoot serializer, string name) : base(name)
+        public TextHolder(IElementViewModelFactory<TextHolder> viewModelFactory, string name) : base(name)
         {
-            Serializer = serializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
+            ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException("IElementViewModelFactory<TextHolder> in TextHolder");
         }
 
         public TextHolder(TextHolder item)
@@ -36,18 +37,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        //public TextHolder(Ymnos ymnos)
-        //{
-        //    if (ymnos == null) throw new ArgumentNullException("Ymnos");
-
-        //    _textHolderKind = new ItemEnumType<TextHolderKind>() { Value = TextHolderKind.Choir };
-            
-        //    if (ymnos.Annotation != null)
-        //    {
-
-        //    }
-        //}
-
         #region Properties
 
         public TextHolderKind Kind { get; set; }
@@ -59,7 +48,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         public List<ItemTextNoted> Paragraphs { get; set; } = new List<ItemTextNoted>();
 
-        public IRuleSerializerRoot Serializer { get; }
+        private IElementViewModelFactory<TextHolder> ViewModelFactory { get; }
 
         #endregion
 
@@ -91,9 +80,14 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public ElementViewModel CreateViewModel(IRuleHandler handler)
+        public void CreateViewModel(IRuleHandler handler, Action<ElementViewModel> append)
         {
-            return new TextHolderViewModel(this, handler);
+            ViewModelFactory.Create(new CreateViewModelRequest<TextHolder>()
+            {
+                Element = this,
+                Handler = handler,
+                AppendModelAction = append
+            });
         }
     }
 }

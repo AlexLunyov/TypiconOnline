@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
 {
     public class ScheduleHandler : RuleHandlerBase
     {
-        private ContainerViewModel _executingResult;
+        WorshipRuleViewModelCollection modelCollection;
 
         public ScheduleHandler()//(RuleHandlerSettings request) : base(request)
         {
@@ -35,43 +35,30 @@ namespace TypiconOnline.Domain.Rules.Handlers
             set
             {
                 base.Settings = value;
-                _executingResult = null;
+
+                modelCollection = null;
             }
         }
 
-        public override void Execute(ICustomInterpreted element)
+        public override bool Execute(ICustomInterpreted element)
         {
-            if ((element is WorshipRule) || (element is Notice))
+            if (element is WorshipRule w)
             {
-                WorshipRuleViewModel renderService = new WorshipRuleViewModel(element as WorshipRule, this);
-                //renderService.CopyOnlyValues(element as Service);
+                GetResult().Add(new WorshipRuleViewModel(w));
 
-                ExecutingResult.ChildElements.Add(renderService);
+                return true;
             }
+
+            return false;
         }
 
-        protected ContainerViewModel ExecutingResult
+        public virtual WorshipRuleViewModelCollection GetResult()
         {
-            get
+            if (modelCollection == null)
             {
-                if (_executingResult == null)
-                {
-                    _executingResult = new ContainerViewModel();
-                }
-                return _executingResult;
+                modelCollection = new WorshipRuleViewModelCollection() { };
             }
-        }
-
-        //public override void Initialize(RuleHandlerSettings settings)
-        //{
-        //    base.Initialize(settings);
-
-        //    _executingResult = null;
-        //}
-
-        public virtual ContainerViewModel GetResult()
-        {
-            return _executingResult;
+            return modelCollection;
         }
     }
 }

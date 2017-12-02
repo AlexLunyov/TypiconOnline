@@ -9,6 +9,7 @@ using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Domain.ViewModels.Factories;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -24,7 +25,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.TextHolderTextNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d) => new TextHolder(SerializerRoot, d.GetElementName());
+        protected override RuleElement CreateObject(XmlDescriptor d)
+        {
+            return new TextHolder(new TextHolderVMFactory(SerializerRoot), d.GetElementName());
+        }
 
         protected override void FillObject(XmlDescriptor d, RuleElement element)
         {

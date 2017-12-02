@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Правило для использования седальнов 
     /// </summary>
-    public class KSedalenRule : KKontakionRule, ICalcStructureElement//<YmnosStructure>
+    public class KSedalenRule : KKontakionRule
     {
         public KSedalenRule(string name) : base(name) { }
 

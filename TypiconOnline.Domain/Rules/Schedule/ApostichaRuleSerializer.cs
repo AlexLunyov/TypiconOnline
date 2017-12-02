@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Domain.ViewModels.Factories;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -20,7 +21,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override RuleElement CreateObject(XmlDescriptor d)
         {
-            return new ApostichaRule(SerializerRoot, d.GetElementName());
+            return new ApostichaRule(new ApostichaVMFactory(SerializerRoot), SerializerRoot, d.GetElementName());
         }
     }
 }

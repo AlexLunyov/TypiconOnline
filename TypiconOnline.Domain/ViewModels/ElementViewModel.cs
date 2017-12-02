@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Rules.Executables;
+using TypiconOnline.Domain.Rules.Schedule;
 
 namespace TypiconOnline.Domain.ViewModels
 {
     /// <summary>
-    /// Абстрактный класс для элементов, которые будут выводиться наружу,
+    /// Коллекция выходных форм правил, которые будут выводиться наружу,
     /// т.е. будут являться конечным результатом обработки правил
     /// </summary>
-    public abstract class ElementViewModel
+    public class ElementViewModel : List<ViewModelItem>
     {
-        public string Text { get; set; }
-
     }
+
 }

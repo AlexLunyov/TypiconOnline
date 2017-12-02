@@ -97,7 +97,7 @@ namespace TypiconOnline.Domain.Services
 
             settings.Rule.GetRule(_ruleSerializer).Interpret(request.Date, handler);
 
-            ContainerViewModel container = handler.GetResult();
+            var container = handler.GetResult();
 
             if (scheduleDay == null)
             {
@@ -122,10 +122,10 @@ namespace TypiconOnline.Domain.Services
                 };
             }
 
-            if (container != null)
-            {
-                scheduleDay.Schedule.ChildElements.AddRange(container.ChildElements);
-            }
+            //if (container != null)
+            //{
+                scheduleDay.Schedule.AddRange(container);
+            //}
 
             return scheduleDay;
         }

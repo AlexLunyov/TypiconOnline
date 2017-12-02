@@ -32,6 +32,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
             //    typeof(TroparionRule),
             //    typeof(KanonasRule)
             //};
+            AuthorizedTypes = null;
+
             ResctrictedTypes = new List<Type>()
             {
                 typeof(ModifyDay),
@@ -39,10 +41,37 @@ namespace TypiconOnline.Domain.Rules.Handlers
             };
         }
 
-        public override void Execute(ICustomInterpreted element)
+        public override bool Execute(ICustomInterpreted element)
         {
-            base.Execute(element);
+            bool result = base.Execute(element);
+
+            if (!result)
+            {
+                //добавляем элементы, реализующие интерфейс IViewModelElement к последней WorshipRuleViewModel
+                if (element is IViewModelElement viewElement)
+                {
+                    viewElement.CreateViewModel(this, model => GetResult().LastOrDefault()?.AddRange(model));
+                }
+            }
+
+            return result;
         }
 
+        /// <summary>
+        /// Возвращает результат обработки правила
+        /// </summary>
+        /// <returns></returns>
+        public override WorshipRuleViewModelCollection GetResult()
+        {
+            //TODO: переопределение добавлено только для тестовых целей. Потом удалить
+            var model = base.GetResult();
+
+            if (model.Count == 0)
+            {
+                model.Add(new WorshipRuleViewModel());
+            }
+
+            return model;
+        }
     }
 }

@@ -52,7 +52,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             rule.GetRule(TestRuleSerializer.Root).Interpret(date, handler);
 
-            SedalenRuleViewModel model = rule.GetRule<SedalenRule>(TestRuleSerializer.Root).CreateViewModel(handler) as SedalenRuleViewModel;
+            var model = handler.GetResult();
+
+            //SedalenRuleViewModel model = rule.GetRule<SedalenRule>(TestRuleSerializer.Root).CreateViewModel(handler) as SedalenRuleViewModel;
 
             Assert.AreEqual(3, rule.GetRule<SedalenRule>(TestRuleSerializer.Root).Structure.YmnosStructureCount);
             Assert.Pass(rule.GetRule<SedalenRule>(TestRuleSerializer.Root).Structure.YmnosStructureCount.ToString());

@@ -65,7 +65,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// Абстрактный метод обработки правила
         /// </summary>
         /// <param name="element"></param>
-        public abstract void Execute(ICustomInterpreted element);
+        public abstract bool Execute(ICustomInterpreted element);
 
         //public abstract RuleContainer GetResult();
         //public virtual RenderContainer GetResult()

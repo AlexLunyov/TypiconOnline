@@ -77,6 +77,8 @@ namespace TypiconOnline.Domain.Rules
         /// Правило для разметки роли Хор для каждого текста
         /// </summary>
         public const string StihosRule = "_sys_stihos";
+
+        
     }
 
     

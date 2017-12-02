@@ -45,15 +45,15 @@ namespace TypiconOnline.Domain.Tests.Services
 
             _unitOfWork.Commit();
 
-            Assert.AreEqual(3, response.Day.Schedule.ChildElements.Count);
+            Assert.AreEqual(3, response.Day.Schedule.Count);
 
             StringBuilder builder = new StringBuilder();
 
             builder.AppendLine(response.Day.Date.ToShortDateString() + " " + response.Day.Name);
 
-            foreach (WorshipRuleViewModel service in response.Day.Schedule.ChildElements)
+            foreach (WorshipRuleViewModel service in response.Day.Schedule)
             {
-                builder.AppendLine(service.Time + " " + service.Text);
+                builder.AppendLine(service.Time + " " + service.Name);
             }
 
             Assert.Pass(builder.ToString());

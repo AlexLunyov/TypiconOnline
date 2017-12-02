@@ -14,11 +14,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class AinoiRule : KekragariaRule
     {
-        public AinoiRule(IRuleSerializerRoot serializer, string name) : base(serializer, name) { }
+        public AinoiRule(IElementViewModelFactory<YmnosStructureRule> viewModelFactory, 
+            IRuleSerializerRoot serializer, string name) : base(viewModelFactory, serializer, name) { }
 
-        public override ElementViewModel CreateViewModel(IRuleHandler handler)
-        {
-            return new AinoiRuleViewModel(this, handler);
-        }
     }
 }

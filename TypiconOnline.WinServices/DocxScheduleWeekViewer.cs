@@ -149,14 +149,14 @@ namespace TypiconOnline.WinServices
             SetTextToCell(tdDate, sDate, false, false);
             dayTable.AppendChild(tr);
 
-            foreach (WorshipRuleViewModel service in day.Schedule.ChildElements)
+            foreach (WorshipRuleViewModel service in day.Schedule)
             {
                 tr = (TableRow)dayTemplateTable.ChildElements[4].Clone();
                 TableCell tdTime = (TableCell)tr.ChildElements[2];
                 TableCell tdSName = (TableCell)tr.ChildElements[3];
 
                 string sTime = service.Time.ToString();
-                string sSName = service.Text;
+                string sSName = service.Name;
 
                 bool bIsTimeBold = false; //(serviceNode.Attributes["istimebold"] != null);
                 bool bIsTimeRed = false; //(serviceNode.Attributes["istimered"] != null);

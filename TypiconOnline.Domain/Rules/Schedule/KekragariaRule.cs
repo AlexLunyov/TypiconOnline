@@ -10,6 +10,7 @@ using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.ViewModels.Messaging;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -18,7 +19,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KekragariaRule : YmnosStructureRule
     {
-        public KekragariaRule(IRuleSerializerRoot serializer, string name) : base(serializer, name) { }
+        public KekragariaRule(IElementViewModelFactory<YmnosStructureRule> viewModelFactory,
+            IRuleSerializerRoot serializer, string name) : base(viewModelFactory, serializer, name)
+        {
+        }
 
         #region Properties
 
@@ -47,9 +51,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
         //    }
         //}
 
-        public override ElementViewModel CreateViewModel(IRuleHandler handler)
-        {
-            return new KekragariaRuleViewModel(this, handler);
-        }
+        
     }
 }

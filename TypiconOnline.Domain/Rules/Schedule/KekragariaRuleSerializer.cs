@@ -8,6 +8,7 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Domain.ViewModels.Factories;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -21,7 +22,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override RuleElement CreateObject(XmlDescriptor d)
         {
-            return new KekragariaRule(SerializerRoot, d.GetElementName());
+            return new KekragariaRule(new KekragariaRuleVMFactory(SerializerRoot), SerializerRoot, d.GetElementName());
         }
 
         protected override void FillObject(XmlDescriptor d, RuleElement container)

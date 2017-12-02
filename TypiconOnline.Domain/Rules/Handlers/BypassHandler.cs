@@ -10,9 +10,9 @@ namespace TypiconOnline.Domain.Rules.Handlers
 {
     public class BypassHandler : IRuleHandler
     {
-        public void Execute(ICustomInterpreted element)
+        public bool Execute(ICustomInterpreted element)
         {
-            //throw new NotImplementedException();
+            return true;
         }
 
         public bool IsAuthorized<T>() where T : ICustomInterpreted

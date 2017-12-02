@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Элемент, являющийся ссылкой на общее правило CommonRule
     /// </summary>
-    public class CommonRuleElement : IncludingRulesElement, ICustomInterpreted, IViewModelElement
+    public class CommonRuleElement : IncludingRulesElement, ICustomInterpreted//, IViewModelElement
     {
         public string CommonRuleName { get; set; }
 
@@ -54,9 +54,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public ElementViewModel CreateViewModel(IRuleHandler handler)
-        {
-            return new ContainerViewModel(this, handler);
-        }
+        //public ElementViewModel CreateViewModel(IRuleHandler handler)
+        //{
+        //    return new ContainerViewModel(this, handler);
+        //}
     }
 }

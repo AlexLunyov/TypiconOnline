@@ -16,7 +16,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
         public WorshipRule(string name) : base(name) { }
 
         #region Properties
-
+        /// <summary>
+        /// Идентификатор для поиска (используется в переопределении правил AsAddition)
+        /// </summary>
+        public string Id { get; set; }
         public ItemTime Time { get; set; }
         public string Name { get; set; }
         public bool IsDayBefore { get; set; } = false;

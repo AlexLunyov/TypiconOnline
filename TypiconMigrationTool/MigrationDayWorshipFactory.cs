@@ -1,6 +1,7 @@
 ﻿using ScheduleHandling;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,9 +37,7 @@ namespace TypiconMigrationTool
 
         public void Initialize(ScheduleDBDataSet.MineinikRow mineinikRow)
         {
-            if (mineinikRow == null) throw new ArgumentNullException("ScheduleDBDataSet.MineinikRow");
-
-            _row = mineinikRow;
+            _row = mineinikRow ?? throw new ArgumentNullException("ScheduleDBDataSet.MineinikRow");
         }
 
         public DayWorship Create()
@@ -61,14 +60,14 @@ namespace TypiconMigrationTool
             string fileName = (!_row.IsDateBNull()) ? new ItemDate(_row.DateB.Month, _row.DateB.Day).Expression + "." + _row.Name : _row.Name;
 
             //сначала ищем в папке Menology в надежде, что текст определен (как в последствии и должно быть)
-            _fileReader.FolderPath = _folderPath + "Menology\\";
+            _fileReader.FolderPath = Path.Combine(_folderPath, "Menology");
 
             string definition = _fileReader.Read(fileName);
 
             if (string.IsNullOrEmpty(definition))
             {
                 //Если его мы не находим, то заменяем текстом по умолчанию, исходя из знака службы
-                _fileReader.FolderPath = _folderPath + "Templates\\";
+                _fileReader.FolderPath = Path.Combine(_folderPath, "Templates");
                 fileName = SignMigrator.Instance(_row.SignID).MajorTemplateName;
                 definition = TransformDefinition(_fileReader.Read(fileName), _row.Name, fileName);
             }

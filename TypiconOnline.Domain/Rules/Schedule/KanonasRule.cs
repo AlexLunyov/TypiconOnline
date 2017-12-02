@@ -10,6 +10,7 @@ using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.ViewModels.Messaging;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -18,7 +19,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KanonasRule : IncludingRulesElement, ICustomInterpreted, IViewModelElement
     {
-        public KanonasRule(string name, IRuleSerializerRoot serializerRoot) : base(name, serializerRoot) { }
+        public KanonasRule(string name, IRuleSerializerRoot serializerRoot, 
+            IElementViewModelFactory<KanonasRule> viewModelFactory) : base(name, serializerRoot)
+        {
+            ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException("IElementViewModelFactory in KanonasRule");
+        }
 
         #region Properties
         public CommonRuleElement Panagias { get; set; }
@@ -47,6 +52,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// Эксапостиларий по 9-ой песне
         /// </summary>
         public Exapostilarion Exapostilarion { get; private set; }
+
+        protected IElementViewModelFactory<KanonasRule> ViewModelFactory { get; }
 
         #endregion
 
@@ -105,20 +112,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        private ExecContainer GetChildElements<T>(DateTime date, IRuleHandler handler) where T : RuleExecutable, ICustomInterpreted
-        {
-            //используем специальный обработчик для KanonasItem,
-            //чтобы создать список источников канонов на обработку
-            var childrenHandler = new CollectorRuleHandler<T>() { Settings = handler.Settings };
-
-            foreach (RuleElement elem in ChildElements)
-            {
-                elem.Interpret(date, childrenHandler);
-            }
-
-            return childrenHandler.GetResult();
-        }
-
         /// <summary>
         /// Добавляет в конец коллекции вычисляемых канонов катавасию
         /// </summary>
@@ -139,9 +132,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             foreach (KSedalenRule item in container.ChildElements)
             {
-                YmnosStructure s = item.Calculate(date, handler.Settings) as YmnosStructure;
-
-                if (s != null)
+                if (item.Calculate(date, handler.Settings) is YmnosStructure s)
                 {
                     if (item is KSedalenTheotokionRule)
                     {
@@ -181,9 +172,14 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public ElementViewModel CreateViewModel(IRuleHandler handler)
+        public virtual void CreateViewModel(IRuleHandler handler, Action<ElementViewModel> append)
         {
-            throw new NotImplementedException();
+            ViewModelFactory.Create(new CreateViewModelRequest<KanonasRule>()
+            {
+                Element = this,
+                Handler = handler,
+                AppendModelAction = append
+            });
         }
     }
 }

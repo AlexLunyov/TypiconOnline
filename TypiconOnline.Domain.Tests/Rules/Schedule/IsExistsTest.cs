@@ -45,9 +45,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             rule.GetRule(TestRuleSerializer.Root).Interpret(date, handler);
 
-            EktenisViewModel model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
+            var model = handler.GetResult();
 
-            Assert.AreEqual(1, model.ChildElements.Count);
+            //EktenisViewModel model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
+
+            Assert.AreEqual(1, model.FirstOrDefault()?.Count);
 
             //Дата --02-09 exists - true
             date = new DateTime(2017, 02, 09);
@@ -60,9 +62,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             rule.GetRule(TestRuleSerializer.Root).Interpret(date, handler);
 
-            model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
+            model = handler.GetResult();
 
-            Assert.AreEqual(2, model.ChildElements.Count);
+            //model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
+
+            Assert.AreEqual(2, model.FirstOrDefault()?.Count);
         }
     }
 }

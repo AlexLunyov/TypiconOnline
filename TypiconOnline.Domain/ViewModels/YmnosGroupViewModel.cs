@@ -31,6 +31,7 @@ namespace TypiconOnline.Domain.ViewModels
         /// Подобен
         /// </summary>
         public string Prosomoion { get; set; }
+        public string Annotation { get; set; }
         /// <summary>
         /// Самоподобен - текстовое значение. Заполняется в случае, если в правиле - true
         /// </summary>
@@ -51,7 +52,7 @@ namespace TypiconOnline.Domain.ViewModels
 
             if (group.Annotation?.IsEmpty == false)
             {
-                Text = group.Annotation[handler.Settings.Language];
+                Annotation = group.Annotation[handler.Settings.Language];
             }
 
             //текст "Глас"

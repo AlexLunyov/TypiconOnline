@@ -16,15 +16,13 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             ElementNames = new string[] {
                 RuleConstants.MikrosEsperinosNode,
+                RuleConstants.MegalisEsperinosNode,
                 RuleConstants.EsperinosNode,
                 RuleConstants.OrthrosNode,
                 RuleConstants.LeitourgiaNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
-        {
-            return new WorshipSequence(d.GetElementName());
-        }
+        protected override RuleElement CreateObject(XmlDescriptor d) => new WorshipSequence(SerializerRoot, d.GetElementName());
 
         protected override void FillObject(XmlDescriptor d, RuleElement container)
         {

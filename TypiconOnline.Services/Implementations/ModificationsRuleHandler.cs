@@ -36,8 +36,9 @@ namespace TypiconOnline.AppServices.Implementations
             _yearToModify = year;
         }
 
-        public override void Execute(ICustomInterpreted element)
+        public override bool Execute(ICustomInterpreted element)
         {
+            bool result = false;
             if (element is ModifyReplacedDay modifyReplacedDay)
             {
                 //
@@ -74,6 +75,8 @@ namespace TypiconOnline.AppServices.Implementations
                 };
 
                 typiconEntity.AddModifiedRule(request);
+
+                result = true;
             }
             else if ((element is ModifyDay modifyDay) 
                 && (modifyDay.MoveDateCalculated.Year == _yearToModify))
@@ -99,7 +102,11 @@ namespace TypiconOnline.AppServices.Implementations
                 };
 
                 _settings.Rule.Owner.AddModifiedRule(request);
+
+                result = true;
             }
+
+            return result;
         }
 
         //public override RenderContainer GetResult()

@@ -194,8 +194,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
                         group = dayWorship.GetElement().GetYmnosStructure(Place.Value, Count, StartFrom)?.Doxastichon;
                         if (group != null)
                         {
-                            result = new YmnosStructure();
-                            result.Doxastichon = group;
+                            result = new YmnosStructure
+                            {
+                                Doxastichon = group
+                            };
                         }
 
                         break;

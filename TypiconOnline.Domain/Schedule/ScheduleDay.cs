@@ -9,16 +9,15 @@ namespace TypiconOnline.Domain.Schedule
     /// <summary>
     /// 
     /// </summary>
-    public class ScheduleDay //????
+    public class ScheduleDay 
     {
         public ScheduleDay()
         {
-            Schedule = new ContainerViewModel();
         }
 
         public string Name { get; set; }
         public virtual DateTime Date { get; set; }
-        public ContainerViewModel Schedule { get; set; }
+        public WorshipRuleViewModelCollection Schedule { get; set; } = new WorshipRuleViewModelCollection();
         /// <summary>
         /// Номер знака службы
         /// </summary>

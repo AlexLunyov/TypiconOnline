@@ -40,9 +40,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             element.Interpret(DateTime.Today, handler);
 
-            WorshipSequenceViewModel model = new WorshipSequenceViewModel(element, handler);
+            var model = handler.GetResult();
 
-            Assert.AreEqual(4, model.ChildElements.Count);
+            //WorshipSequenceViewModel model = new WorshipSequenceViewModel(element, handler);
+
+            Assert.AreEqual(4, model.FirstOrDefault()?.Count);
         }
     }
 }

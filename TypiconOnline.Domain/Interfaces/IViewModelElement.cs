@@ -8,8 +8,8 @@ using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.Domain.Interfaces
 {
-    public interface IViewModelElement
+    public interface IViewModelElement 
     {
-        ElementViewModel CreateViewModel(IRuleHandler handler);
+        void CreateViewModel(IRuleHandler handler, Action<ElementViewModel> append);
     }
 }
