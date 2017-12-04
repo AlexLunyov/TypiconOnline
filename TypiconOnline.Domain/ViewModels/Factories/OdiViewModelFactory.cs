@@ -100,7 +100,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             string result = "";
 
             //выбираем какой предустановленный тип припева отображен в тропаре
-            if (troparion.Kind == YmnosKind.Ymnos)
+            if (troparion.Kind == YmnosKind.Ymnos && kind == ChorusKind.Common)
             {
                 return defaultChorus;
             }
