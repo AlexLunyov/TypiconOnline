@@ -137,8 +137,11 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 case ViewModelItemKind.Chorus:
                     index = 7;
                     break;
-                //default:
-                //    return string.Empty;
+                case ViewModelItemKind.Theotokion:
+                    index = 8;
+                    break;
+                    //default:
+                    //    return string.Empty;
             }
 
             if (index >= 0)

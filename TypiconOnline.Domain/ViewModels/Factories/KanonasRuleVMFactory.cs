@@ -71,7 +71,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 bool isLastKanonas = (i == req.Element.Kanones.Count - 2);
                 bool isOdi8 = odiNumber == 8;
 
-                if (kanonas.Odes.FirstOrDefault(c => c.Number == odiNumber) is Odi odi)
+                if (kanonas.Odes.FirstOrDefault(c => c.Number == odiNumber && c.Troparia.Count > 0) is Odi odi)
                 {
                     ///Проверяем, данная песнь не Катавасия ли - часть канона, который есть одна из катавасий по вся дни лета
                     //bool isKatavasiaKanonas = odi.Troparia.TrueForAll(c => c.Kind == YmnosKind.Katavasia);

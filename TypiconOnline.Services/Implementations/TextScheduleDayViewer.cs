@@ -32,7 +32,7 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 if (!string.IsNullOrEmpty(item.KindStringValue))
                 {
-                    _resultStringBuilder.AppendLine($"{item.KindStringValue}: ");
+                    _resultStringBuilder.Append($"{item.KindStringValue} ");
                 }
 
                 item.Paragraphs.ForEach(c => _resultStringBuilder.AppendLine(c));
