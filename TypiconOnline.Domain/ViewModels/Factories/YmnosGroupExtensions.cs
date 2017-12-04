@@ -18,18 +18,18 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             ElementViewModel viewModel = new ElementViewModel();
 
-            AppendAnnotation(group.Annotation, handler, viewModel);
+            group.Annotation.AppendItemText(handler, viewModel);
             AppendIhos(group.Ihos, group.Prosomoion, handler, serializer, viewModel);
             AppendYmnis(group.Ymnis, handler, serializer, viewModel);
 
             return viewModel;
         }
 
-        private static void AppendAnnotation(ItemText annotation, IRuleHandler handler, ElementViewModel viewModel)
+        public static void AppendItemText(this ItemText text, IRuleHandler handler, ElementViewModel viewModel)
         {
-            if (annotation?.IsEmpty == false)
+            if (text?.IsEmpty == false)
             {
-                viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text, new List<string> { annotation[handler.Settings.Language] }));
+                viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text, new List<string> { text[handler.Settings.Language] }));
             }
         }
 

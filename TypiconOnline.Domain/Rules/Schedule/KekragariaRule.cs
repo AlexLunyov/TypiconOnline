@@ -33,11 +33,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         #endregion
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             if (handler.IsAuthorized<KekragariaRule>())
             {
-                base.InnerInterpret(date, handler);
+                base.InnerInterpret(handler);
             }
         }
 

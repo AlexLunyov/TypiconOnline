@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         public List<RuleExpression> ChildElements { get; set; } = new List<RuleExpression>();
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             RuleExpression exp1 = null;
             RuleExpression exp2 = null;
@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
             for (int i = 0; i < ChildElements.Count; i++)
             {
                 exp2 = ChildElements[i];
-                exp2.Interpret(date, handler);
+                exp2.Interpret(handler);
                     
                 if (exp1 != null)
                 {

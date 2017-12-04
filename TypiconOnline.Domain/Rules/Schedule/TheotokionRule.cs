@@ -55,7 +55,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         }
 
-        public override DayElementBase Calculate(DateTime date, RuleHandlerSettings settings)
+        public override DayElementBase Calculate(RuleHandlerSettings settings)
         {
             YmnosStructure result = null;
 
@@ -66,10 +66,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             if (Source == YmnosSource.Irmologion)
             {
-                int calcIhos = (ReferenceYmnos.Calculate(date, settings) as YmnosStructure).Ihos;
+                int calcIhos = (ReferenceYmnos.Calculate(settings) as YmnosStructure).Ihos;
 
                 GetTheotokionResponse response = theotokionApp.Get(
-                    new GetTheotokionRequest() { Place = Place.Value, Ihos = calcIhos, DayOfWeek = date.DayOfWeek });
+                    new GetTheotokionRequest() { Place = Place.Value, Ihos = calcIhos, DayOfWeek = settings.Date.DayOfWeek });
 
                 if (response.Exception == null && response.BookElement != null)
                 {
@@ -79,7 +79,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
             else
             {
-                result = base.Calculate(date, settings) as YmnosStructure;
+                result = base.Calculate(settings) as YmnosStructure;
             }
 
             return result;

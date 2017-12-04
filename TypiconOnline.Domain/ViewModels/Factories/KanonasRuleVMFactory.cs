@@ -26,6 +26,14 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
         public override void Create(CreateViewModelRequest<KanonasRule> req)
         {
+            if (req.Element == null
+                || req.Element.Kanones == null
+                || req.Element.Kanones.Count == 0)
+            {
+                //TODO: просто ничего не делаем, хотя надо бы это обрабатывать
+                return;
+            }
+
             Clear(req);
             //Канон:
             AppendHeader(req);
@@ -175,9 +183,12 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             req.AppendModelAction(new ElementViewModel() { viewModel });
         }
 
-        private void AppendAfterRule(CreateViewModelRequest<KanonasRule> req, int i)
+        private void AppendAfterRule(CreateViewModelRequest<KanonasRule> req, int odiNumber)
         {
-            //throw new NotImplementedException();
+            if (req.Element.AfterRules?.FirstOrDefault(c => c.OdiNumber == odiNumber) is KAfterRule rule)
+            {
+                rule.ChildElements.ForEach(k => k.Interpret(req.Handler));
+            }
         }
 
         

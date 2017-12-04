@@ -23,7 +23,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
                                  </equals>";
 
             var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
-            element.Interpret(DateTime.Today, BypassHandler.Instance);
+            element.Interpret(BypassHandler.Instance);
 
             Assert.IsTrue(element.IsValid);
         }
@@ -87,7 +87,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
                                  </equals>";
 
             var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
-            element.Interpret(new DateTime(2017, 4, 15), BypassHandler.Instance);
+            element.Interpret(BypassHandler.GetInstance(new DateTime(2017, 4, 15)));
 
             Assert.IsTrue((bool)element.ValueCalculated);
         }
@@ -101,7 +101,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
 
-            element.Interpret(new DateTime(2017, 4, 15), BypassHandler.Instance);
+            element.Interpret(BypassHandler.GetInstance(new DateTime(2017, 4, 15)));
 
             Assert.IsTrue((bool)element.ValueCalculated);
         }

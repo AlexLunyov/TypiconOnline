@@ -89,10 +89,9 @@ namespace TypiconOnline.AppServices.Implementations
                     if (rule != null)
                     {
                         ModificationsRuleHandler handler = new ModificationsRuleHandler(
-                            new RuleHandlerSettings(a), date.Year);
+                            new RuleHandlerSettings(a, easter.AddDays(a.DaysFromEaster)), date.Year);
 
-                        int i = a.DaysFromEaster;
-                        rule.Interpret(easter.AddDays(i), handler);
+                        rule.Interpret(handler);
                     }
                 });
 
@@ -103,9 +102,9 @@ namespace TypiconOnline.AppServices.Implementations
                 if (menologyRule != null)
                 {
                     ModificationsRuleHandler handler = new ModificationsRuleHandler(
-                        new RuleHandlerSettings(menologyRule), year);
+                        new RuleHandlerSettings(menologyRule, dateToInterpret), year);
                     //выполняем его
-                    menologyRule.GetRule(serializer).Interpret(dateToInterpret, handler);
+                    menologyRule.GetRule(serializer).Interpret(handler);
                 }
             }
         }

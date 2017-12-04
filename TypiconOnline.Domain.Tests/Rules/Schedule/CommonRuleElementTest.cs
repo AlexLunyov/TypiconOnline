@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             TypiconEntity typiconEntity = resp.TypiconEntity;
             MenologyRule rule = typiconEntity.MenologyRules[0];
             ServiceSequenceHandler handler = new ServiceSequenceHandler();
-            handler.Settings = new RuleHandlerSettings() { Language = "cs-ru", Rule = rule };
+            handler.Settings = new RuleHandlerSettings() { Language = "cs-ru", Rule = rule, Date = DateTime.Today };
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
             FileReader reader = new FileReader(folderPath);
@@ -38,7 +38,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             var element = TestRuleSerializer.Deserialize<WorshipSequence>(xml);
 
-            element.Interpret(DateTime.Today, handler);
+            element.Interpret(handler);
 
             var model = handler.GetResult();
 

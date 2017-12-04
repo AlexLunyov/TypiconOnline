@@ -10,7 +10,7 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class KSedalenRuleSerializer : KKontakionRuleSerializer, IRuleSerializer<KSedalenRule>
+    public class KSedalenRuleSerializer : KanonasItemRuleBaseSerializer, IRuleSerializer<KSedalenRule>
     {
         public KSedalenRuleSerializer(IRuleSerializerRoot root) : base(root)
         {

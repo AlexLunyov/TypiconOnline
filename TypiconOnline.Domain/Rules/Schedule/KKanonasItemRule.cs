@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Правило для определения конкретного канона 
     /// </summary>
-    public class KKanonasItemRule : KKontakionRule, ICustomInterpreted
+    public class KKanonasItemRule : KanonasItemRuleBase, ICustomInterpreted
     {
         public KKanonasItemRule(string name) : base(name) { }
 
@@ -45,7 +45,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         #endregion
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             if (handler.IsAuthorized<KKanonasItemRule>())
             {
@@ -68,7 +68,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public override DayElementBase Calculate(DateTime date, RuleHandlerSettings settings)
+        public override DayElementBase Calculate(RuleHandlerSettings settings)
         {
             Kanonas result = null;
             Kanonas source = GetKanonas(settings);
@@ -119,7 +119,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             return result;
         }
 
-        public DayElementBase CalculateEveryDayKatavasia(DateTime date, RuleHandlerSettings settings)
+        public DayElementBase CalculateEveryDayKatavasia(RuleHandlerSettings settings)
         {
             Kanonas result = null;
             Kanonas source = GetKanonas(settings);

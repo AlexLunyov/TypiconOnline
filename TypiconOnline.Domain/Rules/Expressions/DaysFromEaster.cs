@@ -29,11 +29,11 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         public DateExpression ChildExpression { get; set; }
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
-            DateTime easterDate = BookStorage.Instance.Easters.GetCurrentEaster(date.Year);
+            DateTime easterDate = BookStorage.Instance.Easters.GetCurrentEaster(handler.Settings.Date.Year);
 
-            ChildExpression.Interpret(date, handler);
+            ChildExpression.Interpret(handler);
 
             //DateTime easterDate = handler.GetCurrentEaster(date.Year);
 

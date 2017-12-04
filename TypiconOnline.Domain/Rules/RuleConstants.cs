@@ -153,6 +153,8 @@ namespace TypiconOnline.Domain.Rules
         public const string KKontakionSourceAttrName = "source";
         public const string KKontakionKanonasAttrName = "kanonas";
 
+        public const string KontakionShowIkosAttrName = "ikos";
+
         /*
          * Константы для описания атрибутов элемента KSedalenRule
         */

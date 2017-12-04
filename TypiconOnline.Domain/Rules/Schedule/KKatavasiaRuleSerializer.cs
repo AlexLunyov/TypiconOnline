@@ -10,7 +10,7 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class KKatavasiaRuleSerializer : KKontakionRuleSerializer, IRuleSerializer<KKatavasiaRule>
+    public class KKatavasiaRuleSerializer : KanonasItemRuleBaseSerializer, IRuleSerializer<KKatavasiaRule>
     {
         public KKatavasiaRuleSerializer(IRuleSerializerRoot root) : base(root)
         {

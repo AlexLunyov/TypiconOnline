@@ -28,6 +28,10 @@ namespace TypiconOnline.Domain.Rules.Handlers
         public TypiconRule Rule { get; set; }
         public List<DayWorship> DayWorships { get; set; } = new List<DayWorship>();
         public OktoikhDay OktoikhDay { get; set; }
+        /// <summary>
+        /// Дата - параметр для интерпретации элементов правил
+        /// </summary>
+        public DateTime Date { get; set; }
         //public HandlingMode Mode { get; set; }
         //public string ShortName { get; set; }
         //public bool UseFullName { get; set; }
@@ -48,9 +52,10 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// 
         /// </summary>
         /// <param name="seniorTypiconRule">Главное правило для обработки</param>
-        public RuleHandlerSettings(DayRule seniorTypiconRule) : this()
+        public RuleHandlerSettings(DayRule seniorTypiconRule, DateTime date) : this()
         {
             Rule = seniorTypiconRule;
+            Date = date;
         }
 
         //private bool? _throwExceptionIfInvalid = null;

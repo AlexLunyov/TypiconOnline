@@ -22,9 +22,9 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         public ICalcStructureElement ChildElement { get; set; }
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
-            ValueCalculated = ChildElement.Calculate(date, handler?.Settings) != null;
+            ValueCalculated = ChildElement.Calculate(handler?.Settings) != null;
         }
 
         protected override void Validate()

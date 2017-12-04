@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 	                            </or>";
 
             var element = TestRuleSerializer.Deserialize<Or>(xmlString);
-            element.Interpret(DateTime.Today, BypassHandler.Instance);
+            element.Interpret(BypassHandler.Instance);
 
             Assert.IsTrue(element.IsValid);
         }
@@ -34,7 +34,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 	                            </or>";
 
             var element = TestRuleSerializer.Deserialize<Or>(xmlString);
-            element.Interpret(DateTime.Today, BypassHandler.Instance);
+            element.Interpret(BypassHandler.Instance);
 
             Assert.IsTrue((bool)element.ValueCalculated);
         }
@@ -49,7 +49,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 	                            </or>";
 
             var element = TestRuleSerializer.Deserialize<Or>(xmlString);
-            element.Interpret(DateTime.Today, BypassHandler.Instance);
+            element.Interpret(BypassHandler.Instance);
 
             Assert.IsFalse((bool)element.ValueCalculated);
         }

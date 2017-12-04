@@ -26,15 +26,20 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         #endregion
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
-            InterpretChildDateExp(date, handler);
+            InterpretChildDateExp(handler);
 
-            DateToReplaceCalculated = date;
+            DateToReplaceCalculated = handler.Settings.Date;
 
             handler.Execute(this);
 
-            ModifyReplacedDay?.Interpret(MoveDateCalculated, handler);
+            DateTime date = handler.Settings.Date;
+            handler.Settings.Date = MoveDateCalculated;
+
+            ModifyReplacedDay?.Interpret(handler);
+            //возвращаем на всякий случай обратно дату
+            handler.Settings.Date = date;
         }
 
     }

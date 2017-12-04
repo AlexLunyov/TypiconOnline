@@ -34,11 +34,11 @@ namespace TypiconOnline.Domain.Rules.Expressions
             }
         }
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             if (ChildDateExp != null)
             {
-                ChildDateExp.Interpret(date, handler);
+                ChildDateExp.Interpret(handler);
 
                 ValueCalculated = ((DateTime)ChildDateExp.ValueCalculated).DayOfWeek;
             }

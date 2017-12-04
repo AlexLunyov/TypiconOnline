@@ -42,7 +42,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 
             var element = TestRuleSerializer.Deserialize<ExecContainer>(xmlString);
 
-            element.Interpret(DateTime.Today, BypassHandler.Instance);
+            element.Interpret(BypassHandler.Instance);
 
             Assert.Pass("Success");
         }
@@ -77,7 +77,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 
             var element = TestRuleSerializer.Deserialize<ExecContainer>(xmlString);
 
-            element.Interpret(DateTime.Today, BypassHandler.Instance);
+            element.Interpret(BypassHandler.Instance);
 
             Assert.Pass("Success");
         }

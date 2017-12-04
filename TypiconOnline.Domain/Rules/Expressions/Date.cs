@@ -29,11 +29,11 @@ namespace TypiconOnline.Domain.Rules.Expressions
             }
         }
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler settings)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             //если значение выражения пустое, просто передаем текущую дату
             //из вводимой даты берем только год
-            ValueCalculated = (((ItemDate)ValueExpression).IsEmpty) ? date : new DateTime(date.Year, ((ItemDate)ValueExpression).Month, ((ItemDate)ValueExpression).Day);
+            ValueCalculated = (((ItemDate)ValueExpression).IsEmpty) ? handler.Settings.Date : new DateTime(handler.Settings.Date.Year, ((ItemDate)ValueExpression).Month, ((ItemDate)ValueExpression).Day);
         }
 
         protected override void Validate()

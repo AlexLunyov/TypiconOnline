@@ -39,6 +39,12 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         /// <param name="isOdi8">Если true, обавляет "Благословим" вместо "Славы", в 8-ую песнь вставляет стих "Хвалим, благословим..."</param>
         public void AppendViewModel(AppendViewModelOdiRequest req)
         {
+            if (req.Odi == null)
+            {
+                //TODO: просто ничего не делаем, хотя надо бы это обрабатывать
+                return;
+            }
+
             for (int i = 0; i < req.Odi.Troparia.Count; i++)
             {
                 Ymnos troparion = req.Odi.Troparia[i];

@@ -11,6 +11,7 @@ namespace TypiconOnline.Domain.ViewModels.Messaging
     public class CreateViewModelRequest<T> where T : RuleElement, IViewModelElement
     {
         public T Element { get; set; }
+        public DateTime Date { get; set; }
         public IRuleHandler Handler { get; set; }
         public Action<ElementViewModel> AppendModelAction { get; set; }
     }

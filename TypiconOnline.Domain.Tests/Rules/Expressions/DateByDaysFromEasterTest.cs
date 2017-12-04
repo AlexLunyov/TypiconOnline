@@ -22,7 +22,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             var element = TestRuleSerializer.Deserialize<DateByDaysFromEaster>(xmlString);
 
-            element.Interpret(new DateTime(2017, 05, 23), BypassHandler.Instance);
+            element.Interpret(BypassHandler.GetInstance(new DateTime(2017, 05, 23)));
 
             string result = ((DateTime)element.ValueCalculated).ToString("dd-MM-yyyy");
 
@@ -36,7 +36,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             var element = TestRuleSerializer.Deserialize<DateByDaysFromEaster>(xmlString);
 
-            element.Interpret(new DateTime(2017, 05, 23), BypassHandler.Instance);
+            element.Interpret(BypassHandler.GetInstance(new DateTime(2017, 05, 23)));
 
             string result = ((DateTime)element.ValueCalculated).ToString("dd-MM-yyyy");
 

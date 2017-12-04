@@ -28,7 +28,10 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             GetTypiconEntityResponse resp = new TypiconEntityService(_unitOfWork).GetTypiconEntity(1);
             TypiconEntity typiconEntity = resp.TypiconEntity;
 
-            ServiceSequenceHandler handler = new ServiceSequenceHandler() { Settings = new RuleHandlerSettings() { Language = "cs-ru" } };
+            ServiceSequenceHandler handler = new ServiceSequenceHandler()
+            {
+                Settings = new RuleHandlerSettings() { Language = "cs-ru" }
+            };
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
             FileReader reader = new FileReader(folderPath);
@@ -42,8 +45,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             handler.Settings.Rule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
+            handler.Settings.Date = date;
 
-            rule.GetRule(TestRuleSerializer.Root).Interpret(date, handler);
+            rule.GetRule(TestRuleSerializer.Root).Interpret(handler);
 
             var model = handler.GetResult();
 
@@ -59,8 +63,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             handler.Settings.Rule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
+            handler.Settings.Date = date;
 
-            rule.GetRule(TestRuleSerializer.Root).Interpret(date, handler);
+            rule.GetRule(TestRuleSerializer.Root).Interpret(handler);
 
             model = handler.GetResult();
 

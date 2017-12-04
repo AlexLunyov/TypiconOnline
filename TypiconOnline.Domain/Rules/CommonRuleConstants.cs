@@ -107,6 +107,11 @@ namespace TypiconOnline.Domain.Rules
         /// Правило для разметки шапки для катавасии Канона
         /// </summary>
         public const string KatavasiaRule = "_sys_katavasia";
+
+        /// <summary>
+        /// Правило для разметки шапки для Кондака
+        /// </summary>
+        public const string Kontakion = "_sys_kontakion";
     }
 
     

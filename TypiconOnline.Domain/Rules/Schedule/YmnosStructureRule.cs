@@ -51,29 +51,29 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         #endregion
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             if (handler.IsAuthorized<YmnosStructureRule>())
             {
                 //используем специальный обработчик для YmnosStructureRule,
                 //чтобы создать список источников стихир на обработку
-                ExecContainer container = GetChildElements<ICalcStructureElement>(date, handler); 
+                ExecContainer container = GetChildElements<ICalcStructureElement>(handler); 
 
                 if (container != null)
                 {
-                    CalculateYmnosStructure(date, handler.Settings, container);
+                    CalculateYmnosStructure(handler.Settings, container);
                 }
 
                 handler.Execute(this);
             }
         }
 
-        private void CalculateYmnosStructure(DateTime date, RuleHandlerSettings settings, ExecContainer container)
+        private void CalculateYmnosStructure(RuleHandlerSettings settings, ExecContainer container)
         {
             Structure = new YmnosStructure();
             foreach (ICalcStructureElement element in container.ChildElements)
             {
-                if (element.Calculate(date, settings) is YmnosStructure s)
+                if (element.Calculate(settings) is YmnosStructure s)
                 {
                     switch (element)
                     {

@@ -36,29 +36,29 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         #region Methods
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler settings)
+        protected override void InnerInterpret(IRuleHandler settings)
         {
-            Expression.Interpret(date, settings);
+            Expression.Interpret(settings);
 
             foreach (Case caseElement in CaseElements)
             {
-                caseElement.Interpret(date, settings);
+                caseElement.Interpret(settings);
 
                 foreach (RuleExpression caseValue in caseElement.ValuesElements)
                 {
-                    caseValue.Interpret(date, settings);
+                    caseValue.Interpret(settings);
 
                     if (Expression.ValueCalculated.Equals(caseValue.ValueCalculated))
                     {
                         //и значения совпадают
-                        caseElement.ActionElement.Interpret(date, settings);
+                        caseElement.ActionElement.Interpret(settings);
                         return;
                     }
                 }
             }
 
             //если мы здесь, значит совпадений не было
-            Default?.Interpret(date, settings);
+            Default?.Interpret(settings);
         }
 
         protected override void Validate()

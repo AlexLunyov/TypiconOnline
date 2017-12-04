@@ -47,7 +47,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         #endregion
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             if (handler.IsAuthorized<YmnosRule>())
             {
@@ -139,7 +139,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <param name="date"></param>
         /// <param name="handler"></param>
         /// <returns>Если таковые не объявлены в DayService, возвращает NULL.</returns>
-        public virtual DayElementBase Calculate(DateTime date, RuleHandlerSettings settings)
+        public virtual DayElementBase Calculate(RuleHandlerSettings settings)
         {
             if (!IsValid)
             {

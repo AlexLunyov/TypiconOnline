@@ -78,7 +78,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
 
             //ModificationsRuleHandler handler = new ModificationsRuleHandler()
 
-            element.Interpret(DateTime.Today, BypassHandler.Instance);
+            element.Interpret(BypassHandler.Instance);
 
             DateTime date = element.MoveDateCalculated;
 

@@ -55,11 +55,11 @@ namespace TypiconOnline.Domain.Rules.Expressions
             return false;
         }
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler settings)
+        protected override void InnerInterpret(IRuleHandler settings)
         {
             foreach (RuleExpression valueElement in ValuesElements)
             {
-                valueElement.Interpret(date, settings);
+                valueElement.Interpret(settings);
             }
         }
 

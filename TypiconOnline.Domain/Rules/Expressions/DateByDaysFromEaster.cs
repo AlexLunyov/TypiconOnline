@@ -29,11 +29,11 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         public IntExpression ChildExpression { get; set; }
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
-            ChildExpression.Interpret(date, handler);
+            ChildExpression.Interpret(handler);
 
-            DateTime easterDate = easterContext.GetCurrentEaster(date.Year);
+            DateTime easterDate = easterContext.GetCurrentEaster(handler.Settings.Date.Year);
 
             ValueCalculated = easterDate.AddDays((int)ChildExpression.ValueCalculated);
         }

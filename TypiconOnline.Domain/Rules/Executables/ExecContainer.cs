@@ -25,11 +25,11 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         #region Methods
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             foreach (RuleElement el in ChildElements)
             {
-                el.Interpret(date, handler);
+                el.Interpret(handler);
             }
         }
 
@@ -64,7 +64,7 @@ namespace TypiconOnline.Domain.Rules.Executables
         /// <param name="date"></param>
         /// <param name="handler"></param>
         /// <returns></returns>
-        protected ExecContainer GetChildElements<T>(DateTime date, IRuleHandler handler) //where T : RuleExecutable, ICustomInterpreted
+        protected ExecContainer GetChildElements<T>(IRuleHandler handler) //where T : RuleExecutable, ICustomInterpreted
         {
             //используем специальный обработчик
             //чтобы создать список источников канонов на обработку
@@ -72,7 +72,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 
             foreach (RuleElement elem in ChildElements)
             {
-                elem.Interpret(date, childrenHandler);
+                elem.Interpret(childrenHandler);
             }
 
             return childrenHandler.GetResult();

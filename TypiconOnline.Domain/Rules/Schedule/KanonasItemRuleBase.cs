@@ -14,11 +14,11 @@ using TypiconOnline.Domain.ViewModels;
 namespace TypiconOnline.Domain.Rules.Schedule
 {
     /// <summary>
-    /// Правило для использования кондака для правила канона 
+    /// Абстрактный базовый класс для элементов правил, использующий как основание богослужебный текст Канон
     /// </summary>
-    public class KKontakionRule : RuleExecutable, ICustomInterpreted, ICalcStructureElement, IViewModelElement//<Kontakion>
+    public abstract class KanonasItemRuleBase : RuleExecutable, ICustomInterpreted, ICalcStructureElement//<Kontakion>
     {
-        public KKontakionRule(string name) : base(name) { }
+        public KanonasItemRuleBase(string name) : base(name) { }
 
         #region Properties
 
@@ -34,9 +34,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         #endregion
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
-            if (handler.IsAuthorized<KKontakionRule>())
+            if (handler.IsAuthorized<KanonasItemRuleBase>())
             {
                 handler.Execute(this);
             }
@@ -63,7 +63,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             //}
         }
 
-        public virtual DayElementBase Calculate(DateTime date, RuleHandlerSettings settings)
+        public virtual DayElementBase Calculate(RuleHandlerSettings settings)
         {
             return (IsValid) ? GetKanonas(settings)?.Kontakion : null;
         }
@@ -118,11 +118,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 return (day.GetElement().Orthros?.Kanones?.Count > index) ? day.GetElement().Orthros.Kanones[index] : null;
             }
-        }
-
-        public void CreateViewModel(IRuleHandler handler, Action<ElementViewModel> append)
-        {
-            throw new NotImplementedException();
-        }
+        }        
     }
 }

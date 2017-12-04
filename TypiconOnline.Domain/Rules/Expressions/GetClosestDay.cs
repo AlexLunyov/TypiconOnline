@@ -34,9 +34,9 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         public DateExpression ChildDateExp { get; set; }
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
-            ChildDateExp.Interpret(date, handler);
+            ChildDateExp.Interpret(handler);
 
             if (WeekCount != 0)
             {

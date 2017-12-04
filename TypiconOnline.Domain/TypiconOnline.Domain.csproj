@@ -204,9 +204,13 @@
     <Compile Include="Rules\Schedule\CommonRuleElementSerializer.cs" />
     <Compile Include="Rules\Schedule\IncludingRulesElement.cs" />
     <Compile Include="Rules\Schedule\KAfterRule.cs" />
+    <Compile Include="Rules\Schedule\KanonasItemRuleBase.cs" />
+    <Compile Include="Rules\Schedule\KanonasItemRuleBaseSerializer.cs" />
     <Compile Include="Rules\Schedule\KKanonasItemRule.cs" />
     <Compile Include="Rules\Schedule\KAfterRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\KKatavasiaRuleSerializer.cs" />
+    <Compile Include="Rules\Schedule\KontakionRule.cs" />
+    <Compile Include="Rules\Schedule\KontakionRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\KSedalenTheotokionRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\KSedalenRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\KKanonasItemRuleSerializer.cs" />
@@ -216,7 +220,6 @@
     <Compile Include="Rules\Schedule\SedalenRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\ApostichaRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\KekragariaRuleSerializer.cs" />
-    <Compile Include="Rules\Schedule\KKontakionRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\TextHolderSerializer.cs" />
     <Compile Include="Rules\Schedule\WorshipSequenceSerializer.cs" />
     <Compile Include="Rules\Schedule\TroparionRuleSerializer.cs" />
@@ -251,7 +254,6 @@
     <Compile Include="Rules\Schedule\AinoiRule.cs" />
     <Compile Include="Rules\Schedule\KanonasRule.cs" />
     <Compile Include="Rules\Schedule\KKatavasiaRule.cs" />
-    <Compile Include="Rules\Schedule\KKontakionRule.cs" />
     <Compile Include="Rules\Schedule\KKatavasiaRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\KSedalenRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\KSedalenRule.cs" />
@@ -339,9 +341,9 @@
     <Compile Include="Typicon\TypiconSettings.cs" />
     <Compile Include="ViewModels\Factories\AinoiRuleVMFactory.cs" />
     <Compile Include="ViewModels\Factories\ApostichaVMFactory.cs" />
-    <Compile Include="ViewModels\Factories\ContainerViewModelFactory.cs" />
     <Compile Include="ViewModels\Factories\KanonasRuleVMFactory.cs" />
     <Compile Include="ViewModels\Factories\KekragariaRuleVMFactory.cs" />
+    <Compile Include="ViewModels\Factories\KontakionRuleVMFactory.cs" />
     <Compile Include="ViewModels\Factories\OdiViewModelFactory.cs" />
     <Compile Include="ViewModels\Factories\SedalenVMFactory.cs" />
     <Compile Include="ViewModels\Factories\TextHolderVMFactory.cs" />

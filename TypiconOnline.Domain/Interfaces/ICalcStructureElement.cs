@@ -13,6 +13,6 @@ namespace TypiconOnline.Domain.Interfaces
     /// </summary>
     public interface ICalcStructureElement
     {
-        DayElementBase Calculate(DateTime date, RuleHandlerSettings settings);
+        DayElementBase Calculate(RuleHandlerSettings settings);
     }
 }

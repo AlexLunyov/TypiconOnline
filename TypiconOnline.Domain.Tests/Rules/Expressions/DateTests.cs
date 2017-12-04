@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             var element = TestRuleSerializer.Deserialize<Date>(xmlString);
 
-            element.Interpret(new DateTime(1900, 05, 23), BypassHandler.Instance);
+            element.Interpret(BypassHandler.GetInstance(new DateTime(1900, 05, 23)));
 
             string result = ((DateTime)element.ValueCalculated).ToString("dd-MM-yyyy");
 

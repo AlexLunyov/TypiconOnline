@@ -23,11 +23,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         //public List<TextHolder> CalculatedElements { get; private set; }
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             if (handler.IsAuthorized<EktenisRule>())
             {
-                base.InnerInterpret(date, handler);
+                base.InnerInterpret(handler);
                 //используем специальный обработчик для Ektenis,
                 //чтобы создать вычисленный список элементов TextHolder
                 //ExecContainer container = GetChildElements<TextHolder>(date, handler);

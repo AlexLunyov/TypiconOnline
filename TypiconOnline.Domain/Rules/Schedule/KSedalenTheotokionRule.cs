@@ -17,7 +17,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         public KSedalenTheotokionRule(string name) : base(name) { }
 
-        public override DayElementBase Calculate(DateTime date, RuleHandlerSettings settings)
+        public override DayElementBase Calculate(RuleHandlerSettings settings)
         {
             YmnosStructure result = null;
 
@@ -58,7 +58,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                         }
                         break;
                     default:
-                        result = base.Calculate(date, settings) as YmnosStructure;
+                        result = base.Calculate(settings) as YmnosStructure;
                         break;
                 }
             }

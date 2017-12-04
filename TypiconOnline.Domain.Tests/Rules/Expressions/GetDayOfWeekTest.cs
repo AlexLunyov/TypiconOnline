@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             var element = TestRuleSerializer.Deserialize<GetDayOfWeek>(xmlString);
 
-            element.Interpret(new DateTime(1900, 05, 23), BypassHandler.Instance);
+            element.Interpret(BypassHandler.GetInstance(new DateTime(1900, 05, 23)));
 
             Assert.AreEqual((DayOfWeek)element.ValueCalculated, DayOfWeek.Sunday);
         }
@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             var element = TestRuleSerializer.Deserialize<GetDayOfWeek>(xmlString);
 
-            element.Interpret(new DateTime(2017, 05, 23), BypassHandler.Instance);
+            element.Interpret(BypassHandler.GetInstance(new DateTime(2017, 05, 23)));
 
             Assert.AreEqual((DayOfWeek)element.ValueCalculated, DayOfWeek.Saturday);
         }
@@ -45,7 +45,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             var element = TestRuleSerializer.Deserialize<GetDayOfWeek>(xmlString);
 
-            element.Interpret(new DateTime(2017, 05, 23), BypassHandler.Instance);
+            element.Interpret(BypassHandler.GetInstance(new DateTime(2017, 05, 23)));
 
             Assert.AreEqual((DayOfWeek)element.ValueCalculated, DayOfWeek.Saturday);
         }

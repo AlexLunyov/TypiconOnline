@@ -29,17 +29,17 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         #region Methods
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
-            Expression.Interpret(date, handler);
+            Expression.Interpret(handler);
 
             if ((bool)Expression.ValueCalculated)
             {
-                ThenElement.Interpret(date, handler);
+                ThenElement.Interpret(handler);
             }
             else
             {
-                ElseElement?.Interpret(date, handler);
+                ElseElement?.Interpret(handler);
             }
         }
 

@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Правило для использования седальнов 
     /// </summary>
-    public class KSedalenRule : KKontakionRule
+    public class KSedalenRule : KanonasItemRuleBase
     {
         public KSedalenRule(string name) : base(name) { }
 
@@ -28,7 +28,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         #endregion
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             if (handler.IsAuthorized<KSedalenRule>())
             {
@@ -36,7 +36,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public override DayElementBase Calculate(DateTime date, RuleHandlerSettings settings)
+        public override DayElementBase Calculate(RuleHandlerSettings settings)
         {
             YmnosStructure result = null;
 

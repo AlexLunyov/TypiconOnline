@@ -34,7 +34,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
             }
         }
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             //ничего
         }

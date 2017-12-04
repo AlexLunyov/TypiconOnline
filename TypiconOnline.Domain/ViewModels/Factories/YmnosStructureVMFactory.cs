@@ -20,6 +20,13 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
         public override void Create(CreateViewModelRequest<YmnosStructureRule> req)
         {
+            if (req.Element == null
+                || req.Element.Structure == null)
+            {
+                //TODO: просто ничего не делаем, хотя надо бы это обрабатывать
+                return;
+            }
+
             ElementViewModel viewModel = new ElementViewModel();
 
             //здесь вставляется индивидуальная обработка наследников

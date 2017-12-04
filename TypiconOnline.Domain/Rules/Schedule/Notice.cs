@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         public Notice(string name) : base(name) { }
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             if (handler.IsAuthorized<Notice>())
             {

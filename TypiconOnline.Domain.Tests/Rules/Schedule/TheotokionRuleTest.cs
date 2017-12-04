@@ -95,8 +95,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             handler.Settings.Rule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
+            handler.Settings.Date = date;
 
-            rule.GetRule(TestRuleSerializer.Root).Interpret(date, handler);
+            rule.GetRule(TestRuleSerializer.Root).Interpret(handler);
 
             var model = handler.GetResult();
 

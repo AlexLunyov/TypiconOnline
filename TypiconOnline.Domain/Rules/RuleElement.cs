@@ -26,7 +26,7 @@ namespace TypiconOnline.Domain.Rules
         /// </summary>
         /// <param name="date"></param>
         /// <param name="handler"></param>
-        public virtual void Interpret(DateTime date, IRuleHandler handler)
+        public virtual void Interpret(IRuleHandler handler)
         {
             //Проверка для всех элементов правил. 
             //Если неверно составлен, то либо выкидывается исключение (в случае соответствующей настройки),
@@ -42,7 +42,7 @@ namespace TypiconOnline.Domain.Rules
 
             if (check != false)
             {
-                InnerInterpret(date, handler);
+                InnerInterpret(handler);
                 _isInterpreted = true;
             }
         }
@@ -61,7 +61,7 @@ namespace TypiconOnline.Domain.Rules
         /// </summary>
         /// <param name="date"></param>
         /// <param name="handler"></param>
-        protected abstract void InnerInterpret(DateTime date, IRuleHandler handler);
+        protected abstract void InnerInterpret(IRuleHandler handler);
 
         /// <summary>
         /// Выкидывает исключение, если настройки обработчика позволяют это

@@ -20,11 +20,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// </summary>
         public int OdiNumber { get; set; }
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             if (handler.IsAuthorized<KAfterRule>())
             {
-                base.InnerInterpret(date, handler);
+                base.InnerInterpret(handler);
 
                 handler.Execute(this);
             }

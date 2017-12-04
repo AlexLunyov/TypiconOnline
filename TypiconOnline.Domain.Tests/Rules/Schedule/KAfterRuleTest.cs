@@ -78,7 +78,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             var element = TestRuleSerializer.Deserialize<KanonasRule>(xmlString);
 
-            element.Interpret(DateTime.Today, BypassHandler.Instance);
+            element.Interpret(BypassHandler.Instance);
 
             Assert.AreEqual(2, element.AfterRules.Count());
         }

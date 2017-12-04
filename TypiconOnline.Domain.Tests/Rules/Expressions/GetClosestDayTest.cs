@@ -69,7 +69,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
 
-            element.Interpret(DateTime.Today, BypassHandler.Instance);
+            element.Interpret(BypassHandler.Instance);
 
             Assert.AreEqual(element.ValueCalculated, new DateTime(2017, 04, 15));
         }
@@ -81,7 +81,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
 
-            element.Interpret(DateTime.Today, BypassHandler.Instance);
+            element.Interpret(BypassHandler.Instance);
 
             Assert.AreEqual(element.ValueCalculated, new DateTime(2017, 04, 02));
         }
@@ -93,7 +93,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
 
-            element.Interpret(DateTime.Today, BypassHandler.Instance);
+            element.Interpret(BypassHandler.Instance);
 
             Assert.AreEqual(element.ValueCalculated, new DateTime(2017, 04, 30));
         }
@@ -105,7 +105,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
 
-            element.Interpret(new DateTime(2014, 12, 12), BypassHandler.Instance);
+            element.Interpret(BypassHandler.GetInstance(new DateTime(2014, 12, 12)));
 
             Assert.AreEqual(element.ValueCalculated, new DateTime(2014, 10, 26));
         }
@@ -117,7 +117,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
 
-            element.Interpret(new DateTime(2017, 12, 12), BypassHandler.Instance);
+            element.Interpret(BypassHandler.GetInstance(new DateTime(2017, 12, 12)));
 
             Assert.AreEqual(element.ValueCalculated, new DateTime(2017, 5, 7));
         }
@@ -129,7 +129,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
 
-            element.Interpret(new DateTime(2017, 12, 12), BypassHandler.Instance);
+            element.Interpret(BypassHandler.GetInstance(new DateTime(2017, 12, 12)));
 
             Assert.AreEqual(element.ValueCalculated, new DateTime(2017, 5, 8));
         }

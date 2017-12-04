@@ -96,17 +96,23 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         #region Methods
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             if (IsValid && handler.IsAuthorized<ModifyDay>())
             {
-                InterpretChildDateExp(date, handler);
+                InterpretChildDateExp(handler);
 
                 handler.Execute(this);
 
                 //обработка ModifyReplacedDay
 
-                ModifyReplacedDay?.Interpret(MoveDateCalculated, handler);
+                DateTime date = handler.Settings.Date;
+
+                handler.Settings.Date = MoveDateCalculated;
+
+                ModifyReplacedDay?.Interpret(handler);
+                //возвращаем на всякий случай обратно дату
+                handler.Settings.Date = date;
             }
         }
 
@@ -115,16 +121,16 @@ namespace TypiconOnline.Domain.Rules.Executables
         /// </summary>
         /// <param name="date"></param>
         /// <param name="handler"></param>
-        protected void InterpretChildDateExp(DateTime date, IRuleHandler handler)
+        protected void InterpretChildDateExp(IRuleHandler handler)
         {
             if (ChildDateExp != null)
             {
-                ChildDateExp.Interpret(date, handler);
+                ChildDateExp.Interpret(handler);
                 MoveDateCalculated = (DateTime)ChildDateExp.ValueCalculated;
             }
             else
             {
-                MoveDateCalculated = date.AddDays((int) DayMoveCount);
+                MoveDateCalculated = handler.Settings.Date.AddDays((int) DayMoveCount);
             }
         }
 

@@ -10,6 +10,15 @@ namespace TypiconOnline.Domain.Rules.Handlers
 {
     public class BypassHandler : IRuleHandler
     {
+        private RuleHandlerSettings settings = new RuleHandlerSettings() { Date = DateTime.Today };
+
+        public BypassHandler() { }
+
+        public BypassHandler(DateTime date)
+        {
+            settings = new RuleHandlerSettings() { Date = date };
+        }
+
         public bool Execute(ICustomInterpreted element)
         {
             return true;
@@ -38,7 +47,14 @@ namespace TypiconOnline.Domain.Rules.Handlers
             }
         }
 
-        private RuleHandlerSettings settings = new RuleHandlerSettings();
+        public static BypassHandler GetInstance(DateTime date)
+        {
+            return new BypassHandler(date);
+        }
+
+        
+
+        
 
         public RuleHandlerSettings Settings
         {

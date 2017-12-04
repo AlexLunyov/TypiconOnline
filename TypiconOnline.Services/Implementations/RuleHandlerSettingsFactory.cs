@@ -200,6 +200,7 @@ namespace TypiconOnline.AppServices.Implementations
             return new RuleHandlerSettings()
             {
                 Addition = additionalSettings,
+                Date = req.Date,
                 Rule = rule,
                 DayWorships = dayServices.ToList(),
                 OktoikhDay = oktoikhDay,

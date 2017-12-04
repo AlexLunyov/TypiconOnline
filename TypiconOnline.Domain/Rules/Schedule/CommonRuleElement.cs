@@ -28,7 +28,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         public CommonRuleElement(string name, IRuleSerializerRoot serializerRoot) : base(name, serializerRoot) { }
 
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             if (handler.IsAuthorized<CommonRuleElement>())
             {
@@ -41,7 +41,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 {
                     //имеется Правило и оно верно составлено
                     //значит просто включаем его
-                    container.ChildElements.ForEach(c => c.Interpret(date, handler));
+                    container.ChildElements.ForEach(c => c.Interpret(handler));
                 }
             }
         }

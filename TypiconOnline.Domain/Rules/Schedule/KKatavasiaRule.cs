@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Приавло для использования катавасии в каноне
     /// </summary>
-    public class KKatavasiaRule : KKontakionRule, ICustomInterpreted, ICalcStructureElement
+    public class KKatavasiaRule : KanonasItemRuleBase, ICustomInterpreted, ICalcStructureElement
     {
         IKatavasiaContext katavasiaContext;
 
@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         #endregion
 
-        protected override void InnerInterpret(DateTime date, IRuleHandler handler)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
             if (handler.IsAuthorized<KKatavasiaRule>())
             {
@@ -62,7 +62,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public override DayElementBase Calculate(DateTime date, RuleHandlerSettings settings)
+        public override DayElementBase Calculate(RuleHandlerSettings settings)
         {
             return (string.IsNullOrEmpty(Name)) ? GetFromSource(settings) : GetFromRepository();
         }

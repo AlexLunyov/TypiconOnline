@@ -95,7 +95,7 @@ namespace TypiconOnline.Domain.Services
 
             handler.Settings = settings;
 
-            settings.Rule.GetRule(_ruleSerializer).Interpret(request.Date, handler);
+            settings.Rule.GetRule(_ruleSerializer).Interpret(handler);
 
             var container = handler.GetResult();
 
