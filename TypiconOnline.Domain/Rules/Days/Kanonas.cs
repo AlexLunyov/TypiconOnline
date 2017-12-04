@@ -27,6 +27,12 @@ namespace TypiconOnline.Domain.Rules.Days
         public int Ihos { get; set; }
 
         /// <summary>
+        /// Наименование канона
+        /// </summary>
+        [XmlElement(RuleConstants.KanonasNameNode)]
+        public ItemText Name { get; set; }
+
+        /// <summary>
         /// Аннотация
         /// </summary>
         [XmlElement(RuleConstants.KanonasAnnotationNode)]
@@ -72,6 +78,15 @@ namespace TypiconOnline.Domain.Rules.Days
 
         protected override void Validate()
         {
+            //if (Name == null)
+            //{
+            //    AddBrokenConstraint(KanonasBusinessConstraint.NameRequired);
+            //}
+            //else if (!Name.IsValid)
+            //{
+            //    AppendAllBrokenConstraints(Name, RuleConstants.KanonasNameNode);
+            //}
+
             if (Acrostic?.IsValid == false)
             {
                 AppendAllBrokenConstraints(Acrostic, RuleConstants.KanonasAcrosticNode);

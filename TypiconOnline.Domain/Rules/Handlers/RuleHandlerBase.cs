@@ -42,7 +42,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
             return IsTypeAuthorized(t.GetType());
         }
 
-        public bool IsAuthorized<T>() where T : ICustomInterpreted
+        public virtual bool IsAuthorized<T>() where T : ICustomInterpreted
         {
             return IsTypeAuthorized(typeof(T));
         }

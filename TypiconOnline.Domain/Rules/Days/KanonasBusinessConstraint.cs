@@ -10,6 +10,7 @@ namespace TypiconOnline.Domain.Rules.Days
 {
     public class KanonasBusinessConstraint
     {
+        public static readonly BusinessConstraint NameRequired = new BusinessConstraint("Необходимо наличие наименования канона.");
         public static readonly BusinessConstraint OdiRequired = new BusinessConstraint("Необходимо наличие хотя бы одной песни канона.");
     }
 }

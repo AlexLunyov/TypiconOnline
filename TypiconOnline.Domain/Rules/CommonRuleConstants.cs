@@ -74,11 +74,39 @@ namespace TypiconOnline.Domain.Rules
         public const string DeaconRule = "_sys_deacon";
         
         /// <summary>
-        /// Правило для разметки роли Хор для каждого текста
+        /// Правило для разметки роли Стих для каждого текста
         /// </summary>
         public const string StihosRule = "_sys_stihos";
 
+        /// <summary>
+        /// Тексты, обозначающие типы размечаемого текста. Строго индексированы по порядку
+        /// </summary>
+        public const string ViewModelKind = "_sys_viewmodelkind";
+
+        /// <summary>
+        /// Правило для разметки шапки для Канона
+        /// </summary>
+        public const string KanonasRule = "_sys_kanonas";
+
+        /// <summary>
+        /// Правило для разметки шапки для Канона
+        /// </summary>
+        public const string KanonasChorusRule = "_sys_kanonaschorus";
+
+        /// <summary>
+        /// Текст «Хвалим, благословим…» по 8-й песне Канона утрени
+        /// </summary>
+        public const string Kanonas8Rule = "_sys_kanonas8";
+
+        /// <summary>
+        /// Правило для разметки шапки для Песни Канона
+        /// </summary>
+        public const string OdiRule = "_sys_odi";
         
+        /// <summary>
+        /// Правило для разметки шапки для катавасии Канона
+        /// </summary>
+        public const string KatavasiaRule = "_sys_katavasia";
     }
 
     

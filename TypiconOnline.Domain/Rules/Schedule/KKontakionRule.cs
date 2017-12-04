@@ -9,13 +9,14 @@ using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
     /// <summary>
     /// Правило для использования кондака для правила канона 
     /// </summary>
-    public class KKontakionRule : RuleExecutable, ICustomInterpreted, ICalcStructureElement//<Kontakion>
+    public class KKontakionRule : RuleExecutable, ICustomInterpreted, ICalcStructureElement, IViewModelElement//<Kontakion>
     {
         public KKontakionRule(string name) : base(name) { }
 
@@ -117,6 +118,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 return (day.GetElement().Orthros?.Kanones?.Count > index) ? day.GetElement().Orthros.Kanones[index] : null;
             }
+        }
+
+        public void CreateViewModel(IRuleHandler handler, Action<ElementViewModel> append)
+        {
+            throw new NotImplementedException();
         }
     }
 }

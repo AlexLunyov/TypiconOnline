@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             if (annotation?.IsEmpty == false)
             {
-                viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text, new string[] { annotation[handler.Settings.Language] }));
+                viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text, new List<string> { annotation[handler.Settings.Language] }));
             }
         }
 
@@ -58,7 +58,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 ihosString += $"{p}: \"{ prosomoion[handler.Settings.Language] }\"";
             }
 
-            viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text, new string[] { ihosString }));
+            viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text, new List<string> { ihosString }));
         }
 
         private static void AppendYmnis(List<Ymnos> ymnis, IRuleHandler handler,
@@ -72,11 +72,11 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 foreach (ItemText stihos in ymnos.Stihoi)
                 {
                     viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Stihos, text.StihosText, 
-                        new string[] { stihos[handler.Settings.Language] }));
+                        new List<string> { stihos[handler.Settings.Language] }));
                 }
 
                 viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Choir, text.ChoirText,
-                    new string[] { ymnos.Text[handler.Settings.Language] } ));
+                    new List<string> { ymnos.Text[handler.Settings.Language] } ));
             }
         }
 

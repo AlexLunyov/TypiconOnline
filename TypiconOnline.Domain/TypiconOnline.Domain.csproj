@@ -342,12 +342,14 @@
     <Compile Include="ViewModels\Factories\ContainerViewModelFactory.cs" />
     <Compile Include="ViewModels\Factories\KanonasRuleVMFactory.cs" />
     <Compile Include="ViewModels\Factories\KekragariaRuleVMFactory.cs" />
+    <Compile Include="ViewModels\Factories\OdiViewModelFactory.cs" />
     <Compile Include="ViewModels\Factories\SedalenVMFactory.cs" />
     <Compile Include="ViewModels\Factories\TextHolderVMFactory.cs" />
     <Compile Include="ViewModels\Factories\ViewModelFactoryBase.cs" />
     <Compile Include="ViewModels\Factories\ViewModelItemFactory.cs" />
     <Compile Include="ViewModels\Factories\YmnosGroupExtensions.cs" />
     <Compile Include="ViewModels\Factories\YmnosStructureVMFactory.cs" />
+    <Compile Include="ViewModels\Messaging\AppendViewModelOdiRequest.cs" />
     <Compile Include="ViewModels\Messaging\CreateViewModelRequest.cs" />
     <Compile Include="ViewModels\EktenisViewModel.cs" />
     <Compile Include="ViewModels\ElementViewModel.cs" />

@@ -15,10 +15,13 @@ namespace TypiconOnline.Domain.ViewModels
     /// <summary>
     /// Элементарная частичка выходной формы последовательности богослужений
     /// </summary>
-    public class ViewModelItem
+    public class ViewModelItem 
     {
         public string KindStringValue { get; set; }
-        public TextHolderKind Kind { get; set; }
-        public IEnumerable<string> Paragraphs { get; set; }
+        public ViewModelItemKind Kind { get; set; }
+        //TODO: необходимо добавить к строкоым значениям каждого параграфа также и стиль
+        public List<string> Paragraphs { get; set; }
     }
+
+    public enum ViewModelItemKind { Choir, Lector, Priest, Deacon, Stihos, Text, Irmos, Troparion, Chorus, Theotokion }
 }

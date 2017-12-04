@@ -41,7 +41,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// Вычисляемое. Определяется в KanonasRule
         /// По умолчанию, false
         /// </summary>
-        public bool IncludeKatavasia { get; set; } = false;
+        //public bool IncludeKatavasia { get; set; } = false;
 
         #endregion
 
@@ -100,8 +100,48 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     //добавляем тропари
                     o.Troparia.AddRange(GetYmnis(odi));
 
-                    if (IncludeKatavasia
-                         && (odi.Number == 3 || odi.Number == 6 || odi.Number == 8 || odi.Number == 9))
+                    //if (IncludeKatavasia
+                    //     && (odi.Number == 3 || odi.Number == 6 || odi.Number == 8 || odi.Number == 9))
+                    //{
+                    //    //добавляем ирмос в качестве катавасии
+                    //    Ymnos katavasia = new Ymnos(irmos)
+                    //    {
+                    //        Kind = YmnosKind.Katavasia
+                    //    };
+                    //    o.Troparia.Add(katavasia);
+                    //}
+
+                    //добавляем саму песнь
+                    result.Odes.Add(o);
+                }
+            }
+
+            return result;
+        }
+
+        public DayElementBase CalculateEveryDayKatavasia(DateTime date, RuleHandlerSettings settings)
+        {
+            Kanonas result = null;
+            Kanonas source = GetKanonas(settings);
+
+            if (source != null)
+            {
+                result = new Kanonas()
+                {
+                    Acrostic = source.Acrostic,
+                    Annotation = source.Annotation,
+                    Ihos = source.Ihos,
+                    Stihos = source.Stihos
+                };
+
+                foreach (Odi odi in source.Odes)
+                {
+                    Odi o = new Odi() { Number = odi.Number };
+
+                    //ирмос
+                    Ymnos irmos = odi.Troparia.Find(c => c.Kind == YmnosKind.Irmos);
+
+                    if ((odi.Number == 3 || odi.Number == 6 || odi.Number == 8 || odi.Number == 9))
                     {
                         //добавляем ирмос в качестве катавасии
                         Ymnos katavasia = new Ymnos(irmos)

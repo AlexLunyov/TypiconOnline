@@ -149,7 +149,7 @@ namespace TypiconOnline.Domain.Rules
         /*
          * Константы для описания атрибутов элемента KKontakionRule
         */
-        public const string KKontakionNode = "k_kontakion";
+        public const string KKontakionNode = "kontakion";//"k_kontakion";
         public const string KKontakionSourceAttrName = "source";
         public const string KKontakionKanonasAttrName = "kanonas";
 
@@ -200,6 +200,7 @@ namespace TypiconOnline.Domain.Rules
         public const string KanonesNode = "kanones";
         public const string KanonasNode = "kanonas"; 
         public const string KanonasAcrosticNode = "acrostic";
+        public const string KanonasNameNode = "name";
         public const string KanonasAnnotationNode = "annotation";
         public const string KanonasStihosNode = "stihos";
 

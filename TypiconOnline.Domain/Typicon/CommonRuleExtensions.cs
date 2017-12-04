@@ -41,7 +41,7 @@ namespace TypiconOnline.Domain.Typicon
         /// <returns></returns>
         public static IEnumerable<RuleElement> GetCommonRuleChildren(this TypiconEntity typicon, CommonRuleServiceRequest request)
         {
-            if (request == null 
+            if (request == null
                 || request.RuleSerializer == null) throw new ArgumentNullException("CommonRuleServiceRequest");
 
             CommonRule commonRule = typicon.GetCommonRule(c => c.Name == request.Key);
@@ -56,13 +56,30 @@ namespace TypiconOnline.Domain.Typicon
                 //}
                 //else
                 //{
-                    return new List<RuleElement>();
+                return new List<RuleElement>();
                 //}
             }
 
             var container = commonRule.GetRule<ExecContainer>(request.RuleSerializer);
 
             return (container != null) ? container.ChildElements : new List<RuleElement>();
+        }
+
+        /// <summary>
+        /// Возвращает строку из Правила, представляющего из себя коллекцию TextHolder, согласно индекса
+        /// </summary>
+        /// <param name="typicon"></param>
+        /// <param name="request"></param>
+        /// <param name="index">Номер TextHolder-ы в коллекции Правила</param>
+        /// <returns></returns>
+        public static string GetCommonRuleIndexedString(this TypiconEntity typicon, CommonRuleServiceRequest request, int index, string language)
+        {
+            string result = "";
+            if (GetCommonRuleChildren(typicon, request).ElementAtOrDefault(index) is TextHolder t && t.Paragraphs?.Count > 0)
+            {
+                result = t.Paragraphs[0]?[language];
+            }
+            return result;
         }
     }
 }

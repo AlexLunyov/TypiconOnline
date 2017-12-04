@@ -24,16 +24,16 @@ namespace TypiconOnline.Domain.Rules.Schedule
             return new KanonasRule(d.GetElementName(), SerializerRoot, new KanonasRuleVMFactory(SerializerRoot));
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
-        {
-            base.FillObject(d, element);
+        //protected override void FillObject(XmlDescriptor d, RuleElement element)
+        //{
+        //    base.FillObject(d, element);
 
-            SetValues((element as KanonasRule).Panagias, d.Element.Attributes[RuleConstants.KanonasRulePanagiasAttrName]);
+        //    //SetValues((element as KanonasRule).Panagias, d.Element.Attributes[RuleConstants.KanonasRulePanagiasAttrName]);
 
-            void SetValues(CommonRuleElement el, XmlAttribute attr)
-            {
-                el = (attr != null) ? new CommonRuleElement(SerializerRoot) { CommonRuleName = attr.Value } : null;
-            }
-        }
+        //    //void SetValues(CommonRuleElement el, XmlAttribute attr)
+        //    //{
+        //    //    el = (attr != null) ? new CommonRuleElement(SerializerRoot) { CommonRuleName = attr.Value } : null;
+        //    //}
+        //}
     }
 }

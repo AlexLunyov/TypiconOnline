@@ -26,14 +26,14 @@ namespace TypiconOnline.Domain.Rules.Schedule
         }
 
         #region Properties
-        public CommonRuleElement Panagias { get; set; }
+        //public CommonRuleElement Panagias { get; set; }
 
         private List<Kanonas> _kanonesCalc = new List<Kanonas>();
 
         /// <summary>
         /// Вычисленные каноны правила
         /// </summary>
-        public IEnumerable<Kanonas> Kanones => _kanonesCalc.AsEnumerable();
+        public IReadOnlyList<Kanonas> Kanones => _kanonesCalc.AsReadOnly();
 
         /// <summary>
         /// Коллекция дочерних элементов, описывающих правила после n-ой песни канона
@@ -43,15 +43,15 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <summary>
         /// Седален по 3-й песне
         /// </summary>
-        public YmnosStructure Sedalen { get; private set; }
+        //public YmnosStructure Sedalen { get; private set; }
         /// <summary>
         /// Кондак по 6-ой песне
         /// </summary>
-        public Kontakion Kontakion { get; private set; }
+        //public Kontakion Kontakion { get; private set; }
         /// <summary>
         /// Эксапостиларий по 9-ой песне
         /// </summary>
-        public Exapostilarion Exapostilarion { get; private set; }
+        //public Exapostilarion Exapostilarion { get; private set; }
 
         protected IElementViewModelFactory<KanonasRule> ViewModelFactory { get; }
 
@@ -79,20 +79,20 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 }
 
                 //используем специальный обработчик для KSedalenRule
-                var sedalenContainer = GetChildElements<KSedalenRule>(date, handler);
+                //var sedalenContainer = GetChildElements<KSedalenRule>(date, handler);
 
-                if (sedalenContainer != null)
-                {
-                    CalculateSedalenStructure(date, handler, sedalenContainer);
-                }
+                //if (sedalenContainer != null)
+                //{
+                //    CalculateSedalenStructure(date, handler, sedalenContainer);
+                //}
 
-                //используем специальный обработчик для KKontakionRule
-                var kontakionContainer = GetChildElements<KKontakionRule>(date, handler);
+                ////используем специальный обработчик для KKontakionRule
+                //var kontakionContainer = GetChildElements<KKontakionRule>(date, handler);
 
-                if (kontakionContainer != null)
-                {
-                    CalculateKontakionStructure(date, handler, kontakionContainer);
-                }
+                //if (kontakionContainer != null)
+                //{
+                //    CalculateKontakionStructure(date, handler, kontakionContainer);
+                //}
 
                 //находим KAfterRules
                 var afterContainer = GetChildElements<KAfterRule>(date, handler);
@@ -106,10 +106,15 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 
 
                 //CommonRules
-                Panagias?.Interpret(date, handler);
+                //Panagias?.Interpret(date, handler);
 
                 handler.Execute(this);
             }
+        }
+
+        protected override void Validate()
+        {
+            base.Validate();
         }
 
         /// <summary>
@@ -126,35 +131,35 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        private void CalculateSedalenStructure(DateTime date, IRuleHandler handler, ExecContainer container)
-        {
-            YmnosStructure sedalen = new YmnosStructure();
+        //private void CalculateSedalenStructure(DateTime date, IRuleHandler handler, ExecContainer container)
+        //{
+        //    YmnosStructure sedalen = new YmnosStructure();
 
-            foreach (KSedalenRule item in container.ChildElements)
-            {
-                if (item.Calculate(date, handler.Settings) is YmnosStructure s)
-                {
-                    if (item is KSedalenTheotokionRule)
-                    {
-                        sedalen.Theotokion = s.Theotokion;
-                    }
-                    else
-                    {
-                        sedalen.Groups.AddRange(s.Groups);
-                    }
-                }
-            }
+        //    foreach (KSedalenRule item in container.ChildElements)
+        //    {
+        //        if (item.Calculate(date, handler.Settings) is YmnosStructure s)
+        //        {
+        //            if (item is KSedalenTheotokionRule)
+        //            {
+        //                sedalen.Theotokion = s.Theotokion;
+        //            }
+        //            else
+        //            {
+        //                sedalen.Groups.AddRange(s.Groups);
+        //            }
+        //        }
+        //    }
 
-            Sedalen = sedalen;
-        }
+        //    Sedalen = sedalen;
+        //}
 
-        private void CalculateKontakionStructure(DateTime date, IRuleHandler handler, ExecContainer container)
-        {
-            if (container?.ChildElements.FirstOrDefault() is KKontakionRule item)
-            {
-                Kontakion = item.Calculate(date, handler.Settings) as Kontakion;
-            }
-        }
+        //private void CalculateKontakionStructure(DateTime date, IRuleHandler handler, ExecContainer container)
+        //{
+        //    if (container?.ChildElements.FirstOrDefault() is KKontakionRule item)
+        //    {
+        //        Kontakion = item.Calculate(date, handler.Settings) as Kontakion;
+        //    }
+        //}
 
         private void CalculateOdesStructure(DateTime date, IRuleHandler handler, ExecContainer container, bool katavasiaExists)
         {
@@ -162,12 +167,19 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 KKanonasItemRule item = container.ChildElements[i] as KKanonasItemRule;
 
-                //определение катавасии отсутствует и канон последний
-                item.IncludeKatavasia = (!katavasiaExists && i == container.ChildElements.Count - 1);
-
                 if (item.Calculate(date, handler.Settings) is Kanonas k)
                 {
                     _kanonesCalc.Add(k);
+                }
+
+                //определение катавасии отсутствует и канон последний
+                if (!katavasiaExists && i == container.ChildElements.Count - 1)
+                {
+                    //добавляем еще один канон, который будет состоять ТОЛЬКО из катавасий после 3, 6, 8, 9-х песен
+                    if (item.CalculateEveryDayKatavasia(date, handler.Settings) is Kanonas k1)
+                    {
+                        _kanonesCalc.Add(k1);
+                    }
                 }
             }
         }

@@ -27,6 +27,18 @@ namespace TypiconOnline.Domain.Rules.Handlers
             _executingResult = null;
         }
 
+        public override bool IsAuthorized<U>()
+        {
+            bool result = base.IsAuthorized<U>();
+
+            foreach (var type in AuthorizedTypes)
+            {
+                result ^= type.IsInterface && typeof(U).GetInterface(type.Name) != null;
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// 
         /// </summary>

@@ -81,7 +81,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                             AsYmnosRule(r, s);
                             break;
                         case KSedalenRule r:
-                            AsSedalenRule(r, s);
+                            AsKanonasSedalenRule(r, s);
                             break;
                     }
                 }
@@ -104,7 +104,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        private void AsSedalenRule(KSedalenRule r, YmnosStructure s)
+        private void AsKanonasSedalenRule(KSedalenRule r, YmnosStructure s)
         {
             if (r is KSedalenTheotokionRule)
             {
