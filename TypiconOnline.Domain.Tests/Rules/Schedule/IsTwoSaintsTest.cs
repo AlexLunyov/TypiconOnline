@@ -66,6 +66,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             handler.Settings.Rule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
 
+            handler.ClearResult();
             rule.GetRule(TestRuleSerializer.Root).Interpret(handler);
 
             model = handler.GetResult();
@@ -81,6 +82,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             handler.Settings.Rule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
 
+            handler.ClearResult();
             rule.GetRule(TestRuleSerializer.Root).Interpret(handler);
 
             model = handler.GetResult();

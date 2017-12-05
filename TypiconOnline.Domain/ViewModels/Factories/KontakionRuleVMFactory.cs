@@ -36,9 +36,9 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             var viewModel = new ElementViewModel() { view };
 
-            kontakion.Annotation.AppendItemText(req.Handler, viewModel);
-            //TODO: Добавить еще подобен
-            kontakion.Ymnos.AppendItemText(req.Handler, viewModel);
+            kontakion.Annotation.AppendViewModel(req.Handler, viewModel);
+            kontakion.Prosomoion.AppendViewModel(req.Handler, Serializer, viewModel);
+            kontakion.Ymnos.AppendViewModel(req.Handler, viewModel);
 
             req.AppendModelAction(viewModel);
         }
@@ -47,7 +47,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             var viewModel = new ElementViewModel() { view };
 
-            ikos.AppendItemText(req.Handler, viewModel);
+            ikos.AppendViewModel(req.Handler, viewModel);
 
             req.AppendModelAction(viewModel);
         }

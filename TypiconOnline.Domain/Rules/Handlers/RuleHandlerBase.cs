@@ -67,6 +67,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// <param name="element"></param>
         public abstract bool Execute(ICustomInterpreted element);
 
+        public abstract void ClearResult();
+
         //public abstract RuleContainer GetResult();
         //public virtual RenderContainer GetResult()
         //{

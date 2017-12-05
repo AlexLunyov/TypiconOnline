@@ -18,14 +18,14 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             ElementViewModel viewModel = new ElementViewModel();
 
-            group.Annotation.AppendItemText(handler, viewModel);
-            AppendIhos(group.Ihos, group.Prosomoion, handler, serializer, viewModel);
+            group.Annotation.AppendViewModel(handler, viewModel);
+            group.Prosomoion.AppendViewModel(handler, serializer, viewModel, group.Ihos);
             AppendYmnis(group.Ymnis, handler, serializer, viewModel);
 
             return viewModel;
         }
 
-        public static void AppendItemText(this ItemText text, IRuleHandler handler, ElementViewModel viewModel)
+        public static void AppendViewModel(this ItemText text, IRuleHandler handler, ElementViewModel viewModel)
         {
             if (text?.IsEmpty == false)
             {
@@ -33,21 +33,26 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             }
         }
 
-        private static void AppendIhos(int ihos, Prosomoion prosomoion, IRuleHandler handler, 
-            IRuleSerializerRoot serializer, ElementViewModel viewModel)
+        public static void AppendViewModel(this Prosomoion prosomoion, IRuleHandler handler,
+            IRuleSerializerRoot serializer, ElementViewModel viewModel, int? ihos = null)
         {
             TypiconEntity typ = handler.Settings.Rule.Owner;
-            //текст "Глас"
             CommonRuleServiceRequest req = new CommonRuleServiceRequest() { RuleSerializer = serializer };
-            req.Key = CommonRuleConstants.IhosText;
 
-            string ihosString = $"{typ.GetCommonRuleTextValue(req, handler.Settings.Language)} {ihos}. ";
+            string str = "";
+
+            if (ihos != null)
+            {
+                //текст "Глас"
+                req.Key = CommonRuleConstants.IhosText;
+                str += $"{typ.GetCommonRuleTextValue(req, handler.Settings.Language)} {ihos}. ";
+            }
 
             //самоподобен?
             if (prosomoion?.Self == true)
             {
                 req.Key = CommonRuleConstants.SelfText;
-                ihosString += typ.GetCommonRuleTextValue(req, handler.Settings.Language);
+                str += typ.GetCommonRuleTextValue(req, handler.Settings.Language);
             }
             //если подобен
             else if (prosomoion?.IsEmpty == false)
@@ -55,10 +60,10 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 req.Key = CommonRuleConstants.ProsomoionText;
                 string p = typ.GetCommonRuleTextValue(req, handler.Settings.Language);
 
-                ihosString += $"{p}: \"{ prosomoion[handler.Settings.Language] }\"";
+                str += $"{p}: \"{ prosomoion[handler.Settings.Language] }\"";
             }
 
-            viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text, new List<string> { ihosString }));
+            viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text, new List<string> { str }));
         }
 
         private static void AppendYmnis(List<Ymnos> ymnis, IRuleHandler handler,

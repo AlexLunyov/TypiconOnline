@@ -37,13 +37,12 @@ namespace TypiconOnline.AppServices.Implementations
                 //_unitOfWork.Commit();
             }
 
-            return modifiedYear.ModifiedRules.FindAll(d => d.Date.Date == date.Date);
+            return modifiedYear.ModifiedRules.Where(d => d.Date.Date == date.Date);
         }
 
         private static ModifiedYear CreateModifiedYear(TypiconEntity typicon, DateTime date, IRuleSerializerRoot serializer)
         {
-            //По умолчанию добавляем год, пусть он и останется пустым
-            ModifiedYear modifiedYear = new ModifiedYear() { Year = date.Year };
+            ModificationsRuleHandler handler = new ModificationsRuleHandler(date.Year);
 
             DateTime indexDate = new DateTime(date.Year, 1, 1);
 
@@ -59,7 +58,7 @@ namespace TypiconOnline.AppServices.Implementations
                 if (menologyRule == null)
                     throw new ArgumentNullException("MenologyRule");
 
-                InterpretMenologyRule(menologyRule, indexDate, date.Year);
+                InterpretMenologyRule(menologyRule, indexDate, handler);
 
                 indexDate = indexDate.AddDays(1);
             }
@@ -70,10 +69,10 @@ namespace TypiconOnline.AppServices.Implementations
             typicon.MenologyRules.FindAll(c => (c.Date.IsEmpty && c.DateB.IsEmpty)).
                 ForEach(a =>
                 {
-                    InterpretMenologyRule(a, date, date.Year);
+                    InterpretMenologyRule(a, date, handler);
 
                     //не нашел другого способа, как только два раза вычислять изменяемые дни
-                    InterpretMenologyRule(a, date.AddYears(1), date.Year);
+                    InterpretMenologyRule(a, date.AddYears(1), handler);
                 });
 
             //Triodion
@@ -85,26 +84,33 @@ namespace TypiconOnline.AppServices.Implementations
             typicon.TriodionRules.
                 ForEach(a =>
                 {
-                    RuleElement rule = a.GetRule(serializer);
-                    if (rule != null)
-                    {
-                        ModificationsRuleHandler handler = new ModificationsRuleHandler(
-                            new RuleHandlerSettings(a, easter.AddDays(a.DaysFromEaster)), date.Year);
+                    handler.Settings.Rule = a;
+                    handler.Settings.Date = easter.AddDays(a.DaysFromEaster);
 
-                        rule.Interpret(handler);
-                    }
+                    a.GetRule(serializer)?.Interpret(handler);
+                    //RuleElement rule = a.GetRule(serializer);
+                    //if (rule != null)
+                    //{
+                    //    ModificationsRuleHandler handler = new ModificationsRuleHandler(
+                    //        new RuleHandlerSettings(a, easter.AddDays(a.DaysFromEaster)), date.Year);
+
+                    //    rule.Interpret(handler);
+                    //}
                 });
 
-            return modifiedYear;
+            return typicon.ModifiedYears.FirstOrDefault(m => m.Year == date.Year); ;
 
-            void InterpretMenologyRule(MenologyRule menologyRule, DateTime dateToInterpret, int year)
+            void InterpretMenologyRule(MenologyRule menologyRule, DateTime dateToInterpret, /*int year, */ModificationsRuleHandler h)
             {
                 if (menologyRule != null)
                 {
-                    ModificationsRuleHandler handler = new ModificationsRuleHandler(
-                        new RuleHandlerSettings(menologyRule, dateToInterpret), year);
+                    h.Settings.Rule = menologyRule;
+                    h.Settings.Date = dateToInterpret;
+
+                    //ModificationsRuleHandler handler = new ModificationsRuleHandler(
+                    //    new RuleHandlerSettings(, dateToInterpret), year);
                     //выполняем его
-                    menologyRule.GetRule(serializer).Interpret(handler);
+                    menologyRule.GetRule(serializer)?.Interpret(h);
                 }
             }
         }

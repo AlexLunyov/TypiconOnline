@@ -36,8 +36,13 @@ namespace TypiconOnline.Domain.Rules.Handlers
             {
                 base.Settings = value;
 
-                modelCollection = null;
+                ClearResult();
             }
+        }
+
+        public override void ClearResult()
+        {
+            modelCollection = null;
         }
 
         public override bool Execute(ICustomInterpreted element)

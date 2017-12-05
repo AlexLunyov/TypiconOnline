@@ -106,7 +106,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                         Odi = odi,
                         IsLastKanonas = isLastKanonas,
                         IsOdi8 = isOdi8,
-                        DefaultChorus = kanonas.Stihos[req.Handler.Settings.Language]
+                        DefaultChorus = kanonas.Stihos?[req.Handler.Settings.Language]
                     });
                 }
             }

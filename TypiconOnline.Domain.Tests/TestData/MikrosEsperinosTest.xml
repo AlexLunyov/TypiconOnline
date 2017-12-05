@@ -1,32 +1,83 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Leitourgia>
-  <makarismi>
-    <odi number="3" count="4"/>
-    <odi number="6" count="4"/>
-  </makarismi>
-  <prokeimenon ihos="7">
-    <stihos>
-      <item language="cs-ru">[item] [sign] Честна́ пред Го́сподем / сме́рть преподо́бных Его́.</item>
-    </stihos>
-    <stihos>
-      <item language="cs-ru">[item] [sign] Что́ возда́м Го́сподеви о все́х, я́же воздаде́ ми?</item>
-    </stihos>
-  </prokeimenon>
-  <apostles>
-    <part number="213"/>
-  </apostles>
-  <alleluia ihos="6">
-    <stihos>
-      <item language="cs-ru">[item] [sign] Блаже́н му́ж, боя́йся Го́спода, в за́поведех Его́ восхо́щет зело́.</item>
-    </stihos>
-    <stihos>
-      <item language="cs-ru">[item] [sign] Си́льно на земли́ бу́дет се́мя его́.</item>
-    </stihos>
-  </alleluia>
-  <evangelion>
-    <part number="10" bookname="Мф"/>
-  </evangelion>
-  <kinonik>
-    <item language="cs-ru">[item] [sign] Ра́дуйтеся пра́веднии о Го́споде, [пра́вым подоба́ет похвала́].</item>
-  </kinonik>
-</Leitourgia>
+<mikrosesperinos>
+  <kekragaria>
+    <group ihos="1">
+      <annotation>
+        <item language="cs-cs">Творeніе прпdбнагw nтцA нaшегw їwaнна дамаски1на.</item>
+      </annotation>
+      <ymnos>
+        <text>
+          <item language="cs-cs">Вечє1рніz нaшz мlтвы, пріими2 с™hй гDи, и3 подaждь нaмъ њставлeніе грэхHвъ, ћкw є3ди1нъ є3си2 kвлeй въ мjрэ воскrніе.</item>
+        </text>
+      </ymnos>
+      <ymnos>
+        <text>
+          <item language="cs-cs">Њбыди1те лю1діе сіHнъ, и3 њб8ими1те є3го2, и3 дади1те слaву въ нeмъ воскrшему и3з8 мeртвыхъ: ћкw т0й є4сть бGъ нaшъ, и3збавлeй нaсъ t беззак0ній нaшихъ.</item>
+        </text>
+      </ymnos>
+      <ymnos>
+        <text>
+          <item language="cs-cs">Пріиди1те лю1діе, воспои1мъ и3 поклони1мсz хrтY, слaвzще є3гw2 и3з8 мeртвыхъ воскrніе: ћкw т0й є4сть бGъ нaшъ, t прeлести врaжіz мjръ и3збавлeй.</item>
+        </text>
+      </ymnos>
+    </group>
+    <theotokion ihos="1">
+      <ymnos>
+        <annotation>
+          <item language="cs-cs">бGор0диченъ догмaтікъ</item>
+        </annotation>
+        <text>
+          <item language="cs-cs">Двcтвенное торжество2 днeсь брaтіе, да взыгрaетсz твaрь, да ликовствyетъ человёчество: созвa бо нaсъ с™az бцdа, несквeрное сокр0вище двcтва: словeсный вторaгw ґдaма рaй: храни1лище соединeніz двY є3стєствY: торжество2 спаси1тельнагw примирeніz: черт0гъ, въ нeмже сл0во ўневёстивый пл0ть вои1стинну: лeгкій џблакъ, и4же над8 херувjмы сyщаго, съ тёломъ носи1вшій. тоS мlтвами хrтE б9е сп7си2 дyшы нaшz.</item>
+        </text>
+      </ymnos>
+    </theotokion>
+  </kekragaria>
+  <aposticha>
+    <group ihos="1">
+      <ymnos>
+        <text>
+          <item language="cs-cs">Стrтію твоeю хrтE t страстeй свободи1хомсz, и3 воскrніемъ твои1мъ и3з8 и3стлёніz и3збaвихомсz, гDи слaва тебЁ.</item>
+        </text>
+      </ymnos>
+    </group>
+    <group ihos="1">
+      <prosomoion>
+        <item language="cs-cs">Нбcныхъ чинHвъ</item>
+      </prosomoion>
+      <ymnos>
+        <stihos>
+          <item language="cs-cs">ПомzнY и4мz твоE во всsкомъ р0дэ и3 р0дэ.</item>
+        </stihos>
+        <text>
+          <item language="cs-cs">Препрослaвлена є3си2 въ р0дэ родHвъ, дв7о м™и nтрокови1це бцdе мRjе, мjра предстaтельство, р0ждши пл0тію сн7а безначaльнагw nц7A, соприсносyщна же д¦у вои1стинну: є3г0же моли2 сп7сти1сz нaмъ.</item>
+        </text>
+      </ymnos>
+      <ymnos>
+        <stihos>
+          <item language="cs-cs">Слhши дщи2 и3 ви1ждь, и3 приклони2 ќхо твоE.</item>
+        </stihos>
+        <text>
+          <item language="cs-cs">Содержи1міи скорбьми2 неначaемыми чcтаz, тS предстaтельство є3ди1но и3мyще дв7о, вопіeмъ бlгодaрнw: сп7си1 ны всес™az бGоневёстнаz: тh бо є3си2 мjра прибёжище, и3 заступлeніе р0да нaшегw.</item>
+        </text>
+      </ymnos>
+      <ymnos>
+        <stihos>
+          <item language="cs-cs">ЛицY твоемY пом0лzтсz богaтіи лю1дстіи.</item>
+        </stihos>
+        <text>
+          <item language="cs-cs">Њбнови1сz мjръ въ ржcтвЁ твоeмъ бGороди1тельнице nтрокови1це, вёрныхъ сп7сeніе, и3 неусыпaемаz предстaтельнице бlгочeстнw молsщихъ тS пречcтаz, не престaй молsщи прилёжнw њ всёхъ пою1щихъ тS.</item>
+        </text>
+      </ymnos>
+    </group>
+    <theotokion ihos="1">
+      <annotation>
+        <item language="cs-cs">догмaтікъ</item>
+      </annotation>
+      <ymnos>
+        <text>
+          <item language="cs-cs">Џблакъ тS свёта присносyщнагw дв7о, прbр0къ и3меновA: и3з8 тебe бо ћкw д0ждь на руно2 сшeдъ сл0во џ§ее, и3 и3з8 тебE возсіsвый, мjръ просвэти2, прeлесть ўпраздни2 хrт0съ бGъ нaшъ. того2 молsщи прилёжнw прес™az, м0лимсz, не престaй њ нaсъ, и5же и4стинную бцdу и3сповёдающихъ тS.</item>
+        </text>
+      </ymnos>
+    </theotokion>
+  </aposticha>
+</mikrosesperinos>

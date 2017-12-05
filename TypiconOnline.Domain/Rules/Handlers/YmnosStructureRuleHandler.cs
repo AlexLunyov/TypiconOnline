@@ -21,6 +21,11 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 typeof(YmnosRule),
             };
 
+            ClearResult();
+        }
+
+        public override void ClearResult()
+        {
             _executingResult = null;
         }
 

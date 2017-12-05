@@ -43,7 +43,7 @@ namespace TypiconOnline.Domain.Typicon
 
             if ((baseRule == null) && string.IsNullOrEmpty(RuleDefinition))
             {
-                return Template.GetRule<T>(serializerRoot);
+                return Template?.GetRule<T>(serializerRoot);
             }
 
             return baseRule;

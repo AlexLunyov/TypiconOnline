@@ -20,7 +20,9 @@ namespace TypiconOnline.AppServices.Implementations
     {
         private readonly int _yearToModify;
 
-        public ModificationsRuleHandler(RuleHandlerSettings settings)// : base(request)
+        public ModificationsRuleHandler(int year) : this (new RuleHandlerSettings(), year) { }
+
+        public ModificationsRuleHandler(RuleHandlerSettings settings, int year) 
         {
             _settings = settings;
             //Initialize(settings);
@@ -29,11 +31,13 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 typeof(ModifyDay)
             };
+
+            _yearToModify = year;
         }
 
-        public ModificationsRuleHandler(RuleHandlerSettings request, int year) : this(request)
+        public override void ClearResult()
         {
-            _yearToModify = year;
+            //nothing
         }
 
         public override bool Execute(ICustomInterpreted element)

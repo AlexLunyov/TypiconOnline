@@ -52,9 +52,10 @@ namespace TypiconOnline.Domain.Rules.Handlers
             return new BypassHandler(date);
         }
 
-        
-
-        
+        public void ClearResult()
+        {
+            
+        }
 
         public RuleHandlerSettings Settings
         {

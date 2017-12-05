@@ -50,7 +50,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             rule.GetRule(TestRuleSerializer.Root).Interpret(handler);
 
-            var model = handler.GetResult();
+            var model = handler.GetResult();            
 
             //var model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
 
@@ -63,6 +63,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             handler.Settings.Rule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
 
+            handler.ClearResult();
             rule.GetRule(TestRuleSerializer.Root).Interpret(handler);
 
             model = handler.GetResult();

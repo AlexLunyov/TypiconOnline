@@ -24,7 +24,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 typeof(T),
             };
 
-            _executingResult = null;
+            ClearResult();
         }
 
         public override bool IsAuthorized<U>()
@@ -63,6 +63,11 @@ namespace TypiconOnline.Domain.Rules.Handlers
         public ExecContainer GetResult()
         {
             return _executingResult;
+        }
+
+        public override void ClearResult()
+        {
+            _executingResult = null;
         }
     }
 }

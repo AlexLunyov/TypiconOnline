@@ -17,6 +17,7 @@ namespace TypiconOnline.Domain.Interfaces
         bool IsTypeAuthorized(ICustomInterpreted t);
 
         bool Execute(ICustomInterpreted element);
+        void ClearResult();
 
         RuleHandlerSettings Settings { get; set; }
 
