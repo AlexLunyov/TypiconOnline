@@ -81,7 +81,7 @@ namespace TypiconOnline.Domain.Rules.Executables
             {
                 if (!caseElement.IsValid)
                 {
-                    AppendAllBrokenConstraints(caseElement, string.Format("{0}.{1}", ElementName, RuleConstants.CaseNodeName));
+                    AppendAllBrokenConstraints(caseElement, $"{ElementName}.{RuleConstants.CaseNodeName}");
                 }
 
                 if (Expression?.ExpressionType != caseElement.ExpressionType)
@@ -93,7 +93,7 @@ namespace TypiconOnline.Domain.Rules.Executables
             //добавляем ломаные правила к родителю
             if (Default?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Default, string.Format("{0}.{1}", ElementName, RuleConstants.DefaultNodeName));
+                AppendAllBrokenConstraints(Default, $"{ElementName}.{RuleConstants.DefaultNodeName}");
             }
         }
 

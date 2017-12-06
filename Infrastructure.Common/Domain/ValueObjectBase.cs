@@ -51,14 +51,19 @@ namespace TypiconOnline.Infrastructure.Common.Domain
             }
         }
 
-        protected void AddBrokenConstraint(BusinessConstraint businessConstraint)
-        {
-            _brokenConstraints.Add(businessConstraint);
-        }
+        //protected void AddBrokenConstraint(BusinessConstraint businessConstraint)
+        //{
+        //    _brokenConstraints.Add(businessConstraint);
+        //}
 
-        protected void AddBrokenConstraint(BusinessConstraint businessConstraint, string constraintPath)
+        protected void AddBrokenConstraint(BusinessConstraint businessConstraint, string constraintPath = null)
         {
-            businessConstraint.ConstraintPath = constraintPath/* + "." + businessConstraint.ConstraintPath*/;
+            if (!string.IsNullOrEmpty(constraintPath))
+            {
+                businessConstraint.ConstraintPath = (string.IsNullOrEmpty(businessConstraint.ConstraintPath))
+                ? constraintPath : $"{constraintPath}.{businessConstraint.ConstraintPath}";
+            }
+
             _brokenConstraints.Add(businessConstraint);
         }
 

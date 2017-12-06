@@ -64,6 +64,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Rules\BusinessConstraintTest.cs" />
     <Compile Include="Rules\Days\EsperinosTest.cs" />
     <Compile Include="Rules\Days\EvangelionPartTest.cs" />
     <Compile Include="Rules\Days\KanonasTest.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Rules\TestRuleSerializer.cs" />
     <Compile Include="ScheduleServiceFactory.cs" />
     <Compile Include="Services\ScheduleServiceTest.cs" />
+    <Compile Include="TestDataXmlReader.cs" />
     <Compile Include="Typicon\BerlukiRuTest.cs" />
     <Compile Include="Typicon\TriodionRuleFolderTest.cs" />
     <Compile Include="Typicon\TypiconEntityTest.cs" />
@@ -154,6 +156,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\CommonRuleElement_Simple.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\BusinessConstraintTest.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\KanonasRuleTest.xml">

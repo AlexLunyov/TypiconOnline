@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rule>
+  <switch>
+    <expression>
+      <getclosestday dayofweek="суббота" weekcount="-1">
+        <date>--11-08</date>
+      </getclosestday>
+    </expression>
+    <case>
+      <values>
+        <date>--11-04</date>
+      </values>
+      <action>
+        <modifyday servicesign="12" iscustomname="true">
+          <getclosestday dayofweek="суббота" weekcount="-2">
+            <date>--11-08</date>
+          </getclosestday>
+        </modifyday>
+      </action>
+    </case>
+    <default>
+      <modifyday servicesign="12" iscustomname="true">
+        <getclosestday dayofweek="суббота1" weekcount="-1">
+          <date>--11-08</date>
+        </getclosestday>
+      </modifyday>
+    </default>
+  </switch>
+</rule>
