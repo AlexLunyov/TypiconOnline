@@ -15,6 +15,8 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             HasKey<int>(c => c.Id);
             Property(c => c.Id).IsRequired();
 
+            Property(c => c.NumberName.StringExpression).IsRequired();
+
             HasRequired(e => e.TypiconEntity).
                 WithMany();
 

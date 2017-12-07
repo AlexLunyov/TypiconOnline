@@ -52,6 +52,10 @@ namespace TypiconOnline.AppServices.Migration.Psalter
                         break;
                     case PsalterElementKind.Slava:
                         //не нужна- ничего не делаем
+                        if (currentPsalm != null)
+                        {
+                            InsertOrUpdatePsalm(currentPsalm);
+                        }
                         break;
                 }
             }
@@ -65,7 +69,7 @@ namespace TypiconOnline.AppServices.Migration.Psalter
         {
             var response = Service.Get(new GetPsalmRequest() { Number = currentPsalm.Number });
 
-            currentPsalm.Definition = new TypiconSerializer().Serialize(currentPsalm.GetElement());
+            currentPsalm.Definition = GetDefinition(currentPsalm);
 
             if (response.Psalm == null)
             {
@@ -77,6 +81,11 @@ namespace TypiconOnline.AppServices.Migration.Psalter
             }
         }
 
+        private string GetDefinition(Psalm psalm)
+        {
+            return new TypiconSerializer().Serialize(psalm.GetElement() ?? new BookReading()); 
+        }
+
         /// <summary>
         /// Возвращает либо существующий Псалом из БД либо новый из Reader-a
         /// </summary>
@@ -85,7 +94,11 @@ namespace TypiconOnline.AppServices.Migration.Psalter
         private Psalm GetPsalm(Psalm psalm)
         {
             var response = Service.Get(new GetPsalmRequest() { Number = psalm.Number });
-            return response.Psalm ?? psalm;
+            Psalm result = response.Psalm ?? psalm;
+
+            result.Definition = GetDefinition(result);
+
+            return result;
         }
     }
 }

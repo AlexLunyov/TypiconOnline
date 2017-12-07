@@ -12,15 +12,19 @@ namespace TypiconOnline.Domain.Books.Psalter
 {
     public class Psalm : BookElementBase<BookReading>, IPsalterElement
     {
+        private BookReading reading;
         public Psalm() { }
 
         public virtual int Number { get; set; }
-        //public virtual List<PsalmStihos> Annotation { get; set; }
-        //public virtual List<PsalmStihos> Text { get; set; }
 
-        protected override void Validate()
+        public override BookReading GetElement()
         {
-            throw new NotImplementedException();
+            if (reading == null)
+            {
+                reading = base.GetElement() ?? new BookReading();
+            }
+
+            return reading;
         }
     }
 }

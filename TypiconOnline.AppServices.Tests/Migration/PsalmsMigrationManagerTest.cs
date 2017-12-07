@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,11 +17,16 @@ namespace TypiconOnline.AppServices.Tests.Migration
         [Test]
         public void PsalmsMigrationManager_Test()
         {
-            var service = new PsalterService(new EFUnitOfWork());
+            var uof = new EFUnitOfWork();
+            var service = new PsalterService(uof);
 
             var manager = new PsalmsMigrationManager(service);
 
+            string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PsalterMigration");
 
+            manager.MigratePsalms(new PsalterRuReader(folderPath, "cs-ru"));
+
+            //uof.Commit();
         }
     }
 }

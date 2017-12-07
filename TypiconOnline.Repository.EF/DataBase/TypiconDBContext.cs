@@ -65,13 +65,13 @@ namespace TypiconOnline.Repository.EF.DataBase
 
             modelBuilder.Configurations.Add(new CommonRuleMap());
 
-            //modelBuilder.Configurations.Add(new KathismaMap());
-            //modelBuilder.Configurations.Add(new SlavaElementMap());
+            modelBuilder.Configurations.Add(new KathismaMap());
+            modelBuilder.Configurations.Add(new SlavaElementMap());
 
-            //modelBuilder.Entity<PsalmLink>().HasKey(c => c.Id);
-            //modelBuilder.Entity<PsalmLink>().HasRequired(c => c.Psalm);
+            modelBuilder.Entity<PsalmLink>().HasKey(c => c.Id);
+            modelBuilder.Entity<PsalmLink>().HasRequired(c => c.Psalm);
 
-            //modelBuilder.Entity<Psalm>().HasKey(c => c.Id);
+            modelBuilder.Entity<Psalm>().HasKey(c => c.Id);
 
             //modelBuilder.Configurations.Add(new TypiconRuleMap());
 

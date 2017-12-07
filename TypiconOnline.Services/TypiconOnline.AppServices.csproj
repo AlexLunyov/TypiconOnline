@@ -137,7 +137,7 @@
     <Compile Include="Migration\Psalter\KathismasMigrationManager.cs" />
     <Compile Include="Migration\Psalter\PsalmsMigrationManager.cs" />
     <Compile Include="Migration\Psalter\PsalterExtensions.cs" />
-    <Compile Include="Migration\Psalter\PsalterReader.cs" />
+    <Compile Include="Migration\Psalter\PsalterRuReader.cs" />
     <Compile Include="Migration\TheotokionAppFactory.cs" />
     <Compile Include="Migration\TheotokionAppFileReader.cs" />
     <Compile Include="Migration\TheotokionAppMigrationManager.cs" />

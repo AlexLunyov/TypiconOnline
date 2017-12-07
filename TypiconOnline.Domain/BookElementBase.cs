@@ -16,12 +16,12 @@ namespace TypiconOnline.Domain
 
         public virtual string Definition { get; set; }
 
-        public T GetElement()
+        public virtual T GetElement()
         {
             return GetElement(new TypiconSerializer());
         }
 
-        public T GetElement(IXmlSerializer serializer)
+        public virtual T GetElement(IXmlSerializer serializer)
         {
             //ThrowExceptionIfInvalid();
 

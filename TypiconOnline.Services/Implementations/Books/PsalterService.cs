@@ -52,7 +52,7 @@ namespace TypiconOnline.AppServices.Implementations.Books
                 else
                 {
                     _unitOfWork.Repository<Psalm>().Update(request.Psalm);
-                    _unitOfWork.Commit();
+                    //_unitOfWork.Commit();
                 }
             }
             catch (Exception ex)

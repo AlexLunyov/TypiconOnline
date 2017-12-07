@@ -24,6 +24,8 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             HasRequired(e => e.Settings).
                 WithRequiredPrincipal();
 
+            HasMany(e => e.Kathismas).
+                WithRequired(m => m.TypiconEntity);
 
             //HasRequired(e => e.MenologyRules).
             //    WithRequiredDependent(m => m.Owner);
