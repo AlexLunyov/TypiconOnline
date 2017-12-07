@@ -61,5 +61,16 @@ namespace TypiconOnline.Domain.Tests.Experiments
                 w = null;
             }
         }
+
+        [Test]
+        public void IntTryParseTest()
+        {
+            var numberString = "Псалом 144.";
+            numberString = numberString.Replace("Псалом", string.Empty).Replace(".", string.Empty);
+
+            int.TryParse(numberString, out int number);
+
+            Assert.AreEqual(144, number);
+        }
     }
 }

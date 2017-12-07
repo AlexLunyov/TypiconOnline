@@ -38,10 +38,12 @@ namespace TypiconOnline.Domain.Serialization
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
 
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Encoding = new UnicodeEncoding(false, false); // no BOM in a .NET string
-            settings.Indent = false;
-            settings.OmitXmlDeclaration = false;
+            XmlWriterSettings settings = new XmlWriterSettings
+            {
+                Encoding = new UnicodeEncoding(false, false), // no BOM in a .NET string
+                Indent = false,
+                OmitXmlDeclaration = false
+            };
 
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
             ns.Add("", "");

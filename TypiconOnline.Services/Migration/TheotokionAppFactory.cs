@@ -18,7 +18,7 @@ namespace TypiconOnline.AppServices.Migration
                 Place = source,
                 Ihos = ihos,
                 DayOfWeek = day,
-                StringDefinition = stringDefinition
+                Definition = stringDefinition
             };
         }
     }

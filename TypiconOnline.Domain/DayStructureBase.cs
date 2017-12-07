@@ -13,44 +13,7 @@ namespace TypiconOnline.Domain
     /// <summary>
     /// Базовый класс для определения богослужебных текстов
     /// </summary>
-    public abstract class DayStructureBase : EntityBase<int>, IAggregateRoot, IBookElement<DayContainer>
+    public abstract class DayStructureBase : BookElementBase<DayContainer>
     {
-        private DayContainer _dayContainer;
-        private string _dayDefinition;
-
-        /// <summary>
-        /// Описание последовательности дня в xml-формате
-        /// </summary>
-        public virtual string DayDefinition
-        {
-            get
-            {
-                return _dayDefinition;
-            }
-            set
-            {
-                if (_dayDefinition != value)
-                {
-                    _dayDefinition = value;
-                    _dayContainer = null;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Возвращает объектную модель определения богослужебного текста
-        /// </summary>
-        /// <returns></returns>
-        public DayContainer GetElement()
-        {
-            ThrowExceptionIfInvalid();
-
-            if (_dayContainer == null)
-            {
-                _dayContainer = new DayContainerFactory(_dayDefinition).Create();
-            }
-
-            return _dayContainer;
-        }
     }
 }

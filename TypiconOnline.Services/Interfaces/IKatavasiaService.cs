@@ -12,6 +12,6 @@ namespace TypiconOnline.AppServices.Interfaces
     {
         InsertKatavasiaResponse Insert(InsertKatavasiaRequest request);
         UpdateKatavasiaResponse Update(UpdateKatavasiaRequest request);
-        DeleteKatavasiaResponse Delete(DeleteKatavasiaRequest request);
+        DeleteKatavasiaResponse Delete(DeletePsalmRequest request);
     }
 }

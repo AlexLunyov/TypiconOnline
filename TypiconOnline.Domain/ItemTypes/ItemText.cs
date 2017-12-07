@@ -128,7 +128,7 @@ namespace TypiconOnline.Domain.ItemTypes
         }
 
         /// <summary>
-        /// Возвращает значение по заданному языку. Если результат нулевой, возвраает первый попавшийся вариант
+        /// Возвращает значение по заданному языку. Если результат нулевой, возвращает первый попавшийся вариант
         /// </summary>
         /// <param name="language">язык. Пример: "cs-ru"</param>
         /// <returns></returns>
@@ -154,6 +154,13 @@ namespace TypiconOnline.Domain.ItemTypes
                 _textDict[language] = value;
             }
         }
+
+        public bool ContainsLanguage(string language)
+        {
+            return _textDict.ContainsKey(language);
+        }
+
+        public IEnumerable<string> Languages => _textDict.Keys;
 
         #region IXmlSerializable
 

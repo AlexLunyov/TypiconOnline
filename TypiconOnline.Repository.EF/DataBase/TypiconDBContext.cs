@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Data.Entity;
 using TypiconOnline.Domain;
+using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
+using TypiconOnline.Domain.Typicon.Psalter;
 using TypiconOnline.Repository.EF.DataBase.Mapping;
 
 namespace TypiconOnline.Repository.EF.DataBase
@@ -63,6 +65,14 @@ namespace TypiconOnline.Repository.EF.DataBase
 
             modelBuilder.Configurations.Add(new CommonRuleMap());
 
+            //modelBuilder.Configurations.Add(new KathismaMap());
+            //modelBuilder.Configurations.Add(new SlavaElementMap());
+
+            //modelBuilder.Entity<PsalmLink>().HasKey(c => c.Id);
+            //modelBuilder.Entity<PsalmLink>().HasRequired(c => c.Psalm);
+
+            //modelBuilder.Entity<Psalm>().HasKey(c => c.Id);
+
             //modelBuilder.Configurations.Add(new TypiconRuleMap());
 
             //modelBuilder.Configurations.Add(new TypiconDayRuleMap()); 
@@ -70,6 +80,7 @@ namespace TypiconOnline.Repository.EF.DataBase
             modelBuilder.Configurations.Add(new IrmologionTheotokionMap());
             modelBuilder.Configurations.Add(new OktoikhDayMap());
             modelBuilder.Configurations.Add(new KatavasiaMap()); 
+
         }
 
         #endregion

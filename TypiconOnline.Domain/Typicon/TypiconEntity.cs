@@ -8,6 +8,7 @@ using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon.Modifications;
+using TypiconOnline.Domain.Typicon.Psalter;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
@@ -21,6 +22,7 @@ namespace TypiconOnline.Domain.Typicon
             CommonRules = new List<CommonRule>();
             MenologyRules = new List<MenologyRule>();
             TriodionRules = new List<TriodionRule>();
+            Kathismas = new List<Kathisma>();
         }
 
         #region Properties
@@ -92,6 +94,8 @@ namespace TypiconOnline.Domain.Typicon
         public virtual List<CommonRule> CommonRules { get; set; }
         public virtual List<MenologyRule> MenologyRules { get; set; }
         public virtual List<TriodionRule> TriodionRules { get; set; }
+
+        public virtual List<Kathisma> Kathismas { get; set; }
 
         private TypiconSettings _settings;
         public virtual TypiconSettings Settings

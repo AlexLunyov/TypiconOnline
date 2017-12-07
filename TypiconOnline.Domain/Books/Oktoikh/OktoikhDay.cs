@@ -1,9 +1,10 @@
 ﻿using System;
+using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Books.Oktoikh
 {
-    public class OktoikhDay : DayStructureBase//, IAggregateRoot
+    public class OktoikhDay : DayStructureBase
     {
         public int Ihos { get; set; }
         public DayOfWeek DayOfWeek { get; set; }

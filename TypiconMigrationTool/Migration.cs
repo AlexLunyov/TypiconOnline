@@ -18,6 +18,8 @@ using System.IO;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Migration;
 using TypiconOnline.AppServices.Implementations.Books;
+using TypiconOnline.AppServices.Migration.Psalter;
+using TypiconOnline.Domain.Books.Psalter;
 
 namespace TypiconMigrationTool
 {
@@ -135,6 +137,12 @@ namespace TypiconMigrationTool
             MigrateCommonRules(typiconEntity);
 
             Commit();
+
+            MigratePsalms();
+            Commit();
+
+            MigrateKathismas(typiconEntity);
+            Commit();
         }
 
         private void MigrateTheotokionIrmologion()
@@ -182,6 +190,29 @@ namespace TypiconMigrationTool
             IMigrationManager manager = new KatavasiaMigrationManager(factory, reader, service);
 
             manager.Migrate();
+        }
+
+        private void MigratePsalms()
+        {
+            Console.WriteLine("MigratePsalms()");
+            string folder = Path.Combine(Properties.Settings.Default.FolderPath, @"Books\Psalter\1");
+
+            var service = new PsalterService(_unitOfWork);
+
+            var manager = new PsalmsMigrationManager(service);
+
+            manager.MigratePsalms(new PsalterRuReader(folder, "cs-ru"));
+        }
+
+        private void MigrateKathismas(TypiconEntity typiconEntity)
+        {
+            Console.WriteLine("MigrateKathismas(TypiconEntity typiconEntity)");
+            string folder = Path.Combine(Properties.Settings.Default.FolderPath, @"Books\Psalter\1");
+
+            var context = new PsalterContext(_unitOfWork);
+
+            var manager = new KathismasMigrationManager(context);
+            manager.MigrateKathismas(new PsalterRuReader(folder, "cs-ru"), typiconEntity);
         }
 
         private void Commit()

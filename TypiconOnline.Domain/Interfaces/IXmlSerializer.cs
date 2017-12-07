@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TypiconOnline.Domain.Interfaces
 {
-    interface IXmlSerializer
+    public interface IXmlSerializer
     {
         T Deserialize<T>(string xml) where T : class;
         string Serialize<T>(T value) where T : class;

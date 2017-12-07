@@ -72,7 +72,7 @@ namespace TypiconMigrationTool
                 definition = TransformDefinition(_fileReader.Read(fileName), _row.Name, fileName);
             }
 
-            dayService.DayDefinition = definition;
+            dayService.Definition = definition;
 
             return dayService;
         }

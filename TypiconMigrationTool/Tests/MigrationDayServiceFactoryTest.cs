@@ -25,7 +25,7 @@ namespace TypiconMigrationTool.Tests
 
             DayWorship dayService = factory.Create();
 
-            Assert.IsNotEmpty(dayService.DayDefinition);
+            Assert.IsNotEmpty(dayService.Definition);
         }
     }
 }

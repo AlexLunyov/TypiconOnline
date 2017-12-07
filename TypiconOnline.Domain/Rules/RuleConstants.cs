@@ -255,6 +255,17 @@ namespace TypiconOnline.Domain.Rules
         public const string KinonikNode = "kinonik";
 
         /*
+         * Константы для описания элемента чтения Священного Писания
+         */
+        public const string PsalmStihosNode = "psalmstihos";
+        public const string ReadingChapterNumberAttr = "chapter";
+        public const string ReadingStihosNumberAttr = "number";
+
+        public const string BookReadingAnnotationNode = "annotation";
+        public const string BookReadingTextNode = "text";
+        public const string BookReadingStihosNode = "stihos";
+
+        /*
          * Константы для описания правил для составления последовательностей богослужебных текстов
          */
 

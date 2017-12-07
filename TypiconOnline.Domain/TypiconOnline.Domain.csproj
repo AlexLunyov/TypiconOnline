@@ -45,13 +45,15 @@
   <ItemGroup>
     <Compile Include="Books\Apostol\ApostolContext.cs" />
     <Compile Include="Books\Apostol\IApostolContext.cs" />
+    <Compile Include="BookElementBase.cs" />
     <Compile Include="Books\BookServiceBase.cs" />
     <Compile Include="Books\BookStorageFactory.cs" />
     <Compile Include="Books\Easter\EasterContext.cs" />
     <Compile Include="Books\Evangelion\EvangelionContext.cs" />
     <Compile Include="Books\Evangelion\IEvangelionContext.cs" />
     <Compile Include="Books\GetBookElementResponseBase.cs" />
-    <Compile Include="Books\IBookElement.cs" />
+    <Compile Include="DayStructureBase.cs" />
+    <Compile Include="Interfaces\IBookElement.cs" />
     <Compile Include="Books\IBookStorageFactory.cs" />
     <Compile Include="Books\Katavasia\GetAllKatavasiaResponse.cs" />
     <Compile Include="Books\Katavasia\GetKatavasiaRequest.cs" />
@@ -64,8 +66,16 @@
     <Compile Include="Books\Oktoikh\OktoikhDayBusinessConstraint.cs" />
     <Compile Include="Books\OldTestament\IOldTestamentContext.cs" />
     <Compile Include="Books\OldTestament\OldTestamentContext.cs" />
+    <Compile Include="Books\Psalter\GetPsalmRequest.cs" />
+    <Compile Include="Books\Psalter\GetPsalmResponse.cs" />
     <Compile Include="Books\Psalter\IPsalterContext.cs" />
+    <Compile Include="Books\Psalter\PsalmStihos.cs" />
+    <Compile Include="Interfaces\IPsalterElement.cs" />
     <Compile Include="Books\Psalter\PsalterContext.cs" />
+    <Compile Include="Rules\Days\BookReading.cs" />
+    <Compile Include="Rules\Days\BookStihos.cs" />
+    <Compile Include="Typicon\Psalter\PsalmLink.cs" />
+    <Compile Include="Typicon\Psalter\SlavaElement.cs" />
     <Compile Include="Books\TheotokionApp\GetAllTheotokionResponse.cs" />
     <Compile Include="Books\TheotokionApp\GetTheotokionResponse.cs" />
     <Compile Include="Books\TheotokionApp\GetTheotokionRequest.cs" />
@@ -77,7 +87,6 @@
     <Compile Include="Books\Oktoikh\OktoikhContext.cs" />
     <Compile Include="Books\OldTestament\OldTestamentBook.cs" />
     <Compile Include="Books\OldTestament\OldTestamentChapter.cs" />
-    <Compile Include="Books\Psalter\Kathisma.cs" />
     <Compile Include="Books\Psalter\Psalm.cs" />
     <Compile Include="Books\Apostol\ApostolBook.cs" />
     <Compile Include="Books\Apostol\ApostolChapter.cs" />
@@ -87,7 +96,6 @@
     <Compile Include="DayRuleWorship.cs" />
     <Compile Include="Days\Day.cs" />
     <Compile Include="Books\Easter\IEasterContext.cs" />
-    <Compile Include="DayStructureBase.cs" />
     <Compile Include="Interfaces\IBookStorage.cs" />
     <Compile Include="Interfaces\ICalcStructureElement.cs" />
     <Compile Include="Interfaces\IDayContainerFactory.cs" />
@@ -237,7 +245,6 @@
     <Compile Include="Rules\Handlers\CollectorRuleHandler.cs" />
     <Compile Include="Rules\Handlers\CustomParameters\ApplyParameterBase.cs" />
     <Compile Include="Rules\Handlers\CustomParameters\KekragariaCustomParameter.cs" />
-    <Compile Include="Rules\Handlers\DayToHandle.cs" />
     <Compile Include="Interfaces\IRuleHandler.cs" />
     <Compile Include="Interfaces\ICustomInterpreted.cs" />
     <Compile Include="RuleEntityBusinessConstraint.cs" />
@@ -295,6 +302,7 @@
     <Compile Include="Typicon\Modifications\ModifiedRule.cs" />
     <Compile Include="Typicon\Modifications\ModifiedYear.cs" />
     <Compile Include="Typicon\Priority.cs" />
+    <Compile Include="Typicon\Psalter\Kathisma.cs" />
     <Compile Include="Typicon\TypiconRule.cs" />
     <Compile Include="Books\Easter\EasterItem.cs" />
     <Compile Include="Books\Oktoikh\OktoikhDay.cs" />

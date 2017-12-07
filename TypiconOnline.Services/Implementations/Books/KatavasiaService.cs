@@ -39,7 +39,7 @@ namespace TypiconOnline.AppServices.Implementations.Books
             return resp;
         }
 
-        public DeleteKatavasiaResponse Delete(DeleteKatavasiaRequest request)
+        public DeleteKatavasiaResponse Delete(DeletePsalmRequest request)
         {
             throw new NotImplementedException();
         }

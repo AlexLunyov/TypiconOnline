@@ -9,8 +9,25 @@ namespace TypiconOnline.Domain.Books.Psalter
 {
     public class PsalterContext : BookServiceBase, IPsalterContext
     {
-        public PsalterContext(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public PsalterContext(IUnitOfWork unitOfWork) : base(unitOfWork) { }
+
+        public GetPsalmResponse Get(GetPsalmRequest request)
         {
+            var response = new GetPsalmResponse();
+
+            try
+            {
+                response.Psalm = _unitOfWork.Repository<Psalm>()
+                                            .Get(c => c.Number == request.Number);
+
+                //response.BookElement = response.Psalm.GetElement();
+            }
+            catch (Exception ex)
+            {
+                response.Exception = ex;
+            }
+
+            return response;
         }
     }
 }

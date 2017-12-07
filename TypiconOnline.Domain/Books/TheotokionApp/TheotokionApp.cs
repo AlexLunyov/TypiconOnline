@@ -14,31 +14,20 @@ namespace TypiconOnline.Domain.Books.TheotokionApp
     /// <summary>
     /// Элемент из Богородичных приложений Ирмология
     /// </summary>
-    public class TheotokionApp : EntityBase<int>, IAggregateRoot, IBookElement<Ymnos> 
+    public class TheotokionApp : BookElementBase<Ymnos> 
     {
         public virtual PlaceYmnosSource Place { get; set; }
         public virtual int Ihos { get; set; }
         public virtual DayOfWeek DayOfWeek { get; set; }
-        public string StringDefinition { get; set; }
 
         protected override void Validate()
         {
+            base.Validate();
+
             if (Ihos < 1 || Ihos > 8)
             {
                 AddBrokenConstraint(TheotokionAppBusinessConstraint.InvalidIhos);
             }
-
-            if (string.IsNullOrEmpty(StringDefinition))
-            {
-                AddBrokenConstraint(TheotokionAppBusinessConstraint.EmptyStringDefinition);
-            }
-        }
-
-        public Ymnos GetElement()
-        {
-            ThrowExceptionIfInvalid();
-
-            return new TypiconSerializer().Deserialize<Ymnos>(StringDefinition);
         }
     }
 }
