@@ -11,7 +11,7 @@ namespace TypiconOnline.Domain.Books.Psalter
     {
         public PsalterContext(IUnitOfWork unitOfWork) : base(unitOfWork) { }
 
-        public GetPsalmResponse Get(GetPsalmRequest request)
+        public virtual GetPsalmResponse Get(GetPsalmRequest request)
         {
             var response = new GetPsalmResponse();
 

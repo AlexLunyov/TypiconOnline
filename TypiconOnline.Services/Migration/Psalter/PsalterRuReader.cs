@@ -34,7 +34,7 @@ namespace TypiconOnline.AppServices.Migration.Psalter
             //находим все файлы с указанным языком
             FoundFiles = Directory.GetFiles(folderPath, $"*{language}*", SearchOption.TopDirectoryOnly);
 
-            if (FoundFiles == null)
+            if (FoundFiles == null || FoundFiles.Count() == 0)
                 throw new FileNotFoundException($"Не найдены файлы с указанным языком \"{language}\" в директории \"{folderPath}\".");
 
             //FolderPath = folderPath;
@@ -144,7 +144,7 @@ namespace TypiconOnline.AppServices.Migration.Psalter
 
             foreach (var str in fragments)
             {
-                if (IsDigit(str, out int i))
+                if (TryParse(str, out int i))
                 {
                     //цифра - значит начало стиха
                     if (number == null)
@@ -181,7 +181,7 @@ namespace TypiconOnline.AppServices.Migration.Psalter
         /// <param name="str"></param>
         /// <param name="i">выходное значение</param>
         /// <returns></returns>
-        protected virtual bool IsDigit(string str, out int i)
+        protected virtual bool TryParse(string str, out int i)
         {
             return int.TryParse(str, out i);
         }
@@ -196,8 +196,8 @@ namespace TypiconOnline.AppServices.Migration.Psalter
 
         private Psalm CreatePsalm()
         {
-            var numberString = parsingString.Replace(PSALM_TEXT, string.Empty).Replace(".", string.Empty);
-            int.TryParse(numberString, out int number);
+            var numberString = parsingString.Replace(PSALM_TEXT, string.Empty).Replace(".", string.Empty).Replace(" ", string.Empty);
+            TryParse(numberString, out int number);
 
             return new Psalm()
             {

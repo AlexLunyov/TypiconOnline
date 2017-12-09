@@ -65,7 +65,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BookStorageFactory.cs" />
+    <Compile Include="Common\IntCsTest.cs" />
     <Compile Include="Common\SignMigratorTest.cs" />
+    <Compile Include="Migration\FakePsalterService.cs" />
     <Compile Include="Migration\KathismasMigrationManagerTest.cs" />
     <Compile Include="Migration\PsalmsMigrationManagerTest.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -144,6 +146,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\PsalterMigration\19.full.cs-ru.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\PsalterMigration\1\1.full.cs-cs.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\PsalterMigration\1\1.full.cs-ru.txt">

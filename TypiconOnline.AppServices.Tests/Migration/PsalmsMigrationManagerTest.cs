@@ -18,13 +18,32 @@ namespace TypiconOnline.AppServices.Tests.Migration
         public void PsalmsMigrationManager_Test()
         {
             var uof = new EFUnitOfWork();
-            var service = new PsalterService(uof);
+            var service = new FakePsalterService(uof);
 
             var manager = new PsalmsMigrationManager(service);
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PsalterMigration");
 
             manager.MigratePsalms(new PsalterRuReader(folderPath, "cs-ru"));
+
+            Assert.That(service.Psalms.Count(), Is.EqualTo(150));
+
+            //uof.Commit();
+        }
+
+        [Test]
+        public void PsalmsMigrationManager_CsTest()
+        {
+            var uof = new EFUnitOfWork();
+            var service = new FakePsalterService(uof);
+
+            var manager = new PsalmsMigrationManager(service);
+
+            string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PsalterMigration\1");
+
+            manager.MigratePsalms(new PsalterRuReader(folderPath, "cs-ru"));
+
+            manager.MigratePsalms(new PsalterCsReader(folderPath, "cs-cs"));
 
             //uof.Commit();
         }

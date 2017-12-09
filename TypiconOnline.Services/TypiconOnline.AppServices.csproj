@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DayXmlHelper T.cs" />
+    <Compile Include="Common\IntCs.cs" />
     <Compile Include="Common\SignMigrator.cs" />
     <Compile Include="Common\XmlToFileSaver.cs" />
     <Compile Include="Exceptions\ResourceNotFoundException.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Migration\OktoikhDayMigrationManager.cs" />
     <Compile Include="Migration\Psalter\KathismasMigrationManager.cs" />
     <Compile Include="Migration\Psalter\PsalmsMigrationManager.cs" />
+    <Compile Include="Migration\Psalter\PsalterCsReader.cs" />
     <Compile Include="Migration\Psalter\PsalterExtensions.cs" />
     <Compile Include="Migration\Psalter\PsalterRuReader.cs" />
     <Compile Include="Migration\TheotokionAppFactory.cs" />
