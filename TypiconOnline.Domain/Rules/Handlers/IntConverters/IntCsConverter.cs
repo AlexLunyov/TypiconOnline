@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Interfaces;
 
-namespace TypiconOnline.AppServices.Common
+namespace TypiconOnline.Domain.Rules.Handlers.IntConverters
 {
     /// <summary>
     /// Класс дял миграции церковно-славянских чисел в цифровые целочисленные значения и обратно
     /// в диапазоне от 1 до 20000
     /// </summary>
-    public class IntCs
+    public class IntCsConverter : IIntConverter
     {
         static readonly string[] TITLE = new string[] { @"\", "7" };
         static readonly string THOUSAND = "¤";
@@ -65,7 +66,7 @@ namespace TypiconOnline.AppServices.Common
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public static int Parse(string str)
+        public int Parse(string str)
         {
             //нуля нет в ц-с
             int result = 0;
@@ -119,7 +120,7 @@ namespace TypiconOnline.AppServices.Common
             }
         }
 
-        private static bool IsDigit(string str)
+        public bool IsDigit(string str)
         {
             bool isDigit = false;
 
@@ -149,11 +150,18 @@ namespace TypiconOnline.AppServices.Common
             return isDigit;
         }
 
-        public static bool TryParse(string str, out int value)
+        public bool TryParse(string str, out int value)
         {
             value = Parse(str);
 
             return value != 0;
+        }
+
+
+        public string ToString(int value)
+        {
+            //TODO: доделать
+            return value.ToString();
         }
     }
 

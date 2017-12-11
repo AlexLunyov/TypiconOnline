@@ -303,6 +303,14 @@ namespace TypiconOnline.Domain.Rules
         public const string EktenisNode = "ektenis";
         public const string EktenisNameNode = "name";
 
+        /*
+         * PsalmRule
+         */
+        public const string PsalmRuleNode = "psalm";
+        public const string PsalmRuleNumberAttr = "number";
+        public const string PsalmRuleStartAttr = "start";
+        public const string PsalmRuleEndAttr = "end";
+
         public enum DefinitionsDayOfWeek { понедельник=1, вторник=2, среда=3, четверг=4, пятница=5, суббота=6, воскресенье=7 };
 
         

@@ -195,19 +195,20 @@ namespace TypiconMigrationTool
         private void MigratePsalms()
         {
             Console.WriteLine("MigratePsalms()");
-            string folder = Path.Combine(Properties.Settings.Default.FolderPath, @"Books\Psalter\1");
+            string folder = Path.Combine(Properties.Settings.Default.FolderPath, @"Books\Psalter");
 
             var service = new PsalterService(_unitOfWork);
 
             var manager = new PsalmsMigrationManager(service);
 
             manager.MigratePsalms(new PsalterRuReader(folder, "cs-ru"));
+            manager.MigratePsalms(new PsalterCsReader(folder, "cs-cs"));
         }
 
         private void MigrateKathismas(TypiconEntity typiconEntity)
         {
             Console.WriteLine("MigrateKathismas(TypiconEntity typiconEntity)");
-            string folder = Path.Combine(Properties.Settings.Default.FolderPath, @"Books\Psalter\1");
+            string folder = Path.Combine(Properties.Settings.Default.FolderPath, @"Books\Psalter");
 
             var context = new PsalterContext(_unitOfWork);
 

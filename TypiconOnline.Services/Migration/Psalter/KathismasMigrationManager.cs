@@ -7,6 +7,7 @@ using TypiconOnline.AppServices.Exceptions;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Psalter;
 
@@ -67,7 +68,7 @@ namespace TypiconOnline.AppServices.Migration.Psalter
                             //создаем новую ссылку на Псалом (17 кафизма)
                             psalmLink = CreatePsalmLink(psalmLink);
                         }
-                        psalmLink?.AppendStihos(reader.Element as PsalmStihos);
+                        psalmLink?.AppendStihos(reader.Element as BookStihos);
                         currentElement = psalmLink;
                         break;
                     case PsalterElementKind.Slava:
@@ -86,7 +87,7 @@ namespace TypiconOnline.AppServices.Migration.Psalter
         {
             var response = Context.Get(new GetPsalmRequest() { Number = number });
 
-            if (response.Exception == null)
+            if (response.Psalm == null)
             {
                 throw new ResourceNotFoundException("Не найден Псалом в выбранном контексте.", response.Exception);
             }

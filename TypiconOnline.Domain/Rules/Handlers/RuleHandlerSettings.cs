@@ -18,6 +18,11 @@ namespace TypiconOnline.Domain.Rules.Handlers
     /// </summary>
     public class RuleHandlerSettings
     {
+        public RuleHandlerSettings()
+        {
+            LanguageSettings = LanguageSettingsFactory.Create("cs-ru");
+        }
+
         /// <summary>
         /// Дополнение для текущего правила
         /// </summary>
@@ -40,48 +45,10 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// </summary>
         public string Language { get; set; }
 
+        public LanguageSettings LanguageSettings { get; set; }
+
         public CustomParamsCollection<IRuleApplyParameter> ApplyParameters { get; set; } = new CustomParamsCollection<IRuleApplyParameter>();
         public CustomParamsCollection<IRuleCheckParameter> CheckParameters { get; set; } = new CustomParamsCollection<IRuleCheckParameter>();
-
-        public RuleHandlerSettings()
-        {
-
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="seniorTypiconRule">Главное правило для обработки</param>
-        public RuleHandlerSettings(DayRule seniorTypiconRule, DateTime date) : this()
-        {
-            Rule = seniorTypiconRule;
-            Date = date;
-        }
-
-        //private bool? _throwExceptionIfInvalid = null;
-
-        /// <summary>
-        /// Признак, генерировать ли исключение в случае неверного составления правила при его обработке
-        /// </summary>
-        //public bool ThrowExceptionIfInvalid
-        //{
-        //    get
-        //    {
-        //        if (_throwExceptionIfInvalid == null)
-        //        {
-        //            _throwExceptionIfInvalid = Rule?.Owner.Settings.IsExceptionThrownWhenInvalid;
-        //            if (_throwExceptionIfInvalid == null)
-        //            {
-        //                _throwExceptionIfInvalid = true;
-        //            }
-        //        }
-        //        return (bool) _throwExceptionIfInvalid;
-        //    }
-        //    set
-        //    {
-        //        _throwExceptionIfInvalid = value;
-        //    }
-        //}
 
         /// <summary>
         /// Применяет кастомные праметры к элементу, если таковые найдутся - соответствующие его типу

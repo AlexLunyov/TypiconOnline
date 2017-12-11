@@ -112,6 +112,11 @@ namespace TypiconOnline.Domain.Rules
         /// Правило для разметки шапки для Кондака
         /// </summary>
         public const string Kontakion = "_sys_kontakion";
+
+        /// <summary>
+        /// Правило для разметки шапки для Псалма
+        /// </summary>
+        public const string Psalm = "_sys_psalm";
     }
 
     

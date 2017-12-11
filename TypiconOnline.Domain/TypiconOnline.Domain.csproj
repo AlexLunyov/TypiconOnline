@@ -70,10 +70,17 @@
     <Compile Include="Books\Psalter\GetPsalmResponse.cs" />
     <Compile Include="Books\Psalter\IPsalterContext.cs" />
     <Compile Include="Books\Psalter\PsalmStihos.cs" />
+    <Compile Include="Interfaces\IIntConverter.cs" />
     <Compile Include="Interfaces\IPsalterElement.cs" />
     <Compile Include="Books\Psalter\PsalterContext.cs" />
     <Compile Include="Rules\Days\BookReading.cs" />
     <Compile Include="Rules\Days\BookStihos.cs" />
+    <Compile Include="Rules\Handlers\IntConverters\IntConverter.cs" />
+    <Compile Include="Rules\Handlers\IntConverters\IntCsConverter.cs" />
+    <Compile Include="Rules\Handlers\LanguageSettings.cs" />
+    <Compile Include="Rules\Handlers\LanguageSettingsFactory.cs" />
+    <Compile Include="Rules\Schedule\PsalmRule.cs" />
+    <Compile Include="Rules\Schedule\PsalmRuleSerializer.cs" />
     <Compile Include="Typicon\Psalter\PsalmLink.cs" />
     <Compile Include="Typicon\Psalter\SlavaElement.cs" />
     <Compile Include="Books\TheotokionApp\GetAllTheotokionResponse.cs" />
@@ -271,7 +278,6 @@
     <Compile Include="Rules\Expressions\IsExistsBusinessConstraint.cs" />
     <Compile Include="Rules\Expressions\IsExists.cs" />
     <Compile Include="Rules\Expressions\IsTwoSaints.cs" />
-    <Compile Include="Rules\Schedule\Paragraph.cs" />
     <Compile Include="Rules\Schedule\EktenisBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\TextHolder.cs" />
     <Compile Include="Rules\Expressions\IsCelebrating.cs" />
@@ -351,6 +357,7 @@
     <Compile Include="ViewModels\Factories\KekragariaRuleVMFactory.cs" />
     <Compile Include="ViewModels\Factories\KontakionRuleVMFactory.cs" />
     <Compile Include="ViewModels\Factories\OdiViewModelFactory.cs" />
+    <Compile Include="ViewModels\Factories\PsalmRuleVMFactory.cs" />
     <Compile Include="ViewModels\Factories\SedalenVMFactory.cs" />
     <Compile Include="ViewModels\Factories\TextHolderVMFactory.cs" />
     <Compile Include="ViewModels\Factories\ViewModelFactoryBase.cs" />
@@ -359,7 +366,6 @@
     <Compile Include="ViewModels\Factories\YmnosStructureVMFactory.cs" />
     <Compile Include="ViewModels\Messaging\AppendViewModelOdiRequest.cs" />
     <Compile Include="ViewModels\Messaging\CreateViewModelRequest.cs" />
-    <Compile Include="ViewModels\EktenisViewModel.cs" />
     <Compile Include="ViewModels\ElementViewModel.cs" />
     <Compile Include="ViewModels\ViewModelItem.cs" />
     <Compile Include="ViewModels\WorshipRuleViewModel.cs" />

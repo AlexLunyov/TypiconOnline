@@ -24,16 +24,16 @@ namespace TypiconOnline.AppServices.Migration.Psalter
             return kathisma;
         }
 
-        public static void AppendStihos(this PsalmLink psalmLink, PsalmStihos stihos)
+        public static void AppendStihos(this PsalmLink psalmLink, BookStihos stihos)
         {
             if (psalmLink.StartStihos == null)
             {
-                psalmLink.StartStihos = stihos.Number;
-                psalmLink.EndStihos = stihos.Number;
+                psalmLink.StartStihos = stihos.StihosNumber;
+                psalmLink.EndStihos = stihos.StihosNumber;
             }
             else
             {
-                psalmLink.EndStihos = stihos.Number;
+                psalmLink.EndStihos = stihos.StihosNumber;
             }
         }
 

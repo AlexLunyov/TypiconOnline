@@ -45,9 +45,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             foreach (XmlNode childNode in d.Element.ChildNodes)
             {
-                ItemTextNoted item = new ItemTextNoted((childNode.Name == RuleConstants.TextHolderPapragraphNode) ? childNode.OuterXml : string.Empty);
+                if (childNode.Name == RuleConstants.TextHolderPapragraphNode)
+                {
+                    ItemTextNoted item = new ItemTextNoted(childNode.OuterXml);
 
-                (element as TextHolder).Paragraphs.Add(item);
+                    (element as TextHolder).Paragraphs.Add(item);
+                }
             }
         }
 
