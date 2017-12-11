@@ -25,10 +25,12 @@ namespace TypiconOnline.Domain
         {
             //ThrowExceptionIfInvalid();
 
-            if (_element == null)
-            {
+            //не проверяем, так как каждый раз выдаем копию элемента, иначе изменения, 
+            //которые неизбежно вносят элементы правила - сохраняются
+            //if (_element == null)
+            //{
                 _element = serializer.Deserialize<T>(Definition);
-            }
+            //}
 
             return _element;
         }

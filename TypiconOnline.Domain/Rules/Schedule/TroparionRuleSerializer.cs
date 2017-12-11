@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override RuleElement CreateObject(XmlDescriptor d)
         {
-            return new TroparionRule(new ApostichaVMFactory(SerializerRoot), SerializerRoot, d.GetElementName());
+            return new TroparionRule(new TroparionRuleVMFactory(SerializerRoot), SerializerRoot, d.GetElementName());
         }
     }
 }

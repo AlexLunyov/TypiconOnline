@@ -112,7 +112,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                 int end = (EndStihos != null && EndStihos < reading.Text.Count) ? (int)EndStihos : reading.Text.Count;
 
-                for (int start = StartStihos ?? 1; start < end; start++)
+                for (int start = StartStihos ?? 1; start <= end; start++)
                 {
                     var stihos = reading.Text.FirstOrDefault(c => c.StihosNumber == start);
                     if (stihos != null)

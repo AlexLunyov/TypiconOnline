@@ -17,6 +17,7 @@ using TypiconOnline.Domain.Books.Katavasia;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Services;
+using TypiconOnline.AppServices.Implementations;
 
 namespace TypiconMigrationTool
 {
@@ -44,7 +45,7 @@ namespace TypiconMigrationTool
 
             IRuleSerializerRoot serializerRoot = new RuleSerializerRoot(bookStorage);
 
-            return new ScheduleService(serializerRoot);
+            return new ScheduleService(new RuleHandlerSettingsFactory(), serializerRoot);
         }
     }
 }

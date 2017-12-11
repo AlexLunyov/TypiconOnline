@@ -8,7 +8,6 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Expressions;
-using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Expressions

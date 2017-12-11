@@ -9,6 +9,7 @@ using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Schedule.Extensions;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -56,21 +57,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     case KanonasPlaceKind.kontakion:
                         if (kanonas.Kontakion != null)
                         {
-                            //конвертируем структуру кондака в YmnosGroup
-                            YmnosGroup group = new YmnosGroup()
-                            {
-                                Annotation = (kanonas.Kontakion.Annotation != null) ? new ItemText(kanonas.Kontakion.Annotation) : null,
-                                Ihos = kanonas.Kontakion.Ihos,
-                                Prosomoion = (kanonas.Kontakion.Prosomoion != null) ? new Prosomoion(kanonas.Kontakion.Prosomoion) : null,
-                                Ymnis = new List<Ymnos>()
-                                {
-                                    new Ymnos() { Text = kanonas.Kontakion.Ymnos },
-                                    new Ymnos() { Text = kanonas.Kontakion.Ikos }
-                                }
-                            };
-
-                            result = new YmnosStructure();
-                            result.Groups.Add(group);
+                            result = kanonas.Kontakion.ToYmnosStructure();
                         }
                         break;
                 }

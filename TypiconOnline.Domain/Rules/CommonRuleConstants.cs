@@ -54,6 +54,11 @@ namespace TypiconOnline.Domain.Rules
         public const string AinoiRule = "_sys_ainoi";
 
         /// <summary>
+        /// Правило для разметки Отпустительных тропарей
+        /// </summary>
+        public const string TroparionRule = "_sys_troparion";
+
+        /// <summary>
         /// Правило для разметки роли Хор для каждого текста
         /// </summary>
         public const string ChoirRule = "_sys_choir";

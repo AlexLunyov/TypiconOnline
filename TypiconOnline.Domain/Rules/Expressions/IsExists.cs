@@ -7,7 +7,6 @@ using System.Xml;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Expressions;
-using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Rules.Expressions

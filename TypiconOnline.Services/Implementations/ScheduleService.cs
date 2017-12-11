@@ -23,7 +23,7 @@ namespace TypiconOnline.Domain.Services
     public class ScheduleService : IScheduleService
     {
         //ITypiconEntityService _typiconEntityService;
-        IRuleHandlerSettingsFactory _settingsFactory = new RuleHandlerSettingsFactory();
+        IRuleHandlerSettingsFactory _settingsFactory;// = new RuleHandlerSettingsFactory();
         //IModifiedRuleService _modifiedRuleService;
         //IRuleHandler _ruleHandler;
         //BookStorage _bookStorage;
@@ -31,14 +31,14 @@ namespace TypiconOnline.Domain.Services
         IRuleSerializerRoot _ruleSerializer;
 
         public ScheduleService(/*ITypiconEntityService typiconEntityService
-            , IRuleHandlerSettingsFactory settingsFactory
-            ,*/ IRuleSerializerRoot ruleSerializer
+            , */IRuleHandlerSettingsFactory settingsFactory
+            , IRuleSerializerRoot ruleSerializer
             //, IModifiedRuleService modifiedRuleService
             //, IRuleHandler ruleHandler
             )
         {
             //_typiconEntityService = typiconEntityService ?? throw new ArgumentNullException("ITypiconEntityService");
-            //_settingsFactory = settingsFactory ?? throw new ArgumentNullException("IRuleHandlerSettingsFactory");
+            _settingsFactory = settingsFactory ?? throw new ArgumentNullException("IRuleHandlerSettingsFactory");
             //_modifiedRuleService = modifiedRuleService ?? throw new ArgumentNullException("modifiedRuleService");
             _ruleSerializer = ruleSerializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
 
@@ -118,7 +118,7 @@ namespace TypiconOnline.Domain.Services
                     Name = nameComposer.Compose(settings, request.Date),
                     Date = request.Date,
                     SignNumber = signNumber,
-                    SignName = sign.SignName[settings.Language],
+                    SignName = sign.SignName[settings.Language.Name],
                 };
             }
 

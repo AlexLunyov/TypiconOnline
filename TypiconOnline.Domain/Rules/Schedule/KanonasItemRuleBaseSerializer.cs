@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule

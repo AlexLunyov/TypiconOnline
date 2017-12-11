@@ -9,7 +9,6 @@ using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Oktoikh;
-using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Typicon;
@@ -31,7 +30,10 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             GetTypiconEntityResponse resp = new TypiconEntityService(_unitOfWork).GetTypiconEntity(1);
             TypiconEntity typiconEntity = resp.TypiconEntity;
 
-            ServiceSequenceHandler handler = new ServiceSequenceHandler() { Settings = new RuleHandlerSettings() { Language = "cs-ru" } };
+            ServiceSequenceHandler handler = new ServiceSequenceHandler()
+            {
+                Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru") }
+            };
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
             FileReader reader = new FileReader(folderPath);

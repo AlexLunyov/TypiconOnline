@@ -106,7 +106,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                         Odi = odi,
                         IsLastKanonas = isLastKanonas,
                         IsOdi8 = isOdi8,
-                        DefaultChorus = kanonas.Stihos?[req.Handler.Settings.Language]
+                        DefaultChorus = kanonas.Stihos?[req.Handler.Settings.Language.Name]
                     });
                 }
             }
@@ -125,16 +125,16 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 if (kanonas.Name != null)
                 {
                     holder = GetHeaders(req)[2];
-                    name = kanonas.Name[req.Handler.Settings.Language];
+                    name = kanonas.Name[req.Handler.Settings.Language.Name];
                 }
                 else
                 {
                     holder = GetHeaders(req)[3];
                 }
 
-                string kanonasString = holder.Paragraphs[0][req.Handler.Settings.Language];
+                string kanonasString = holder.Paragraphs[0][req.Handler.Settings.Language.Name];
                 kanonasString = kanonasString.Replace("[kanonas]", name).
-                                              Replace("[ihos]", kanonas.Ihos.ToString());
+                                              Replace("[ihos]", req.Handler.Settings.Language.IntConverter.ToString(kanonas.Ihos));
 
 
                 view = ViewModelItemFactory.Create(TextHolderKind.Text, new List<string> { kanonasString });
@@ -153,8 +153,8 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             if (katavasiaHeader == null)
             {
-                string str = GetHeaders(req)[4].Paragraphs[0][req.Handler.Settings.Language];
-                str = str.Replace("[ihos]", ihos.ToString());
+                string str = GetHeaders(req)[4].Paragraphs[0][req.Handler.Settings.Language.Name];
+                str = str.Replace("[ihos]", req.Handler.Settings.Language.IntConverter.ToString(ihos));
 
                 katavasiaHeader = ViewModelItemFactory.Create(TextHolderKind.Text, new List<string> { str });
             }

@@ -19,8 +19,6 @@ namespace TypiconOnline.Domain.Rules
             ElementName = name;
         }
 
-        private bool _isInterpreted = false;
-
         /// <summary>
         /// Общедоступный метод вызова интерпретации правила
         /// </summary>
@@ -43,18 +41,12 @@ namespace TypiconOnline.Domain.Rules
             if (check != false)
             {
                 InnerInterpret(handler);
-                _isInterpreted = true;
+                IsInterpreted = true;
             }
         }
 
 
-        public bool IsInterpreted
-        {
-            get
-            {
-                return _isInterpreted;
-            }
-        }
+        public bool IsInterpreted { get; private set; } = false;
 
         /// <summary>
         /// Внутренний метод для определения интерпретации. Должен быть определен в каждом элементе

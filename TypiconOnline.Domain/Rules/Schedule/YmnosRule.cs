@@ -10,7 +10,6 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
-using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Rules.Schedule

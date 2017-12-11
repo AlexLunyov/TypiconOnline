@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.Domain.Books;
-using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Typicon;
@@ -30,7 +29,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             ServiceSequenceHandler handler = new ServiceSequenceHandler()
             {
-                Settings = new RuleHandlerSettings() { Language = "cs-ru" }
+                Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru") }
             };
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");

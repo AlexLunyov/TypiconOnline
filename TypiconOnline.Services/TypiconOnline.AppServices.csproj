@@ -53,6 +53,7 @@
     <Compile Include="Implementations\Books\PsalterService.cs" />
     <Compile Include="Implementations\Books\TheotokionAppService.cs" />
     <Compile Include="Implementations\BypassSequenceViewer.cs" />
+    <Compile Include="Implementations\CustomRuleSettingsFactory.cs" />
     <Compile Include="Implementations\DayContainerService.cs" />
     <Compile Include="Implementations\FileReader.cs" />
     <Compile Include="Implementations\HtmlInnerScheduleWeekViewer.cs" />

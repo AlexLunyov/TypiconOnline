@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
-using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.ViewModels;

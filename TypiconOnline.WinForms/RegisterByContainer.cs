@@ -55,6 +55,7 @@ namespace TypiconOnline.WinForms
                     x.For<IScheduleService>().Use<ScheduleService>(); 
                     x.For<IRuleSerializerRoot>().Use<RuleSerializerRoot>();
                     x.For<IScheduleWeekViewer>().Use<DocxScheduleWeekViewer>();
+                    x.For<IRuleHandlerSettingsFactory>().Use<RuleHandlerSettingsFactory>();
                 });
         }
     }

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Schedule;
 
 namespace TypiconOnline.Domain.Tests.Rules.Schedule

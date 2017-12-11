@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Rules.Days;
-using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Schedule;
 
 namespace TypiconOnline.Domain.Tests.Rules.Schedule

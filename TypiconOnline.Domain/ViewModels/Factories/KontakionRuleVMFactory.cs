@@ -15,30 +15,35 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 {
     public class KontakionRuleVMFactory : ViewModelFactoryBase<KontakionRule>
     {
+        private const string IHOS_STRING = "[ihos]";
+
         public KontakionRuleVMFactory(IRuleSerializerRoot serializer) : base(serializer) { }
 
         public override void Create(CreateViewModelRequest<KontakionRule> req)
         {
-            if (req.Element?.Calculate(req.Handler.Settings) is Kontakion kontakion)
+            if (req.Element?.Calculate(req.Handler.Settings) is YmnosStructure kontakion
+                && kontakion.Groups.Count > 0)
             {
                 var headers = GetHeaders(req, kontakion);
 
                 AppendKontakion(req, kontakion, headers.Kontakion);
 
-                if (req.Element.ShowIkos && kontakion.Ikos is ItemText ikos)
+                if (req.Element.ShowIkos && kontakion.Groups[0].Ymnis.Count > 1)
                 {
-                    AppendIkos(req, ikos, headers.Ikos);
+                    AppendIkos(req, kontakion.Groups[0].Ymnis[1].Text, headers.Ikos);
                 }
             }
         }
 
-        private void AppendKontakion(CreateViewModelRequest<KontakionRule> req, Kontakion kontakion, ViewModelItem view)
+        private void AppendKontakion(CreateViewModelRequest<KontakionRule> req, YmnosStructure kontakion, ViewModelItem view)
         {
             var viewModel = new ElementViewModel() { view };
 
-            kontakion.Annotation.AppendViewModel(req.Handler, viewModel);
-            kontakion.Prosomoion.AppendViewModel(req.Handler, Serializer, viewModel);
-            kontakion.Ymnos.AppendViewModel(req.Handler, viewModel);
+            var group = kontakion.Groups[0];
+
+            group.Annotation.AppendViewModel(req.Handler, viewModel);
+            group.Prosomoion.AppendViewModel(req.Handler, Serializer, viewModel);
+            group.Ymnis[0].Text.AppendViewModel(req.Handler, viewModel);
 
             req.AppendModelAction(viewModel);
         }
@@ -52,13 +57,14 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             req.AppendModelAction(viewModel);
         }
 
-        private (ViewModelItem Kontakion, ViewModelItem Ikos) GetHeaders(CreateViewModelRequest<KontakionRule> req, Kontakion kontakion)
+        private (ViewModelItem Kontakion, ViewModelItem Ikos) GetHeaders(CreateViewModelRequest<KontakionRule> req, YmnosStructure kontakion)
         {
             List<TextHolder> headers = req.Handler.Settings.Rule.Owner.GetCommonRuleChildren(
                     new CommonRuleServiceRequest() { Key = CommonRuleConstants.Kontakion, RuleSerializer = Serializer }).Cast<TextHolder>().ToList();
 
             var viewKontakion = ViewModelItemFactory.Create(headers[0], req.Handler, Serializer);
-            viewKontakion.Paragraphs[0] = viewKontakion.Paragraphs[0].Replace("[ihos]", kontakion.Ihos.ToString());
+            viewKontakion.Paragraphs[0] = viewKontakion.Paragraphs[0].Replace(IHOS_STRING,
+                req.Handler.Settings.Language.IntConverter.ToString(kontakion.Ihos));
 
             var viewIkos = ViewModelItemFactory.Create(headers[1], req.Handler, Serializer);
 

@@ -8,7 +8,6 @@ using System.Xml;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Executables;
-using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Services;

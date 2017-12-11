@@ -81,6 +81,8 @@ namespace TypiconOnline.Domain.ItemTypes
 
                     if (!wasEmpty)
                     {
+                        _textDict.Clear();
+
                         ReadXml(xmlReader);
                     }
                 }

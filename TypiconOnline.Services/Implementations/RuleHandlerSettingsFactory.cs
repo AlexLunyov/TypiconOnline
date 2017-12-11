@@ -36,7 +36,7 @@ namespace TypiconOnline.AppServices.Implementations
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public RuleHandlerSettings Create(GetRuleSettingsRequest req)
+        public virtual RuleHandlerSettings Create(GetRuleSettingsRequest req)
         {
             //MenologyRule - не может быть null
             if (req.MenologyRule == null) throw new NullReferenceException("MenologyRule");
@@ -204,7 +204,7 @@ namespace TypiconOnline.AppServices.Implementations
                 Rule = rule,
                 DayWorships = dayServices.ToList(),
                 OktoikhDay = oktoikhDay,
-                Language = req.Language,
+                Language = LanguageSettingsFactory.Create(req.Language),
                 //ThrowExceptionIfInvalid = req.ThrowExceptionIfInvalid,
                 ApplyParameters = req.ApplyParameters,
                 CheckParameters = req.CheckParameters

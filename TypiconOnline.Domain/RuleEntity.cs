@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.Domain;

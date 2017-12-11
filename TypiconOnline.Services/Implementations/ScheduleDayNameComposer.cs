@@ -43,13 +43,13 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 for (int i = 1; i < settings.DayWorships.Count; i++)
                 {
-                    result += settings.DayWorships[i].WorshipName[settings.Language] + " ";
+                    result += settings.DayWorships[i].WorshipName[settings.Language.Name] + " ";
                 }
             }
 
             //а теперь разбираемся с главным
 
-            string s = seniorService.WorshipName[settings.Language];
+            string s = seniorService.WorshipName[settings.Language.Name];
 
             if (date.DayOfWeek != DayOfWeek.Sunday
                 || (date.DayOfWeek == DayOfWeek.Sunday
@@ -69,8 +69,8 @@ namespace TypiconOnline.AppServices.Implementations
 
                 //Если имеется короткое название, то добавляем только его
 
-                result = oktoikhContext.GetSundayName(date, settings.Language,
-                    GetShortName(settings.DayWorships, settings.Language)) + " " + result;
+                result = oktoikhContext.GetSundayName(date, settings.Language.Name,
+                    GetShortName(settings.DayWorships, settings.Language.Name)) + " " + result;
 
                 //жестко задаем воскресный день
                 //handlerRequest.Rule = inputRequest.TypiconEntity.Settings.TemplateSunday;

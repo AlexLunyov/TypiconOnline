@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Tests
         {
             IRuleSerializerRoot serializerRoot = new RuleSerializerRoot(BookStorageFactory.Create());
 
-            return new ScheduleService(serializerRoot);
+            return new ScheduleService(new RuleHandlerSettingsFactory(), serializerRoot);
         }
     }
 }

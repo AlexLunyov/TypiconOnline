@@ -32,7 +32,8 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 //заполняем header - вставляем номер гласа
                 ItemText header = (children[0] as TextHolder).Paragraphs[0];
                 string headerText = header.StringExpression;
-                header.StringExpression = headerText.Replace("[ihos]", req.Element.Structure.Groups[0].Ihos.ToString());
+                header.StringExpression = headerText.Replace("[ihos]", 
+                    req.Handler.Settings.Language.IntConverter.ToString(req.Element.Structure.Groups[0].Ihos));
 
                 //а теперь отсчитываем от последней стихиры и добавляем к ней стих из псалма
                 //сам стих удаляем из псалма

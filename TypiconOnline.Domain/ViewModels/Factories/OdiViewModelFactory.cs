@@ -159,7 +159,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
             if (index >= 0)
             {
-                result = choruses[index]?.Paragraphs[0]?[handler.Settings.Language] ?? "";
+                result = choruses[index]?.Paragraphs[0]?[handler.Settings.Language.Name] ?? "";
             }
 
             return result;

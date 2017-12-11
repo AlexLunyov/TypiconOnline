@@ -4,7 +4,6 @@ using System.Xml;
 using TypiconOnline.Domain.Rules.Expressions;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Repository.EF;
 using System.Linq;
 using TypiconOnline.Domain.Books;

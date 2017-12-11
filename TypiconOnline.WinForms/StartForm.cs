@@ -83,8 +83,9 @@ namespace TypiconOnline.WinForms
             //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
             IRuleSerializerRoot serializerRoot = container.With(BookStorage.Instance).GetInstance<IRuleSerializerRoot>();
+            var settingsFactory = container.GetInstance<IRuleHandlerSettingsFactory>();
 
-            _scheduleService = container.With(serializerRoot).GetInstance<IScheduleService>();
+            _scheduleService = container.With(settingsFactory).With(serializerRoot).GetInstance<IScheduleService>();
 
             _docxTemplateService = container.With(BookStorage.Instance.Oktoikh).GetInstance<IDocxTemplateService>();
         }
@@ -626,7 +627,7 @@ namespace TypiconOnline.WinForms
                     CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.All)
                 };
 
-            request.Handler.Settings.Language = "cs-ru";
+            request.Handler.Settings.Language = LanguageSettingsFactory.Create("cs-ru");
 
                 GetScheduleDayResponse dayResponse = _scheduleService.GetScheduleDay(request);
 
@@ -662,6 +663,14 @@ namespace TypiconOnline.WinForms
                 checkBoxIsBigDocxOpen.Checked = false;
 
             CheckEnablingExecuteButton();
+        }
+
+        private void btnCustomRule_Click(object sender, EventArgs e)
+        {
+            using (CustomRuleViewer dialog = new CustomRuleViewer())
+            {
+                // Show testDialog as a modal dialog and determine if DialogResult = OK.
+            }
         }
     }
 }

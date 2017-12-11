@@ -45,7 +45,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             {
                 Kind = kind,
                 KindStringValue = GetKindStringValue(kind, handler, serializer),
-                Paragraphs = textHolder.Paragraphs.Select(c => c[handler.Settings.Language]).ToList()
+                Paragraphs = textHolder.Paragraphs.Select(c => c[handler.Settings.Language.Name]).ToList()
             };
         }
 
@@ -56,7 +56,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             {
                 Kind = Cast(ymnos.Kind),
                 KindStringValue = GetKindStringValue(kind, handler, serializer),
-                Paragraphs = new List<string>() { ymnos.Text[handler.Settings.Language] }
+                Paragraphs = new List<string>() { ymnos.Text[handler.Settings.Language.Name] }
             };
         }
 
@@ -147,7 +147,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             if (index >= 0)
             {
                 result = handler.Settings.Rule.Owner.GetCommonRuleIndexedString(
-                    new CommonRuleServiceRequest() { Key = CommonRuleConstants.ViewModelKind, RuleSerializer = ruleSerializer }, index, handler.Settings.Language);
+                    new CommonRuleServiceRequest() { Key = CommonRuleConstants.ViewModelKind, RuleSerializer = ruleSerializer }, index, handler.Settings.Language.Name);
             }
 
             return result;

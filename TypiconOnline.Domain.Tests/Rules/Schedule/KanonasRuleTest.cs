@@ -28,7 +28,10 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             GetTypiconEntityResponse resp = new TypiconEntityService(_unitOfWork).GetTypiconEntity(1);
             TypiconEntity typiconEntity = resp.TypiconEntity;
 
-            ServiceSequenceHandler handler = new ServiceSequenceHandler() { Settings = new RuleHandlerSettings() { Language = "cs-ru" } };
+            ServiceSequenceHandler handler = new ServiceSequenceHandler()
+            {
+                Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru") }
+            };
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
             FileReader reader = new FileReader(folderPath);

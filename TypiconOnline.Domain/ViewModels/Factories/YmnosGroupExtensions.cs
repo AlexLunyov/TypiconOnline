@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             if (text?.IsEmpty == false)
             {
-                viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text, new List<string> { text[handler.Settings.Language] }));
+                viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text, new List<string> { text[handler.Settings.Language.Name] }));
             }
         }
 
@@ -45,22 +45,23 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             {
                 //текст "Глас"
                 req.Key = CommonRuleConstants.IhosText;
-                str += $"{typ.GetCommonRuleTextValue(req, handler.Settings.Language)} {ihos}. ";
+                string ihosString = handler.Settings.Language.IntConverter.ToString((int)ihos);
+                str += $"{typ.GetCommonRuleTextValue(req, handler.Settings.Language.Name)} {ihosString}. ";
             }
 
             //самоподобен?
             if (prosomoion?.Self == true)
             {
                 req.Key = CommonRuleConstants.SelfText;
-                str += typ.GetCommonRuleTextValue(req, handler.Settings.Language);
+                str += typ.GetCommonRuleTextValue(req, handler.Settings.Language.Name);
             }
             //если подобен
             else if (prosomoion?.IsEmpty == false)
             {
                 req.Key = CommonRuleConstants.ProsomoionText;
-                string p = typ.GetCommonRuleTextValue(req, handler.Settings.Language);
+                string p = typ.GetCommonRuleTextValue(req, handler.Settings.Language.Name);
 
-                str += $"{p}: \"{ prosomoion[handler.Settings.Language] }\"";
+                str += $"{p}: \"{ prosomoion[handler.Settings.Language.Name] }\"";
             }
 
             viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text, new List<string> { str }));
@@ -77,11 +78,11 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 foreach (ItemText stihos in ymnos.Stihoi)
                 {
                     viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Stihos, text.StihosText, 
-                        new List<string> { stihos[handler.Settings.Language] }));
+                        new List<string> { stihos[handler.Settings.Language.Name] }));
                 }
 
                 viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Choir, text.ChoirText,
-                    new List<string> { ymnos.Text[handler.Settings.Language] } ));
+                    new List<string> { ymnos.Text[handler.Settings.Language.Name] } ));
             }
         }
 
@@ -91,10 +92,10 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
             //находим Стих и Хор для дальнешей вставки
             req.Key = CommonRuleConstants.StihosRule;
-            string stihos = handler.Settings.Rule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language);
+            string stihos = handler.Settings.Rule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language.Name);
 
             req.Key = CommonRuleConstants.ChoirRule;
-            string choir = handler.Settings.Rule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language);
+            string choir = handler.Settings.Rule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language.Name);
 
             return (stihos, choir);
         }

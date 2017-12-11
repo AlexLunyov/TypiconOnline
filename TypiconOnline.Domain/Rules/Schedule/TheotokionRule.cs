@@ -8,7 +8,6 @@ using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Days;
-using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Rules.Schedule
@@ -33,6 +32,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             if (ReferenceYmnos == null 
                 && ((Place != PlaceYmnosSource.kekragaria_theotokion)
+                && (Place != PlaceYmnosSource.kekragaria_stavrostheotokion)
                 && (Place != PlaceYmnosSource.liti_theotokion)
                 && (Place != PlaceYmnosSource.aposticha_esperinos_theotokion)
                 && (Place != PlaceYmnosSource.aposticha_orthros_theotokion)

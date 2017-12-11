@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
     {
         public RuleHandlerSettings()
         {
-            LanguageSettings = LanguageSettingsFactory.Create("cs-ru");
+            Language = LanguageSettingsFactory.Create("cs-ru");
         }
 
         /// <summary>
@@ -43,9 +43,9 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// <summary>
         /// Язык для обработки
         /// </summary>
-        public string Language { get; set; }
+        //public string Language { get; set; }
 
-        public LanguageSettings LanguageSettings { get; set; }
+        public LanguageSettings Language { get; set; }
 
         public CustomParamsCollection<IRuleApplyParameter> ApplyParameters { get; set; } = new CustomParamsCollection<IRuleApplyParameter>();
         public CustomParamsCollection<IRuleCheckParameter> CheckParameters { get; set; } = new CustomParamsCollection<IRuleCheckParameter>();

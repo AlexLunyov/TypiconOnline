@@ -86,6 +86,8 @@
             this.monthCalendarSequence = new System.Windows.Forms.MonthCalendar();
             this.folderBrowserDialogSettings = new System.Windows.Forms.FolderBrowserDialog();
             this.templateFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.tabPageCustomRuleMain = new System.Windows.Forms.TabPage();
+            this.btnCustomRule = new System.Windows.Forms.Button();
             this.tabControlMain.SuspendLayout();
             this.tabPageMain.SuspendLayout();
             this.panelTest.SuspendLayout();
@@ -101,6 +103,7 @@
             this.tabPageSequence.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.tabPageCustomRuleMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlMain
@@ -110,6 +113,7 @@
             this.tabControlMain.Controls.Add(this.tabAdminPage);
             this.tabControlMain.Controls.Add(this.tabPageTesting);
             this.tabControlMain.Controls.Add(this.tabPageSequence);
+            this.tabControlMain.Controls.Add(this.tabPageCustomRuleMain);
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
             this.tabControlMain.Margin = new System.Windows.Forms.Padding(4);
@@ -364,7 +368,7 @@
             this.tabPagesSettings.Margin = new System.Windows.Forms.Padding(4);
             this.tabPagesSettings.Name = "tabPagesSettings";
             this.tabPagesSettings.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPagesSettings.Size = new System.Drawing.Size(963, 542);
+            this.tabPagesSettings.Size = new System.Drawing.Size(1069, 542);
             this.tabPagesSettings.TabIndex = 1;
             this.tabPagesSettings.Text = "Настройки";
             this.tabPagesSettings.UseVisualStyleBackColor = true;
@@ -393,7 +397,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(955, 208);
+            this.groupBox2.Size = new System.Drawing.Size(1061, 208);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Wordpress";
@@ -475,7 +479,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(955, 160);
+            this.groupBox1.Size = new System.Drawing.Size(1061, 160);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Файлы";
@@ -580,7 +584,7 @@
             this.tabAdminPage.Location = new System.Drawing.Point(4, 25);
             this.tabAdminPage.Name = "tabAdminPage";
             this.tabAdminPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAdminPage.Size = new System.Drawing.Size(963, 542);
+            this.tabAdminPage.Size = new System.Drawing.Size(1069, 542);
             this.tabAdminPage.TabIndex = 2;
             this.tabAdminPage.Text = "Администрирование";
             this.tabAdminPage.UseVisualStyleBackColor = true;
@@ -634,7 +638,7 @@
             this.tabPageTesting.Location = new System.Drawing.Point(4, 25);
             this.tabPageTesting.Name = "tabPageTesting";
             this.tabPageTesting.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTesting.Size = new System.Drawing.Size(963, 542);
+            this.tabPageTesting.Size = new System.Drawing.Size(1069, 542);
             this.tabPageTesting.TabIndex = 3;
             this.tabPageTesting.Text = "Тестирование";
             this.tabPageTesting.UseVisualStyleBackColor = true;
@@ -652,7 +656,7 @@
             // textBoxTesting
             // 
             this.textBoxTesting.Dock = System.Windows.Forms.DockStyle.Right;
-            this.textBoxTesting.Location = new System.Drawing.Point(273, 3);
+            this.textBoxTesting.Location = new System.Drawing.Point(379, 3);
             this.textBoxTesting.Multiline = true;
             this.textBoxTesting.Name = "textBoxTesting";
             this.textBoxTesting.ReadOnly = true;
@@ -676,7 +680,7 @@
             this.tabPageSequence.Location = new System.Drawing.Point(4, 25);
             this.tabPageSequence.Name = "tabPageSequence";
             this.tabPageSequence.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSequence.Size = new System.Drawing.Size(963, 542);
+            this.tabPageSequence.Size = new System.Drawing.Size(1069, 542);
             this.tabPageSequence.TabIndex = 4;
             this.tabPageSequence.Text = "Последование";
             this.tabPageSequence.UseVisualStyleBackColor = true;
@@ -693,10 +697,10 @@
             // groupBox7
             // 
             this.groupBox7.Controls.Add(this.txtSequence);
-            this.groupBox7.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox7.Location = new System.Drawing.Point(243, 3);
+            this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox7.Location = new System.Drawing.Point(237, 3);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(717, 536);
+            this.groupBox7.Size = new System.Drawing.Size(829, 536);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Текст";
@@ -709,7 +713,7 @@
             this.txtSequence.Name = "txtSequence";
             this.txtSequence.ReadOnly = true;
             this.txtSequence.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSequence.Size = new System.Drawing.Size(711, 515);
+            this.txtSequence.Size = new System.Drawing.Size(823, 515);
             this.txtSequence.TabIndex = 1;
             // 
             // groupBox6
@@ -760,6 +764,27 @@
             // 
             this.templateFileDialog.Filter = "Docx файлы | *.docx";
             // 
+            // tabPageCustomRuleMain
+            // 
+            this.tabPageCustomRuleMain.Controls.Add(this.btnCustomRule);
+            this.tabPageCustomRuleMain.Location = new System.Drawing.Point(4, 25);
+            this.tabPageCustomRuleMain.Name = "tabPageCustomRuleMain";
+            this.tabPageCustomRuleMain.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageCustomRuleMain.Size = new System.Drawing.Size(1069, 542);
+            this.tabPageCustomRuleMain.TabIndex = 5;
+            this.tabPageCustomRuleMain.Text = "Правило";
+            this.tabPageCustomRuleMain.UseVisualStyleBackColor = true;
+            // 
+            // btnCustomRule
+            // 
+            this.btnCustomRule.Location = new System.Drawing.Point(8, 6);
+            this.btnCustomRule.Name = "btnCustomRule";
+            this.btnCustomRule.Size = new System.Drawing.Size(246, 64);
+            this.btnCustomRule.TabIndex = 0;
+            this.btnCustomRule.Text = "Открыть форму";
+            this.btnCustomRule.UseVisualStyleBackColor = true;
+            this.btnCustomRule.Click += new System.EventHandler(this.btnCustomRule_Click);
+            // 
             // StartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -768,7 +793,6 @@
             this.Controls.Add(this.tabControlMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.MaximizeBox = false;
             this.Name = "StartForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Расписание богослужений";
@@ -796,6 +820,7 @@
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
+            this.tabPageCustomRuleMain.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -860,5 +885,7 @@
         private System.Windows.Forms.Button btnSequenceCustomParams;
         private System.Windows.Forms.CheckBox checkBoxIsBigDocxOpen;
         private System.Windows.Forms.CheckBox checkBoxBigDocx;
+        private System.Windows.Forms.TabPage tabPageCustomRuleMain;
+        private System.Windows.Forms.Button btnCustomRule;
     }
 }

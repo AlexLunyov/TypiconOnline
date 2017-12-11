@@ -79,6 +79,7 @@
     <Compile Include="Rules\Handlers\IntConverters\IntCsConverter.cs" />
     <Compile Include="Rules\Handlers\LanguageSettings.cs" />
     <Compile Include="Rules\Handlers\LanguageSettingsFactory.cs" />
+    <Compile Include="Rules\Schedule\Extensions\KontakionExtensions.cs" />
     <Compile Include="Rules\Schedule\PsalmRule.cs" />
     <Compile Include="Rules\Schedule\PsalmRuleSerializer.cs" />
     <Compile Include="Typicon\Psalter\PsalmLink.cs" />
@@ -203,8 +204,6 @@
     <Compile Include="Rules\Expressions\GetDayOfWeek.cs" />
     <Compile Include="Rules\Expressions\BooleanExpression.cs" />
     <Compile Include="Rules\Expressions\LogicalExpression.cs" />
-    <Compile Include="Rules\Factories\DayContainerFactory.cs" />
-    <Compile Include="Rules\Factories\RuleDayFactory.cs" />
     <Compile Include="Rules\Handlers\CustomParameters\CheckParameterBase.cs" />
     <Compile Include="Rules\Handlers\CustomParameters\CustomParamsCollection.cs" />
     <Compile Include="Rules\Handlers\CustomParameters\RuleCheckParameterExtensions.cs" />
@@ -336,7 +335,6 @@
     <Compile Include="Rules\Expressions\Int.cs" />
     <Compile Include="Rules\Expressions\RuleExpression.cs" />
     <Compile Include="Rules\Expressions\IntExpression.cs" />
-    <Compile Include="Rules\Factories\RuleFactory.cs" />
     <Compile Include="Rules\RuleElement.cs" />
     <Compile Include="Rules\RuleConstants.cs" />
     <Compile Include="Rules\RulesExceptions.cs" />
@@ -360,6 +358,7 @@
     <Compile Include="ViewModels\Factories\PsalmRuleVMFactory.cs" />
     <Compile Include="ViewModels\Factories\SedalenVMFactory.cs" />
     <Compile Include="ViewModels\Factories\TextHolderVMFactory.cs" />
+    <Compile Include="ViewModels\Factories\TroparionRuleVMFactory.cs" />
     <Compile Include="ViewModels\Factories\ViewModelFactoryBase.cs" />
     <Compile Include="ViewModels\Factories\ViewModelItemFactory.cs" />
     <Compile Include="ViewModels\Factories\YmnosGroupExtensions.cs" />
@@ -380,6 +379,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Books\Menology\" />
+    <Folder Include="Rules\Factories\" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\TypiconOnline.Modeling\TypiconOnlineLayers.layerdiagram">

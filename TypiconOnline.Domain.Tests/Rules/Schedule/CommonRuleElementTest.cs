@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.Domain.Books;
-using TypiconOnline.Domain.Rules.Factories;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Typicon;
@@ -30,7 +29,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             TypiconEntity typiconEntity = resp.TypiconEntity;
             MenologyRule rule = typiconEntity.MenologyRules[0];
             ServiceSequenceHandler handler = new ServiceSequenceHandler();
-            handler.Settings = new RuleHandlerSettings() { Language = "cs-ru", Rule = rule, Date = DateTime.Today };
+            handler.Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru"), Rule = rule, Date = DateTime.Today };
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
             FileReader reader = new FileReader(folderPath);

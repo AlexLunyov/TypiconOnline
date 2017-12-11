@@ -39,14 +39,14 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
             //вставляем номер Псалма
             viewHeader.Paragraphs[0] = viewHeader.Paragraphs[0]
-                .Replace(NUMBER, req.Handler.Settings.LanguageSettings.IntConverter.ToString(req.Element.Number));
+                .Replace(NUMBER, req.Handler.Settings.Language.IntConverter.ToString(req.Element.Number));
 
             req.AppendModelAction(new ElementViewModel() { viewHeader });
         }
 
         private void AppendText(CreateViewModelRequest<PsalmRule> req, BookReading psalmReading)
         {
-            List<string> paragraphs = psalmReading.Text.Select(c => c[req.Handler.Settings.LanguageSettings.Name]).ToList();
+            List<string> paragraphs = psalmReading.Text.Select(c => c[req.Handler.Settings.Language.Name]).ToList();
 
             req.AppendModelAction(new ElementViewModel() { ViewModelItemFactory.Create(TextHolderKind.Lector, paragraphs) });
         }

@@ -102,7 +102,7 @@ namespace TypiconOnline.AppServices.Implementations
 
             IRuleSerializerRoot serializerRoot = new RuleSerializerRoot(bookStorage);
 
-            return new ScheduleService(serializerRoot);
+            return new ScheduleService(new RuleHandlerSettingsFactory(), serializerRoot);
         }
     }
 }
