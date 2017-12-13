@@ -13,12 +13,12 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 {
     public class ViewModelItemFactory
     {
-        public static ViewModelItem Create(TextHolderKind kind, List<string> p)
+        public static ViewModelItem Create(TextHolderKind kind, List<ParagraphViewModel> p)
         {
             return Create(kind, string.Empty, p);
         }
 
-        public static ViewModelItem Create(TextHolderKind kind, string kindString, List<string> p)
+        public static ViewModelItem Create(TextHolderKind kind, string kindString, List<ParagraphViewModel> p)
         {
             return new ViewModelItem()
             {
@@ -28,7 +28,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             };
         }
 
-        public static ViewModelItem Create(ViewModelItemKind kind, List<string> p, IRuleHandler handler, IRuleSerializerRoot serializer)
+        public static ViewModelItem Create(ViewModelItemKind kind, List<ParagraphViewModel> p, IRuleHandler handler, IRuleSerializerRoot serializer)
         {
             return new ViewModelItem()
             {
@@ -45,7 +45,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             {
                 Kind = kind,
                 KindStringValue = GetKindStringValue(kind, handler, serializer),
-                Paragraphs = textHolder.Paragraphs.Select(c => c[handler.Settings.Language.Name]).ToList()
+                Paragraphs = ParagraphVMFactory.CreateList(textHolder.Paragraphs, handler.Settings.Language.Name)
             };
         }
 
@@ -56,7 +56,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             {
                 Kind = Cast(ymnos.Kind),
                 KindStringValue = GetKindStringValue(kind, handler, serializer),
-                Paragraphs = new List<string>() { ymnos.Text[handler.Settings.Language.Name] }
+                Paragraphs = new List<ParagraphViewModel>() { ParagraphVMFactory.Create(ymnos.Text, handler.Settings.Language.Name) }
             };
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Schedule;
@@ -58,7 +59,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             }
         }
 
-        private void AppendChorus(Odi odi, bool isLastKanonas, bool isOdi8, int i, string defaultChorus)
+        private void AppendChorus(Odi odi, bool isLastKanonas, bool isOdi8, int i, ItemText defaultChorus)
         {
             var troparion = odi.Troparia[i];
 
@@ -87,23 +88,23 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 }
             }
 
-            string text = GetChorus(kind, troparion, defaultChorus);
+            ItemText text = GetChorus(kind, troparion, defaultChorus);
 
-            if (!string.IsNullOrEmpty(text)
+            if ((text?.IsEmpty == false)
                 //добавляем пустой припев к Ирмосу в любом случае
                 || troparion.Kind == YmnosKind.Irmos)
             {
                 //добавляем припев
                 var view = ViewModelItemFactory.Create((kind == ChorusKind.Common) ? ViewModelItemKind.Chorus : ViewModelItemKind.Text,
-                    new List<string>() { text }, handler, serializer);
+                    new List<ParagraphViewModel>() { ParagraphVMFactory.Create(text, handler.Settings.Language.Name) }, handler, serializer);
 
                 appendModelAction(new ElementViewModel() { view });
             }
         }
 
-        private string GetChorus(ChorusKind kind, Ymnos troparion, string defaultChorus)
+        private ItemText GetChorus(ChorusKind kind, Ymnos troparion, ItemText defaultChorus)
         {
-            string result = "";
+            ItemText result = null;
 
             //выбираем какой предустановленный тип припева отображен в тропаре
             if (troparion.Kind == YmnosKind.Ymnos && kind == ChorusKind.Common)
@@ -159,7 +160,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
             if (index >= 0)
             {
-                result = choruses[index]?.Paragraphs[0]?[handler.Settings.Language.Name] ?? "";
+                result = choruses[index]?.Paragraphs[0];
             }
 
             return result;

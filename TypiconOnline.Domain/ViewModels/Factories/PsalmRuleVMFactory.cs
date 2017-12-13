@@ -38,15 +38,15 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             var viewHeader = ViewModelItemFactory.Create(header, req.Handler, Serializer);
 
             //вставляем номер Псалма
-            viewHeader.Paragraphs[0] = viewHeader.Paragraphs[0]
-                .Replace(NUMBER, req.Handler.Settings.Language.IntConverter.ToString(req.Element.Number));
+            viewHeader.Paragraphs[0].Replace(NUMBER, req.Handler.Settings.Language.IntConverter.ToString(req.Element.Number));
 
             req.AppendModelAction(new ElementViewModel() { viewHeader });
         }
 
         private void AppendText(CreateViewModelRequest<PsalmRule> req, BookReading psalmReading)
         {
-            List<string> paragraphs = psalmReading.Text.Select(c => c[req.Handler.Settings.Language.Name]).ToList();
+            //List<string> paragraphs = psalmReading.Text.Select(c => c[req.Handler.Settings.Language.Name]).ToList();
+            var paragraphs = ParagraphVMFactory.CreateList(psalmReading.Text, req.Handler.Settings.Language.Name);
 
             req.AppendModelAction(new ElementViewModel() { ViewModelItemFactory.Create(TextHolderKind.Lector, paragraphs) });
         }

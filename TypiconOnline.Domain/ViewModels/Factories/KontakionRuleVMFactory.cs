@@ -63,7 +63,8 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                     new CommonRuleServiceRequest() { Key = CommonRuleConstants.Kontakion, RuleSerializer = Serializer }).Cast<TextHolder>().ToList();
 
             var viewKontakion = ViewModelItemFactory.Create(headers[0], req.Handler, Serializer);
-            viewKontakion.Paragraphs[0] = viewKontakion.Paragraphs[0].Replace(IHOS_STRING,
+
+            viewKontakion.Paragraphs[0].Replace(IHOS_STRING,
                 req.Handler.Settings.Language.IntConverter.ToString(kontakion.Ihos));
 
             var viewIkos = ViewModelItemFactory.Create(headers[1], req.Handler, Serializer);

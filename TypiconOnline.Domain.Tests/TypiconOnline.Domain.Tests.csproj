@@ -46,6 +46,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -117,6 +118,7 @@
     <Compile Include="Typicon\BerlukiRuTest.cs" />
     <Compile Include="Typicon\TriodionRuleFolderTest.cs" />
     <Compile Include="Typicon\TypiconEntityTest.cs" />
+    <Compile Include="ViewModels\ViewModelItemTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\TypiconOnline.Modeling\TypiconOnlineLayers.layerdiagram">

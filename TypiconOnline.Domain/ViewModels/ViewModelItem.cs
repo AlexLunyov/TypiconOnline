@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
@@ -15,12 +16,16 @@ namespace TypiconOnline.Domain.ViewModels
     /// <summary>
     /// Элементарная частичка выходной формы последовательности богослужений
     /// </summary>
+    [DataContract]
     public class ViewModelItem 
     {
+        [DataMember]
         public string KindStringValue { get; set; }
+        [DataMember]
         public ViewModelItemKind Kind { get; set; }
-        //TODO: необходимо добавить к строкоым значениям каждого параграфа также и стиль
-        public List<string> Paragraphs { get; set; }
+        [DataMember]
+        //TODO: необходимо добавить к строковым значениям каждого параграфа также и стиль
+        public List<ParagraphViewModel> Paragraphs { get; set; }
     }
 
     public enum ViewModelItemKind { Choir, Lector, Priest, Deacon, Stihos, Text, Irmos, Troparion, Chorus, Theotokion }

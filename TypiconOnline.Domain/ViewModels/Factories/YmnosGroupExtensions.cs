@@ -29,7 +29,8 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             if (text?.IsEmpty == false)
             {
-                viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text, new List<string> { text[handler.Settings.Language.Name] }));
+                viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text, 
+                    new List<ParagraphViewModel> { ParagraphVMFactory.Create(text, handler.Settings.Language.Name) }));
             }
         }
 
@@ -64,7 +65,8 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 str += $"{p}: \"{ prosomoion[handler.Settings.Language.Name] }\"";
             }
 
-            viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text, new List<string> { str }));
+            viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text,
+                    new List<ParagraphViewModel> { ParagraphVMFactory.Create(str) }));
         }
 
         private static void AppendYmnis(List<Ymnos> ymnis, IRuleHandler handler,
@@ -78,11 +80,11 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 foreach (ItemText stihos in ymnos.Stihoi)
                 {
                     viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Stihos, text.StihosText, 
-                        new List<string> { stihos[handler.Settings.Language.Name] }));
+                        new List<ParagraphViewModel> { ParagraphVMFactory.Create(stihos, handler.Settings.Language.Name) }));
                 }
 
                 viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Choir, text.ChoirText,
-                    new List<string> { ymnos.Text[handler.Settings.Language.Name] } ));
+                    new List<ParagraphViewModel> { ParagraphVMFactory.Create(ymnos.Text, handler.Settings.Language.Name) } ));
             }
         }
 

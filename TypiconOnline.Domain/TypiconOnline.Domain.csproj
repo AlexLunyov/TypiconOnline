@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -73,6 +74,7 @@
     <Compile Include="Interfaces\IIntConverter.cs" />
     <Compile Include="Interfaces\IPsalterElement.cs" />
     <Compile Include="Books\Psalter\PsalterContext.cs" />
+    <Compile Include="ItemTypes\TextStyle.cs" />
     <Compile Include="Rules\Days\BookReading.cs" />
     <Compile Include="Rules\Days\BookStihos.cs" />
     <Compile Include="Rules\Handlers\IntConverters\IntConverter.cs" />
@@ -106,7 +108,6 @@
     <Compile Include="Books\Easter\IEasterContext.cs" />
     <Compile Include="Interfaces\IBookStorage.cs" />
     <Compile Include="Interfaces\ICalcStructureElement.cs" />
-    <Compile Include="Interfaces\IDayContainerFactory.cs" />
     <Compile Include="Interfaces\IDayWorshipFactory.cs" />
     <Compile Include="Interfaces\IContainingIhos.cs" />
     <Compile Include="Interfaces\IDescriptor T.cs" />
@@ -355,6 +356,7 @@
     <Compile Include="ViewModels\Factories\KekragariaRuleVMFactory.cs" />
     <Compile Include="ViewModels\Factories\KontakionRuleVMFactory.cs" />
     <Compile Include="ViewModels\Factories\OdiViewModelFactory.cs" />
+    <Compile Include="ViewModels\Factories\ParagraphVMFactory.cs" />
     <Compile Include="ViewModels\Factories\PsalmRuleVMFactory.cs" />
     <Compile Include="ViewModels\Factories\SedalenVMFactory.cs" />
     <Compile Include="ViewModels\Factories\TextHolderVMFactory.cs" />
@@ -366,6 +368,7 @@
     <Compile Include="ViewModels\Messaging\AppendViewModelOdiRequest.cs" />
     <Compile Include="ViewModels\Messaging\CreateViewModelRequest.cs" />
     <Compile Include="ViewModels\ElementViewModel.cs" />
+    <Compile Include="ViewModels\ParagraphViewModel.cs" />
     <Compile Include="ViewModels\ViewModelItem.cs" />
     <Compile Include="ViewModels\WorshipRuleViewModel.cs" />
     <Compile Include="ViewModels\WorshipRuleViewModelCollection.cs" />

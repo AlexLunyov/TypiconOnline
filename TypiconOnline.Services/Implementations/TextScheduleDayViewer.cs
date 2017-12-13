@@ -35,7 +35,7 @@ namespace TypiconOnline.AppServices.Implementations
                     _resultStringBuilder.Append($"{item.KindStringValue} ");
                 }
 
-                item.Paragraphs.ForEach(c => _resultStringBuilder.AppendLine(c));
+                item.Paragraphs.ForEach(c => _resultStringBuilder.AppendLine($"{c.Text} {c.Note?.Text}"));
             } 
         }
 
