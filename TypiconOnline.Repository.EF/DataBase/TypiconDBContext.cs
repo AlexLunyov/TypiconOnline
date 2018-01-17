@@ -36,7 +36,7 @@ namespace TypiconOnline.Repository.EF.DataBase
             //modelBuilder.Configurations.Add(new RuleEntityMap());
 
             //modelBuilder.Configurations.Add(new DayMap());
-            modelBuilder.Configurations.Add(new DayServiceMap());
+            modelBuilder.Configurations.Add(new DayWorshipMap());
 
             modelBuilder.Configurations.Add(new MenologyDayMap());
             modelBuilder.Configurations.Add(new DayRuleMap());

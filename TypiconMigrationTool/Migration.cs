@@ -139,7 +139,6 @@ namespace TypiconMigrationTool
             Commit();
 
             MigratePsalms();
-            Commit();
 
             MigrateKathismas(typiconEntity);
             Commit();
@@ -202,7 +201,9 @@ namespace TypiconMigrationTool
             var manager = new PsalmsMigrationManager(service);
 
             manager.MigratePsalms(new PsalterRuReader(folder, "cs-ru"));
+            Commit();
             manager.MigratePsalms(new PsalterCsReader(folder, "cs-cs"));
+            Commit();
         }
 
         private void MigrateKathismas(TypiconEntity typiconEntity)

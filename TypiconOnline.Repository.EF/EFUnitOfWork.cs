@@ -16,6 +16,7 @@ namespace TypiconOnline.Repository.EF
     public class EFUnitOfWork : IUnitOfWork
     {
         TypiconDBContext _dbContext = null;
+        private bool disposed = false;
 
         public EFUnitOfWork()
         {
@@ -78,6 +79,24 @@ namespace TypiconOnline.Repository.EF
             IRepository<AggregateType> repo = new Repository<AggregateType>(_dbContext);
             repositories.Add(typeof(AggregateType), repo);
             return repo;
+        }
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    _dbContext.Dispose();
+                }
+            }
+            disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

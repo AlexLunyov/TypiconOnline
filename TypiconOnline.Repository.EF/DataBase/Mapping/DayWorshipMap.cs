@@ -8,9 +8,9 @@ using TypiconOnline.Domain.Days;
 
 namespace TypiconOnline.Repository.EF.DataBase.Mapping
 {
-    class DayServiceMap : EntityTypeConfiguration<DayWorship>
+    class DayWorshipMap : EntityTypeConfiguration<DayWorship>
     {
-        public DayServiceMap()
+        public DayWorshipMap()
         {
             Property(c => c.WorshipName.StringExpression).IsRequired();
 

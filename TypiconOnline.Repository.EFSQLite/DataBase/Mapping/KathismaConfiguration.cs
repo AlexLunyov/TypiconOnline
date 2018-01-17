@@ -6,24 +6,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.Typicon.Psalter;
 
 namespace TypiconOnline.Repository.EFSQlite.DataBase.Mapping
 {
-    class SignConfiguration : IEntityTypeConfiguration<Sign>
+    class KathismaConfiguration : IEntityTypeConfiguration<Kathisma>
     {
-        public void Configure(EntityTypeBuilder<Sign> builder)
+        public void Configure(EntityTypeBuilder<Kathisma> builder)
         {
-            builder.HasBaseType((Type)null);
-
             builder.HasKey(c => c.Id);
 
-            builder.Property(c => c.Number).IsRequired();
+            builder.OwnsOne(c => c.NumberName);
 
-            builder.Property(c => c.Priority).IsRequired();
+            builder.HasMany(c => c.SlavaElements);
 
-            builder.HasOne(c => c.Owner).WithMany().HasForeignKey(d => d.OwnerId);
-
-            builder.OwnsOne(c => c.SignName);
+            builder.HasOne(c => c.TypiconEntity).WithMany(d => d.Kathismas);
 
             //builder.Ignore(c => c.IsTemplate);
         }

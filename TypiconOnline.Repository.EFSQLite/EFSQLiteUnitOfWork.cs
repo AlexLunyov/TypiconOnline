@@ -16,6 +16,7 @@ namespace TypiconOnline.Repository.EFSQLite
     public class EFSQLiteUnitOfWork : IUnitOfWork
     {
         SQLiteDBContext _dbContext = null;
+        private bool disposed = false;
 
         public EFSQLiteUnitOfWork()
         {
@@ -63,6 +64,24 @@ namespace TypiconOnline.Repository.EFSQLite
             IRepository<AggregateType> repo = new Repository<AggregateType>(_dbContext);
             repositories.Add(typeof(AggregateType), repo);
             return repo;
+        }
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    _dbContext.Dispose();
+                }
+            }
+            disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

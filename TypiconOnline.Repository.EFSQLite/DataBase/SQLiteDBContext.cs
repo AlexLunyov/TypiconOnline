@@ -2,9 +2,11 @@
 using System;
 using TypiconOnline.Domain.Books.Katavasia;
 using TypiconOnline.Domain.Books.Oktoikh;
+using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.Typicon.Psalter;
 using TypiconOnline.Repository.EFSQlite.DataBase.Mapping;
 
 namespace TypiconOnline.Repository.EFSQLite.DataBase
@@ -26,6 +28,8 @@ namespace TypiconOnline.Repository.EFSQLite.DataBase
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite($"Filename={_databasePath}");
+            //для теста
+            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         #region Modeling
@@ -66,12 +70,14 @@ namespace TypiconOnline.Repository.EFSQLite.DataBase
             //modelBuilder.ApplyConfiguration(new ItemFakeTextConfiguration());
             //modelBuilder.ApplyConfiguration(new ItemTextStyledConfiguration()); 
 
-
-
             modelBuilder.Entity<OktoikhDay>();
             modelBuilder.Entity<TheotokionApp>();
             modelBuilder.Entity<Katavasia>();
 
+            modelBuilder.ApplyConfiguration(new KathismaConfiguration()); 
+            modelBuilder.ApplyConfiguration(new SlavaElementConfiguration());
+            modelBuilder.ApplyConfiguration(new PsalmLinkConfiguration());
+            modelBuilder.ApplyConfiguration(new PsalmConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

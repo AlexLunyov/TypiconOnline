@@ -52,13 +52,27 @@ namespace TypiconMigrationTool.Core.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    DayDefinition = table.Column<string>(type: "TEXT", nullable: true),
                     DayOfWeek = table.Column<int>(type: "INTEGER", nullable: false),
+                    Definition = table.Column<string>(type: "TEXT", nullable: true),
                     Ihos = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OktoikhDay", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Psalm",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Definition = table.Column<string>(type: "TEXT", nullable: true),
+                    Number = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Psalm", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,9 +82,9 @@ namespace TypiconMigrationTool.Core.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     DayOfWeek = table.Column<int>(type: "INTEGER", nullable: false),
+                    Definition = table.Column<string>(type: "TEXT", nullable: true),
                     Ihos = table.Column<int>(type: "INTEGER", nullable: false),
-                    Place = table.Column<int>(type: "INTEGER", nullable: false),
-                    StringDefinition = table.Column<string>(type: "TEXT", nullable: true)
+                    Place = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -154,6 +168,27 @@ namespace TypiconMigrationTool.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Kathisma",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Number = table.Column<int>(type: "INTEGER", nullable: false),
+                    TypiconEntityId = table.Column<int>(type: "INTEGER", nullable: true),
+                    NumberName_StringExpression = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Kathisma", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Kathisma_TypiconEntity_TypiconEntityId",
+                        column: x => x.TypiconEntityId,
+                        principalTable: "TypiconEntity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ModifiedYear",
                 columns: table => new
                 {
@@ -201,6 +236,25 @@ namespace TypiconMigrationTool.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SlavaElement",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    KathismaId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SlavaElement", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SlavaElement_Kathisma_KathismaId",
+                        column: x => x.KathismaId,
+                        principalTable: "Kathisma",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sign",
                 columns: table => new
                 {
@@ -242,6 +296,34 @@ namespace TypiconMigrationTool.Core.Migrations
                         name: "FK_Sign_TypiconEntity_TypiconEntityId",
                         column: x => x.TypiconEntityId,
                         principalTable: "TypiconEntity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PsalmLink",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    EndStihos = table.Column<int>(type: "INTEGER", nullable: true),
+                    PsalmId = table.Column<int>(type: "INTEGER", nullable: true),
+                    SlavaElementId = table.Column<int>(type: "INTEGER", nullable: true),
+                    StartStihos = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PsalmLink", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PsalmLink_Psalm_PsalmId",
+                        column: x => x.PsalmId,
+                        principalTable: "Psalm",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PsalmLink_SlavaElement_SlavaElementId",
+                        column: x => x.SlavaElementId,
+                        principalTable: "SlavaElement",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -296,8 +378,8 @@ namespace TypiconMigrationTool.Core.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    DayDefinition = table.Column<string>(type: "TEXT", nullable: true),
                     DayRuleId = table.Column<int>(type: "INTEGER", nullable: true),
+                    Definition = table.Column<string>(type: "TEXT", nullable: true),
                     IsCelebrating = table.Column<bool>(type: "INTEGER", nullable: false),
                     ParentId = table.Column<int>(type: "INTEGER", nullable: false),
                     UseFullName = table.Column<bool>(type: "INTEGER", nullable: false),
@@ -446,6 +528,11 @@ namespace TypiconMigrationTool.Core.Migrations
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Kathisma_TypiconEntityId",
+                table: "Kathisma",
+                column: "TypiconEntityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ModifiedRule_ModifiedYearId",
                 table: "ModifiedRule",
                 column: "ModifiedYearId");
@@ -459,6 +546,16 @@ namespace TypiconMigrationTool.Core.Migrations
                 name: "IX_ModifiedYear_TypiconEntityId",
                 table: "ModifiedYear",
                 column: "TypiconEntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PsalmLink_PsalmId",
+                table: "PsalmLink",
+                column: "PsalmId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PsalmLink_SlavaElementId",
+                table: "PsalmLink",
+                column: "SlavaElementId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sign_Owner.Id",
@@ -480,6 +577,11 @@ namespace TypiconMigrationTool.Core.Migrations
                 name: "IX_Sign_TypiconEntityId",
                 table: "Sign",
                 column: "TypiconEntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SlavaElement_KathismaId",
+                table: "SlavaElement",
+                column: "KathismaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TypiconEntity_TemplateId",
@@ -519,6 +621,9 @@ namespace TypiconMigrationTool.Core.Migrations
                 name: "OktoikhDay");
 
             migrationBuilder.DropTable(
+                name: "PsalmLink");
+
+            migrationBuilder.DropTable(
                 name: "TheotokionApp");
 
             migrationBuilder.DropTable(
@@ -528,10 +633,19 @@ namespace TypiconMigrationTool.Core.Migrations
                 name: "ModifiedYear");
 
             migrationBuilder.DropTable(
+                name: "Psalm");
+
+            migrationBuilder.DropTable(
+                name: "SlavaElement");
+
+            migrationBuilder.DropTable(
                 name: "DayRule");
 
             migrationBuilder.DropTable(
                 name: "Day");
+
+            migrationBuilder.DropTable(
+                name: "Kathisma");
 
             migrationBuilder.DropTable(
                 name: "Sign");

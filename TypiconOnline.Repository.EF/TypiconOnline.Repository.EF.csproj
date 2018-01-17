@@ -55,13 +55,13 @@
   <ItemGroup>
     <Compile Include="DataBase\Mapping\CommonRuleMap.cs" />
     <Compile Include="DataBase\Mapping\DayRuleWorshipMap.cs" />
+    <Compile Include="DataBase\Mapping\DayWorshipMap.cs" />
     <Compile Include="DataBase\Mapping\KatavasiaMap.cs" />
     <Compile Include="DataBase\Mapping\SlavaElementMap.cs" />
     <Compile Include="DataBase\Mapping\KathismaMap.cs" />
     <Compile Include="DataBase\Mapping\OktoikhDayMap.cs" />
     <Compile Include="DataBase\Mapping\IrmologionTheotokionMap.cs" />
     <Compile Include="DataBase\Mapping\DayRuleMap.cs" />
-    <Compile Include="DataBase\Mapping\DayServiceMap.cs" />
     <Compile Include="DataBase\Mapping\EasterItemMap.cs" />
     <Compile Include="DataBase\Mapping\ModifiedRuleMap.cs" />
     <Compile Include="DataBase\Mapping\ModifiedYearMap.cs" />

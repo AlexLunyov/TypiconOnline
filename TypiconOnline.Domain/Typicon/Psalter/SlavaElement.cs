@@ -10,6 +10,7 @@ namespace TypiconOnline.Domain.Typicon.Psalter
 {
     public class SlavaElement : EntityBase<int>, IPsalterElement
     {
+        //нужен ли???
         public int Index { get; }
         public List<PsalmLink> PsalmLinks { get; set; } = new List<PsalmLink>();
 

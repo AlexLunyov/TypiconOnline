@@ -403,6 +403,32 @@ namespace TypiconOnline.WinForms
                     //textBoxResult.Clear();
                     //textBoxResult.AppendText(htmlViewer.ResultString);
 
+                    if (checkBoxWordpress.Checked)
+                    {
+                        using (FormPassword testDialog = new FormPassword())
+                        {
+                            // Show testDialog as a modal dialog and determine if DialogResult = OK.
+                            if (testDialog.ShowDialog(this) == DialogResult.OK)
+                            {
+                                if (testDialog.textBoxPassword.Text == Properties.Settings.Default.PasswordToPostWordpress)
+                                {
+                                    DateTime datePub = _selectedDate.AddDays(-8).AddHours(17).AddMinutes(30);
+
+                                    PostToWordPress(weekResponse.Week.Name, htmlViewer.ResultString, datePub);
+
+                                    MessageBox.Show($"Запись размещена на сайте. Дата публикации - {datePub.ToString("hh:mm dd MMMM yyyy года.")}", "Информация",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                                else
+                                {
+                                    // Read the contents of testDialog's TextBox.
+                                    MessageBox.Show("Неверный пароль. Расписание не было опубликовано на сайте.", "Ошибка",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                }
+                            }
+                        }
+                    }
+
                 }
 
             //MessageBox.Show(messageString, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);

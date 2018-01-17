@@ -32,7 +32,7 @@ namespace TypiconOnline.Repository.EFSQLite
                 request = request.Where(predicate);
             }
 
-            return request.AsEnumerable();
+            return request.AsNoTracking().AsEnumerable();
         }
 
         public DomainType Get(Expression<Func<DomainType, bool>> predicate)
@@ -70,8 +70,11 @@ namespace TypiconOnline.Repository.EFSQLite
 
         public void Update(DomainType aggregate)
         {
-            //_objectSet.Attach(aggregate);
-            _typiconDBContext.Entry(aggregate).State = EntityState.Modified;
+            _objectSet.Update(aggregate);
+            //if (_typiconDBContext.Entry(aggregate).State != EntityState.Modified)
+            //{
+            //    _typiconDBContext.Entry(aggregate).State = EntityState.Modified;
+            //}
         }
 
         public void Insert(DomainType aggregate)

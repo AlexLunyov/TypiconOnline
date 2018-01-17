@@ -13,7 +13,7 @@ using TypiconOnline.Domain.Rules;
 namespace TypiconMigrationTool.Core.Migrations
 {
     [DbContext(typeof(MigrationContext))]
-    [Migration("20171128201611_Initial")]
+    [Migration("20171228114554_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,15 +50,29 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("DayDefinition");
-
                     b.Property<int>("DayOfWeek");
+
+                    b.Property<string>("Definition");
 
                     b.Property<int>("Ihos");
 
                     b.HasKey("Id");
 
                     b.ToTable("OktoikhDay");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Books.Psalter.Psalm", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Definition");
+
+                    b.Property<int>("Number");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Psalm");
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Books.TheotokionApp.TheotokionApp", b =>
@@ -68,11 +82,11 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<int>("DayOfWeek");
 
+                    b.Property<string>("Definition");
+
                     b.Property<int>("Ihos");
 
                     b.Property<int>("Place");
-
-                    b.Property<string>("StringDefinition");
 
                     b.HasKey("Id");
 
@@ -118,9 +132,9 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("DayDefinition");
-
                     b.Property<int?>("DayRuleId");
+
+                    b.Property<string>("Definition");
 
                     b.Property<bool>("IsCelebrating");
 
@@ -241,6 +255,58 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.HasIndex("TypiconEntityId");
 
                     b.ToTable("ModifiedYear");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Psalter.Kathisma", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Number");
+
+                    b.Property<int?>("TypiconEntityId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypiconEntityId");
+
+                    b.ToTable("Kathisma");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Psalter.PsalmLink", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("EndStihos");
+
+                    b.Property<int?>("PsalmId");
+
+                    b.Property<int?>("SlavaElementId");
+
+                    b.Property<int?>("StartStihos");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PsalmId");
+
+                    b.HasIndex("SlavaElementId");
+
+                    b.ToTable("PsalmLink");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Psalter.SlavaElement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("KathismaId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KathismaId");
+
+                    b.ToTable("SlavaElement");
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Sign", b =>
@@ -408,7 +474,7 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.OwnsOne("TypiconOnline.Domain.ItemTypes.ItemTextStyled", "WorshipName", b1 =>
                         {
-                            b1.Property<int?>("DayWorshipId");
+                            b1.Property<int>("DayWorshipId");
 
                             b1.Property<string>("StringExpression");
 
@@ -474,6 +540,45 @@ namespace TypiconMigrationTool.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Psalter.Kathisma", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconEntity", "TypiconEntity")
+                        .WithMany("Kathismas")
+                        .HasForeignKey("TypiconEntityId");
+
+                    b.OwnsOne("TypiconOnline.Domain.ItemTypes.ItemText", "NumberName", b1 =>
+                        {
+                            b1.Property<int?>("KathismaId");
+
+                            b1.Property<string>("StringExpression");
+
+                            b1.ToTable("Kathisma");
+
+                            b1.HasOne("TypiconOnline.Domain.Typicon.Psalter.Kathisma")
+                                .WithOne("NumberName")
+                                .HasForeignKey("TypiconOnline.Domain.ItemTypes.ItemText", "KathismaId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Psalter.PsalmLink", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Books.Psalter.Psalm", "Psalm")
+                        .WithMany()
+                        .HasForeignKey("PsalmId");
+
+                    b.HasOne("TypiconOnline.Domain.Typicon.Psalter.SlavaElement")
+                        .WithMany("PsalmLinks")
+                        .HasForeignKey("SlavaElementId");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Psalter.SlavaElement", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.Psalter.Kathisma")
+                        .WithMany("SlavaElements")
+                        .HasForeignKey("KathismaId");
+                });
+
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Sign", b =>
                 {
                     b.HasOne("TypiconOnline.Domain.Typicon.TypiconSettings")
@@ -493,7 +598,7 @@ namespace TypiconMigrationTool.Core.Migrations
                         .WithMany("Signs")
                         .HasForeignKey("TypiconEntityId");
 
-                    b.OwnsOne("TypiconOnline.Domain.ItemTypes.ItemTextStyled", "SignName", b1 =>
+                    b.OwnsOne("TypiconOnline.Domain.ItemTypes.ItemText", "SignName", b1 =>
                         {
                             b1.Property<int>("SignId");
 
@@ -503,7 +608,7 @@ namespace TypiconMigrationTool.Core.Migrations
 
                             b1.HasOne("TypiconOnline.Domain.Typicon.Sign")
                                 .WithOne("SignName")
-                                .HasForeignKey("TypiconOnline.Domain.ItemTypes.ItemTextStyled", "SignId")
+                                .HasForeignKey("TypiconOnline.Domain.ItemTypes.ItemText", "SignId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });
