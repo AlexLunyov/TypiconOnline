@@ -67,16 +67,19 @@ namespace TypiconOnline.AppServices.Implementations
                     priority = ruleToModify.Template.Priority;
                 }
 
-                ModificationsRuleRequest request = new ModificationsRuleRequest()
-                {
-                    Caller = ruleToModify,
-                    Date = modifyReplacedDay.MoveDateCalculated,
-                    Priority = priority,
-                    ShortName = modifyReplacedDay.ShortName,
-                    AsAddition = modifyReplacedDay.AsAddition,
-                    IsLastName = modifyReplacedDay.IsLastName,
-                    UseFullName = modifyReplacedDay.UseFullName
-                };
+                var request = CreateRequest(ruleToModify, modifyReplacedDay, priority);
+
+                //ModificationsRuleRequest request = new ModificationsRuleRequest()
+                //{
+                //    Caller = ruleToModify,
+                //    Date = modifyReplacedDay.MoveDateCalculated,
+                //    Priority = priority,
+                //    ShortName = modifyReplacedDay.ShortName,
+                //    AsAddition = modifyReplacedDay.AsAddition,
+                //    IsLastName = modifyReplacedDay.IsLastName,
+                //    UseFullName = modifyReplacedDay.UseFullName,
+                //    Filter = modifyReplacedDay.Filter
+                //};
 
                 typiconEntity.AddModifiedRule(request);
 
@@ -94,20 +97,38 @@ namespace TypiconOnline.AppServices.Implementations
                     priority = /*seniorTypicon*/_settings.Rule.Template.Priority;
                 }
 
-                ModificationsRuleRequest request = new ModificationsRuleRequest()
-                {
-                    Caller = /*seniorTypicon*/(DayRule)_settings.Rule,
-                    Date = modifyDay.MoveDateCalculated,
-                    Priority = priority,
-                    ShortName = modifyDay.ShortName,
-                    AsAddition = modifyDay.AsAddition,
-                    IsLastName = modifyDay.IsLastName,
-                    UseFullName = modifyDay.UseFullName
-                };
+                var request = CreateRequest((DayRule)_settings.Rule, modifyDay, priority);
+
+                //ModificationsRuleRequest request = new ModificationsRuleRequest()
+                //{
+                //    Caller = /*seniorTypicon*/(DayRule)_settings.Rule,
+                //    Date = modifyDay.MoveDateCalculated,
+                //    Priority = priority,
+                //    ShortName = modifyDay.ShortName,
+                //    AsAddition = modifyDay.AsAddition,
+                //    IsLastName = modifyDay.IsLastName,
+                //    UseFullName = modifyDay.UseFullName,
+                //    Filter = modifyDay.Filter
+                //};
 
                 _settings.Rule.Owner.AddModifiedRule(request);
 
                 result = true;
+            }
+
+            ModificationsRuleRequest CreateRequest(DayRule caller, ModifyDay md, int priority)
+            {
+                return new ModificationsRuleRequest()
+                {
+                    Caller = caller,
+                    Date = md.MoveDateCalculated,
+                    Priority = priority,
+                    ShortName = md.ShortName,
+                    AsAddition = md.AsAddition,
+                    IsLastName = md.IsLastName,
+                    UseFullName = md.UseFullName,
+                    Filter = md.Filter
+                };
             }
 
             return result;

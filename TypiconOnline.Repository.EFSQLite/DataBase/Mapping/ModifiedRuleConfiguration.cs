@@ -22,6 +22,10 @@ namespace TypiconOnline.Repository.EFSQlite.DataBase.Mapping
             //    m.MapLeftKey("DayRuleId");
             //    m.MapRightKey("ServiceDayId");
             //});
+            builder.OwnsOne(c => c.Filter/*, k =>
+            {
+                k.OwnsOne(m => m.ExcludedItem);
+            }*/);
         }
     }
 }

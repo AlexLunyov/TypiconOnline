@@ -47,7 +47,7 @@ namespace TypiconOnline.Repository.EFSQLite.DataBase
 
             modelBuilder.ApplyConfiguration(new ModifiedYearConfiguration());
 
-            //modelBuilder.ApplyConfiguration(new ModifiedRuleConfiguration());
+            modelBuilder.ApplyConfiguration(new ModifiedRuleConfiguration());
 
             modelBuilder.ApplyConfiguration(new CommonRuleConfiguration());
 

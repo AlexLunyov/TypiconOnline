@@ -5,11 +5,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
+using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon.Modifications
 {
-    public class ModifiedRule : EntityBase<int>/*, IAggregateRoot*/, IComparable<ModifiedRule>
+    public class ModifiedRule : EntityBase<int>/*, IAggregateRoot*/, IComparable<ModifiedRule>, IDayRule
     {
         public virtual DayRule RuleEntity { get; set; }
 
@@ -25,6 +28,72 @@ namespace TypiconOnline.Domain.Typicon.Modifications
         public virtual bool IsAddition { get; set; }
 
         public virtual bool UseFullName { get; set; }
+
+        public virtual DayWorshipsFilter Filter { get; set; }
+
+        /// <summary>
+        /// Список служб, отфильтрованный согласно настройкам ModifiedRule
+        /// </summary>
+        public List<DayWorship> DayWorships
+        {
+            get
+            {
+                return (RuleEntity?.DayWorships != null) ? ApplyFilter(RuleEntity.DayWorships) : new List<DayWorship>();
+            }
+        }
+
+        //public Sign Template => RuleEntity?.Template;
+
+        //public string RuleDefinition => RuleEntity?.RuleDefinition;
+
+        private List<DayWorship> ApplyFilter(List<DayWorship> dayWorships)
+        {
+            List<DayWorship> result = new List<DayWorship>();
+
+            if (Filter?.IsValid == true)
+            {
+                for (int i = 0; i < dayWorships.Count; i++)
+                {
+                    var item = dayWorships[i];
+
+                    //смотрим включенную службу - если определена - добавляем
+                    //если не определена - смотрим исключенную
+                    if (Filter.IncludedItem != null)
+                    {
+                        if (i == ((int)Filter.IncludedItem - 1))
+                        {
+                            AddDayWorship(item);
+                        }
+                    }
+                    else if (Filter.ExcludedItem != null)
+                    {
+                        if (i != ((int)Filter.IncludedItem - 1))
+                        {
+                            AddDayWorship(item);
+                        }
+                    }
+                    else
+                    {
+                        AddDayWorship(item);
+                    }
+                }
+            }
+
+            void AddDayWorship(DayWorship dayWorship)
+            {
+                if (Filter.IsCelebrating != null)
+                {
+                    //если IsCelebrating определен и не совпадает - не добавляем такую службу
+                    if (dayWorship.IsCelebrating != Filter.IsCelebrating)
+                    {
+                        return;
+                    }
+                }
+                result.Add(dayWorship);
+            };
+
+            return dayWorships;
+        }
 
         protected override void Validate()
         {

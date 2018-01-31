@@ -152,7 +152,8 @@ namespace TypiconOnline.AppServices.Implementations
                 IsLastName = request.IsLastName,
                 IsAddition = request.AsAddition,
                 ShortName = request.ShortName,
-                UseFullName = request.UseFullName
+                UseFullName = request.UseFullName,
+                Filter = request.Filter
             });
         }
     }

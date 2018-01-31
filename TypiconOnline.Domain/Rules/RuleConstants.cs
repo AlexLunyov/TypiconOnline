@@ -21,7 +21,14 @@ namespace TypiconOnline.Domain.Rules
         public const string AsAdditionAttrName = "asaddition";
         public const string DayMoveAttrName = "daymove";
         public const string PriorityAttrName = "priority";
-        public const string UseFullNameAttrName = "usefullname"; 
+        public const string UseFullNameAttrName = "usefullname";
+
+        /*
+         * DayWorshipsFilter
+         */
+        public const string FilterExcludeItemAttr = "excludeitem";
+        public const string FilterIncludeItemAttr = "includeitem";
+        public const string FilterIsCelebratingAttr = "iscelebrating";
 
         public const string DaysFromEasterNodeName = "daysfromeaster";
         public const string DateNodeName = "date";

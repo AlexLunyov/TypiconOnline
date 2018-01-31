@@ -137,6 +137,8 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<bool>("IsCelebrating");
 
+                    b.Property<int?>("ModifiedRuleId");
+
                     b.Property<int?>("ParentId")
                         .IsRequired();
 
@@ -145,6 +147,8 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DayRuleId");
+
+                    b.HasIndex("ModifiedRuleId");
 
                     b.HasIndex("ParentId");
 
@@ -466,6 +470,10 @@ namespace TypiconMigrationTool.Core.Migrations
                         .WithMany("DayWorships")
                         .HasForeignKey("DayRuleId");
 
+                    b.HasOne("TypiconOnline.Domain.Typicon.Modifications.ModifiedRule")
+                        .WithMany("DayWorships")
+                        .HasForeignKey("ModifiedRuleId");
+
                     b.HasOne("TypiconOnline.Domain.Days.Day", "Parent")
                         .WithMany("DayWorships")
                         .HasForeignKey("ParentId")
@@ -529,6 +537,24 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.HasOne("TypiconOnline.Domain.Typicon.DayRule", "RuleEntity")
                         .WithMany()
                         .HasForeignKey("RuleEntityId");
+
+                    b.OwnsOne("TypiconOnline.Domain.Typicon.Modifications.DayWorshipsFilter", "Filter", b1 =>
+                        {
+                            b1.Property<int>("ModifiedRuleId");
+
+                            b1.Property<int?>("ExcludedItem");
+
+                            b1.Property<int?>("IncludedItem");
+
+                            b1.Property<bool?>("IsCelebrating");
+
+                            b1.ToTable("ModifiedRule");
+
+                            b1.HasOne("TypiconOnline.Domain.Typicon.Modifications.ModifiedRule")
+                                .WithOne("Filter")
+                                .HasForeignKey("TypiconOnline.Domain.Typicon.Modifications.DayWorshipsFilter", "ModifiedRuleId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Modifications.ModifiedYear", b =>

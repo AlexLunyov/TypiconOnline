@@ -57,6 +57,8 @@ namespace TypiconOnline.Repository.EF.DataBase
 
             modelBuilder.Configurations.Add(new ModifiedYearMap());
 
+            //DayWorshipsFilter
+            modelBuilder.ComplexType<DayWorshipsFilter>();
             modelBuilder.Configurations.Add(new ModifiedRuleMap());
 
             //modelBuilder.Configurations.Add(new ModifiedMenologyRuleMap());

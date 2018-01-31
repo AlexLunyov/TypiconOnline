@@ -42,6 +42,9 @@ namespace TypiconOnline.Domain.Rules.Executables
             attr = d.Element.Attributes[RuleConstants.PriorityAttrName];
             (element as ModifyDay).Priority = int.TryParse(attr?.Value, out intValue) ? intValue : 0;
 
+            //filter
+            DeserializeFilter(d.Element, element as ModifyDay);
+
             foreach (XmlNode childNode in d.Element.ChildNodes)
             {
                 if (childNode.Name == RuleConstants.ModifyReplacedDayNodeName)
@@ -54,6 +57,27 @@ namespace TypiconOnline.Domain.Rules.Executables
                     (element as ModifyDay).ChildDateExp = SerializerRoot.Container<DateExpression>()
                         .Deserialize(new XmlDescriptor() { Element = childNode });
                 }
+            }
+        }
+
+        private void DeserializeFilter(XmlNode element, ModifyDay modifyDay)
+        {
+            XmlAttribute attr = element.Attributes[RuleConstants.FilterExcludeItemAttr];
+            if (int.TryParse(attr?.Value, out int intValue))
+            {
+                modifyDay.Filter.ExcludedItem = intValue;
+            }
+
+            attr = element.Attributes[RuleConstants.FilterIncludeItemAttr];
+            if (int.TryParse(attr?.Value, out intValue))
+            {
+                modifyDay.Filter.IncludedItem = intValue;
+            }
+
+            attr = element.Attributes[RuleConstants.FilterIsCelebratingAttr];
+            if (bool.TryParse(attr?.Value, out bool boolValue))
+            {
+                modifyDay.Filter.IsCelebrating = boolValue;
             }
         }
 

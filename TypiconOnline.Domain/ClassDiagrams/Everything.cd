@@ -32,7 +32,7 @@
   <Class Name="TypiconOnline.Domain.Books.BookStorage" Collapsed="true">
     <Position X="67.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BQAAAAAAAAAAAAAAAAgAAAAAECAAAAEQQAAAAAAAAAA=</HashCode>
+      <HashCode>BQAAAAAAAAAAAAAAAAgAIAAAECAAAAEAQQAAAAAAAAA=</HashCode>
       <FileName>Books\BookStorage.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -144,7 +144,7 @@
   <Class Name="TypiconOnline.Domain.Books.Oktoikh.OktoikhDay" Collapsed="true">
     <Position X="8.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AQAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
       <FileName>Books\Oktoikh\OktoikhDay.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -195,9 +195,10 @@
   <Class Name="TypiconOnline.Domain.Books.Psalter.Psalm" Collapsed="true">
     <Position X="76.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAIAIA=</HashCode>
       <FileName>Books\Psalter\Psalm.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypiconOnline.Domain.Books.Psalter.PsalterService" Collapsed="true">
     <Position X="13.75" Y="16.75" Width="1.5" />
@@ -210,7 +211,7 @@
   <Class Name="TypiconOnline.Domain.Days.Day" Collapsed="true">
     <Position X="1.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAACAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <HashCode>AAAAAAAAAACAAAAAICAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Days\Day.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -262,10 +263,9 @@
   <Class Name="TypiconOnline.Domain.RuleEntity" Collapsed="true">
     <Position X="22" Y="21.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAECAAAAAAAAEAAQAIAAAAAAAAAABAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAACAAAAAAAAEQAQAIAAAAAAAAAABAAAAAAA=</HashCode>
       <FileName>RuleEntity.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypiconOnline.Domain.RuleEntityBusinessConstraint" Collapsed="true">
     <Position X="67.75" Y="6.5" Width="1.5" />
@@ -356,13 +356,13 @@
     <Position X="67.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BAAAAAAAAAAAAAAAAAAAAAgAAAAgAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ItemTypes\ItemStyledType.cs</FileName>
+      <FileName>ItemTypes\TextStyle.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.ItemTypes.ItemText" Collapsed="true">
     <Position X="3.25" Y="14.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAAAAAAACBAAAECBCAADACAABAgAAAAAACiEAAAQA=</HashCode>
+      <HashCode>AABAAAAACACBAAAECFCAACACAABBAAAAAAAAgAAACAA=</HashCode>
       <FileName>ItemTypes\ItemText.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -384,7 +384,7 @@
   <Class Name="TypiconOnline.Domain.ItemTypes.ItemTime" Collapsed="true">
     <Position X="10" Y="13" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAAAAAAACEEAAEAAAAAAAEAAAAACIQAAAAAAAAAAA=</HashCode>
+      <HashCode>AABAAAAAAACAEAAEAAAAAAAAAAAAACIQAAAAAAAAAAA=</HashCode>
       <FileName>ItemTypes\ItemTime.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -413,21 +413,21 @@
   <Class Name="TypiconOnline.Domain.Rules.CommonRuleConstants" Collapsed="true">
     <Position X="76.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAEAAAAAAACSAAAAAAAQAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <HashCode>AQAQEJkAAQgACSAAAAAAARIAAgAAAABAAIoAAgAQAAA=</HashCode>
       <FileName>Rules\CommonRuleConstants.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.RuleConstants" Collapsed="true">
     <Position X="80" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>cI1vdKE4llK9F3Mog6G1iGhz60EoHWGOk4+BrFaAKTo=</HashCode>
+      <HashCode>cI1vdKt4ltK9F3M4g+O1iWpz60EoHWGOk4+DrNfGKz4=</HashCode>
       <FileName>Rules\RuleConstants.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.RuleElement" Collapsed="true">
     <Position X="32.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAACAAAgABAAAAAAAAAAAIAAAIAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAAAACAAAgAAAAAAAAAAAAAIAAAIAAAAAAAA=</HashCode>
       <FileName>Rules\RuleElement.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -455,7 +455,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Days.DayContainerBusinessConstraint" Collapsed="true">
     <Position X="69.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Days\DayContainerBusinessConstraint.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -511,7 +511,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Days.Kanonas" Collapsed="true">
     <Position X="18" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQABAAAAEACACAAAACAAQAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <HashCode>AQABAAAAEACACAAAACAAwAQAAAAAAAAAAAAAAgAAAAA=</HashCode>
       <FileName>Rules\Days\Kanonas.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -519,7 +519,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Days.KanonasBusinessConstraint" Collapsed="true">
     <Position X="64.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Days\KanonasBusinessConstraint.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -569,21 +569,21 @@
   <Class Name="TypiconOnline.Domain.Rules.Days.Odi" Collapsed="true">
     <Position X="40.5" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAEAAIAAAAAAAAgAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAAACAAAAIAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Days\Odi.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Days.OdiBusinessConstraint" Collapsed="true">
     <Position X="66" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <HashCode>AgAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
       <FileName>Rules\Days\OdiBusinessConstraint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Days.Orthros" Collapsed="true">
     <Position X="4.5" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAAACAAAAAAgAAAAAAACAQAEEAAADAGgAAAAA=</HashCode>
+      <HashCode>AAAAAQAQAACAAAAAAgAAAAAAACAQAEEAAADAGgAAAAA=</HashCode>
       <FileName>Rules\Days\Orthros.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -632,7 +632,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Days.Ymnos" Collapsed="true">
     <Position X="20.25" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEADAAAAAAAAAgAAAAAAAAAAAAAAACAAAAQA=</HashCode>
+      <HashCode>AAAAAAAAEADAAAAAAAAAgAAAAAAAAAAAAAAACAAAAAA=</HashCode>
       <FileName>Rules\Days\Ymnos.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -661,14 +661,14 @@
   <Class Name="TypiconOnline.Domain.Rules.Days.YmnosStructure" Collapsed="true">
     <Position X="33.75" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAEAAAACAAAQACAQAAIAAAEAAAAAAAAAgAIAAAAQ=</HashCode>
+      <HashCode>AQAAAEAAAACAAAQACAQAAIAAAEAAAAAAAAAgAIAAAAQ=</HashCode>
       <FileName>Rules\Days\YmnosStructure.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Executables.ExecContainer" Collapsed="true">
     <Position X="18" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <HashCode>QAAAIAAAAACAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Executables\ExecContainer.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -682,7 +682,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Executables.If" Collapsed="true">
     <Position X="25.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAACAAAAABAAAAAAAAAAAAAAQAAAAgEAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAACAAAAAAACAAAAAAAAAAIAQAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Executables\If.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -696,7 +696,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Executables.ModifyDay" Collapsed="true">
     <Position X="3.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAArDAACACAAAAEAgEAgAACAQAAAIAAQAAAAAAAgIA=</HashCode>
+      <HashCode>AABApBAAAACAAAAEAgAAgAAAARAAAIAAQAAAAAAAAAI=</HashCode>
       <FileName>Rules\Executables\ModifyDay.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -704,14 +704,14 @@
   <Class Name="TypiconOnline.Domain.Rules.Executables.ModifyDayBusinessConstraint" Collapsed="true">
     <Position X="80" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAAAAAACAQAAAAAAAAAAQAAAAAAIAgAAQA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAIAAAAAAAAAAAAgAAAA=</HashCode>
       <FileName>Rules\Executables\ModifyDayBusinessConstraint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Executables.ModifyReplacedDay" Collapsed="true">
     <Position X="3.25" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAAIAAAAADAAAAAAIAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAABAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Executables\ModifyReplacedDay.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -732,7 +732,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Executables.Switch" Collapsed="true">
     <Position X="5.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAAIAAAAACAAAAIAAAAAAAAAAAAAAAQAAAAgAAAAAA=</HashCode>
+      <HashCode>AQAAIAAAAACAAAAAAAAAIAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Executables\Switch.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -760,7 +760,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Expressions.Case" Collapsed="true">
     <Position X="59.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIEEAAgCAAAEAAAAAAAAAAAAAAAAAAgAAAAAAAIA=</HashCode>
+      <HashCode>AAAAIEAAAgCAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAIA=</HashCode>
       <FileName>Rules\Expressions\Case.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -802,7 +802,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Expressions.DateByDaysFromEaster" Collapsed="true">
     <Position X="28" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAACAAAAAAACAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>Rules\Expressions\DateByDaysFromEaster.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -823,7 +823,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Expressions.DaysFromEaster" Collapsed="true">
     <Position X="61.75" Y="10.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAACAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAACAAAAAAACAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>Rules\Expressions\DaysFromEaster.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -844,7 +844,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Expressions.GetClosestDay" Collapsed="true">
     <Position X="30.25" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAACBAAAAAAFAAAAAAAAAIAAAAAAEAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAIAAAAAAEAAAAAAI=</HashCode>
       <FileName>Rules\Expressions\GetClosestDay.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -858,7 +858,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Expressions.GetDayOfWeek" Collapsed="true">
     <Position X="34.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAACAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAII=</HashCode>
       <FileName>Rules\Expressions\GetDayOfWeek.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -872,7 +872,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Expressions.Int" Collapsed="true">
     <Position X="61.75" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
       <FileName>Rules\Expressions\Int.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -907,7 +907,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Expressions.LogicalExpression" Collapsed="true">
     <Position X="50.5" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAACAAAAAgAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAEAAAAgAAAAAA=</HashCode>
       <FileName>Rules\Expressions\LogicalExpression.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -949,7 +949,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Expressions.RuleExpression" Collapsed="true">
     <Position X="45" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAECAAAABAAAAAAQAAAAAAAAAAAAAAAAABAAgAIA=</HashCode>
+      <HashCode>AAAAAEAAAAABAAAAAAAAAAAAAAAAAAAAAAAABAAgAIA=</HashCode>
       <FileName>Rules\Expressions\RuleExpression.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -985,7 +985,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Handlers.BypassHandler" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="71.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAAAAQAAIAAAAAAAACACAAAwAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAIAAAAAQAAIAAAAAABACACAAAwAAABAAAAAA=</HashCode>
       <FileName>Rules\Handlers\BypassHandler.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -993,7 +993,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Handlers.CollectorRuleHandler&lt;T&gt;" Collapsed="true">
     <Position X="20.25" Y="19.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAEAAAAAAEAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAEAABAAAEAA=</HashCode>
       <FileName>Rules\Handlers\CollectorRuleHandler.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -1029,7 +1029,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Handlers.RuleHandlerBase" Collapsed="true">
     <Position X="19" Y="18.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAgIAAAAAAAAAACAAAgAAgAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQAgIAAAAAAAIAACAAAgAAgBAAAAAA=</HashCode>
       <FileName>Rules\Handlers\RuleHandlerBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -1037,28 +1037,28 @@
   <Class Name="TypiconOnline.Domain.Rules.Handlers.RuleHandlerSettings" Collapsed="true">
     <Position X="71.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAACMAACAAAAAAAAAAAAAAAQgAAAABAAAhBAAA=</HashCode>
+      <HashCode>CAAAAIAACEAAAAAAIAAAAAAAAAgAAgABAEAAAABAAAA=</HashCode>
       <FileName>Rules\Handlers\RuleHandlerSettings.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Handlers.ScheduleHandler" Collapsed="true">
     <Position X="15.75" Y="19.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAEAAAAAgEAAAAAAEAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAgFAABAAAAAA=</HashCode>
       <FileName>Rules\Handlers\ScheduleHandler.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Handlers.ServiceSequenceHandler" Collapsed="true">
     <Position X="15.75" Y="21.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>Rules\Handlers\ServiceSequenceHandler.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Handlers.YmnosStructureRuleHandler" Collapsed="true">
     <Position X="18" Y="19.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAEAAAAAAEAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAEAABAAAEAA=</HashCode>
       <FileName>Rules\Handlers\YmnosStructureRuleHandler.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -1087,7 +1087,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Schedule.ApostichaRule" Collapsed="true">
     <Position X="23.5" Y="10.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Schedule\ApostichaRule.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -1101,10 +1101,9 @@
   <Class Name="TypiconOnline.Domain.Rules.Schedule.CommonRuleElement" Collapsed="true">
     <Position X="16.75" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAEACAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Rules\Schedule\CommonRuleElement.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Schedule.Ektenis" Collapsed="true">
     <Position X="19" Y="8.75" Width="1.5" />
@@ -1152,7 +1151,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Schedule.KekragariaRule" Collapsed="true">
     <Position X="21.25" Y="10.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAIAAAEACAACAAAAAAAAgAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Schedule\KekragariaRule.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -1196,7 +1195,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Schedule.TextHolder" Collapsed="true">
     <Position X="7.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAEADAAAAAAAAAAAAAAAAgAAAAAAQBAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAEADAAAAACAAAAAAAAAAgAAAAAACAAAAAAAA=</HashCode>
       <FileName>Rules\Schedule\TextHolder.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -1211,7 +1210,7 @@
   <Class Name="TypiconOnline.Domain.Rules.Schedule.YmnosRule" Collapsed="true">
     <Position X="10" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAIAAAAkCIAAAAAAECAAQAAEAEAAAgAECAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAgDAAAAAAAEAAAQAACAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>Rules\Schedule\YmnosRule.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -1219,14 +1218,14 @@
   <Class Name="TypiconOnline.Domain.Rules.Schedule.YmnosRuleBusinessConstraint" Collapsed="true">
     <Position X="66" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAgAAAAAAAAgAgAAAAAAAAAAAAAAAAAAAACAE=</HashCode>
+      <HashCode>AEBAAAAAgAAAAAAAAAAgAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Schedule\YmnosRuleBusinessConstraint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Schedule.YmnosStructureRule" Collapsed="true">
     <Position X="22.5" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gBAAIAAAECCAAAAAAAAKAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>ABAAIAAAEADAACAACgACAAAEAAAAAAAAAAAAQAAAAAA=</HashCode>
       <FileName>Rules\Schedule\YmnosStructureRule.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -1234,7 +1233,7 @@
   <Class Name="TypiconOnline.Domain.Schedule.ScheduleDay" Collapsed="true">
     <Position X="74.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAAAAAABAAAAAAAAQAAEAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAQAAEAAAAABgAAAAAAAAAA=</HashCode>
       <FileName>Schedule\ScheduleDay.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -1253,10 +1252,10 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="TypiconOnline.Domain.Typicon.CommonRule" Collapsed="true">
+  <Class Name="TypiconOnline.Domain.Typicon.CommonRule">
     <Position X="25.5" Y="23" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Typicon\CommonRule.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -1270,14 +1269,14 @@
   <Class Name="TypiconOnline.Domain.Typicon.CommonRuleServiceRequest" Collapsed="true">
     <Position X="80" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Typicon\CommonRuleServiceRequest.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Typicon.DayRule" Collapsed="true">
     <Position X="19.75" Y="24.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAACAAAAAAAAAAQAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <HashCode>AAAAAAAAAAACAAAAIAAAAAQAAABAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Typicon\DayRule.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -1298,14 +1297,14 @@
   <Class Name="TypiconOnline.Domain.Typicon.TriodionRule" Collapsed="true">
     <Position X="21" Y="25.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>Typicon\TriodionRule.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Typicon.TypiconEntity" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="71.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAQAGCAICAAhAAAAAQAQFAAAAEAgAAgAAIAAAA=</HashCode>
+      <HashCode>AAAAAAAQAGCAIAAAhAAAAAQAAFAAAAAAgAAgAAIAAAA=</HashCode>
       <FileName>Typicon\TypiconEntity.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -1317,17 +1316,17 @@
       <FileName>Typicon\TypiconFolderEntity.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypiconOnline.Domain.Typicon.TypiconRule" Collapsed="true">
+  <Class Name="TypiconOnline.Domain.Typicon.TypiconRule">
     <Position X="21" Y="23" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAACAAEAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAACIAEAAAAAAAAAAQIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Typicon\TypiconRule.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Typicon.TypiconSettings" Collapsed="true">
     <Position X="76.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAASAASAAAAAAAAAAEAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <HashCode>AAAAAAACAASAAAAAAAAAAEAAAAAAAAAAAAAAAAABAAA=</HashCode>
       <FileName>Typicon\TypiconSettings.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -1349,10 +1348,9 @@
   <Class Name="TypiconOnline.Domain.Typicon.Modifications.ModifiedYear" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="78.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAAAAABACAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AABAAAAABACAAAAAAAAAAEAAAAAAAAAAAAAAIAAAAAA=</HashCode>
       <FileName>Typicon\Modifications\ModifiedYear.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="TypiconOnline.Domain.ViewModels.ContainerViewModel" Collapsed="true">
     <Position X="7.75" Y="19.75" Width="1.5" />
@@ -1371,7 +1369,7 @@
   <Class Name="TypiconOnline.Domain.ViewModels.ElementViewModel" Collapsed="true">
     <Position X="6.5" Y="18.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\ElementViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -1525,7 +1523,7 @@
   <Interface Name="TypiconOnline.Domain.Interfaces.IRuleHandler" Collapsed="true">
     <Position X="71.25" Y="10.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAAIAAAAAAAAAACAAAgAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQAAIAAAAAAAAAACAAAgAAABAAAAAA=</HashCode>
       <FileName>Interfaces\IRuleHandler.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -1561,7 +1559,7 @@
     <Position X="67.75" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAIAAAgAAAEg=</HashCode>
-      <FileName>ItemTypes\ItemStyledType.cs</FileName>
+      <FileName>ItemTypes\TextStyle.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="TypiconOnline.Domain.Rules.YmnosSource" Collapsed="true">
@@ -1574,14 +1572,14 @@
   <Enum Name="TypiconOnline.Domain.Rules.PlaceYmnosSource" Collapsed="true">
     <Position X="71.25" Y="11.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAEBAAQBAgACCAAABAygEAAAAAABAgEIAAAAAAABA=</HashCode>
+      <HashCode>AEAAEBAAwFJgACCAAABiCQEAAAAAgBBgMIBAAAEEEBg=</HashCode>
       <FileName>Rules\RuleConstants.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="TypiconOnline.Domain.Rules.YmnosKind" Collapsed="true">
     <Position X="66" Y="12.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAIAgAAAAAAgAAAAAAA=</HashCode>
+      <HashCode>AAAAAEAAAAAAAAAEAAAAIAAAAAIAggQAAAAgAAgAAAA=</HashCode>
       <FileName>Rules\RuleConstants.cs</FileName>
     </TypeIdentifier>
   </Enum>

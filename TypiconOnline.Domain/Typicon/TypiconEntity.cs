@@ -257,7 +257,8 @@ namespace TypiconOnline.Domain.Typicon
         {
             DateTime easterDate = BookStorage.Instance.Easters.GetCurrentEaster(date.Year);
 
-            int daysFromEaster = date.Subtract(easterDate).Days;
+            //вычитаем из даты, потому как неверно считает, если время оставить
+            int daysFromEaster = date.Date.Subtract(easterDate.Date).Days;
 
             return TriodionRules.FirstOrDefault(c => c.DaysFromEaster == daysFromEaster);
         }

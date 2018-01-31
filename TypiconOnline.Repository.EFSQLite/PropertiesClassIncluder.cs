@@ -39,9 +39,23 @@ namespace TypiconOnline.Repository.EFSQLite
                 case bool _ when type == typeof(MenologyDay):
                     request = GetMenologyDayIncludes();
                     break;
+                case bool _ when type == typeof(DayRule):
+                    request = GetDayRuleIncludes();
+                    break;
             }
 
             return request;
+        }
+
+        private IQueryable<DomainType> GetDayRuleIncludes()
+        {
+            return (_dbSet as DbSet<DayRule>)
+                .Include(c => c.Template)
+                .Include(c => c.DayWorships)
+                    .ThenInclude(c => c.WorshipName)
+                .Include(c => c.DayWorships)
+                    .ThenInclude(c => c.WorshipShortName)
+                as IQueryable<DomainType>;
         }
 
         private IQueryable<MenologyDay> MenologyDayInc(IQueryable<MenologyDay> request)
@@ -86,11 +100,15 @@ namespace TypiconOnline.Repository.EFSQLite
                 .Include(c => c.Template)
                 .Include(c => c.Signs)
                     .ThenInclude(c => c.SignName)
+                .Include(c => c.Signs)
+                    .ThenInclude(c => c.Template)
                 .Include(c => c.CommonRules)
                 .Include(c => c.MenologyRules)
                     .ThenInclude(c => c.Date)
                 .Include(c => c.MenologyRules)
                     .ThenInclude(c => c.DateB)
+                .Include(c => c.MenologyRules)
+                    .ThenInclude(c => c.Template)
                 .Include(c => c.MenologyRules)
                     .ThenInclude(c => c.DayRuleWorships)
                         .ThenInclude(k => k.DayWorship)
@@ -99,6 +117,8 @@ namespace TypiconOnline.Repository.EFSQLite
                     .ThenInclude(c => c.DayRuleWorships)
                         .ThenInclude(k => k.DayWorship)
                             .ThenInclude(k => k.WorshipShortName)
+                .Include(c => c.TriodionRules)
+                    .ThenInclude(c => c.Template)
                 .Include(c => c.TriodionRules)
                     .ThenInclude(c => c.DayRuleWorships)
                         .ThenInclude(k => k.DayWorship)
@@ -110,7 +130,11 @@ namespace TypiconOnline.Repository.EFSQLite
                 .Include(c => c.Settings)
                 .Include(c => c.ModifiedYears)
                     .ThenInclude(k => k.ModifiedRules)
-                        .ThenInclude(c => c.RuleEntity) as IQueryable<DomainType>;
+                        .ThenInclude(c => c.RuleEntity)
+                .Include(c => c.Kathismas)
+                    .ThenInclude(c => c.SlavaElements)
+                        .ThenInclude(c => c.PsalmLinks)
+                            .ThenInclude(c => c.Psalm) as IQueryable<DomainType>;
         }
     }
 }

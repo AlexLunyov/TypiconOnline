@@ -139,8 +139,8 @@ namespace TypiconMigrationTool
             Commit();
 
             MigratePsalms();
-
-            MigrateKathismas(typiconEntity);
+            //TODO: раскомментировать и исправить. Не работает с EFSQLite
+            //MigrateKathismas(typiconEntity);
             Commit();
         }
 

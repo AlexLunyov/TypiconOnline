@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconOnline.Domain.Typicon
 {
-    public abstract class DayRule : TypiconRule
+    public abstract class DayRule : TypiconRule, IDayRule
     {
         public DayRule()
         {

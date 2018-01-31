@@ -6,7 +6,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Infrastructure.Common.UnitOfWork
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork //: IDisposable
     {
         IRepository<AggregateType> Repository<AggregateType>() where AggregateType : class, IAggregateRoot;
 

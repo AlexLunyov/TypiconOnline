@@ -71,6 +71,7 @@
     <Compile Include="Books\Psalter\GetPsalmResponse.cs" />
     <Compile Include="Books\Psalter\IPsalterContext.cs" />
     <Compile Include="Books\Psalter\PsalmStihos.cs" />
+    <Compile Include="Interfaces\IDayRule.cs" />
     <Compile Include="Interfaces\IIntConverter.cs" />
     <Compile Include="Interfaces\IPsalterElement.cs" />
     <Compile Include="Books\Psalter\PsalterContext.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Rules\Schedule\Extensions\KontakionExtensions.cs" />
     <Compile Include="Rules\Schedule\PsalmRule.cs" />
     <Compile Include="Rules\Schedule\PsalmRuleSerializer.cs" />
+    <Compile Include="Typicon\Modifications\DayWorshipsFilter.cs" />
     <Compile Include="Typicon\Psalter\PsalmLink.cs" />
     <Compile Include="Typicon\Psalter\SlavaElement.cs" />
     <Compile Include="Books\TheotokionApp\GetAllTheotokionResponse.cs" />

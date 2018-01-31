@@ -5,6 +5,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Typicon.Modifications;
 
 namespace TypiconOnline.Domain.Rules.Executables
 {
@@ -34,7 +35,7 @@ namespace TypiconOnline.Domain.Rules.Executables
         /// </summary>
         public int Priority { get; set; }
         /// <summary>
-        /// Краткое наименование правздника
+        /// Краткое наименование праздника
         /// </summary>
         public string ShortName { get; set; }
         /// <summary>
@@ -48,7 +49,11 @@ namespace TypiconOnline.Domain.Rules.Executables
         /// <summary>
         /// Признак, использовать ли полное имя
         /// </summary>
-        public bool UseFullName { get; set; } 
+        public bool UseFullName { get; set; }
+        /// <summary>
+        /// Фильтр для текстов служб
+        /// </summary>
+        public DayWorshipsFilter Filter { get; set; } = new DayWorshipsFilter();
         /// <summary>
         /// Вычисляемое выражение для переноса даты
         /// </summary>
@@ -174,6 +179,11 @@ namespace TypiconOnline.Domain.Rules.Executables
             if (ModifyReplacedDay?.IsValid == false)
             {
                 AppendAllBrokenConstraints(ModifyReplacedDay, ElementName);
+            }
+
+            if (Filter?.IsValid == false)
+            {
+                AppendAllBrokenConstraints(Filter, ElementName);
             }
         }
 
