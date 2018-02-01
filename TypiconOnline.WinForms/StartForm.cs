@@ -598,9 +598,19 @@ namespace TypiconOnline.WinForms
         {
             textBoxTesting.Clear();
 
+            var menologyRule = _typiconEntity.GetMenologyRule(dateTimePickerTesting.Value);
+
+            if (menologyRule == null)
+            {
+                textBoxTesting.AppendText("Правило по заданной дате не найдено.");
+                return;
+            }
+
             foreach (EasterItem easterItem in BookStorage.Instance.Easters.GetAll())
             {
-                DateTime innerDate = (DateTime.IsLeapYear(easterItem.Date.Year)) ? new DateTime(easterItem.Date.Year, 3, 08) : new DateTime(easterItem.Date.Year, 3, 09);
+                DateTime innerDate = (DateTime.IsLeapYear(easterItem.Date.Year)) 
+                    ? new DateTime(easterItem.Date.Year, menologyRule.DateB.Month, menologyRule.DateB.Day) 
+                    : new DateTime(easterItem.Date.Year, menologyRule.Date.Month, menologyRule.Date.Day);
                 int daysFromEaster = easterItem.Date.Subtract(innerDate).Days;
 
                 textBoxTesting.AppendText(easterItem.Date.Year + " год. " + daysFromEaster + " дней до Пасхи." + Environment.NewLine);

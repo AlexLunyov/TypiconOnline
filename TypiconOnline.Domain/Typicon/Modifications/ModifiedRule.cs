@@ -67,7 +67,7 @@ namespace TypiconOnline.Domain.Typicon.Modifications
                     }
                     else if (Filter.ExcludedItem != null)
                     {
-                        if (i != ((int)Filter.IncludedItem - 1))
+                        if (i != ((int)Filter.ExcludedItem - 1))
                         {
                             AddDayWorship(item);
                         }
@@ -81,13 +81,11 @@ namespace TypiconOnline.Domain.Typicon.Modifications
 
             void AddDayWorship(DayWorship dayWorship)
             {
-                if (Filter.IsCelebrating != null)
+                //если IsCelebrating определен и не совпадает - не добавляем такую службу
+                if (Filter.IsCelebrating != null
+                    && Filter.IsCelebrating != dayWorship.IsCelebrating)
                 {
-                    //если IsCelebrating определен и не совпадает - не добавляем такую службу
-                    if (dayWorship.IsCelebrating != Filter.IsCelebrating)
-                    {
-                        return;
-                    }
+                    return;
                 }
                 result.Add(dayWorship);
             };

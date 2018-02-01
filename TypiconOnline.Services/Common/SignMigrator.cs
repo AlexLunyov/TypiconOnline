@@ -21,7 +21,7 @@ namespace TypiconOnline.AppServices.Common
             { 7, new Item() { Name = "Аллилуиа", Priority = 4, NewID = 8 } },
             { 8, new Item() { Name = "Литургия Преждеосвященных Даров", Priority = 4, NewID = 9 } },
             { 14, new Item() { Name = "Поминовение усопших", Priority = 4, NewID = 10, TemplateId = 14 } },
-            { 16, new Item() { Name = "Поминовение усопших (Постом)", Priority = 4, NewID = 11, TemplateId = 14 } },
+            { 16, new Item() { Name = "Поминовение усопших (Постом)", Priority = 3, NewID = 11, TemplateId = 14 } },
             { 3, new Item() { Name = "Славословная", Priority = 5, NewID = 12, TemplateId = 14 } },
             { 2, new Item() { Name = "Шестеричная", Priority = 5, NewID = 13, TemplateId = 14 } },
             { 1, new Item() { Name = "Без знака", Priority = 5, NewID = 14 } },
