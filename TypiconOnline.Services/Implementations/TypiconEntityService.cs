@@ -32,7 +32,17 @@ namespace TypiconOnline.AppServices.Implementations
 
             if (response.TypiconEntity != null)
             {
-                response.TypiconEntity.ModifiedYears.ForEach(c => c.TypiconEntity = null);
+                response.TypiconEntity.ModifiedYears
+                    .ForEach(c =>
+                    {
+                        c.TypiconEntity = null;
+                        c.ModifiedRules.ForEach(d =>
+                            {
+                                d.RuleEntity = null;
+                                d.DayWorships.Clear();
+                            });
+                        c.ModifiedRules.Clear();
+                    });
                 response.TypiconEntity.ModifiedYears.Clear();
 
                 //while (response.TypiconEntity.ModifiedYears.Count > 0)

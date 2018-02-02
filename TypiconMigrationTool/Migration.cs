@@ -282,7 +282,9 @@ namespace TypiconMigrationTool
                 /* Чтобы лишний раз не обращаться к БД,
                  * смотрим, не один и тот же MenologyDay, что и предыдущая строка из Access
                 */
-                if (menologyDay == null || !menologyDay.DateB.Expression.Equals(d.Expression))
+                //if (menologyDay == null || !menologyDay.DateB.Expression.Equals(d.Expression))
+                menologyDay = _unitOfWork.Repository<MenologyDay>().Get(c => c.DateB.Expression.Equals(d.Expression));
+                if (menologyDay == null)
                 {
                     //нет - создаем новый день
                     menologyDay = new MenologyDay()
@@ -304,7 +306,13 @@ namespace TypiconMigrationTool
                 /*смотрим, есть ли уже такой объект с заявленной датой
                  * если дата пустая - т.е. праздник переходящий - значит 
                 */
-                if (menologyRule == null || d.IsEmpty || (!d.IsEmpty && !menologyRule.DateB.Expression.Equals(d.Expression)))
+
+                if (!d.IsEmpty)
+                {
+                    menologyRule = typiconEntity.GetMenologyRule(mineinikRow.DateB);
+                }
+
+                if (menologyRule == null || d.IsEmpty)
                 {
                     menologyRule = new MenologyRule()
                     {

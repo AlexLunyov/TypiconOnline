@@ -12,6 +12,10 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             HasKey<int>(c => c.Id);
             Property(c => c.Id).IsRequired();
 
+            Ignore(c => c.DayWorships);
+
+            //HasRequired(c => c.RuleEntity).WithMany().WillCascadeOnDelete(false);
+
             ToTable("ModifiedRules");
         }
     }

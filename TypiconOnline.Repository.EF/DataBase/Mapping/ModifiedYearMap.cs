@@ -23,7 +23,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
                 WithMany(c => c.ModifiedYears).
                 HasForeignKey(x => x.TypiconEntityId); 
 
-            HasMany(c => c.ModifiedRules);
+            HasMany(c => c.ModifiedRules).WithRequired().WillCascadeOnDelete(true);
 
             ToTable("ModifiedYears");
         }

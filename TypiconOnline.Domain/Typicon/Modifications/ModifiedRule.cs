@@ -90,7 +90,7 @@ namespace TypiconOnline.Domain.Typicon.Modifications
                 result.Add(dayWorship);
             };
 
-            return dayWorships;
+            return result;
         }
 
         protected override void Validate()

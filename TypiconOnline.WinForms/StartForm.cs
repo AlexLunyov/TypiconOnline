@@ -271,8 +271,8 @@ namespace TypiconOnline.WinForms
                 return;
             }
 
-            try
-            {
+            //try
+            //{
                 GetScheduleWeekRequest weekRequest = new GetScheduleWeekRequest()
                 {
                     Date = SelectedDate,
@@ -456,11 +456,11 @@ namespace TypiconOnline.WinForms
             }
 
                 #endregion
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         private string GetFileName(DateTime date)
