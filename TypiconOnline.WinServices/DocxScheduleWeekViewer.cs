@@ -189,7 +189,7 @@ namespace TypiconOnline.WinServices
         /// <returns></returns>
         private int InterpretSignNumber(int sign)
         {
-            return SignMigrator.GetOldId(k => k.Value.NewID == sign);
+            return SignMigrator.GetOldTemplateId(k => k.Value.NewID == sign);
         }
 
         /// <summary>

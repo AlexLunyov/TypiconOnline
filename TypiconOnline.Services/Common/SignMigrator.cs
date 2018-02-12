@@ -21,7 +21,7 @@ namespace TypiconOnline.AppServices.Common
             { 7, new Item() { Name = "Аллилуиа", Priority = 4, NewID = 8 } },
             { 8, new Item() { Name = "Литургия Преждеосвященных Даров", Priority = 4, NewID = 9 } },
             { 14, new Item() { Name = "Поминовение усопших", Priority = 4, NewID = 10, TemplateId = 14 } },
-            { 16, new Item() { Name = "Поминовение усопших (Постом)", Priority = 3, NewID = 11 } },
+            { 16, new Item() { Name = "Поминовение усопших (Постом)", Priority = 3, NewID = 11, TemplateId = 14 } },
             { 3, new Item() { Name = "Славословная", Priority = 5, NewID = 12, TemplateId = 14 } },
             { 2, new Item() { Name = "Шестеричная", Priority = 5, NewID = 13, TemplateId = 14 } },
             { 1, new Item() { Name = "Без знака", Priority = 5, NewID = 14 } },
@@ -51,6 +51,18 @@ namespace TypiconOnline.AppServices.Common
         public static int GetOldId(Func<KeyValuePair<int, Item>, bool> condition )
         {
             return _signs.Where(condition).Select(k => k.Key).FirstOrDefault();
+        }
+
+        public static int GetOldTemplateId(Func<KeyValuePair<int, Item>, bool> condition)
+        {
+            var valuePair = _signs.Where(condition).FirstOrDefault();
+
+            while (valuePair.Value.TemplateId != null)
+            {
+                valuePair = _signs.Where(c => c.Value.NewID == valuePair.Value.TemplateId).FirstOrDefault();
+            }
+
+            return valuePair.Key;
         }
 
         public string Name
@@ -92,18 +104,23 @@ namespace TypiconOnline.AppServices.Common
         {
             get
             {
-                Item item = _signs[_oldID];
-
-                while (item.TemplateId != null)
-                {
-                    item = _signs.Where(c => c.Value.NewID == item.TemplateId).FirstOrDefault().Value;
-                }
-
-                return item.Name;
+                return GetMajorItem(_oldID)?.Name;
             }
         }
 
-        public struct Item
+        private Item GetMajorItem(int id)
+        {
+            Item item = _signs[id];
+
+            while (item?.TemplateId != null)
+            {
+                item = _signs.Where(c => c.Value.NewID == item.TemplateId).FirstOrDefault().Value;
+            }
+
+            return item;
+        }
+
+        public class Item
         {
             public string Name;
             public int Priority;

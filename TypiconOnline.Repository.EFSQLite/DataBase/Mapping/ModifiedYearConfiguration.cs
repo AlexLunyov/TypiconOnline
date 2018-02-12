@@ -23,6 +23,7 @@ namespace TypiconOnline.Repository.EFSQlite.DataBase.Mapping
                 .HasForeignKey(x => x.TypiconEntityId);
 
             builder.HasMany(c => c.ModifiedRules);
+//                .WithOne(c => c.Parent).HasForeignKey(c => c.ModifiedYearId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

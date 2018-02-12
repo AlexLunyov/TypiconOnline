@@ -251,8 +251,8 @@ namespace TypiconOnline.WinForms
                     }
                     catch
                     {
-                        labelNextScheduleWeek.Text = OktoikhCalculator.GetSundayName(_selectedDate);
                         _selectedDate = DateTime.Today;
+                        labelNextScheduleWeek.Text = OktoikhCalculator.GetSundayName(_selectedDate);
                     }
                 }
                 else

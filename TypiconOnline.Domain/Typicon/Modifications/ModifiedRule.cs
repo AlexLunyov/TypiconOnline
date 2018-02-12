@@ -14,6 +14,8 @@ namespace TypiconOnline.Domain.Typicon.Modifications
 {
     public class ModifiedRule : EntityBase<int>/*, IAggregateRoot*/, IComparable<ModifiedRule>, IDayRule
     {
+        public virtual int ModifiedYearId { get; set; }
+        public virtual ModifiedYear Parent { get; set; }
         public virtual DayRule RuleEntity { get; set; }
 
         public virtual DateTime Date { get; set; }
