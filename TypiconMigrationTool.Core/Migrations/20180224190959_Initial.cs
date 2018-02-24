@@ -381,7 +381,7 @@ namespace TypiconMigrationTool.Core.Migrations
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IsAddition = table.Column<bool>(type: "INTEGER", nullable: false),
                     IsLastName = table.Column<bool>(type: "INTEGER", nullable: false),
-                    ModifiedYearId = table.Column<int>(type: "INTEGER", nullable: true),
+                    ModifiedYearId = table.Column<int>(type: "INTEGER", nullable: false),
                     Priority = table.Column<int>(type: "INTEGER", nullable: false),
                     RuleEntityId = table.Column<int>(type: "INTEGER", nullable: true),
                     ShortName = table.Column<string>(type: "TEXT", nullable: true),
@@ -398,7 +398,7 @@ namespace TypiconMigrationTool.Core.Migrations
                         column: x => x.ModifiedYearId,
                         principalTable: "ModifiedYear",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ModifiedRule_DayRule_RuleEntityId",
                         column: x => x.RuleEntityId,
@@ -451,8 +451,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 {
                     DayRuleId = table.Column<int>(type: "INTEGER", nullable: false),
                     DayWorshipId = table.Column<int>(type: "INTEGER", nullable: false),
-                    DayRuleId1 = table.Column<int>(type: "INTEGER", nullable: true),
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    DayRuleId1 = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {

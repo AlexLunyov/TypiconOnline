@@ -100,8 +100,6 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<int?>("DayRuleId1");
 
-                    b.Property<int>("Id");
-
                     b.HasKey("DayRuleId", "DayWorshipId");
 
                     b.HasIndex("DayRuleId1");
@@ -225,7 +223,7 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<bool>("IsLastName");
 
-                    b.Property<int?>("ModifiedYearId");
+                    b.Property<int>("ModifiedYearId");
 
                     b.Property<int>("Priority");
 
@@ -530,9 +528,10 @@ namespace TypiconMigrationTool.Core.Migrations
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Modifications.ModifiedRule", b =>
                 {
-                    b.HasOne("TypiconOnline.Domain.Typicon.Modifications.ModifiedYear")
+                    b.HasOne("TypiconOnline.Domain.Typicon.Modifications.ModifiedYear", "Parent")
                         .WithMany("ModifiedRules")
-                        .HasForeignKey("ModifiedYearId");
+                        .HasForeignKey("ModifiedYearId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TypiconOnline.Domain.Typicon.DayRule", "RuleEntity")
                         .WithMany()

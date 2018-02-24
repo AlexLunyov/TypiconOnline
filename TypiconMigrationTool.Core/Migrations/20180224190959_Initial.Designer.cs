@@ -13,7 +13,7 @@ using TypiconOnline.Domain.Rules;
 namespace TypiconMigrationTool.Core.Migrations
 {
     [DbContext(typeof(MigrationContext))]
-    [Migration("20180131135047_Initial")]
+    [Migration("20180224190959_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -100,8 +100,6 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.Property<int>("DayWorshipId");
 
                     b.Property<int?>("DayRuleId1");
-
-                    b.Property<int>("Id");
 
                     b.HasKey("DayRuleId", "DayWorshipId");
 
@@ -226,7 +224,7 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<bool>("IsLastName");
 
-                    b.Property<int?>("ModifiedYearId");
+                    b.Property<int>("ModifiedYearId");
 
                     b.Property<int>("Priority");
 
@@ -531,9 +529,10 @@ namespace TypiconMigrationTool.Core.Migrations
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Modifications.ModifiedRule", b =>
                 {
-                    b.HasOne("TypiconOnline.Domain.Typicon.Modifications.ModifiedYear")
+                    b.HasOne("TypiconOnline.Domain.Typicon.Modifications.ModifiedYear", "Parent")
                         .WithMany("ModifiedRules")
-                        .HasForeignKey("ModifiedYearId");
+                        .HasForeignKey("ModifiedYearId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TypiconOnline.Domain.Typicon.DayRule", "RuleEntity")
                         .WithMany()

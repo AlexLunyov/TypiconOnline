@@ -42,8 +42,8 @@ namespace TypiconOnline.WinForms
                         scan.AssemblyContainingType<DocxScheduleWeekViewer>(); 
                         scan.WithDefaultConventions();
                     });
-                    //x.For<IUnitOfWork>().Use<EFSQLiteUnitOfWork>().SelectConstructor(() => new EFSQLiteUnitOfWork()).Singleton();
-                    x.For<IUnitOfWork>().Use<EFUnitOfWork>().Singleton();
+                    x.For<IUnitOfWork>().Use<EFSQLiteUnitOfWork>().SelectConstructor(() => new EFSQLiteUnitOfWork()).Singleton();
+                    //x.For<IUnitOfWork>().Use<EFUnitOfWork>().Singleton();
                     x.For<ITypiconEntityService>().Use<TypiconEntityService>();
                     x.For<IEvangelionContext>().Use<EvangelionContext>();
                     x.For<IApostolContext>().Use<ApostolContext>();
