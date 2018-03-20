@@ -127,69 +127,63 @@ namespace TypiconOnline.WinServices
         private Table GetDayTable(ScheduleDay day, List<Table> templateTables)
         {
             Table dayTable = new Table();
-            int sign = InterpretSignNumber(day.SignNumber);
-            //в зависимости от того, какой знак дня - берем для заполнения шаблона соответствующую таблицу в templateTables
-            Table dayTemplateTable = templateTables[sign];
 
-            TableRow tr = (TableRow)dayTemplateTable.ChildElements[2].Clone();
-            TableCell tdDayofweek = (TableCell)tr.ChildElements[2];
-            TableCell tdName = (TableCell)tr.ChildElements[3];
-            string sDayofweek = day.Date.ToString("dddd").ToUpper();
-            string sName = day.Name;
-            //TODO: реализовать функционал
-            bool bIsNameBold = false;//(dayNode.SelectSingleNode("name").Attributes["isbold"] != null);
-
-            SetTextToCell(tdDayofweek, sDayofweek, false, false);
-            SetTextToCell(tdName, sName, bIsNameBold, false);
-            dayTable.AppendChild(tr);
-
-            tr = (TableRow)dayTemplateTable.ChildElements[3].Clone();
-            TableCell tdDate = (TableCell)tr.ChildElements[2];
-            string sDate = day.Date.ToString("dd MMMM yyyy г.");
-            SetTextToCell(tdDate, sDate, false, false);
-            dayTable.AppendChild(tr);
-
-            foreach (WorshipRuleViewModel service in day.Schedule)
+            try
             {
-                tr = (TableRow)dayTemplateTable.ChildElements[4].Clone();
-                TableCell tdTime = (TableCell)tr.ChildElements[2];
-                TableCell tdSName = (TableCell)tr.ChildElements[3];
+                //в зависимости от того, какой знак дня - берем для заполнения шаблона соответствующую таблицу в templateTables
+                Table dayTemplateTable = templateTables[day.SignNumber + 1] ?? templateTables[1];
 
-                string sTime = service.Time.ToString();
-                string sSName = service.Name;
+                TableRow tr = (TableRow)dayTemplateTable.ChildElements[2].Clone();
+                TableCell tdDayofweek = (TableCell)tr.ChildElements[2];
+                TableCell tdName = (TableCell)tr.ChildElements[3];
+                string sDayofweek = day.Date.ToString("dddd").ToUpper();
+                string sName = day.Name;
+                //TODO: реализовать функционал
+                bool bIsNameBold = false;//(dayNode.SelectSingleNode("name").Attributes["isbold"] != null);
 
-                bool bIsTimeBold = false; //(serviceNode.Attributes["istimebold"] != null);
-                bool bIsTimeRed = false; //(serviceNode.Attributes["istimered"] != null);
-
-                bool bIsServiceNameBold = false; //(serviceNode.Attributes["isnamebold"] != null);
-                bool bIsServiceNameRed = false; //(serviceNode.Attributes["isnamered"] != null);
-
-
-                SetTextToCell(tdTime, sTime, bIsTimeBold, bIsTimeRed);
-                SetTextToCell(tdSName, sSName, bIsServiceNameBold, bIsServiceNameRed);
-
-                //additionalName
-                if (!string.IsNullOrEmpty(service.AdditionalName))
-                {
-                    AppendTextToCell(tdSName, service.AdditionalName, true, false);
-                }
-
-                //tr.ChildElements[1].InnerXml = dayNode.SelectSingleNode("time").InnerText;
-                //tr.ChildElements[2].InnerXml = dayNode.SelectSingleNode("name").InnerText;
+                SetTextToCell(tdDayofweek, sDayofweek, false, false);
+                SetTextToCell(tdName, sName, bIsNameBold, false);
                 dayTable.AppendChild(tr);
+
+                tr = (TableRow)dayTemplateTable.ChildElements[3].Clone();
+                TableCell tdDate = (TableCell)tr.ChildElements[2];
+                string sDate = day.Date.ToString("dd MMMM yyyy г.");
+                SetTextToCell(tdDate, sDate, false, false);
+                dayTable.AppendChild(tr);
+
+                foreach (WorshipRuleViewModel service in day.Schedule)
+                {
+                    tr = (TableRow)dayTemplateTable.ChildElements[4].Clone();
+                    TableCell tdTime = (TableCell)tr.ChildElements[2];
+                    TableCell tdSName = (TableCell)tr.ChildElements[3];
+
+                    string sTime = service.Time.ToString();
+                    string sSName = service.Name;
+
+                    bool bIsTimeBold = false; //(serviceNode.Attributes["istimebold"] != null);
+                    bool bIsTimeRed = false; //(serviceNode.Attributes["istimered"] != null);
+
+                    bool bIsServiceNameBold = false; //(serviceNode.Attributes["isnamebold"] != null);
+                    bool bIsServiceNameRed = false; //(serviceNode.Attributes["isnamered"] != null);
+
+
+                    SetTextToCell(tdTime, sTime, bIsTimeBold, bIsTimeRed);
+                    SetTextToCell(tdSName, sSName, bIsServiceNameBold, bIsServiceNameRed);
+
+                    //additionalName
+                    if (!string.IsNullOrEmpty(service.AdditionalName))
+                    {
+                        AppendTextToCell(tdSName, service.AdditionalName, true, false);
+                    }
+
+                    //tr.ChildElements[1].InnerXml = dayNode.SelectSingleNode("time").InnerText;
+                    //tr.ChildElements[2].InnerXml      = dayNode.SelectSingleNode("name").InnerText;
+                    dayTable.AppendChild(tr);
+                }
             }
+            catch (IndexOutOfRangeException) { }
 
             return dayTable;
-        }
-
-        /// <summary>
-        /// преобразует номер знака к индексу нужной таблицы в шаблоне
-        /// </summary>
-        /// <param name="sign"></param>
-        /// <returns></returns>
-        private int InterpretSignNumber(int sign)
-        {
-            return SignMigrator.GetOldTemplateId(k => k.Value.NewID == sign);
         }
 
         /// <summary>

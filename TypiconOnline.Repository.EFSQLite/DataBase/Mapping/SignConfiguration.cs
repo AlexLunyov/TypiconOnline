@@ -17,7 +17,7 @@ namespace TypiconOnline.Repository.EFSQlite.DataBase.Mapping
 
             builder.HasKey(c => c.Id);
 
-            builder.Property(c => c.Number).IsRequired();
+            //builder.Property(c => c.Number).IsRequired();
 
             builder.Property(c => c.Priority).IsRequired();
 

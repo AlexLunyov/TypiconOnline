@@ -104,12 +104,12 @@ namespace TypiconOnline.Domain.Services
                 //Sign sign = (settings.Rule is Sign s) ? s : GetTemplateSign(settings.Rule.Template);
                 Sign sign = GetRootAdditionSign(settings);
 
-                int signNumber = (convertSignNumber) ? SignMigrator.GetOldId(k => k.Value.NewID == sign.Number) : sign.Number;
+                int signNumber = (int)sign.Number;
 
                 if (request.Date.DayOfWeek == DayOfWeek.Sunday && sign.Priority > 3)
                 {
                     //TODO: жесткая привязка к номеру знака воскресного дня
-                    signNumber = 6;// SignMigrator.GetOldId(k => k.Value.Name == "Воскресный день");
+                    signNumber = 8;// SignMigrator.GetOldId(k => k.Value.Name == "Воскресный день");
                 }
 
                 scheduleDay = new ScheduleDay
@@ -130,32 +130,13 @@ namespace TypiconOnline.Domain.Services
             return scheduleDay;
         }
 
-        /// <summary>
-        /// Возвращает ID предустановленного шаблона.
-        /// </summary>
-        /// <param name="sign">Вводимый ID для проверки</param>
-        /// <returns></returns>
-        private int GetTemplateSignID(Sign sign)
-        {
-            return (sign.Template == null) ? sign.Number : GetTemplateSignID(sign.Template);
-        }
-
-        /// <summary>
-        /// Возвращает Знак службы, помеченный как Предустановленный
-        /// Используется для отображения предустановленных знаков службы в расписании
-        /// </summary>
-        /// <param name="sign"></param>
-        /// <returns></returns>
-        private Sign GetTemplateSign(Sign sign)
-        {
-            return (sign.IsTemplate || sign.Template == null) ? sign : GetTemplateSign(sign.Template);
-        }
-
         private Sign GetRootAdditionSign(RuleHandlerSettings settings)
         {
             if (settings.Addition == null)
             {
-                return GetTemplateSign((settings.Rule is Sign s) ? s : settings.Rule.Template);
+                var sign = (settings.Rule is Sign s) ? s : settings.Rule.Template;
+
+                return sign?.GetPredefinedTemplate();
             }
             
             return GetRootAdditionSign(settings.Addition);

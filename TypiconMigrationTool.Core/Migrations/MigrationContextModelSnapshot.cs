@@ -319,7 +319,7 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<bool>("IsTemplate");
 
-                    b.Property<int>("Number");
+                    b.Property<int?>("Number");
 
                     b.Property<int?>("Owner.Id");
 

@@ -36,19 +36,17 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 _resultString += "<div style=\"margin - top:10px; \">";
 
-                int sign = SignMigrator.GetOldId(k => k.Value.NewID == day.SignNumber);
-
-                _resultString += "[sign cat=\"" + sign.ToString() + "\"]<strong>";
+                _resultString += "[sign cat=\"" + day.SignNumber.ToString() + "\"]<strong>";
 
                 //если бдение или бдение с литией или воскресный день - красим в красный цвет
-                if (sign == 5 || sign == 6 || sign == 9)
+                if (day.SignNumber == 4 || day.SignNumber == 5 || day.SignNumber == 8)
                     _resultString += "<span style=\"color: #ff0000;\">";
 
                 _resultString += day.Date.ToString("dd MMMM yyyy г.") + "<br/>";
                 _resultString += day.Date.ToString("dddd").ToUpper() + "<br/>";
                 _resultString += day.Name + "</strong>";
 
-                if (sign == 5 || sign == 6 || sign == 9)
+                if (day.SignNumber == 4 || day.SignNumber == 5 || day.SignNumber == 8)
                     _resultString += "</span>";
 
                 _resultString += "</div>";

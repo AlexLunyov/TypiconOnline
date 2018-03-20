@@ -27,5 +27,33 @@ namespace TypiconOnline.AppServices.Tests
 
             Assert.AreEqual(response.TypiconEntity.ModifiedYears.Count, 0);
         }
+
+        [Test]
+        public void TypiconEntityService_GetAllTypiconEntities()
+        {
+            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+
+            BookStorage.Instance = BookStorageFactory.Create();
+
+            TypiconEntityService service = new TypiconEntityService(_unitOfWork);
+
+            GetTypiconEntitiesResponse response = service.GetAllTypiconEntities();
+
+            Assert.GreaterOrEqual(response.TypiconEntities.Count(), 1);
+        }
+
+        [Test]
+        public void TypiconEntityService_GetTypiconEntity()
+        {
+            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+
+            BookStorage.Instance = BookStorageFactory.Create();
+
+            TypiconEntityService service = new TypiconEntityService(_unitOfWork);
+
+            GetTypiconEntityResponse response = service.GetTypiconEntity(1);
+
+            Assert.NotNull(response.TypiconEntity);
+        }
     }
 }

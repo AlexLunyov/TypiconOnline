@@ -68,7 +68,7 @@ namespace TypiconMigrationTool
             {
                 //Если его мы не находим, то заменяем текстом по умолчанию, исходя из знака службы
                 _fileReader.FolderPath = Path.Combine(_folderPath, "Templates");
-                fileName = SignMigrator.Instance(_row.SignID).MajorTemplateName;
+                fileName = SignMigrator.Instance(_row.ServiceSignsRow.Number).MajorTemplateName;
                 definition = TransformDefinition(_fileReader.Read(fileName), _row.Name, fileName);
             }
 

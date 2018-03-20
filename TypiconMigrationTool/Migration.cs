@@ -101,19 +101,23 @@ namespace TypiconMigrationTool
             {
                 //int priority = _signPriorites.ContainsKey(row.Name) ? _signPriorites[row.Name] : row.ID;
 
-                SignMigrator signMigrator = new SignMigrator(row.ID);
+                SignMigrator signMigrator = new SignMigrator(row.Number);
 
                 Sign sign = new Sign()
                 {
                     //Id = signMigrator.NewId,
                     Name = row.Name,
-                    Number = signMigrator.NewId,
                     Priority = signMigrator.Priority,
                     Owner = typiconEntity,
                     IsTemplate = row.IsTemplate,
                     RuleDefinition = fileReader.Read(row.Name),
                     SignName = new ItemTextStyled()// { StringExpression = row.Name }
                 };
+
+                if (signMigrator.Number != null)
+                {
+                    sign.Number = (int)signMigrator.Number;
+                }
 
                 sign.SignName.AddElement("cs-ru", row.Name);
 
@@ -321,7 +325,7 @@ namespace TypiconMigrationTool
                         DateB = menologyDay.DateB,
                         Owner = typiconEntity,
                         //IsAddition = true,
-                        Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(mineinikRow.SignID).NewId),
+                        Template = typiconEntity.Signs.First(c => c.SignName["cs-ru"] == mineinikRow.ServiceSignsRow.Name),
                     };
 
                     menologyRule.DayRuleWorships.Add( new DayRuleWorship() { DayRule = menologyRule, DayWorship = dayWorship } );
@@ -396,7 +400,7 @@ namespace TypiconMigrationTool
                     DaysFromEaster = day.DaysFromEaster,
                     Owner = typiconEntity,
                     //IsAddition = true,
-                    Template = typiconEntity.Signs.First(c => c.Number == SignMigrator.Instance(row.SignID).NewId),
+                    Template = typiconEntity.Signs.First(c => c.SignName["cs-ru"] == row.ServiceSignsRow.Name),
                     RuleDefinition = fileReader.Read(row.DayFromEaster.ToString()),
                     
                 };
