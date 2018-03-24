@@ -52,27 +52,36 @@ namespace TypiconOnline.AppServices.Implementations
             //создаем выходной объект
             RuleHandlerSettings settings = null;
 
-            if (req.ModifiedRule?.IsAddition == true)
-            {
-                //создаем первый объект, который в дальнейшем станет ссылкой Addition у выбранного правила
-                settings = Create(req.ModifiedRule.RuleEntity, req.ModifiedRule.RuleEntity.DayWorships, req.OktoikhDay, req, null);
+            //Номер Знака службы, указанный в ModifiedRule, который будет использовать в отображении Расписания
+            int? signNumber = null;
 
-                //обнуляем его, чтобы больше не участвовал в формировании
-                req.ModifiedRule = null;
+            if (req.ModifiedRule != null)
+            {
+                //custom SignNumber
+                signNumber = req.ModifiedRule.SignNumber;
+
+                if (req.ModifiedRule.IsAddition == true)
+                {
+                    //создаем первый объект, который в дальнейшем станет ссылкой Addition у выбранного правила
+                    settings = InnerCreate(req.ModifiedRule.RuleEntity, req.ModifiedRule.RuleEntity.DayWorships, req.OktoikhDay, req, null);
+
+                    //обнуляем его, чтобы больше не участвовал в формировании
+                    req.ModifiedRule = null;
+                }
             }
 
             //получаем главное Правило и коллекцию богослужебных текстов
-            (DayRule Rule, IEnumerable<DayWorship> Worships) almostReadyEntity = CalculatePriorities(req.ModifiedRule, req.MenologyRule, req.TriodionRule);
+            (DayRule Rule, IEnumerable<DayWorship> Worships) = CalculatePriorities(req.ModifiedRule, req.MenologyRule, req.TriodionRule);
 
             //смотрим, не созданы ли уже настройки
             if (settings != null)
             {
                 //созданы - значит был определен элемент для добавления
-                settings.DayWorships.AddRange(almostReadyEntity.Worships);
+                settings.DayWorships.AddRange(Worships);
             }
 
 
-            TypiconRule seniorRule = almostReadyEntity.Rule;
+            TypiconRule seniorRule = Rule;
             //смотрим, главным ставить само Правило или Знак службы
             /*
              * Если Правило имеет: 
@@ -81,15 +90,15 @@ namespace TypiconOnline.AppServices.Implementations
              *      и определен Шаблон
              */
             if (
-                string.IsNullOrEmpty(almostReadyEntity.Rule.RuleDefinition)
-                && almostReadyEntity.Rule.IsAddition 
-                && almostReadyEntity.Rule.Template != null
+                string.IsNullOrEmpty(Rule.RuleDefinition)
+                && Rule.IsAddition 
+                && Rule.Template != null
                 )
             {
                 seniorRule = seniorRule.Template;
             }
 
-            RuleHandlerSettings outputSettings = GetRecursiveSettings(seniorRule, almostReadyEntity.Worships, req.OktoikhDay, req, settings);
+            RuleHandlerSettings outputSettings = GetRecursiveSettings(seniorRule, Worships, req.OktoikhDay, req, settings, signNumber);
 
             return outputSettings;
         }
@@ -101,40 +110,31 @@ namespace TypiconOnline.AppServices.Implementations
         /// <param name="modifiedRule"></param>
         /// <param name="menologyRule"></param>
         /// <param name="triodionRule"></param>
-        /// <returns></returns>
+        /// <returns>Правило для обработки, список текстов богослужений</returns>
         private (DayRule, IEnumerable<DayWorship>) CalculatePriorities(ModifiedRule modifiedRule, MenologyRule menologyRule, TriodionRule triodionRule)
         {
-            IDayRule menologyToCompare = null;
-            IDayRule triodionToCompare = null;
-
             //Приоритет Минеи
-            int menologyPriority = int.MaxValue;
-            if (modifiedRule?.RuleEntity is MenologyRule)
-            {
-                menologyPriority = modifiedRule.Priority;
-                menologyToCompare = modifiedRule;
-            }
-            else
-            {
-                menologyPriority = menologyRule.Template.Priority;
-                menologyToCompare = menologyRule;
-            }
-
+            IDayRule menologyToCompare = SetValues(menologyRule, out int menologyPriority, typeof(MenologyRule));
             //Приоритет Триоди
-            int triodionPriority = int.MaxValue;
-            if (modifiedRule?.RuleEntity is TriodionRule)
+            IDayRule triodionToCompare = SetValues(triodionRule, out int triodionPriority, typeof(TriodionRule));
+
+            IDayRule SetValues(DayRule dr, out int p, Type t)
             {
-                triodionPriority = modifiedRule.Priority;
-                triodionToCompare = modifiedRule;
-            }
-            else
-            {
-                if (triodionRule != null)
+                IDayRule r = null;
+                p = int.MaxValue;
+                if (modifiedRule?.RuleEntity.GetType().Equals(t) == true)
                 {
-                    triodionPriority = triodionRule.Template.Priority;
-                    triodionToCompare = triodionRule;
+                    r = modifiedRule;
+                    p = modifiedRule.Priority;
                 }
-            }
+                else if (dr != null)
+                {
+                    r = dr;
+                    p = dr.Template.Priority;
+                }
+
+                return r;
+            };
 
             var rulesList = new List<IDayRule>();
 
@@ -173,7 +173,7 @@ namespace TypiconOnline.AppServices.Implementations
 
             //находим главное правило
             var rule = rulesList.First();
-            //если это измененое правило, то возвращаем правило, на которое оно указывает
+            //если это измененное правило, то возвращаем правило, на которое оно указывает
             if (rule is ModifiedRule)
             {
                 rule = (rule as ModifiedRule).RuleEntity;
@@ -183,9 +183,9 @@ namespace TypiconOnline.AppServices.Implementations
         }
 
         private RuleHandlerSettings GetRecursiveSettings(TypiconRule rule, IEnumerable<DayWorship> dayWorships, OktoikhDay oktoikhDay,
-            GetRuleSettingsRequest req, RuleHandlerSettings additionalSettings)
+            GetRuleSettingsRequest req, RuleHandlerSettings additionalSettings, int? signNumber = null)
         {
-            RuleHandlerSettings outputSettings = Create(rule, dayWorships, oktoikhDay, req, additionalSettings);
+            RuleHandlerSettings outputSettings = InnerCreate(rule, dayWorships, oktoikhDay, req, additionalSettings, signNumber);
 
             /*
              * Если Правило имеет: 
@@ -202,8 +202,8 @@ namespace TypiconOnline.AppServices.Implementations
             return outputSettings;
         }
 
-        private RuleHandlerSettings Create(TypiconRule rule, IEnumerable<DayWorship> dayWorships, OktoikhDay oktoikhDay, 
-            GetRuleSettingsRequest req, RuleHandlerSettings additionalSettings)
+        private RuleHandlerSettings InnerCreate(TypiconRule rule, IEnumerable<DayWorship> dayWorships, OktoikhDay oktoikhDay, 
+            GetRuleSettingsRequest req, RuleHandlerSettings additionalSettings, int? signNumber = null)
         {
             return new RuleHandlerSettings()
             {
@@ -213,6 +213,7 @@ namespace TypiconOnline.AppServices.Implementations
                 DayWorships = dayWorships.ToList(),
                 OktoikhDay = oktoikhDay,
                 Language = LanguageSettingsFactory.Create(req.Language),
+                SignNumber = signNumber,
                 //ThrowExceptionIfInvalid = req.ThrowExceptionIfInvalid,
                 ApplyParameters = req.ApplyParameters,
                 CheckParameters = req.CheckParameters

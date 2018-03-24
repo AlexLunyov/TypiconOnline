@@ -45,9 +45,7 @@ namespace TypiconOnline.AppServices.Implementations
             bool result = false;
             if (element is ModifyReplacedDay modifyReplacedDay)
             {
-                //
-
-                TypiconEntity typiconEntity = _settings.Rule.Owner; //Rules[0].Owner;
+                var typiconEntity = _settings.Rule.Owner;
 
                 DayRule ruleToModify;
 
@@ -69,18 +67,6 @@ namespace TypiconOnline.AppServices.Implementations
 
                 var request = CreateRequest(ruleToModify, modifyReplacedDay, priority);
 
-                //ModificationsRuleRequest request = new ModificationsRuleRequest()
-                //{
-                //    Caller = ruleToModify,
-                //    Date = modifyReplacedDay.MoveDateCalculated,
-                //    Priority = priority,
-                //    ShortName = modifyReplacedDay.ShortName,
-                //    AsAddition = modifyReplacedDay.AsAddition,
-                //    IsLastName = modifyReplacedDay.IsLastName,
-                //    UseFullName = modifyReplacedDay.UseFullName,
-                //    Filter = modifyReplacedDay.Filter
-                //};
-
                 typiconEntity.AddModifiedRule(request);
 
                 result = true;
@@ -99,18 +85,6 @@ namespace TypiconOnline.AppServices.Implementations
 
                 var request = CreateRequest((DayRule)_settings.Rule, modifyDay, priority);
 
-                //ModificationsRuleRequest request = new ModificationsRuleRequest()
-                //{
-                //    Caller = /*seniorTypicon*/(DayRule)_settings.Rule,
-                //    Date = modifyDay.MoveDateCalculated,
-                //    Priority = priority,
-                //    ShortName = modifyDay.ShortName,
-                //    AsAddition = modifyDay.AsAddition,
-                //    IsLastName = modifyDay.IsLastName,
-                //    UseFullName = modifyDay.UseFullName,
-                //    Filter = modifyDay.Filter
-                //};
-
                 _settings.Rule.Owner.AddModifiedRule(request);
 
                 result = true;
@@ -127,6 +101,7 @@ namespace TypiconOnline.AppServices.Implementations
                     AsAddition = md.AsAddition,
                     IsLastName = md.IsLastName,
                     UseFullName = md.UseFullName,
+                    SignNumber = md.SignNumber,
                     Filter = md.Filter
                 };
             }

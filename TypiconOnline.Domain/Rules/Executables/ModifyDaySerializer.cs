@@ -42,6 +42,12 @@ namespace TypiconOnline.Domain.Rules.Executables
             attr = d.Element.Attributes[RuleConstants.PriorityAttrName];
             (element as ModifyDay).Priority = int.TryParse(attr?.Value, out intValue) ? intValue : 0;
 
+            attr = d.Element.Attributes[RuleConstants.SignNumberAttrName];
+            if (int.TryParse(attr?.Value, out intValue))
+            {
+                (element as ModifyDay).SignNumber = intValue;
+            }
+
             //filter
             DeserializeFilter(d.Element, element as ModifyDay);
 

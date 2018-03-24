@@ -47,9 +47,14 @@ namespace TypiconOnline.Domain.Rules.Executables
         /// </summary>
         public bool AsAddition { get; set; } 
         /// <summary>
-        /// Признак, использовать ли полное имя
+        /// Признак, использовать ли полное имя в Расписании
         /// </summary>
         public bool UseFullName { get; set; }
+        /// <summary>
+        /// Предустановленный номер Знака службы, который будет использоваться только для отображения в Расписании.
+        /// Никак не влияет на обработку последовательности богослужений.
+        /// </summary>
+        public int? SignNumber { get; set; }
         /// <summary>
         /// Фильтр для текстов служб
         /// </summary>
@@ -90,6 +95,7 @@ namespace TypiconOnline.Domain.Rules.Executables
                     && !IsLastName
                     && !AsAddition
                     && UseFullName
+                    && SignNumber == null
                     && ChildDateExp == null
                     && ModifyReplacedDay == null);
             }

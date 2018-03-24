@@ -31,6 +31,8 @@ namespace TypiconOnline.Domain.Typicon.Modifications
 
         public virtual bool UseFullName { get; set; }
 
+        public virtual int? SignNumber { get; set; }
+
         public virtual DayWorshipsFilter Filter { get; set; }
 
         /// <summary>

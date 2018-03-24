@@ -46,6 +46,11 @@ namespace TypiconOnline.Domain.Rules.Handlers
         //public string Language { get; set; }
 
         public LanguageSettings Language { get; set; }
+        /// <summary>
+        /// Номер Знака службы, который будет использовать для отображения в Расписании.
+        /// Issue #6
+        /// </summary>
+        public int? SignNumber { get; set; }
 
         public CustomParamsCollection<IRuleApplyParameter> ApplyParameters { get; set; } = new CustomParamsCollection<IRuleApplyParameter>();
         public CustomParamsCollection<IRuleCheckParameter> CheckParameters { get; set; } = new CustomParamsCollection<IRuleCheckParameter>();

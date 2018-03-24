@@ -104,13 +104,14 @@ namespace TypiconOnline.Domain.Services
                 //Sign sign = (settings.Rule is Sign s) ? s : GetTemplateSign(settings.Rule.Template);
                 Sign sign = GetRootAdditionSign(settings);
 
-                int signNumber = (int)sign.Number;
+                //Если settings.SignNumber определен в ModifiedRule, то назначаем его
+                int signNumber = settings.SignNumber ?? (int)sign.Number;
 
-                if (request.Date.DayOfWeek == DayOfWeek.Sunday && sign.Priority > 3)
-                {
-                    //TODO: жесткая привязка к номеру знака воскресного дня
-                    signNumber = 8;// SignMigrator.GetOldId(k => k.Value.Name == "Воскресный день");
-                }
+                //if (request.Date.DayOfWeek == DayOfWeek.Sunday && sign.Priority > 3)
+                //{
+                //    //TODO: жесткая привязка к номеру знака воскресного дня
+                //    signNumber = 8;// SignMigrator.GetOldId(k => k.Value.Name == "Воскресный день");
+                //}
 
                 scheduleDay = new ScheduleDay
                 {

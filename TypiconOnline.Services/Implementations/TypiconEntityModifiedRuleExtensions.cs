@@ -153,6 +153,7 @@ namespace TypiconOnline.AppServices.Implementations
                 IsAddition = request.AsAddition,
                 ShortName = request.ShortName,
                 UseFullName = request.UseFullName,
+                SignNumber = request.SignNumber,
                 Filter = request.Filter
             });
         }

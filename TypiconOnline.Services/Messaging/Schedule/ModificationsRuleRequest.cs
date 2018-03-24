@@ -18,6 +18,7 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
         public string ShortName { get; set; }
         public bool AsAddition { get; set; }
         public bool UseFullName { get; set; }
+        public int? SignNumber { get; set; }
         public DayWorshipsFilter Filter { get; set; }
     }
 }
