@@ -55,7 +55,8 @@ namespace TypiconOnline.AppServices.Implementations
                 }
                 else //if ((element as ModifyReplacedDay).Kind == RuleConstants.KindOfReplacedDay.triodion)
                 {
-                    ruleToModify = typiconEntity.GetTriodionRule(modifyReplacedDay.DateToReplaceCalculated);
+                    int daysFromEaster = modifyReplacedDay.EasterContext.GetDaysFromCurrentEaster(modifyReplacedDay.DateToReplaceCalculated);
+                    ruleToModify = typiconEntity.GetTriodionRule(daysFromEaster);
                 }
 
                 int priority = modifyReplacedDay.Priority;

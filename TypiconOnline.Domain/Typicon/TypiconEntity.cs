@@ -253,15 +253,15 @@ namespace TypiconOnline.Domain.Typicon
             return TriodionRules.FirstOrDefault(c => c.DaysFromEaster == daysFromEaster);
         }
 
-        public TriodionRule GetTriodionRule(DateTime date)
-        {
-            DateTime easterDate = BookStorage.Instance.Easters.GetCurrentEaster(date.Year);
+        //public TriodionRule GetTriodionRule(DateTime date)
+        //{
+        //    DateTime easterDate = BookStorage.Instance.Easters.GetCurrentEaster(date.Year);
 
-            //вычитаем из даты, потому как неверно считает, если время оставить
-            int daysFromEaster = date.Date.Subtract(easterDate.Date).Days;
+        //    //вычитаем из даты, потому как неверно считает, если время оставить
+        //    int daysFromEaster = date.Date.Subtract(easterDate.Date).Days;
 
-            return TriodionRules.FirstOrDefault(c => c.DaysFromEaster == daysFromEaster);
-        }
+        //    return TriodionRules.FirstOrDefault(c => c.DaysFromEaster == daysFromEaster);
+        //}
 
         public CommonRule GetCommonRule(Func<CommonRule, bool> predicate)
         {

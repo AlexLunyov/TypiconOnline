@@ -24,5 +24,13 @@ namespace TypiconOnline.Domain.Books.Easter
 
             return easter.Date;
         }
+
+        public int GetDaysFromCurrentEaster(DateTime date)
+        {
+            DateTime easterDate = GetCurrentEaster(date.Year);
+
+            //вычитаем из даты, потому как неверно считает, если время оставить
+            return date.Date.Subtract(easterDate.Date).Days;
+        }
     }
 }

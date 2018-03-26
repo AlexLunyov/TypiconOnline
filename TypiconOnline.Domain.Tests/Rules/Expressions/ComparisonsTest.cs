@@ -47,7 +47,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         [Test]
         public void Rules_Expressions_More_False()
         {
-            BookStorage.Instance = BookStorageFactory.Create();
+            //BookStorage.Instance = BookStorageFactory.Create();
 
             string xmlString = @"<more>
                                     <int>2</int>

@@ -71,5 +71,10 @@ namespace TypiconMigrationTool.Tests
             //TODO: 10/10/2017 закомментировал, потому как поменялся функционал 
             //EasterStorage.Instance.EasterDays = easters;
         }
+
+        public int GetDaysFromCurrentEaster(DateTime date)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

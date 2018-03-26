@@ -70,18 +70,12 @@ namespace TypiconOnline.WinServices.Books
         //    return date;
         //}
 
-        public static EasterCacheStorage Instance
+        public int GetDaysFromCurrentEaster(DateTime date)
         {
-            get { return Nested.instance; }
-        }
+            DateTime easterDate = GetCurrentEaster(date.Year);
 
-        private class Nested
-        {
-            static Nested()
-            {
-            }
-
-            internal static readonly EasterCacheStorage instance = new EasterCacheStorage();
+            //вычитаем из даты, потому как неверно считает, если время оставить
+            return date.Date.Subtract(easterDate.Date).Days;
         }
     }
 }

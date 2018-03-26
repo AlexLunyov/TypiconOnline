@@ -26,7 +26,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         public void YmnosStructureRule_FromRealDB()
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-            BookStorage.Instance = BookStorageFactory.Create();
+            //BookStorage.Instance = BookStorageFactory.Create();
             GetTypiconEntityResponse resp = new TypiconEntityService(_unitOfWork).GetTypiconEntity(1);
             TypiconEntity typiconEntity = resp.TypiconEntity;
 
@@ -49,7 +49,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             handler.Settings.DayWorships = rule.DayWorships;
             handler.Settings.Date = date;
 
-            OktoikhDay oktoikhDay = BookStorage.Instance.Oktoikh.Get(date);
+            var bookStorage = BookStorageFactory.Create();
+
+            OktoikhDay oktoikhDay = bookStorage.Oktoikh.Get(date);
 
             handler.Settings.OktoikhDay = oktoikhDay;
 

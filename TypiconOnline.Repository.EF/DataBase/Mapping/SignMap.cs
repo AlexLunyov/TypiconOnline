@@ -29,7 +29,7 @@ namespace TypiconOnline.Repository.EF.DataBase.Mapping
             HasOptional(e => e.Template).
                 WithMany().WillCascadeOnDelete(false);
 
-            Property(c => c.Number).IsRequired();
+            //Property(c => c.Number).IsRequired();
 
             Property(c => c.Priority).IsRequired();
 

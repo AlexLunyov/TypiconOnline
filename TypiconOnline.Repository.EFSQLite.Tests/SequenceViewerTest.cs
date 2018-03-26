@@ -21,7 +21,7 @@ namespace TypiconOnline.Repository.EFSQLite.Tests
             string path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"Data\SQLiteDB.db");
             EFSQLiteUnitOfWork unitOfWork = new EFSQLiteUnitOfWork(path);
 
-            BookStorage.Instance = BookStorageFactory.Create(unitOfWork);
+            //BookStorage.Instance = BookStorageFactory.Create(unitOfWork);
 
             ISequenceViewer viewer = new BypassSequenceViewer(unitOfWork);
 
@@ -37,7 +37,7 @@ namespace TypiconOnline.Repository.EFSQLite.Tests
             string path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"Data\SQLiteDB.db");
             EFSQLiteUnitOfWork unitOfWork = new EFSQLiteUnitOfWork(path);
 
-            BookStorage.Instance = BookStorageFactory.Create(unitOfWork);
+            //BookStorage.Instance = BookStorageFactory.Create(unitOfWork);
 
             ISequenceViewer viewer = new BypassSequenceViewer(unitOfWork);
 

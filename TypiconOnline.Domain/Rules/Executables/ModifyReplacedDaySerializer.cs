@@ -17,7 +17,7 @@ namespace TypiconOnline.Domain.Rules.Executables
             ElementNames = new string[] { RuleConstants.ModifyReplacedDayNodeName };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d) => new ModifyReplacedDay(d.GetElementName());
+        protected override RuleElement CreateObject(XmlDescriptor d) => new ModifyReplacedDay(d.GetElementName(), SerializerRoot.BookStorage.Easters);
 
         protected override void FillObject(XmlDescriptor d, RuleElement element)
         {

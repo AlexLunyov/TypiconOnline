@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Handlers;
 
@@ -11,11 +12,16 @@ namespace TypiconOnline.Domain.Rules.Executables
 {
     public class ModifyReplacedDay : ModifyDay
     {
-        public ModifyReplacedDay(string name) : base(name) { }
+        public ModifyReplacedDay(string name, IEasterContext context) : base(name)
+        {
+            EasterContext = context ?? throw new ArgumentNullException("IEasterContext");
+        }
 
         #region Properties
 
         public KindOfReplacedDay Kind { get; set; }
+
+        public IEasterContext EasterContext { get; }
 
         /// <summary>
         /// Дата, по которой будет совершаться поиск правила для модификации

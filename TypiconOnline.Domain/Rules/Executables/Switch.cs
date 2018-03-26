@@ -65,7 +65,7 @@ namespace TypiconOnline.Domain.Rules.Executables
         {
             if (Expression == null)
             {
-                AddBrokenConstraint(SwitchBusinessBusinessConstraint.ConditionRequired, ElementName);
+                AddBrokenConstraint(SwitchBusinessConstraint.ConditionRequired, ElementName);
             }
             else
             {
@@ -86,7 +86,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 
                 if (Expression?.ExpressionType != caseElement.ExpressionType)
                 {
-                    AddBrokenConstraint(SwitchBusinessBusinessConstraint.ConditionsTypeMismatch, ElementName);
+                    AddBrokenConstraint(SwitchBusinessConstraint.ConditionsTypeMismatch, ElementName);
                 }
             }
 

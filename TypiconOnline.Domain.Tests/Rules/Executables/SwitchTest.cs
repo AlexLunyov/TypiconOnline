@@ -50,7 +50,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Executables
         [Test]
         public void Rules_Executables_Switch_DimitrySaturday()
         {
-            BookStorage.Instance = BookStorageFactory.Create();
+            //BookStorage.Instance = BookStorageFactory.Create();
 
             string xmlString = @"<rule>
 	                                <switch>

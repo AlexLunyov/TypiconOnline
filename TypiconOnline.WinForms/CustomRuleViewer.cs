@@ -53,7 +53,7 @@ namespace TypiconOnline.WinForms
 
             typiconEntity = response.TypiconEntity;
 
-            BookStorage.Instance = new BookStorage(
+            var bookStorage = new BookStorage(
                 container.With(unitOfWork).GetInstance<IEvangelionContext>(),
                 container.With(unitOfWork).GetInstance<IApostolContext>(),
                 container.With(unitOfWork).GetInstance<IOldTestamentContext>(),
@@ -63,7 +63,7 @@ namespace TypiconOnline.WinForms
                 container.With(unitOfWork).GetInstance<IEasterContext>(),
                 container.With(unitOfWork).GetInstance<IKatavasiaContext>());
 
-            IRuleSerializerRoot serializerRoot = container.With(BookStorage.Instance).GetInstance<IRuleSerializerRoot>();
+            IRuleSerializerRoot serializerRoot = container.With(bookStorage).GetInstance<IRuleSerializerRoot>();
             settingsFactory = new CustomRuleSettingsFactory();
 
             scheduleService = container.With(settingsFactory).With(serializerRoot).GetInstance<IScheduleService>();

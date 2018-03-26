@@ -42,6 +42,7 @@ namespace TypiconOnline.WinForms
         //private ScheduleHandling.ScheduleHandler _sh = null;
         private IUnitOfWork _unitOfWork;
         private IScheduleService _scheduleService;
+        BookStorage _bookStorage;
         TypiconEntity _typiconEntity;
         ITypiconEntityService _typiconEntityService;
         IDocxTemplateService _docxTemplateService;
@@ -70,7 +71,7 @@ namespace TypiconOnline.WinForms
 
             _typiconEntity = response.TypiconEntity;
 
-            BookStorage.Instance = new BookStorage(
+            _bookStorage = new BookStorage(
                 container.With(_unitOfWork).GetInstance<IEvangelionContext>(),
                 container.With(_unitOfWork).GetInstance<IApostolContext>(),
                 container.With(_unitOfWork).GetInstance<IOldTestamentContext>(),
@@ -82,12 +83,12 @@ namespace TypiconOnline.WinForms
 
             //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
-            IRuleSerializerRoot serializerRoot = container.With(BookStorage.Instance).GetInstance<IRuleSerializerRoot>();
+            IRuleSerializerRoot serializerRoot = container.With(_bookStorage).GetInstance<IRuleSerializerRoot>();
             var settingsFactory = container.GetInstance<IRuleHandlerSettingsFactory>();
 
             _scheduleService = container.With(settingsFactory).With(serializerRoot).GetInstance<IScheduleService>();
 
-            _docxTemplateService = container.With(BookStorage.Instance.Oktoikh).GetInstance<IDocxTemplateService>();
+            _docxTemplateService = container.With(_bookStorage.Oktoikh).GetInstance<IDocxTemplateService>();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -188,7 +189,7 @@ namespace TypiconOnline.WinForms
         {
             DateTime date = monthCalendarXML.SelectionRange.Start;
 
-            labelNextScheduleWeek.Text = OktoikhCalculator.GetSundayName(date/*_selectedDate*/);
+            //labelNextScheduleWeek.Text = OktoikhCalculator.GetSundayName(date/*_selectedDate*/);
 
             while (monthCalendarXML.SelectionStart.DayOfWeek != DayOfWeek.Monday)
             {
@@ -247,17 +248,17 @@ namespace TypiconOnline.WinForms
 
                         _selectedDate = date.AddDays(1);
 
-                        labelNextScheduleWeek.Text = OktoikhCalculator.GetSundayName(_selectedDate);
+                        //labelNextScheduleWeek.Text = OktoikhCalculator.GetSundayName(_selectedDate);
                     }
                     catch
                     {
                         _selectedDate = DateTime.Today;
-                        labelNextScheduleWeek.Text = OktoikhCalculator.GetSundayName(_selectedDate);
+                        //labelNextScheduleWeek.Text = OktoikhCalculator.GetSundayName(_selectedDate);
                     }
                 }
                 else
                 {
-                    labelNextScheduleWeek.Text = OktoikhCalculator.GetSundayName(_selectedDate);
+                    //labelNextScheduleWeek.Text = OktoikhCalculator.GetSundayName(_selectedDate);
                     _selectedDate = DateTime.Today;
                 }
             }
@@ -463,13 +464,6 @@ namespace TypiconOnline.WinForms
             //}
         }
 
-        private string GetFileName(DateTime date)
-        {
-            string result = textBoxFilePath.Text + "\\";
-            result += _scheduleFileStart + date.ToString("yyyy-MM-dd") + " " + date.AddDays(6).ToString("yyyy-MM-dd") + " " + OktoikhCalculator.GetWeekName(date, true);
-            return result;
-        }
-
         private void CheckEnablingExecuteButton()
         {
             buttonExecute.Enabled = checkBoxDocx.Checked || checkBoxBigDocx.Checked|| checkBoxTxt.Checked;
@@ -578,7 +572,7 @@ namespace TypiconOnline.WinForms
 
             textBoxTesting.Clear();
 
-            DateTime easter = BookStorage.Instance.Easters.GetCurrentEaster(dateTimePickerTesting.Value.Year);
+            DateTime easter = _bookStorage.Easters.GetCurrentEaster(dateTimePickerTesting.Value.Year);
 
             int daysFromEaster = dateTimePickerTesting.Value.Subtract(easter).Days;
 
@@ -606,7 +600,7 @@ namespace TypiconOnline.WinForms
                 return;
             }
 
-            foreach (EasterItem easterItem in BookStorage.Instance.Easters.GetAll())
+            foreach (EasterItem easterItem in _bookStorage.Easters.GetAll())
             {
                 DateTime innerDate = (DateTime.IsLeapYear(easterItem.Date.Year)) 
                     ? new DateTime(easterItem.Date.Year, menologyRule.DateB.Month, menologyRule.DateB.Day) 

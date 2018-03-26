@@ -70,7 +70,7 @@ namespace TypiconOnline.Domain.Books
 
         #region Singletone pattern
 
-        public static BookStorage Instance { get; set; }
+        //public static BookStorage Instance { get; set; }
         //{
         //    get { return Nested.instance; }
         //}

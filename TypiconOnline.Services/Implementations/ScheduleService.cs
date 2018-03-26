@@ -86,7 +86,10 @@ namespace TypiconOnline.Domain.Services
         {
             //заполняем Правила и день Октоиха
             request.MenologyRule = typicon.GetMenologyRule(request.Date);
-            request.TriodionRule = typicon.GetTriodionRule(request.Date);
+
+            int daysFromEaster = _ruleSerializer.BookStorage.Easters.GetDaysFromCurrentEaster(request.Date);
+            request.TriodionRule = typicon.GetTriodionRule(daysFromEaster);
+
             request.ModifiedRule = typicon.GetModifiedRuleHighestPriority(request.Date, _ruleSerializer);
             request.OktoikhDay = _ruleSerializer.BookStorage.Oktoikh.Get(request.Date);
 
@@ -147,7 +150,7 @@ namespace TypiconOnline.Domain.Services
         {
             ScheduleWeek week = new ScheduleWeek() 
             {
-                Name = OktoikhCalculator.GetWeekName(request.Date, false)
+                Name = _ruleSerializer.BookStorage.Oktoikh.GetWeekName(request.Date, false)
             };
 
             GetScheduleDayRequest dayRequest = new GetScheduleDayRequest()

@@ -17,7 +17,7 @@ namespace TypiconOnline.AppServices.Tests
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            BookStorage.Instance = BookStorageFactory.Create();
+            //BookStorage.Instance = BookStorageFactory.Create();
 
             TypiconEntityService service = new TypiconEntityService(_unitOfWork);
 
@@ -33,7 +33,7 @@ namespace TypiconOnline.AppServices.Tests
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            BookStorage.Instance = BookStorageFactory.Create();
+            //BookStorage.Instance = BookStorageFactory.Create();
 
             TypiconEntityService service = new TypiconEntityService(_unitOfWork);
 
@@ -47,7 +47,7 @@ namespace TypiconOnline.AppServices.Tests
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            BookStorage.Instance = BookStorageFactory.Create();
+            //BookStorage.Instance = BookStorageFactory.Create();
 
             TypiconEntityService service = new TypiconEntityService(_unitOfWork);
 

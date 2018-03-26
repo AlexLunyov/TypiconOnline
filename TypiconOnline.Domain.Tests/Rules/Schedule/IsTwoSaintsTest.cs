@@ -23,7 +23,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         public void IsTwoSaints_Test()
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-            BookStorage.Instance = BookStorageFactory.Create();
+            //BookStorage.Instance = BookStorageFactory.Create();
             GetTypiconEntityResponse resp = new TypiconEntityService(_unitOfWork).GetTypiconEntity(1);
             TypiconEntity typiconEntity = resp.TypiconEntity;
 

@@ -31,7 +31,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-            DateTime easterDate = BookStorage.Instance.Easters.GetCurrentEaster(handler.Settings.Date.Year);
+            DateTime easterDate = easterContext.GetCurrentEaster(handler.Settings.Date.Year);
 
             ChildExpression.Interpret(handler);
 

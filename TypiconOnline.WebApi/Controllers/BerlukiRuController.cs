@@ -13,6 +13,7 @@ using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.AppServices.Implementations;
+using System.Text;
 
 namespace TypiconOnline.WebApi.Controllers
 {
@@ -32,12 +33,55 @@ namespace TypiconOnline.WebApi.Controllers
         [HttpGet]
         public ContentResult Index()
         {
-            return new ContentResult
+            try
             {
-                ContentType = "text/html",
-                StatusCode = (int)HttpStatusCode.OK,
-                Content = GetHtmlString()
-            };
+                return Content(GetHtmlString(), "text/html", Encoding.UTF8);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+        }
+
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            try
+            {
+                var response = _typiconEntityService.GetTypiconEntity(1);
+
+                return response.TypiconEntity.Name;
+
+                var date = DateTime.Now;
+
+                if ((date.DayOfWeek == DayOfWeek.Sunday) && (date.Hour > 17))
+                {
+                    date = date.AddDays(1);
+                }
+
+                var weekRequest = new GetScheduleWeekRequest()
+                {
+                    Date = date,
+                    Typicon = response.TypiconEntity,
+                    Handler = new ScheduleHandler(),
+                    CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
+                };
+
+                var weekResponse = _scheduleService.GetScheduleWeek(weekRequest);
+
+                return weekResponse.Week.Name;
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+
+            //var htmlViewer = new HtmlScheduleWeekViewer();
+            //htmlViewer.Execute(weekResponse.Week);
+
+            //string resultString = htmlViewer.ResultString;
+
+            //return resultString;
         }
 
         private string GetHtmlString()
@@ -74,30 +118,5 @@ namespace TypiconOnline.WebApi.Controllers
 
             return resultString;
         }
-
-        // GET api/values/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST api/values
-        //[HttpPost]
-        //public void Post([FromBody]string value)
-        //{
-        //}
-
-        //// PUT api/values/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE api/values/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

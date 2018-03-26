@@ -63,7 +63,6 @@
     <Compile Include="Books\Katavasia\Katavasia.cs" />
     <Compile Include="Books\Katavasia\KatavasiaContext.cs" />
     <Compile Include="Books\Katavasia\KatavasiaBusinessConstraint.cs" />
-    <Compile Include="Books\Oktoikh\OktoikhCalculator.cs" />
     <Compile Include="Books\Oktoikh\OktoikhDayBusinessConstraint.cs" />
     <Compile Include="Books\OldTestament\IOldTestamentContext.cs" />
     <Compile Include="Books\OldTestament\OldTestamentContext.cs" />
@@ -174,7 +173,7 @@
     <Compile Include="Rules\Executables\ModifyDay.cs" />
     <Compile Include="Rules\Executables\ModifyDayBusinessConstraint.cs" />
     <Compile Include="Rules\Executables\ModifyReplacedDay.cs" />
-    <Compile Include="Rules\Executables\IfBusinessBusinessConstraint.cs" />
+    <Compile Include="Rules\Executables\IfBusinessConstraint.cs" />
     <Compile Include="Rules\Expressions\GetDayOfWeekSerializer.cs" />
     <Compile Include="Rules\Expressions\OrSerializer.cs" />
     <Compile Include="Rules\Expressions\AndSerializer.cs" />
@@ -321,7 +320,7 @@
     <Compile Include="Days\TriodionDayBusinessConstraint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\Expressions\DateExpression.cs" />
-    <Compile Include="Rules\Executables\SwitchBusinessBusinessConstraint.cs" />
+    <Compile Include="Rules\Executables\SwitchBusinessConstraint.cs" />
     <Compile Include="Rules\Executables\ExecContainerBusinessConstraint.cs" />
     <Compile Include="Rules\Executables\ExecContainer.cs" />
     <Compile Include="Rules\Executables\RuleExecutable.cs" />

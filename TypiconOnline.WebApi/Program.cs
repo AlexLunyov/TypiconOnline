@@ -14,7 +14,18 @@ namespace TypiconOnline.WebApi
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            var host = new WebHostBuilder()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
+                .UseStartup<Startup>()
+                //
+                .UseSetting("detailedErrors", "true")
+                .CaptureStartupErrors(true)
+                .Build();
+
+            host.Run();
+            //BuildWebHost(args).Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

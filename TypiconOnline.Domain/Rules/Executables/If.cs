@@ -47,7 +47,7 @@ namespace TypiconOnline.Domain.Rules.Executables
         {
             if (Expression == null)
             {
-                AddBrokenConstraint(IfBusinessBusinessConstraint.ConditionRequired, ElementName);
+                AddBrokenConstraint(IfBusinessConstraint.ConditionRequired, ElementName);
             }
             else
             {
@@ -60,7 +60,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 
             if (ThenElement == null)
             {
-                AddBrokenConstraint(IfBusinessBusinessConstraint.ThenRequired, ElementName);
+                AddBrokenConstraint(IfBusinessConstraint.ThenRequired, ElementName);
             }
             else
             {

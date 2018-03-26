@@ -58,6 +58,8 @@ namespace TypiconOnline.WebApi
             services.AddTransient<IScheduleService, ScheduleService>();
             services.AddTransient<IRuleSerializerRoot, RuleSerializerRoot>();
             services.AddTransient<BookStorage>();
+
+
         }
     }
 }

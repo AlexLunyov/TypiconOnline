@@ -24,7 +24,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Handlers
         {
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            BookStorage.Instance = BookStorageFactory.Create();
+            //BookStorage.Instance = BookStorageFactory.Create();
 
             TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
 

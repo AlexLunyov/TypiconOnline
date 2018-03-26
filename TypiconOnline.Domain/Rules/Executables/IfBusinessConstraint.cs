@@ -8,10 +8,9 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Executables
 {
-    public class SwitchBusinessBusinessConstraint
+    public class IfBusinessConstraint
     {
         public static readonly BusinessConstraint ConditionRequired = new BusinessConstraint("Должно быть определено условие.");
-        public static readonly BusinessConstraint CaseRequired = new BusinessConstraint("Должно быть определено хотя бы одно значение выбора.");
-        public static readonly BusinessConstraint ConditionsTypeMismatch = new BusinessConstraint("Условие и значения должны быть одного типа.");
+        public static readonly BusinessConstraint ThenRequired = new BusinessConstraint("Должно быть определено действие, в случае удовлетворения условию.");
     }
 }

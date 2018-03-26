@@ -24,7 +24,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             //находим первый попавшийся MenologyRule
             EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-            BookStorage.Instance = BookStorageFactory.Create();
+            //BookStorage.Instance = BookStorageFactory.Create();
             GetTypiconEntityResponse resp = new TypiconEntityService(_unitOfWork).GetTypiconEntity(1);
             TypiconEntity typiconEntity = resp.TypiconEntity;
 
