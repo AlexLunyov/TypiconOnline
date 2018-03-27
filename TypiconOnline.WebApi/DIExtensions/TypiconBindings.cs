@@ -20,6 +20,7 @@ using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.AppServices.Standard.Caching;
 using TypiconOnline.AppServices.Standard.Configuration;
 using Microsoft.Extensions.Caching.Memory;
+using TypiconOnline.AppServices.Caching;
 
 namespace TypiconOnline.WebApi.DIExtensions
 {
@@ -28,12 +29,12 @@ namespace TypiconOnline.WebApi.DIExtensions
         public static void BindTypiconServices(this IKernel kernel, IConfiguration configuration)
         {
             //Настройки для использования SQLite
-            string con = configuration.GetConnectionString("DBTypicon");
-            kernel.Bind<IUnitOfWork>().To<SQLiteUnitOfWork>().WithConstructorArgument("connection", con);
+            //string con = configuration.GetConnectionString("DBTypicon");
+            //kernel.Bind<IUnitOfWork>().To<SQLiteUnitOfWork>().WithConstructorArgument("connection", con);
 
             //Настройки для использования SqlServer
-            //string con = configuration.GetConnectionString("MSSql");
-            //kernel.Bind<IUnitOfWork>().To<MSSqlUnitOfWork>().WithConstructorArgument("connection", con);
+            string con = configuration.GetConnectionString("MSSql");
+            kernel.Bind<IUnitOfWork>().To<MSSqlUnitOfWork>().WithConstructorArgument("connection", con);
 
             //MemoryCache
             kernel.Bind<IMemoryCache>().To<MemoryCache>()
@@ -42,6 +43,8 @@ namespace TypiconOnline.WebApi.DIExtensions
 
             kernel.Bind<ICacheStorage>().To<MemoryCacheStorage>();
             kernel.Bind<IConfigurationRepository>().To<ConfigurationRepository>().WithConstructorArgument("configuration", configuration);
+
+
             kernel.Bind<ITypiconEntityService>().To<CachingTypiconEntityService>();
             kernel.Bind<ITypiconEntityService>().To<TypiconEntityService>().WhenInjectedInto<CachingTypiconEntityService>();
 
@@ -54,7 +57,10 @@ namespace TypiconOnline.WebApi.DIExtensions
             kernel.Bind<IEasterContext>().To<EasterContext>();
             kernel.Bind<IKatavasiaContext>().To<KatavasiaContext>();
             kernel.Bind<IRuleHandlerSettingsFactory>().To<RuleHandlerSettingsFactory>();
-            kernel.Bind<IScheduleService>().To<ScheduleService>();
+
+            kernel.Bind<IScheduleService>().To<CachingScheduleService>();
+            kernel.Bind<IScheduleService>().To<ScheduleService>().WhenInjectedInto<CachingScheduleService>();
+
             kernel.Bind<IRuleSerializerRoot>().To<RuleSerializerRoot>();
 
         }

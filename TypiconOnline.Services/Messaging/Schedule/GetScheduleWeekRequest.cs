@@ -8,12 +8,15 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
 {
     public class GetScheduleWeekRequest : GetScheduleDayRequest
     {
-        
+        /// <summary>
+        /// Дата всегда - понедельник. Если вводим другую - вычитает дни до ближайшего понедельника.
+        /// </summary>
         public override DateTime Date
         {
+            
             get
             {
-                return base.Date;
+                return base.Date.Date;
             }
 
             set
