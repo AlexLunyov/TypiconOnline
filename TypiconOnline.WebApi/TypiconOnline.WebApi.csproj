@@ -20,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TypiconOnline.Repository.EFSQLite\TypiconOnline.Repository.EFSQLite.csproj" />
+    <ProjectReference Include="..\TypiconOnline.AppServices.Standard\TypiconOnline.AppServices.Standard.csproj" />
+    <ProjectReference Include="..\TypiconOnline.Repository.EFCore\TypiconOnline.Repository.EFCore.csproj" />
     <ProjectReference Include="..\TypiconOnline.Services\TypiconOnline.AppServices.csproj" />
   </ItemGroup>
 

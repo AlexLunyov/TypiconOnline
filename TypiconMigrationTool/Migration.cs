@@ -74,7 +74,7 @@ namespace TypiconMigrationTool
             //    _unitOfWork.Repository<TriodionDay>().Delete(element);
             //}
 
-            _unitOfWork.Commit();
+            _unitOfWork.SaveChanges();
         }
 
         private void Migrate()
@@ -230,7 +230,7 @@ namespace TypiconMigrationTool
                 Timer timer = new Timer();
                 timer.Start();
 
-                _unitOfWork.Commit();
+                _unitOfWork.SaveChanges();
 
                 Console.WriteLine("Success.");
                 timer.Stop();

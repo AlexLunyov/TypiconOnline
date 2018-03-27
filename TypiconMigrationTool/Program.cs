@@ -19,7 +19,8 @@ using System.IO;
 using System.Xml.Serialization;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Repository.EF;
-using TypiconOnline.Repository.EFSQLite;
+using System.Configuration;
+using TypiconOnline.Repository.EFCore;
 
 namespace TypiconMigrationTool
 {
@@ -44,19 +45,19 @@ namespace TypiconMigrationTool
                 switch (info.KeyChar)
                 {
                     case '1':
-                        var ef = new EFUnitOfWork();
+                        var ef = GetMSSqlUnitOfWork();
                         Migrate(ef);
                         break;
                     case '2':
-                        var sqlite = new EFSQLiteUnitOfWork(@"data\SQLiteDB.db");
+                        var sqlite = new SQLiteUnitOfWork(@"data\SQLiteDB.db");
                         Migrate(sqlite);
                         break;
                     case '3':
-                        ef = new EFUnitOfWork();
+                        ef = GetMSSqlUnitOfWork();
                         TestDate(ef);
                         break;
                     case '4':
-                        ef = new EFUnitOfWork();
+                        ef = GetMSSqlUnitOfWork();
                         TestBlagoveshenie(ef);
                         break;
                     case '5':
@@ -66,6 +67,11 @@ namespace TypiconMigrationTool
                         TestEsperinos();
                         break;
                 }
+
+                IUnitOfWork GetMSSqlUnitOfWork()
+                {
+                    return new MSSqlUnitOfWork(ConfigurationManager.ConnectionStrings["DBTypicon"].ConnectionString);
+                };
             }
 
             

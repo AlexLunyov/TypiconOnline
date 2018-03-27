@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.Typicon.Modifications
 
         public virtual int? SignNumber { get; set; }
 
-        public virtual DayWorshipsFilter Filter { get; set; }
+        public virtual DayWorshipsFilter Filter { get; set; } = new DayWorshipsFilter();
 
         /// <summary>
         /// Список служб, отфильтрованный согласно настройкам ModifiedRule

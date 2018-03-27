@@ -116,6 +116,8 @@ namespace TypiconOnline.WebApi.Controllers
             htmlViewer.Execute(weekResponse.Week);
             resultString += htmlViewer.ResultString;
 
+            _typiconEntityService.UpdateTypiconEntity(new UpdateTypiconEntityRequest() { TypiconEntity = response.TypiconEntity });
+
             return resultString;
         }
     }

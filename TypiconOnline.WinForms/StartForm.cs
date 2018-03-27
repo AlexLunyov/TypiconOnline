@@ -287,7 +287,7 @@ namespace TypiconOnline.WinForms
 
                 GetScheduleWeekResponse weekResponse = _scheduleService.GetScheduleWeek(weekRequest);
 
-                _unitOfWork.Commit();
+                _unitOfWork.SaveChanges();
 
                 //string messageString = "";
 
@@ -568,7 +568,7 @@ namespace TypiconOnline.WinForms
 
             GetScheduleDayResponse dayResponse = _scheduleService.GetScheduleDay(dayRequest);
 
-            _unitOfWork.Commit();
+            _unitOfWork.SaveChanges();
 
             textBoxTesting.Clear();
 

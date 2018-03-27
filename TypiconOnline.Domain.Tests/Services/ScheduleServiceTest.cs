@@ -43,7 +43,7 @@ namespace TypiconOnline.Domain.Tests.Services
 
             GetScheduleDayResponse response = scheduleService.GetScheduleDay(request);
 
-            _unitOfWork.Commit();
+            _unitOfWork.SaveChanges();
 
             Assert.AreEqual(3, response.Day.Schedule.Count);
 

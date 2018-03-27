@@ -4,7 +4,7 @@ using TypiconOnline.Repository.EF;
 using StructureMap;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Repository.EFSQLite;
+using TypiconOnline.Repository.EFCore;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.Domain.Books.Evangelion;
@@ -41,7 +41,7 @@ namespace TypiconMigrationTool
                     scan.AssemblyContainingType<TypiconEntity>();
                     scan.AssemblyContainingType<IAggregateRoot>();
                     scan.AssemblyContainingType<EFUnitOfWork>();
-                    scan.AssemblyContainingType<EFSQLiteUnitOfWork>();
+                    scan.AssemblyContainingType<SQLiteUnitOfWork>();
                     scan.WithDefaultConventions();
                 });
                 x.For<IUnitOfWork>().Use<EFUnitOfWork>().SelectConstructor(() => new EFUnitOfWork()).Singleton();

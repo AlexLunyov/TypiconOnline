@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Infrastructure.Common.UnitOfWork
@@ -10,6 +11,7 @@ namespace TypiconOnline.Infrastructure.Common.UnitOfWork
     {
         IRepository<AggregateType> Repository<AggregateType>() where AggregateType : class, IAggregateRoot;
 
-        void Commit();
+        void SaveChanges();
+        Task<int> SaveChangesAsync();
     }
 }

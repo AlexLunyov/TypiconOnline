@@ -63,7 +63,7 @@ namespace TypiconOnline.Repository.EF
 
         #endregion
 
-        public void Commit()
+        public void SaveChanges()
         {
             _dbContext.SaveChanges();
         }
@@ -79,6 +79,11 @@ namespace TypiconOnline.Repository.EF
             IRepository<AggregateType> repo = new Repository<AggregateType>(_dbContext);
             repositories.Add(typeof(AggregateType), repo);
             return repo;
+        }
+
+        public Task<int> SaveChangesAsync()
+        {
+            throw new NotImplementedException();
         }
 
         //public virtual void Dispose(bool disposing)

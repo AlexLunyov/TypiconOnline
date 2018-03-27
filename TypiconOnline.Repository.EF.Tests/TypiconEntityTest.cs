@@ -44,11 +44,11 @@ namespace TypiconOnline.Repository.EF.Tests
 
             _unitOfWork.Repository<TypiconEntity>().Insert(typiconEntity);
 
-            _unitOfWork.Commit();
+            _unitOfWork.SaveChanges();
 
             _unitOfWork.Repository<TypiconEntity>().Delete(typiconEntity);
 
-            _unitOfWork.Commit();
+            _unitOfWork.SaveChanges();
 
             Assert.Pass("Deleted.");
         }

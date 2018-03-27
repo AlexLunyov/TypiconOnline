@@ -76,7 +76,7 @@ namespace TypiconOnline.AppServices.Implementations
             });
 
 
-            _unitOfWork.Commit();
+            _unitOfWork.SaveChanges();
 
             HtmlInnerScheduleWeekViewer viewer = new HtmlInnerScheduleWeekViewer();
 

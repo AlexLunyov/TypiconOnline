@@ -19,10 +19,13 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Services;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
-using TypiconOnline.Repository.EFSQLite;
+using TypiconOnline.Repository.EFCore;
 
 namespace TypiconOnline.WebApi
 {
+    /// <summary>
+    /// Не используется. Оставлен на всякий случай в качестве примера использования стандартных средств DI
+    /// </summary>
     public static class DIExtension
     {
         public static void AddTypiconOnlineService(this IServiceCollection services)
@@ -44,7 +47,7 @@ namespace TypiconOnline.WebApi
             //kernel.Bind<IScheduleService>().To<ScheduleService>();
             //kernel.Bind<IRuleSerializerRoot>().To<RuleSerializerRoot>();
 
-            services.AddTransient<IUnitOfWork, EFSQLiteUnitOfWork>();
+            services.AddTransient<IUnitOfWork, SQLiteUnitOfWork>();
             services.AddTransient<ITypiconEntityService, TypiconEntityService>();
             services.AddTransient<IEvangelionContext, EvangelionContext>();
             services.AddTransient<IApostolContext, ApostolContext>();

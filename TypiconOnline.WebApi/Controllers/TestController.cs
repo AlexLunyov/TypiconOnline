@@ -8,8 +8,10 @@ using Ninject;
 using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Repository.EFSQLite;
+using TypiconOnline.Repository.EFCore;
 using TypiconOnline.AppServices.Implementations;
+using System.Globalization;
+using Microsoft.Extensions.Caching.Memory;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,19 +20,20 @@ namespace TypiconOnline.WebApi.Controllers
     [Route("api/[controller]")]
     public class TestController : Controller
     {
+        IRuleSerializerRoot _ruleSerializer;
+        IMemoryCache _cache;
+
+        public TestController(IRuleSerializerRoot ruleSerializer, IMemoryCache cache)
+        {
+            _ruleSerializer = ruleSerializer ?? throw new ArgumentNullException("IRuleSerializerRoot in TestController");
+            _cache = cache ?? throw new ArgumentNullException("cache");
+        }
+
         // GET: api/<controller>
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            var uof = new EFSQLiteUnitOfWork("Data\\SQLiteDB.db");
-
-            var typicon = uof.Repository<TypiconEntity>().Get(c => c.Id == 1);
-
-            IKernel kernel = new StandardKernel();
-
-            var ruleSerializer = kernel.Get<IRuleSerializerRoot>();
-
-            var rule = typicon.GetModifiedRuleHighestPriority(DateTime.Now, ruleSerializer);
+            var uof = new SQLiteUnitOfWork("Data\\SQLiteDB.db");
 
             var easters = uof.Repository<EasterItem>().GetAll();
 
@@ -39,11 +42,24 @@ namespace TypiconOnline.WebApi.Controllers
             return arr;
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET api/<controller>/2015-05-13
+        [HttpGet("{str}")]
+        public string Get(string str)
         {
-            return Directory.GetCurrentDirectory();
+            if (DateTime.TryParseExact(str, "yyyy-MM-dd", new CultureInfo("ru-RU"), DateTimeStyles.None, out DateTime date))
+            {
+                var uof = new SQLiteUnitOfWork("Data\\SQLiteDB.db");
+
+                var typicon = uof.Repository<TypiconEntity>().Get(c => c.Id == 1);
+
+                var rule = typicon.GetModifiedRuleHighestPriority(date, _ruleSerializer);
+
+                return rule.RuleEntity.Name;
+            }
+            else
+            {
+                return "Измененное Правило отсутствует";
+            }
         }
 
         // POST api/<controller>

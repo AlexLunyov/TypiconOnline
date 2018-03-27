@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -61,7 +62,7 @@ namespace TypiconOnline.AppServices.Implementations
                 //    _unitOfWork.Repository<ModifiedYear>().Delete(year);
                 //}
 
-                _unitOfWork.Commit();
+                _unitOfWork.SaveChanges();
             }
         }
 
@@ -152,7 +153,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 ReloadCommonRules(response.TypiconEntity, folderPath);
 
-                _unitOfWork.Commit();
+                _unitOfWork.SaveChanges();
             }
         }
 
@@ -164,23 +165,23 @@ namespace TypiconOnline.AppServices.Implementations
 
             IEnumerable<(string name, string content)> files = fileReader.ReadAllFromDirectory();
 
-            foreach ((string name, string content) file in files)
+            foreach ((string name, string content) in files)
             {
-                CommonRule commonRule = typiconEntity.GetCommonRule(c => c.Name == file.name);
+                CommonRule commonRule = typiconEntity.GetCommonRule(c => c.Name == name);
 
                 if (commonRule == null)
                 {
                     commonRule = new CommonRule()
                     {
-                        Name = file.name,
-                        RuleDefinition = file.content,
+                        Name = name,
+                        RuleDefinition = content,
                         Owner = typiconEntity
                     };
                     typiconEntity.CommonRules.Add(commonRule);
                 }
                 else
                 {
-                    commonRule.RuleDefinition = file.content;
+                    commonRule.RuleDefinition = content;
                 }
             }
         }
@@ -199,7 +200,20 @@ namespace TypiconOnline.AppServices.Implementations
 
         public UpdateTypiconEntityResponse UpdateTypiconEntity(UpdateTypiconEntityRequest updateTypiconEntityRequest)
         {
-            throw new NotImplementedException();
+            var response = new UpdateTypiconEntityResponse();
+
+            try
+            {
+                _unitOfWork.Repository<TypiconEntity>().Update(updateTypiconEntityRequest.TypiconEntity);
+
+                _unitOfWork.SaveChanges();
+            }
+            catch (SqlException ex)
+            {
+                response.Exception = ex;
+            }
+
+            return response;
         }
 
         public DeleteTypiconEntityResponse DeleteTypiconEntity(DeleteTypiconEntityRequest deleteTypiconEntityRequest)

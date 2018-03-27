@@ -40,13 +40,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypiconOnline.Web", "..\Typ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypiconOnline.Infrastructure.Win", "TypiconOnline.Infrastructure.Win\TypiconOnline.Infrastructure.Win.csproj", "{69CE74B5-F5EE-4057-A342-96533DAA7D9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypiconOnline.Repository.EFSQLite", "TypiconOnline.Repository.EFSQLite\TypiconOnline.Repository.EFSQLite.csproj", "{8ED6DE06-A34B-4775-BCB2-1655C36649CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypiconOnline.Repository.EFCore", "TypiconOnline.Repository.EFCore\TypiconOnline.Repository.EFCore.csproj", "{8ED6DE06-A34B-4775-BCB2-1655C36649CC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypiconMigrationTool.Core", "TypiconMigrationTool.Core\TypiconMigrationTool.Core.csproj", "{FA89013F-7726-425F-8B59-04DF27F088B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypiconOnline.Repository.EFSQLite.Tests", "TypiconOnline.Repository.EFSQLite.Tests\TypiconOnline.Repository.EFSQLite.Tests.csproj", "{09E59A2B-081D-4ACB-91D7-03AABDB98958}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypiconOnline.Repository.EFCore.Tests", "TypiconOnline.Repository.EFCore.Tests\TypiconOnline.Repository.EFCore.Tests.csproj", "{09E59A2B-081D-4ACB-91D7-03AABDB98958}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypiconOnline.WebApi", "TypiconOnline.WebApi\TypiconOnline.WebApi.csproj", "{68BCBE25-015B-4EDC-8F73-D585DD2D5A47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypiconOnline.WebApi", "TypiconOnline.WebApi\TypiconOnline.WebApi.csproj", "{68BCBE25-015B-4EDC-8F73-D585DD2D5A47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypiconOnline.AppServices.Standard", "TypiconOnline.AppServices.Standard\TypiconOnline.AppServices.Standard.csproj", "{E5888F71-C704-408D-B928-E16C5528607A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -844,6 +846,54 @@ Global
 		{68BCBE25-015B-4EDC-8F73-D585DD2D5A47}.Release|x64.Build.0 = Release|Any CPU
 		{68BCBE25-015B-4EDC-8F73-D585DD2D5A47}.Release|x86.ActiveCfg = Release|Any CPU
 		{68BCBE25-015B-4EDC-8F73-D585DD2D5A47}.Release|x86.Build.0 = Release|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Ad-Hoc|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Ad-Hoc|Any CPU.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Ad-Hoc|ARM.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Ad-Hoc|ARM.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Ad-Hoc|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Ad-Hoc|x64.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Ad-Hoc|x64.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Ad-Hoc|x86.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Ad-Hoc|x86.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.AppStore|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.AppStore|Any CPU.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.AppStore|ARM.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.AppStore|ARM.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.AppStore|iPhone.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.AppStore|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.AppStore|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.AppStore|x64.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.AppStore|x64.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.AppStore|x86.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.AppStore|x86.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Debug|ARM.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Debug|x64.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Debug|x86.Build.0 = Debug|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Release|ARM.ActiveCfg = Release|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Release|ARM.Build.0 = Release|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Release|iPhone.Build.0 = Release|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Release|x64.ActiveCfg = Release|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Release|x64.Build.0 = Release|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Release|x86.ActiveCfg = Release|Any CPU
+		{E5888F71-C704-408D-B928-E16C5528607A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
