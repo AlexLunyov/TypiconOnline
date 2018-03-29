@@ -41,7 +41,7 @@ namespace TypiconMigrationTool
                     scan.AssemblyContainingType<TypiconEntity>();
                     scan.AssemblyContainingType<IAggregateRoot>();
                     scan.AssemblyContainingType<EFUnitOfWork>();
-                    scan.AssemblyContainingType<SQLiteUnitOfWork>();
+                    scan.AssemblyContainingType<UnitOfWork>();
                     scan.WithDefaultConventions();
                 });
                 x.For<IUnitOfWork>().Use<EFUnitOfWork>().SelectConstructor(() => new EFUnitOfWork()).Singleton();

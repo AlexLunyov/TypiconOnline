@@ -544,6 +544,6 @@ namespace TypiconOnline.Domain.Rules
         All = 0,
         ThisDay = 1,
         DayBefore = 2,
-        AstronimicDay = 3
+        AstronomicDay = 3
     }
 }

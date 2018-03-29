@@ -21,6 +21,9 @@ using TypiconOnline.AppServices.Standard.Caching;
 using TypiconOnline.AppServices.Standard.Configuration;
 using Microsoft.Extensions.Caching.Memory;
 using TypiconOnline.AppServices.Caching;
+using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.Infrastructure.Common.Domain;
+using TypiconOnline.Repository.EFCore.Caching;
 
 namespace TypiconOnline.WebApi.DIExtensions
 {
@@ -28,25 +31,37 @@ namespace TypiconOnline.WebApi.DIExtensions
     {
         public static void BindTypiconServices(this IKernel kernel, IConfiguration configuration)
         {
+            //MemoryCache
+            kernel.Bind<IMemoryCache>().To<MemoryCache>()
+                .InSingletonScope()
+                .WithConstructorArgument("optionsAccessor", new MemoryCacheOptions());
+            kernel.Bind<ICacheStorage>().To<MemoryCacheStorage>();
+
+            //Configuration
+            kernel.Bind<IConfigurationRepository>().To<ConfigurationRepository>()
+                .WithConstructorArgument("configuration", configuration);
+
             //Настройки для использования SQLite
             //string con = configuration.GetConnectionString("DBTypicon");
             //kernel.Bind<IUnitOfWork>().To<SQLiteUnitOfWork>().WithConstructorArgument("connection", con);
 
             //Настройки для использования SqlServer
             string con = configuration.GetConnectionString("MSSql");
-            kernel.Bind<IUnitOfWork>().To<MSSqlUnitOfWork>().WithConstructorArgument("connection", con);
-
-            //MemoryCache
-            kernel.Bind<IMemoryCache>().To<MemoryCache>()
+            kernel.Bind<DBContextBase>().To<MSSqlDBContext>()
+                //??????
                 .InSingletonScope()
-                .WithConstructorArgument("optionsAccessor", new MemoryCacheOptions());
+                .WithConstructorArgument("connection", con);
 
-            kernel.Bind<ICacheStorage>().To<MemoryCacheStorage>();
-            kernel.Bind<IConfigurationRepository>().To<ConfigurationRepository>().WithConstructorArgument("configuration", configuration);
+            //RepositoryFactory
+            kernel.Bind<IRepositoryFactory>().To<CachingRepositoryFactory>();
+            kernel.Bind<IRepositoryFactory>().To<RepositoryFactory>().WhenInjectedInto<CachingRepositoryFactory>();
 
+            //UnitOfWork
+            kernel.Bind<IUnitOfWork>().To<UnitOfWork>();
 
-            kernel.Bind<ITypiconEntityService>().To<CachingTypiconEntityService>();
-            kernel.Bind<ITypiconEntityService>().To<TypiconEntityService>().WhenInjectedInto<CachingTypiconEntityService>();
+            kernel.Bind<ITypiconEntityService>().To<TypiconEntityService>();
+            //kernel.Bind<ITypiconEntityService>().To<CachingTypiconEntityService>();
+            //kernel.Bind<ITypiconEntityService>().To<TypiconEntityService>().WhenInjectedInto<CachingTypiconEntityService>();
 
             kernel.Bind<IEvangelionContext>().To<EvangelionContext>();
             kernel.Bind<IApostolContext>().To<ApostolContext>();
@@ -58,8 +73,9 @@ namespace TypiconOnline.WebApi.DIExtensions
             kernel.Bind<IKatavasiaContext>().To<KatavasiaContext>();
             kernel.Bind<IRuleHandlerSettingsFactory>().To<RuleHandlerSettingsFactory>();
 
-            kernel.Bind<IScheduleService>().To<CachingScheduleService>();
-            kernel.Bind<IScheduleService>().To<ScheduleService>().WhenInjectedInto<CachingScheduleService>();
+            kernel.Bind<IScheduleService>().To<ScheduleService>();
+            //kernel.Bind<IScheduleService>().To<CachingScheduleService>();
+            //kernel.Bind<IScheduleService>().To<ScheduleService>().WhenInjectedInto<CachingScheduleService>();
 
             kernel.Bind<IRuleSerializerRoot>().To<RuleSerializerRoot>();
 

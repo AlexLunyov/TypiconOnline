@@ -9,6 +9,7 @@ using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Books;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Repository.EFCore.Tests
 {
@@ -18,8 +19,9 @@ namespace TypiconOnline.Repository.EFCore.Tests
         [Test]
         public void BypassSequenceViewer_Test()
         {
-            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"Data\SQLiteDB.db");
-            SQLiteUnitOfWork unitOfWork = new SQLiteUnitOfWork(path);
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"FileName=Data\SQLiteDB.db");
+            var context = new SQLiteDBContext(path);
+            var unitOfWork = new UnitOfWork(context, new RepositoryFactory(context));
 
             //BookStorage.Instance = BookStorageFactory.Create(unitOfWork);
 
@@ -34,8 +36,9 @@ namespace TypiconOnline.Repository.EFCore.Tests
         [Test]
         public void BypassSequenceViewer_Test2()
         {
-            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"Data\SQLiteDB.db");
-            SQLiteUnitOfWork unitOfWork = new SQLiteUnitOfWork(path);
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"FileName=Data\SQLiteDB.db");
+            var context = new SQLiteDBContext(path);
+            var unitOfWork = new UnitOfWork(context, new RepositoryFactory(context));
 
             //BookStorage.Instance = BookStorageFactory.Create(unitOfWork);
 

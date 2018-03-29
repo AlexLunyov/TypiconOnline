@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.Books.TheotokionApp
     /// <summary>
     /// Элемент из Богородичных приложений Ирмология
     /// </summary>
-    public class TheotokionApp : BookElementBase<Ymnos> 
+    public class TheotokionApp : BookElementBase<Ymnos>, IAggregateRoot
     {
         public virtual PlaceYmnosSource Place { get; set; }
         public virtual int Ihos { get; set; }

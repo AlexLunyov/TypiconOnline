@@ -4,7 +4,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Books.Oktoikh
 {
-    public class OktoikhDay : DayStructureBase
+    public class OktoikhDay : DayStructureBase, IAggregateRoot
     {
         public int Ihos { get; set; }
         public DayOfWeek DayOfWeek { get; set; }

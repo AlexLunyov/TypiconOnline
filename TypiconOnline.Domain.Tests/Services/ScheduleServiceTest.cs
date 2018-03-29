@@ -36,7 +36,7 @@ namespace TypiconOnline.Domain.Tests.Services
                 Date = new DateTime(2018, 5, 21),//DateTime.Today,
                 Handler = new ScheduleHandler(),
                 Typicon = typiconEntity,
-                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };
 
             ScheduleService scheduleService = ScheduleServiceFactory.Create();

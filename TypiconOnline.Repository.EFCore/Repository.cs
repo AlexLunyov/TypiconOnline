@@ -14,25 +14,28 @@ namespace TypiconOnline.Repository.EFCore
 {
     public class Repository<DomainType> : IRepository<DomainType> where DomainType : class, IAggregateRoot
     {
-        private DBContextBase _typiconDBContext = null;
-        DbSet<DomainType> _objectSet;
+        readonly DbSet<DomainType> objectSet;
 
-        public Repository(DBContextBase typiconDBContext)
+        public Repository(DBContextBase dbContext)
         {
-            _typiconDBContext = typiconDBContext;
-            _objectSet = _typiconDBContext.Set<DomainType>();
+            if (dbContext == null) throw new ArgumentNullException("DBContextBase in Repository");
+
+            objectSet = dbContext.Set<DomainType>();
         }
 
-        public IEnumerable<DomainType> GetAll(Expression<Func<DomainType, bool>> predicate = null)
+        public IQueryable<DomainType> GetAll(Expression<Func<DomainType, bool>> predicate = null)
         {
-            IQueryable<DomainType> request = new ClassPropertiesIncluder<DomainType>(_objectSet).GetIncludes();
+            var request = new ClassPropertiesIncluder<DomainType>(objectSet).GetIncludes();
 
             if (predicate != null)
             {
                 request = request.Where(predicate);
             }
 
-            return request.AsNoTracking().AsEnumerable();
+            //TODO: AsNoTracking??
+            // ASNOTracking используется для read-only случаев, т.е. изменения не фиксируются при сохранении
+            //return request.AsNoTracking().AsEnumerable();
+            return request;
         }
 
         public DomainType Get(Expression<Func<DomainType, bool>> predicate)
@@ -42,7 +45,7 @@ namespace TypiconOnline.Repository.EFCore
 
         public void Update(DomainType aggregate)
         {
-            _typiconDBContext.Update(aggregate);
+            objectSet.Update(aggregate);
             //if (_typiconDBContext.Entry(aggregate).State != EntityState.Modified)
             //{
             //    _typiconDBContext.Entry(aggregate).State = EntityState.Modified;
@@ -51,12 +54,12 @@ namespace TypiconOnline.Repository.EFCore
 
         public void Insert(DomainType aggregate)
         {
-            _objectSet.Add(aggregate);
+            objectSet.Add(aggregate);
         }
 
         public void Delete(DomainType aggregate)
         {
-            _objectSet.Remove(aggregate);
+            objectSet.Remove(aggregate);
         }
     }
 }

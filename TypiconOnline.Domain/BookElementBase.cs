@@ -10,7 +10,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain
 {
-    public abstract class BookElementBase<T> : EntityBase<int>, IAggregateRoot, IBookElement<T> where T : DayElementBase
+    public abstract class BookElementBase<T> : EntityBase<int>, IBookElement<T> where T : DayElementBase
     {
         protected T _element;
 

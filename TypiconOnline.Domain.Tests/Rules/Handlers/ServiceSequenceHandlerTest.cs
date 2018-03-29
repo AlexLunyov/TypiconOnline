@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Handlers
                 Date = new DateTime(2018, 5, 21),//DateTime.Today,
                 Handler = new ServiceSequenceHandler(),
                 Typicon = typiconEntity,
-                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };
 
             ScheduleService scheduleService = ScheduleServiceFactory.Create();

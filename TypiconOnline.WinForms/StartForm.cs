@@ -282,7 +282,7 @@ namespace TypiconOnline.WinForms
                     Language = "cs-ru",
                     ThrowExceptionIfInvalid = checkBoxException.Checked,
                     ApplyParameters = CustomParameters,
-                    CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
+                    CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
                 };
 
                 GetScheduleWeekResponse weekResponse = _scheduleService.GetScheduleWeek(weekRequest);
@@ -563,7 +563,7 @@ namespace TypiconOnline.WinForms
                 Date = dateTimePickerTesting.Value,
                 Typicon = _typiconEntity,
                 Handler = new ScheduleHandler(),
-                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };
 
             GetScheduleDayResponse dayResponse = _scheduleService.GetScheduleDay(dayRequest);

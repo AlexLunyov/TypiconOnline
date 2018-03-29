@@ -23,12 +23,12 @@ namespace TypiconOnline.Domain.Services
     public class ScheduleService : IScheduleService
     {
         //ITypiconEntityService _typiconEntityService;
-        IRuleHandlerSettingsFactory _settingsFactory;// = new RuleHandlerSettingsFactory();
+        IRuleHandlerSettingsFactory settingsFactory;// = new RuleHandlerSettingsFactory();
         //IModifiedRuleService _modifiedRuleService;
         //IRuleHandler _ruleHandler;
         //BookStorage _bookStorage;
         IScheduleDayNameComposer nameComposer;
-        IRuleSerializerRoot _ruleSerializer;
+        IRuleSerializerRoot ruleSerializer;
 
         public ScheduleService(/*ITypiconEntityService typiconEntityService
             , */IRuleHandlerSettingsFactory settingsFactory
@@ -38,11 +38,11 @@ namespace TypiconOnline.Domain.Services
             )
         {
             //_typiconEntityService = typiconEntityService ?? throw new ArgumentNullException("ITypiconEntityService");
-            _settingsFactory = settingsFactory ?? throw new ArgumentNullException("IRuleHandlerSettingsFactory");
+            this.settingsFactory = settingsFactory ?? throw new ArgumentNullException("IRuleHandlerSettingsFactory");
             //_modifiedRuleService = modifiedRuleService ?? throw new ArgumentNullException("modifiedRuleService");
-            _ruleSerializer = ruleSerializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
+            this.ruleSerializer = ruleSerializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
 
-            nameComposer = new ScheduleDayNameComposer(_ruleSerializer.BookStorage.Oktoikh);
+            nameComposer = new ScheduleDayNameComposer(this.ruleSerializer.BookStorage.Oktoikh);
 
             //_ruleHandler = ruleHandler ?? throw new ArgumentNullException("IRuleHandler");
         }
@@ -59,18 +59,18 @@ namespace TypiconOnline.Domain.Services
                 Language = request.Language,
                 ApplyParameters = request.ApplyParameters,
                 CheckParameters = request.CheckParameters
-                    .SetModeParam((mode == HandlingMode.AstronimicDay) ? HandlingMode.ThisDay : mode)
+                    .SetModeParam((mode == HandlingMode.AstronomicDay) ? HandlingMode.ThisDay : mode)
             };
 
-            ScheduleDay scheduleDay = GetOrFillScheduleDay(settingsRequest, request.Typicon, request.Handler, request.ConvertSignToHtmlBinding);
+            ScheduleDay scheduleDay = GetOrFillScheduleDay(settingsRequest, request.Typicon, request.Handler);
 
-            if (mode == HandlingMode.AstronimicDay)
+            if (mode == HandlingMode.AstronomicDay)
             {
                 //ищем службы следующего дня с маркером IsDayBefore == true
                 settingsRequest.Date = request.Date.AddDays(1);
                 settingsRequest.CheckParameters = settingsRequest.CheckParameters.SetModeParam(HandlingMode.DayBefore);
 
-                scheduleDay = GetOrFillScheduleDay(settingsRequest, request.Typicon, request.Handler, request.ConvertSignToHtmlBinding, scheduleDay);
+                scheduleDay = GetOrFillScheduleDay(settingsRequest, request.Typicon, request.Handler, scheduleDay);
             }
 
             return new GetScheduleDayResponse()
@@ -82,23 +82,23 @@ namespace TypiconOnline.Domain.Services
         
 
         private ScheduleDay GetOrFillScheduleDay(GetRuleSettingsRequest request, TypiconEntity typicon,
-            ScheduleHandler handler, bool convertSignNumber, ScheduleDay scheduleDay = null)
+            ScheduleHandler handler, ScheduleDay scheduleDay = null)
         {
             //заполняем Правила и день Октоиха
             request.MenologyRule = typicon.GetMenologyRule(request.Date);
 
-            int daysFromEaster = _ruleSerializer.BookStorage.Easters.GetDaysFromCurrentEaster(request.Date);
+            int daysFromEaster = ruleSerializer.BookStorage.Easters.GetDaysFromCurrentEaster(request.Date);
             request.TriodionRule = typicon.GetTriodionRule(daysFromEaster);
 
-            request.ModifiedRule = typicon.GetModifiedRuleHighestPriority(request.Date, _ruleSerializer);
-            request.OktoikhDay = _ruleSerializer.BookStorage.Oktoikh.Get(request.Date);
+            request.ModifiedRule = typicon.GetModifiedRuleHighestPriority(request.Date, ruleSerializer);
+            request.OktoikhDay = ruleSerializer.BookStorage.Oktoikh.Get(request.Date);
 
             //Формируем данные для обработки
-            var settings = _settingsFactory.Create(request);
+            var settings = settingsFactory.Create(request);
 
             handler.Settings = settings;
 
-            settings.Rule.GetRule(_ruleSerializer).Interpret(handler);
+            settings.Rule.GetRule(ruleSerializer).Interpret(handler);
 
             var container = handler.GetResult();
 
@@ -150,7 +150,7 @@ namespace TypiconOnline.Domain.Services
         {
             ScheduleWeek week = new ScheduleWeek() 
             {
-                Name = _ruleSerializer.BookStorage.Oktoikh.GetWeekName(request.Date, false)
+                Name = ruleSerializer.BookStorage.Oktoikh.GetWeekName(request.Date, false)
             };
 
             GetScheduleDayRequest dayRequest = new GetScheduleDayRequest()
@@ -160,7 +160,6 @@ namespace TypiconOnline.Domain.Services
                 Handler = request.Handler,
                 Language = request.Language,
                 ThrowExceptionIfInvalid = request.ThrowExceptionIfInvalid,
-                ConvertSignToHtmlBinding = request.ConvertSignToHtmlBinding,
                 ApplyParameters = request.ApplyParameters,
                 CheckParameters = request.CheckParameters
             };

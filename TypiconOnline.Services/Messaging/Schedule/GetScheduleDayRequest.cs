@@ -18,7 +18,6 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
     {
         public GetScheduleDayRequest()
         {
-            ConvertSignToHtmlBinding = false;
             Language = "cs-ru";
             ThrowExceptionIfInvalid = false;
         }
@@ -32,10 +31,6 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
         /// Язык службы
         /// </summary>
         public string Language { get; set; }
-        /// <summary>
-        /// Признак, конвертировать ли номер знака службы в формат отображения в веб-формах
-        /// </summary>
-        public bool ConvertSignToHtmlBinding { get; set; }
         /// <summary>
         /// Признак, генерировать ли исключение в случае неверного составления правила при его обработке
         /// </summary>

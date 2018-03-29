@@ -35,7 +35,7 @@ namespace TypiconOnline.WebApi.Controllers
         {
             try
             {
-                return Content(GetHtmlString(), "text/html", Encoding.UTF8);
+                return Content(GetHtmlString(DateTime.Now), "text/html", Encoding.UTF8);
             }
             catch (Exception ex)
             {
@@ -43,53 +43,16 @@ namespace TypiconOnline.WebApi.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{date}")]
+        public ContentResult Get(DateTime date)
         {
-            try
-            {
-                var response = _typiconEntityService.GetTypiconEntity(1);
-
-                return response.TypiconEntity.Name;
-
-                var date = DateTime.Now;
-
-                if ((date.DayOfWeek == DayOfWeek.Sunday) && (date.Hour > 17))
-                {
-                    date = date.AddDays(1);
-                }
-
-                var weekRequest = new GetScheduleWeekRequest()
-                {
-                    Date = date,
-                    Typicon = response.TypiconEntity,
-                    Handler = new ScheduleHandler(),
-                    CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
-                };
-
-                var weekResponse = _scheduleService.GetScheduleWeek(weekRequest);
-
-                return weekResponse.Week.Name;
-            }
-            catch (Exception ex)
-            {
-                return ex.ToString();
-            }
-
-            //var htmlViewer = new HtmlScheduleWeekViewer();
-            //htmlViewer.Execute(weekResponse.Week);
-
-            //string resultString = htmlViewer.ResultString;
-
-            //return resultString;
+            return Content(GetHtmlString(date), "text/html", Encoding.UTF8);
         }
 
-        private string GetHtmlString()
+        private string GetHtmlString(DateTime date)
         {
             var response = _typiconEntityService.GetTypiconEntity(1);
-
-            var date = DateTime.Now;
-
+            
             if ((date.DayOfWeek == DayOfWeek.Sunday) && (date.Hour > 17))
             {
                 date = date.AddDays(1);
@@ -100,7 +63,7 @@ namespace TypiconOnline.WebApi.Controllers
                 Date = date,
                 Typicon = response.TypiconEntity,
                 Handler = new ScheduleHandler(),
-                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };
 
             var weekResponse = _scheduleService.GetScheduleWeek(weekRequest);

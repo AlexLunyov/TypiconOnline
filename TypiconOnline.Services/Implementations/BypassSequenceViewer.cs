@@ -72,7 +72,7 @@ namespace TypiconOnline.AppServices.Implementations
                 Typicon = typicon,
                 Handler = new ScheduleHandler(),
                 Language = "cs-ru",
-                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             });
 
 

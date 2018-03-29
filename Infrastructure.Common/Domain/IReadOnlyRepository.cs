@@ -10,6 +10,6 @@ namespace TypiconOnline.Infrastructure.Common.Domain
 	{
 		AggregateType Get(Expression<Func<AggregateType, bool>> predicate);
         //AggregateType Get(int id);
-        IEnumerable<AggregateType> GetAll(Expression<Func<AggregateType, bool>> predicate = null);
+        IQueryable<AggregateType> GetAll(Expression<Func<AggregateType, bool>> predicate = null);
     }
 }

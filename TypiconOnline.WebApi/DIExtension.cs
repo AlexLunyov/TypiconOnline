@@ -47,7 +47,7 @@ namespace TypiconOnline.WebApi
             //kernel.Bind<IScheduleService>().To<ScheduleService>();
             //kernel.Bind<IRuleSerializerRoot>().To<RuleSerializerRoot>();
 
-            services.AddTransient<IUnitOfWork, SQLiteUnitOfWork>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<ITypiconEntityService, TypiconEntityService>();
             services.AddTransient<IEvangelionContext, EvangelionContext>();
             services.AddTransient<IApostolContext, ApostolContext>();
@@ -61,8 +61,6 @@ namespace TypiconOnline.WebApi
             services.AddTransient<IScheduleService, ScheduleService>();
             services.AddTransient<IRuleSerializerRoot, RuleSerializerRoot>();
             services.AddTransient<BookStorage>();
-
-
         }
     }
 }

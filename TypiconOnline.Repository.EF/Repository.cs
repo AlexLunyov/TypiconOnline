@@ -23,14 +23,15 @@ namespace TypiconOnline.Repository.EF
             _objectSet = _typiconDBContext.Set<DomainType>();
         }
 
-        public IEnumerable<DomainType> GetAll(Expression<Func<DomainType, bool>> predicate = null)
+        public IQueryable<DomainType> GetAll(Expression<Func<DomainType, bool>> predicate = null)
         {
             if (predicate != null)
             {
                 return _objectSet.Where(predicate);
             }
 
-            return _objectSet.AsEnumerable();
+            //return _objectSet.AsEnumerable();
+            return _objectSet;
         }
 
         public DomainType Get(Expression<Func<DomainType, bool>> predicate)

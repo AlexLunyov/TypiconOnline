@@ -10,7 +10,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Books.Psalter
 {
-    public class Psalm : BookElementBase<BookReading>, IPsalterElement
+    public class Psalm : BookElementBase<BookReading>, IPsalterElement, IAggregateRoot
     {
         private BookReading reading;
         public Psalm() { }

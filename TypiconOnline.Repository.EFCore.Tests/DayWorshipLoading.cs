@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Repository.EFCore.Tests
 {
@@ -15,10 +16,12 @@ namespace TypiconOnline.Repository.EFCore.Tests
         [Test]
         public void DayWorshipLoading_ItemTexts()
         {
-            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"Data\SQLiteDB.db");
-            SQLiteUnitOfWork unitOfWork = new SQLiteUnitOfWork(path);
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"FileName=Data\SQLiteDB.db");
+            var context = new SQLiteDBContext(path);
+            var unitOfWork = new UnitOfWork(context, new RepositoryFactory(context));
 
-            DayWorship entity = unitOfWork.Repository<DayWorship>().Get(c => c.Id == 155);
+            //TODO: переделать
+            DayWorship entity = null;// unitOfWork.Repository<DayWorship>().Get(c => c.Id == 155);
 
             Assert.IsFalse(entity.WorshipName.IsEmpty);
             Assert.Pass(entity.WorshipName.StringExpression);

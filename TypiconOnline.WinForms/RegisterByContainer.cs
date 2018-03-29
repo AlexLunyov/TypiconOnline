@@ -19,6 +19,7 @@ using TypiconOnline.AppServices.Services;
 using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.WinForms
 {
@@ -38,11 +39,17 @@ namespace TypiconOnline.WinForms
                         scan.AssemblyContainingType<TypiconEntity>();
                         scan.AssemblyContainingType<IAggregateRoot>();
                         scan.AssemblyContainingType<EFUnitOfWork>();
-                        scan.AssemblyContainingType<SQLiteUnitOfWork>();
+                        scan.AssemblyContainingType<UnitOfWork>();
                         scan.AssemblyContainingType<DocxScheduleWeekViewer>(); 
                         scan.WithDefaultConventions();
                     });
-                    x.For<IUnitOfWork>().Use<SQLiteUnitOfWork>().SelectConstructor(() => new SQLiteUnitOfWork()).Singleton();
+                    x.For<DBContextBase>().Use<SQLiteDBContext>().Singleton();
+                    x.For<IRepositoryFactory>().Use<RepositoryFactory>();
+                    //x.ForConcreteType<SQLiteDBContext>().Configure.Singleton();
+                    x.For<IUnitOfWork>().Use<UnitOfWork>()
+                        //.SelectConstructor(() => new UnitOfWork(dbContext))
+                        .Singleton(); 
+                    
                     //x.For<IUnitOfWork>().Use<EFUnitOfWork>().Singleton();
                     x.For<ITypiconEntityService>().Use<TypiconEntityService>();
                     x.For<IEvangelionContext>().Use<EvangelionContext>();

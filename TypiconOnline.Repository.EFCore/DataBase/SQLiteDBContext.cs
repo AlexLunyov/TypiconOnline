@@ -7,21 +7,18 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 {
     public class SQLiteDBContext : DBContextBase
     {
-        private string _databasePath { get; set; }
+        string connectionString;
 
-        //public SQLiteDBContext()
-        //{
-        //    _databasePath = @"Data\SQLiteDB.db";
-        //}
+        public SQLiteDBContext() : this(@"Filename=Data\SQLiteDB.db") { }
 
         public SQLiteDBContext(string connection)
         {
-            _databasePath = connection;
+            connectionString = connection;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite($"Filename={_databasePath}");
+            optionsBuilder.UseSqlite(connectionString);
             //для теста
             optionsBuilder.EnableSensitiveDataLogging();
         }

@@ -43,7 +43,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
                 Date = date,
                 Typicon = typiconEntity,
                 Handler = new ScheduleHandler(),
-                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };
 
             ScheduleService scheduleService = ScheduleServiceFactory.Create();
@@ -81,7 +81,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
                 Date = date,
                 Handler = new ScheduleHandler(),
                 Typicon = typiconEntity,
-                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };
 
             ScheduleService scheduleService = ScheduleServiceFactory.Create();
@@ -94,8 +94,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
                 Date = date,
                 Typicon = typiconEntity,
                 Handler = new ScheduleHandler(),
-                ConvertSignToHtmlBinding = true,
-                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };
 
             GetScheduleDayResponse dayResponse2 = scheduleService.GetScheduleDay(dayRequest2);
@@ -105,7 +104,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
                 Date = date,
                 Typicon = typiconEntity,
                 Handler = new ScheduleHandler(),
-                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronimicDay)
+                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };
 
             GetScheduleWeekResponse weekResponse = scheduleService.GetScheduleWeek(weekRequest);
