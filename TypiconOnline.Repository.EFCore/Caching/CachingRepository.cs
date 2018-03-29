@@ -32,10 +32,12 @@ namespace TypiconOnline.Repository.EFCore.Caching
 
         public DomainType Get(Expression<Func<DomainType, bool>> predicate)
         {
+            //делаем выборку из кешированных данных
             var item = CachedCollection.GetItems(cacheStorage).Where(predicate).FirstOrDefault();
             
             if (item == null)
             {
+                //обращаемся к репозиторию
                 item = repository.Get(predicate);
 
                 if (item != null)
@@ -49,22 +51,44 @@ namespace TypiconOnline.Repository.EFCore.Caching
 
         public IQueryable<DomainType> GetAll(Expression<Func<DomainType, bool>> predicate = null)
         {
-            return repository.GetAll(predicate);
+            //находим сущности в кеше
+            var cachedItems = (predicate != null)
+                ? CachedCollection.GetItems(cacheStorage).Where(predicate).AsEnumerable()
+                : CachedCollection.GetItems(cacheStorage).AsEnumerable();
+
+            //делаем выборку из репозитория, исключая те сущности, что уже есть в кеше
+            var repoItems = cachedItems.Union((predicate == null) ? repository.GetAll() : repository.GetAll(predicate));
+
+            //сохраняем выборку в кеше
+            StoreItems(repoItems);
+
+            return repoItems.AsQueryable();
         }
 
         public void Insert(DomainType aggregate)
         {
             repository.Insert(aggregate);
+
+            StoreItem(aggregate);
         }
 
         public void Update(DomainType aggregate)
         {
             repository.Update(aggregate);
+
+            StoreItem(aggregate);
         }
 
         public void Delete(DomainType aggregate)
         {
             repository.Delete(aggregate);
+
+            //удаляем указатель
+            CachedCollection.RemovePointer(GetItemCachedKey(aggregate));
+            Store(CachedCollectionKey, cachedCollection);
+
+            //удаляем из кеша сам объект
+            cacheStorage.Remove(GetItemCachedKey(aggregate));
         }
 
         private int CacheDurationTime
@@ -95,6 +119,8 @@ namespace TypiconOnline.Repository.EFCore.Caching
 
         private string CachedCollectionKey => $"{KEY_COLLECTION}:{typeof(DomainType).Name}";
 
+        private string GetItemCachedKey(DomainType item) => $"{KEY_GET}:{typeof(DomainType).Name}:{item.GetHashCode()}";
+
         private void Store(string key, object entity)
         {
             cacheStorage.Store(key, entity, TimeSpan.FromMinutes(CacheDurationTime));
@@ -102,12 +128,22 @@ namespace TypiconOnline.Repository.EFCore.Caching
 
         private void StoreItem(DomainType item)
         {
-            string key = $"{KEY_GET}:{typeof(DomainType).Name}:{item.GetHashCode()}";
+            //сохраняем в кеш объект
+            Store(GetItemCachedKey(item), item);
 
-            CachedCollection.AddPointer(key, TimeSpan.FromMinutes(CacheDurationTime));
-
-            Store(key, item);
+            //добавялем указатель
+            CachedCollection.AddPointer(GetItemCachedKey(item), TimeSpan.FromMinutes(CacheDurationTime));
+            
+            //сохраняем в кеш коллекцию
             Store(CachedCollectionKey, cachedCollection);
+        }
+
+        private void StoreItems(IEnumerable<DomainType> items)
+        {
+            foreach (var item in items)
+            {
+                StoreItem(item);
+            }
         }
     }
 }
