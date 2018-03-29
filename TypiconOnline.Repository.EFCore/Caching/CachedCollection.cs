@@ -24,6 +24,14 @@ namespace TypiconOnline.Repository.EFCore.Caching
             }
         }
 
+        public void RemovePointer(string key)
+        {
+            if (pointers.ContainsKey(key))
+            {
+                pointers.Remove(key);
+            }
+        }
+
         public IQueryable<T> GetItems(ICacheStorage cacheStorage)
         {
             ClearExpiredPointers();
