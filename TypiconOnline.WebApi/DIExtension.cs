@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CacheManager.Core;
+using EFSecondLevelCache.Core;
+using EFSecondLevelCache.Core.Contracts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +23,12 @@ using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Services;
+using TypiconOnline.Infrastructure.Common.Domain;
+using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Repository.EFCore;
+using TypiconOnline.Repository.EFCore.Caching;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.WebApi
 {
@@ -28,39 +37,64 @@ namespace TypiconOnline.WebApi
     /// </summary>
     public static class DIExtension
     {
-        public static void AddTypiconOnlineService(this IServiceCollection services)
+        public static void AddTypiconOnlineService(this IServiceCollection services, IConfiguration configuration)
         {
-            //kernel.Bind<IUnitOfWork>().To<EFUnitOfWork>().InRequestScope();
-            //kernel.Bind<ICacheStorage>().To<SystemRuntimeCacheStorage>();
-            //kernel.Bind<IConfigurationRepository>().To<AppSettingsConfigurationRepository>();
-            //kernel.Bind<ITypiconEntityService>().To<EnrichedTypiconEntityService>();
-            //kernel.Bind<ITypiconEntityService>().To<TypiconEntityService>().WhenInjectedInto<EnrichedTypiconEntityService>();
-            //kernel.Bind<IEvangelionContext>().To<EvangelionContext>();
-            //kernel.Bind<IApostolContext>().To<ApostolContext>();
-            //kernel.Bind<IOldTestamentContext>().To<OldTestamentContext>();
-            //kernel.Bind<IPsalterContext>().To<PsalterContext>();
-            //kernel.Bind<IOktoikhContext>().To<OktoikhContext>();
-            //kernel.Bind<ITheotokionAppContext>().To<TheotokionAppContext>();
-            //kernel.Bind<IEasterContext>().To<EasterContext>();
-            //kernel.Bind<IKatavasiaContext>().To<KatavasiaContext>();
-            //kernel.Bind<IRuleHandlerSettingsFactory>().To<RuleHandlerSettingsFactory>();
-            //kernel.Bind<IScheduleService>().To<ScheduleService>();
-            //kernel.Bind<IRuleSerializerRoot>().To<RuleSerializerRoot>();
+            //typiconservices
+            services.AddScoped<ITypiconEntityService, TypiconEntityService>();
+            services.AddScoped<IEvangelionContext, EvangelionContext>();
+            services.AddScoped<IApostolContext, ApostolContext>();
+            services.AddScoped<IOldTestamentContext, OldTestamentContext>();
+            services.AddScoped<IPsalterContext, PsalterContext>();
+            services.AddScoped<IOktoikhContext, OktoikhContext>();
+            services.AddScoped<ITheotokionAppContext, TheotokionAppContext>();
+            services.AddScoped<IEasterContext, EasterContext>();
+            services.AddScoped<IKatavasiaContext, KatavasiaContext>();
+            
+            //scheduleservice
+            services.AddScoped<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
+            services.AddScoped<IScheduleService, ScheduleService>();
+            services.AddScoped<IRuleSerializerRoot, RuleSerializerRoot>();
+            services.AddScoped<BookStorage>();
 
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<ITypiconEntityService, TypiconEntityService>();
-            services.AddTransient<IEvangelionContext, EvangelionContext>();
-            services.AddTransient<IApostolContext, ApostolContext>();
-            services.AddTransient<IOldTestamentContext, OldTestamentContext>();
-            services.AddTransient<IPsalterContext, PsalterContext>();
-            services.AddTransient<IOktoikhContext, OktoikhContext>();
-            services.AddTransient<ITheotokionAppContext, TheotokionAppContext>();
-            services.AddTransient<IEasterContext, EasterContext>();
-            services.AddTransient<IKatavasiaContext, KatavasiaContext>();
-            services.AddTransient<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
-            services.AddTransient<IScheduleService, ScheduleService>();
-            services.AddTransient<IRuleSerializerRoot, RuleSerializerRoot>();
-            services.AddTransient<BookStorage>();
+            //caching
+            services.AddEFSecondLevelCache();
+
+            services.AddSingleton(typeof(ICacheManager<>), typeof(BaseCacheManager<>));
+            services.AddSingleton(typeof(ICacheManagerConfiguration),
+                new CacheManager.Core.ConfigurationBuilder()
+                    .WithJsonSerializer()
+                    .WithMicrosoftMemoryCacheHandle()
+                    .WithExpiration(ExpirationMode.Absolute, TimeSpan.FromMinutes(configuration.GetValue<int>("ShortCacheDuration")))
+                    .DisablePerformanceCounters()
+                    .DisableStatistics()
+                    .Build());
+
+            //DbContext
+            services.AddScoped<DBContextBase>(serviceProvider =>
+            {
+                var cacheServiceProvider = serviceProvider.GetRequiredService<IEFCacheServiceProvider>();
+
+                var optionsBuilder = new DbContextOptionsBuilder<DBContextBase>();
+                //SqlServer
+                var connectionString = configuration.GetConnectionString("MSSql");
+                optionsBuilder.UseSqlServer(connectionString);
+                //SQLite
+                //var connectionString = configuration.GetConnectionString("DBTypicon");
+                //optionsBuilder.UseSqlite(connectionString);
+
+                return new EFCacheDBContext(optionsBuilder.Options, cacheServiceProvider);
+            });
+
+            //unitofwork
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<IRepositoryFactory>(serviceProvider =>
+            {
+                var dbContext = serviceProvider.GetRequiredService<DBContextBase>();
+                var innerRepository = new RepositoryFactory(dbContext);
+
+                return new EFCacheRepositoryFactory(innerRepository, serviceProvider);
+            });
         }
     }
 }

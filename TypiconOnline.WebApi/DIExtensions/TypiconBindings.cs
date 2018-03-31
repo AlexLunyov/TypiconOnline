@@ -24,18 +24,23 @@ using TypiconOnline.AppServices.Caching;
 using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Repository.EFCore.Caching;
+using Microsoft.Extensions.DependencyInjection;
+using CacheManager.Core;
+using System;
+using EFSecondLevelCache.Core;
+using EFSecondLevelCache.Core.Contracts;
 
 namespace TypiconOnline.WebApi.DIExtensions
 {
     public static class TypiconBindings
     {
-        public static void BindTypiconServices(this IKernel kernel, IConfiguration configuration)
+        public static void BindTypiconServices(this IKernel kernel, IConfiguration configuration, IServiceProvider serviceProvider)
         {
             //MemoryCache
-            kernel.Bind<IMemoryCache>().To<MemoryCache>()
-                .InSingletonScope()
-                .WithConstructorArgument("optionsAccessor", new MemoryCacheOptions());
-            kernel.Bind<ICacheStorage>().To<MemoryCacheStorage>();
+            //kernel.Bind<IMemoryCache>().To<MemoryCache>()
+            //    .InSingletonScope()
+            //    .WithConstructorArgument("optionsAccessor", new MemoryCacheOptions());
+            //kernel.Bind<ICacheStorage>().To<MemoryCacheStorage>();
 
             //Configuration
             kernel.Bind<IConfigurationRepository>().To<ConfigurationRepository>()
@@ -47,14 +52,21 @@ namespace TypiconOnline.WebApi.DIExtensions
 
             //Настройки для использования SqlServer
             string con = configuration.GetConnectionString("MSSql");
-            kernel.Bind<DBContextBase>().To<MSSqlDBContext>()
+            kernel.Bind<DBContextBase>().To<EFCacheDBContext>()
                 //??????
                 .InSingletonScope()
                 .WithConstructorArgument("connection", con);
 
             //RepositoryFactory
-            kernel.Bind<IRepositoryFactory>().To<CachingRepositoryFactory>();
-            kernel.Bind<IRepositoryFactory>().To<RepositoryFactory>().WhenInjectedInto<CachingRepositoryFactory>();
+            //kernel.Bind<IRepositoryFactory>().To<CachingRepositoryFactory>();
+            //kernel.Bind<IRepositoryFactory>().To<RepositoryFactory>().WhenInjectedInto<CachingRepositoryFactory>();
+
+            kernel.Bind<IRepositoryFactory>().To<EFCacheRepositoryFactory>();
+
+            //EF2ndLevel
+            kernel.Bind<IEFCacheKeyHashProvider>().To<EFCacheKeyHashProvider>().InSingletonScope();
+            kernel.Bind<IEFCacheKeyProvider>().To<EFCacheKeyProvider>().InSingletonScope();
+            kernel.Bind<IEFCacheServiceProvider>().To<EFCacheServiceProvider>().InSingletonScope();
 
             //UnitOfWork
             kernel.Bind<IUnitOfWork>().To<UnitOfWork>();

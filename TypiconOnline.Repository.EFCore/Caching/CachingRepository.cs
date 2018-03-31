@@ -53,11 +53,17 @@ namespace TypiconOnline.Repository.EFCore.Caching
         {
             //находим сущности в кеше
             var cachedItems = (predicate != null)
-                ? CachedCollection.GetItems(cacheStorage).Where(predicate).AsEnumerable()
-                : CachedCollection.GetItems(cacheStorage).AsEnumerable();
+                ? CachedCollection.GetItems(cacheStorage).Where(predicate)
+                : CachedCollection.GetItems(cacheStorage);
 
-            //делаем выборку из репозитория, исключая те сущности, что уже есть в кеше
-            var repoItems = cachedItems.Union((predicate == null) ? repository.GetAll() : repository.GetAll(predicate));
+            //делаем явную выборку из репозитория, исключая те сущности, что уже есть в кеше
+            var repoItems = repository.GetAll(predicate).ExcludeCachedItems(cachedItems).ToList();
+
+            //var repoItems = ((predicate == null) ? repository.GetAll() : repository.GetAll(predicate)).ExcludeCachedItems(cachedItems);//.ToList();
+
+            //объединяем полученные данные с кешированными
+            repoItems.AddRange(cachedItems);
+            //var repoItems = cachedItems.Union((predicate == null) ? repository.GetAll() : repository.GetAll(predicate));
 
             //сохраняем выборку в кеше
             StoreItems(repoItems);

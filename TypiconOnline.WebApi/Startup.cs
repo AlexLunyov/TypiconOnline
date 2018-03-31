@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using EFSecondLevelCache.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -17,11 +18,11 @@ namespace TypiconOnline.WebApi
 {
     public class Startup
     {
-        private readonly AsyncLocal<Scope> scopeProvider = new AsyncLocal<Scope>();
-        private IKernel Kernel;
+        //private readonly AsyncLocal<Scope> scopeProvider = new AsyncLocal<Scope>();
+        //private IKernel Kernel;
 
-        private object Resolve(Type type) => Kernel.Get(type);
-        private Scope RequestScope(IContext context) => scopeProvider.Value;
+        //private object Resolve(Type type) => Kernel.Get(type);
+        //private Scope RequestScope(IContext context) => scopeProvider.Value;
 
         public Startup(IHostingEnvironment env)
         {
@@ -42,10 +43,11 @@ namespace TypiconOnline.WebApi
             services.AddMvc();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTypiconOnlineService(Configuration);
 
-            services.AddRequestScopingMiddleware(() => scopeProvider.Value = new Scope());
-            services.AddCustomControllerActivation(Resolve);
-            services.AddCustomViewComponentActivation(Resolve);
+            //services.AddRequestScopingMiddleware(() => scopeProvider.Value = new Scope());
+            //services.AddCustomControllerActivation(Resolve);
+            //services.AddCustomViewComponentActivation(Resolve);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,29 +62,32 @@ namespace TypiconOnline.WebApi
                 app.UseDatabaseErrorPage();
             }
 
-            Kernel = RegisterApplicationComponents(app, loggerFactory);
+            //EFSecondLevel
+            app.UseEFSecondLevelCache();
+
+            //Kernel = RegisterApplicationComponents(app, loggerFactory);
 
             app.UseMvc();
         }
 
-        private IKernel RegisterApplicationComponents(IApplicationBuilder app, ILoggerFactory loggerFactory)
-        {
-            Kernel = new StandardKernel();
+        //private IKernel RegisterApplicationComponents(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        //{
+        //    Kernel = new StandardKernel();
 
-            // Register application services
-            //config.Bind(app.GetControllerTypes()).ToSelf().InScope(RequestScope);
+        //    // Register application services
+        //    //config.Bind(app.GetControllerTypes()).ToSelf().InScope(RequestScope);
 
-            //my own
-            Kernel.BindTypiconServices(Configuration);
+        //    //my own
+        //    Kernel.BindTypiconServices(Configuration);
 
-            // Cross-wire required framework services
-            Kernel.BindToMethod(app.GetRequestService<IViewBufferScope>);
-            Kernel.Bind<ILoggerFactory>().ToConstant(loggerFactory);
+        //    // Cross-wire required framework services
+        //    Kernel.BindToMethod(app.GetRequestService<IViewBufferScope>);
+        //    Kernel.Bind<ILoggerFactory>().ToConstant(loggerFactory);
 
-            return Kernel;
-        }
+        //    return Kernel;
+        //}
 
-        private sealed class Scope : DisposableObject { }
+        //private sealed class Scope : DisposableObject { }
     }
 
     public static class BindingHelpers

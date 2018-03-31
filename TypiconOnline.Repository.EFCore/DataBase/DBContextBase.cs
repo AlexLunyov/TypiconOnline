@@ -13,6 +13,10 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 {
     public abstract class DBContextBase : DbContext
     {
+        public DBContextBase() : base() { }
+
+        public DBContextBase(DbContextOptions<DBContextBase> options) : base(options) { }
+
         #region Modeling
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
