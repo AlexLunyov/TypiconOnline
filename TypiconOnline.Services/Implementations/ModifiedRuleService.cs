@@ -41,7 +41,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 //фиксируем изменения
                 _unitOfWork.Repository<TypiconEntity>().Update(typicon);
-                _unitOfWork.SaveChangesAsync();
+                _unitOfWork.SaveChanges();
             }
 
             return modifiedYear.ModifiedRules.FindAll(d => d.Date.Date == date.Date);
