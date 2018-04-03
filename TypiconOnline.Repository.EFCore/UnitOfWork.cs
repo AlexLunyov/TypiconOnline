@@ -44,7 +44,7 @@ namespace TypiconOnline.Repository.EFCore
             {
                 return repositories[typeof(AggregateType)] as IRepository<AggregateType>;
             }
-            IRepository<AggregateType> repo = repositoryFactory.Create<AggregateType>();
+            IRepository<AggregateType> repo = repositoryFactory.Create<AggregateType>(dbContext);
             repositories.Add(typeof(AggregateType), repo);
             return repo;
         }

@@ -15,6 +15,24 @@ namespace TypiconOnline.AppServices.Standard.Caching
             _cache = cache ?? throw new ArgumentNullException("IMemoryCache");
         }
 
+        /// <summary>
+        /// Ref. https://github.com/VahidN/EFSecondLevelCache.Core EFCacheServiceProvider
+        /// </summary>
+        /// <param name="rootCacheKeys"></param>
+        public void InvalidateCacheDependencies(string[] rootCacheKeys)
+        {
+            foreach (var rootCacheKey in rootCacheKeys)
+            {
+                if (string.IsNullOrWhiteSpace(rootCacheKey))
+                {
+                    continue;
+                }
+
+                //clearDependencyValues(rootCacheKey);
+                //_dependenciesCacheManager.Remove(rootCacheKey);
+            }
+        }
+
         //public MemoryCacheStorage()
         //{
         //    _cache = new MemoryCache(new MemoryCacheOptions());
@@ -45,7 +63,7 @@ namespace TypiconOnline.AppServices.Standard.Caching
             _cache.Set(key, data, options);
         }
 
-        public void Store(string key, object data, DateTime absoluteExpiration, TimeSpan slidingExpiration)
+        public void Store(string key, object data, DateTime absoluteExpiration, TimeSpan? slidingExpiration = null)
         {
             var options = new MemoryCacheEntryOptions()
             {

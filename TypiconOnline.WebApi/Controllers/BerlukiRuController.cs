@@ -14,18 +14,20 @@ using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.AppServices.Implementations;
 using System.Text;
+using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Domain.Typicon;
 
 namespace TypiconOnline.WebApi.Controllers
 {
     [Route("[controller]")]
     public class BerlukiRuController : Controller
     {
-        ITypiconEntityService _typiconEntityService;
         IScheduleService _scheduleService;
+        IUnitOfWork unitOfWork;
 
-        public BerlukiRuController(ITypiconEntityService typiconEntityService, IScheduleService scheduleService)
+        public BerlukiRuController(IUnitOfWork unitOfWork, IScheduleService scheduleService)
         {
-            _typiconEntityService = typiconEntityService ?? throw new ArgumentNullException("TypiconEntityService in BerlukiRuController");
+            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork in BerlukiRuController");
             _scheduleService = scheduleService ?? throw new ArgumentNullException("ScheduleService in BerlukiRuController");
         }
 
@@ -51,7 +53,7 @@ namespace TypiconOnline.WebApi.Controllers
 
         private string GetHtmlString(DateTime date)
         {
-            var response = _typiconEntityService.GetTypiconEntity(1);
+            var typicon = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
             
             if ((date.DayOfWeek == DayOfWeek.Sunday) && (date.Hour > 17))
             {
@@ -61,7 +63,7 @@ namespace TypiconOnline.WebApi.Controllers
             var weekRequest = new GetScheduleWeekRequest()
             {
                 Date = date,
-                Typicon = response.TypiconEntity,
+                Typicon = typicon,
                 Handler = new ScheduleHandler(),
                 CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };
@@ -78,8 +80,6 @@ namespace TypiconOnline.WebApi.Controllers
             weekResponse = _scheduleService.GetScheduleWeek(weekRequest);
             htmlViewer.Execute(weekResponse.Week);
             resultString += htmlViewer.ResultString;
-
-            _typiconEntityService.UpdateTypiconEntity(new UpdateTypiconEntityRequest() { TypiconEntity = response.TypiconEntity });
 
             return resultString;
         }

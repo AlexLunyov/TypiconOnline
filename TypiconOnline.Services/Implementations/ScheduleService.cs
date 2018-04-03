@@ -24,7 +24,7 @@ namespace TypiconOnline.Domain.Services
     {
         //ITypiconEntityService _typiconEntityService;
         IRuleHandlerSettingsFactory settingsFactory;// = new RuleHandlerSettingsFactory();
-        //IModifiedRuleService _modifiedRuleService;
+        IModifiedRuleService modifiedRuleService;
         //IRuleHandler _ruleHandler;
         //BookStorage _bookStorage;
         IScheduleDayNameComposer nameComposer;
@@ -33,13 +33,13 @@ namespace TypiconOnline.Domain.Services
         public ScheduleService(/*ITypiconEntityService typiconEntityService
             , */IRuleHandlerSettingsFactory settingsFactory
             , IRuleSerializerRoot ruleSerializer
-            //, IModifiedRuleService modifiedRuleService
+            , IModifiedRuleService modifiedRuleService
             //, IRuleHandler ruleHandler
             )
         {
             //_typiconEntityService = typiconEntityService ?? throw new ArgumentNullException("ITypiconEntityService");
             this.settingsFactory = settingsFactory ?? throw new ArgumentNullException("IRuleHandlerSettingsFactory");
-            //_modifiedRuleService = modifiedRuleService ?? throw new ArgumentNullException("modifiedRuleService");
+            this.modifiedRuleService = modifiedRuleService ?? throw new ArgumentNullException("modifiedRuleService");
             this.ruleSerializer = ruleSerializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
 
             nameComposer = new ScheduleDayNameComposer(this.ruleSerializer.BookStorage.Oktoikh);
@@ -90,7 +90,7 @@ namespace TypiconOnline.Domain.Services
             int daysFromEaster = ruleSerializer.BookStorage.Easters.GetDaysFromCurrentEaster(request.Date);
             request.TriodionRule = typicon.GetTriodionRule(daysFromEaster);
 
-            request.ModifiedRule = typicon.GetModifiedRuleHighestPriority(request.Date, ruleSerializer);
+            request.ModifiedRule = modifiedRuleService.GetModifiedRuleHighestPriority(typicon, request.Date, ruleSerializer);
             request.OktoikhDay = ruleSerializer.BookStorage.Oktoikh.Get(request.Date);
 
             //Формируем данные для обработки

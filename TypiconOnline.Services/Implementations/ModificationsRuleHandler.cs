@@ -18,11 +18,12 @@ namespace TypiconOnline.AppServices.Implementations
     /// </summary>
     public class ModificationsRuleHandler : RuleHandlerBase
     {
-        private readonly int _yearToModify;
+        readonly IModifiedRuleService modifiedRuleService;
+        readonly int yearToModify;
 
-        public ModificationsRuleHandler(int year) : this (new RuleHandlerSettings(), year) { }
+        public ModificationsRuleHandler(IModifiedRuleService modifiedRuleService, int year) : this (new RuleHandlerSettings(), modifiedRuleService, year) { }
 
-        public ModificationsRuleHandler(RuleHandlerSettings settings, int year) 
+        public ModificationsRuleHandler(RuleHandlerSettings settings, IModifiedRuleService modifiedRuleService, int year) 
         {
             _settings = settings;
             //Initialize(settings);
@@ -32,7 +33,9 @@ namespace TypiconOnline.AppServices.Implementations
                 typeof(ModifyDay)
             };
 
-            _yearToModify = year;
+            this.modifiedRuleService = modifiedRuleService ?? throw new ArgumentNullException("modifiedRuleService in ModificationsRuleHandler");
+
+            yearToModify = year;
         }
 
         public override void ClearResult()
@@ -43,10 +46,11 @@ namespace TypiconOnline.AppServices.Implementations
         public override bool Execute(ICustomInterpreted element)
         {
             bool result = false;
+
+            var typiconEntity = _settings.Rule.Owner;
+
             if (element is ModifyReplacedDay modifyReplacedDay)
             {
-                var typiconEntity = _settings.Rule.Owner;
-
                 DayRule ruleToModify;
 
                 if (modifyReplacedDay.Kind == KindOfReplacedDay.Menology)
@@ -68,12 +72,12 @@ namespace TypiconOnline.AppServices.Implementations
 
                 var request = CreateRequest(ruleToModify, modifyReplacedDay, priority);
 
-                typiconEntity.AddModifiedRule(request);
+                modifiedRuleService.AddModifiedRule(typiconEntity, request);
 
                 result = true;
             }
             else if ((element is ModifyDay modifyDay) 
-                && (modifyDay.MoveDateCalculated.Year == _yearToModify))
+                && (modifyDay.MoveDateCalculated.Year == yearToModify))
             {
                 int priority = modifyDay.Priority;
 
@@ -86,7 +90,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 var request = CreateRequest((DayRule)_settings.Rule, modifyDay, priority);
 
-                _settings.Rule.Owner.AddModifiedRule(request);
+                modifiedRuleService.AddModifiedRule(typiconEntity, request);
 
                 result = true;
             }

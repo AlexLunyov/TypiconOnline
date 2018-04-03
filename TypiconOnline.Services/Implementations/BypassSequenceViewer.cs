@@ -97,12 +97,12 @@ namespace TypiconOnline.AppServices.Implementations
                                     new PsalterContext(_unitOfWork),
                                     new OktoikhContext(_unitOfWork, easters),
                                     new TheotokionAppContext(_unitOfWork),
-                                    new EasterContext(_unitOfWork),
+                                    easters,
                                     new KatavasiaContext(_unitOfWork));
 
             IRuleSerializerRoot serializerRoot = new RuleSerializerRoot(bookStorage);
 
-            return new ScheduleService(new RuleHandlerSettingsFactory(), serializerRoot);
+            return new ScheduleService(new RuleHandlerSettingsFactory(), serializerRoot, new ModifiedRuleService(_unitOfWork));
         }
     }
 }

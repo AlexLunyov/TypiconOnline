@@ -14,10 +14,12 @@ namespace TypiconOnline.Repository.EFCore.Caching
         const string KEY_CACHEDURATION = "ShortCacheDuration";
         const string KEY_GET = "RepositoryGet";
         const string KEY_GETALL = "RepositoryGetAll";
-        const string KEY_COLLECTION = "CachedCollection";
+        const string KEY_GETCOLLECTION = "CachedGet";
+        const string KEY_GETALLCOLLECTION = "CachedGetAll";
 
-        int? cacheDurationTime;
-        CachedCollection<DomainType> cachedCollection;
+        TimeSpan? cacheDurationTime;
+        CachedGetCollection getCollection;
+        CachedGetAllCollection getAllCollection;
 
         readonly IRepository<DomainType> repository;
         readonly ICacheStorage cacheStorage;
@@ -30,10 +32,16 @@ namespace TypiconOnline.Repository.EFCore.Caching
             this.configurationRepository = configurationRepository ?? throw new ArgumentNullException("IConfigurationRepository");
         }
 
+        /// <summary>
+        /// Возвращает сущность по заданному лямбда-выражению.
+        /// Если таковое сохраненно в кеше, то обращения к БД не происходит.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public DomainType Get(Expression<Func<DomainType, bool>> predicate)
         {
             //делаем выборку из кешированных данных
-            var item = CachedCollection.GetItems(cacheStorage).Where(predicate).FirstOrDefault();
+            var item = cacheStorage.GetEntities<DomainType>(GetCollection, CacheDurationTime).Where(predicate).FirstOrDefault();
             
             if (item == null)
             {
@@ -49,107 +57,130 @@ namespace TypiconOnline.Repository.EFCore.Caching
             return item;
         }
 
+        /// <summary>
+        /// Возвращает коллекцию сущностей по заданному лямбда-выражению.
+        /// Кеширование совершается по лямбда-выражению, но не по отдельным сущностям.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public IQueryable<DomainType> GetAll(Expression<Func<DomainType, bool>> predicate = null)
         {
-            //находим сущности в кеше
-            var cachedItems = (predicate != null)
-                ? CachedCollection.GetItems(cacheStorage).Where(predicate)
-                : CachedCollection.GetItems(cacheStorage);
+            var predicateKey = (predicate != null) ? predicate.Body.ToString() : string.Empty;
 
-            //делаем явную выборку из репозитория, исключая те сущности, что уже есть в кеше
-            var repoItems = repository.GetAll(predicate).ExcludeCachedItems(cachedItems).ToList();
+            //Ищем введеный запрос среди сохраненных
+            //При обращении дата просрочки обновляется найденного запроса
+            var cachedQuery = GetAllCollection.GetItem(predicateKey);
 
-            //var repoItems = ((predicate == null) ? repository.GetAll() : repository.GetAll(predicate)).ExcludeCachedItems(cachedItems);//.ToList();
+            if (cachedQuery != null)
+            {
+                //Продляем дату просрочки у запрошенных сущностей
+                GetCollection.ProlongExpirationDates(cachedQuery);
 
-            //объединяем полученные данные с кешированными
-            repoItems.AddRange(cachedItems);
-            //var repoItems = cachedItems.Union((predicate == null) ? repository.GetAll() : repository.GetAll(predicate));
+                //Возвращаем коллекцию сущностей по указателям на сущности, сохраненные в кеше
+                return cacheStorage.GetEntities<DomainType>(cachedQuery);
+            }
+            else
+            {
+                //делаем явную выборку из репозитория
+                var repoItems = repository.GetAll(predicate);
 
-            //сохраняем выборку в кеше
-            StoreItems(repoItems);
+                //сохраняем выборку в кеше
+                StoreItems(repoItems, predicateKey);
 
-            return repoItems.AsQueryable();
+                return repoItems;
+            }
         }
 
-        public void Insert(DomainType aggregate)
-        {
-            repository.Insert(aggregate);
+        public void Insert(DomainType aggregate) => repository.Insert(aggregate);
 
-            StoreItem(aggregate);
-        }
+        public void Update(DomainType aggregate) => repository.Update(aggregate);
 
-        public void Update(DomainType aggregate)
-        {
-            repository.Update(aggregate);
+        public void Delete(DomainType aggregate) => repository.Delete(aggregate);
 
-            StoreItem(aggregate);
-        }
-
-        public void Delete(DomainType aggregate)
-        {
-            repository.Delete(aggregate);
-
-            //удаляем указатель
-            CachedCollection.RemovePointer(GetItemCachedKey(aggregate));
-            Store(CachedCollectionKey, cachedCollection);
-
-            //удаляем из кеша сам объект
-            cacheStorage.Remove(GetItemCachedKey(aggregate));
-        }
-
-        private int CacheDurationTime
+        private TimeSpan CacheDurationTime
         {
             get
             {
                 if (cacheDurationTime == null)
                 {
-                    cacheDurationTime = configurationRepository.GetConfigurationValue<int>(KEY_CACHEDURATION);
+                    cacheDurationTime = TimeSpan.FromMinutes(configurationRepository.GetConfigurationValue<int>(KEY_CACHEDURATION));
                 }
 
-                return (int)cacheDurationTime;
+                return (TimeSpan)cacheDurationTime;
             }
         }
 
-        private CachedCollection<DomainType> CachedCollection
+        private CachedGetCollection GetCollection
         {
             get
             {
-                if (cachedCollection == null)
+                if (getCollection == null)
                 {
-                    cachedCollection = cacheStorage.Retrieve<CachedCollection<DomainType>>(CachedCollectionKey) ?? new CachedCollection<DomainType>();
+                    getCollection = cacheStorage.Retrieve<CachedGetCollection>(CachedGetCollectionKey) ?? new CachedGetCollection(CacheDurationTime);
                 }
 
-                return cachedCollection;
+                return getCollection;
             }
         }
 
-        private string CachedCollectionKey => $"{KEY_COLLECTION}:{typeof(DomainType).Name}";
+        private CachedGetAllCollection GetAllCollection
+        {
+            get
+            {
+                if (getAllCollection == null)
+                {
+                    getAllCollection = cacheStorage.Retrieve<CachedGetAllCollection>(CachedGetAllCollectionKey) ?? new CachedGetAllCollection(CacheDurationTime);
+                }
 
-        private string GetItemCachedKey(DomainType item) => $"{KEY_GET}:{typeof(DomainType).Name}:{item.GetHashCode()}";
+                return getAllCollection;
+            }
+        }
+
+        private string CachedGetCollectionKey => $"{KEY_GETCOLLECTION}:{typeof(DomainType).FullName}";
+        private string CachedGetAllCollectionKey => $"{KEY_GETALLCOLLECTION}:{typeof(DomainType).FullName}";
+        private string GetItemCachedKey(DomainType item) => $"{KEY_GET}:{typeof(DomainType).FullName}:{item.GetHashCode()}";
 
         private void Store(string key, object entity)
         {
-            cacheStorage.Store(key, entity, TimeSpan.FromMinutes(CacheDurationTime));
+            cacheStorage.Store(key, entity, CacheDurationTime);
         }
 
-        private void StoreItem(DomainType item)
+        private string StoreItem(DomainType item)
         {
+            string key = GetItemCachedKey(item);
             //сохраняем в кеш объект
-            Store(GetItemCachedKey(item), item);
+            Store(key, item);
 
-            //добавялем указатель
-            CachedCollection.AddPointer(GetItemCachedKey(item), TimeSpan.FromMinutes(CacheDurationTime));
+            //добавляем указатель
+            GetCollection.AddPointer(GetItemCachedKey(item), DateTime.Now.Add(CacheDurationTime));
             
             //сохраняем в кеш коллекцию
-            Store(CachedCollectionKey, cachedCollection);
+            Store(CachedGetCollectionKey, GetCollection);
+
+            return key;
         }
 
-        private void StoreItems(IEnumerable<DomainType> items)
+        private void StoreItems(IEnumerable<DomainType> items, string predicateKey)
         {
+            //создаем коллекцию ключей для кешированного запроса
+            var cachedQuery = new GetAllCollectionItem
+            {
+                ExpirationDate = DateTime.Now.Add(CacheDurationTime)
+            };
+
+            //сохраняем объекты в кеше и добавляем ссылки в коллекцию
             foreach (var item in items)
             {
-                StoreItem(item);
+                var key = StoreItem(item);
+
+                cachedQuery.Collection.Add(key);
             }
+
+            //добавялем кешированный запрос в общую коллекцию
+            GetAllCollection.AddPointer(predicateKey, cachedQuery);
+
+            //сохраняем в кеш коллекцию
+            Store(CachedGetAllCollectionKey, GetAllCollection);
         }
     }
 }

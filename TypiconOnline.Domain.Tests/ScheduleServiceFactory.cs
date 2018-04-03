@@ -14,9 +14,18 @@ namespace TypiconOnline.Domain.Tests
     {
         public static ScheduleService Create()
         {
-            IRuleSerializerRoot serializerRoot = new RuleSerializerRoot(BookStorageFactory.Create());
+            throw new NotImplementedException();
+            //var optionsBuilder = new DbContextOptionsBuilder<DBContextBase>();
 
-            return new ScheduleService(new RuleHandlerSettingsFactory(), serializerRoot);
+            ////string path = $"Data Source=31.31.196.160;Initial Catalog=u0351320_Typicon;Integrated Security=False;User Id=u0351320_defaultuser;Password=DDOR0YUMg519DbT2ebzN;MultipleActiveResultSets=True";
+            //string path = $"Data Source=(LocalDB)\\MSSQLLocalDB;Database=TypiconDB;Integrated Security=True;Connect Timeout=30";
+            //optionsBuilder.UseSqlServer(path);
+
+            //var context = new EFCacheDBContext(optionsBuilder.Options, cacheServiceProvider);
+            //var uof = new UnitOfWork(context);
+            //IRuleSerializerRoot serializerRoot = new RuleSerializerRoot(BookStorageFactory.Create());
+
+            //return new ScheduleService(new RuleHandlerSettingsFactory(), serializerRoot);
         }
     }
 }

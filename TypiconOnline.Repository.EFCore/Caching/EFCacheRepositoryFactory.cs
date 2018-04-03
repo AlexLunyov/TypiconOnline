@@ -5,6 +5,7 @@ using System.Text;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Repository.EFCore.Caching
 {
@@ -31,9 +32,9 @@ namespace TypiconOnline.Repository.EFCore.Caching
             cacheServiceProvider = serviceProvider.GetService<IEFCacheServiceProvider>();
         }
 
-        IRepository<AggregateType> IRepositoryFactory.Create<AggregateType>() 
+        IRepository<AggregateType> IRepositoryFactory.Create<AggregateType>(DBContextBase dbContext) 
         {
-            return new EFCacheRepository<AggregateType>(repositoryFactory.Create<AggregateType>(), cacheKeyProvider, cacheServiceProvider);
+            return new EFCacheRepository<AggregateType>(repositoryFactory.Create<AggregateType>(dbContext), cacheKeyProvider, cacheServiceProvider);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TypiconOnline.Infrastructure.Common.Domain;
+using TypiconOnline.Infrastructure.Common.Interfaces;
 
 namespace TypiconOnline.Repository.EFCore.Caching
 {
@@ -10,7 +11,7 @@ namespace TypiconOnline.Repository.EFCore.Caching
     {
         /// <summary>
         /// Исключает из формирующегося запроса все кешированные сущности.
-        /// Сравнение идет по Хеш-коду.
+        /// Сравнение идет по Хеш-коду. НЕ ИСПОЛЬЗУЕТСЯ.
         /// </summary>
         /// <typeparam name="DomainType"></typeparam>
         /// <param name="repoItems"></param>
@@ -31,6 +32,51 @@ namespace TypiconOnline.Repository.EFCore.Caching
             , IEnumerable<DomainType> cachedItems) where DomainType : class, IAggregateRoot
         {
             return cachedItems.Union(repoItems);
+        }
+
+        public static IQueryable<T> GetEntities<T>(this ICacheStorage cacheStorage, GetAllCollectionItem cachedQuery, bool prolongStoring = true) where T : IAggregateRoot
+        {
+            var items = new List<T>();
+
+            foreach (var key in cachedQuery.Collection)
+            {
+                var t = cacheStorage.Retrieve<T>(key);
+                if (t != null)
+                {
+                    items.Add(t);
+
+                    if (prolongStoring)
+                    {
+                        cacheStorage.Store(key, t, cachedQuery.ExpirationDate);
+                    }
+                }
+            }
+
+            return items.AsQueryable();
+        }
+
+        public static IQueryable<T> GetEntities<T>(this ICacheStorage cacheStorage, CachedGetCollection collection, TimeSpan durationTime, bool prolongStoring = true) where T : IAggregateRoot
+        {
+            var items = new List<T>();
+
+            foreach (var pointer in collection.Items)
+            {
+                var t = cacheStorage.Retrieve<T>(pointer.Key);
+                if (t != null)
+                {
+                    items.Add(t);
+                }
+
+                if (prolongStoring)
+                {
+                    var expDate = DateTime.Now.Add(durationTime);
+                    collection.AddPointer(pointer.Key, expDate);
+
+                    cacheStorage.Store(pointer.Key, t, expDate);
+                }
+            }
+
+            return items.AsQueryable();
         }
     }
 }

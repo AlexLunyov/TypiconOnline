@@ -12,20 +12,19 @@ namespace TypiconOnline.AppServices.Interfaces
 {
     public interface IModifiedRuleService
     {
-        IRuleSerializerRoot Serializer { get; }
         /// <summary>
         /// Возвращает список измененных правил для конкретной даты
         /// </summary>
         /// <param name="date">Конкретная дата</param>
         /// <returns></returns>
-        IEnumerable<ModifiedRule> GetModifiedRules(TypiconEntity typicon, DateTime date);
+        IEnumerable<ModifiedRule> GetModifiedRules(TypiconEntity typicon, DateTime date, IRuleSerializerRoot serializer);
         /// <summary>
         /// Возвращает измененное правило с мксимальным приоритетом для веденной даты
         /// </summary>
         /// <param name="date">Дата для поиска</param>
         /// <returns></returns>
-        ModifiedRule GetModifiedRuleHighestPriority(TypiconEntity typicon, DateTime date);
-        void ClearModifiedYears(TypiconEntity typicon);
+        ModifiedRule GetModifiedRuleHighestPriority(TypiconEntity typicon, DateTime date, IRuleSerializerRoot serializer);
+        //void ClearModifiedYears(TypiconEntity typicon);
         void AddModifiedRule(TypiconEntity typicon, ModificationsRuleRequest request);
     }
 }

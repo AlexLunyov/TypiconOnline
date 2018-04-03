@@ -38,7 +38,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\IRepositoryFactory.cs" />
     <Compile Include="Interfaces\ICacheStorage.cs" />
     <Compile Include="Domain\BusinessConstraint.cs" />
     <Compile Include="Domain\IAggregateRoot.cs" />

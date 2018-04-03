@@ -42,7 +42,7 @@ namespace TypiconOnline.Repository.EFCore.Tests.Common
 
             var context = new EFCacheDBContext(optionsBuilder.Options, cacheServiceProvider);
             
-            var cachingRepository = new EFCacheRepositoryFactory(new RepositoryFactory(context), serviceProvider);
+            var cachingRepository = new EFCacheRepositoryFactory(new RepositoryFactory(), serviceProvider);
 
             return new UnitOfWork(context, cachingRepository);
         }

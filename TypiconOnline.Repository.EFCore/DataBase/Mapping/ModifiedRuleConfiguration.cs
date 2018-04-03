@@ -26,6 +26,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
             //{
             //    k.OwnsOne(m => m.ExcludedItem);
             //}*/);
+            builder.HasOne(c => c.RuleEntity);
         }
     }
 }

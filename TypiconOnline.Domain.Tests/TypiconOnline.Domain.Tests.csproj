@@ -55,6 +55,7 @@
     <Compile Include="Books\TheotokionApp\TheotokionAppContextTest.cs" />
     <Compile Include="Days\DayServiceTest.cs" />
     <Compile Include="Days\EsperinosTest.cs" />
+    <Compile Include="DbContextOptionsBuilder.cs" />
     <Compile Include="Experiments\Experiment.cs" />
     <Compile Include="ItemTypes\ItemTextNotedTest.cs" />
     <Compile Include="ItemTypes\ItemTextTest.cs" />

@@ -179,7 +179,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookStorageFactory.cs" />
     <Compile Include="Experiments\Context.cs" />
     <Compile Include="Experiments\GenericTest.cs" />
     <Compile Include="Experiments\TestClass1.cs" />
@@ -197,6 +196,7 @@
     </Compile>
     <Compile Include="RegisterByContainer.cs" />
     <Compile Include="RuleHandler.cs" />
+    <Compile Include="ScheduleServiceFactory.cs" />
     <Compile Include="Tests\EasterFakeContext.cs" />
     <Compile Include="Tests\MigrationDayServiceFactoryTest.cs" />
     <Compile Include="Timer.cs" />

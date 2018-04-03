@@ -1,7 +1,9 @@
 ﻿using CacheManager.Core;
 using EFSecondLevelCache.Core;
 using EFSecondLevelCache.Core.Contracts;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -11,6 +13,8 @@ using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Services;
+using TypiconOnline.AppServices.Standard.Caching;
+using TypiconOnline.AppServices.Standard.Configuration;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Apostol;
 using TypiconOnline.Domain.Books.Easter;
@@ -52,10 +56,56 @@ namespace TypiconOnline.WebApi
             
             //scheduleservice
             services.AddScoped<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
+            services.AddScoped<IModifiedRuleService, ModifiedRuleService>();
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<IRuleSerializerRoot, RuleSerializerRoot>();
             services.AddScoped<BookStorage>();
 
+            //unitofwork
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            //caching
+            //services.AddTypiconCaching(configuration);
+
+            services.EFCache(configuration);
+        }
+
+        private static void AddTypiconCaching(this IServiceCollection services, IConfiguration configuration)
+        {
+            //DbContext
+            services.AddScoped<DBContextBase>(serviceProvider =>
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<DBContextBase>();
+                //SqlServer
+                var connectionString = configuration.GetConnectionString("MSSql");
+                optionsBuilder.UseSqlServer(connectionString);
+                //SQLite
+                //var connectionString = configuration.GetConnectionString("DBTypicon");
+                //optionsBuilder.UseSqlite(connectionString);
+
+                return new CachedDbContext(optionsBuilder.Options);
+            });
+
+            //MemoryCache
+            services.AddMemoryCache();
+            services.AddSingleton(typeof(ICacheStorage), typeof(MemoryCacheStorage));
+
+            //Configuration
+            services.AddScoped<IConfigurationRepository>(serviceProvider => new ConfigurationRepository(configuration));
+
+            services.AddScoped<IRepositoryFactory>(serviceProvider =>
+            {
+                var dbContext = serviceProvider.GetService<DBContextBase>();
+                var innerRepository = new RepositoryFactory();
+
+                return new CachingRepositoryFactory(innerRepository,
+                    serviceProvider.GetRequiredService<ICacheStorage>(),
+                    serviceProvider.GetRequiredService<IConfigurationRepository>());
+            });
+        }
+
+        private static void EFCache(this IServiceCollection services, IConfiguration configuration)
+        {
             //caching
             services.AddEFSecondLevelCache();
 
@@ -72,7 +122,7 @@ namespace TypiconOnline.WebApi
             //DbContext
             services.AddScoped<DBContextBase>(serviceProvider =>
             {
-                var cacheServiceProvider = serviceProvider.GetRequiredService<IEFCacheServiceProvider>();
+                var cacheServiceProvider = serviceProvider.GetService<IEFCacheServiceProvider>();
 
                 var optionsBuilder = new DbContextOptionsBuilder<DBContextBase>();
                 //SqlServer
@@ -85,13 +135,12 @@ namespace TypiconOnline.WebApi
                 return new EFCacheDBContext(optionsBuilder.Options, cacheServiceProvider);
             });
 
-            //unitofwork
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
             services.AddScoped<IRepositoryFactory>(serviceProvider =>
             {
-                var dbContext = serviceProvider.GetRequiredService<DBContextBase>();
-                var innerRepository = new RepositoryFactory(dbContext);
+                var dbContext = serviceProvider.GetService<DBContextBase>();
+                var innerRepository = new RepositoryFactory();
 
                 return new EFCacheRepositoryFactory(innerRepository, serviceProvider);
             });

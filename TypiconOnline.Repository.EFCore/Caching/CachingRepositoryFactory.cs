@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.Interfaces;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Repository.EFCore.Caching
 {
@@ -19,9 +20,9 @@ namespace TypiconOnline.Repository.EFCore.Caching
             this.configurationRepository = configurationRepository ?? throw new ArgumentNullException("configurationRepository in CachingRepositoryFactory");
         }
 
-        IRepository<AggregateType> IRepositoryFactory.Create<AggregateType>() 
+        IRepository<AggregateType> IRepositoryFactory.Create<AggregateType>(DBContextBase dbContext) 
         {
-            return new CachingRepository<AggregateType>(repositoryFactory.Create<AggregateType>(), cacheStorage, configurationRepository);
+            return new CachingRepository<AggregateType>(repositoryFactory.Create<AggregateType>(dbContext), cacheStorage, configurationRepository);
         }
     }
 }

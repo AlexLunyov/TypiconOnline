@@ -29,11 +29,12 @@ namespace TypiconOnline.Repository.EFCore.Tests.Caching
         public void EFCacheRepository_TypiconEntity_Twice()
         {
             var uof = EFCacheUOFFactory.Create();
-            var typiconEntity = uof.Repository<TypiconEntity>().GetAll(c => c.Id == 1).ToList();
+
+            var typiconEntity = uof.Repository<TypiconEntity>().GetAll(c => c.Name == "Типикон").ToList();
 
             typiconEntity = uof.Repository<TypiconEntity>().GetAll(c => c.Name == "Типикон").ToList();
 
-            typiconEntity = uof.Repository<TypiconEntity>().GetAll(c => c.Name == "Типикон").ToList();
+            typiconEntity = uof.Repository<TypiconEntity>().GetAll(c => c.Id == 1).ToList();
 
             Assert.IsNotNull(typiconEntity);
         }

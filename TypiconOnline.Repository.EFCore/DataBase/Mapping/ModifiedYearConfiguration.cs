@@ -22,7 +22,10 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
                 .WithMany(c => c.ModifiedYears)
                 .HasForeignKey(x => x.TypiconEntityId);
 
-            builder.HasMany(c => c.ModifiedRules);
+            builder.HasMany(c => c.ModifiedRules)
+                .WithOne(c => c.Parent)
+                .HasForeignKey(c => c.ModifiedYearId)
+                .OnDelete(DeleteBehavior.Cascade);
 //                .WithOne(c => c.Parent).HasForeignKey(c => c.ModifiedYearId).OnDelete(DeleteBehavior.Cascade);
         }
     }

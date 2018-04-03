@@ -38,7 +38,7 @@ namespace TypiconMigrationTool
 
             while (true)
             {
-                Console.WriteLine("Что желаете? '1' - миграция БД, '3' - тест, '4' - тест для Благовещения, '5' - XmlSerialization");
+                Console.WriteLine("Что желаете? '1' - миграция БД, '4' - тест для Благовещения, '5' - XmlSerialization");
                 Console.WriteLine("'6' - test Esperinos");
 
                 ConsoleKeyInfo info = Console.ReadKey();
@@ -52,13 +52,9 @@ namespace TypiconMigrationTool
                     case '2':
                         {
                             var context = new SQLiteDBContext(@"FileName=data\SQLiteDB.db");
-                            var sqlite = new UnitOfWork(context, new RepositoryFactory(context));
+                            var sqlite = new UnitOfWork(context, new RepositoryFactory());
                             Migrate(sqlite);
                         }
-                        break;
-                    case '3':
-                        ef = GetMSSqlUnitOfWork();
-                        TestDate(ef);
                         break;
                     case '4':
                         ef = GetMSSqlUnitOfWork();
@@ -75,7 +71,7 @@ namespace TypiconMigrationTool
                 IUnitOfWork GetMSSqlUnitOfWork()
                 {
                     var context = new MSSqlDBContext(ConfigurationManager.ConnectionStrings["DBTypicon"].ConnectionString);
-                    return new UnitOfWork(context, new RepositoryFactory(context));
+                    return new UnitOfWork(context, new RepositoryFactory());
                 };
             }
 

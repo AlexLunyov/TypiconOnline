@@ -11,7 +11,8 @@ namespace TypiconOnline.Infrastructure.Common.Interfaces
         void Remove(string key);
         void Store(string key, object data);
         void Store(string key, object data, TimeSpan slidingExpiration);
-        void Store(string key, object data, DateTime absoluteExpiration, TimeSpan slidingExpiration);
+        void Store(string key, object data, DateTime absoluteExpiration, TimeSpan? slidingExpiration = null);
         T Retrieve<T>(string key);
+        void InvalidateCacheDependencies(string[] rootCacheKeys);
     }
 }

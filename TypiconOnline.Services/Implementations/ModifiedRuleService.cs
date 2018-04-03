@@ -16,41 +16,40 @@ namespace TypiconOnline.AppServices.Implementations
 {
     public class ModifiedRuleService : IModifiedRuleService
     {
-        //IUnitOfWork _unitOfWork;
+        IUnitOfWork _unitOfWork;
 
-        public ModifiedRuleService(/*IUnitOfWork unitOfWork, */IRuleSerializerRoot serializer)
+        public ModifiedRuleService(IUnitOfWork unitOfWork)
         {
-            //_unitOfWork = unitOfWork ?? throw new ArgumentNullException("IUnitOfWork");
-            Serializer = serializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork in ModifiedRuleService");
+            //Serializer = serializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
         }
 
-        public IRuleSerializerRoot Serializer { get; }
+        //public IRuleSerializerRoot Serializer { get; }
 
         /// <summary>
         /// Возвращает список измененных правил для конкретной даты
         /// </summary>
         /// <param name="date">Конкретная дата</param>
         /// <returns></returns>
-        public IEnumerable<ModifiedRule> GetModifiedRules(TypiconEntity typicon, DateTime date)
+        public IEnumerable<ModifiedRule> GetModifiedRules(TypiconEntity typicon, DateTime date, IRuleSerializerRoot serializer)
         {
             ModifiedYear modifiedYear = typicon.ModifiedYears.FirstOrDefault(m => m.Year == date.Year);
 
             if (modifiedYear == null)
             {
-                modifiedYear = CreateModifiedYear(typicon, date);
+                modifiedYear = CreateModifiedYear(typicon, date, serializer);
 
-                typicon.ModifiedYears.Add(modifiedYear);
-
-                //_unitOfWork.Commit();
+                //фиксируем изменения
+                _unitOfWork.Repository<TypiconEntity>().Update(typicon);
+                _unitOfWork.SaveChangesAsync();
             }
 
             return modifiedYear.ModifiedRules.FindAll(d => d.Date.Date == date.Date);
         }
 
-        private ModifiedYear CreateModifiedYear(TypiconEntity typicon, DateTime date)
+        private ModifiedYear CreateModifiedYear(TypiconEntity typicon, DateTime date, IRuleSerializerRoot serializer)
         {
-            //По умолчанию добавляем год, пусть он и останется пустым
-            ModifiedYear modifiedYear = new ModifiedYear() { Year = date.Year };
+            ModificationsRuleHandler handler = new ModificationsRuleHandler(this, date.Year);
 
             DateTime indexDate = new DateTime(date.Year, 1, 1);
 
@@ -66,7 +65,7 @@ namespace TypiconOnline.AppServices.Implementations
                 if (menologyRule == null)
                     throw new ArgumentNullException("MenologyRule");
 
-                InterpretMenologyRule(menologyRule, indexDate, date.Year);
+                InterpretMenologyRule(menologyRule, indexDate, handler);
 
                 indexDate = indexDate.AddDays(1);
             }
@@ -77,42 +76,48 @@ namespace TypiconOnline.AppServices.Implementations
             typicon.MenologyRules.FindAll(c => (c.Date.IsEmpty && c.DateB.IsEmpty)).
                 ForEach(a =>
                 {
-                    InterpretMenologyRule(a, date, date.Year);
+                    InterpretMenologyRule(a, date, handler);
 
                     //не нашел другого способа, как только два раза вычислять изменяемые дни
-                    InterpretMenologyRule(a, date.AddYears(1), date.Year);
+                    InterpretMenologyRule(a, date.AddYears(1), handler);
                 });
 
             //Triodion
 
             //найти текущую Пасху
             //Для каждого правила выполнять interpret(), где date = текущая Пасха. AddDays(Day.DaysFromEaster)
-            DateTime easter = Serializer.BookStorage.Easters.GetCurrentEaster(date.Year);
+            DateTime easter = serializer.BookStorage.Easters.GetCurrentEaster(date.Year);
 
             typicon.TriodionRules.
                 ForEach(a =>
                 {
-                    RuleElement rule = a.GetRule(Serializer);
-                    if (rule != null)
-                    {
-                        ModificationsRuleHandler handler = new ModificationsRuleHandler(
-                            new RuleHandlerSettings(a), date.Year);
+                    handler.Settings.Rule = a;
+                    handler.Settings.Date = easter.AddDays(a.DaysFromEaster);
 
-                        int i = a.DaysFromEaster;
-                        rule.Interpret(easter.AddDays(i), handler);
-                    }
+                    a.GetRule(serializer)?.Interpret(handler);
+                    //RuleElement rule = a.GetRule(serializer);
+                    //if (rule != null)
+                    //{
+                    //    ModificationsRuleHandler handler = new ModificationsRuleHandler(
+                    //        new RuleHandlerSettings(a, easter.AddDays(a.DaysFromEaster)), date.Year);
+
+                    //    rule.Interpret(handler);
+                    //}
                 });
 
-            return modifiedYear;
+            return typicon.ModifiedYears.FirstOrDefault(m => m.Year == date.Year); ;
 
-            void InterpretMenologyRule(MenologyRule menologyRule, DateTime dateToInterpret, int year)
+            void InterpretMenologyRule(MenologyRule menologyRule, DateTime dateToInterpret, /*int year, */ModificationsRuleHandler h)
             {
                 if (menologyRule != null)
                 {
-                    ModificationsRuleHandler handler = new ModificationsRuleHandler(
-                        new RuleHandlerSettings(menologyRule), year);
+                    h.Settings.Rule = menologyRule;
+                    h.Settings.Date = dateToInterpret;
+
+                    //ModificationsRuleHandler handler = new ModificationsRuleHandler(
+                    //    new RuleHandlerSettings(, dateToInterpret), year);
                     //выполняем его
-                    menologyRule.GetRule(Serializer).Interpret(dateToInterpret, handler);
+                    menologyRule.GetRule(serializer)?.Interpret(h);
                 }
             }
         }
@@ -124,9 +129,9 @@ namespace TypiconOnline.AppServices.Implementations
             //_unitOfWork.Commit();
         }
 
-        public ModifiedRule GetModifiedRuleHighestPriority(TypiconEntity typicon, DateTime date)
+        public ModifiedRule GetModifiedRuleHighestPriority(TypiconEntity typicon, DateTime date, IRuleSerializerRoot serializer)
         {
-            return GetModifiedRules(typicon, date)?.Min();
+            return GetModifiedRules(typicon, date, serializer)?.Min();
         }
 
         /// <summary>
