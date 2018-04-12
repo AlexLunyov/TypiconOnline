@@ -10,6 +10,6 @@ namespace TypiconOnline.Repository.EFCore
 { 
     public interface IRepositoryFactory
     {
-        IRepository<AggregateType> Create<AggregateType>(DBContextBase dbContext) where AggregateType : class, IAggregateRoot;
+        IRepository<AggregateType> Create<AggregateType>(TypiconDBContext dbContext) where AggregateType : class, IAggregateRoot;
     }
 }

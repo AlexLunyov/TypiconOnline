@@ -16,6 +16,7 @@ using TypiconOnline.AppServices.Implementations;
 using System.Text;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Domain.Typicon;
+using Microsoft.AspNetCore.Html;
 
 namespace TypiconOnline.WebApi.Controllers
 {
@@ -33,25 +34,18 @@ namespace TypiconOnline.WebApi.Controllers
 
         // GET berlukiru
         [HttpGet]
-        public ContentResult Index()
+        public ActionResult Index()
         {
-            try
-            {
-                return Content(GetHtmlString(DateTime.Now), "text/html", Encoding.UTF8);
-            }
-            catch (Exception ex)
-            {
-                return Content(ex.ToString());
-            }
+            return GetHtmlString(DateTime.Now);
         }
 
         [HttpGet("{date}")]
-        public ContentResult Get(DateTime date)
+        public ActionResult Get(DateTime date)
         {
-            return Content(GetHtmlString(date), "text/html", Encoding.UTF8);
+            return GetHtmlString(date);
         }
 
-        private string GetHtmlString(DateTime date)
+        private ActionResult GetHtmlString(DateTime date)
         {
             var typicon = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
             
@@ -81,7 +75,9 @@ namespace TypiconOnline.WebApi.Controllers
             htmlViewer.Execute(weekResponse.Week);
             resultString += htmlViewer.ResultString;
 
-            return resultString;
+            ViewBag.Schedule = new HtmlString(resultString);
+
+            return View();
         }
     }
 }

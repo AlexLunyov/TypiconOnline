@@ -16,11 +16,11 @@ namespace TypiconOnline.AppServices.Implementations
 {
     public class ModifiedRuleService : IModifiedRuleService
     {
-        IUnitOfWork _unitOfWork;
+        IUnitOfWork unitOfWork;
 
         public ModifiedRuleService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork in ModifiedRuleService");
+            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork in ModifiedRuleService");
             //Serializer = serializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
         }
 
@@ -40,8 +40,8 @@ namespace TypiconOnline.AppServices.Implementations
                 modifiedYear = CreateModifiedYear(typicon, date, serializer);
 
                 //фиксируем изменения
-                _unitOfWork.Repository<TypiconEntity>().Update(typicon);
-                _unitOfWork.SaveChanges();
+                unitOfWork.Repository<TypiconEntity>().Update(typicon);
+                unitOfWork.SaveChanges();
             }
 
             return modifiedYear.ModifiedRules.FindAll(d => d.Date.Date == date.Date);

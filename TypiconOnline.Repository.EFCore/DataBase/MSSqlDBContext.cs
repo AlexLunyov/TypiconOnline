@@ -1,14 +1,8 @@
-﻿using EFSecondLevelCache.Core;
-using EFSecondLevelCache.Core.Contracts;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace TypiconOnline.Repository.EFCore.DataBase
 {
-    public class MSSqlDBContext : DBContextBase
+    public class MSSqlDBContext : TypiconDBContext
     {
         private string _databasePath { get; set; }
 

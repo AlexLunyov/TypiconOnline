@@ -9,9 +9,9 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Repository.EFCore.Tests.Common
 {
-    public class FakeDbContext : DBContextBase
+    public class FakeDbContext : TypiconDBContext
     {
-        public FakeDbContext(DbContextOptions<DBContextBase> options) : base(options) { }
+        public FakeDbContext(DbContextOptions<TypiconDBContext> options) : base(options) { }
 
         public override int SaveChanges()
         {

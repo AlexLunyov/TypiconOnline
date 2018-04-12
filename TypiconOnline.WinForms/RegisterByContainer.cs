@@ -20,6 +20,7 @@ using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Repository.EFCore.DataBase;
+using Microsoft.EntityFrameworkCore;
 
 namespace TypiconOnline.WinForms
 {
@@ -29,7 +30,6 @@ namespace TypiconOnline.WinForms
 
         public RegisterByContainer()
         {
-
             Container = new Container(x => 
                 {
                     x.Scan(scan =>
@@ -43,7 +43,17 @@ namespace TypiconOnline.WinForms
                         scan.AssemblyContainingType<DocxScheduleWeekViewer>(); 
                         scan.WithDefaultConventions();
                     });
-                    x.For<DBContextBase>().Use<SQLiteDBContext>().Singleton();
+
+                    //SQLite connection
+                    var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
+                    var connectionString = @"FileName=data\SQLiteDB.db";
+                    optionsBuilder.UseSqlite(connectionString);
+
+                    x.ForConcreteType<TypiconDBContext>()
+                        .Configure
+                        .Ctor<DbContextOptions<TypiconDBContext>>("options").Is(optionsBuilder.Options)
+                        .Singleton();
+
                     x.For<IRepositoryFactory>().Use<RepositoryFactory>();
                     //x.ForConcreteType<SQLiteDBContext>().Configure.Singleton();
                     x.For<IUnitOfWork>().Use<UnitOfWork>()

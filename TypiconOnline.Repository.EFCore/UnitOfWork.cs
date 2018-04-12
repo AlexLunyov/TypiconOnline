@@ -15,12 +15,14 @@ namespace TypiconOnline.Repository.EFCore
     /// </summary>
     public class UnitOfWork : IUnitOfWork
     {
-        protected DBContextBase dbContext = null;
+        protected TypiconDBContext dbContext = null;
         IRepositoryFactory repositoryFactory;
 
         private bool disposed = false;
 
-        public UnitOfWork(DBContextBase dbContext, IRepositoryFactory repositoryFactory)
+        public UnitOfWork(TypiconDBContext dbContext) : this(dbContext, new RepositoryFactory()) { }
+
+        public UnitOfWork(TypiconDBContext dbContext, IRepositoryFactory repositoryFactory)
         {
             this.dbContext = dbContext ?? throw new ArgumentNullException("dbContext in UnitOfWorkBase");
             this.repositoryFactory = repositoryFactory ?? throw new ArgumentNullException("repositoryFactory in UnitOfWorkBase");

@@ -20,11 +20,11 @@ namespace TypiconOnline.Repository.EFCore.Tests.Common
         {
             var mockRepo = new Mock<IRepository<EasterItem>>();
 
-            mockRepo.Setup(c => c.GetAll(null)).Returns(GetAllAsters());
+            mockRepo.Setup(c => c.GetAll(null)).Returns(GetAllEasters());
             mockRepo.Setup(c => c.Get(It.IsAny<Expression<Func<EasterItem, bool>>>())).Returns(new EasterItem() { Date = new DateTime(2018, 1, 1) });
 
             var mockFactory = new Mock<IRepositoryFactory>();
-            mockFactory.Setup(c => c.Create<EasterItem>(It.IsAny<DBContextBase>())).Returns(mockRepo.Object);
+            mockFactory.Setup(c => c.Create<EasterItem>(It.IsAny<TypiconDBContext>())).Returns(mockRepo.Object);
 
             return mockFactory.Object;
         }
@@ -33,7 +33,7 @@ namespace TypiconOnline.Repository.EFCore.Tests.Common
         /// Возвращает 100 элементов с днем даты year-01-01
         /// </summary>
         /// <returns></returns>
-        private static IQueryable<EasterItem> GetAllAsters()
+        private static IQueryable<EasterItem> GetAllEasters()
         {
             var easters = new List<EasterItem>();
 

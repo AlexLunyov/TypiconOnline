@@ -65,7 +65,6 @@ namespace TypiconOnline.AppServices.Implementations
 
             TypiconEntity typicon = resp.TypiconEntity ?? throw new NullReferenceException("TypiconEntity");
 
-
             GetScheduleWeekResponse weekResponse = CreateScheduleService().GetScheduleWeek(new GetScheduleWeekRequest()
             {
                 Date = request.Date,
@@ -75,8 +74,7 @@ namespace TypiconOnline.AppServices.Implementations
                 CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             });
 
-
-            _unitOfWork.SaveChanges();
+            //_unitOfWork.SaveChanges();
 
             HtmlInnerScheduleWeekViewer viewer = new HtmlInnerScheduleWeekViewer();
 

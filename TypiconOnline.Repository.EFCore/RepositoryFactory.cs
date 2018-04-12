@@ -8,14 +8,14 @@ namespace TypiconOnline.Repository.EFCore
 {
     public class RepositoryFactory : IRepositoryFactory
     {
-        //DBContextBase dbContext;
+        //TypiconDBContext dbContext;
 
-        //public RepositoryFactory(DBContextBase dbContext)
+        //public RepositoryFactory(TypiconDBContext dbContext)
         //{
         //    this.dbContext = dbContext ?? throw new ArgumentOutOfRangeException("dbContext in RepositoryFactory");
         //}
 
-        IRepository<AggregateType> IRepositoryFactory.Create<AggregateType>(DBContextBase dbContext)
+        IRepository<AggregateType> IRepositoryFactory.Create<AggregateType>(TypiconDBContext dbContext)
         {
             return new Repository<AggregateType>(dbContext);
         }

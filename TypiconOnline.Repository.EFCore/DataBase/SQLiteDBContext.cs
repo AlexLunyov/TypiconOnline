@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TypiconOnline.Repository.EFCore.DataBase
 {
-    public class SQLiteDBContext : DBContextBase
+    public class SQLiteDBContext : TypiconDBContext
     {
         string connectionString;
 

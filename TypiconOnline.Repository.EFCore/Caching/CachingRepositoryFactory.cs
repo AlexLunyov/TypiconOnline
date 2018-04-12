@@ -20,7 +20,7 @@ namespace TypiconOnline.Repository.EFCore.Caching
             this.configurationRepository = configurationRepository ?? throw new ArgumentNullException("configurationRepository in CachingRepositoryFactory");
         }
 
-        IRepository<AggregateType> IRepositoryFactory.Create<AggregateType>(DBContextBase dbContext) 
+        IRepository<AggregateType> IRepositoryFactory.Create<AggregateType>(TypiconDBContext dbContext) 
         {
             return new CachingRepository<AggregateType>(repositoryFactory.Create<AggregateType>(dbContext), cacheStorage, configurationRepository);
         }

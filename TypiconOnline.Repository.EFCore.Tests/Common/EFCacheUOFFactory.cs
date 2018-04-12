@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Repository.Caching;
 using TypiconOnline.Repository.EFCore.Caching;
 using TypiconOnline.Repository.EFCore.DataBase;
 
@@ -15,7 +17,9 @@ namespace TypiconOnline.Repository.EFCore.Tests.Common
 {
     public class EFCacheUOFFactory
     {
-        public static UnitOfWork Create()
+        public static IUnitOfWork Create() => Create(new RepositoryFactory());
+
+        public static IUnitOfWork Create(IRepositoryFactory repository)
         {
             var services = new ServiceCollection();
             services.AddEFSecondLevelCache();
@@ -34,7 +38,7 @@ namespace TypiconOnline.Repository.EFCore.Tests.Common
             var cacheServiceProvider = serviceProvider.GetService<IEFCacheServiceProvider>();
 
             
-            var optionsBuilder = new DbContextOptionsBuilder<DBContextBase>();
+            var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
 
             //string path = $"Data Source=31.31.196.160;Initial Catalog=u0351320_Typicon;Integrated Security=False;User Id=u0351320_defaultuser;Password=DDOR0YUMg519DbT2ebzN;MultipleActiveResultSets=True";
             string path = $"Data Source=(LocalDB)\\MSSQLLocalDB;Database=TypiconDB;Integrated Security=True;Connect Timeout=30";
@@ -42,7 +46,7 @@ namespace TypiconOnline.Repository.EFCore.Tests.Common
 
             var context = new EFCacheDBContext(optionsBuilder.Options, cacheServiceProvider);
             
-            var cachingRepository = new EFCacheRepositoryFactory(new RepositoryFactory(), serviceProvider);
+            var cachingRepository = new EFCacheRepositoryFactory(repository, serviceProvider);
 
             return new UnitOfWork(context, cachingRepository);
         }

@@ -41,9 +41,9 @@ namespace TypiconOnline.Repository.EFCore.Tests.Caching
         [TestMethod]
         public void CachingRepository_MockEasters()
         {
-            var uof = CachingUOFFactory.Create(MockEastersRepositoryFactory.Create());
+            var uof = EFCacheUOFFactory.Create(MockEastersRepositoryFactory.Create());
 
-            var items = uof.Repository<EasterItem>().GetAll().ToList();
+            var items = uof.Repository<EasterItem>().GetAll(c => c.Date > DateTime.MinValue).ToList();
 
             items.ForEach(c =>
             {
@@ -58,6 +58,22 @@ namespace TypiconOnline.Repository.EFCore.Tests.Caching
             var found = items.FirstOrDefault(c => c.Date.Year != DateTime.Now.Year);
 
             Assert.IsNotNull(found);
+        }
+
+        [TestMethod]
+        public void CachingRepository_MockEaster()
+        {
+            var uof = EFCacheUOFFactory.Create(MockEastersRepositoryFactory.Create());
+
+            var response = uof.Repository<EasterItem>().Get(c => c.Date.Year == 2018);
+
+            response.Date = DateTime.MinValue;
+
+            uof.SaveChanges();
+
+            response = uof.Repository<EasterItem>().Get(c => c.Date > DateTime.MinValue);
+
+            Assert.AreNotEqual(response.Date, DateTime.MinValue);
         }
 
         [TestMethod]

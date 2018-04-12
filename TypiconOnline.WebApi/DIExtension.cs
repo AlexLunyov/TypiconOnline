@@ -31,8 +31,9 @@ using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Repository.EFCore;
-using TypiconOnline.Repository.EFCore.Caching;
+using TypiconOnline.Repository.Caching;
 using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.Repository.EFCore.Caching;
 
 namespace TypiconOnline.WebApi
 {
@@ -73,9 +74,9 @@ namespace TypiconOnline.WebApi
         private static void AddTypiconCaching(this IServiceCollection services, IConfiguration configuration)
         {
             //DbContext
-            services.AddScoped<DBContextBase>(serviceProvider =>
+            services.AddScoped<TypiconDBContext>(serviceProvider =>
             {
-                var optionsBuilder = new DbContextOptionsBuilder<DBContextBase>();
+                var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
                 //SqlServer
                 var connectionString = configuration.GetConnectionString("MSSql");
                 optionsBuilder.UseSqlServer(connectionString);
@@ -95,7 +96,7 @@ namespace TypiconOnline.WebApi
 
             services.AddScoped<IRepositoryFactory>(serviceProvider =>
             {
-                var dbContext = serviceProvider.GetService<DBContextBase>();
+                var dbContext = serviceProvider.GetService<TypiconDBContext>();
                 var innerRepository = new RepositoryFactory();
 
                 return new CachingRepositoryFactory(innerRepository,
@@ -114,17 +115,17 @@ namespace TypiconOnline.WebApi
                 new CacheManager.Core.ConfigurationBuilder()
                     .WithJsonSerializer()
                     .WithMicrosoftMemoryCacheHandle()
-                    .WithExpiration(ExpirationMode.Absolute, TimeSpan.FromMinutes(configuration.GetValue<int>("ShortCacheDuration")))
+                    .WithExpiration(ExpirationMode.Sliding, TimeSpan.FromMinutes(configuration.GetValue<int>("ShortCacheDuration")))
                     .DisablePerformanceCounters()
                     .DisableStatistics()
                     .Build());
 
             //DbContext
-            services.AddScoped<DBContextBase>(serviceProvider =>
+            services.AddScoped<TypiconDBContext>(serviceProvider =>
             {
                 var cacheServiceProvider = serviceProvider.GetService<IEFCacheServiceProvider>();
 
-                var optionsBuilder = new DbContextOptionsBuilder<DBContextBase>();
+                var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
                 //SqlServer
                 var connectionString = configuration.GetConnectionString("MSSql");
                 optionsBuilder.UseSqlServer(connectionString);
@@ -139,7 +140,7 @@ namespace TypiconOnline.WebApi
 
             services.AddScoped<IRepositoryFactory>(serviceProvider =>
             {
-                var dbContext = serviceProvider.GetService<DBContextBase>();
+                var dbContext = serviceProvider.GetService<TypiconDBContext>();
                 var innerRepository = new RepositoryFactory();
 
                 return new EFCacheRepositoryFactory(innerRepository, serviceProvider);

@@ -1,25 +1,73 @@
-﻿using EFSecondLevelCache.Core;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using TypiconOnline.Domain.Books.Katavasia;
+using TypiconOnline.Domain.Books.Oktoikh;
+using TypiconOnline.Domain.Books.Psalter;
+using TypiconOnline.Domain.Books.TheotokionApp;
+using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.Typicon.Psalter;
+using TypiconOnline.Repository.EFCore.DataBase.Mapping;
 
 namespace TypiconOnline.Repository.EFCore.DataBase
 {
-    public class CachedDbContext : DBContextBase
+    public class TypiconDBContext : DbContext
     {
-        public CachedDbContext(DbContextOptions<DBContextBase> options) : base(options) { }
+        public TypiconDBContext() : base() { }
 
-        public override int SaveChanges()
+        public TypiconDBContext(DbContextOptions<TypiconDBContext> options) : base(options) { }
+
+        #region Modeling
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            this.ChangeTracker.DetectChanges();
-            var changedEntityNames = this.GetChangedEntityNames();
+            // настройка полей с помощью Fluent API
 
-            this.ChangeTracker.AutoDetectChangesEnabled = false; // for performance reasons, to avoid calling DetectChanges() again.
-            var result = base.SaveChanges();
-            this.ChangeTracker.AutoDetectChangesEnabled = true;
+            modelBuilder.ApplyConfiguration(new TypiconEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new TypiconSettingsConfiguration());
 
-            return result;
+            //modelBuilder.ApplyConfiguration(new TypiconRuleConfiguration());
+
+            modelBuilder.ApplyConfiguration(new SignConfiguration());
+
+            modelBuilder.ApplyConfiguration(new ModifiedYearConfiguration());
+            
+            modelBuilder.ApplyConfiguration(new ModifiedRuleConfiguration());
+            modelBuilder.ApplyConfiguration(new DayWorshipsFilterConfiguration());
+
+            modelBuilder.ApplyConfiguration(new CommonRuleConfiguration());
+
+            modelBuilder.ApplyConfiguration(new DayRuleConfiguration()); 
+            modelBuilder.ApplyConfiguration(new DayWorshipConfiguration());
+            modelBuilder.ApplyConfiguration(new DayRuleWorshipConfiguration());
+            modelBuilder.ApplyConfiguration(new MenologyRuleConfiguration());
+            modelBuilder.ApplyConfiguration(new TriodionRuleConfiguration());
+
+            modelBuilder.ApplyConfiguration(new MenologyDayConfiguration());
+            modelBuilder.ApplyConfiguration(new TriodionDayConfiguration());
+
+            modelBuilder.ApplyConfiguration(new DayConfiguration());
+
+            modelBuilder.ApplyConfiguration(new EasterItemConfiguration());
+
+            modelBuilder.ApplyConfiguration(new ItemDateConfiguration());
+
+            //modelBuilder.ApplyConfiguration(new ItemTextConfiguration());
+            //modelBuilder.ApplyConfiguration(new ItemFakeTextConfiguration());
+            //modelBuilder.ApplyConfiguration(new ItemTextStyledConfiguration()); 
+
+            modelBuilder.Entity<OktoikhDay>();
+            modelBuilder.Entity<TheotokionApp>();
+            modelBuilder.Entity<Katavasia>();
+
+            modelBuilder.ApplyConfiguration(new KathismaConfiguration()); 
+            modelBuilder.ApplyConfiguration(new SlavaElementConfiguration());
+            modelBuilder.ApplyConfiguration(new PsalmLinkConfiguration());
+            modelBuilder.ApplyConfiguration(new PsalmConfiguration());
+
+            base.OnModelCreating(modelBuilder);
         }
+
+        #endregion
     }
 }

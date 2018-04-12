@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Tests
         public static ScheduleService Create()
         {
             throw new NotImplementedException();
-            //var optionsBuilder = new DbContextOptionsBuilder<DBContextBase>();
+            //var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
 
             ////string path = $"Data Source=31.31.196.160;Initial Catalog=u0351320_Typicon;Integrated Security=False;User Id=u0351320_defaultuser;Password=DDOR0YUMg519DbT2ebzN;MultipleActiveResultSets=True";
             //string path = $"Data Source=(LocalDB)\\MSSQLLocalDB;Database=TypiconDB;Integrated Security=True;Connect Timeout=30";

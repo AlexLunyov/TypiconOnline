@@ -29,6 +29,7 @@ using CacheManager.Core;
 using System;
 using EFSecondLevelCache.Core;
 using EFSecondLevelCache.Core.Contracts;
+using TypiconOnline.Repository.Caching;
 
 namespace TypiconOnline.WebApi.DIExtensions
 {
@@ -52,7 +53,7 @@ namespace TypiconOnline.WebApi.DIExtensions
 
             //Настройки для использования SqlServer
             string con = configuration.GetConnectionString("MSSql");
-            kernel.Bind<DBContextBase>().To<EFCacheDBContext>()
+            kernel.Bind<TypiconDBContext>().To<EFCacheDBContext>()
                 //??????
                 .InSingletonScope()
                 .WithConstructorArgument("connection", con);

@@ -22,6 +22,7 @@ using TypiconOnline.Repository.EF;
 using System.Configuration;
 using TypiconOnline.Repository.EFCore;
 using TypiconOnline.Repository.EFCore.DataBase;
+using Microsoft.EntityFrameworkCore;
 
 namespace TypiconMigrationTool
 {
@@ -51,8 +52,7 @@ namespace TypiconMigrationTool
                         break;
                     case '2':
                         {
-                            var context = new SQLiteDBContext(@"FileName=data\SQLiteDB.db");
-                            var sqlite = new UnitOfWork(context, new RepositoryFactory());
+                            var sqlite = GetSQLiteUnitOfWork();
                             Migrate(sqlite);
                         }
                         break;
@@ -70,8 +70,20 @@ namespace TypiconMigrationTool
 
                 IUnitOfWork GetMSSqlUnitOfWork()
                 {
-                    var context = new MSSqlDBContext(ConfigurationManager.ConnectionStrings["DBTypicon"].ConnectionString);
-                    return new UnitOfWork(context, new RepositoryFactory());
+                    var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
+                    var connectionString = ConfigurationManager.ConnectionStrings["DBTypicon"].ConnectionString;
+                    optionsBuilder.UseSqlServer(connectionString);
+
+                    return new UnitOfWork(new TypiconDBContext(optionsBuilder.Options));
+                };
+
+                IUnitOfWork GetSQLiteUnitOfWork()
+                {
+                    var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
+                    var connectionString = @"FileName=data\SQLiteDB.db";
+                    optionsBuilder.UseSqlite(connectionString);
+
+                    return new UnitOfWork(new TypiconDBContext(optionsBuilder.Options));
                 };
             }
 

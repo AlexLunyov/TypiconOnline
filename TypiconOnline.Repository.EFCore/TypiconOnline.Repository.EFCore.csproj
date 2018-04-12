@@ -5,10 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EFSecondLevelCache.Core" Version="1.5.0" />
+    <Compile Remove="Caching\EFCacheRepository.cs" />
+    <Compile Remove="Caching\EFCacheRepositoryFactory.cs" />
+    <Compile Remove="DataBase\MSSqlDBContext.cs" />
+    <Compile Remove="DataBase\SQLiteDBContext.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />

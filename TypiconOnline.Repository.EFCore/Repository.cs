@@ -16,9 +16,9 @@ namespace TypiconOnline.Repository.EFCore
     {
         readonly DbSet<DomainType> objectSet;
 
-        public Repository(DBContextBase dbContext)
+        public Repository(TypiconDBContext dbContext)
         {
-            if (dbContext == null) throw new ArgumentNullException("DBContextBase in Repository");
+            if (dbContext == null) throw new ArgumentNullException("TypiconDBContext in Repository");
 
             objectSet = dbContext.Set<DomainType>();
         }

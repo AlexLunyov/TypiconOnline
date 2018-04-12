@@ -6,6 +6,7 @@ using System.Text;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Repository.EFCore.Tests.Common;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.Books.Easter;
 
 namespace TypiconOnline.Repository.EFCore.Tests.Caching
 {
@@ -37,6 +38,16 @@ namespace TypiconOnline.Repository.EFCore.Tests.Caching
             typiconEntity = uof.Repository<TypiconEntity>().GetAll(c => c.Id == 1).ToList();
 
             Assert.IsNotNull(typiconEntity);
+        }
+
+        [TestMethod]
+        public void EFCacheRepository_EasterItems()
+        {
+            var uof = EFCacheUOFFactory.Create();
+
+            var response = uof.Repository<EasterItem>().GetAll().ToList();
+
+            Assert.IsNotNull(response);
         }
     }
 }
