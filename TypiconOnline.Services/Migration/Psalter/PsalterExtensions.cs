@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Books.Psalter;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Psalter;
@@ -18,10 +19,22 @@ namespace TypiconOnline.AppServices.Migration.Psalter
         /// <param name="typiconEntity"></param>
         /// <param name="kathisma"></param>
         /// <returns></returns>
-        public static Kathisma AppendKathisma(this TypiconEntity typiconEntity, Kathisma kathisma)
+        public static Kathisma AppendOrUpdateKathisma(this TypiconEntity typiconEntity, Kathisma kathisma)
         {
-            typiconEntity.Kathismas.Add(kathisma);
-            return kathisma;
+            var found = typiconEntity.Kathismas.FirstOrDefault(c => c.Number == kathisma.Number);
+
+            if (found != null)
+            {
+                found.NumberName.Merge(kathisma.NumberName);
+
+                return found;
+            }
+            else
+            {
+                typiconEntity.Kathismas.Add(kathisma);
+
+                return kathisma;
+            }
         }
 
         public static void AppendStihos(this PsalmLink psalmLink, BookStihos stihos)
@@ -37,28 +50,48 @@ namespace TypiconOnline.AppServices.Migration.Psalter
             }
         }
 
-        public static void AppendPsalmLink(this Kathisma kathisma, PsalmLink psalmLink)
+        public static void AppendOrUpdatePsalmLink(this Kathisma kathisma, PsalmLink psalmLink)
         {
             var lastSlava = kathisma.SlavaElements.LastOrDefault();
             if (lastSlava == null)
             {
-                lastSlava = new SlavaElement();
-                kathisma.SlavaElements.Add(lastSlava);
+                lastSlava = kathisma.AppendNewSlava();
             }
-            lastSlava.PsalmLinks.Add(psalmLink);
+
+            //ищем существующую PsalmLink
+            var found = lastSlava.PsalmLinks.FirstOrDefault(c => c.Psalm.Number == psalmLink.Psalm.Number);
+            if (found != null)
+            {
+                //обновляем
+                found.StartStihos = psalmLink.StartStihos;
+                found.EndStihos = psalmLink.EndStihos;
+            }
+            else
+            {
+                //добавялем
+                lastSlava.PsalmLinks.Add(psalmLink);
+            }
+            
         }
 
-        public static void AppendNewSlava(this Kathisma kathisma)
+        /// <summary>
+        /// Добавляет новый элемент Славы к Кафизме
+        /// </summary>
+        /// <param name="kathisma"></param>
+        /// <returns>Добавленную Славу</returns>
+        public static SlavaElement AppendNewSlava(this Kathisma kathisma)
         {
+            SlavaElement result = null;
             if (kathisma.SlavaElements.Count < 3)
             {
-                var slava = new SlavaElement();
-                kathisma.SlavaElements.Add(slava);
+                result = new SlavaElement();
+                kathisma.SlavaElements.Add(result);
             }
             else
             {
                 //пошла 4-ая Слава - выдавать исключение?
             }
+            return result;
         }
 
         public static void Merge(this List<BookStihos> list, BookStihos stihos)
@@ -72,17 +105,22 @@ namespace TypiconOnline.AppServices.Migration.Psalter
             }
             else
             {
-                //добавляем или обновляем локализованные значения
-                foreach (var lang in stihos.Languages)
+                foundStihos.Merge(stihos);
+            }
+        }
+
+        public static void Merge(this ItemText oldItem, ItemText newItem)
+        {
+            //добавляем или обновляем локализованные значения
+            foreach (var lang in newItem.Languages)
+            {
+                if (oldItem.ContainsLanguage(lang))
                 {
-                    if (foundStihos.ContainsLanguage(lang))
-                    {
-                        foundStihos[lang] = stihos[lang];
-                    }
-                    else
-                    {
-                        foundStihos.AddElement(lang, stihos[lang]);
-                    }
+                    oldItem[lang] = newItem[lang];
+                }
+                else
+                {
+                    oldItem.AddElement(lang, newItem[lang]);
                 }
             }
         }

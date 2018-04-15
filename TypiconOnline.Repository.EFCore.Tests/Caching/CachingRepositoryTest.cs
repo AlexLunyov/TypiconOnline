@@ -38,43 +38,43 @@ namespace TypiconOnline.Repository.EFCore.Tests.Caching
             Assert.IsNotNull(items);
         }
 
-        [TestMethod]
-        public void CachingRepository_MockEasters()
-        {
-            var uof = EFCacheUOFFactory.Create(MockEastersRepositoryFactory.Create());
+        //[TestMethod]
+        //public void CachingRepository_MockEasters()
+        //{
+        //    var uof = EFCacheUOFFactory.Create(MockEastersRepositoryFactory.Create());
 
-            var items = uof.Repository<EasterItem>().GetAll(c => c.Date > DateTime.MinValue).ToList();
+        //    var items = uof.Repository<EasterItem>().GetAll(c => c.Date > DateTime.MinValue).ToList();
 
-            items.ForEach(c =>
-            {
-                c.Date = DateTime.Now;
-                uof.Repository<EasterItem>().Update(c);
-            });
+        //    items.ForEach(c =>
+        //    {
+        //        c.Date = DateTime.Now;
+        //        uof.Repository<EasterItem>().Update(c);
+        //    });
 
-            uof.SaveChanges();
+        //    uof.SaveChanges();
 
-            items = uof.Repository<EasterItem>().GetAll().ToList();
+        //    items = uof.Repository<EasterItem>().GetAll().ToList();
 
-            var found = items.FirstOrDefault(c => c.Date.Year != DateTime.Now.Year);
+        //    var found = items.FirstOrDefault(c => c.Date.Year != DateTime.Now.Year);
 
-            Assert.IsNotNull(found);
-        }
+        //    Assert.IsNotNull(found);
+        //}
 
-        [TestMethod]
-        public void CachingRepository_MockEaster()
-        {
-            var uof = EFCacheUOFFactory.Create(MockEastersRepositoryFactory.Create());
+        //[TestMethod]
+        //public void CachingRepository_MockEaster()
+        //{
+        //    var uof = EFCacheUOFFactory.Create(MockEastersRepositoryFactory.Create());
 
-            var response = uof.Repository<EasterItem>().Get(c => c.Date.Year == 2018);
+        //    var response = uof.Repository<EasterItem>().Get(c => c.Date.Year == 2018);
 
-            response.Date = DateTime.MinValue;
+        //    response.Date = DateTime.MinValue;
 
-            uof.SaveChanges();
+        //    uof.SaveChanges();
 
-            response = uof.Repository<EasterItem>().Get(c => c.Date > DateTime.MinValue);
+        //    response = uof.Repository<EasterItem>().Get(c => c.Date > DateTime.MinValue);
 
-            Assert.AreNotEqual(response.Date, DateTime.MinValue);
-        }
+        //    Assert.AreNotEqual(response.Date, DateTime.MinValue);
+        //}
 
         [TestMethod]
         public void CachingRepository_DetectChanges()

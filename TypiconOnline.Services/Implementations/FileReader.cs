@@ -61,6 +61,10 @@ namespace TypiconOnline.AppServices.Implementations
             return "";
         }
 
+        /// <summary>
+        /// Читает все файлы ".xml" из определенной директории
+        /// </summary>
+        /// <returns>name - имя файла, content - содержимое в строковом формате</returns>
         public IEnumerable<(string name, string content)> ReadAllFromDirectory()
         {
             List<(string name, string content)> result = new List<(string name, string content)>();
@@ -83,11 +87,5 @@ namespace TypiconOnline.AppServices.Implementations
 
             return result;
         }
-    }
-
-    public class FilesSearchResponse
-    {
-        public string Name;
-        public string Xml;
     }
 }

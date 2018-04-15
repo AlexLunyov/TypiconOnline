@@ -17,7 +17,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
         [Test]
         public void PsalmsMigrationManager_Test()
         {
-            var uof = new EFUnitOfWork();
+            var uof = UnitOfWorkFactory.Create();
             var service = new FakePsalterService(uof);
 
             var manager = new PsalmsMigrationManager(service);

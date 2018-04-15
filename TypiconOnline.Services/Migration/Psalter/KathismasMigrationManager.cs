@@ -27,13 +27,18 @@ namespace TypiconOnline.AppServices.Migration.Psalter
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="typiconEntity"></param>
+        /// <param name="migrateOnlyKathismaName">Только лишь обновляет/добавляет имена у кафизм для заданного языка</param>
         /// <exception cref="ResourceNotFoundException">В случае отсутствия Псалмов в БД</exception>
-        public void MigrateKathismas(IPsalterReader reader, TypiconEntity typiconEntity)
+        public void MigrateKathismas(IPsalterReader reader, TypiconEntity typiconEntity, bool migrateOnlyKathismaName = false)
         {
             if (reader == null) throw new ArgumentNullException("IPsalterReader in MigrateKathismas");
             if (typiconEntity == null) throw new ArgumentNullException("TypiconEntity in MigrateKathismas");
 
-            DeleteAllKathismas(typiconEntity);
+            //Удаляем все кафизмы, если установлен флаг
+            //if (clearBeforeMigration)
+            //{
+            //    DeleteAllKathismas(typiconEntity);
+            //}
 
             Kathisma kathisma = null;
             PsalmLink psalmLink = null;
@@ -45,41 +50,77 @@ namespace TypiconOnline.AppServices.Migration.Psalter
                 switch (reader.ElementType)
                 {
                     case PsalterElementKind.Kathisma:
-                        currentElement = reader.Element;
-                        kathisma = typiconEntity.AppendKathisma(reader.Element as Kathisma);
+                        {
+                            currentElement = reader.Element;
+                            kathisma = typiconEntity.AppendOrUpdateKathisma(reader.Element as Kathisma);
+                            psalmLink = null;
+                        }
                         break;
                     case PsalterElementKind.Psalm:
-                        //если до этого читали Псалом, то добавляем его, очищая ссылки на стихи
-                        if (currentElement is PsalmLink p)
                         {
-                            ClearStihosIndexes(p);
-                            kathisma?.AppendPsalmLink(p);
+                            if (!migrateOnlyKathismaName)
+                            {
+                                //если до этого читали Псалом, то добавляем его, очищая ссылки на стихи
+                                if (psalmLink != null)
+                                {
+                                    AppendAndClearPsalmLink(kathisma, psalmLink);
+                                }
+                                currentElement = reader.Element;
+                                psalmLink = CreatePsalmLink((reader.Element as Psalm).Number);
+                            }
                         }
-                        currentElement = reader.Element;
-                        psalmLink = CreatePsalmLink((reader.Element as Psalm).Number);
                         break;
                     case PsalterElementKind.PsalmAnnotation:
                         //не нужна- ничего не делаем
                         break;
                     case PsalterElementKind.PsalmText:
-                        if (currentElement == null)
                         {
-                            //значит пришли сюда после чтения "Славы"
-                            //создаем новую ссылку на Псалом (17 кафизма)
-                            psalmLink = CreatePsalmLink(psalmLink);
+                            if (!migrateOnlyKathismaName)
+                            {
+                                if (currentElement == null)
+                                {
+                                    //значит пришли сюда после чтения "Славы"
+                                    //добавляем сформированную Ссылку
+                                    //и создаем новую ссылку на Псалом (17 кафизма)
+                                    if (psalmLink != null)
+                                    {
+                                        kathisma.AppendOrUpdatePsalmLink(psalmLink);
+                                    }
+                                    psalmLink = CreatePsalmLink(psalmLink);
+                                }
+                                psalmLink.AppendStihos(reader.Element as BookStihos);
+                                currentElement = psalmLink;
+                            }
                         }
-                        psalmLink?.AppendStihos(reader.Element as BookStihos);
-                        currentElement = psalmLink;
                         break;
                     case PsalterElementKind.Slava:
-                        kathisma?.AppendNewSlava();
-                        if (currentElement is PsalmLink pl)
                         {
-                            kathisma?.AppendPsalmLink(pl);
+                            if (!migrateOnlyKathismaName)
+                            {
+                                //Добавляем новую Славу
+                                kathisma.AppendNewSlava();
+
+                                //добавляем Ссылку
+                                if (currentElement is PsalmLink p)
+                                {
+                                    if (kathisma.SlavaElements.Count >= 3)
+                                    {
+                                        kathisma.AppendOrUpdatePsalmLink(p);
+                                    }
+                                }
+
+                                currentElement = null;
+                            }
                         }
-                        currentElement = null;
                         break;
                 }
+            }
+
+            void AppendAndClearPsalmLink(Kathisma k, PsalmLink p)
+            {
+                //Пока убираем, потому как в текст Псалма будут входить и аннотации
+                //ClearStihosIndexes(p);
+                k.AppendOrUpdatePsalmLink(p);
             }
         }
 

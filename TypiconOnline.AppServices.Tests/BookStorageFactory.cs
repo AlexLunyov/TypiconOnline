@@ -30,7 +30,7 @@ namespace TypiconOnline.AppServices.Tests
                                     new PsalterContext(_unitOfWork),
                                     new OktoikhContext(_unitOfWork, easters),
                                     new TheotokionAppContext(_unitOfWork),
-                                    new EasterContext(_unitOfWork),
+                                    easters,
                                     new KatavasiaContext(_unitOfWork));
         }
     }

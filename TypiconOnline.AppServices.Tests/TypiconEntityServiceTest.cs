@@ -15,7 +15,7 @@ namespace TypiconOnline.AppServices.Tests
         [Test]
         public void TypiconEntityService_ClearModifiedYears()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+            var _unitOfWork = UnitOfWorkFactory.Create();
 
             //BookStorage.Instance = BookStorageFactory.Create();
 
@@ -31,7 +31,7 @@ namespace TypiconOnline.AppServices.Tests
         [Test]
         public void TypiconEntityService_GetAllTypiconEntities()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+            var _unitOfWork = UnitOfWorkFactory.Create();
 
             //BookStorage.Instance = BookStorageFactory.Create();
 
@@ -45,7 +45,7 @@ namespace TypiconOnline.AppServices.Tests
         [Test]
         public void TypiconEntityService_GetTypiconEntity()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+            var _unitOfWork = UnitOfWorkFactory.Create();
 
             //BookStorage.Instance = BookStorageFactory.Create();
 

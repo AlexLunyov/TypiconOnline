@@ -25,7 +25,9 @@ namespace TypiconOnline.Repository.EFCore
 
         public IQueryable<DomainType> GetIncludes()
         {
-            IQueryable<DomainType> request = _dbSet.AsNoTracking();
+            //TODO: убираем AsNoTracking - необходимо протестировать ScheduleService 
+            //- не будут ли портиться связи и ссылки на службы
+            IQueryable<DomainType> request = _dbSet;//.AsNoTracking();
 
             Type type = typeof(DomainType);
             switch (true)

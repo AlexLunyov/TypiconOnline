@@ -28,8 +28,10 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             GetTypiconEntityResponse resp = new TypiconEntityService(_unitOfWork).GetTypiconEntity(1);
             TypiconEntity typiconEntity = resp.TypiconEntity;
             MenologyRule rule = typiconEntity.MenologyRules[0];
-            ServiceSequenceHandler handler = new ServiceSequenceHandler();
-            handler.Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru"), Rule = rule, Date = DateTime.Today };
+            ServiceSequenceHandler handler = new ServiceSequenceHandler
+            {
+                Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru"), Rule = rule, Date = DateTime.Today }
+            };
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
             FileReader reader = new FileReader(folderPath);

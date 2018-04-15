@@ -143,9 +143,7 @@ namespace TypiconMigrationTool
             Commit();
 
             MigratePsalms();
-            //TODO: раскомментировать и исправить. Не работает с EFSQLite
-            //MigrateKathismas(typiconEntity);
-            Commit();
+            MigrateKathismas(typiconEntity);            
         }
 
         private void MigrateTheotokionIrmologion()
@@ -219,6 +217,9 @@ namespace TypiconMigrationTool
 
             var manager = new KathismasMigrationManager(context);
             manager.MigrateKathismas(new PsalterRuReader(folder, "cs-ru"), typiconEntity);
+            //Commit();
+            manager.MigrateKathismas(new PsalterCsReader(folder, "cs-cs"), typiconEntity, true);
+            Commit();
         }
 
         private void Commit()
