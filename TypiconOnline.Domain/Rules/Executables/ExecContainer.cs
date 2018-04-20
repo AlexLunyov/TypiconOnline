@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
@@ -60,22 +61,23 @@ namespace TypiconOnline.Domain.Rules.Executables
         /// <summary>
         /// Возвращает все дочерние элементы согласно введенного generic типа
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="date"></param>
-        /// <param name="handler"></param>
+        /// <typeparam name="T">Тип элемента правил для поиска</typeparam>
+        /// <param name="predicate">Дополнительные условия для поиска</param>
         /// <returns></returns>
-        protected ExecContainer GetChildElements<T>(IRuleHandler handler) //where T : RuleExecutable, ICustomInterpreted
+        public IReadOnlyList<T> GetChildElements<T>(Func<T, bool> predicate = null) //where T : RuleExecutable, ICustomInterpreted
         {
             //используем специальный обработчик
             //чтобы создать список источников канонов на обработку
-            var childrenHandler = new CollectorRuleHandler<T>() { Settings = handler.Settings };
+            var childrenHandler = new CollectorRuleHandler<T>();
 
             foreach (RuleElement elem in ChildElements)
             {
                 elem.Interpret(childrenHandler);
             }
 
-            return childrenHandler.GetResult();
+            var result = childrenHandler.GetResult();
+
+            return (predicate != null) ? result.Where(predicate).ToList() : result;
         }
 
         #endregion

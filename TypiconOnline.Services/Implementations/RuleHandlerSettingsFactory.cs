@@ -21,13 +21,16 @@ namespace TypiconOnline.AppServices.Implementations
     {
         //IOktoikhContext _oktoikhContext;
         //TypiconEntity _typicon;
-        //IModifiedRuleService _modifiedRuleService;
+        IModifiedRuleService modifiedRuleService;
+        IRuleSerializerRoot ruleSerializer;
 
-        public RuleHandlerSettingsFactory()
+        public RuleHandlerSettingsFactory(IRuleSerializerRoot ruleSerializer
+                                        , IModifiedRuleService modifiedRuleService)
         {
-            //_modifiedRuleService = service ?? throw new ArgumentNullException("IModifiedRuleService");
+            this.modifiedRuleService = modifiedRuleService ?? throw new ArgumentNullException("modifiedRuleService in RuleHandlerSettingsFactory");
             //_oktoikhContext = oktoikhContext ?? throw new ArgumentNullException("IOktoikhContext");
             //_typicon = typicon ?? throw new ArgumentNullException("TypiconEntity");
+            this.ruleSerializer = ruleSerializer ?? throw new ArgumentNullException("ruleSerializer in RuleHandlerSettingsFactory");
         }
 
         /// <summary>
@@ -38,16 +41,24 @@ namespace TypiconOnline.AppServices.Implementations
         /// <returns></returns>
         public virtual RuleHandlerSettings Create(GetRuleSettingsRequest req)
         {
-            //MenologyRule - не может быть null
-            if (req.MenologyRule == null) throw new NullReferenceException("MenologyRule");
-            //находим день Октоиха - не может быть null
-            if (req.OktoikhDay == null) throw new NullReferenceException("OktoikhDay");
+            if (req == null || req.Typicon == null)
+            {
+                throw new ArgumentNullException("GetRuleSettingsRequest in Create");
+            }
+
+            //заполняем Правила и день Октоиха
+            //находим MenologyRule - не может быть null
+            var menologyRule = req.Typicon.GetMenologyRule(req.Date) ?? throw new NullReferenceException("MenologyRule");
 
             //находим TriodionRule
-            //TriodionRule triodionRule = req.Typicon.GetTriodionRule(req.Date);
+            int daysFromEaster = ruleSerializer.BookStorage.Easters.GetDaysFromCurrentEaster(req.Date);
+            var triodionRule = req.Typicon.GetTriodionRule(daysFromEaster);
 
-            //находим ModifiedRule с максимальным приоритетом 
-            //ModifiedRule modifiedRule = _modifiedRuleService.GetModifiedRuleHighestPriority(req.Typicon, req.Date);
+            //находим ModifiedRule с максимальным приоритетом
+            var modifiedRule = modifiedRuleService.GetModifiedRuleHighestPriority(req.Typicon, req.Date, ruleSerializer);
+
+            //находим день Октоиха - не может быть null
+            var oktoikhDay = ruleSerializer.BookStorage.Oktoikh.Get(req.Date) ?? throw new NullReferenceException("OktoikhDay"); ;
 
             //создаем выходной объект
             RuleHandlerSettings settings = null;
@@ -55,23 +66,23 @@ namespace TypiconOnline.AppServices.Implementations
             //Номер Знака службы, указанный в ModifiedRule, который будет использовать в отображении Расписания
             int? signNumber = null;
 
-            if (req.ModifiedRule != null)
+            if (modifiedRule != null)
             {
                 //custom SignNumber
-                signNumber = req.ModifiedRule.SignNumber;
+                signNumber = modifiedRule.SignNumber;
 
-                if (req.ModifiedRule.IsAddition == true)
+                if (modifiedRule.IsAddition == true)
                 {
                     //создаем первый объект, который в дальнейшем станет ссылкой Addition у выбранного правила
-                    settings = InnerCreate(req.ModifiedRule.RuleEntity, req.ModifiedRule.RuleEntity.DayWorships, req.OktoikhDay, req, null);
+                    settings = GetRecursiveSettings(modifiedRule.RuleEntity, modifiedRule.RuleEntity.DayWorships, oktoikhDay, req, null);
 
                     //обнуляем его, чтобы больше не участвовал в формировании
-                    req.ModifiedRule = null;
+                    modifiedRule = null;
                 }
             }
 
             //получаем главное Правило и коллекцию богослужебных текстов
-            (DayRule Rule, IEnumerable<DayWorship> Worships) = CalculatePriorities(req.ModifiedRule, req.MenologyRule, req.TriodionRule);
+            (DayRule Rule, IEnumerable<DayWorship> Worships) = CalculatePriorities(modifiedRule, menologyRule, triodionRule);
 
             //смотрим, не созданы ли уже настройки
             if (settings != null)
@@ -79,7 +90,6 @@ namespace TypiconOnline.AppServices.Implementations
                 //созданы - значит был определен элемент для добавления
                 settings.DayWorships.AddRange(Worships);
             }
-
 
             TypiconRule seniorRule = Rule;
             //смотрим, главным ставить само Правило или Знак службы
@@ -98,7 +108,7 @@ namespace TypiconOnline.AppServices.Implementations
                 seniorRule = seniorRule.Template;
             }
 
-            RuleHandlerSettings outputSettings = GetRecursiveSettings(seniorRule, Worships, req.OktoikhDay, req, settings, signNumber);
+            RuleHandlerSettings outputSettings = GetRecursiveSettings(seniorRule, Worships, oktoikhDay, req, settings, signNumber);
 
             return outputSettings;
         }
@@ -209,7 +219,8 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 Addition = additionalSettings,
                 Date = req.Date,
-                Rule = rule,
+                TypiconRule = rule,
+                RuleContainer = rule.GetRule<ExecContainer>(ruleSerializer),
                 DayWorships = dayWorships.ToList(),
                 OktoikhDay = oktoikhDay,
                 Language = LanguageSettingsFactory.Create(req.Language),

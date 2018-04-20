@@ -146,7 +146,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
             if (index >= 0)
             {
-                result = handler.Settings.Rule.Owner.GetCommonRuleIndexedString(
+                result = handler.Settings.TypiconRule.Owner.GetCommonRuleIndexedString(
                     new CommonRuleServiceRequest() { Key = CommonRuleConstants.ViewModelKind, RuleSerializer = ruleSerializer }, index, handler.Settings.Language.Name);
             }
 

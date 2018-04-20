@@ -16,35 +16,35 @@ namespace TypiconOnline.Domain.Rules.Schedule
         public WorshipRuleSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] {
-                RuleConstants.ServiceNodeName };
+                RuleConstants.WorshipRuleNodeName };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new WorshipRule(d.GetElementName());
+            return new WorshipRule(req.Descriptor.GetElementName(), req.Parent);
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement container)
+        protected override void FillObject(FillObjectRequest req)
         {
-            base.FillObject(d, container);
+            base.FillObject(req);
 
-            XmlAttribute attr = d.Element.Attributes[RuleConstants.ServiceIdAttrName];
-            (container as WorshipRule).Id = (attr != null) ? attr.Value : string.Empty;
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.WorshipRuleIdAttrName];
+            (req.Element as WorshipRule).Id = (attr != null) ? attr.Value : string.Empty;
 
-            attr = d.Element.Attributes[RuleConstants.ServiceTimeAttrName];
-            (container as WorshipRule).Time = new ItemTime((attr != null) ? attr.Value : string.Empty);
+            attr = req.Descriptor.Element.Attributes[RuleConstants.WorshipRuleTimeAttrName];
+            (req.Element as WorshipRule).Time = new ItemTime((attr != null) ? attr.Value : string.Empty);
 
-            attr = d.Element.Attributes[RuleConstants.ServiceNameAttrName];
-            (container as WorshipRule).Name = (attr != null) ? attr.Value : string.Empty;
+            attr = req.Descriptor.Element.Attributes[RuleConstants.WorshipRuleNameAttrName];
+            (req.Element as WorshipRule).Name = (attr != null) ? attr.Value : string.Empty;
 
-            attr = d.Element.Attributes[RuleConstants.ServiceIsDayBeforeAttrName];
+            attr = req.Descriptor.Element.Attributes[RuleConstants.WorshipRuleIsDayBeforeAttrName];
             if (bool.TryParse(attr?.Value, out bool showPsalm))
             {
-                (container as WorshipRule).IsDayBefore = showPsalm;
+                (req.Element as WorshipRule).IsDayBefore = showPsalm;
             }
 
-            attr = d.Element.Attributes[RuleConstants.ServiceAdditionalNameAttrName];
-            (container as WorshipRule).AdditionalName = (attr != null) ? attr.Value : string.Empty;
+            attr = req.Descriptor.Element.Attributes[RuleConstants.WorshipRuleAdditionalNameAttrName];
+            (req.Element as WorshipRule).AdditionalName = (attr != null) ? attr.Value : string.Empty;
         }
     }
 }

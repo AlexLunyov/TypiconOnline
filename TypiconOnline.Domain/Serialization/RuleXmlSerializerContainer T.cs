@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Serialization
     /// <typeparam name="T"></typeparam>
     public class RuleXmlSerializerContainer<T> : RuleSerializerContainerBase<T> where T: RuleElement
     {
-        public RuleXmlSerializerContainer(IRuleSerializerRoot unitOfWork) : base(unitOfWork, new XmlDescriptor()) { }
+        public RuleXmlSerializerContainer(IRuleSerializerRoot serializerRoot) : base(serializerRoot, new XmlDescriptor()) { }
 
         protected override void LoadFactories()
         {
@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.Serialization
             {
                 //IRuleFactory<T> factory1 = Activator.CreateInstance(type, _unitOfWork);
 
-                var factory = Activator.CreateInstance(type, _unitOfWork) as IRuleSerializer;
+                var factory = Activator.CreateInstance(type, _serializerRoot) as IRuleSerializer;
 
                 if (factory.ElementNames != null)
                 {

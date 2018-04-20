@@ -19,22 +19,30 @@ namespace TypiconOnline.Domain.Serialization
 
         public IEnumerable<string> ElementNames { get; protected set; }
 
-        public virtual RuleElement Deserialize(IDescriptor descriptor)
+        public virtual RuleElement Deserialize(IDescriptor descriptor, IRewritableElement parent)
         {
             RuleElement element = null;
 
             if (descriptor is XmlDescriptor d)
             {
-                element = CreateObject(d);
+                element = CreateObject(new CreateObjectRequest() { Descriptor = d, Parent = parent });
 
-                FillObject(d, element);
+                /*
+                 * Вычисляем IRewritableElement.
+                 * Если созданный элемент является таковым, используем его.
+                 * Если нет - используем parent
+                 */
+
+                parent = element as IRewritableElement ?? parent;
+
+                FillObject(new FillObjectRequest() { Descriptor = d, Element = element, Parent = parent });
             }
 
             return element;
         }
 
-        protected abstract RuleElement CreateObject(XmlDescriptor d);
-        protected abstract void FillObject(XmlDescriptor d, RuleElement element);
+        protected abstract RuleElement CreateObject(CreateObjectRequest req);
+        protected abstract void FillObject(FillObjectRequest req);
 
         public abstract string Serialize(RuleElement element);
     }

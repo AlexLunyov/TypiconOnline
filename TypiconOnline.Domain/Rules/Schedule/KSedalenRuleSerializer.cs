@@ -16,16 +16,16 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.KSedalenNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d) => new KSedalenRule(d.GetElementName());
+        protected override RuleElement CreateObject(CreateObjectRequest req) => new KSedalenRule(req.Descriptor.GetElementName());
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            base.FillObject(d, element);
+            base.FillObject(req);
 
-            XmlAttribute attr = d.Element.Attributes[RuleConstants.KSedalenPlaceAttrName];
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.KSedalenPlaceAttrName];
             if (Enum.TryParse(attr?.Value, true, out KanonasPlaceKind place))
             {
-                (element as KSedalenRule).Place = place;
+                (req.Element as KSedalenRule).Place = place;
             }
         }
 

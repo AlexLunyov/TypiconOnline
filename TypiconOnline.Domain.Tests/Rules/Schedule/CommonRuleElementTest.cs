@@ -13,6 +13,7 @@ using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Repository.EF;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Rules.Schedule
 {
@@ -23,14 +24,14 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         public void CommonRuleElement_SimplePassing()
         {
             //находим первый попавшийся MenologyRule
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-            //BookStorage.Instance = BookStorageFactory.Create();
-            GetTypiconEntityResponse resp = new TypiconEntityService(_unitOfWork).GetTypiconEntity(1);
-            TypiconEntity typiconEntity = resp.TypiconEntity;
+            var unitOfWork = UnitOfWorkFactory.Create();
+
+            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
+
             MenologyRule rule = typiconEntity.MenologyRules[0];
             ServiceSequenceHandler handler = new ServiceSequenceHandler
             {
-                Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru"), Rule = rule, Date = DateTime.Today }
+                Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru"), TypiconRule = rule, Date = DateTime.Today }
             };
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");

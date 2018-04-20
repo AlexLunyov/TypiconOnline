@@ -16,42 +16,42 @@ namespace TypiconOnline.Repository.EF.Tests
     [TestFixture]
     public class TypiconEntityTest
     {
-        [Test]
-        public void TypiconEntity_FromDB()
-        {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+        //[Test]
+        //public void TypiconEntity_FromDB()
+        //{
+        //    EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
+        //    TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
 
-            Assert.AreEqual(typiconEntity.Signs.Count, 16);
-        }
+        //    Assert.AreEqual(typiconEntity.Signs.Count, 16);
+        //}
 
-        [Test]
-        public void TypiconEntity_Delete()
-        {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+        //[Test]
+        //public void TypiconEntity_Delete()
+        //{
+        //    EFUnitOfWork _unitOfWork = new EFUnitOfWork();
 
-            TypiconEntity typiconEntity = new TypiconEntity()
-            {
-                Name = "Устав для удаления"
-            };
+        //    TypiconEntity typiconEntity = new TypiconEntity()
+        //    {
+        //        Name = "Устав для удаления"
+        //    };
 
-            //typiconEntity.RulesFolder.AddFolder(new TypiconFolderEntity()
-            //{
-            //    Name = "Папка для удаления",
-            //    Owner = typiconEntity
-            //});
+        //    //typiconEntity.RulesFolder.AddFolder(new TypiconFolderEntity()
+        //    //{
+        //    //    Name = "Папка для удаления",
+        //    //    Owner = typiconEntity
+        //    //});
 
-            _unitOfWork.Repository<TypiconEntity>().Insert(typiconEntity);
+        //    _unitOfWork.Repository<TypiconEntity>().Insert(typiconEntity);
 
-            _unitOfWork.SaveChanges();
+        //    _unitOfWork.SaveChanges();
 
-            _unitOfWork.Repository<TypiconEntity>().Delete(typiconEntity);
+        //    _unitOfWork.Repository<TypiconEntity>().Delete(typiconEntity);
 
-            _unitOfWork.SaveChanges();
+        //    _unitOfWork.SaveChanges();
 
-            Assert.Pass("Deleted.");
-        }
+        //    Assert.Pass("Deleted.");
+        //}
 
         //[Test]
         //public void TypiconEntity_GetModifiedRule()

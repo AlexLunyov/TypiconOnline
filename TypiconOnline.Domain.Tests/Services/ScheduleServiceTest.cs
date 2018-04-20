@@ -14,6 +14,7 @@ using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Repository.EF;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Services
 {
@@ -23,11 +24,9 @@ namespace TypiconOnline.Domain.Tests.Services
         [Test]
         public void ScheduleService_GetService()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+            var unitOfWork = UnitOfWorkFactory.Create();
 
-            //BookStorage.Instance = BookStorageFactory.Create();
-
-            TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
+            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
 
             ScheduleHandler handler = new ScheduleHandler();
 
@@ -43,7 +42,7 @@ namespace TypiconOnline.Domain.Tests.Services
 
             GetScheduleDayResponse response = scheduleService.GetScheduleDay(request);
 
-            _unitOfWork.SaveChanges();
+            //unitOfWork.SaveChanges();
 
             Assert.AreEqual(3, response.Day.Schedule.Count);
 

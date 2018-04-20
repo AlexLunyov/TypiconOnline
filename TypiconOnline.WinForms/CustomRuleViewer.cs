@@ -64,7 +64,8 @@ namespace TypiconOnline.WinForms
                 container.With(unitOfWork).GetInstance<IKatavasiaContext>());
 
             IRuleSerializerRoot serializerRoot = container.With(bookStorage).GetInstance<IRuleSerializerRoot>();
-            settingsFactory = new CustomRuleSettingsFactory();
+            var modifiedRuleService = container.With(unitOfWork).GetInstance<IModifiedRuleService>();
+            settingsFactory = new CustomRuleSettingsFactory(serializerRoot, modifiedRuleService);
 
             scheduleService = container.With(settingsFactory).With(serializerRoot).GetInstance<IScheduleService>();
 

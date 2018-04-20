@@ -91,7 +91,7 @@ namespace TypiconOnline.AppServices.Implementations
             typicon.TriodionRules.
                 ForEach(a =>
                 {
-                    handler.Settings.Rule = a;
+                    handler.Settings.TypiconRule = a;
                     handler.Settings.Date = easter.AddDays(a.DaysFromEaster);
 
                     a.GetRule(serializer)?.Interpret(handler);
@@ -111,7 +111,7 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 if (menologyRule != null)
                 {
-                    h.Settings.Rule = menologyRule;
+                    h.Settings.TypiconRule = menologyRule;
                     h.Settings.Date = dateToInterpret;
 
                     //ModificationsRuleHandler handler = new ModificationsRuleHandler(

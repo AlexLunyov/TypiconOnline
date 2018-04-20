@@ -17,25 +17,25 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.PsalmRuleNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d) 
-            => new PsalmRule(d.GetElementName(), SerializerRoot.BookStorage.Psalter, new PsalmRuleVMFactory(SerializerRoot));
+        protected override RuleElement CreateObject(CreateObjectRequest req) 
+            => new PsalmRule(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.Psalter, new PsalmRuleVMFactory(SerializerRoot));
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            var psalmRule = element as PsalmRule;
-            XmlAttribute attr = d.Element.Attributes[RuleConstants.PsalmRuleNumberAttr];
+            var psalmRule = req.Element as PsalmRule;
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.PsalmRuleNumberAttr];
             if (int.TryParse(attr?.Value, out int intValue))
             {
                 psalmRule.Number = intValue;
             }
 
-            attr = d.Element.Attributes[RuleConstants.PsalmRuleStartAttr];
+            attr = req.Descriptor.Element.Attributes[RuleConstants.PsalmRuleStartAttr];
             if (int.TryParse(attr?.Value, out intValue))
             {
                 psalmRule.StartStihos = intValue;
             }
 
-            attr = d.Element.Attributes[RuleConstants.PsalmRuleEndAttr];
+            attr = req.Descriptor.Element.Attributes[RuleConstants.PsalmRuleEndAttr];
             if (int.TryParse(attr?.Value, out intValue))
             {
                 psalmRule.EndStihos = intValue;

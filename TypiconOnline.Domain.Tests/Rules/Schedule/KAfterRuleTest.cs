@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void KAfterRule_Deserialize()
         {
-            string xmlString = @"<k_after odinumber=""3"">
+            string xmlString = @"<k_after number=""3"">
 							        <priest>
 						                <p>
 							                <item language=""cs-ru"">Благослове́н Бог наш всегда́, ны́не и при́сно, и во ве́ки веко́в</item>
@@ -31,7 +31,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void KAfterRule_NoChildren()
         {
-            string xmlString = @"<k_after odinumber=""3""></k_after>";
+            string xmlString = @"<k_after number=""3""></k_after>";
 
             var element = TestRuleSerializer.Deserialize<KAfterRule>(xmlString);
 
@@ -41,7 +41,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void KAfterRule_InvalidNumber()
         {
-            string xmlString = @"<k_after odinumber=""10""></k_after>";
+            string xmlString = @"<k_after number=""10""></k_after>";
 
             var element = TestRuleSerializer.Deserialize<KAfterRule>(xmlString);
 
@@ -67,12 +67,20 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void KAfterRule_InKanonasRule()
         {
-            string xmlString = @"<kanonasrule panagias=""Честнейшую"">
-						            <k_after odinumber=""3"">
-							            <commonrule name=""Ектения_малая3""/>
+            string xmlString = @"<kanonasrule>
+						            <k_after number=""3"">
+							            <priest>
+						                    <p>
+							                    <item language=""cs-ru"">Благослове́н Бог наш всегда́, ны́не и при́сно, и во ве́ки веко́в</item>
+						                    </p>
+					                    </priest>
 						            </k_after>
-						            <k_after odinumber=""6"">
-							            <commonrule name=""Ектения_малая6""/>
+						            <k_after number=""6"">
+							            <priest>
+						                    <p>
+							                    <item language=""cs-ru"">Благослове́н Бог наш всегда́, ны́не и при́сно, и во ве́ки веко́в</item>
+						                    </p>
+					                    </priest>
 						            </k_after>
                                 </kanonasrule>";
 

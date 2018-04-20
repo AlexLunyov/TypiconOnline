@@ -37,7 +37,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         public static void AppendViewModel(this Prosomoion prosomoion, IRuleHandler handler,
             IRuleSerializerRoot serializer, ElementViewModel viewModel, int? ihos = null)
         {
-            TypiconEntity typ = handler.Settings.Rule.Owner;
+            TypiconEntity typ = handler.Settings.TypiconRule.Owner;
             CommonRuleServiceRequest req = new CommonRuleServiceRequest() { RuleSerializer = serializer };
 
             string str = "";
@@ -94,10 +94,10 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
             //находим Стих и Хор для дальнешей вставки
             req.Key = CommonRuleConstants.StihosRule;
-            string stihos = handler.Settings.Rule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language.Name);
+            string stihos = handler.Settings.TypiconRule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language.Name);
 
             req.Key = CommonRuleConstants.ChoirRule;
-            string choir = handler.Settings.Rule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language.Name);
+            string choir = handler.Settings.TypiconRule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language.Name);
 
             return (stihos, choir);
         }

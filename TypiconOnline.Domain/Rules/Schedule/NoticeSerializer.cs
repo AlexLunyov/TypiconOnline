@@ -19,9 +19,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.NoticeNodeName };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new Notice(d.GetElementName());
+            return new Notice(req.Descriptor.GetElementName(), req.Parent);
         }
     }
 }

@@ -57,7 +57,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 //используем специальный обработчик для YmnosStructureRule,
                 //чтобы создать список источников стихир на обработку
-                ExecContainer container = GetChildElements<ICalcStructureElement>(handler); 
+                var container = GetChildElements<ICalcStructureElement>(); 
 
                 if (container != null)
                 {
@@ -68,10 +68,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        private void CalculateYmnosStructure(RuleHandlerSettings settings, ExecContainer container)
+        private void CalculateYmnosStructure(RuleHandlerSettings settings, IEnumerable<ICalcStructureElement> container)
         {
             Structure = new YmnosStructure();
-            foreach (ICalcStructureElement element in container.ChildElements)
+            foreach (ICalcStructureElement element in container)
             {
                 if (element.Calculate(settings) is YmnosStructure s)
                 {

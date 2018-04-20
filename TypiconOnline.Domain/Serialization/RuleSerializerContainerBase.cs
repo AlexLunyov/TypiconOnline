@@ -18,13 +18,14 @@ namespace TypiconOnline.Domain.Serialization
     {
         protected Dictionary<string, IRuleSerializer> _factories = new Dictionary<string, IRuleSerializer>();
 
-        protected IRuleSerializerRoot _unitOfWork;
+        protected IRuleSerializerRoot _serializerRoot;
 
+        //TODO: используется только для тестов. В дальнейшем удалить
         protected IDescriptor _descriptor;
 
-        public RuleSerializerContainerBase(IRuleSerializerRoot unitOfWork, IDescriptor descriptor)
+        public RuleSerializerContainerBase(IRuleSerializerRoot serializerRoot, IDescriptor descriptor)
         {
-            _unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork");
+            _serializerRoot = serializerRoot ?? throw new ArgumentNullException("unitOfWork");
             _descriptor = descriptor ?? throw new ArgumentNullException("descriptor");
 
             LoadFactories();
@@ -32,12 +33,13 @@ namespace TypiconOnline.Domain.Serialization
 
         protected abstract void LoadFactories();
 
+        //TODO: используется только для тестов. В дальнейшем удалить
         public T Deserialize(string description)
         {
-            return Deserialize(_descriptor.CreateInstance(description));
+            return Deserialize(_descriptor.CreateInstance(description), null);
         }
 
-        public T Deserialize(IDescriptor descriptor)
+        public T Deserialize(IDescriptor descriptor, IRewritableElement parent)
         {
             if (descriptor == null) throw new ArgumentNullException("descriptor"); 
 
@@ -45,7 +47,7 @@ namespace TypiconOnline.Domain.Serialization
 
             if (_factories.ContainsKey(elementName))
             {
-                return _factories[elementName].Deserialize(descriptor) as T;
+                return _factories[elementName].Deserialize(descriptor, parent) as T;
             }
 
             return default(T);

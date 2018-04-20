@@ -16,19 +16,19 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.YmnosRuleTheotokionNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new TheotokionRule(d.GetElementName(), SerializerRoot.BookStorage.TheotokionApp);
+            return new TheotokionRule(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.TheotokionApp);
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            base.FillObject(d, element);
+            base.FillObject(req);
 
-            if (d.Element.SelectSingleNode(RuleConstants.YmnosRuleNode) is XmlNode ymnosNode)
+            if (req.Descriptor.Element.SelectSingleNode(RuleConstants.YmnosRuleNode) is XmlNode ymnosNode)
             {
-                (element as TheotokionRule).ReferenceYmnos = SerializerRoot.Container<YmnosRule>()
-                    .Deserialize(new XmlDescriptor() { Element = ymnosNode });
+                (req.Element as TheotokionRule).ReferenceYmnos = SerializerRoot.Container<YmnosRule>()
+                    .Deserialize(new XmlDescriptor() { Element = ymnosNode }, req.Parent);
             }
         }
 

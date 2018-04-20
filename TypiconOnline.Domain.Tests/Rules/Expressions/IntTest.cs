@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
             var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
 
             var element = unitOfWork.Container<Int>()
-                .Deserialize(new XmlDescriptor() { Description = xmlString });
+                .Deserialize(new XmlDescriptor() { Description = xmlString }, null);
 
             Assert.IsFalse(element.IsValid);
         }
@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
             var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
 
             var element = unitOfWork.Container<Int>()
-                .Deserialize(new XmlDescriptor() { Description = xmlString });
+                .Deserialize(new XmlDescriptor() { Description = xmlString }, null);
 
             Assert.IsNotNull(element);
 

@@ -30,7 +30,11 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// <summary>
         /// Правило для обработки
         /// </summary>
-        public TypiconRule Rule { get; set; }
+        public TypiconRule TypiconRule { get; set; }
+        /// <summary>
+        /// Десериализированная последовательность элементов
+        /// </summary>
+        public ExecContainer RuleContainer { get; set; }
         public List<DayWorship> DayWorships { get; set; } = new List<DayWorship>();
         public OktoikhDay OktoikhDay { get; set; }
         /// <summary>

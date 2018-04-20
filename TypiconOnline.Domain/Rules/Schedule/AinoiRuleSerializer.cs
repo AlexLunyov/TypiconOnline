@@ -18,9 +18,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.AinoiNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new AinoiRule(new AinoiRuleVMFactory(SerializerRoot), SerializerRoot, d.GetElementName());
+            return new AinoiRule(new AinoiRuleVMFactory(SerializerRoot), SerializerRoot, req.Descriptor.GetElementName());
         }
     }
 }

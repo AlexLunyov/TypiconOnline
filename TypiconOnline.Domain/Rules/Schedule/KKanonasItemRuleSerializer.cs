@@ -16,23 +16,23 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.KanonasItemNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d) => new KKanonasItemRule(d.GetElementName());
+        protected override RuleElement CreateObject(CreateObjectRequest req) => new KKanonasItemRule(req.Descriptor.GetElementName());
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            base.FillObject(d, element);
+            base.FillObject(req);
 
-            XmlAttribute attr = d.Element.Attributes[RuleConstants.KanonasCountAttrName];
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.KanonasCountAttrName];
             if (int.TryParse(attr?.Value, out int intValue))
             {
-                (element as KKanonasItemRule).Count = intValue;
+                (req.Element as KKanonasItemRule).Count = intValue;
             }
 
-            attr = d.Element.Attributes[RuleConstants.KanonasMartyrionAttrName];
-            (element as KKanonasItemRule).UseMartyrion = bool.TryParse(attr?.Value, out bool value) ? value : false;
+            attr = req.Descriptor.Element.Attributes[RuleConstants.KanonasMartyrionAttrName];
+            (req.Element as KKanonasItemRule).UseMartyrion = bool.TryParse(attr?.Value, out bool value) ? value : false;
 
-            attr = d.Element.Attributes[RuleConstants.KanonasIrmosCountAttrName];
-            (element as KKanonasItemRule).IrmosCount = int.TryParse(attr?.Value, out int i) ? i : 0;
+            attr = req.Descriptor.Element.Attributes[RuleConstants.KanonasIrmosCountAttrName];
+            (req.Element as KKanonasItemRule).IrmosCount = int.TryParse(attr?.Value, out int i) ? i : 0;
         }
 
         public override string Serialize(RuleElement element)

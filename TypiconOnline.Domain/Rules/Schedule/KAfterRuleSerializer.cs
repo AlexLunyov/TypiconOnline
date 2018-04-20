@@ -17,17 +17,17 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.KAfterNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d) => new KAfterRule(d.GetElementName());
+        protected override RuleElement CreateObject(CreateObjectRequest req) => new KAfterRule(req.Descriptor.GetElementName());
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            base.FillObject(d, element);
+            base.FillObject(req);
 
-            var attr = d.Element.Attributes[RuleConstants.KAfterOdiNumberAttrName];
+            var attr = req.Descriptor.Element.Attributes[RuleConstants.KAfterOdiNumberAttrName];
 
             if (int.TryParse(attr?.Value, out int intValue))
             {
-                (element as KAfterRule).OdiNumber = intValue;
+                (req.Element as KAfterRule).OdiNumber = intValue;
             }
         }
 

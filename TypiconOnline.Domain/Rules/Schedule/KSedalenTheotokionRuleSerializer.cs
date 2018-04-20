@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.KSedalenTheotokionNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d) => new KSedalenTheotokionRule(d.GetElementName());
+        protected override RuleElement CreateObject(CreateObjectRequest req) => new KSedalenTheotokionRule(req.Descriptor.GetElementName());
 
         public override string Serialize(RuleElement element)
         {

@@ -19,21 +19,21 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.KanonasRuleNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new KanonasRule(d.GetElementName(), SerializerRoot, new KanonasRuleVMFactory(SerializerRoot));
+            return new KanonasRule(req.Descriptor.GetElementName(), SerializerRoot, new KanonasRuleVMFactory(SerializerRoot), req.Parent);
         }
 
-        //protected override void FillObject(XmlDescriptor d, RuleElement element)
-        //{
-        //    base.FillObject(d, element);
+        protected override void FillObject(FillObjectRequest req)
+        {
+            base.FillObject(req);
 
-        //    //SetValues((element as KanonasRule).Panagias, d.Element.Attributes[RuleConstants.KanonasRulePanagiasAttrName]);
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.IsOrthrosAttribute];
 
-        //    //void SetValues(CommonRuleElement el, XmlAttribute attr)
-        //    //{
-        //    //    el = (attr != null) ? new CommonRuleElement(SerializerRoot) { CommonRuleName = attr.Value } : null;
-        //    //}
-        //}
+            if (bool.TryParse(attr?.Value, out bool isOrthros))
+            {
+                (req.Element as KanonasRule).IsOrthros = isOrthros;
+            }
+        }
     }
 }

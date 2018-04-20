@@ -14,12 +14,13 @@ using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Repository.EF;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Domain.Books.Katavasia;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests
 {
     public static class BookStorageFactory
     {
-        public static BookStorage Create() => Create(new EFUnitOfWork());
+        public static BookStorage Create() => Create(UnitOfWorkFactory.Create());
 
         public static BookStorage Create(IUnitOfWork unitOfWork)
         {
@@ -33,7 +34,7 @@ namespace TypiconOnline.Domain.Tests
                                     new PsalterContext(unitOfWork),
                                     new OktoikhContext(unitOfWork, easters),
                                     new TheotokionAppContext(unitOfWork),
-                                    new EasterContext(unitOfWork),
+                                    easters,
                                     new KatavasiaContext(unitOfWork));
         }
     }

@@ -19,17 +19,17 @@ namespace TypiconOnline.Domain.Rules.Expressions
             ElementNames = new string[] { RuleConstants.DaysFromEasterNodeName };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new DaysFromEaster(d.GetElementName(), SerializerRoot.BookStorage.Easters);
+            return new DaysFromEaster(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.Easters);
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            if (d.Element.HasChildNodes)
+            if (req.Descriptor.Element.HasChildNodes)
             {
-                (element as DaysFromEaster).ChildExpression = SerializerRoot.Container<DateExpression>()
-                    .Deserialize(new XmlDescriptor() { Element = d.Element.FirstChild });
+                (req.Element as DaysFromEaster).ChildExpression = SerializerRoot.Container<DateExpression>()
+                    .Deserialize(new XmlDescriptor() { Element = req.Descriptor.Element.FirstChild }, req.Parent);
             }
         }
 

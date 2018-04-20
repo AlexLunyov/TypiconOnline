@@ -27,17 +27,17 @@ namespace TypiconOnline.Domain.Rules.Executables
             throw new NotImplementedException();
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new ExecContainer(d.GetElementName());
+            return new ExecContainer(req.Descriptor.GetElementName());
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            foreach (XmlNode childNode in d.Element.ChildNodes)
+            foreach (XmlNode childNode in req.Descriptor.Element.ChildNodes)
             {
-                RuleElement child = SerializerRoot.Container<RuleElement>().Deserialize(new XmlDescriptor() { Element = childNode });
-                (element as ExecContainer).ChildElements.Add(child);
+                RuleElement child = SerializerRoot.Container<RuleElement>().Deserialize(new XmlDescriptor() { Element = childNode }, req.Parent);
+                (req.Element as ExecContainer).ChildElements.Add(child);
             }
         }
     }

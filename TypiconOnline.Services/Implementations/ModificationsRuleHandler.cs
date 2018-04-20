@@ -47,7 +47,7 @@ namespace TypiconOnline.AppServices.Implementations
         {
             bool result = false;
 
-            var typiconEntity = _settings.Rule.Owner;
+            var typiconEntity = _settings.TypiconRule.Owner;
 
             if (element is ModifyReplacedDay modifyReplacedDay)
             {
@@ -85,10 +85,10 @@ namespace TypiconOnline.AppServices.Implementations
 
                 if (priority == 0)
                 {
-                    priority = /*seniorTypicon*/_settings.Rule.Template.Priority;
+                    priority = /*seniorTypicon*/_settings.TypiconRule.Template.Priority;
                 }
 
-                var request = CreateRequest((DayRule)_settings.Rule, modifyDay, priority);
+                var request = CreateRequest((DayRule)_settings.TypiconRule, modifyDay, priority);
 
                 modifiedRuleService.AddModifiedRule(typiconEntity, request);
 

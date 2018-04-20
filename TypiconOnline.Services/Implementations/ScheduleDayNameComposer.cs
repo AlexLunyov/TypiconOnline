@@ -29,7 +29,7 @@ namespace TypiconOnline.AppServices.Implementations
                 settings = settings.Addition;
             }
 
-            if (settings.DayWorships == null || settings.DayWorships.Count() == 0)
+            if (settings.DayWorships == null || settings.DayWorships.Count == 0)
             {
                 return string.Empty;
             }
@@ -58,7 +58,7 @@ namespace TypiconOnline.AppServices.Implementations
                 result = $"{s} {result}";
             }
 
-            int priority = (settings.Rule is Sign sign) ? sign.Priority : settings.Rule.Template.Priority;
+            int priority = (settings.TypiconRule is Sign sign) ? sign.Priority : settings.TypiconRule.Template.Priority;
 
             if (/*(settings.Rule is MenologyRule)
                 && */(date.DayOfWeek == DayOfWeek.Sunday)
@@ -78,6 +78,8 @@ namespace TypiconOnline.AppServices.Implementations
 
             return result;
         }
+
+        public string GetWeekName(DateTime date) => oktoikhContext.GetWeekName(date, false);
 
         private string GetShortName(List<DayWorship> dayServices, string language)
         {

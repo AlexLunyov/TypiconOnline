@@ -19,9 +19,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.LitiNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new ApostichaRule(new ApostichaVMFactory(SerializerRoot), SerializerRoot, d.GetElementName());
+            return new ApostichaRule(new ApostichaVMFactory(SerializerRoot), SerializerRoot, req.Descriptor.GetElementName());
         }
     }
 }

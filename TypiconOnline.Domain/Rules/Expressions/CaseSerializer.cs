@@ -18,32 +18,32 @@ namespace TypiconOnline.Domain.Rules.Expressions
             ElementNames = new string[] { RuleConstants.CaseNodeName };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new Case(d.GetElementName());
+            return new Case(req.Descriptor.GetElementName());
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            XmlNode valuesNode = d.Element.SelectSingleNode(RuleConstants.ValuesNodeName);
+            XmlNode valuesNode = req.Descriptor.Element.SelectSingleNode(RuleConstants.ValuesNodeName);
 
             if (valuesNode?.HasChildNodes == true)
             {
                 foreach (XmlNode valueNode in valuesNode.ChildNodes)
                 {
                     RuleExpression valueElement = SerializerRoot.Container<RuleExpression>()
-                    .Deserialize(new XmlDescriptor() { Element = valueNode });
+                    .Deserialize(new XmlDescriptor() { Element = valueNode }, req.Parent);
 
-                    (element as Case).ValuesElements.Add(valueElement);
+                    (req.Element as Case).ValuesElements.Add(valueElement);
                 }
             }
 
-            XmlNode actionNode = d.Element.SelectSingleNode(RuleConstants.ActionNodeName);
+            XmlNode actionNode = req.Descriptor.Element.SelectSingleNode(RuleConstants.ActionNodeName);
 
             if (actionNode != null)
             {
-                (element as Case).ActionElement = SerializerRoot.Container<ExecContainer>()
-                    .Deserialize(new XmlDescriptor() { Element = actionNode });
+                (req.Element as Case).ActionElement = SerializerRoot.Container<ExecContainer>()
+                    .Deserialize(new XmlDescriptor() { Element = actionNode }, req.Parent);
             }
         }
 

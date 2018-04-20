@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             var element = TestRuleSerializer.Deserialize<DaysFromEaster>(xmlString);
 
-            element.Interpret(BypassHandler.Instance);
+            element.Interpret(BypassHandler.GetInstance(new DateTime(2017, 04, 30)));
 
             Assert.AreEqual(-9, element.ValueCalculated);
             

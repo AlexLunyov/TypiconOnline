@@ -16,16 +16,16 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.KKatavasiaNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new KKatavasiaRule(d.GetElementName(), SerializerRoot.BookStorage.Katavasia);
+            return new KKatavasiaRule(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.Katavasia);
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            base.FillObject(d, element);
+            base.FillObject(req);
 
-            (element as KKatavasiaRule).Name = d.Element.Attributes[RuleConstants.KKatavasiaNameAttr]?.Value;
+            (req.Element as KKatavasiaRule).Name = req.Descriptor.Element.Attributes[RuleConstants.KKatavasiaNameAttr]?.Value;
         }
 
         public override string Serialize(RuleElement element)

@@ -14,20 +14,20 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         public YmnosStructureRuleSerializer(IRuleSerializerRoot root) : base(root) { }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement container)
+        protected override void FillObject(FillObjectRequest req)
         {
-            base.FillObject(d, container);
+            base.FillObject(req);
 
-            if (Enum.TryParse(d.GetElementName(), true, out YmnosStructureKind kind))
+            if (Enum.TryParse(req.Descriptor.GetElementName(), true, out YmnosStructureKind kind))
             {
-                (container as YmnosStructureRule).Kind = kind;
+                (req.Element as YmnosStructureRule).Kind = kind;
             }
 
-            XmlAttribute attr = d.Element.Attributes[RuleConstants.TotalCountAttribute];
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.TotalCountAttribute];
 
             if (int.TryParse(attr?.Value, out int count))
             {
-                (container as YmnosStructureRule).TotalYmnosCount = count;
+                (req.Element as YmnosStructureRule).TotalYmnosCount = count;
             }
         }
     }

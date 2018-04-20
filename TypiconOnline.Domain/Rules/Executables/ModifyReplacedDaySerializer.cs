@@ -17,17 +17,18 @@ namespace TypiconOnline.Domain.Rules.Executables
             ElementNames = new string[] { RuleConstants.ModifyReplacedDayNodeName };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d) => new ModifyReplacedDay(d.GetElementName(), SerializerRoot.BookStorage.Easters);
+        protected override RuleElement CreateObject(CreateObjectRequest req) 
+            => new ModifyReplacedDay(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.Easters);
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            base.FillObject(d, element);
+            base.FillObject(req);
 
-            XmlAttribute attr = d.Element.Attributes[RuleConstants.KindAttrName];
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.KindAttrName];
 
             if (Enum.TryParse(attr?.Value, true, out KindOfReplacedDay value))
             {
-                (element as ModifyReplacedDay).Kind = value;
+                (req.Element as ModifyReplacedDay).Kind = value;
             }
         }
 

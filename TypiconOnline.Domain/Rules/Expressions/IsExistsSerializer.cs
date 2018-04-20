@@ -19,17 +19,17 @@ namespace TypiconOnline.Domain.Rules.Expressions
             ElementNames = new string[] { RuleConstants.IsExistsNodeName };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new IsExists(d.GetElementName());
+            return new IsExists(req.Descriptor.GetElementName());
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            if (d.Element.HasChildNodes)// && node.FirstChild.Name == RuleConstants.YmnosRuleNode)
+            if (req.Descriptor.Element.HasChildNodes)// && node.FirstChild.Name == RuleConstants.YmnosRuleNode)
             {
-                (element as IsExists).ChildElement = SerializerRoot.Container<RuleExecutable, ICalcStructureElement>()
-                    .Deserialize(new XmlDescriptor() { Element = d.Element.FirstChild }) as ICalcStructureElement;
+                (req.Element as IsExists).ChildElement = SerializerRoot.Container<RuleExecutable, ICalcStructureElement>()
+                    .Deserialize(new XmlDescriptor() { Element = req.Descriptor.Element.FirstChild }, req.Parent) as ICalcStructureElement;
             }
         }
 

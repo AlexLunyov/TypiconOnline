@@ -1,59 +1,66 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <kanonasrule>
   <!-- ПРАВИЛА ДЛЯ КАНОНОВ-->
-  <if>
-    <!-- если два святых-->
-    <expression>
-      <istwosaints/>
-    </expression>
-    <then>
-      <if>
-        <expression>
-          <!-- если предпразднество или попразднество-->
-          <iscelebrating/>
-        </expression>
-        <then>
-          <k_kanonas source="item1" kanonas="orthros1" count="6" irmoscount="2"/>
-          <k_kanonas source="item2" kanonas="orthros1" count="4"/>
-          <k_kanonas source="item3" kanonas="orthros1" count="4"/>
-        </then>
-        <else>
-          <if>
-            <expression>
-              <!-- среда или пятница-->
-              <or>
-                <equals>
-                  <getdayofweek>
-                    <date/>
-                  </getdayofweek>
-                  <getdayofweek name="среда"/>
-                </equals>
-                <equals>
-                  <getdayofweek>
-                    <date/>
-                  </getdayofweek>
-                  <getdayofweek name="пятница"/>
-                </equals>
-              </or>
-            </expression>
-            <then>
-              <k_kanonas source="oktoikh" kanonas="orthros1" count="4" irmoscount="1" martyrion="false"/>
-              <k_kanonas source="oktoikh" kanonas="orthros2" count="4"/>
-              <k_kanonas source="item1" kanonas="orthros1" count="3"/>
-              <k_kanonas source="item2" kanonas="orthros1" count="3"/>
-            </then>
-            <else>
-              <k_kanonas source="oktoikh" kanonas="orthros1" count="6" irmoscount="1"/>
-              <k_kanonas source="item1" kanonas="orthros1" count="4"/>
-              <k_kanonas source="item2" kanonas="orthros1" count="4"/>
-              <k_katavasia name="отверзу_уста_моя"/>
-            </else>
-          </if>
-        </else>
-      </if>
-    </then>
-  </if>
-  <k_after odinumber="3">
+  <k_odi>
+    <if>
+      <!-- если два святых-->
+      <expression>
+        <istwosaints/>
+      </expression>
+      <then>
+        <if>
+          <expression>
+            <!-- если предпразднество или попразднество-->
+            <iscelebrating/>
+          </expression>
+          <then>
+            <k_kanonas source="item1" kanonas="orthros1" count="6" irmoscount="2"/>
+            <k_kanonas source="item2" kanonas="orthros1" count="4"/>
+            <k_kanonas source="item3" kanonas="orthros1" count="4"/>
+          </then>
+          <else>
+            <if>
+              <expression>
+                <!-- среда или пятница-->
+                <or>
+                  <equals>
+                    <getdayofweek>
+                      <date/>
+                    </getdayofweek>
+                    <getdayofweek name="среда"/>
+                  </equals>
+                  <equals>
+                    <getdayofweek>
+                      <date/>
+                    </getdayofweek>
+                    <getdayofweek name="пятница"/>
+                  </equals>
+                </or>
+              </expression>
+              <then>
+                <k_kanonas source="oktoikh" kanonas="orthros1" count="4" irmoscount="1" martyrion="false"/>
+                <k_kanonas source="oktoikh" kanonas="orthros2" count="4"/>
+                <k_kanonas source="item1" kanonas="orthros1" count="3"/>
+                <k_kanonas source="item2" kanonas="orthros1" count="3"/>
+              </then>
+              <else>
+                <k_kanonas source="oktoikh" kanonas="orthros1" count="6" irmoscount="1"/>
+                <k_kanonas source="item1" kanonas="orthros1" count="4"/>
+                <k_kanonas source="item2" kanonas="orthros1" count="4"/>
+                <k_katavasia name="отверзу_уста_моя"/>
+              </else>
+            </if>
+          </else>
+        </if>
+      </then>
+      <else>
+        <k_kanonas source="oktoikh" kanonas="orthros1" count="4" irmoscount="1" martyrion="false"/>
+        <k_kanonas source="oktoikh" kanonas="orthros2" count="4"/>
+        <k_kanonas source="item1" kanonas="orthros1" count="3"/>
+      </else>
+    </if>
+  </k_odi>
+  <k_after number="3">
     <!-- ПРАВИЛА ДЛЯ СЕДАЛЬНОВ ПО 3-Й ПЕСНЕ-->
     <if>
       <!-- Два святых-->

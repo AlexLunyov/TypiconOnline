@@ -24,31 +24,31 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.TextHolderTextNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new TextHolder(new TextHolderVMFactory(SerializerRoot), d.GetElementName());
+            return new TextHolder(new TextHolderVMFactory(SerializerRoot), req.Descriptor.GetElementName());
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            if (Enum.TryParse(d.Element.Name, true, out TextHolderKind kind))
+            if (Enum.TryParse(req.Descriptor.Element.Name, true, out TextHolderKind kind))
             {
-                (element as TextHolder).Kind = kind;
+                (req.Element as TextHolder).Kind = kind;
             }
 
-            XmlAttribute attr = d.Element.Attributes[RuleConstants.TextHolderMarkAttr];
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.TextHolderMarkAttr];
             if (Enum.TryParse(attr?.Value, true, out TextHolderMark mark))
             {
-                (element as TextHolder).Mark = mark;
+                (req.Element as TextHolder).Mark = mark;
             }
 
-            foreach (XmlNode childNode in d.Element.ChildNodes)
+            foreach (XmlNode childNode in req.Descriptor.Element.ChildNodes)
             {
                 if (childNode.Name == RuleConstants.TextHolderPapragraphNode)
                 {
                     ItemTextNoted item = new ItemTextNoted(childNode.OuterXml);
 
-                    (element as TextHolder).Paragraphs.Add(item);
+                    (req.Element as TextHolder).Paragraphs.Add(item);
                 }
             }
         }

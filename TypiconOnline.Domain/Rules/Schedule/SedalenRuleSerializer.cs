@@ -18,9 +18,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.SedalenNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new SedalenRule(new SedalenVMFactory(SerializerRoot), SerializerRoot, d.GetElementName());
+            return new SedalenRule(new SedalenVMFactory(SerializerRoot), SerializerRoot, req.Descriptor.GetElementName());
         }
     }
 }

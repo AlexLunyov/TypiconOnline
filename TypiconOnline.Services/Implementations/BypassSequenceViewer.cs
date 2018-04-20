@@ -89,18 +89,21 @@ namespace TypiconOnline.AppServices.Implementations
         {
             var easters = new EasterContext(_unitOfWork);
 
+            var oktoikhContext = new OktoikhContext(_unitOfWork, easters);
+
             BookStorage bookStorage = new BookStorage(new EvangelionContext(_unitOfWork),
                                     new ApostolContext(_unitOfWork),
                                     new OldTestamentContext(_unitOfWork),
                                     new PsalterContext(_unitOfWork),
-                                    new OktoikhContext(_unitOfWork, easters),
+                                    oktoikhContext,
                                     new TheotokionAppContext(_unitOfWork),
                                     easters,
                                     new KatavasiaContext(_unitOfWork));
 
             IRuleSerializerRoot serializerRoot = new RuleSerializerRoot(bookStorage);
 
-            return new ScheduleService(new RuleHandlerSettingsFactory(), serializerRoot, new ModifiedRuleService(_unitOfWork));
+            return new ScheduleService(new RuleHandlerSettingsFactory(serializerRoot, new ModifiedRuleService(_unitOfWork))
+                                     , new ScheduleDayNameComposer(oktoikhContext));
         }
     }
 }

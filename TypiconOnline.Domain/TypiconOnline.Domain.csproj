@@ -74,6 +74,7 @@
     <Compile Include="Interfaces\IIntConverter.cs" />
     <Compile Include="Interfaces\IPsalterElement.cs" />
     <Compile Include="Books\Psalter\PsalterContext.cs" />
+    <Compile Include="Interfaces\IRewritableElement.cs" />
     <Compile Include="ItemTypes\TextStyle.cs" />
     <Compile Include="Rules\Days\BookReading.cs" />
     <Compile Include="Rules\Days\BookStihos.cs" />
@@ -81,9 +82,14 @@
     <Compile Include="Rules\Handlers\IntConverters\IntCsConverter.cs" />
     <Compile Include="Rules\Handlers\LanguageSettings.cs" />
     <Compile Include="Rules\Handlers\LanguageSettingsFactory.cs" />
+    <Compile Include="Rules\Schedule\Extensions\KanonesExtensions.cs" />
     <Compile Include="Rules\Schedule\Extensions\KontakionExtensions.cs" />
+    <Compile Include="Rules\Schedule\KOdiRuleSerializer.cs" />
+    <Compile Include="Rules\Schedule\KOdiRule.cs" />
     <Compile Include="Rules\Schedule\PsalmRule.cs" />
     <Compile Include="Rules\Schedule\PsalmRuleSerializer.cs" />
+    <Compile Include="Serialization\CreateObjectRequest.cs" />
+    <Compile Include="Serialization\FillObjectRequest.cs" />
     <Compile Include="Typicon\Modifications\DayWorshipsFilter.cs" />
     <Compile Include="Typicon\Psalter\PsalmLink.cs" />
     <Compile Include="Typicon\Psalter\SlavaElement.cs" />
@@ -119,7 +125,6 @@
     <Compile Include="Interfaces\IRuleCustomParameter.cs" />
     <Compile Include="Interfaces\IRuleSerializer T.cs" />
     <Compile Include="Interfaces\IRuleSerializerRoot.cs" />
-    <Compile Include="Interfaces\IStructedElement.cs" />
     <Compile Include="Interfaces\IViewModelElement.cs" />
     <Compile Include="Interfaces\IXmlSerializer.cs" />
     <Compile Include="ItemTypes\ItemEnumTypeBusinessConstraint.cs" />
@@ -290,7 +295,6 @@
     <Compile Include="Rules\Schedule\KanonasItemBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\KKontakionRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\YmnosRuleBusinessConstraint.cs" />
-    <Compile Include="Rules\Schedule\ServiceBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\Notice.cs" />
     <Compile Include="Rules\Schedule\YmnosStructureRule.cs" />
     <Compile Include="Rules\Schedule\YmnosRule.cs" />
@@ -384,6 +388,7 @@
   <ItemGroup>
     <Folder Include="Books\Menology\" />
     <Folder Include="Rules\Factories\" />
+    <Folder Include="Rules\Schedule\Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\TypiconOnline.Modeling\TypiconOnlineLayers.layerdiagram">

@@ -18,14 +18,14 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            foreach (XmlNode childNode in d.Element.ChildNodes)
+            foreach (XmlNode childNode in req.Descriptor.Element.ChildNodes)
             {
                 var exp = SerializerRoot.Container<RuleExpression>()
-                    .Deserialize(new XmlDescriptor() { Element = childNode });
+                    .Deserialize(new XmlDescriptor() { Element = childNode }, req.Parent);
 
-                (element as LogicalExpression).ChildElements.Add(exp);
+                (req.Element as LogicalExpression).ChildElements.Add(exp);
             }
         }
 

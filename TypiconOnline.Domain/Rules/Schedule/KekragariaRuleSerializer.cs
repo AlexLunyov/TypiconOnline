@@ -19,20 +19,20 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.KekragariaRuleNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new KekragariaRule(new KekragariaRuleVMFactory(SerializerRoot), SerializerRoot, d.GetElementName());
+            return new KekragariaRule(new KekragariaRuleVMFactory(SerializerRoot), SerializerRoot, req.Descriptor.GetElementName());
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement container)
+        protected override void FillObject(FillObjectRequest req)
         {
-            base.FillObject(d, container);
+            base.FillObject(req);
 
-            XmlAttribute attr = d.Element.Attributes[RuleConstants.ShowPsalmAttribute];
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.ShowPsalmAttribute];
 
             if (bool.TryParse(attr?.Value, out bool showPsalm))
             {
-                (container as KekragariaRule).ShowPsalm = showPsalm;
+                (req.Element as KekragariaRule).ShowPsalm = showPsalm;
             }
         }
     }

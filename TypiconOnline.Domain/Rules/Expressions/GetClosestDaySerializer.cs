@@ -19,30 +19,30 @@ namespace TypiconOnline.Domain.Rules.Expressions
             ElementNames = new string[] { RuleConstants.GetClosestDayNodeName };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new GetClosestDay(d.GetElementName());
+            return new GetClosestDay(req.Descriptor.GetElementName());
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            XmlAttribute attr = d.Element.Attributes[RuleConstants.DayOfWeekAttrName];
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.DayOfWeekAttrName];
             if (attr != null)
             {
-                (element as GetClosestDay).DayOfWeek = new ItemDayOfWeek(attr.Value);
+                (req.Element as GetClosestDay).DayOfWeek = new ItemDayOfWeek(attr.Value);
             }
 
-            attr = d.Element.Attributes[RuleConstants.WeekCountAttrName];
+            attr = req.Descriptor.Element.Attributes[RuleConstants.WeekCountAttrName];
 
             if (int.TryParse(attr?.Value, out int count))
             {
-                (element as GetClosestDay).WeekCount = count;
+                (req.Element as GetClosestDay).WeekCount = count;
             }
 
-            if (d.Element.HasChildNodes)
+            if (req.Descriptor.Element.HasChildNodes)
             {
-                (element as GetClosestDay).ChildDateExp = SerializerRoot.Container<DateExpression>()
-                    .Deserialize(new XmlDescriptor() { Element = d.Element.FirstChild });
+                (req.Element as GetClosestDay).ChildDateExp = SerializerRoot.Container<DateExpression>()
+                    .Deserialize(new XmlDescriptor() { Element = req.Descriptor.Element.FirstChild }, req.Parent);
             }
         }
 

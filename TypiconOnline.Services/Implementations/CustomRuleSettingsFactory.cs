@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
 
@@ -15,6 +16,9 @@ namespace TypiconOnline.AppServices.Implementations
     /// </summary>
     public class CustomRuleSettingsFactory : RuleHandlerSettingsFactory
     {
+        public CustomRuleSettingsFactory(IRuleSerializerRoot ruleSerializer, IModifiedRuleService modifiedRuleService) 
+            : base(ruleSerializer, modifiedRuleService) { }
+
         public string CustomRule { get; set; }
 
         /// <summary>
@@ -26,7 +30,7 @@ namespace TypiconOnline.AppServices.Implementations
         {
             RuleHandlerSettings result = base.Create(request);
 
-            result.Rule.RuleDefinition = CustomRule;
+            result.TypiconRule.RuleDefinition = CustomRule;
 
             return result;
         }

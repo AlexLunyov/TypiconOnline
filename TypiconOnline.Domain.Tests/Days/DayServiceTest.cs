@@ -9,6 +9,7 @@ using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Tests.Rules;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Repository.EF;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Days
 {
@@ -18,11 +19,9 @@ namespace TypiconOnline.Domain.Tests.Days
         [Test]
         public void DayServiceTest_Working()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+            var unitOfWork = UnitOfWorkFactory.Create();
 
-            //BookStorage.Instance = BookStorageFactory.Create();
-
-            TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
+            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
 
             MenologyRule menologyRule = typiconEntity.GetMenologyRule(new DateTime(2017, 09, 28));
 

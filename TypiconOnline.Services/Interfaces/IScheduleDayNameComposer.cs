@@ -10,5 +10,6 @@ namespace TypiconOnline.AppServices.Interfaces
     public interface IScheduleDayNameComposer
     {
         string Compose(RuleHandlerSettings settings, DateTime date);
+        string GetWeekName(DateTime date);
     }
 }

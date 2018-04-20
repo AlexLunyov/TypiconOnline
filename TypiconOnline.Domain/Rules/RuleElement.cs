@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -26,6 +27,8 @@ namespace TypiconOnline.Domain.Rules
         /// <param name="handler"></param>
         public virtual void Interpret(IRuleHandler handler)
         {
+            if (handler == null) throw new ArgumentNullException("IRuleHandler in Interpret");
+
             //Проверка для всех элементов правил. 
             //Если неверно составлен, то либо выкидывается исключение (в случае соответствующей настройки),
             //либо просто ничего не обрабатывается
@@ -34,14 +37,43 @@ namespace TypiconOnline.Domain.Rules
                 return;
             }
 
-            handler?.Settings?.ApplyCustomParameters(this);
+            handler.Settings?.ApplyCustomParameters(this);
 
-            bool? check = handler?.Settings?.CheckCustomParameters(this);
+            bool? checkSuccess = handler.Settings?.CheckCustomParameters(this);
 
-            if (check != false)
+            if (checkSuccess != false)
             {
-                InnerInterpret(handler);
-                IsInterpreted = true;
+                /*
+                 * Добавляем обработку IRewritableElement.
+                 * Если элемент - IRewritableElement и есть в настройках handler-а Добавление,
+                 * ищем элемент для замены
+                */
+
+                bool isRewritten = false;
+
+                if (this is IRewritableElement rewritableElement && handler.Settings.Addition != null)
+                {
+                    //ищем элемент для замены
+                    var found = handler.Settings.Addition.RuleContainer
+                        .GetChildElements<IRewritableElement>(c => c.RewritableName == rewritableElement.RewritableName).FirstOrDefault();
+
+                    //если находим, исполняем его вместо настоящего элемента
+                    if (found != null)
+                    {
+                        (found as RuleElement).Interpret(handler);
+
+                        isRewritten = true;
+
+                        IsInterpreted = true;
+                    }
+                }
+
+                if (!isRewritten)
+                {
+                    InnerInterpret(handler);
+
+                    IsInterpreted = true;
+                }
             }
         }
 
@@ -73,6 +105,8 @@ namespace TypiconOnline.Domain.Rules
 
             return false;
         }
+
+        
     }
 }
 

@@ -18,37 +18,37 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.YmnosRuleDoxastichonNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d) => new YmnosRule(d.GetElementName());
+        protected override RuleElement CreateObject(CreateObjectRequest req) => new YmnosRule(req.Descriptor.GetElementName());
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            if (Enum.TryParse(d.Element.Name, true, out YmnosRuleKind kind))
+            if (Enum.TryParse(req.Descriptor.Element.Name, true, out YmnosRuleKind kind))
             {
-                (element as YmnosRule).Kind = kind;
+                (req.Element as YmnosRule).Kind = kind;
             }
 
-            XmlAttribute attr = d.Element.Attributes[RuleConstants.YmnosRuleSourceAttrName];
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.YmnosRuleSourceAttrName];
             if (Enum.TryParse(attr?.Value, true, out YmnosSource source))
             {
-                (element as YmnosRule).Source = source;
+                (req.Element as YmnosRule).Source = source;
             }
 
-            attr = d.Element.Attributes[RuleConstants.YmnosRulePlaceAttrName];
+            attr = req.Descriptor.Element.Attributes[RuleConstants.YmnosRulePlaceAttrName];
             if (Enum.TryParse(attr?.Value, true, out PlaceYmnosSource place))
             {
-                (element as YmnosRule).Place = place;
+                (req.Element as YmnosRule).Place = place;
             }
 
-            attr = d.Element.Attributes[RuleConstants.YmnosRuleCountAttrName];
+            attr = req.Descriptor.Element.Attributes[RuleConstants.YmnosRuleCountAttrName];
             if (int.TryParse(attr?.Value, out int intValue))
             {
-                (element as YmnosRule).Count = intValue;
+                (req.Element as YmnosRule).Count = intValue;
             }
 
-            attr = d.Element.Attributes[RuleConstants.YmnosRuleStartFromAttrName];
+            attr = req.Descriptor.Element.Attributes[RuleConstants.YmnosRuleStartFromAttrName];
             if (int.TryParse(attr?.Value, out intValue))
             {
-                (element as YmnosRule).StartFrom = intValue;
+                (req.Element as YmnosRule).StartFrom = intValue;
             }
         }
 

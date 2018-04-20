@@ -19,9 +19,9 @@ namespace TypiconOnline.Domain.Rules.Expressions
             ElementNames = new string[] { RuleConstants.LessNodeName };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new Less(d.GetElementName());
+            return new Less(req.Descriptor.GetElementName());
         }
 
         public override string Serialize(RuleElement element)

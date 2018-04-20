@@ -21,15 +21,15 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.LeitourgiaNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d) => new WorshipSequence(SerializerRoot, d.GetElementName());
+        protected override RuleElement CreateObject(CreateObjectRequest req) => new WorshipSequence(SerializerRoot, req.Descriptor.GetElementName());
 
-        protected override void FillObject(XmlDescriptor d, RuleElement container)
+        protected override void FillObject(FillObjectRequest req)
         {
-            base.FillObject(d, container);
+            base.FillObject(req);
 
-            if (Enum.TryParse(d.GetElementName(), true, out WorshipSequenceKind kind))
+            if (Enum.TryParse(req.Descriptor.GetElementName(), true, out WorshipSequenceKind kind))
             {
-                (container as WorshipSequence).Kind = kind;
+                (req.Element as WorshipSequence).Kind = kind;
             }
         }
     }

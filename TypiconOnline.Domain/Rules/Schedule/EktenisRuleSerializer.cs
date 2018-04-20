@@ -17,6 +17,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.EktenisNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d) => new EktenisRule(d.GetElementName());
+        protected override RuleElement CreateObject(CreateObjectRequest req) => new EktenisRule(req.Descriptor.GetElementName());
     }
 }

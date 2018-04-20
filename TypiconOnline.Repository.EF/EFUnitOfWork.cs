@@ -16,7 +16,7 @@ namespace TypiconOnline.Repository.EF
     public class EFUnitOfWork : IUnitOfWork
     {
         TypiconDBContext _dbContext = null;
-        private bool disposed = false;
+        //private bool disposed = false;
 
         public EFUnitOfWork()
         {

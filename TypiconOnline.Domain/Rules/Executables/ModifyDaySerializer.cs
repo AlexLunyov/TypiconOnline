@@ -17,51 +17,51 @@ namespace TypiconOnline.Domain.Rules.Executables
             ElementNames = new string[] { RuleConstants.ModifyDayNodeName };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d) => new ModifyDay(d.GetElementName());
+        protected override RuleElement CreateObject(CreateObjectRequest req) => new ModifyDay(req.Descriptor.GetElementName());
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            XmlAttribute attr = d.Element.Attributes[RuleConstants.ShortNameAttrName];
-            (element as ModifyDay).ShortName = attr?.Value;
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.ShortNameAttrName];
+            (req.Element as ModifyDay).ShortName = attr?.Value;
 
-            attr = d.Element.Attributes[RuleConstants.IsLastNameAttrName];
-            (element as ModifyDay).IsLastName = bool.TryParse(attr?.Value, out bool value) ? value : false;
+            attr = req.Descriptor.Element.Attributes[RuleConstants.IsLastNameAttrName];
+            (req.Element as ModifyDay).IsLastName = bool.TryParse(attr?.Value, out bool value) ? value : false;
 
-            attr = d.Element.Attributes[RuleConstants.AsAdditionAttrName];
-            (element as ModifyDay).AsAddition = bool.TryParse(attr?.Value, out value) ? value : false;
+            attr = req.Descriptor.Element.Attributes[RuleConstants.AsAdditionAttrName];
+            (req.Element as ModifyDay).AsAddition = bool.TryParse(attr?.Value, out value) ? value : false;
 
-            attr = d.Element.Attributes[RuleConstants.UseFullNameAttrName];
-            (element as ModifyDay).UseFullName = bool.TryParse(attr?.Value, out value) ? value : true;
+            attr = req.Descriptor.Element.Attributes[RuleConstants.UseFullNameAttrName];
+            (req.Element as ModifyDay).UseFullName = bool.TryParse(attr?.Value, out value) ? value : true;
 
-            attr = d.Element.Attributes[RuleConstants.DayMoveAttrName];
+            attr = req.Descriptor.Element.Attributes[RuleConstants.DayMoveAttrName];
             if (int.TryParse(attr?.Value, out int intValue))
             {
-                (element as ModifyDay).DayMoveCount = intValue;
+                (req.Element as ModifyDay).DayMoveCount = intValue;
             }
 
-            attr = d.Element.Attributes[RuleConstants.PriorityAttrName];
-            (element as ModifyDay).Priority = int.TryParse(attr?.Value, out intValue) ? intValue : 0;
+            attr = req.Descriptor.Element.Attributes[RuleConstants.PriorityAttrName];
+            (req.Element as ModifyDay).Priority = int.TryParse(attr?.Value, out intValue) ? intValue : 0;
 
-            attr = d.Element.Attributes[RuleConstants.SignNumberAttrName];
+            attr = req.Descriptor.Element.Attributes[RuleConstants.SignNumberAttrName];
             if (int.TryParse(attr?.Value, out intValue))
             {
-                (element as ModifyDay).SignNumber = intValue;
+                (req.Element as ModifyDay).SignNumber = intValue;
             }
 
             //filter
-            DeserializeFilter(d.Element, element as ModifyDay);
+            DeserializeFilter(req.Descriptor.Element, req.Element as ModifyDay);
 
-            foreach (XmlNode childNode in d.Element.ChildNodes)
+            foreach (XmlNode childNode in req.Descriptor.Element.ChildNodes)
             {
                 if (childNode.Name == RuleConstants.ModifyReplacedDayNodeName)
                 {
-                    (element as ModifyDay).ModifyReplacedDay = SerializerRoot.Container<ModifyReplacedDay>()
-                        .Deserialize(new XmlDescriptor() { Element = childNode });
+                    (req.Element as ModifyDay).ModifyReplacedDay = SerializerRoot.Container<ModifyReplacedDay>()
+                        .Deserialize(new XmlDescriptor() { Element = childNode }, req.Parent);
                 }
                 else
                 {
-                    (element as ModifyDay).ChildDateExp = SerializerRoot.Container<DateExpression>()
-                        .Deserialize(new XmlDescriptor() { Element = childNode });
+                    (req.Element as ModifyDay).ChildDateExp = SerializerRoot.Container<DateExpression>()
+                        .Deserialize(new XmlDescriptor() { Element = childNode }, req.Parent);
                 }
             }
         }

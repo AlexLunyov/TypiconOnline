@@ -18,9 +18,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.TroparionNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new TroparionRule(new TroparionRuleVMFactory(SerializerRoot), SerializerRoot, d.GetElementName());
+            return new TroparionRule(new TroparionRuleVMFactory(SerializerRoot), SerializerRoot, req.Descriptor.GetElementName());
         }
     }
 }

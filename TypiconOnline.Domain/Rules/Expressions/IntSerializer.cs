@@ -19,14 +19,14 @@ namespace TypiconOnline.Domain.Rules.Expressions
             ElementNames = new string[] { RuleConstants.IntNodeName };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new Int(d.GetElementName());
+            return new Int(req.Descriptor.GetElementName());
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            (element as Int).ValueExpression = new ItemInt(d.Element.InnerText);
+            (req.Element as Int).ValueExpression = new ItemInt(req.Descriptor.Element.InnerText);
         }
 
         public override string Serialize(RuleElement element)

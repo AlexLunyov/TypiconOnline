@@ -13,20 +13,20 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         public KanonasItemRuleBaseSerializer(IRuleSerializerRoot root) : base(root) { }
 
-        //protected override RuleElement CreateObject(XmlDescriptor d) => new KontakionRule(d.GetElementName());
+        //protected override RuleElement CreateObject(CreateObjectRequest req) => new KontakionRule(req.Descriptor.GetElementName());
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            XmlAttribute attr = d.Element.Attributes[RuleConstants.KKontakionSourceAttrName];
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.KKontakionSourceAttrName];
             if (Enum.TryParse(attr?.Value, true, out KanonasSource source))
             {
-                (element as KanonasItemRuleBase).Source = source;
+                (req.Element as KanonasItemRuleBase).Source = source;
             }
 
-            attr = d.Element.Attributes[RuleConstants.KKontakionKanonasAttrName];
+            attr = req.Descriptor.Element.Attributes[RuleConstants.KKontakionKanonasAttrName];
             if (Enum.TryParse(attr?.Value, true, out KanonasKind kanonas))
             {
-                (element as KanonasItemRuleBase).Kanonas = kanonas;
+                (req.Element as KanonasItemRuleBase).Kanonas = kanonas;
             }
         }
 

@@ -13,6 +13,7 @@ using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Repository.EF;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Rules.Schedule
 {
@@ -22,10 +23,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void IsExists_Test()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-            //BookStorage.Instance = BookStorageFactory.Create();
-            GetTypiconEntityResponse resp = new TypiconEntityService(_unitOfWork).GetTypiconEntity(1);
-            TypiconEntity typiconEntity = resp.TypiconEntity;
+            var unitOfWork = UnitOfWorkFactory.Create();
+
+            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
 
             ServiceSequenceHandler handler = new ServiceSequenceHandler()
             {
@@ -42,7 +42,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             MenologyRule rule = typiconEntity.GetMenologyRule(date);
             rule.RuleDefinition = xml;
 
-            handler.Settings.Rule = rule;
+            handler.Settings.TypiconRule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
             handler.Settings.Date = date;
 
@@ -60,7 +60,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             rule = typiconEntity.GetMenologyRule(date);
             rule.RuleDefinition = xml;
 
-            handler.Settings.Rule = rule;
+            handler.Settings.TypiconRule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
             handler.Settings.Date = date;
 

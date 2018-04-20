@@ -7,6 +7,7 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Schedule;
+using TypiconOnline.Domain.Rules.Schedule.Extensions;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.ViewModels.Messaging;
 
@@ -19,16 +20,11 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         ViewModelItem katavasiaHeader;
         OdiViewModelFactory odiView;
 
-        public KanonasRuleVMFactory(IRuleSerializerRoot serializer) : base(serializer)
-        {
-            
-        }
+        public KanonasRuleVMFactory(IRuleSerializerRoot serializer) : base(serializer) { }
 
         public override void Create(CreateViewModelRequest<KanonasRule> req)
         {
-            if (req.Element == null
-                || req.Element.Kanones == null
-                || req.Element.Kanones.Count == 0)
+            if (req.Element == null || !req.Element.IsValid)
             {
                 //TODO: просто ничего не делаем, хотя надо бы это обрабатывать
                 return;
@@ -38,10 +34,12 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             //Канон:
             AppendHeader(req);
 
+            var defaultOdi = req.Element.Odes.FirstOrDefault(c => c.Number == null);
+
             for (int i = 1; i <= 9; i++)
             {
                 //Песнь
-                AppendOdi(req, i);
+                AppendOdi(req, defaultOdi, i);
                 //Правило после песни
                 AppendAfterRule(req, i);
             }
@@ -61,38 +59,47 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             req.AppendModelAction(new ElementViewModel() { ViewModelItemFactory.Create(header, req.Handler, Serializer) });
         }
 
-        private void AppendOdi(CreateViewModelRequest<KanonasRule> req, int odiNumber)
+        private void AppendOdi(CreateViewModelRequest<KanonasRule> req, KOdiRule defaultOdiRule, int odiNumber)
         {
-            //ничего не делаем, если нет канонов с таким номером песни
-            if (req.Element.Kanones.FirstOrDefault(c => c.Odes.Exists(k => k.Number == odiNumber)) == null)
+            /*
+             * Ищем KOdiRule для обработки:
+             * Если есть с заданным номером, используем ее. 
+             * Иначе если есть defaultOdi, используем ее.
+             * Иначе ничего не делаем. Также ничего не делаем, если нет канонов с таким номером у найденного KOdiRule.
+            */
+
+            var odiRuleToHandle = req.Element.Odes.FirstOrDefault(c => c.Number == odiNumber) ?? defaultOdiRule;
+
+            if (odiRuleToHandle == null 
+                || odiRuleToHandle.Kanones.FirstOrDefault(c => c.Odes.Exists(k => k.Number == odiNumber)) == null)
             {
                 return;
             }
 
             AppenOdiHeader(req, odiNumber);
 
-            ///Проходим по всем канонам и добавляем песню, согласно индекса, если она имеется
-            for (int i = 0; i < req.Element.Kanones.Count; i++)
+            //Проходим по всем канонам и добавляем песню, согласно индекса, если она имеется
+            for (int i = 0; i < odiRuleToHandle.Kanones.Count; i++)
             {
-                var kanonas = req.Element.Kanones[i];
-                ///Признак того, последний ли канон (катавасию не считаем)
-                bool isLastKanonas = (i == req.Element.Kanones.Count - 2);
-                bool isOdi8 = odiNumber == 8;
+                var kanonas = odiRuleToHandle.Kanones[i];
+                //Признак того, последний ли канон (катавасию не считаем)
+                bool isLastKanonas = odiRuleToHandle.Kanones.IsLastKanonasBeforeKatavasia(i);
+                bool isOdi8 = req.Element.IsOrthros && odiNumber == 8;
 
                 if (kanonas.Odes.FirstOrDefault(c => c.Number == odiNumber && c.Troparia.Count > 0) is Odi odi)
                 {
-                    ///Проверяем, данная песнь не Катавасия ли - часть канона, который есть одна из катавасий по вся дни лета
-                    //bool isKatavasiaKanonas = odi.Troparia.TrueForAll(c => c.Kind == YmnosKind.Katavasia);
-                    bool isKatavasiaKanonas = (i == req.Element.Kanones.Count - 1);
+                    //Проверяем, данная песнь не Катавасия ли - часть канона, который есть одна из катавасий по вся дни лета
+                    bool isKatavasiaKanonas = odi.Troparia.TrueForAll(c => c.Kind == YmnosKind.Katavasia);
+                    //bool isKatavasiaKanonas = (i == odiRuleToHandle.Kanones.Count - 1);
 
-                    ///Добавляем шапку канона
+                    //Добавляем шапку канона
                     if (isKatavasiaKanonas)
                     {
                         AppendKatavasiaHeader(req, kanonas.Ihos);
 
-                        if (odiNumber == 8)
+                        if (isOdi8)
                         {
-                            //TODO: по умолчанию добавляет после 8-й песни "Хвалим, благословим", но так не должно быть всегда.
+                            //добавляет после 8-й песни "Хвалим, благословим"
                             AppendStihosOdi8(req);
                         }
                     }
@@ -208,7 +215,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             if (headers == null)
             {
-                headers = req.Handler.Settings.Rule.Owner.GetCommonRuleChildren(
+                headers = req.Handler.Settings.TypiconRule.Owner.GetCommonRuleChildren(
                     new CommonRuleServiceRequest() { Key = CommonRuleConstants.KanonasRule, RuleSerializer = Serializer }).Cast<TextHolder>().ToList();
             }
             return headers;

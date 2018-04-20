@@ -17,40 +17,40 @@ namespace TypiconOnline.Domain.Rules.Executables
             ElementNames = new string[] { RuleConstants.SwitchNodeName };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new Switch(d.GetElementName());
+            return new Switch(req.Descriptor.GetElementName());
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
             //ищем expression
-            XmlNode expressionNode = d.Element.SelectSingleNode(RuleConstants.ExpressionNodeName);
+            XmlNode expressionNode = req.Descriptor.Element.SelectSingleNode(RuleConstants.ExpressionNodeName);
 
             if (expressionNode?.HasChildNodes == true)
             {
-                (element as Switch).Expression = SerializerRoot.Container<RuleExpression>()
-                    .Deserialize(new XmlDescriptor() { Element = expressionNode.FirstChild });
+                (req.Element as Switch).Expression = SerializerRoot.Container<RuleExpression>()
+                    .Deserialize(new XmlDescriptor() { Element = expressionNode.FirstChild }, req.Parent);
             }
 
             //ищем элементы case
-            XmlNodeList casesList = d.Element.SelectNodes(RuleConstants.CaseNodeName);
+            XmlNodeList casesList = req.Descriptor.Element.SelectNodes(RuleConstants.CaseNodeName);
 
             if (casesList != null)
             {
                 foreach (XmlNode caseNode in casesList)
                 {
-                    Case caseElement = SerializerRoot.Container<Case>().Deserialize(new XmlDescriptor() { Element = caseNode });
-                    (element as Switch).CaseElements.Add(caseElement);
+                    Case caseElement = SerializerRoot.Container<Case>().Deserialize(new XmlDescriptor() { Element = caseNode }, req.Parent);
+                    (req.Element as Switch).CaseElements.Add(caseElement);
                 }
             }
 
             //ищем default
-            XmlNode defaultNode = d.Element.SelectSingleNode(RuleConstants.DefaultNodeName);
+            XmlNode defaultNode = req.Descriptor.Element.SelectSingleNode(RuleConstants.DefaultNodeName);
             if (defaultNode != null)
             {
-                (element as Switch).Default = SerializerRoot.Container<ExecContainer>()
-                    .Deserialize(new XmlDescriptor() { Element = defaultNode });
+                (req.Element as Switch).Default = SerializerRoot.Container<ExecContainer>()
+                    .Deserialize(new XmlDescriptor() { Element = defaultNode }, req.Parent);
             }
         }
 

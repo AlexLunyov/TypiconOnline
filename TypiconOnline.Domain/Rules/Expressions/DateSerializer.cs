@@ -19,14 +19,14 @@ namespace TypiconOnline.Domain.Rules.Expressions
             ElementNames = new string[] { RuleConstants.DateNodeName };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d)
+        protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new Date(d.GetElementName());
+            return new Date(req.Descriptor.GetElementName());
         }
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            (element as Date).ValueExpression = new ItemDate(d.Element.InnerText);
+            (req.Element as Date).ValueExpression = new ItemDate(req.Descriptor.Element.InnerText);
         }
 
         public override string Serialize(RuleElement element)

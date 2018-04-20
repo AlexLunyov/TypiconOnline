@@ -50,12 +50,16 @@ namespace TypiconOnline.Domain.Rules
         public const string ThenNodeName = "then";
         public const string ElseNodeName = "else";
 
-        public const string ServiceNodeName = "service";
-        public const string ServiceIdAttrName = "id";
-        public const string ServiceTimeAttrName = "time";
-        public const string ServiceNameAttrName = "name";
-        public const string ServiceIsDayBeforeAttrName = "isdaybefore";
-        public const string ServiceAdditionalNameAttrName = "additionalname";
+        /*
+         * Константы для описания атрибутов элемента WorshipRule
+         */
+
+        public const string WorshipRuleNodeName = "service";
+        public const string WorshipRuleIdAttrName = "id";
+        public const string WorshipRuleTimeAttrName = "time";
+        public const string WorshipRuleNameAttrName = "name";
+        public const string WorshipRuleIsDayBeforeAttrName = "isdaybefore";
+        public const string WorshipRuleAdditionalNameAttrName = "additionalname";
 
         public const string NoticeNodeName = "notice";
 
@@ -143,6 +147,7 @@ namespace TypiconOnline.Domain.Rules
         */
         public const string KanonasRuleNode = "kanonasrule";
         public const string KanonasRulePanagiasAttrName = "panagias";
+        public const string IsOrthrosAttribute = "isorthros";
 
         /*
          * Константы для описания атрибутов элемента KanonasItem
@@ -184,7 +189,13 @@ namespace TypiconOnline.Domain.Rules
          * Константы для описания атрибутов элемента KAfterRule
         */
         public const string KAfterNode = "k_after";
-        public const string KAfterOdiNumberAttrName = "odinumber";
+        public const string KAfterOdiNumberAttrName = "number";
+
+        /*
+         * Константы для описания атрибутов элемента KOdiRule
+        */
+        public const string KOdiRuleNode = "k_odi";
+        public const string KOdiRuleNumberAttrName = "number";
 
         public const string SedalenKathisma1Node = "sed_1kathisma";
         public const string SedalenKathisma2Node = "sed_2kathisma";

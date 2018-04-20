@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
     /// <typeparam name="T"></typeparam>
     public class CollectorRuleHandler<T> : RuleHandlerBase //where T : RuleElement, ICustomInterpreted
     {
-        protected ExecContainer _executingResult;
+        protected List<T> executingResult = new List<T>();
 
         public CollectorRuleHandler()
         {
@@ -46,28 +46,21 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// <returns></returns>
         public override bool Execute(ICustomInterpreted element)
         {
-            if (element is T && element is RuleElement r)
+            if (element is RuleElement && element is T r)
             {
-                if (_executingResult == null)
-                {
-                    _executingResult = new ExecContainer();
-                }
-
-                _executingResult.ChildElements.Add(r);
+                executingResult.Add(r);
 
                 return true;
             }
             return false;
         }
 
-        public ExecContainer GetResult()
-        {
-            return _executingResult;
-        }
+        public IReadOnlyList<T> GetResult() => executingResult;
 
         public override void ClearResult()
         {
-            _executingResult = null;
+            //executingResult = new List<T>();
+            executingResult.Clear();
         }
     }
 }

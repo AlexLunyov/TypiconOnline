@@ -17,16 +17,16 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.KKontakionNode };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d) => new KontakionRule(d.GetElementName(), new KontakionRuleVMFactory(SerializerRoot));
+        protected override RuleElement CreateObject(CreateObjectRequest req) => new KontakionRule(req.Descriptor.GetElementName(), new KontakionRuleVMFactory(SerializerRoot));
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
-            base.FillObject(d, element);
+            base.FillObject(req);
 
-            XmlAttribute attr = d.Element.Attributes[RuleConstants.KontakionShowIkosAttrName];
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.KontakionShowIkosAttrName];
             if (bool.TryParse(attr?.Value, out bool val))
             {
-                (element as KontakionRule).ShowIkos = val;
+                (req.Element as KontakionRule).ShowIkos = val;
             }
         }
 

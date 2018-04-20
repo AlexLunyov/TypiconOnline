@@ -18,7 +18,7 @@ namespace TypiconOnline.Repository.EFCore
         protected TypiconDBContext dbContext = null;
         IRepositoryFactory repositoryFactory;
 
-        private bool disposed = false;
+        //private bool disposed = false;
 
         public UnitOfWork(TypiconDBContext dbContext) : this(dbContext, new RepositoryFactory()) { }
 

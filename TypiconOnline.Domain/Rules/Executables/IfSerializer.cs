@@ -17,32 +17,32 @@ namespace TypiconOnline.Domain.Rules.Executables
             ElementNames = new string[] { RuleConstants.IfNodeName };
         }
 
-        protected override RuleElement CreateObject(XmlDescriptor d) => new If(d.GetElementName());
+        protected override RuleElement CreateObject(CreateObjectRequest req) => new If(req.Descriptor.GetElementName());
 
-        protected override void FillObject(XmlDescriptor d, RuleElement element)
+        protected override void FillObject(FillObjectRequest req)
         {
             //expression
-            XmlNode elementNode = d.Element.SelectSingleNode(RuleConstants.ExpressionIfNodeName);
+            XmlNode elementNode = req.Descriptor.Element.SelectSingleNode(RuleConstants.ExpressionIfNodeName);
             if (elementNode?.HasChildNodes == true)
             {
-                (element as If).Expression = SerializerRoot.Container<BooleanExpression>()
-                    .Deserialize(new XmlDescriptor() { Element = elementNode.FirstChild });
+                (req.Element as If).Expression = SerializerRoot.Container<BooleanExpression>()
+                    .Deserialize(new XmlDescriptor() { Element = elementNode.FirstChild }, req.Parent);
             }
 
             //ищем then
-            elementNode = d.Element.SelectSingleNode(RuleConstants.ThenNodeName);
+            elementNode = req.Descriptor.Element.SelectSingleNode(RuleConstants.ThenNodeName);
             if (elementNode != null)
             {
-                (element as If).ThenElement = SerializerRoot.Container<ExecContainer>()
-                    .Deserialize(new XmlDescriptor() { Element = elementNode });
+                (req.Element as If).ThenElement = SerializerRoot.Container<ExecContainer>()
+                    .Deserialize(new XmlDescriptor() { Element = elementNode }, req.Parent);
             }
 
             //ищем else
-            elementNode = d.Element.SelectSingleNode(RuleConstants.ElseNodeName);
+            elementNode = req.Descriptor.Element.SelectSingleNode(RuleConstants.ElseNodeName);
             if (elementNode != null)
             {
-                (element as If).ElseElement = SerializerRoot.Container<ExecContainer>()
-                    .Deserialize(new XmlDescriptor() { Element = elementNode });
+                (req.Element as If).ElseElement = SerializerRoot.Container<ExecContainer>()
+                    .Deserialize(new XmlDescriptor() { Element = elementNode }, req.Parent);
             }
         }
 
