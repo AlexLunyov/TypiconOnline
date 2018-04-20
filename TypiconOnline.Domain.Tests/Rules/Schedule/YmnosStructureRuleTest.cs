@@ -14,21 +14,19 @@ using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Repository.EF;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Rules.Schedule
 {
     [TestFixture]
     public class YmnosStructureRuleTest
     {
-        
-
         [Test]
         public void YmnosStructureRule_FromRealDB()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
-            //BookStorage.Instance = BookStorageFactory.Create();
-            GetTypiconEntityResponse resp = new TypiconEntityService(_unitOfWork).GetTypiconEntity(1);
-            TypiconEntity typiconEntity = resp.TypiconEntity;
+            var unitOfWork = UnitOfWorkFactory.Create();
+
+            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
 
             ServiceSequenceHandler handler = new ServiceSequenceHandler()
             {
@@ -55,13 +53,10 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             handler.Settings.OktoikhDay = oktoikhDay;
 
-            rule.GetRule(TestRuleSerializer.Root).Interpret(handler);
+            var ruleContainer = rule.GetRule<SedalenRule>(TestRuleSerializer.Root);
+            ruleContainer.Interpret(handler);
 
-            var model = handler.GetResult();
-
-            //SedalenRuleViewModel model = rule.GetRule<SedalenRule>(TestRuleSerializer.Root).CreateViewModel(handler) as SedalenRuleViewModel;
-
-            Assert.AreEqual(3, rule.GetRule<SedalenRule>(TestRuleSerializer.Root).Structure.YmnosStructureCount);
+            Assert.AreEqual(3, ruleContainer.Structure.YmnosStructureCount);
             Assert.Pass(rule.GetRule<SedalenRule>(TestRuleSerializer.Root).Structure.YmnosStructureCount.ToString());
         }
     }

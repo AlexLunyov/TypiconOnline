@@ -39,49 +39,49 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// </summary>
         public bool IsOrthros { get; set; }
 
-        IReadOnlyList<KAfterRule> _afterRules = null;
+        //IReadOnlyList<KAfterRule> _afterRules = null;
         /// <summary>
         /// Коллекция дочерних элементов, описывающих правила после n-ой песни канона
         /// </summary>
-        public IReadOnlyList<KAfterRule> AfterRules
-        {
-            get
-            {
-                if (_afterRules == null)
-                {
-                    //находим KAfterRules
-                    _afterRules = GetChildElements<KAfterRule>();
-                }
+        public IReadOnlyList<KAfterRule> AfterRules { get; private set; } = new List<KAfterRule>();
+        //{
+        //    get
+        //    {
+        //        if (_afterRules == null)
+        //        {
+        //            //находим KAfterRules
+        //            _afterRules = GetChildElements<KAfterRule>();
+        //        }
 
-                return _afterRules;
-            }
-            private set
-            {
-                _afterRules = value;
-            }
-        }
+        //        return _afterRules;
+        //    }
+        //    private set
+        //    {
+        //        _afterRules = value;
+        //    }
+        //}
 
-        private IReadOnlyList<KOdiRule> _odes = null;
+        //private IReadOnlyList<KOdiRule> _odes = null;
         /// <summary>
         /// Песни канона, где каждая отдельно определяет последовательность тропарей
         /// </summary>
-        public IReadOnlyList<KOdiRule> Odes
-        {
-            get
-            {
-                if (_odes == null)
-                {
-                    //находим Odes
-                    _odes = GetChildElements<KOdiRule>();
-                }
+        public IReadOnlyList<KOdiRule> Odes { get; private set; } = new List<KOdiRule>();
+        //{
+        //    get
+        //    {
+        //        if (_odes == null)
+        //        {
+        //            //находим Odes
+        //            _odes = GetChildElements<KOdiRule>();
+        //        }
 
-                return _odes;
-            }
-            private set
-            {
-                _odes = value;
-            }
-        }
+        //        return _odes;
+        //    }
+        //    private set
+        //    {
+        //        _odes = value;
+        //    }
+        //}
 
         protected IElementViewModelFactory<KanonasRule> ViewModelFactory { get; }
 
@@ -114,6 +114,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             if (handler.IsAuthorized<KanonasRule>())
             {
+                Odes = GetChildElements<KOdiRule>(handler.Settings);
+
+                AfterRules = GetChildElements<KAfterRule>(handler.Settings);
+
                 foreach (var ode in Odes)
                 {
                     ode.Interpret(handler);
@@ -123,29 +127,29 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        protected override void Validate()
-        {
-            base.Validate();
+        //protected override void Validate()
+        //{
+        //    base.Validate();
 
-            if (Odes.Count == 0)
-            {
-                AddBrokenConstraint(KanonasRuleBusinessConstraint.OdiRequired);
-            }
+        //    if (Odes.Count == 0)
+        //    {
+        //        AddBrokenConstraint(KanonasRuleBusinessConstraint.OdiRequired);
+        //    }
 
-            //ищем KOdi с одинаковым номером
-            var sameOdes = Odes.Where(str => Odes.Count(s => s.Number == str.Number) > 1);
-            if (sameOdes?.Count() > 0)
-            {
-                AddBrokenConstraint(KanonasRuleBusinessConstraint.OdesWithSameNumber);
-            }
+        //    //ищем KOdi с одинаковым номером
+        //    var sameOdes = Odes.Where(str => Odes.Count(s => s.Number == str.Number) > 1);
+        //    if (sameOdes?.Count() > 0)
+        //    {
+        //        AddBrokenConstraint(KanonasRuleBusinessConstraint.OdesWithSameNumber);
+        //    }
 
-            //ищем KAfterRule с одинаковым номером
-            var sameAfterRules = AfterRules.Where(str => AfterRules.Count(s => s.OdiNumber == str.OdiNumber) > 1);
-            if (sameAfterRules?.Count() > 0)
-            {
-                AddBrokenConstraint(KanonasRuleBusinessConstraint.AfterRulesWithSameNumber);
-            }
-        }
+        //    //ищем KAfterRule с одинаковым номером
+        //    var sameAfterRules = AfterRules.Where(str => AfterRules.Count(s => s.OdiNumber == str.OdiNumber) > 1);
+        //    if (sameAfterRules?.Count() > 0)
+        //    {
+        //        AddBrokenConstraint(KanonasRuleBusinessConstraint.AfterRulesWithSameNumber);
+        //    }
+        //}
 
         ///// <summary>
         ///// Добавляет в конец коллекции вычисляемых канонов катавасию

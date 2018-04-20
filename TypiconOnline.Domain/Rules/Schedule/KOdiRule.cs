@@ -64,11 +64,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
             if (handler.IsAuthorized<KOdiRule>())
             {
                 //используем специальный обработчик для KKatavasiaRule
-                var katavasia = GetChildElements<KKatavasiaRule>();
+                var katavasia = GetChildElements<KKatavasiaRule>(handler.Settings);
 
                 //используем специальный обработчик для KanonasItem,
                 //чтобы создать список источников канонов на обработку
-                var kanones = GetChildElements<KKanonasItemRule>();
+                var kanones = GetChildElements<KKanonasItemRule>(handler.Settings);
 
                 _kanonesCalc.Calculate(handler.Settings, kanones, katavasia, (Parent as KanonasRule).IsOrthros);
 

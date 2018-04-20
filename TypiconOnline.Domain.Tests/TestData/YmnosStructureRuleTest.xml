@@ -8,7 +8,7 @@
       </equals>
     </expression>
     <then>
-      <ymnosrule source="oktoikh" place="sedalen2" count="0"/>
+      <ymnosrule source="oktoikh" place="sedalen2" count="3"/>
     </then>
   </if>
 </sedalen>

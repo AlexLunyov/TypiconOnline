@@ -13,6 +13,7 @@ using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Repository.EF;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Rules.Handlers
 {
@@ -22,15 +23,13 @@ namespace TypiconOnline.Domain.Tests.Rules.Handlers
         [Test]
         public void ServiceSequenceHandler_Working()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+            var unitOfWork = UnitOfWorkFactory.Create();
 
-            //BookStorage.Instance = BookStorageFactory.Create();
-
-            TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
+            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
 
             GetScheduleDayRequest request = new GetScheduleDayRequest()
             {
-                Date = new DateTime(2018, 5, 21),//DateTime.Today,
+                Date = new DateTime(2017, 11, 13),//DateTime.Today,
                 Handler = new ServiceSequenceHandler(),
                 Typicon = typiconEntity,
                 CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
@@ -39,6 +38,8 @@ namespace TypiconOnline.Domain.Tests.Rules.Handlers
             ScheduleService scheduleService = ScheduleServiceFactory.Create();
 
             GetScheduleDayResponse response = scheduleService.GetScheduleDay(request);
+
+            Assert.Pass();
         }
     }
 }

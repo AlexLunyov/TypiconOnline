@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Tests.Rules
             var element = TestRuleSerializer.Deserialize<ExecContainer>(xmlString);
 
             Assert.IsFalse(element.IsValid);
-            Assert.Pass(element.GetBrokenConstraints()[0].ConstraintFullDescription);
+            Assert.Pass(element.GetBrokenConstraints().FirstOrDefault().ConstraintFullDescription);
         }
     }
 }

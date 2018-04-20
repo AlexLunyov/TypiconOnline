@@ -55,7 +55,7 @@ namespace TypiconOnline.Domain.Rules
                 {
                     //ищем элемент для замены
                     var found = handler.Settings.Addition.RuleContainer
-                        .GetChildElements<IRewritableElement>(c => c.RewritableName == rewritableElement.RewritableName).FirstOrDefault();
+                        .GetChildElements<IRewritableElement>(handler.Settings, c => c.RewritableName == rewritableElement.RewritableName).FirstOrDefault();
 
                     //если находим, исполняем его вместо настоящего элемента
                     if (found != null)

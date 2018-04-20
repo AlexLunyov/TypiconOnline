@@ -16,6 +16,7 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Typicon
 {
@@ -25,11 +26,9 @@ namespace TypiconOnline.Domain.Tests.Typicon
         [Test]
         public void BerlukiRu_Test()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+            var unitOfWork = UnitOfWorkFactory.Create();
 
-            //BookStorage.Instance = BookStorageFactory.Create();
-
-            TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
+            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
 
             DateTime date = new DateTime(2017, 09, 03);//DateTime.Now;
 
@@ -67,11 +66,9 @@ namespace TypiconOnline.Domain.Tests.Typicon
         [Test]
         public void BerlukiRu_ComparingRequests()
         {
-            EFUnitOfWork _unitOfWork = new EFUnitOfWork();
+            var unitOfWork = UnitOfWorkFactory.Create();
 
-            //BookStorage.Instance = BookStorageFactory.Create();
-
-            TypiconEntity typiconEntity = _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
+            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
 
             DateTime date = new DateTime(2017, 9, 24);
 

@@ -64,11 +64,11 @@ namespace TypiconOnline.Domain.Rules.Executables
         /// <typeparam name="T">Тип элемента правил для поиска</typeparam>
         /// <param name="predicate">Дополнительные условия для поиска</param>
         /// <returns></returns>
-        public IReadOnlyList<T> GetChildElements<T>(Func<T, bool> predicate = null) //where T : RuleExecutable, ICustomInterpreted
+        public IReadOnlyList<T> GetChildElements<T>(RuleHandlerSettings settings, Func<T, bool> predicate = null) //where T : RuleExecutable, ICustomInterpreted
         {
             //используем специальный обработчик
             //чтобы создать список источников канонов на обработку
-            var childrenHandler = new CollectorRuleHandler<T>();
+            var childrenHandler = new CollectorRuleHandler<T>() { Settings = settings };
 
             foreach (RuleElement elem in ChildElements)
             {

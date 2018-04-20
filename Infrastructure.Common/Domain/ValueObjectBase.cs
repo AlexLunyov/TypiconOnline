@@ -19,11 +19,11 @@ namespace TypiconOnline.Infrastructure.Common.Domain
         public bool IsValid {
             get
             {
-                return (GetBrokenConstraints().Count() == 0);
+                return (GetBrokenConstraints().Count == 0);
             }
         }
 
-        public List<BusinessConstraint> GetBrokenConstraints()
+        public IReadOnlyCollection<BusinessConstraint> GetBrokenConstraints()
         {
             if (!_isValidated)
             {
