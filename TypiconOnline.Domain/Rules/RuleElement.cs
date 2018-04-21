@@ -28,6 +28,7 @@ namespace TypiconOnline.Domain.Rules
         public virtual void Interpret(IRuleHandler handler)
         {
             if (handler == null) throw new ArgumentNullException("IRuleHandler in Interpret");
+            if (handler.Settings == null) throw new ArgumentNullException("handler.Settings in Interpret");
 
             //Проверка для всех элементов правил. 
             //Если неверно составлен, то либо выкидывается исключение (в случае соответствующей настройки),
@@ -37,48 +38,13 @@ namespace TypiconOnline.Domain.Rules
                 return;
             }
 
-            handler.Settings?.ApplyCustomParameters(this);
+            handler.Settings.ApplyCustomParameters(this);
 
-            bool? checkSuccess = handler.Settings?.CheckCustomParameters(this);
-
-            if (checkSuccess != false)
+            if (handler.Settings.CheckCustomParameters(this))
             {
-                /*
-                 * Добавляем обработку IRewritableElement.
-                 * Если элемент - IRewritableElement и есть в настройках handler-а Добавление,
-                 * ищем элемент для замены
-                */
-
-                bool isRewritten = false;
-
-                if (this is IRewritableElement rewritableElement && handler.Settings.Addition != null)
-                {
-                    //ищем элемент для замены
-                    var found = handler.Settings.Addition.RuleContainer
-                        .GetChildElements<IRewritableElement>(handler.Settings, c => c.RewritableName == rewritableElement.RewritableName).FirstOrDefault();
-
-                    //если находим, исполняем его вместо настоящего элемента
-                    if (found != null)
-                    {
-                        (found as RuleElement).Interpret(handler);
-
-                        isRewritten = true;
-
-                        IsInterpreted = true;
-                    }
-                }
-
-                if (!isRewritten)
-                {
-                    InnerInterpret(handler);
-
-                    IsInterpreted = true;
-                }
+                InnerInterpret(handler);
             }
         }
-
-
-        public bool IsInterpreted { get; private set; } = false;
 
         /// <summary>
         /// Внутренний метод для определения интерпретации. Должен быть определен в каждом элементе

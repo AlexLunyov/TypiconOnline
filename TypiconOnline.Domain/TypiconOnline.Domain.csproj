@@ -54,6 +54,7 @@
     <Compile Include="Books\Evangelion\IEvangelionContext.cs" />
     <Compile Include="Books\GetBookElementResponseBase.cs" />
     <Compile Include="DayStructureBase.cs" />
+    <Compile Include="Interfaces\IAsAdditionElement.cs" />
     <Compile Include="Interfaces\IBookElement.cs" />
     <Compile Include="Books\IBookStorageFactory.cs" />
     <Compile Include="Books\Katavasia\GetAllKatavasiaResponse.cs" />
@@ -74,7 +75,6 @@
     <Compile Include="Interfaces\IIntConverter.cs" />
     <Compile Include="Interfaces\IPsalterElement.cs" />
     <Compile Include="Books\Psalter\PsalterContext.cs" />
-    <Compile Include="Interfaces\IRewritableElement.cs" />
     <Compile Include="ItemTypes\TextStyle.cs" />
     <Compile Include="Rules\Days\BookReading.cs" />
     <Compile Include="Rules\Days\BookStihos.cs" />
@@ -82,6 +82,9 @@
     <Compile Include="Rules\Handlers\IntConverters\IntCsConverter.cs" />
     <Compile Include="Rules\Handlers\LanguageSettings.cs" />
     <Compile Include="Rules\Handlers\LanguageSettingsFactory.cs" />
+    <Compile Include="Rules\Handlers\RuleHandlerBase T.cs" />
+    <Compile Include="Rules\Schedule\Extensions\IAsAdditionElementExtensions.cs" />
+    <Compile Include="Rules\Schedule\Extensions\IAsAdditionElementSerialization.cs" />
     <Compile Include="Rules\Schedule\Extensions\KanonesExtensions.cs" />
     <Compile Include="Rules\Schedule\Extensions\KontakionExtensions.cs" />
     <Compile Include="Rules\Schedule\KOdiRuleSerializer.cs" />
@@ -388,7 +391,6 @@
   <ItemGroup>
     <Folder Include="Books\Menology\" />
     <Folder Include="Rules\Factories\" />
-    <Folder Include="Rules\Schedule\Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\TypiconOnline.Modeling\TypiconOnlineLayers.layerdiagram">

@@ -24,6 +24,6 @@ namespace TypiconOnline.Domain.Serialization
         /// <summary>
         /// Вышестоящий по иерархии заменяемый элемент
         /// </summary>
-        public IRewritableElement Parent { get; set; }
+        public IAsAdditionElement Parent { get; set; }
     }
 }

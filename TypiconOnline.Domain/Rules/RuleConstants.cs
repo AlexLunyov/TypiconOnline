@@ -143,6 +143,13 @@ namespace TypiconOnline.Domain.Rules
         public const string SedalenNode = "sedalen";
 
         /*
+         * Константы для описания атрибутов элементов IAsAdditionElement
+        */
+        public const string IAsAdditionElementModeAttrName = "asaddition";
+        public const string IAsAdditionElementRewriteAttrName = "rewrite";
+        public const string IAsAdditionElementAppendAttrName = "append";
+
+        /*
          * Константы для описания атрибутов элемента KanonasRule
         */
         public const string KanonasRuleNode = "kanonasrule";

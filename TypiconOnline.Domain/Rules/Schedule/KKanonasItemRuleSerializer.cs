@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.KanonasMartyrionAttrName];
-            (req.Element as KKanonasItemRule).UseMartyrion = bool.TryParse(attr?.Value, out bool value) ? value : false;
+            (req.Element as KKanonasItemRule).UseMartyrion = bool.TryParse(attr?.Value, out bool value) ? value : true;
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.KanonasIrmosCountAttrName];
             (req.Element as KKanonasItemRule).IrmosCount = int.TryParse(attr?.Value, out int i) ? i : 0;

@@ -7,6 +7,7 @@ using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Executables;
+using TypiconOnline.Domain.Rules.Schedule.Extensions;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
@@ -45,6 +46,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.WorshipRuleAdditionalNameAttrName];
             (req.Element as WorshipRule).AdditionalName = (attr != null) ? attr.Value : string.Empty;
+
+            (req.Element as IAsAdditionElement).FillElement(req.Descriptor.Element);
         }
     }
 }

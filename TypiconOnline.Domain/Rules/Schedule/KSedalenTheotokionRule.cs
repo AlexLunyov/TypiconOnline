@@ -32,11 +32,14 @@ namespace TypiconOnline.Domain.Rules.Schedule
                             && kanonas.Sedalen?.Groups[0]?.Ymnis?.Count > 0)
                         {
                             result = new YmnosStructure();
+
+                            var s = kanonas.Sedalen.Groups[0];
+
                             YmnosGroup th = new YmnosGroup()
                             {
-                                Annotation = new ItemText(kanonas.Sedalen.Groups[0].Annotation),
+                                Annotation = (s.Annotation != null) ? new ItemText(s.Annotation) : null,
                                 Ihos = kanonas.Sedalen.Groups[0].Ihos,
-                                Prosomoion = new Prosomoion(kanonas.Sedalen.Groups[0].Prosomoion)
+                                Prosomoion = (s.Prosomoion != null) ? new Prosomoion(s.Prosomoion) : null
                             };
                             th.Ymnis.Add(new Ymnos(kanonas.Sedalen.Groups[0].Ymnis[0]));
                             result.Theotokion.Add(th);

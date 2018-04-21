@@ -28,6 +28,9 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
+            //Добавляем IAsAdditionElement append реализацию
+            AppendHandling(handler);
+
             foreach (RuleElement el in ChildElements)
             {
                 el.Interpret(handler);
@@ -78,6 +81,26 @@ namespace TypiconOnline.Domain.Rules.Executables
             var result = childrenHandler.GetResult();
 
             return (predicate != null) ? result.Where(predicate).ToList() : result;
+        }
+
+        /// <summary>
+        /// Добавляет к текущему элементу все дочерние элементы из дополнения, помеченные как append
+        /// </summary>
+        /// <param name="handler"></param>
+        protected void AppendHandling(IRuleHandler handler)
+        {
+            if (this is IAsAdditionElement rewritableElement && handler.Settings.Addition?.RuleContainer is ExecContainer container)
+            {
+                //ищем элементы, у которых Parent - с таким же именем как и ExecContainer,
+                //а также AsAdditionMode == Append
+                var found = container.GetChildElements<IAsAdditionElement>(handler.Settings.Addition,
+                        c => c.AsAdditionMode == AsAdditionMode.Append && c.Parent?.AsAdditionName == rewritableElement.AsAdditionName);
+
+                if (found.Count > 0)
+                {
+                    ChildElements.AddRange(found.Cast<RuleElement>());
+                }
+            }
         }
 
         #endregion

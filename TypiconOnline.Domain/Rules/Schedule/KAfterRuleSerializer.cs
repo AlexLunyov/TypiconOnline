@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Executables;
+using TypiconOnline.Domain.Rules.Schedule.Extensions;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
@@ -29,6 +30,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 (req.Element as KAfterRule).OdiNumber = intValue;
             }
+
+            (req.Element as KAfterRule).FillElement(req.Descriptor.Element);
         }
 
         public override string Serialize(RuleElement element)

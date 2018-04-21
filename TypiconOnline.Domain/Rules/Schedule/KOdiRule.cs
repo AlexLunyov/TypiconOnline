@@ -12,7 +12,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// Элемент определяет последовательность тропарей для N-ой песни канона.
     /// Используется в KanonasRule
     /// </summary>
-    public class KOdiRule : ExecContainer, IRewritableElement, ICustomInterpreted
+    public class KOdiRule : ExecContainer, IAsAdditionElement, ICustomInterpreted
     {
         public KOdiRule(string name, KanonasRule parent) : base(name)
         {
@@ -37,13 +37,13 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <summary>
         /// Ссылка на KanonasRule
         /// </summary>
-        public IRewritableElement Parent { get; }
+        public IAsAdditionElement Parent { get; }
 
-        public string RewritableName
+        public string AsAdditionName
         {
             get
             {
-                string result = $"{Parent.RewritableName}/{ElementName}";
+                string result = $"{Parent.AsAdditionName}/{ElementName}";
 
                 if (Number != null)
                 {
@@ -53,7 +53,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 return result;
             }
         }
-        public bool Rewrite { get; set; }
+        public AsAdditionMode AsAdditionMode { get; set; }
 
         #endregion
 
@@ -61,7 +61,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-            if (handler.IsAuthorized<KOdiRule>())
+            if (handler.IsAuthorized<KOdiRule>() && !this.AsAdditionHandled(handler))
             {
                 //используем специальный обработчик для KKatavasiaRule
                 var katavasia = GetChildElements<KKatavasiaRule>(handler.Settings);

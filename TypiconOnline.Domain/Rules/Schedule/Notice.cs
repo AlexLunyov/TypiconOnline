@@ -12,7 +12,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class Notice : WorshipRule
     {
-        public Notice(string name, IRewritableElement parent) : base(name, parent) { }
+        public Notice(string name, IAsAdditionElement parent) : base(name, parent) { }
 
         protected override void InnerInterpret(IRuleHandler handler)
         {

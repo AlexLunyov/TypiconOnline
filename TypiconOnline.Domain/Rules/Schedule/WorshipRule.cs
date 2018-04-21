@@ -7,6 +7,7 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Schedule.Extensions;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Schedule
@@ -15,9 +16,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// Элемент "Служба". Является строкой в расписании. 
     /// Включает в себя последовательность богослужения, задекларированного в названии
     /// </summary>
-    public class WorshipRule : ExecContainer, ICustomInterpreted, IRewritableElement
+    public class WorshipRule : ExecContainer, ICustomInterpreted, IAsAdditionElement
     {
-        public WorshipRule(string name, IRewritableElement parent) : base(name)
+        public WorshipRule(string name, IAsAdditionElement parent) : base(name)
         {
             Parent = parent;
         }
@@ -38,9 +39,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         #region IRewritableElement implementation
 
-        public IRewritableElement Parent { get; }
+        public IAsAdditionElement Parent { get; }
 
-        public string RewritableName
+        public string AsAdditionName
         {
             get
             {
@@ -48,7 +49,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                 if (Parent != null)
                 {
-                    result = $"{Parent.RewritableName}/{result}";
+                    result = $"{Parent.AsAdditionName}/{result}";
                 }
 
                 if (!string.IsNullOrEmpty(Id))
@@ -60,7 +61,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public bool Rewrite { get; set; }
+        public AsAdditionMode AsAdditionMode { get; set; }
 
         #endregion
 
@@ -68,7 +69,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-            if (handler.IsAuthorized<WorshipRule>())
+            if (handler.IsAuthorized<WorshipRule>() && !this.AsAdditionHandled(handler))
             {
                 base.InnerInterpret(handler);
 
@@ -95,7 +96,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 {
                     foreach (BusinessConstraint brokenRule in element.GetBrokenConstraints())
                     {
-                        AddBrokenConstraint(brokenRule, ElementName + "." + brokenRule.ConstraintPath);
+                        AddBrokenConstraint(brokenRule);//, ElementName + "." + brokenRule.ConstraintPath);
                     }
                 }
             }
@@ -105,7 +106,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     public class WorshipRuleBusinessConstraint
     {
         public static readonly BusinessConstraint TimeTypeMismatch = new BusinessConstraint("Неверный формат времени.");
-        public static readonly BusinessConstraint NameReqiured = new BusinessConstraint("Отсутствуют определение имени.");
+        public static readonly BusinessConstraint NameReqiured = new BusinessConstraint("Отсутствует определение имени.");
         public static readonly BusinessConstraint IsDayBeforeTypeMismatch = new BusinessConstraint("Неверный формат логического обозначения.");
     }
 }

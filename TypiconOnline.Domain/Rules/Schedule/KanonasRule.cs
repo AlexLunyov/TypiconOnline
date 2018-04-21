@@ -19,10 +19,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Правило для составления канонов
     /// </summary>
-    public class KanonasRule : IncludingRulesElement, ICustomInterpreted, IViewModelElement, IRewritableElement
+    public class KanonasRule : IncludingRulesElement, ICustomInterpreted, IViewModelElement, IAsAdditionElement
     {
         public KanonasRule(string name, IRuleSerializerRoot serializerRoot,
-            IElementViewModelFactory<KanonasRule> viewModelFactory, IRewritableElement parent) : base(name, serializerRoot)
+            IElementViewModelFactory<KanonasRule> viewModelFactory, IAsAdditionElement parent) : base(name, serializerRoot)
         {
             ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException("IElementViewModelFactory in KanonasRuleBase");
 
@@ -87,9 +87,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         #region IRewritableElement implementation
 
-        public IRewritableElement Parent { get; }
+        public IAsAdditionElement Parent { get; }
 
-        public string RewritableName
+        public string AsAdditionName
         {
             get
             {
@@ -97,14 +97,14 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                 if (Parent != null)
                 {
-                    result = $"{Parent.RewritableName}/{result}";
+                    result = $"{Parent.AsAdditionName}/{result}";
                 }
 
                 return result;
             }
         }
 
-        public bool Rewrite { get; set; }
+        public AsAdditionMode AsAdditionMode { get; set; }
 
         #endregion
 
@@ -112,8 +112,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-            if (handler.IsAuthorized<KanonasRule>())
+            if (handler.IsAuthorized<KanonasRule>() && !this.AsAdditionHandled(handler))
             {
+                //Добавляем IAsAdditionElement append реализацию
+                //Приходится явно вызывать метод, т.к. функционал ExecContainer.InnerInterpret не используется 
+                AppendHandling(handler);
+
                 Odes = GetChildElements<KOdiRule>(handler.Settings);
 
                 AfterRules = GetChildElements<KAfterRule>(handler.Settings);
@@ -121,6 +125,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 foreach (var ode in Odes)
                 {
                     ode.Interpret(handler);
+                }
+
+                foreach (var afterRule in AfterRules)
+                {
+                    afterRule.Interpret(handler);
                 }
 
                 handler.Execute(this);

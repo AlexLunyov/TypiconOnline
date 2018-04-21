@@ -33,6 +33,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 //ExecContainer container = GetChildElements<TextHolder>(date, handler);
 
                 //CalculatedElements = container?.ChildElements.Cast<TextHolder>().ToList();
+
+                handler.Execute(this);
             }
         }
 

@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Serialization
 
         public IEnumerable<string> ElementNames { get; protected set; }
 
-        public virtual RuleElement Deserialize(IDescriptor descriptor, IRewritableElement parent)
+        public virtual RuleElement Deserialize(IDescriptor descriptor, IAsAdditionElement parent)
         {
             RuleElement element = null;
 
@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.Serialization
                  * Если нет - используем parent
                  */
 
-                parent = element as IRewritableElement ?? parent;
+                parent = element as IAsAdditionElement ?? parent;
 
                 FillObject(new FillObjectRequest() { Descriptor = d, Element = element, Parent = parent });
             }

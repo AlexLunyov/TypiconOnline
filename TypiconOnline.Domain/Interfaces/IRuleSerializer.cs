@@ -10,7 +10,7 @@ namespace TypiconOnline.Domain.Interfaces
     {
         IEnumerable<string> ElementNames { get; }
         //RuleElement Create(string description);
-        RuleElement Deserialize(IDescriptor descriptor, IRewritableElement parent);
+        RuleElement Deserialize(IDescriptor descriptor, IAsAdditionElement parent);
         string Serialize(RuleElement element);
     }
 }

@@ -39,7 +39,7 @@ namespace TypiconOnline.Domain.Serialization
             return Deserialize(_descriptor.CreateInstance(description), null);
         }
 
-        public T Deserialize(IDescriptor descriptor, IRewritableElement parent)
+        public T Deserialize(IDescriptor descriptor, IAsAdditionElement parent)
         {
             if (descriptor == null) throw new ArgumentNullException("descriptor"); 
 

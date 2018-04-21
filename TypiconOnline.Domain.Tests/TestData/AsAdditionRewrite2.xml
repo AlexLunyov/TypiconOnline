@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rule>
+  <service id="1" name="Вечерня">
+    <kanonasrule>
+      <k_after number="3">
+        <sedalen>
+          <k_sedalen source="item1" place="sedalen" kanonas="orthros1"/>
+          <k_sedalentheotokion source="item1" place="sedalen" kanonas="orthros1"/>
+        </sedalen>
+      </k_after>
+    </kanonasrule>
+  </service>
+</rule>
