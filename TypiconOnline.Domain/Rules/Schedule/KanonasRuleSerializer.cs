@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Executables;
-using TypiconOnline.Domain.Rules.Schedule.Extensions;
+using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.ViewModels.Factories;
 

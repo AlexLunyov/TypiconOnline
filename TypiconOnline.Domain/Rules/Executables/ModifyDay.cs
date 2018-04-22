@@ -6,6 +6,7 @@ using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Typicon.Modifications;
+using TypiconOnline.Domain.Rules.Extensions;
 
 namespace TypiconOnline.Domain.Rules.Executables
 {
@@ -21,9 +22,12 @@ namespace TypiconOnline.Domain.Rules.Executables
     /// <summary>
     /// Элемент, используемый для переноса богослужебных дней
     /// </summary>
-    public class ModifyDay : RuleExecutable, ICustomInterpreted
+    public class ModifyDay : RuleExecutable, ICustomInterpreted, IAsAdditionElement
     {
-        public ModifyDay(string name) : base(name) { }
+        public ModifyDay(string name, IAsAdditionElement parent) : base(name)
+        {
+            Parent = parent;
+        }
 
         #region Properties
         /// <summary>
@@ -67,17 +71,45 @@ namespace TypiconOnline.Domain.Rules.Executables
         /// Правило для дня, который будет перемещен
         /// </summary>
         public ModifyReplacedDay ModifyReplacedDay { get; set; }
+        /// <summary>
+        /// Идентификатор. Используется для замены элементов
+        /// </summary>
+        public string Id { get; set; }
+
+        #region IRewritableElement implementation 
+        /// <summary>
+        /// Ссылка на KanonasRule
+        /// </summary>
+        public IAsAdditionElement Parent { get; }
+
+        public string AsAdditionName
+        {
+            get
+            {
+                string result = $"{ElementName}";
+
+                if (!string.IsNullOrEmpty(Id))
+                {
+                    result = $"{result}?{RuleConstants.ModifyDayIdAttrName}={Id}";
+                }
+
+                if (Parent != null)
+                {
+                    result = $"{Parent.AsAdditionName}/{result}";
+                }
+
+                return result;
+            }
+        }
+
+        public AsAdditionMode AsAdditionMode { get; set; }
+
+        #endregion
 
         public ItemDate MoveDateExpression
         {
             get
             {
-                //if (!IsInterpreted)
-                //    throw new DefinitionsNotInterpretedException();
-
-                //if (!IsInterpreted || (_childDateExp == null))
-                //    return DateTime.MinValue;
-
                 return ChildDateExp?.ValueExpression as ItemDate;
             }
         }
@@ -109,7 +141,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-            if (IsValid && handler.IsAuthorized<ModifyDay>())
+            if (IsValid && handler.IsAuthorized<ModifyDay>() && !this.AsAdditionHandled(handler))
             {
                 InterpretChildDateExp(handler);
 

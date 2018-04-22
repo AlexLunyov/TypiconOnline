@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Tests.Common;
 
-namespace TypiconOnline.Domain.Tests.Rules
+namespace TypiconOnline.Tests.Common
 {
     public static class TestRuleSerializer
     {

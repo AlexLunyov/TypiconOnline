@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Executables;
-using TypiconOnline.Domain.Rules.Schedule.Extensions;
+using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Schedule
@@ -15,7 +15,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KAfterRule : ExecContainer, ICustomInterpreted, IAsAdditionElement
     {
-        public KAfterRule(string name) : base(name) { }
+        public KAfterRule(string name, KanonasRule parent) : base(name)
+        {
+            Parent = parent ?? throw new ArgumentNullException("KanonasRule in KOdiRule");
+        }
         /// <summary>
         /// Номер песни, после которой будут добавлены дочерние элементы Правила
         /// </summary>

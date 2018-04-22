@@ -7,6 +7,7 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
@@ -17,6 +18,7 @@ namespace TypiconOnline.AppServices.Implementations
     public class ModifiedRuleService : IModifiedRuleService
     {
         IUnitOfWork unitOfWork;
+
 
         public ModifiedRuleService(IUnitOfWork unitOfWork)
         {
@@ -62,24 +64,20 @@ namespace TypiconOnline.AppServices.Implementations
                 //находим правило для конкретного дня Минеи
                 MenologyRule menologyRule = typicon.GetMenologyRule(indexDate);
 
-                if (menologyRule == null)
-                    throw new ArgumentNullException("MenologyRule");
-
-                InterpretMenologyRule(menologyRule, indexDate, handler);
+                InterpretRule(menologyRule, indexDate, handler);
 
                 indexDate = indexDate.AddDays(1);
             }
 
             //теперь обрабатываем переходящие минейные праздники
             //у них не должны быть определены даты. так их и найдем
-
             typicon.MenologyRules.FindAll(c => (c.Date.IsEmpty && c.DateB.IsEmpty)).
                 ForEach(a =>
                 {
-                    InterpretMenologyRule(a, date, handler);
+                    InterpretRule(a, date, handler);
 
                     //не нашел другого способа, как только два раза вычислять изменяемые дни
-                    InterpretMenologyRule(a, date.AddYears(1), handler);
+                    InterpretRule(a, date.AddYears(1), handler);
                 });
 
             //Triodion
@@ -91,35 +89,44 @@ namespace TypiconOnline.AppServices.Implementations
             typicon.TriodionRules.
                 ForEach(a =>
                 {
-                    handler.Settings.TypiconRule = a;
-                    handler.Settings.Date = easter.AddDays(a.DaysFromEaster);
-
-                    a.GetRule(serializer)?.Interpret(handler);
-                    //RuleElement rule = a.GetRule(serializer);
-                    //if (rule != null)
-                    //{
-                    //    ModificationsRuleHandler handler = new ModificationsRuleHandler(
-                    //        new RuleHandlerSettings(a, easter.AddDays(a.DaysFromEaster)), date.Year);
-
-                    //    rule.Interpret(handler);
-                    //}
+                    InterpretRule(a, easter.AddDays(a.DaysFromEaster), handler);
                 });
 
-            return typicon.ModifiedYears.FirstOrDefault(m => m.Year == date.Year); ;
+            return typicon.ModifiedYears.FirstOrDefault(m => m.Year == date.Year);
 
-            void InterpretMenologyRule(MenologyRule menologyRule, DateTime dateToInterpret, /*int year, */ModificationsRuleHandler h)
+            void InterpretRule(TypiconRule rule, DateTime dateToInterpret, ModificationsRuleHandler h)
             {
-                if (menologyRule != null)
+                if (rule != null)
                 {
-                    h.Settings.TypiconRule = menologyRule;
-                    h.Settings.Date = dateToInterpret;
+                    h.Settings = CreateSettings(rule, dateToInterpret, serializer);
 
-                    //ModificationsRuleHandler handler = new ModificationsRuleHandler(
-                    //    new RuleHandlerSettings(, dateToInterpret), year);
                     //выполняем его
-                    menologyRule.GetRule(serializer)?.Interpret(h);
+                    h.Settings.RuleContainer.Interpret(h);
                 }
             }
+        }
+
+        /// <summary>
+        /// Рекурсивно создает настройки для обработчика
+        /// </summary>
+        /// <returns></returns>
+        private RuleHandlerSettings CreateSettings(TypiconRule rule, DateTime dateToInterpret, 
+            IRuleSerializerRoot serializer, RuleHandlerSettings additionalSettings = null)
+        {
+            var settings = new RuleHandlerSettings()
+            {
+                TypiconRule = rule,
+                RuleContainer = rule.GetRule<RootContainer>(serializer),
+                Date = dateToInterpret,
+                Addition = additionalSettings
+            };
+
+            if (rule.IsAddition && rule.Template != null)
+            {
+                settings = CreateSettings(rule.Template, dateToInterpret, serializer, settings);
+            }
+
+            return settings;
         }
 
         public void ClearModifiedYears(TypiconEntity typicon)

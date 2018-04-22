@@ -21,13 +21,8 @@ namespace TypiconOnline.AppServices.Implementations
         readonly IModifiedRuleService modifiedRuleService;
         readonly int yearToModify;
 
-        public ModificationsRuleHandler(IModifiedRuleService modifiedRuleService, int year) : this (new RuleHandlerSettings(), modifiedRuleService, year) { }
-
-        public ModificationsRuleHandler(RuleHandlerSettings settings, IModifiedRuleService modifiedRuleService, int year) 
+        public ModificationsRuleHandler(IModifiedRuleService modifiedRuleService, int year) 
         {
-            _settings = settings;
-            //Initialize(settings);
-
             AuthorizedTypes = new List<Type>()
             {
                 typeof(ModifyDay)
@@ -81,14 +76,14 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 int priority = modifyDay.Priority;
 
-                //TypiconRule seniorTypiconRule = Rules[0];
+                DayRule dayRule = FindDayRule(_settings);
 
                 if (priority == 0)
                 {
-                    priority = /*seniorTypicon*/_settings.TypiconRule.Template.Priority;
+                    priority = dayRule.Template.Priority;
                 }
 
-                var request = CreateRequest((DayRule)_settings.TypiconRule, modifyDay, priority);
+                var request = CreateRequest(dayRule, modifyDay, priority);
 
                 modifiedRuleService.AddModifiedRule(typiconEntity, request);
 
@@ -112,6 +107,11 @@ namespace TypiconOnline.AppServices.Implementations
             }
 
             return result;
+        }
+
+        private DayRule FindDayRule(RuleHandlerSettings settings)
+        {
+            return (settings.TypiconRule is DayRule) ? settings.TypiconRule as DayRule : FindDayRule(settings.Addition);
         }
 
         //public override RenderContainer GetResult()

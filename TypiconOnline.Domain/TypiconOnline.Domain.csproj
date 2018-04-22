@@ -78,13 +78,15 @@
     <Compile Include="ItemTypes\TextStyle.cs" />
     <Compile Include="Rules\Days\BookReading.cs" />
     <Compile Include="Rules\Days\BookStihos.cs" />
+    <Compile Include="Rules\Executables\RootContainer.cs" />
+    <Compile Include="Rules\Executables\RootContainerSerializer.cs" />
     <Compile Include="Rules\Handlers\IntConverters\IntConverter.cs" />
     <Compile Include="Rules\Handlers\IntConverters\IntCsConverter.cs" />
     <Compile Include="Rules\Handlers\LanguageSettings.cs" />
     <Compile Include="Rules\Handlers\LanguageSettingsFactory.cs" />
     <Compile Include="Rules\Handlers\RuleHandlerBase T.cs" />
-    <Compile Include="Rules\Schedule\Extensions\IAsAdditionElementExtensions.cs" />
-    <Compile Include="Rules\Schedule\Extensions\IAsAdditionElementSerialization.cs" />
+    <Compile Include="Rules\Extensions\IAsAdditionElementExtensions.cs" />
+    <Compile Include="Rules\Extensions\IAsAdditionElementSerialization.cs" />
     <Compile Include="Rules\Schedule\Extensions\KanonesExtensions.cs" />
     <Compile Include="Rules\Schedule\Extensions\KontakionExtensions.cs" />
     <Compile Include="Rules\Schedule\KOdiRuleSerializer.cs" />

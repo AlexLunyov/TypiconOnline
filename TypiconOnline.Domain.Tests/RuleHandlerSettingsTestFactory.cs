@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.Tests
             var bookStorage = BookStorageFactory.Create();
             var oktoikhDay = bookStorage.Oktoikh.Get(date);
 
-            var ruleContainer = menologyRule.GetRule<ExecContainer>(TestRuleSerializer.Root);
+            var ruleContainer = TestRuleSerializer.Deserialize<RootContainer>(ruleDefinition);// menologyRule.GetRule<ExecContainer>(TestRuleSerializer.Root);
 
             return new RuleHandlerSettings
             {

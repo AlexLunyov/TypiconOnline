@@ -22,7 +22,9 @@ namespace TypiconOnline.Domain.Rules
         public const string DayMoveAttrName = "daymove";
         public const string PriorityAttrName = "priority";
         public const string UseFullNameAttrName = "usefullname";
-        public const string SignNumberAttrName = "signnumber";
+        public const string SignNumberAttrName = "signnumber"; 
+        public const string ModifyDayIdAttrName = "id";
+        public const string ModifyDayAsadditionModeAttrName = "asadditionmode";
 
         /*
          * DayWorshipsFilter

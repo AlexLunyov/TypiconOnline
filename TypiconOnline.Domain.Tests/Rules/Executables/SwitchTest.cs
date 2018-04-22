@@ -1,12 +1,7 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Linq;
-using System.Xml;
-using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Repository.EF;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Rules.Executables
 {

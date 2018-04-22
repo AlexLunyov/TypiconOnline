@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 
-namespace TypiconOnline.Domain.Rules.Schedule.Extensions
+namespace TypiconOnline.Domain.Rules.Extensions
 {
     public static class IAsAdditionElementXmlSerialization
     {

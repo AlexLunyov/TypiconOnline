@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 
-namespace TypiconOnline.Domain.Tests
+namespace TypiconOnline.Tests.Common
 {
     public class TestDataXmlReader
     {

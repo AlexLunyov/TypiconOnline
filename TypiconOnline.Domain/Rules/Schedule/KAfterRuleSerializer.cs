@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Executables;
-using TypiconOnline.Domain.Rules.Schedule.Extensions;
+using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
@@ -18,7 +18,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.KAfterNode };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req) => new KAfterRule(req.Descriptor.GetElementName());
+        protected override RuleElement CreateObject(CreateObjectRequest req) 
+            => new KAfterRule(req.Descriptor.GetElementName(), req.Parent as KanonasRule);
 
         protected override void FillObject(FillObjectRequest req)
         {
@@ -31,6 +32,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 (req.Element as KAfterRule).OdiNumber = intValue;
             }
 
+            //IAsAdditionElement
             (req.Element as KAfterRule).FillElement(req.Descriptor.Element);
         }
 

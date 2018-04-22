@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations.Books;
 using TypiconOnline.AppServices.Migration.Psalter;
 using TypiconOnline.Repository.EF;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.AppServices.Tests.Migration
 {

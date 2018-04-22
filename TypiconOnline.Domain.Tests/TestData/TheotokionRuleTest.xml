@@ -1,17 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<kekragaria>
-  <if>
-    <expression>
-      <equals>
-        <date/>
-        <date>--01-16</date>
-      </equals>
-    </expression>
-    <then>
-      <ymnosrule source="item1" place="kekragaria" count="3"/>
-      <theotokionrule source="irmologion" place="app2_esperinos">
-        <ymnosrule source="item1" place="kekragaria"/>
-      </theotokionrule>
-    </then>
-  </if>
-</kekragaria>
+<rule>
+  <kekragaria>
+    <if>
+      <expression>
+        <equals>
+          <date/>
+          <date>--01-16</date>
+        </equals>
+      </expression>
+      <then>
+        <ymnosrule source="item1" place="kekragaria" count="3"/>
+        <theotokionrule source="irmologion" place="app2_esperinos">
+          <ymnosrule source="item1" place="kekragaria"/>
+        </theotokionrule>
+      </then>
+    </if>
+  </kekragaria>
+</rule>

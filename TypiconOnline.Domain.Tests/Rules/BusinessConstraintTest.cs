@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Rules.Executables;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Rules
 {

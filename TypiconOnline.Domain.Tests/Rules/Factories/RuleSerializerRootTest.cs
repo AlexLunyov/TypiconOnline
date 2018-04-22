@@ -9,6 +9,7 @@ using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Rules.Factories
 {

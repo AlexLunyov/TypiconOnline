@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Books.Katavasia;
 using TypiconOnline.Domain.Rules.Schedule.Extensions;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Rules.Schedule.Extensions
 {

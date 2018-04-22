@@ -58,7 +58,7 @@ namespace TypiconOnline.AppServices.Implementations
             var modifiedRule = modifiedRuleService.GetModifiedRuleHighestPriority(req.Typicon, req.Date, ruleSerializer);
 
             //находим день Октоиха - не может быть null
-            var oktoikhDay = ruleSerializer.BookStorage.Oktoikh.Get(req.Date) ?? throw new NullReferenceException("OktoikhDay"); ;
+            var oktoikhDay = ruleSerializer.BookStorage.Oktoikh.Get(req.Date) ?? throw new NullReferenceException("OktoikhDay");
 
             //создаем выходной объект
             RuleHandlerSettings settings = null;
@@ -220,7 +220,7 @@ namespace TypiconOnline.AppServices.Implementations
                 Addition = additionalSettings,
                 Date = req.Date,
                 TypiconRule = rule,
-                RuleContainer = rule.GetRule<ExecContainer>(ruleSerializer),
+                RuleContainer = rule.GetRule<RootContainer>(ruleSerializer),
                 DayWorships = dayWorships.ToList(),
                 OktoikhDay = oktoikhDay,
                 Language = LanguageSettingsFactory.Create(req.Language),

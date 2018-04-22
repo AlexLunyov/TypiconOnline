@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
 
-namespace TypiconOnline.Domain.Rules.Schedule.Extensions
+namespace TypiconOnline.Domain.Rules.Extensions
 {
     public static class IAsAdditionElementExtensions
     {

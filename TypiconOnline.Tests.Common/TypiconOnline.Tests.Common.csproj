@@ -118,8 +118,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EFCoreBookStorageFactory.cs" />
+    <Compile Include="BookStorageFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestDataXmlReader.cs" />
+    <Compile Include="TestRuleSerializer.cs" />
     <Compile Include="UnitOfWorkFactory.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +136,10 @@
     <ProjectReference Include="..\TypiconOnline.Repository.EFCore\TypiconOnline.Repository.EFCore.csproj">
       <Project>{8ED6DE06-A34B-4775-BCB2-1655C36649CC}</Project>
       <Name>TypiconOnline.Repository.EFCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TypiconOnline.Services\TypiconOnline.AppServices.csproj">
+      <Project>{4ee462f2-d6af-4b99-b9b3-09aa172fe9c8}</Project>
+      <Name>TypiconOnline.AppServices</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

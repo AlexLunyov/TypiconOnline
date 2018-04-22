@@ -13,6 +13,7 @@ using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Repository.EF;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Rules.Executables
 {

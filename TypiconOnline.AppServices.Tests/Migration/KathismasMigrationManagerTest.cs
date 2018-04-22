@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Migration.Psalter;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.AppServices.Tests.Migration
 {
@@ -20,7 +21,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
 
             var typicon = new TypiconEntity();
 
-            var manager = new KathismasMigrationManager(EFCoreBookStorageFactory.Create().Psalter);
+            var manager = new KathismasMigrationManager(BookStorageFactory.Create().Psalter);
             manager.MigrateKathismas(new PsalterRuReader(folderPath, "cs-ru"), typicon);
 
             Assert.AreEqual(1, typicon.Kathismas.Count);
@@ -33,7 +34,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
 
             var typicon = new TypiconEntity();
 
-            var manager = new KathismasMigrationManager(EFCoreBookStorageFactory.Create().Psalter);
+            var manager = new KathismasMigrationManager(BookStorageFactory.Create().Psalter);
             manager.MigrateKathismas(new PsalterRuReader(folderPath, "cs-ru"), typicon);
 
             Assert.AreEqual(20, typicon.Kathismas.Count);
@@ -49,7 +50,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
 
             var typicon = new TypiconEntity();
 
-            var manager = new KathismasMigrationManager(EFCoreBookStorageFactory.Create().Psalter);
+            var manager = new KathismasMigrationManager(BookStorageFactory.Create().Psalter);
             manager.MigrateKathismas(new PsalterRuReader(folderPath, "cs-ru"), typicon);
 
             var psalmLink = typicon.Kathismas[0].SlavaElements[0].PsalmLinks[0];
@@ -77,7 +78,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
 
             var unitOfWork = UnitOfWorkFactory.Create();
 
-            var manager = new KathismasMigrationManager(EFCoreBookStorageFactory.Create(unitOfWork).Psalter);
+            var manager = new KathismasMigrationManager(BookStorageFactory.Create(unitOfWork).Psalter);
             manager.MigrateKathismas(new PsalterRuReader(folderPath, "cs-ru"), typicon);
 
             unitOfWork.Repository<TypiconEntity>().Insert(typicon);
@@ -124,7 +125,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PsalterMigration\1");
 
-            var manager = new KathismasMigrationManager(EFCoreBookStorageFactory.Create().Psalter);
+            var manager = new KathismasMigrationManager(BookStorageFactory.Create().Psalter);
 
             manager.MigrateKathismas(new PsalterRuReader(folderPath, "cs-ru"), typicon);
 
@@ -148,7 +149,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PsalterMigration\1");
 
-            var manager = new KathismasMigrationManager(EFCoreBookStorageFactory.Create().Psalter);
+            var manager = new KathismasMigrationManager(BookStorageFactory.Create().Psalter);
 
             manager.MigrateKathismas(new PsalterRuReader(folderPath, "cs-ru"), typicon);
 

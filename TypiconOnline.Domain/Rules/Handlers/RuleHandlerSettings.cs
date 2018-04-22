@@ -34,7 +34,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// <summary>
         /// Десериализированная последовательность элементов
         /// </summary>
-        public ExecContainer RuleContainer { get; set; }
+        public RootContainer RuleContainer { get; set; }
         public List<DayWorship> DayWorships { get; set; } = new List<DayWorship>();
         public OktoikhDay OktoikhDay { get; set; }
         /// <summary>

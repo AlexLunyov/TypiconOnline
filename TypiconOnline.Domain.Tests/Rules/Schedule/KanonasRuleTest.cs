@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Messaging.Typicon;
-using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -58,7 +57,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             handler.Settings.OktoikhDay = oktoikhDay;
 
             handler.ClearResult();
-            KanonasRule kanonasRule = rule.GetRule<KanonasRule>(TestRuleSerializer.Root);
+            KanonasRule kanonasRule = TestRuleSerializer.Deserialize<KanonasRule>(xml);
             kanonasRule.Interpret(handler);
 
             Assert.AreEqual(4, kanonasRule.Odes[0].Kanones.Count()); 

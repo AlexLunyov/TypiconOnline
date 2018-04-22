@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Messaging.Typicon;
-using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
@@ -53,11 +52,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             handler.Settings.OktoikhDay = oktoikhDay;
 
-            var ruleContainer = rule.GetRule<SedalenRule>(TestRuleSerializer.Root);
+            var ruleContainer = TestRuleSerializer.Deserialize<SedalenRule>(xml);// rule.GetRule<SedalenRule>(TestRuleSerializer.Root);
             ruleContainer.Interpret(handler);
 
             Assert.AreEqual(3, ruleContainer.Structure.YmnosStructureCount);
-            Assert.Pass(rule.GetRule<SedalenRule>(TestRuleSerializer.Root).Structure.YmnosStructureCount.ToString());
+            Assert.Pass(ruleContainer.Structure.YmnosStructureCount.ToString());
         }
     }
 }

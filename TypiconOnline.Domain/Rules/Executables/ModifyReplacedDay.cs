@@ -12,7 +12,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 {
     public class ModifyReplacedDay : ModifyDay
     {
-        public ModifyReplacedDay(string name, IEasterContext context) : base(name)
+        public ModifyReplacedDay(string name, IEasterContext context, IAsAdditionElement parent) : base(name, parent)
         {
             EasterContext = context ?? throw new ArgumentNullException("IEasterContext");
         }

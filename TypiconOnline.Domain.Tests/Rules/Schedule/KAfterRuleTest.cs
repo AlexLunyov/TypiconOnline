@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Rules.Schedule
 {
@@ -28,15 +29,15 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             Assert.IsTrue(element.IsValid);
         }
 
-        [Test]
-        public void KAfterRule_NoChildren()
-        {
-            string xmlString = @"<k_after number=""3""></k_after>";
+        //[Test]
+        //public void KAfterRule_NoChildren()
+        //{
+        //    string xmlString = @"<k_after number=""3""></k_after>";
 
-            var element = TestRuleSerializer.Deserialize<KAfterRule>(xmlString);
+        //    var element = TestRuleSerializer.Deserialize<KAfterRule>(xmlString);
 
-            Assert.IsFalse(element.IsValid);
-        }
+        //    Assert.IsFalse(element.IsValid);
+        //}
 
         [Test]
         public void KAfterRule_InvalidNumber()

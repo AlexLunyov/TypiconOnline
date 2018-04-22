@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Expressions;
+using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Executables
@@ -17,7 +18,8 @@ namespace TypiconOnline.Domain.Rules.Executables
             ElementNames = new string[] { RuleConstants.ModifyDayNodeName };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req) => new ModifyDay(req.Descriptor.GetElementName());
+        protected override RuleElement CreateObject(CreateObjectRequest req) 
+            => new ModifyDay(req.Descriptor.GetElementName(), req.Parent);
 
         protected override void FillObject(FillObjectRequest req)
         {
@@ -48,8 +50,15 @@ namespace TypiconOnline.Domain.Rules.Executables
                 (req.Element as ModifyDay).SignNumber = intValue;
             }
 
+            attr = req.Descriptor.Element.Attributes[RuleConstants.ModifyDayIdAttrName];
+            (req.Element as ModifyDay).Id = attr?.Value;
+
             //filter
             DeserializeFilter(req.Descriptor.Element, req.Element as ModifyDay);
+
+            //IAsAdditionElement
+            attr = req.Descriptor.Element.Attributes[RuleConstants.ModifyDayAsadditionModeAttrName];
+            (req.Element as ModifyDay).AsAdditionMode = (Enum.TryParse(attr?.Value, true, out AsAdditionMode mode)) ? mode : AsAdditionMode.None;
 
             foreach (XmlNode childNode in req.Descriptor.Element.ChildNodes)
             {

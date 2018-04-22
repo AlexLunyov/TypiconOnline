@@ -1,12 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
-using System.Xml;
 using TypiconOnline.Domain.Rules.Expressions;
-using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Repository.EF;
-using System.Linq;
-using TypiconOnline.Domain.Books;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Rules.Expressions
 {

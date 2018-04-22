@@ -6,6 +6,7 @@ using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Repository.EF;
+using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.AppServices.Tests
 {

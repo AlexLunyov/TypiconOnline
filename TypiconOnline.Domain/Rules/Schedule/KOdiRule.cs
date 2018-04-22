@@ -4,6 +4,7 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Schedule.Extensions;
+using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Schedule
