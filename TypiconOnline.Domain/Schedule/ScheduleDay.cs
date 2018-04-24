@@ -17,7 +17,7 @@ namespace TypiconOnline.Domain.Schedule
 
         public string Name { get; set; }
         public virtual DateTime Date { get; set; }
-        public WorshipRuleViewModelCollection Schedule { get; set; } = new WorshipRuleViewModelCollection();
+        public ViewModelRoot Schedule { get; set; } = new ViewModelRoot();
         /// <summary>
         /// Номер знака службы
         /// </summary>

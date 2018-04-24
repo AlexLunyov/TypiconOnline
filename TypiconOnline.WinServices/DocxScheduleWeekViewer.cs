@@ -151,7 +151,7 @@ namespace TypiconOnline.WinServices
                 SetTextToCell(tdDate, sDate, false, false);
                 dayTable.AppendChild(tr);
 
-                foreach (WorshipRuleViewModel service in day.Schedule)
+                foreach (WorshipRuleViewModel service in day.Schedule.Worships)
                 {
                     tr = (TableRow)dayTemplateTable.ChildElements[4].Clone();
                     TableCell tdTime = (TableCell)tr.ChildElements[2];

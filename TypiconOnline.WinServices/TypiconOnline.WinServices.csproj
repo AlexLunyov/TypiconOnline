@@ -47,7 +47,6 @@
     <Compile Include="Books\EasterCacheStorage.cs" />
     <Compile Include="DocxScheduleWeekViewer.cs" />
     <Compile Include="Implementations\DocxTemplateService.cs" />
-    <Compile Include="Implementations\TextScheduleDayViewer.cs" />
     <Compile Include="Interfaces\IDocxTemplateService.cs" />
     <Compile Include="Messaging\HandleTemplateRequest.cs" />
     <Compile Include="Messaging\HandleTemplateResponse.cs" />

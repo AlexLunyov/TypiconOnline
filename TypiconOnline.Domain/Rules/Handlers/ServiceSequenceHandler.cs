@@ -50,7 +50,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 //добавляем элементы, реализующие интерфейс IViewModelElement к последней WorshipRuleViewModel
                 if (element is IViewModelElement viewElement)
                 {
-                    viewElement.CreateViewModel(this, model => GetResult().LastOrDefault()?.AddRange(model));
+                    viewElement.CreateViewModel(this, model => GetResult().Worships.LastOrDefault()?.ChildElements.AddRange(model));
                 }
             }
 
@@ -61,14 +61,14 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// Возвращает результат обработки правила
         /// </summary>
         /// <returns></returns>
-        public override WorshipRuleViewModelCollection GetResult()
+        public override ViewModelRoot GetResult()
         {
             //TODO: переопределение добавлено только для тестовых целей. Потом удалить
             var model = base.GetResult();
 
-            if (model.Count == 0)
+            if (model.Worships.Count == 0)
             {
-                model.Add(new WorshipRuleViewModel());
+                model.Worships.Add(new WorshipRuleViewModel());
             }
 
             return model;

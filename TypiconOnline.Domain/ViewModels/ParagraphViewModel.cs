@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.ViewModels
@@ -10,10 +11,15 @@ namespace TypiconOnline.Domain.ViewModels
     /// <summary>
     /// Выходная модель для параграфа с определением стиля
     /// </summary>
+    [Serializable]
+    [XmlRoot(ViewModelConstants.ParagraphNodeName)]
     public class ParagraphViewModel //: List<string>
     {
+        [XmlElement(ViewModelConstants.ParagraphTextNodeName)]
         public string Text { get; set; }
+        [XmlElement(ViewModelConstants.ParagraphStyleNodeName)]
         public TextStyle Style { get; set; }
+        [XmlElement(ViewModelConstants.ParagraphNoteNodeName)]
         public ParagraphViewModel Note { get; set; }
 
         public ParagraphViewModel() { }

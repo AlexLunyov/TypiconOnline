@@ -114,7 +114,7 @@ namespace TypiconOnline.Domain.Services
 
             //if (container != null)
             //{
-                scheduleDay.Schedule.AddRange(container);
+                scheduleDay.Schedule.Worships.AddRange(container.Worships);
             //}
 
             return scheduleDay;

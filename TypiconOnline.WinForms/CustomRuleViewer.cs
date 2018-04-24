@@ -92,9 +92,7 @@ namespace TypiconOnline.WinForms
             GetScheduleDayResponse dayResponse = scheduleService.GetScheduleDay(request);
 
             TextScheduleDayViewer viewer = new TextScheduleDayViewer();
-            viewer.Execute(dayResponse.Day);
-
-            webCustomRule.DocumentText = viewer.GetResult();
+            webCustomRule.DocumentText = viewer.Execute(dayResponse.Day);
         }
     }
 }

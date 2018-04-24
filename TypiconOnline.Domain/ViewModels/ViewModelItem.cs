@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules;
@@ -16,14 +17,18 @@ namespace TypiconOnline.Domain.ViewModels
     /// <summary>
     /// Элементарная частичка выходной формы последовательности богослужений
     /// </summary>
-    [DataContract]
+    [Serializable]
+    [XmlRoot(ViewModelConstants.ViewModelItemNodeName)]
     public class ViewModelItem 
     {
-        [DataMember]
+        [XmlAttribute(ViewModelConstants.ViewModelKindTextAttrName)]
         public string KindStringValue { get; set; }
-        [DataMember]
+
+        [XmlAttribute(ViewModelConstants.ViewModelKindAttrName)]
         public ViewModelItemKind Kind { get; set; }
-        [DataMember]
+
+        [XmlArray(ElementName = ViewModelConstants.ViewModelItemChildNodeName, IsNullable = true)]
+        [XmlArrayItem(ElementName = ViewModelConstants.ParagraphNodeName, Type = typeof(ParagraphViewModel))]
         //TODO: необходимо добавить к строковым значениям каждого параграфа также и стиль
         public List<ParagraphViewModel> Paragraphs { get; set; }
     }

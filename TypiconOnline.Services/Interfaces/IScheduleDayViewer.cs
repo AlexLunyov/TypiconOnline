@@ -7,8 +7,8 @@ using TypiconOnline.Domain.Schedule;
 
 namespace TypiconOnline.AppServices.Interfaces
 {
-    public interface IScheduleDayViewer
+    public interface IScheduleDayViewer<T> where T: class
     {
-        void Execute(ScheduleDay day);
+        T Execute(ScheduleDay day);
     }
 }

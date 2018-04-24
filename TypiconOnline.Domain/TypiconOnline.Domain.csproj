@@ -379,9 +379,10 @@
     <Compile Include="ViewModels\Messaging\CreateViewModelRequest.cs" />
     <Compile Include="ViewModels\ElementViewModel.cs" />
     <Compile Include="ViewModels\ParagraphViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelConstants.cs" />
     <Compile Include="ViewModels\ViewModelItem.cs" />
+    <Compile Include="ViewModels\ViewModelRoot.cs" />
     <Compile Include="ViewModels\WorshipRuleViewModel.cs" />
-    <Compile Include="ViewModels\WorshipRuleViewModelCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure.Common\TypiconOnline.Infrastructure.Common.csproj">

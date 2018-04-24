@@ -37,7 +37,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         /// </summary>
         /// <param name="odi"></param>
         /// <param name="katavasiaHeader">Если не null, то считаем, что это последний канон, в который необходимо вставить заголовок Катавасия</param>
-        /// <param name="isOdi8">Если true, обавляет "Благословим" вместо "Славы", в 8-ую песнь вставляет стих "Хвалим, благословим..."</param>
+        /// <param name="isOdi8">Если true, добавляет "Благословим" вместо "Славы", в 8-ую песнь вставляет стих "Хвалим, благословим..."</param>
         public void AppendViewModel(AppendViewModelOdiRequest req)
         {
             if (req.Odi == null)
@@ -50,7 +50,9 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             {
                 Ymnos troparion = req.Odi.Troparia[i];
                 //добавляем припев, только если это не катавасия
-                if (troparion.Kind != YmnosKind.Katavasia)
+                //и если ирмос не имеет стихов
+                if (((troparion.Kind != YmnosKind.Katavasia) && (troparion.Kind != YmnosKind.Irmos))
+                    || (troparion.Kind == YmnosKind.Irmos && troparion.Stihoi.Count > 0))
                 {
                     AppendChorus(req.Odi, req.IsLastKanonas, req.IsOdi8, i, req.DefaultChorus);
                 }

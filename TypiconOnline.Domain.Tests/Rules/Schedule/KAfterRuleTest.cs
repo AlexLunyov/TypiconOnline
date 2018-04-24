@@ -16,17 +16,19 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void KAfterRule_Deserialize()
         {
-            string xmlString = @"<k_after number=""3"">
-							        <priest>
-						                <p>
-							                <item language=""cs-ru"">Благослове́н Бог наш всегда́, ны́не и при́сно, и во ве́ки веко́в</item>
-						                </p>
-					                </priest>
-						        </k_after>";
+            string xmlString = @"<kanonasrule>
+                                    <k_after number=""3"">
+							            <priest>
+						                    <p>
+							                    <item language=""cs-ru"">Благослове́н Бог наш всегда́, ны́не и при́сно, и во ве́ки веко́в</item>
+						                    </p>
+					                    </priest>
+						            </k_after>
+                                </kanonasrule>";
 
-            var element = TestRuleSerializer.Deserialize<KAfterRule>(xmlString);
+            var element = TestRuleSerializer.Deserialize<KanonasRule>(xmlString);
 
-            Assert.IsTrue(element.IsValid);
+            Assert.IsTrue(element.ChildElements[0].IsValid);
         }
 
         //[Test]
@@ -42,27 +44,29 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void KAfterRule_InvalidNumber()
         {
-            string xmlString = @"<k_after number=""10""></k_after>";
+            string xmlString = @"<kanonasrule><k_after number=""10""></k_after></kanonasrule>";
 
-            var element = TestRuleSerializer.Deserialize<KAfterRule>(xmlString);
+            var element = TestRuleSerializer.Deserialize<KanonasRule>(xmlString);
 
-            Assert.IsFalse(element.IsValid);
+            Assert.IsFalse(element.ChildElements[0].IsValid);
         }
 
         [Test]
         public void KAfterRule_NoNumber()
         {
-            string xmlString = @"<k_after>
-							        <priest>
-						                <p>
-							                <item language=""cs-ru"">Благослове́н Бог наш всегда́, ны́не и при́сно, и во ве́ки веко́в</item>
-						                </p>
-					                </priest>
-						        </k_after>";
+            string xmlString = @"<kanonasrule>
+                                    <k_after>
+							            <priest>
+						                    <p>
+							                    <item language=""cs-ru"">Благослове́н Бог наш всегда́, ны́не и при́сно, и во ве́ки веко́в</item>
+						                    </p>
+					                    </priest>
+						            </k_after>
+                                </kanonasrule>";
 
-            var element = TestRuleSerializer.Deserialize<KAfterRule>(xmlString);
+            var element = TestRuleSerializer.Deserialize<KanonasRule>(xmlString);
 
-            Assert.IsFalse(element.IsValid);
+            Assert.IsFalse(element.ChildElements[0].IsValid);
         }
 
         [Test]

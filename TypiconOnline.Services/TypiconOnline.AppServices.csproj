@@ -60,6 +60,7 @@
     <Compile Include="Implementations\DayContainerService.cs" />
     <Compile Include="Implementations\FileReader.cs" />
     <Compile Include="Implementations\HtmlInnerScheduleWeekViewer.cs" />
+    <Compile Include="Implementations\HtmlScheduleDayViewer.cs" />
     <Compile Include="Implementations\HtmlScheduleWeekViewer.cs" />
     <Compile Include="Implementations\ModificationsRuleHandler.cs" />
     <Compile Include="Implementations\ModifiedRuleService.cs" />

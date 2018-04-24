@@ -50,7 +50,7 @@ namespace TypiconOnline.Domain.Tests.Services
 
             builder.AppendLine(response.Day.Date.ToShortDateString() + " " + response.Day.Name);
 
-            foreach (WorshipRuleViewModel service in response.Day.Schedule)
+            foreach (var service in response.Day.Schedule.Worships)
             {
                 builder.AppendLine(service.Time + " " + service.Name);
             }

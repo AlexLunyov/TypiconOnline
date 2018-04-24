@@ -446,7 +446,7 @@ namespace TypiconOnline.WinForms
                 textBoxResult.AppendText(day.Date.ToShortDateString() + Environment.NewLine);
                 textBoxResult.AppendText(day.Name + Environment.NewLine);
                 textBoxResult.AppendText("Знак службы: " + day.SignName + Environment.NewLine);
-                foreach (WorshipRuleViewModel el in day.Schedule)
+                foreach (var el in day.Schedule.Worships)
                 {
                     string str = !string.IsNullOrEmpty(el.Time) ? $"{el.Time} " : "";
                  
@@ -578,7 +578,7 @@ namespace TypiconOnline.WinForms
 
             textBoxTesting.AppendText(dayResponse.Day.Date.ToShortDateString() + Environment.NewLine);
             textBoxTesting.AppendText(dayResponse.Day.Name + ". " + daysFromEaster + " дней до Пасхи." +Environment.NewLine);
-            foreach (WorshipRuleViewModel el in dayResponse.Day.Schedule)
+            foreach (var el in dayResponse.Day.Schedule.Worships)
             {
                 string str = string.IsNullOrEmpty(el.Time) ? $"{el.Time} " : "";
                  
@@ -662,10 +662,10 @@ namespace TypiconOnline.WinForms
                 GetScheduleDayResponse dayResponse = _scheduleService.GetScheduleDay(request);
 
                 TextScheduleDayViewer viewer = new TextScheduleDayViewer();
-                viewer.Execute(dayResponse.Day);
+                string result = viewer.Execute(dayResponse.Day);
 
                 txtSequence.Clear();
-                txtSequence.AppendText(viewer.GetResult());
+                txtSequence.AppendText(result);
             //}
             //catch (Exception ex)
             //{
