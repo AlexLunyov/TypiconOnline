@@ -16,7 +16,6 @@ using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.AppServices.Services;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconMigrationTool

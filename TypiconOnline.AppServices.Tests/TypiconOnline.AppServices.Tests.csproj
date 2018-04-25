@@ -140,6 +140,7 @@
     <Compile Include="Common\IntCsTest.cs" />
     <Compile Include="Common\SignMigratorTest.cs" />
     <Compile Include="Implementation\ModifiedRuleServiceTest.cs" />
+    <Compile Include="Implementation\ScheduleServiceTest.cs" />
     <Compile Include="Migration\FakePsalterService.cs" />
     <Compile Include="Migration\KathismasMigrationManagerTest.cs" />
     <Compile Include="Migration\PsalmsMigrationManagerTest.cs" />

@@ -20,7 +20,6 @@ using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 

@@ -15,6 +15,8 @@ namespace TypiconOnline.Domain.ViewModels
     [XmlRoot(ViewModelConstants.ParagraphNodeName)]
     public class ParagraphViewModel //: List<string>
     {
+        [XmlAttribute( ViewModelConstants.ParagraphTextNodeName)]
+        public string Language { get; set; }
         [XmlElement(ViewModelConstants.ParagraphTextNodeName)]
         public string Text { get; set; }
         [XmlElement(ViewModelConstants.ParagraphStyleNodeName)]

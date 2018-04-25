@@ -18,7 +18,7 @@ using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Domain.ViewModels;
 
-namespace TypiconOnline.Domain.Services
+namespace TypiconOnline.AppServices.Implementations
 {
     public class ScheduleService : IScheduleService
     {

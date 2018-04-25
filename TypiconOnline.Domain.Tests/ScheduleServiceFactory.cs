@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Domain.Services;
+using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests
 {
     public class ScheduleServiceFactory
     {
-        public static ScheduleService Create()
+        public static ScheduleService Create() => Create(UnitOfWorkFactory.Create());
+
+        public static ScheduleService Create(IUnitOfWork unitOfWork)
         {
-            var unitOfWork = UnitOfWorkFactory.Create();
             var bookStorageFactory = BookStorageFactory.Create();
             IRuleSerializerRoot serializerRoot = new RuleSerializerRoot(bookStorageFactory);
 

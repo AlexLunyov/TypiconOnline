@@ -16,7 +16,6 @@ using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Repository.EFCore;
 using TypiconOnline.AppServices.Services;
-using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Repository.EFCore.DataBase;

@@ -10,7 +10,6 @@ using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Repository.EF;
 using TypiconOnline.Tests.Common;

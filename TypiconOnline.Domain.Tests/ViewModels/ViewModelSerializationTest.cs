@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.ViewModels
@@ -31,6 +33,30 @@ namespace TypiconOnline.Domain.Tests.ViewModels
             var serializer = new TypiconSerializer();
 
             var result = serializer.Serialize(viewModel);
+
+            Assert.IsNotEmpty(result);
+            Assert.Pass(result);
+        }
+
+        [Test]
+        public void ViewModelSerialization_DeserializeFull()
+        {
+            var unitOfWork = UnitOfWorkFactory.Create();
+
+            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
+
+            var service = ScheduleServiceFactory.Create(unitOfWork);
+
+            var scheduleDay = service.GetScheduleDay(new GetScheduleDayRequest()
+            {
+                Handler = new ServiceSequenceHandler(),
+                Date = new DateTime(2017, 11, 13),
+                Typicon = typiconEntity
+            });
+
+            var serializer = new TypiconSerializer();
+
+            var result = serializer.Serialize(scheduleDay.Day.Schedule);
 
             Assert.IsNotEmpty(result);
             Assert.Pass(result);

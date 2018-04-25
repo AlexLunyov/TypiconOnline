@@ -4,7 +4,6 @@ using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Schedule;
-using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;

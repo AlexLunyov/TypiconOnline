@@ -6,7 +6,6 @@ using System.IO;
 using WordPressSharp;
 using WordPressSharp.Models;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
-using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;

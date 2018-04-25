@@ -7,7 +7,6 @@ using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Services;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Easter;
-using TypiconOnline.Domain.Services;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 
 namespace TypiconMigrationTool

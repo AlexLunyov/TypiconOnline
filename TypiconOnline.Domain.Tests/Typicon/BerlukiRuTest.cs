@@ -8,7 +8,6 @@ using TypiconOnline.Domain.Serialization;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Repository.EF;
 using TypiconOnline.AppServices.Implementations;
