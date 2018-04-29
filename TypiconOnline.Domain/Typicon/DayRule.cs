@@ -49,7 +49,7 @@ namespace TypiconOnline.Domain.Typicon
             {
                 foreach (DayWorship serv in DayWorships)
                 {
-                    result += serv.WorshipName[language] + " ";
+                    result += serv.WorshipName.FirstOrDefault(language).Text + " ";
                 }
 
                 result = result.Substring(0, result.Length - 1);

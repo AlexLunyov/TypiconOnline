@@ -23,7 +23,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 
             builder.HasOne(c => c.Owner).WithMany().HasForeignKey(d => d.OwnerId);
 
-            builder.OwnsOne(c => c.SignName);
+            builder.OwnsOne(c => c.SignName, k => k.Ignore(d => d.Items));
 
             //builder.Ignore(c => c.IsTemplate);
         }

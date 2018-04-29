@@ -7,8 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Domain.Tests.Experiments;
+//using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.Tests.ItemTypes
 {
@@ -18,20 +20,26 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
         [Test]
         public void ItemText_Right()
         {
-            string xmlString = @"<ItemText>
+            string xmlString = @"<text>
 	                                <item language=""cs-ru"">Блажен муж, иже не иде на совет нечестивых и на пути грешных не ста, и на седалищи губителей не седе,</item>
 	                                <item language=""cs-cs"">Бlжeнъ мyжъ, и4же не и4де на совётъ нечести1выхъ, и3 на пути2 грёшныхъ не стA, и3 на сэдaлищи губи1телей не сёде:</item>
 	                                <item language=""ru-ru"">Блажен муж, который не пошел на совет нечестивых, и на путь грешных не вступил, и не сидел в сборище губителей;</item>
 	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
-                                </ItemText>";
+                                </text>";
 
             //XmlDocument xmlDoc = new XmlDocument();
 
             //xmlDoc.LoadXml(xmlString);
 
-            ItemText element = new ItemText(xmlString);// (xmlDoc.FirstChild);
+            ItemText element = new ItemText(xmlString, "text");// (xmlDoc.FirstChild);
 
             Assert.IsFalse(element.IsEmpty);
+            Assert.AreEqual(4, element.Items.Count());
+            //Assert.Pass($"count: {element.Items.Count()}");
+
+            var item = element.FirstOrDefault("cs-ru");
+            Assert.IsNotNull(item);
+            Assert.Pass($"text: {item.Text}");
         }
 
         [Test]
@@ -48,7 +56,7 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 
             xmlDoc.LoadXml(xmlString);
 
-            ItemText element = new ItemText(xmlString);// (xmlDoc.FirstChild);
+            ItemText element = new ItemText(xmlString, "ItemText");// (xmlDoc.FirstChild);
 
             Assert.Pass(element.StringExpression);
         }
@@ -82,7 +90,8 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
             TypiconSerializer ser = new TypiconSerializer();
             ItemText element = ser.Deserialize<ItemText>(xmlString);
 
-            element["cs-cs"] = "cs-cs Текст измененный";
+            //element["cs-cs"] = "cs-cs Текст измененный";
+            element.AddOrUpdate(new ItemTextUnit() { Language = "cs-cs", Text = "cs-cs Текст измененный" });
 
             string result = ser.Serialize(element);
 
@@ -114,21 +123,18 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
         [Test]
         public void ItemText_StringExpression()
         {
-            string xmlString = @"<ItemText>
+            string xmlString = @"<text>
 	                                <item language=""cs-ru"">Блажен муж, иже не иде на совет нечестивых и на пути грешных не ста, и на седалищи губителей не седе,</item>
 	                                <item language=""cs-cs"">Бlжeнъ мyжъ, и4же не и4де на совётъ нечести1выхъ, и3 на пути2 грёшныхъ не стA, и3 на сэдaлищи губи1телей не сёде:</item>
 	                                <item language=""ru-ru"">Блажен муж, который не пошел на совет нечестивых, и на путь грешных не вступил, и не сидел в сборище губителей;</item>
 	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
-                                </ItemText>";
+                                </text>";
 
             //XmlDocument xmlDoc = new XmlDocument();
 
             //xmlDoc.LoadXml(xmlString);
 
-            ItemText element = new ItemText
-            {
-                StringExpression = xmlString
-            };
+            ItemText element = new ItemText(xmlString, "text");
 
             Assert.IsFalse(element.IsEmpty);
         }

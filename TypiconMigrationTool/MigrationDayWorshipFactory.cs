@@ -47,14 +47,14 @@ namespace TypiconMigrationTool
             DayWorship dayService = new DayWorship();
 
             //наполняем содержимое текста службы
-            dayService.WorshipName.AddElement("cs-ru", _row.Name);
+            dayService.WorshipName.AddOrUpdate("cs-ru", _row.Name);
             dayService.IsCelebrating = !_row.IsIsCelebratingNull() ? _row.IsCelebrating : false;
             dayService.UseFullName = !_row.IsUseFullNameNull() ? _row.UseFullName : false;
 
             if (!_row.IsShortNameNull() && !string.IsNullOrEmpty(_row.ShortName))
             {
                 //dayService.ServiceShortName = new ItemText();
-                dayService.WorshipShortName.AddElement("cs-ru", _row.ShortName);
+                dayService.WorshipShortName.AddOrUpdate("cs-ru", _row.ShortName);
             }
 
             string fileName = (!_row.IsDateBNull()) ? new ItemDate(_row.DateB.Month, _row.DateB.Day).Expression + "." + _row.Name : _row.Name;

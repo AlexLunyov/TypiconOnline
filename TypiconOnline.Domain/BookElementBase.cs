@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain
             return GetElement(new TypiconSerializer());
         }
 
-        public virtual T GetElement(IXmlSerializer serializer)
+        public virtual T GetElement(ITypiconSerializer serializer)
         {
             //ThrowExceptionIfInvalid();
 

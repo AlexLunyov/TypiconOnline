@@ -42,31 +42,33 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
             string str = "";
 
+            var language = handler.Settings.Language;
+
             if (ihos != null)
             {
                 //текст "Глас"
                 req.Key = CommonRuleConstants.IhosText;
-                string ihosString = handler.Settings.Language.IntConverter.ToString((int)ihos);
-                str += $"{typ.GetCommonRuleTextValue(req, handler.Settings.Language.Name)} {ihosString}. ";
+                string ihosString = language.IntConverter.ToString((int)ihos);
+                str += $"{typ.GetCommonRuleTextValue(req, language.Name)} {ihosString}. ";
             }
 
             //самоподобен?
             if (prosomoion?.Self == true)
             {
                 req.Key = CommonRuleConstants.SelfText;
-                str += typ.GetCommonRuleTextValue(req, handler.Settings.Language.Name);
+                str += typ.GetCommonRuleTextValue(req, language.Name);
             }
             //если подобен
             else if (prosomoion?.IsEmpty == false)
             {
                 req.Key = CommonRuleConstants.ProsomoionText;
-                string p = typ.GetCommonRuleTextValue(req, handler.Settings.Language.Name);
+                string p = typ.GetCommonRuleTextValue(req, language.Name);
 
-                str += $"{p}: \"{ prosomoion[handler.Settings.Language.Name] }\"";
+                str += $"{p}: \"{ prosomoion.FirstOrDefault(language.Name).Text }\"";
             }
 
             viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text,
-                    new List<ParagraphViewModel> { ParagraphVMFactory.Create(str) }));
+                    new List<ParagraphViewModel> { ParagraphVMFactory.Create(language.Name, str) }));
         }
 
         private static void AppendYmnis(List<Ymnos> ymnis, IRuleHandler handler,

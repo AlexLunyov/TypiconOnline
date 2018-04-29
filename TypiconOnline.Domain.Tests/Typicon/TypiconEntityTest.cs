@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
         public void Typicon_TypiconEntity_Creature()
         {
             DayWorship dayService = new DayWorship();
-            dayService.WorshipName.AddElement("cs-ru", "Благовещение");
+            dayService.WorshipName.AddOrUpdate("cs-ru", "Благовещение");
 
             MenologyDay menologyday = new MenologyDay() {
                 Id = 1,

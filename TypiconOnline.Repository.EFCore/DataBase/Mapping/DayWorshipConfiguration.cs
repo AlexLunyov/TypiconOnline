@@ -23,8 +23,8 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 
             builder.HasKey(c => c.Id);
 
-            builder.OwnsOne(c => c.WorshipName, k => k.Ignore(d => d.Style));
-            builder.OwnsOne(c => c.WorshipShortName, k => k.Ignore(d => d.Style));
+            builder.OwnsOne(c => c.WorshipName, k => k.Ignore(d => d.Items));
+            builder.OwnsOne(c => c.WorshipShortName, k => k.Ignore(d => d.Items));
 
             builder.HasOne(e => e.Parent).
                 WithMany();

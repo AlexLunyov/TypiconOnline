@@ -46,7 +46,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 if (childNode.Name == RuleConstants.TextHolderPapragraphNode)
                 {
-                    ItemTextNoted item = new ItemTextNoted(childNode.OuterXml);
+                    ItemTextNoted item = new ItemTextNoted(childNode.OuterXml, RuleConstants.TextHolderPapragraphNode);
 
                     (req.Element as TextHolder).Paragraphs.Add(item);
                 }

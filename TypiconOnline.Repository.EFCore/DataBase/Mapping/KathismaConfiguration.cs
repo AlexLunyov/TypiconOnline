@@ -16,7 +16,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
         {
             builder.HasKey(c => c.Id);
 
-            builder.OwnsOne(c => c.NumberName);
+            builder.OwnsOne(c => c.NumberName, k => k.Ignore(d => d.Items));
 
             builder.HasMany(c => c.SlavaElements);
 

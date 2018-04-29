@@ -3,72 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Serialization;
-using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconOnline.Domain.ItemTypes
 {
-    public class ItemTextNoted : ItemTextStyled
+    public class ItemTextNoted : ItemTextHeader
     {
         public ItemTextNoted() : base() { }
 
-        public ItemTextNoted(string expression) : base(expression) { }
+        public ItemTextNoted(ITypiconSerializer serializer) : base(serializer) { }
 
-        /// <summary>
-        /// Примечание. Например, "трижды" к тропарю или другому тексту
-        /// </summary>
-        public ItemTextNoted Note { get; set; }
+        public ItemTextNoted(string exp) : base(exp) { }
 
-        public override bool IsEmpty
+        public ItemTextNoted(string exp, string rootName) : base(exp, rootName) { }
+
+        public ItemTextNoted(ItemText source) : base(source) { }
+
+        [XmlElement("note")]
+        public ItemTextStyled Note { get; set; }
+
+        protected override ItemText Deserialize(string exp) => Serializer.Deserialize<ItemTextNoted>(exp, RootName);
+
+        protected override string Serialize() => Serializer.Serialize(this, RootName);
+
+        protected override void Build(ItemText source)
         {
-            get
+            base.Build(source);
+
+            if (source is ItemTextNoted s)
             {
-                return base.IsEmpty && Note.IsEmpty;
+                Note = s.Note;
             }
-        }
-
-        protected override bool ReadNode(XmlReader reader)
-        {
-            bool isRead = base.ReadNode(reader);
-
-            if (!isRead && RuleConstants.ItemTextNoteNode == reader.Name)
-            {
-                XmlSerializer _serializer = new XmlSerializer(typeof(ItemTextNoted), new XmlRootAttribute(RuleConstants.ItemTextNoteNode));
-                Note = _serializer.Deserialize(reader) as ItemTextNoted;
-
-                isRead = true;
-            }
-
-            return isRead;
-        }
-        public override void WriteXml(XmlWriter writer)
-        {
-            base.WriteXml(writer);
-
-            if (Note != null && !Note.IsEmpty)
-            {
-                XmlSerializer _serializer = new XmlSerializer(typeof(ItemTextNoted), new XmlRootAttribute(RuleConstants.ItemTextNoteNode));
-                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-                ns.Add("", "");
-                _serializer.Serialize(writer, Note, ns);
-            }
-        }
-
-
-        protected override void Validate()
-        {
-            base.Validate();
-
-            if (Note?.IsValid == false)
-            {
-                AppendAllBrokenConstraints(Note);
-            }
-        }
-
-        public override string ToString()
-        {
-            return (Note != null) ? string.Format($"{base.ToString()} {Note}") : base.ToString();
         }
     }
 }

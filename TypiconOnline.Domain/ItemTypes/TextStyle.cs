@@ -18,6 +18,8 @@ namespace TypiconOnline.Domain.ItemTypes
         public bool IsRed { get; set; } = false;
         [XmlElement(RuleConstants.StyleBoldNodeName)]
         public bool IsBold { get; set; } = false;
+        [XmlElement(RuleConstants.StyleItalicNodeName)]
+        public bool IsItalic { get; set; } = false;
         [XmlElement(RuleConstants.StyleHeaderNodeName)]
         public HeaderCaption Header { get; set; } = HeaderCaption.NotDefined;
     }

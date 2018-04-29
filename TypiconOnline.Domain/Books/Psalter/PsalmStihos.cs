@@ -15,30 +15,31 @@ namespace TypiconOnline.Domain.Books.Psalter
     [XmlRoot(RuleConstants.PsalmStihosNode)]
     public class PsalmStihos : ItemText, IPsalterElement
     {
-        public int? Number { get; set; }
+        [XmlAttribute(RuleConstants.ReadingStihosNumberAttr)]
+        public int Number { get; set; }
 
-        public override void ReadXml(XmlReader reader)
-        {
-            reader.MoveToElement();
+        //public override void ReadXml(XmlReader reader)
+        //{
+        //    reader.MoveToElement();
 
-            string numberString = reader.GetAttribute(RuleConstants.ReadingStihosNumberAttr);
+        //    string numberString = reader.GetAttribute(RuleConstants.ReadingStihosNumberAttr);
 
-            if (int.TryParse(numberString, out int i))
-            {
-                Number = i;
-            }
+        //    if (int.TryParse(numberString, out int i))
+        //    {
+        //        Number = i;
+        //    }
 
-            base.ReadXml(reader);
-        }
+        //    base.ReadXml(reader);
+        //}
 
-        public override void WriteXml(XmlWriter writer)
-        {
-            if (Number != null)
-            {
-                writer.WriteAttributeString(RuleConstants.ReadingStihosNumberAttr, string.Empty, Number.ToString());
-            }
+        //public override void WriteXml(XmlWriter writer)
+        //{
+        //    if (Number != null)
+        //    {
+        //        writer.WriteAttributeString(RuleConstants.ReadingStihosNumberAttr, string.Empty, Number.ToString());
+        //    }
             
-            base.WriteXml(writer);
-        }
+        //    base.WriteXml(writer);
+        //}
     }
 }

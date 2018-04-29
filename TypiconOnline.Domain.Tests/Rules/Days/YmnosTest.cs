@@ -25,7 +25,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             Ymnos element = ser.Deserialize<Ymnos>(xmlString);
 
             Assert.IsFalse(element.Text.IsEmpty);
-            Assert.Pass(element.Text["cs-ru"]);
+            Assert.Pass(element.Text.FirstOrDefault("cs-ru").Text);
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             Ymnos element = ser.Deserialize<Ymnos>(xmlString);
 
             Assert.IsFalse(element.Text.IsEmpty);
-            Assert.Pass(element.Text["cs-ru"]);
+            Assert.Pass(element.Text.FirstOrDefault("cs-ru").Text);
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             TypiconSerializer ser = new TypiconSerializer();
             Ymnos element = ser.Deserialize<Ymnos>(xmlString);
 
-            element.Text["cs-ru"] = "Текст измененный";
+            element.Text.AddOrUpdate("cs-ru", "Текст измененный");
 
             string result = ser.Serialize(element);
 

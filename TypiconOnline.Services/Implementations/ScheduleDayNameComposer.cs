@@ -43,13 +43,13 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 for (int i = 1; i < settings.DayWorships.Count; i++)
                 {
-                    result += settings.DayWorships[i].WorshipName[settings.Language.Name] + " ";
+                    result += settings.DayWorships[i].WorshipName.FirstOrDefault(settings.Language.Name).Text + " ";
                 }
             }
 
             //а теперь разбираемся с главным
 
-            string s = seniorService.WorshipName[settings.Language.Name];
+            string s = seniorService.WorshipName.FirstOrDefault(settings.Language.Name).Text;
 
             if (date.DayOfWeek != DayOfWeek.Sunday
                 || (date.DayOfWeek == DayOfWeek.Sunday
@@ -87,7 +87,7 @@ namespace TypiconOnline.AppServices.Implementations
 
             for (int i = 0; i < dayServices.Count; i++)
             {
-                string s = dayServices[i].WorshipShortName[language];
+                string s = dayServices[i].WorshipShortName.FirstOrDefault(language)?.Text;
 
                 if (!string.IsNullOrEmpty(s))
                 {

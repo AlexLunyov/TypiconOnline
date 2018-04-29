@@ -75,6 +75,9 @@
     <Compile Include="Interfaces\IIntConverter.cs" />
     <Compile Include="Interfaces\IPsalterElement.cs" />
     <Compile Include="Books\Psalter\PsalterContext.cs" />
+    <Compile Include="Interfaces\ITypiconSerializer.cs" />
+    <Compile Include="ItemTypes\ItemTextHeader.cs" />
+    <Compile Include="ItemTypes\ItemTextUnit.cs" />
     <Compile Include="ItemTypes\TextStyle.cs" />
     <Compile Include="Rules\Days\BookReading.cs" />
     <Compile Include="Rules\Days\BookStihos.cs" />
@@ -131,7 +134,6 @@
     <Compile Include="Interfaces\IRuleSerializer T.cs" />
     <Compile Include="Interfaces\IRuleSerializerRoot.cs" />
     <Compile Include="Interfaces\IViewModelElement.cs" />
-    <Compile Include="Interfaces\IXmlSerializer.cs" />
     <Compile Include="ItemTypes\ItemEnumTypeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemEnumType.cs" />
     <Compile Include="ItemTypes\ItemTextStyled.cs" />

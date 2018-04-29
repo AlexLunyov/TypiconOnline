@@ -11,6 +11,6 @@ namespace TypiconOnline.Domain
     interface IBookElement<T> where T : DayElementBase
     {
         T GetElement();
-        T GetElement(IXmlSerializer serializer);
+        T GetElement(ITypiconSerializer serializer);
     }
 }

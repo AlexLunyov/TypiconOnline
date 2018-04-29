@@ -8,95 +8,97 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.ItemTypes
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class ItemText : ItemType, IXmlSerializable
+    [Serializable]
+    public class ItemText : ItemType
     {
-        private Dictionary<string, string> _textDict = new Dictionary<string, string>();
+        private List<ItemTextUnit> items = new List<ItemTextUnit>();
+        
 
-        public ItemText() { }
+        public ItemText() : this(new TypiconSerializer()) { }
 
-        public ItemText(ItemText source)
+        public ItemText(ITypiconSerializer serializer)
         {
-            foreach (KeyValuePair<string, string> entry in source._textDict)
-            {
-                AddElement(entry.Key, entry.Value);
-            }
+            Serializer = serializer ?? throw new ArgumentNullException("serializer in ItemText");
         }
 
-        public ItemText(string expression)
+        public ItemText(string exp) : this() { }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="exp">xml-выражение</param>
+        /// <param name="rootName">корневой элемент</param>
+        public ItemText(string exp, string rootName) : this()
         {
-            StringExpression = expression;
+            RootName = rootName;
+
+            StringExpression = exp;
         }
 
-        #region Properties
+        public ItemText(ItemText source) : this()
+        {
+            if (source == null) throw new ArgumentNullException("source in ItemText");
 
-        protected string TagName {get; private set; } = "text"; 
+            RootName = source.RootName;
 
-        public virtual bool IsEmpty
+            Build(source);
+        }
+
+        protected ITypiconSerializer Serializer { get; }
+
+        protected string RootName { get; } //= RuleConstants.ItemTextDefaultNode;
+
+        [XmlElement("item")]
+        public ItemTextUnit[] Items
         {
             get
             {
-                return _textDict.Count == 0;
+                return items.ToArray();
+            }
+            set
+            {
+                if (value != null)
+                {
+                    items = value.ToList();
+                }
             }
         }
 
-        /// <summary>
-        /// Строкове выражение многоязычного текста
-        /// </summary>
+        public virtual bool IsEmpty => items.Count == 0;
+
+        public IEnumerable<string> Languages => items.Select(c => c.Language);
+
+        [XmlIgnore]
         public string StringExpression
         {
             get
             {
-                StringBuilder builder = new StringBuilder();
-
-                using (XmlWriter writer = XmlWriter.Create(builder, 
-                    new XmlWriterSettings() { OmitXmlDeclaration = true, ConformanceLevel = ConformanceLevel.Auto, Indent = true }))
-                {
-                    writer.WriteStartElement(TagName);
-
-                    WriteXml(writer);
-
-                    writer.WriteEndElement();
-                    writer.Close();
-
-                    return builder.ToString();
-                }
+                return Serialize();
             }
             set
             {
-                using (XmlReader xmlReader = XmlReader.Create(new StringReader(value), 
-                    new XmlReaderSettings() { DtdProcessing = DtdProcessing.Ignore } ))
-                {
-                    bool wasEmpty = xmlReader.IsEmptyElement;
+                var obj = Deserialize(value);
 
-                    xmlReader.MoveToElement();
-                    xmlReader.Read();
-
-                    if (!wasEmpty)
-                    {
-                        _textDict.Clear();
-
-                        ReadXml(xmlReader);
-                    }
-                }
+                Build(obj);
             }
         }
 
-        #endregion
+        protected virtual ItemText Deserialize(string exp) => Serializer.Deserialize<ItemText>(exp, RootName);
 
+        protected virtual string Serialize() => Serializer.Serialize(this, RootName);
 
         protected override void Validate()
         {
-            foreach (KeyValuePair<string, string> entry in _textDict)
+            foreach (var item in items)
             {
-                if (!IsKeyValid(entry.Key))
+                if (!IsKeyValid(item.Language))
                 {
                     AddBrokenConstraint(ItemTextBusinessConstraint.LanguageMismatch, "ItemText");
                 }
@@ -112,131 +114,57 @@ namespace TypiconOnline.Domain.ItemTypes
             return rgx.IsMatch(key);
         }
 
-        /// <summary>
-        /// Добавляет текст к коллекции
-        /// </summary>
-        /// <param name="key">язык</param>
-        /// <param name="value">текст</param>
-        /// <returns>Возвращает значение, успешно ли добавилось</returns>
-        public bool AddElement(string key, string value)
+        public void AddOrUpdate(string language, string text)
         {
-            bool result = false;
-            if (!_textDict.ContainsKey(key))
+            AddOrUpdate(new ItemTextUnit() { Language = language, Text = text });
+        }
+
+        public void AddOrUpdate(ItemTextUnit item)
+        {
+            if (items.FirstOrDefault(c => c.Language == item.Language) is ItemTextUnit found)
             {
-                _textDict.Add(key, value);
-                result = true;
+                found.Text = item.Text;
             }
+            else
+            {
+                items.Add(item);
+            }
+        }
+
+        public ItemTextUnit FirstOrDefault(string language)
+        {
+            ItemTextUnit result = null;
+
+            if (items.FirstOrDefault(c => c.Language == language) is ItemTextUnit found)
+            {
+                result = found;
+            }
+            else if (items.Count > 0)
+            {
+                result = items.First();
+            }
+
             return result;
         }
 
-        /// <summary>
-        /// Возвращает значение по заданному языку. Если результат нулевой, возвращает первый попавшийся вариант
-        /// </summary>
-        /// <param name="language">язык. Пример: "cs-ru"</param>
-        /// <returns></returns>
-        public string this[string language]
+        protected virtual void Build(ItemText source)
         {
-            get
-            {
-                string result = "";
-
-                if (_textDict.ContainsKey(language))
-                {
-                    result = _textDict[language];// + " ";
-                }
-                else if (_textDict.Count > 0)
-                {
-                    result = _textDict.Values.First();// + " ";
-                }
-
-                return result;
-            }
-            set
-            {
-                _textDict[language] = value;
-            }
-        }
-
-        public bool ContainsLanguage(string language)
-        {
-            return _textDict.ContainsKey(language);
-        }
-
-        public IEnumerable<string> Languages => _textDict.Keys;
-
-        #region IXmlSerializable
-
-        public XmlSchema GetSchema()
-        {
-            return null;
-        }
-
-        public virtual void ReadXml(XmlReader reader)
-        {
-            bool wasEmpty = reader.IsEmptyElement;
-
-            reader.MoveToElement();
-            reader.Read();
-
-            if (wasEmpty)
-                return;
-
-            while (reader.NodeType != XmlNodeType.EndElement)
-            {
-                reader.MoveToContent();
-
-                ReadNode(reader);
-            }
-
-            reader.Read();
-        }
-
-        public virtual void WriteXml(XmlWriter writer)
-        {
-            foreach (KeyValuePair<string, string> entry in _textDict)
-            {
-                writer.WriteStartElement(RuleConstants.ItemTextItemNode);
-
-                writer.WriteStartAttribute(RuleConstants.ItemTextLanguageAttr);
-                writer.WriteValue(entry.Key);
-                writer.WriteEndAttribute();
-
-                writer.WriteString(entry.Value);
-
-                writer.WriteEndElement();
-            }
+            source.items.ForEach(c => AddOrUpdate(c));
         }
 
         /// <summary>
-        /// Метод, который должен переопределяться у наследников, в котором будет совершаться десериализация их собственных свойств
+        /// Заменяет во всех элементах одно строковое значение на другое
         /// </summary>
-        /// <param name="reader"></param>
-        /// <returns></returns>
-        protected virtual bool ReadNode(XmlReader reader)
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
+        public void Replace(string oldValue, string newValue)
         {
-            bool isRead = false;
-
-            //string nodeName = reader.Name;
-
-            if (RuleConstants.ItemTextItemNode == reader.Name)
-            {
-                string language = reader.GetAttribute(RuleConstants.ItemTextLanguageAttr);
-                string value = reader.ReadElementContentAsString();
-                if (IsKeyValid(language))
-                {
-                    AddElement(language, value);
-                }
-
-                isRead = true;
-            }
-            return isRead;
+            items.ForEach(c => c.Text = c.Text.Replace(oldValue, newValue));
         }
-
-        #endregion
 
         public override string ToString()
         {
-            return (_textDict.Count > 0) ? _textDict.First().Value : base.ToString();
+            return (items.Count > 0) ? items.First().Text : base.ToString();
         }
     }
 }

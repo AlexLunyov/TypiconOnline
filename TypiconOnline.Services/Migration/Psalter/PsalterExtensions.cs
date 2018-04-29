@@ -112,16 +112,9 @@ namespace TypiconOnline.AppServices.Migration.Psalter
         public static void Merge(this ItemText oldItem, ItemText newItem)
         {
             //добавляем или обновляем локализованные значения
-            foreach (var lang in newItem.Languages)
+            foreach (var item in newItem.Items)
             {
-                if (oldItem.ContainsLanguage(lang))
-                {
-                    oldItem[lang] = newItem[lang];
-                }
-                else
-                {
-                    oldItem.AddElement(lang, newItem[lang]);
-                }
+                oldItem.AddOrUpdate(item);
             }
         }
     }

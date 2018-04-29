@@ -3,6 +3,7 @@ using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.Schedule
 {
@@ -25,7 +26,7 @@ namespace TypiconOnline.Domain.Schedule
         /// <summary>
         /// Наименование знака службы
         /// </summary>
-        public string SignName { get; set; }
+        public ItemTextUnit SignName { get; set; }
     }
 }
 

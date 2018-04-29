@@ -17,10 +17,10 @@ namespace TypiconOnline.AppServices.Implementations
     {
         const string XSLT_CONFIG = "ScheduleDayViewer_XsltFile";
 
-        IXmlSerializer xmlSerializer;
+        ITypiconSerializer xmlSerializer;
         IConfigurationRepository configRepo;
 
-        public HtmlScheduleDayViewer(IXmlSerializer xmlSerializer, IConfigurationRepository configRepo)
+        public HtmlScheduleDayViewer(ITypiconSerializer xmlSerializer, IConfigurationRepository configRepo)
         {
             this.xmlSerializer = xmlSerializer ?? throw new ArgumentNullException("xmlSerializer in HtmlScheduleDayViewer");
             this.configRepo = configRepo ?? throw new ArgumentNullException("configRepo in HtmlScheduleDayViewer");

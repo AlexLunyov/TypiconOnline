@@ -34,18 +34,18 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         {
             YmnosGroup element1 = new YmnosGroup()
             {
-                Annotation = new ItemText(@"<annotation>
+                Annotation = new ItemText(@"<ItemText>
 					                            <item language=""cs-ru"">Феофа́ново</item>
-				                            </annotation>"),
+				                            </ItemText>"),
                 Ihos = 1,
                 Prosomoion = new Prosomoion()
             };
 
             YmnosGroup element2 = new YmnosGroup()
             {
-                Annotation = new ItemText(@"<annotation>
+                Annotation = new ItemText(@"<ItemText>
 					                            <item language=""cs-ru"">Феофа́ново</item>
-				                            </annotation>"),
+				                            </ItemText>"),
                 Ihos = 2,
                 Prosomoion = new Prosomoion()
             };
@@ -82,18 +82,18 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         {
             YmnosGroup element1 = new YmnosGroup()
             {
-                Annotation = new ItemText(@"<annotation>
+                Annotation = new ItemText(@"<ItemText>
                                  <item language=""cs-ru"">Феофа́ново</item>
-                                </annotation>"),
+                                </ItemText>"),
                 Ihos = 1,
                 //Prosomoion = new Prosomoion()
             };
 
             YmnosGroup element2 = new YmnosGroup()
             {
-                Annotation = new ItemText(@"<annotation>
+                Annotation = new ItemText(@"<ItemText>
                                  <item language=""cs-cs"">Феофа́ново</item>
-                                </annotation>"),
+                                </ItemText>"),
                 Ihos = 1,
                 //Prosomoion = new Prosomoion()
             };

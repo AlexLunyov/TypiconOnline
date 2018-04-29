@@ -7,15 +7,15 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconMigrationTool.Core
 {
-    public class SQLite : TypiconDBContext
-    {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite(@"Data\SQLiteDB.db");
-            //для теста
-            optionsBuilder.EnableSensitiveDataLogging();
-        }
-    }
+    //public class SQLite : TypiconDBContext
+    //{
+    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //    {
+    //        optionsBuilder.UseSqlite(@"FileName=Data\SQLiteDB.db");
+    //        //для теста
+    //        optionsBuilder.EnableSensitiveDataLogging();
+    //    }
+    //}
     public class MSSql : TypiconDBContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -130,6 +130,7 @@
     <Compile Include="DbContextOptionsBuilder.cs" />
     <Compile Include="Experiments\Experiment.cs" />
     <Compile Include="ItemTypes\ItemTextNotedTest.cs" />
+    <Compile Include="ItemTypes\ItemTextHeaderTest.cs" />
     <Compile Include="ItemTypes\ItemTextTest.cs" />
     <Compile Include="ItemTypes\ItemTimeTest.cs" />
     <Compile Include="ItemTypes\ItemTextStyledTest.cs" />

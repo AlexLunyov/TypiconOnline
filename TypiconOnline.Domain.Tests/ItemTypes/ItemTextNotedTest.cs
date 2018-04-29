@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.ItemTypes;
+//using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Domain.Tests.Experiments;
 
 namespace TypiconOnline.Domain.Tests.ItemTypes
 {
@@ -15,24 +17,21 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
         [Test]
         public void ItemTextNotedTest_Note()
         {
-            string xmlString = @"<ItemText>
+            string xmlString = @"<ItemTextNoted>
 	                                <item language=""cs-ru"">Господи помилуй.</item>
 	                                <item language=""cs-cs"">Господи помилуй.</item>
 	                                <item language=""ru-ru"">Господи помилуй.</item>
 	                                <item language=""el-el"">Господи помилуй.</item>
-	                                <note><item language=""cs-cs"">Трижды.</item><style><red>true</red><bold>true</bold></style></note>
-                                </ItemText>";
+	                                <note bold=""true""><item language=""cs-cs"">Трижды.</item></note>
+                                </ItemTextNoted>";
 
-            //XmlDocument xmlDoc = new XmlDocument();
+            ItemTextNoted element = new ItemTextNoted(xmlString, "ItemTextNoted");
 
-            //xmlDoc.LoadXml(xmlString);
+            Assert.IsNotNull(element.Note);
+            Assert.AreEqual(1, element.Note.Items.Count());
+            Assert.IsTrue(element.Note.IsBold);
 
-            ItemTextNoted element = new ItemTextNoted
-            {
-                StringExpression = xmlString
-            };
-
-            Assert.AreEqual("Господи помилуй. Трижды.", element.ToString());
+            //Assert.AreEqual("Господи помилуй. Трижды.", element.ToString());
             Assert.Pass(element.StringExpression);
         }
 
@@ -47,12 +46,12 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 	                                <note><item language=""cs-cs"">Трижды.</item><style><red>true</red><bold>true</bold></style></note>
                                 </ItemTextNoted>";
             TypiconSerializer ser = new TypiconSerializer();
-            ItemTextNoted element = ser.Deserialize<ItemTextNoted>(xmlString);
+            ItemTextNoted element = ser.Deserialize<ItemTextNoted>(xmlString, "ItemTextNoted");
 
-            element["cs-cs"] = "cs-cs Текст измененный";
+            element.AddOrUpdate(new ItemTextUnit() { Language = "cs-cs", Text = "cs-cs Текст измененный" });
 
-            element.Style.Header = HeaderCaption.h1;
-            element.Style.IsBold = true;
+            element.Header = Domain.ItemTypes.HeaderCaption.h1;
+            element.IsBold = true;
 
             string result = ser.Serialize(element);
 

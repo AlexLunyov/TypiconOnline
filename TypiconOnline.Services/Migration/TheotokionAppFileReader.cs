@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Serialization;
@@ -32,7 +33,7 @@ namespace TypiconOnline.AppServices.Migration
             string text = string.Format("[{0}] [глас {1}] [{2}] Богородичен из Приложения Ирмология", place, ihos, dayOfWeek);
 
             Ymnos ymnos = new Ymnos();
-            ymnos.Text.AddElement("cs-ru", text);
+            ymnos.Text.AddOrUpdate(new ItemTextUnit() { Language = "cs-ru", Text = text });
 
             return new TypiconSerializer().Serialize(ymnos);
         }

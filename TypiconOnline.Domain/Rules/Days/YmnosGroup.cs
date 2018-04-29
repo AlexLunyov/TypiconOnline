@@ -34,7 +34,7 @@ namespace TypiconOnline.Domain.Rules.Days
 
             if (source.Annotation != null)
             {
-                Annotation = new ItemText(source.Annotation.StringExpression);
+                Annotation = new ItemText(source.Annotation);
             }
 
             Ihos = source.Ihos;

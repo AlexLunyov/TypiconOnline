@@ -38,6 +38,7 @@ namespace TypiconOnline.Domain.ViewModels
          * Константы для элементов класса ParagraphViewModel 
         */
         public const string ParagraphNodeName = "p";
+        public const string ParagraphLanguageNodeName = "language";
         public const string ParagraphTextNodeName = "text";
         public const string ParagraphStyleNodeName = "style";
         public const string ParagraphNoteNodeName = "note";

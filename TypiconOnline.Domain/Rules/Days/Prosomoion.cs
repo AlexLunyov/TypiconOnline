@@ -37,29 +37,29 @@ namespace TypiconOnline.Domain.Rules.Days
 
         #region IXmlSerializable
 
-        public override void ReadXml(XmlReader reader)
-        {
-            if (reader.MoveToAttribute(RuleConstants.ProsomoionSelfAttr))
-            {
-                bool.TryParse(reader.Value, out bool result);
+        //public override void ReadXml(XmlReader reader)
+        //{
+        //    if (reader.MoveToAttribute(RuleConstants.ProsomoionSelfAttr))
+        //    {
+        //        bool.TryParse(reader.Value, out bool result);
 
-                Self = result;
+        //        Self = result;
 
-                reader.MoveToElement();
-            }
+        //        reader.MoveToElement();
+        //    }
 
-            base.ReadXml(reader);
-        }
+        //    base.ReadXml(reader);
+        //}
 
-        public override void WriteXml(XmlWriter writer)
-        {
-            if (Self)
-            {
-                writer.WriteAttributeString(RuleConstants.ProsomoionSelfAttr, Self.ToString());
-            }
+        //public override void WriteXml(XmlWriter writer)
+        //{
+        //    if (Self)
+        //    {
+        //        writer.WriteAttributeString(RuleConstants.ProsomoionSelfAttr, Self.ToString());
+        //    }
 
-            base.WriteXml(writer);
-        }
+        //    base.WriteXml(writer);
+        //}
 
         #endregion
     }

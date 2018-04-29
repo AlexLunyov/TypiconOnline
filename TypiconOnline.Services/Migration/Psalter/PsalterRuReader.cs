@@ -140,14 +140,14 @@ namespace TypiconOnline.AppServices.Migration.Psalter
             var fragments = parsingString.Split(new Char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             string text = "";
-            int? number = null;
+            int number = 0;
 
             foreach (var str in fragments)
             {
                 if (TryParse(str, out int i))
                 {
                     //цифра - значит начало стиха
-                    if (number == null)
+                    if (number == 0)
                     {
                         number = i;
                         RemoveFragment(str);
@@ -186,10 +186,10 @@ namespace TypiconOnline.AppServices.Migration.Psalter
             return int.TryParse(str, out i);
         }
 
-        private BookStihos CreateStihos(int? number, string text)
+        private BookStihos CreateStihos(int number, string text)
         {
             var stihos = new BookStihos() { StihosNumber = number };
-            stihos.AddElement(Language, text);
+            stihos.AddOrUpdate(new ItemTextUnit() { Language = Language, Text = text });
 
             return stihos;
         }
@@ -214,7 +214,7 @@ namespace TypiconOnline.AppServices.Migration.Psalter
 
             //добавляем в качестве строкового значения полученную строку из Reader-a
             var numberName = new ItemText();
-            numberName.AddElement(Language, parsingString);
+            numberName.AddOrUpdate(new ItemTextUnit() { Language = Language, Text = parsingString });
 
             return new Kathisma()
             {

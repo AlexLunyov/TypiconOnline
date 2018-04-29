@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 
@@ -12,44 +13,47 @@ namespace TypiconOnline.Domain.Rules.Days
     /// <summary>
     /// Стих из чтения Священного Писания
     /// </summary>
+    [Serializable]
     public class BookStihos : ItemText, IPsalterElement
     {
-        public int? ChapterNumber { get; set; }
-        public int? StihosNumber { get; set; }
+        [XmlAttribute(RuleConstants.ReadingChapterNumberAttr)]
+        public int ChapterNumber { get; set; }
+        [XmlAttribute(RuleConstants.ReadingStihosNumberAttr)]
+        public int StihosNumber { get; set; }
 
-        public override void ReadXml(XmlReader reader)
-        {
-            reader.MoveToElement();
+        //public override void ReadXml(XmlReader reader)
+        //{
+        //    reader.MoveToElement();
 
-            ChapterNumber = TryParse(reader.GetAttribute(RuleConstants.ReadingChapterNumberAttr));
-            StihosNumber = TryParse(reader.GetAttribute(RuleConstants.ReadingStihosNumberAttr));
+        //    ChapterNumber = TryParse(reader.GetAttribute(RuleConstants.ReadingChapterNumberAttr));
+        //    StihosNumber = TryParse(reader.GetAttribute(RuleConstants.ReadingStihosNumberAttr));
             
-            base.ReadXml(reader);
+        //    base.ReadXml(reader);
 
-            int? TryParse(string str)
-            {
-                if (int.TryParse(str, out int i))
-                {
-                    return i;
-                }
-                return null;
-            }
-        }
+        //    int? TryParse(string str)
+        //    {
+        //        if (int.TryParse(str, out int i))
+        //        {
+        //            return i;
+        //        }
+        //        return null;
+        //    }
+        //}
 
-        public override void WriteXml(XmlWriter writer)
-        {
-            Write(ChapterNumber, RuleConstants.ReadingChapterNumberAttr);
-            Write(StihosNumber, RuleConstants.ReadingStihosNumberAttr);
+        //public override void WriteXml(XmlWriter writer)
+        //{
+        //    Write(ChapterNumber, RuleConstants.ReadingChapterNumberAttr);
+        //    Write(StihosNumber, RuleConstants.ReadingStihosNumberAttr);
 
-            base.WriteXml(writer);
+        //    base.WriteXml(writer);
 
-            void Write(int? i, string str)
-            {
-                if (i != null)
-                {
-                    writer.WriteAttributeString(str, string.Empty, i.ToString());
-                }
-            }
-        }
+        //    void Write(int? i, string str)
+        //    {
+        //        if (i != null)
+        //        {
+        //            writer.WriteAttributeString(str, string.Empty, i.ToString());
+        //        }
+        //    }
+        //}
     }
 }

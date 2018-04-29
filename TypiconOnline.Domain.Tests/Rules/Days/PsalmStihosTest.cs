@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Books.Psalter;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Tests.Rules.Days
@@ -17,7 +18,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         {
             PsalmStihos stihos = new PsalmStihos() { Number = 1 };
 
-            var result = stihos.AddElement("cs-ru", "Стих 1");
+            stihos.AddOrUpdate("cs-ru", "Стих 1");
 
             TypiconSerializer ser = new TypiconSerializer();
 
@@ -35,7 +36,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         {
             PsalmStihos stihos = new PsalmStihos();
 
-            var result = stihos.AddElement("cs-ru", "Стих 1");
+            stihos.AddOrUpdate("cs-ru", "Стих 1" );
 
             TypiconSerializer ser = new TypiconSerializer();
 
@@ -44,7 +45,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
             PsalmStihos element = ser.Deserialize<PsalmStihos>(xmlString);
 
             Assert.IsNotNull(element);
-            Assert.AreEqual(null, element.Number);
+            Assert.AreEqual(0, element.Number);
             Assert.Pass(xmlString);
         }
     }

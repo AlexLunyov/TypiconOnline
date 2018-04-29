@@ -15,10 +15,8 @@ namespace TypiconOnline.Domain.ViewModels
     [XmlRoot(ViewModelConstants.ParagraphNodeName)]
     public class ParagraphViewModel //: List<string>
     {
-        [XmlAttribute( ViewModelConstants.ParagraphTextNodeName)]
-        public string Language { get; set; }
         [XmlElement(ViewModelConstants.ParagraphTextNodeName)]
-        public string Text { get; set; }
+        public ItemTextUnit Text { get; set; }
         [XmlElement(ViewModelConstants.ParagraphStyleNodeName)]
         public TextStyle Style { get; set; }
         [XmlElement(ViewModelConstants.ParagraphNoteNodeName)]
@@ -48,7 +46,7 @@ namespace TypiconOnline.Domain.ViewModels
         /// <param name="newValue">Новое значение</param>
         public void Replace(string oldValue, string newValue)
         {
-            Text = Text.Replace(oldValue, newValue);
+            Text.Text = Text.Text.Replace(oldValue, newValue);
         }
     }
 }

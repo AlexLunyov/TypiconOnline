@@ -19,13 +19,13 @@ namespace TypiconOnline.Domain.Typicon
         /// <summary>
         /// Наименование знака службы на нескольких языках
         /// </summary>
-        public ItemText SignName { get; set; }
+        public ItemText SignName { get; set; } = new ItemText();
 
         public override string Name
         {
             get
             {
-                return SignName[(Owner != null) ? Owner.Settings.DefaultLanguage : ""];
+                return SignName.FirstOrDefault((Owner != null) ? Owner.Settings.DefaultLanguage : "").Text;
             }
         }
 

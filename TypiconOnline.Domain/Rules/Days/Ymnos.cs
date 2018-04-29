@@ -31,7 +31,7 @@ namespace TypiconOnline.Domain.Rules.Days
 
             //ElementName = string.Copy(source.ElementName);
             source.Stihoi.ForEach(c => Stihoi.Add(new ItemText(c)));
-            Text = new ItemText(source.Text.StringExpression);
+            Text = new ItemText(source.Text);
             Kind = source.Kind;
             Annotation = (source.Annotation != null) ? new ItemText(source.Annotation) : null;
         }

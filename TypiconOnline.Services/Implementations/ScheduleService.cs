@@ -108,7 +108,7 @@ namespace TypiconOnline.AppServices.Implementations
                     Name = nameComposer.Compose(settings, request.Date),
                     Date = request.Date,
                     SignNumber = signNumber,
-                    SignName = sign.SignName[settings.Language.Name],
+                    SignName = sign.SignName.FirstOrDefault(settings.Language.Name),
                 };
             }
 

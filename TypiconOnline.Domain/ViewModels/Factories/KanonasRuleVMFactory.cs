@@ -132,7 +132,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 if (kanonas.Name != null)
                 {
                     holder = GetHeaders(req)[2];
-                    name = kanonas.Name[req.Handler.Settings.Language.Name];
+                    name = kanonas.Name.FirstOrDefault(req.Handler.Settings.Language.Name).Text;
                 }
                 else
                 {

@@ -111,7 +111,7 @@ namespace TypiconMigrationTool
                     Owner = typiconEntity,
                     IsTemplate = row.IsTemplate,
                     RuleDefinition = fileReader.Read(row.Name),
-                    SignName = new ItemTextStyled()// { StringExpression = row.Name }
+                    //SignName = new ItemText()// { StringExpression = row.Name }
                 };
 
                 if (signMigrator.Number != null)
@@ -119,7 +119,7 @@ namespace TypiconMigrationTool
                     sign.Number = (int)signMigrator.Number;
                 }
 
-                sign.SignName.AddElement("cs-ru", row.Name);
+                sign.SignName.AddOrUpdate("cs-ru", row.Name);
 
                 if (signMigrator.TemplateId != null)
                 {
@@ -326,7 +326,7 @@ namespace TypiconMigrationTool
                         DateB = menologyDay.DateB,
                         Owner = typiconEntity,
                         //IsAddition = true,
-                        Template = typiconEntity.Signs.First(c => c.SignName["cs-ru"] == mineinikRow.ServiceSignsRow.Name),
+                        Template = typiconEntity.Signs.First(c => c.SignName.FirstOrDefault("cs-ru").Text == mineinikRow.ServiceSignsRow.Name),
                     };
 
                     menologyRule.DayRuleWorships.Add( new DayRuleWorship() { DayRule = menologyRule, DayWorship = dayWorship } );
@@ -371,8 +371,8 @@ namespace TypiconMigrationTool
                 {
                     WorshipName = new ItemTextStyled()
                 };
-                dayWorship.WorshipName.Style.IsBold = row.IsNameBold;
-                dayWorship.WorshipName.AddElement("cs-ru", row.Name);
+                dayWorship.WorshipName.IsBold = row.IsNameBold;
+                dayWorship.WorshipName.AddOrUpdate("cs-ru", row.Name);
 
                 //DayWorship dayWorship = new DayWorship()
                 //{
@@ -401,7 +401,7 @@ namespace TypiconMigrationTool
                     DaysFromEaster = day.DaysFromEaster,
                     Owner = typiconEntity,
                     //IsAddition = true,
-                    Template = typiconEntity.Signs.First(c => c.SignName["cs-ru"] == row.ServiceSignsRow.Name),
+                    Template = typiconEntity.Signs.First(c => c.SignName.FirstOrDefault("cs-ru").Text == row.ServiceSignsRow.Name),
                     RuleDefinition = fileReader.Read(row.DayFromEaster.ToString()),
                     
                 };

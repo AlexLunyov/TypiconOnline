@@ -31,7 +31,7 @@ namespace TypiconOnline.Domain.Typicon
         /// <returns></returns>
         public static string GetCommonRuleTextValue(this TypiconEntity typicon, CommonRuleServiceRequest request, string language)
         {
-            return GetCommonRuleItemTextValue(typicon, request)[language];
+            return GetCommonRuleItemTextValue(typicon, request).FirstOrDefault(language).Text;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace TypiconOnline.Domain.Typicon
             string result = "";
             if (GetCommonRuleChildren(typicon, request).ElementAtOrDefault(index) is TextHolder t && t.Paragraphs?.Count > 0)
             {
-                result = t.Paragraphs[0]?[language];
+                result = t.Paragraphs[0]?.FirstOrDefault(language).Text;
             }
             return result;
         }

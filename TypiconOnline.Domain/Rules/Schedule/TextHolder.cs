@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             foreach (ItemTextNoted text in item.Paragraphs)
             {
-                Paragraphs.Add(new ItemTextNoted(text.StringExpression));
+                Paragraphs.Add(new ItemTextNoted(text));
             }
         }
 

@@ -12,14 +12,19 @@ namespace TypiconOnline.Domain.ViewModels.Factories
     {
         public static ParagraphViewModel Create(ItemTextNoted itemTextNoted, string language)
         {
-            var viewModel = new ParagraphViewModel
+            var style = new TextStyle()
             {
-                Style = itemTextNoted.Style
+                IsBold = itemTextNoted.IsBold,
+                IsItalic = itemTextNoted.IsItalic,
+                IsRed = itemTextNoted.IsRed,
+                Header = itemTextNoted.Header
             };
 
-            if (itemTextNoted[language] is string s)
+            var viewModel = new ParagraphViewModel() { Style = style };
+
+            if (itemTextNoted.FirstOrDefault(language) is ItemTextUnit i)
             {
-                viewModel.Text = s;
+                viewModel.Text = i;
             }
 
             if (itemTextNoted.Note != null)
@@ -34,9 +39,9 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             var viewModel = new ParagraphViewModel();
 
-            if (itemText?[language] is string s)
+            if (itemText?.FirstOrDefault(language) is ItemTextUnit i)
             {
-                viewModel.Text = s;
+                viewModel.Text = i;
             }
 
             return viewModel;
@@ -60,11 +65,11 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             return viewModel;
         }
 
-        public static ParagraphViewModel Create(string str)
+        public static ParagraphViewModel Create(string language, string text)
         {
             return new ParagraphViewModel
             {
-                Text = str
+                Text = new ItemTextUnit() { Language = language, Text = text }
             };
         }
     }

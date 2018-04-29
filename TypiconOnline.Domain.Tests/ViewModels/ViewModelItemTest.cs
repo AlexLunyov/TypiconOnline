@@ -41,9 +41,9 @@ namespace TypiconOnline.Domain.Tests.ViewModels
                     KindStringValue = "Хор",
                     Paragraphs = new List<ParagraphViewModel>()
                     {
-                        ParagraphVMFactory.Create("Строка 1"),
-                        ParagraphVMFactory.Create("Строка 2"),
-                        ParagraphVMFactory.Create("Строка 3"),
+                        ParagraphVMFactory.Create("Строка 1", "cs-ru"),
+                        ParagraphVMFactory.Create("Строка 2", "cs-ru"),
+                        ParagraphVMFactory.Create("Строка 3", "cs-ru"),
                     }
                 },
                 new ViewModelItem()
@@ -52,9 +52,9 @@ namespace TypiconOnline.Domain.Tests.ViewModels
                     KindStringValue = "Хор",
                     Paragraphs = new List<ParagraphViewModel>()
                     {
-                        ParagraphVMFactory.Create("Строка 4"),
-                        ParagraphVMFactory.Create("Строка 5"),
-                        ParagraphVMFactory.Create("Строка 6"),
+                        ParagraphVMFactory.Create("Строка 4", "cs-ru"),
+                        ParagraphVMFactory.Create("Строка 5", "cs-ru"),
+                        ParagraphVMFactory.Create("Строка 6", "cs-ru"),
                     }
                 },
                 new ViewModelItem()
@@ -63,7 +63,7 @@ namespace TypiconOnline.Domain.Tests.ViewModels
                     KindStringValue = "Священник",
                     Paragraphs = new List<ParagraphViewModel>()
                     {
-                        ParagraphVMFactory.Create("Строка 7")
+                        ParagraphVMFactory.Create("Строка 7", "cs-ru")
                     }
                 },
                 new ViewModelItem()
@@ -72,7 +72,7 @@ namespace TypiconOnline.Domain.Tests.ViewModels
                     KindStringValue = "Хор",
                     Paragraphs = new List<ParagraphViewModel>()
                     {
-                        ParagraphVMFactory.Create("Строка 8")
+                        ParagraphVMFactory.Create("Строка 8", "cs-ru")
                     }
                 }
             };
