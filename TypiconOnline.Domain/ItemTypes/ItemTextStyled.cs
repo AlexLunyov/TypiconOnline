@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.ItemTypes
 
         protected override ItemText Deserialize(string exp) => Serializer.Deserialize<ItemTextStyled>(exp, RootName);
 
-        protected override string Serialize() => Serializer.Serialize(this, RootName);
+        protected override string Serialize() => Serializer.Serialize(this);//, RootName);
 
         protected override void Build(ItemText source)
         {

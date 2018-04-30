@@ -20,6 +20,8 @@ namespace TypiconOnline.Tests.Common
             var connectionString = $"FileName={TestContext.CurrentContext.TestDirectory}\\Data\\SQLiteDB.db";
             optionsBuilder.UseSqlite(connectionString);
 
+            optionsBuilder.EnableSensitiveDataLogging();
+
             var dbContext = new CachedDbContext(optionsBuilder.Options);
 
             return new UnitOfWork(dbContext);

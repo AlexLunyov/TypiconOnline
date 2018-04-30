@@ -31,15 +31,24 @@ namespace TypiconOnline.Domain.Rules.Extensions
                 if (found != null)
                 {
                     //если rewrite, то исполняем элемент
-                    //если remove, то просто ничего не делаем
-                    if (found.AsAdditionMode == AsAdditionMode.Rewrite)
+                    
+                    switch (found.AsAdditionMode)
                     {
-                        var currentsettings = handler.Settings;
-
-                        handler.Settings = currentsettings.Addition;
-                        (found as RuleElement).Interpret(handler);
-
-                        handler.Settings = currentsettings;
+                        case AsAdditionMode.Rewrite:
+                            {
+                                Rewrite(found, handler);
+                            }
+                            break;
+                        case AsAdditionMode.Remove:
+                            {
+                                //если remove, то просто ничего не делаем
+                            }
+                            break;
+                        case AsAdditionMode.RewriteValues:
+                            {
+                                RewriteValues(found, handler);
+                            }
+                            break;
                     }
 
                     result = true;
@@ -47,6 +56,21 @@ namespace TypiconOnline.Domain.Rules.Extensions
             }
 
             return result;
+        }
+
+        private static void RewriteValues(IAsAdditionElement found, IRuleHandler handler)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void Rewrite(IAsAdditionElement found, IRuleHandler handler)
+        {
+            var currentsettings = handler.Settings;
+
+            handler.Settings = currentsettings.Addition;
+            (found as RuleElement).Interpret(handler);
+
+            handler.Settings = currentsettings;
         }
     }
 }

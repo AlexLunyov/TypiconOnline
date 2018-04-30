@@ -158,7 +158,7 @@ namespace TypiconOnline.WinServices
                     TableCell tdSName = (TableCell)tr.ChildElements[3];
 
                     string sTime = service.Time.ToString();
-                    string sSName = service.Name;
+                    string sSName = service.Name.Text;
 
                     bool bIsTimeBold = false; //(serviceNode.Attributes["istimebold"] != null);
                     bool bIsTimeRed = false; //(serviceNode.Attributes["istimered"] != null);
@@ -171,9 +171,9 @@ namespace TypiconOnline.WinServices
                     SetTextToCell(tdSName, sSName, bIsServiceNameBold, bIsServiceNameRed);
 
                     //additionalName
-                    if (!string.IsNullOrEmpty(service.AdditionalName))
+                    if (service.AdditionalName != null)
                     {
-                        AppendTextToCell(tdSName, service.AdditionalName, true, false);
+                        AppendTextToCell(tdSName, service.AdditionalName.Text, true, false);
                     }
 
                     //tr.ChildElements[1].InnerXml = dayNode.SelectSingleNode("time").InnerText;

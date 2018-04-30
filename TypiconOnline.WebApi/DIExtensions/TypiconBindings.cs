@@ -10,7 +10,6 @@ using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.AppServices.Services;
-using TypiconOnline.Domain.Services;
 using TypiconOnline.Domain.Books.Katavasia;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;

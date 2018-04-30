@@ -98,6 +98,14 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         public AsAdditionMode AsAdditionMode { get; set; }
 
+        public void RewriteValues(IAsAdditionElement source)
+        {
+            if (source is KanonasRule s)
+            {
+                IsOrthros = s.IsOrthros;
+            }
+        }
+
         #endregion
 
         #endregion
@@ -197,7 +205,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 Handler = handler,
                 AppendModelAction = append
             });
-        }
+        }      
     }
 
     public class KanonasRuleBusinessConstraint

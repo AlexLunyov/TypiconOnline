@@ -37,11 +37,11 @@ namespace TypiconOnline.Domain.Rules.Executables
         /// <summary>
         /// Выставляемый приоритет изменяемому дню
         /// </summary>
-        public int Priority { get; set; }
+        public int? Priority { get; set; }
         /// <summary>
         /// Краткое наименование праздника
         /// </summary>
-        public string ShortName { get; set; }
+        public ItemTextStyled ShortName { get; set; }
         /// <summary>
         /// Если true, в Расписании имя дня указывается последним
         /// </summary>
@@ -104,6 +104,50 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         public AsAdditionMode AsAdditionMode { get; set; }
 
+        public void RewriteValues(IAsAdditionElement source)
+        {
+            if (source is ModifyDay s)
+            {
+                if (s.DayMoveCount != null)
+                {
+                    DayMoveCount = s.DayMoveCount;
+                }
+
+                Priority = s.Priority;
+
+                if (s.ShortName != null)
+                {
+                    ShortName = s.ShortName;
+                }
+
+                IsLastName = s.IsLastName;
+
+                AsAddition = s.AsAddition;
+
+                UseFullName = s.UseFullName;
+
+                if (s.SignNumber != null)
+                {
+                    SignNumber = s.SignNumber;
+                }
+
+                if (s.Filter != null)
+                {
+                    Filter = s.Filter;
+                }
+
+                if (s.ChildDateExp != null)
+                {
+                    ChildDateExp = s.ChildDateExp;
+                }
+
+                if (s.ModifyReplacedDay != null)
+                {
+                    ModifyReplacedDay = s.ModifyReplacedDay;
+                }
+            }
+        }
+
         #endregion
 
         public ItemDate MoveDateExpression
@@ -123,7 +167,7 @@ namespace TypiconOnline.Domain.Rules.Executables
             {
                 return (DayMoveCount == null
                     && Priority == 0
-                    && string.IsNullOrEmpty(ShortName)
+                    && ShortName == null
                     && !IsLastName
                     && !AsAddition
                     && UseFullName

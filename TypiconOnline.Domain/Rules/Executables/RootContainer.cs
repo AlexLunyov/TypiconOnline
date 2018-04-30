@@ -38,6 +38,12 @@ namespace TypiconOnline.Domain.Rules.Executables
         /// </summary>
         public AsAdditionMode AsAdditionMode { get; set; }
 
+        /// <summary>
+        /// Ничего не делаем.
+        /// </summary>
+        /// <param name="source"></param>
+        public void RewriteValues(IAsAdditionElement source) { }
+
         #endregion
 
 

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon.Modifications
@@ -19,13 +20,10 @@ namespace TypiconOnline.Domain.Typicon.Modifications
         public virtual DayRule RuleEntity { get; set; }
 
         public virtual DateTime Date { get; set; }
-        //public DayType Day { get; set; }
 
         public virtual int Priority { get; set; }
 
         public virtual bool IsLastName { get; set; }
-
-        public virtual string ShortName { get; set; }
 
         public virtual bool IsAddition { get; set; }
 
@@ -33,7 +31,37 @@ namespace TypiconOnline.Domain.Typicon.Modifications
 
         public virtual int? SignNumber { get; set; }
 
-        public virtual DayWorshipsFilter Filter { get; set; } = new DayWorshipsFilter();
+        ItemTextStyled shortName = new ItemTextStyled();
+        public virtual ItemTextStyled ShortName
+        {
+            get
+            {
+                return shortName;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    shortName = value;
+                }
+            }
+        }
+
+        DayWorshipsFilter filter = new DayWorshipsFilter();
+        public virtual DayWorshipsFilter Filter
+        {
+            get
+            {
+                return filter;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    filter = value;
+                }
+            }
+        }
 
         /// <summary>
         /// Список служб, отфильтрованный согласно настройкам ModifiedRule

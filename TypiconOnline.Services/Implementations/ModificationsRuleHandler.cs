@@ -58,14 +58,14 @@ namespace TypiconOnline.AppServices.Implementations
                     ruleToModify = typiconEntity.GetTriodionRule(daysFromEaster);
                 }
 
-                int priority = modifyReplacedDay.Priority;
+                int? priority = modifyReplacedDay.Priority;
 
-                if (priority == 0)
+                if (priority == null)
                 {
                     priority = ruleToModify.Template.Priority;
                 }
 
-                var request = CreateRequest(ruleToModify, modifyReplacedDay, priority);
+                var request = CreateRequest(ruleToModify, modifyReplacedDay, (int)priority);
 
                 modifiedRuleService.AddModifiedRule(typiconEntity, request);
 
@@ -74,16 +74,16 @@ namespace TypiconOnline.AppServices.Implementations
             else if ((element is ModifyDay modifyDay) 
                 && (modifyDay.MoveDateCalculated.Year == yearToModify))
             {
-                int priority = modifyDay.Priority;
+                int? priority = modifyDay.Priority;
 
                 DayRule dayRule = FindDayRule(_settings);
 
-                if (priority == 0)
+                if (priority == null)
                 {
                     priority = dayRule.Template.Priority;
                 }
 
-                var request = CreateRequest(dayRule, modifyDay, priority);
+                var request = CreateRequest(dayRule, modifyDay, (int)priority);
 
                 modifiedRuleService.AddModifiedRule(typiconEntity, request);
 

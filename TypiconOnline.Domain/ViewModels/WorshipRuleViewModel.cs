@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Serialization;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Schedule;
 
 namespace TypiconOnline.Domain.ViewModels
@@ -11,25 +13,25 @@ namespace TypiconOnline.Domain.ViewModels
     {
         public WorshipRuleViewModel() { }
 
-        public WorshipRuleViewModel(WorshipRule worship)
+        public WorshipRuleViewModel(WorshipRule worship, string language)
         {
             Id = worship.Id;
-            Name = worship.Name;
             Time = worship.Time.Expression;
             IsDayBefore = worship.IsDayBefore;
-            AdditionalName = worship.AdditionalName;
+            Name = worship.Name?.FirstOrDefault(language);
+            AdditionalName = worship.AdditionalName?.FirstOrDefault(language);
         }
 
         [XmlAttribute(ViewModelConstants.WorshipRuleIdAttrName)]
         public string Id { get; set; }
         [XmlAttribute(ViewModelConstants.WorshipRuleTimeAttrName)]
         public string Time { get; set; }
-        [XmlAttribute(ViewModelConstants.WorshipRuleNameAttrName)]
-        public string Name { get; set; }
+        [XmlElement(ViewModelConstants.WorshipRuleNameAttrName)]
+        public ItemTextUnit Name { get; set; }
         [XmlIgnore]
         public bool IsDayBefore { get; set; }
-        [XmlAttribute(ViewModelConstants.WorshipRuleAdditionalNameAttrName)]
-        public string AdditionalName { get; set; }
+        [XmlElement(ViewModelConstants.WorshipRuleAdditionalNameAttrName)]
+        public ItemTextUnit AdditionalName { get; set; }
         [XmlArray(ViewModelConstants.WorshipRuleChildNodeName)]
         [XmlArrayItem(ElementName = ViewModelConstants.ViewModelItemNodeName, Type = typeof(ViewModelItem))]
         public List<ViewModelItem> ChildElements { get; set; } = new List<ViewModelItem>();

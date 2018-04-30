@@ -10,7 +10,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// Элемент "Служба". Является строкой в расписании. 
     /// Включает в себя последовательность богослужения, задекларированного в названии
     /// </summary>
-    public class WorshipRule : ExecContainer, ICustomInterpreted, IAsAdditionElement
+    public class WorshipRule : RuleExecutable, ICustomInterpreted, IAsAdditionElement
     {
         public WorshipRule(string name, IAsAdditionElement parent) : base(name)
         {
@@ -23,9 +23,13 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// </summary>
         public string Id { get; set; }
         public ItemTime Time { get; set; }
-        public string Name { get; set; }
+        public ItemTextStyled Name { get; set; }
         public bool IsDayBefore { get; set; } = false;
-        public string AdditionalName { get; set; }
+        public ItemTextStyled AdditionalName { get; set; }
+        /// <summary>
+        /// Последовательность богослужения
+        /// </summary>
+        public ExecContainer Sequence { get; set; }
         /// <summary>
         /// Значение заполняется при обработке Правила с помощью CustomParmeter
         /// </summary>
@@ -57,6 +61,34 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         public AsAdditionMode AsAdditionMode { get; set; }
 
+        public void RewriteValues(IAsAdditionElement source)
+        {
+            if (source is WorshipRule s)
+            {
+                if (s.Time != null)
+                {
+                    Time = s.Time;
+                }
+
+                if (s.Name != null)
+                {
+                    Name = s.Name;
+                }
+
+                if (s.AdditionalName != null)
+                {
+                    AdditionalName = s.AdditionalName;
+                }
+
+                IsDayBefore = s.IsDayBefore;
+
+                if (s.Sequence != null)
+                {
+                    Sequence = s.Sequence;
+                }
+            }
+        }
+
         #endregion
 
         #endregion
@@ -65,7 +97,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             if (handler.IsAuthorized<WorshipRule>() && !this.AsAdditionHandled(handler))
             {
-                base.InnerInterpret(handler);
+                Sequence?.Interpret(handler);
 
                 handler.Execute(this);
             }
@@ -78,21 +110,15 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 AddBrokenConstraint(WorshipRuleBusinessConstraint.TimeTypeMismatch, ElementName);
             }
 
-            if (string.IsNullOrEmpty(Name))
+            //if (string.IsNullOrEmpty(Name))
+            if (Name == null)
             {
                 AddBrokenConstraint(WorshipRuleBusinessConstraint.NameReqiured, ElementName);
             }
 
-            foreach (RuleElement element in ChildElements)
+            if (Sequence?.IsValid == false)
             {
-                //добавляем ломаные правила к родителю
-                if (!element.IsValid)
-                {
-                    foreach (BusinessConstraint brokenRule in element.GetBrokenConstraints())
-                    {
-                        AddBrokenConstraint(brokenRule);//, ElementName + "." + brokenRule.ConstraintPath);
-                    }
-                }
+                AppendAllBrokenConstraints(Sequence, ElementName);
             }
         }
     }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -42,7 +43,7 @@ namespace TypiconOnline.AppServices.Implementations
                 modifiedYear = CreateModifiedYear(typicon, date, serializer);
 
                 //фиксируем изменения
-                unitOfWork.Repository<TypiconEntity>().Update(typicon);
+                //unitOfWork.Repository<TypiconEntity>().Update(typicon);
                 unitOfWork.SaveChanges();
             }
 
@@ -71,14 +72,27 @@ namespace TypiconOnline.AppServices.Implementations
 
             //теперь обрабатываем переходящие минейные праздники
             //у них не должны быть определены даты. так их и найдем
-            typicon.MenologyRules.FindAll(c => (c.Date.IsEmpty && c.DateB.IsEmpty)).
-                ForEach(a =>
-                {
-                    InterpretRule(a, date, handler);
+            //typicon.MenologyRules.FindAll(c => (c.Date.IsEmpty && c.DateB.IsEmpty)).
+            //    ForEach(a =>
+            //    {
+            //        InterpretRule(a, date, handler);
 
-                    //не нашел другого способа, как только два раза вычислять изменяемые дни
-                    InterpretRule(a, date.AddYears(1), handler);
-                });
+            //        //не нашел другого способа, как только два раза вычислять изменяемые дни
+            //        InterpretRule(a, date.AddYears(1), handler);
+            //    });
+
+            int i = 1;
+
+            var rules = typicon.MenologyRules.FindAll(c => (c.Date.IsEmpty && c.DateB.IsEmpty));
+            foreach (var a in rules)
+            {
+                InterpretRule(a, date, handler);
+
+                //не нашел другого способа, как только два раза вычислять изменяемые дни
+                InterpretRule(a, date.AddYears(1), handler);
+
+                i++;
+            }
 
             //Triodion
 
@@ -158,16 +172,20 @@ namespace TypiconOnline.AppServices.Implementations
 
             //ModifiedRule
 
-            modifiedYear.ModifiedRules.Add(new ModifiedRule()
+            var modifiedRule = new ModifiedRule()
             {
                 Date = request.Date,
                 RuleEntity = request.Caller,
                 Priority = request.Priority,
                 IsLastName = request.IsLastName,
                 IsAddition = request.AsAddition,
-                ShortName = request.ShortName,
-                UseFullName = request.UseFullName
-            });
+                UseFullName = request.UseFullName,
+                Filter = request.Filter,
+                SignNumber = request.SignNumber,
+                ShortName = (request.ShortName != null) ? new ItemTextStyled(request.ShortName) : new ItemTextStyled()
+            };
+
+            modifiedYear.ModifiedRules.Add(modifiedRule);
         }
     }
 }

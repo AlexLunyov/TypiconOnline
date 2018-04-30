@@ -1,19 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <rule>
-  <service id="1" name="Вечерня">
-    <kanonasrule>
-      <k_after number="3" asaddition="rewrite">
-        <ektenis>
-          <text>
-            <p>
-              <item language="cs-ru">Мирная ектения.</item>
-              <style>
-                <header>h3</header>
-              </style>
-            </p>
-          </text>
-        </ektenis>
-      </k_after>
-    </kanonasrule>
-  </service>
+  <worship id="1">
+    <name>
+      <item language="cs-ru">Вечерня</item>
+    </name>
+    <sequence>
+      <kanonasrule>
+        <k_after number="3" asaddition="rewrite">
+          <ektenis>
+            <text>
+              <p header="h3">
+                <item language="cs-ru">Мирная ектения.</item>
+              </p>
+            </text>
+          </ektenis>
+        </k_after>
+      </kanonasrule>
+    </sequence>
+  </worship>
 </rule>

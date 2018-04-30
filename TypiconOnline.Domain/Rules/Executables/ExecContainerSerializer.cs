@@ -18,7 +18,8 @@ namespace TypiconOnline.Domain.Rules.Executables
                 RuleConstants.ActionNodeName,
                 RuleConstants.DefaultNodeName,
                 RuleConstants.ThenNodeName,
-                RuleConstants.ElseNodeName
+                RuleConstants.ElseNodeName,
+                RuleConstants.WorshipRuleSequenceNode
             };
         }
 

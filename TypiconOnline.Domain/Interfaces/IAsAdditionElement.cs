@@ -35,30 +35,10 @@ namespace TypiconOnline.Domain.Interfaces
         AsAdditionMode AsAdditionMode { get; set; }
 
         /// <summary>
-        /// Признак того, что данный элемент переписывает функционал шаблона
+        /// Метод присваивает свойствам Элемента значения введенного source.
         /// </summary>
-        //bool Rewrite { get; set; }
-
-        /// <summary>
-        /// Признак того, что данный элемент должен быть добавлен к ближайшему родителю в шаблоне.
-        /// </summary>
-        /// <example>
-        ///   <rule>
-	    ///     <service id="1">
-		///       <kekragaria>
-		///          <doxastichonrule source="item2" place="kekragaria_doxastichon" append="true"/>
-		///       </kekragaria>
-	    ///     </service>
-        ///   </rule>
-        /// </example>
-        //bool Append { get; set; }
-
-        /// <summary>
-        /// Метод сравнения для замены элемента
-        /// </summary>
-        /// <param name="element">Элемент для сравнения</param>
-        /// <returns></returns>
-        //bool Equals(IRewritableElement element);
+        /// <param name="source">Элемент со значениями для замены.</param>
+        void RewriteValues(IAsAdditionElement source);
     }
 
     /// <summary>
@@ -82,6 +62,10 @@ namespace TypiconOnline.Domain.Interfaces
         /// <summary>
         /// Элемент будет исключен из обработки Правила
         /// </summary>
-        Remove
+        Remove,
+        /// <summary>
+        /// Будут переписаны только свойства обновляемого элемента
+        /// </summary>
+        RewriteValues
     }
 }

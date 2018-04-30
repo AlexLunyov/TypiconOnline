@@ -309,37 +309,7 @@ namespace TypiconOnline.WinForms
                         return;
                     }
 
-                    //if (textBoxTemplatePath.Text == "")
-                    //{
-                    //    MessageBox.Show("Определите файл docx шаблона.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //    return;
-                    //}
-
-                    //string fileTemplateName = textBoxTemplatePath.Text;
-                    //string fileOutputName = GetFileName(_selectedDate) + ".docx";
-
-                    //if (File.Exists(fileOutputName))
-                    //    File.Delete(fileOutputName);
-                    //string dirPath = Path.GetDirectoryName(fileOutputName);
-                    //if (!Directory.Exists(dirPath))
-                    //    Directory.CreateDirectory(dirPath);
-                    //File.Copy(fileTemplateName, fileOutputName);
-
-                    //DocxScheduleWeekViewer docxViewer = new DocxScheduleWeekViewer(fileOutputName);
-
-                    //docxViewer.Execute(weekResponse.Week);
-
-                    //messageString += "\nПечатная версия была успешно сохранена. ";
-
                     FillDateCaptions();
-
-                    //if (checkBoxIsDocxOpen.Checked)
-                    //{
-                    //    System.Diagnostics.Process proc = new System.Diagnostics.Process();
-                    //    proc.StartInfo.FileName = fileOutputName;
-                    //    proc.StartInfo.UseShellExecute = true;
-                    //    proc.Start();
-                    //}
                 }
 
                 if (checkBoxBigDocx.Checked)
@@ -444,12 +414,12 @@ namespace TypiconOnline.WinForms
                 textBoxResult.AppendText("--------------------------" + Environment.NewLine);
                 textBoxResult.AppendText(day.Date.ToShortDateString() + Environment.NewLine);
                 textBoxResult.AppendText(day.Name + Environment.NewLine);
-                textBoxResult.AppendText("Знак службы: " + day.SignName + Environment.NewLine);
+                textBoxResult.AppendText("Знак службы: " + day.SignName.Text + Environment.NewLine);
                 foreach (var el in day.Schedule.Worships)
                 {
                     string str = !string.IsNullOrEmpty(el.Time) ? $"{el.Time} " : "";
                  
-                    str += $"{el.Name} {el.AdditionalName + Environment.NewLine}";
+                    str += $"{el.Name.Text} {el.AdditionalName?.Text + Environment.NewLine}";
 
                     textBoxResult.AppendText(str);
                 }

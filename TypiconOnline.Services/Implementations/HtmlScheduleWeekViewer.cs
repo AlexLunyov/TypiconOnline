@@ -58,12 +58,12 @@ namespace TypiconOnline.AppServices.Implementations
                     _resultString += "<tr><td>";
 
                     _resultString += service.Time.ToString() + "&nbsp;</td><td>";
-                    _resultString += service.Name;
+                    _resultString += service.Name.Text;
 
                     //additionalName
-                    if (!string.IsNullOrEmpty(service.AdditionalName))
+                    if (service.AdditionalName != null)
                     {
-                        _resultString += "<strong>" + service.AdditionalName + "</strong>";
+                        _resultString += "<strong>" + service.AdditionalName.Text + "</strong>";
                     }
                     _resultString += "</td></tr>";
                 }

@@ -83,6 +83,7 @@
     <Compile Include="Rules\Days\BookStihos.cs" />
     <Compile Include="Rules\Executables\RootContainer.cs" />
     <Compile Include="Rules\Executables\RootContainerSerializer.cs" />
+    <Compile Include="Rules\Extensions\XmlNodeExtensions.cs" />
     <Compile Include="Rules\Handlers\IntConverters\IntConverter.cs" />
     <Compile Include="Rules\Handlers\IntConverters\IntCsConverter.cs" />
     <Compile Include="Rules\Handlers\LanguageSettings.cs" />

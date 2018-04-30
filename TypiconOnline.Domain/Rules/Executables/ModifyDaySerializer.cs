@@ -23,10 +23,9 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         protected override void FillObject(FillObjectRequest req)
         {
-            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.ShortNameAttrName];
-            (req.Element as ModifyDay).ShortName = attr?.Value;
+            (req.Element as ModifyDay).ShortName = req.Descriptor.Element.GetItemTextStyled(RuleConstants.ShortNameNodeName);
 
-            attr = req.Descriptor.Element.Attributes[RuleConstants.IsLastNameAttrName];
+            var attr = req.Descriptor.Element.Attributes[RuleConstants.IsLastNameAttrName];
             (req.Element as ModifyDay).IsLastName = bool.TryParse(attr?.Value, out bool value) ? value : false;
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.AsAdditionAttrName];
@@ -42,7 +41,10 @@ namespace TypiconOnline.Domain.Rules.Executables
             }
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.PriorityAttrName];
-            (req.Element as ModifyDay).Priority = int.TryParse(attr?.Value, out intValue) ? intValue : 0;
+            if (int.TryParse(attr?.Value, out intValue))
+            {
+                (req.Element as ModifyDay).Priority = intValue;
+            }
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.SignNumberAttrName];
             if (int.TryParse(attr?.Value, out intValue))

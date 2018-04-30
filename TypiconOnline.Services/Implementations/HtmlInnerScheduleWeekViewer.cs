@@ -93,9 +93,9 @@ namespace TypiconOnline.AppServices.Implementations
                     _resultString += service.Name;
 
                     //additionalName
-                    if (!string.IsNullOrEmpty(service.AdditionalName))
+                    if (service.AdditionalName != null)
                     {
-                        _resultString += "<strong>" + service.AdditionalName + "</strong>";
+                        _resultString += "<strong>" + service.AdditionalName.Text + "</strong>";
                     }
                     _resultString += "</td></tr>";
                 }

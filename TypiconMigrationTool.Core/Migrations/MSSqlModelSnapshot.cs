@@ -248,8 +248,6 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<int?>("RuleEntityId");
 
-                    b.Property<string>("ShortName");
-
                     b.Property<int?>("SignNumber");
 
                     b.Property<bool>("UseFullName");
@@ -504,13 +502,7 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.OwnsOne("TypiconOnline.Domain.ItemTypes.ItemTextStyled", "WorshipName", b1 =>
                         {
-                            b1.Property<int>("DayWorshipId");
-
-                            b1.Property<bool>("IsBold");
-
-                            b1.Property<bool>("IsItalic");
-
-                            b1.Property<bool>("IsRed");
+                            b1.Property<int?>("DayWorshipId");
 
                             b1.Property<string>("StringExpression");
 
@@ -525,12 +517,6 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.OwnsOne("TypiconOnline.Domain.ItemTypes.ItemTextStyled", "WorshipShortName", b1 =>
                         {
                             b1.Property<int?>("DayWorshipId");
-
-                            b1.Property<bool>("IsBold");
-
-                            b1.Property<bool>("IsItalic");
-
-                            b1.Property<bool>("IsRed");
 
                             b1.Property<string>("StringExpression");
 
@@ -577,6 +563,20 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.HasOne("TypiconOnline.Domain.Typicon.DayRule", "RuleEntity")
                         .WithMany()
                         .HasForeignKey("RuleEntityId");
+
+                    b.OwnsOne("TypiconOnline.Domain.ItemTypes.ItemTextStyled", "ShortName", b1 =>
+                        {
+                            b1.Property<int>("ModifiedRuleId");
+
+                            b1.Property<string>("StringExpression");
+
+                            b1.ToTable("ModifiedRule");
+
+                            b1.HasOne("TypiconOnline.Domain.Typicon.Modifications.ModifiedRule")
+                                .WithOne("ShortName")
+                                .HasForeignKey("TypiconOnline.Domain.ItemTypes.ItemTextStyled", "ModifiedRuleId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Modifications.ModifiedYear", b =>

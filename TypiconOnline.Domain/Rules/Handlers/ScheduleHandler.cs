@@ -49,7 +49,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         {
             if (element is WorshipRule w)
             {
-                model.Worships.Add(new WorshipRuleViewModel(w));
+                model.Worships.Add(new WorshipRuleViewModel(w, Settings.Language.Name));
 
                 return true;
             }

@@ -20,6 +20,7 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Repository.EFCore.DataBase;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 namespace TypiconOnline.WinForms
 {
@@ -43,13 +44,24 @@ namespace TypiconOnline.WinForms
                         scan.WithDefaultConventions();
                     });
 
-                    //SQLite connection
+                    
                     var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
+
+                    //MSSql connection
+                    //var connectionString = ConfigurationManager.ConnectionStrings["DBTypicon"].ConnectionString;
+                    //optionsBuilder.UseSqlServer(connectionString);
+
+                    //SQLite connection
                     var connectionString = @"FileName=data\SQLiteDB.db";
                     optionsBuilder.UseSqlite(connectionString);
 
-                    x.ForConcreteType<TypiconDBContext>()
-                        .Configure
+                    //x.ForConcreteType<TypiconDBContext>()
+                    //    .Configure
+                    //    .Ctor<DbContextOptions<TypiconDBContext>>("options").Is(optionsBuilder.Options)
+                    //    .Singleton();
+
+                    x.For<TypiconDBContext>()
+                        .Use<CachedDbContext>()
                         .Ctor<DbContextOptions<TypiconDBContext>>("options").Is(optionsBuilder.Options)
                         .Singleton();
 

@@ -56,6 +56,21 @@ namespace TypiconOnline.Domain.Rules.Schedule
         }
         public AsAdditionMode AsAdditionMode { get; set; }
 
+        /// <summary>
+        /// Переписывает только номер песни.
+        /// </summary>
+        /// <param name="source"></param>
+        public void RewriteValues(IAsAdditionElement source)
+        {
+            if (source is KOdiRule s)
+            {
+                if (s.Number != null)
+                {
+                    Number = s.Number;
+                }
+            }
+        }
+
         #endregion
 
         #endregion

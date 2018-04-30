@@ -26,7 +26,6 @@ using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Domain.Services;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;

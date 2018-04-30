@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rule>
+  <switch>
+    <expression>
+      <getdayofweek>
+        <date>--01-07</date>
+      </getdayofweek>
+    </expression>
+    <case>
+      <values>
+        <getdayofweek name="понедельник"></getdayofweek>
+      </values>
+      <action>
+        <worship time="17.30" isdaybefore="true">
+          <name>
+            <item language="cs-ru">9-й час. Вечерня. Малое повечерие.</item>
+          </name>
+        </worship>
+        <worship time="06.00">
+          <name>
+            <item language="cs-ru">Полунощница. Утреня. Часы.</item>
+          </name>
+        </worship>
+        <worship time="08.00">
+          <name>
+            <item language="cs-ru">Божественная литургия.</item>
+          </name>
+        </worship>
+        <notice>
+          <name>
+            <item language="cs-ru">Божественная литургия не совершается.</item>
+          </name>
+        </notice>
+      </action>
+    </case>
+    <default>
+      <worship time="17.30" isdaybefore="true">
+        <name>
+          <item language="cs-ru">9-й час. Вечерня. Малое повечерие.</item>
+        </name>
+      </worship>
+      <worship time="06.00">
+        <name>
+          <item language="cs-ru">Полунощница. Утреня. Часы.</item>
+        </name>
+      </worship>
+      <worship time="08.00">
+        <name>
+          <item language="cs-ru">Божественная литургия.</item>
+        </name>
+      </worship>
+    </default>
+  </switch>
+</rule>

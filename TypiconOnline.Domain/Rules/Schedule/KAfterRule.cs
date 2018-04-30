@@ -47,6 +47,14 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         public AsAdditionMode AsAdditionMode { get; set; }
 
+        public void RewriteValues(IAsAdditionElement source)
+        {
+            if (source is KAfterRule s)
+            {
+                OdiNumber = s.OdiNumber;
+            }
+        }
+
         #endregion
 
         protected override void InnerInterpret(IRuleHandler handler)

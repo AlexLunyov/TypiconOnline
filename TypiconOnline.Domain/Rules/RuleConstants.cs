@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules
         public const string ExpressionNodeName = "expression";
 
         public const string ModifyDayNodeName = "modifyday";
-        public const string ShortNameAttrName = "shortname";
+        public const string ShortNameNodeName = "shortname";
         public const string IsLastNameAttrName = "islastname";
         public const string AsAdditionAttrName = "asaddition";
         public const string DayMoveAttrName = "daymove";
@@ -56,12 +56,13 @@ namespace TypiconOnline.Domain.Rules
          * Константы для описания атрибутов элемента WorshipRule
          */
 
-        public const string WorshipRuleNodeName = "service";
+        public const string WorshipRuleNodeName = "worship";
         public const string WorshipRuleIdAttrName = "id";
         public const string WorshipRuleTimeAttrName = "time";
-        public const string WorshipRuleNameAttrName = "name";
+        public const string WorshipRuleNameNode = "name";
         public const string WorshipRuleIsDayBeforeAttrName = "isdaybefore";
-        public const string WorshipRuleAdditionalNameAttrName = "additionalname";
+        public const string WorshipRuleAdditionalNameNode = "additionalname";
+        public const string WorshipRuleSequenceNode = "sequence";
 
         public const string NoticeNodeName = "notice";
 
