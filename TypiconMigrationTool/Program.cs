@@ -7,7 +7,6 @@ using System;
 using TypiconMigrationTool.Experiments;
 using System.Collections.Generic;
 using System.Globalization;
-using TypiconOnline.Domain.Schedule;
 using System.Text;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Books.Easter;
@@ -193,8 +192,8 @@ namespace TypiconMigrationTool
                     {
                         StringBuilder stringBuilder = new StringBuilder();
                         stringBuilder.AppendLine(day.Date.ToShortDateString());
-                        stringBuilder.AppendLine(day.Name);
-                        foreach (WorshipRuleViewModel service in day.Schedule.Worships)
+                        stringBuilder.AppendLine(day.Name.Text);
+                        foreach (WorshipRuleViewModel service in day.Worships)
                         {
                             stringBuilder.AppendLine(service.Time + " " + service.Name + " " + service.AdditionalName);
                         }

@@ -307,7 +307,7 @@
     <Compile Include="Rules\Schedule\YmnosStructureRule.cs" />
     <Compile Include="Rules\Schedule\YmnosRule.cs" />
     <Compile Include="Rules\Schedule\YmnosStructureRuleSerializer.cs" />
-    <Compile Include="Schedule\ScheduleWeek.cs" />
+    <Compile Include="ViewModels\ScheduleWeek.cs" />
     <Compile Include="Serialization\TypiconSerializer.cs" />
     <Compile Include="Serialization\XElementCreator.cs" />
     <Compile Include="Serialization\XmlNodeCreator.cs" />
@@ -323,7 +323,7 @@
     <Compile Include="Typicon\TypiconRule.cs" />
     <Compile Include="Books\Easter\EasterItem.cs" />
     <Compile Include="Books\Oktoikh\OktoikhDay.cs" />
-    <Compile Include="Schedule\ScheduleDay.cs" />
+    <Compile Include="ViewModels\ScheduleDay.cs" />
     <Compile Include="Interfaces\IRuleSerializer.cs" />
     <Compile Include="Typicon\TriodionRule.cs" />
     <Compile Include="Typicon\MenologyRule.cs" />
@@ -397,6 +397,7 @@
   <ItemGroup>
     <Folder Include="Books\Menology\" />
     <Folder Include="Rules\Factories\" />
+    <Folder Include="Schedule\" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\TypiconOnline.Modeling\TypiconOnlineLayers.layerdiagram">

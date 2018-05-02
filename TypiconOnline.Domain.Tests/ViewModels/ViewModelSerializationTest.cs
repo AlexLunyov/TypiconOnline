@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.Tests.ViewModels
 
             var serializer = new TypiconSerializer();
 
-            var result = serializer.Serialize(viewModel);
+            var result = serializer.Serialize(viewModel.First());
 
             Assert.IsNotEmpty(result);
             Assert.Pass(result);
@@ -56,7 +56,7 @@ namespace TypiconOnline.Domain.Tests.ViewModels
 
             var serializer = new TypiconSerializer();
 
-            var result = serializer.Serialize(scheduleDay.Day.Schedule);
+            var result = serializer.Serialize(scheduleDay.Day);
 
             Assert.IsNotEmpty(result);
             Assert.Pass(result);

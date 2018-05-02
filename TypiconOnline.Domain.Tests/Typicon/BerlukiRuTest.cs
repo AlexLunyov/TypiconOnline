@@ -105,8 +105,8 @@ namespace TypiconOnline.Domain.Tests.Typicon
 
             GetScheduleWeekResponse weekResponse = scheduleService.GetScheduleWeek(weekRequest);
 
-            Assert.AreEqual(dayResponse1.Day.Name, dayResponse2.Day.Name);
-            Assert.AreEqual(dayResponse1.Day.Name, weekResponse.Week.Days.Last().Name);
+            Assert.AreEqual(dayResponse1.Day.Name.Text, dayResponse2.Day.Name.Text);
+            Assert.AreEqual(dayResponse1.Day.Name.Text, weekResponse.Week.Days.Last().Name.Text);
         }
     }
 }

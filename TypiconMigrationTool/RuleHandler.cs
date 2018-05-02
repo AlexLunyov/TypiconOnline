@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.Schedule;
+using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;

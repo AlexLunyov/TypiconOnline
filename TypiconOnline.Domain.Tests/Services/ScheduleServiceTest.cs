@@ -44,13 +44,13 @@ namespace TypiconOnline.Domain.Tests.Services
 
             //unitOfWork.SaveChanges();
 
-            Assert.IsNotNull(response.Day.Schedule);
+            Assert.IsNotNull(response.Day);
 
             StringBuilder builder = new StringBuilder();
 
             builder.AppendLine(response.Day.Date.ToShortDateString() + " " + response.Day.Name);
 
-            foreach (var service in response.Day.Schedule.Worships)
+            foreach (var service in response.Day.Worships)
             {
                 builder.AppendLine(service.Time + " " + service.Name);
             }

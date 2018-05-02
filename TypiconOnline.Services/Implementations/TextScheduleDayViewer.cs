@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.Domain.Schedule;
 using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.AppServices.Implementations
@@ -16,11 +15,10 @@ namespace TypiconOnline.AppServices.Implementations
         public string Execute(ScheduleDay day)
         {
             if (day == null) throw new ArgumentNullException("ScheduleDay");
-            if (day.Schedule == null) throw new ArgumentNullException("ScheduleDay.Schedule");
 
             _resultStringBuilder.Clear();
 
-            foreach (WorshipRuleViewModel element in day.Schedule.Worships)
+            foreach (WorshipRuleViewModel element in day.Worships)
             {
                 Render(element);
             }
@@ -37,7 +35,7 @@ namespace TypiconOnline.AppServices.Implementations
                     _resultStringBuilder.Append($"{item.KindStringValue} ");
                 }
 
-                item.Paragraphs.ForEach(c => _resultStringBuilder.AppendLine($"{c.Text} {c.Note?.Text}"));
+                item.Paragraphs.ForEach(c => _resultStringBuilder.AppendLine($"{c.Text.Text} {c.Note?.Text.Text}"));
             } 
         }
     }

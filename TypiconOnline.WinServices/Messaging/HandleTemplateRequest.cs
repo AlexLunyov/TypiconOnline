@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TypiconOnline.Domain.Schedule;
+using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.WinServices.Messaging
 {

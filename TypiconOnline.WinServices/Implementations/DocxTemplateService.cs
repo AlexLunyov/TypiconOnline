@@ -73,7 +73,7 @@ namespace TypiconOnline.WinServices.Implementations
 
         private string GetFileName(string folderPath, string fileStart, DateTime date)
         {
-            string fileName = $"{fileStart} {date.ToString("yyyy-MM-dd")} {date.AddDays(6).ToString("yyyy-MM-dd")} {oktoikhContext.GetWeekName(date, true)}.docx";
+            string fileName = $"{fileStart} {date.ToString("yyyy-MM-dd")} {date.AddDays(6).ToString("yyyy-MM-dd")} {oktoikhContext.GetWeekName(date, "cs-ru", true).Text}..docx";
             return Path.Combine(folderPath, fileName);
         }
     }

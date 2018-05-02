@@ -46,7 +46,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             //WorshipSequenceViewModel model = new WorshipSequenceViewModel(element, handler);
 
-            Assert.AreEqual(30, model.Worships.FirstOrDefault()?.ChildElements.Count);
+            Assert.AreEqual(30, model.FirstOrDefault()?.ChildElements.Count);
         }
     }
 }

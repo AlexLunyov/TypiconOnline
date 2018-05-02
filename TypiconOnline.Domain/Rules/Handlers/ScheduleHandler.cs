@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
 {
     public class ScheduleHandler : RuleHandlerBase
     {
-        ViewModelRoot model = new ViewModelRoot();
+        List<WorshipRuleViewModel> collection = new List<WorshipRuleViewModel>();
 
         public ScheduleHandler()//(RuleHandlerSettings request) : base(request)
         {
@@ -42,14 +42,14 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
         public override void ClearResult()
         {
-            model.Worships.Clear();
+            collection.Clear();
         }
 
         public override bool Execute(ICustomInterpreted element)
         {
             if (element is WorshipRule w)
             {
-                model.Worships.Add(new WorshipRuleViewModel(w, Settings.Language.Name));
+                collection.Add(new WorshipRuleViewModel(w, Settings.Language.Name));
 
                 return true;
             }
@@ -57,6 +57,6 @@ namespace TypiconOnline.Domain.Rules.Handlers
             return false;
         }
 
-        public virtual ViewModelRoot GetResult() => model;
+        public virtual ICollection<WorshipRuleViewModel> GetResult() => collection;
     }
 }

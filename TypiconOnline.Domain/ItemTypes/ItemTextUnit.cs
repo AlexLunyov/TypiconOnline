@@ -10,6 +10,16 @@ namespace TypiconOnline.Domain.ItemTypes
     [Serializable]
     public class ItemTextUnit
     {
+        public ItemTextUnit() { }
+
+        public ItemTextUnit(ItemTextUnit source)
+        {
+            if (source == null) throw new ArgumentNullException("ItemTextUnit");
+
+            Text = source.Text;
+            Language = source.Language;
+        }
+
         [XmlAttribute("language")]
         public string Language { get; set; }
         [XmlText()]

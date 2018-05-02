@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.Domain.Schedule;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
@@ -70,7 +69,7 @@ namespace TypiconOnline.WinServices
 
                         //Название седмицы
                         //table[2]->tr[1]->td[1]->p[1]->r[1]->t[1]
-                        Table headerTable = GetHeaderTable(templateTables[0], week.Name);
+                        Table headerTable = GetHeaderTable(templateTables[0], week.Name.Text);
                         resultElements.Add(headerTable);
                     }
                     Table dayTable = GetDayTable(day, templateTables);
@@ -137,7 +136,7 @@ namespace TypiconOnline.WinServices
                 TableCell tdDayofweek = (TableCell)tr.ChildElements[2];
                 TableCell tdName = (TableCell)tr.ChildElements[3];
                 string sDayofweek = day.Date.ToString("dddd").ToUpper();
-                string sName = day.Name;
+                string sName = day.Name.Text;
                 //TODO: реализовать функционал
                 bool bIsNameBold = false;//(dayNode.SelectSingleNode("name").Attributes["isbold"] != null);
 
@@ -151,7 +150,7 @@ namespace TypiconOnline.WinServices
                 SetTextToCell(tdDate, sDate, false, false);
                 dayTable.AppendChild(tr);
 
-                foreach (WorshipRuleViewModel service in day.Schedule.Worships)
+                foreach (WorshipRuleViewModel service in day.Worships)
                 {
                     tr = (TableRow)dayTemplateTable.ChildElements[4].Clone();
                     TableCell tdTime = (TableCell)tr.ChildElements[2];

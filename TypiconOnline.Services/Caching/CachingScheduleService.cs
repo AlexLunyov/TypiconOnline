@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Services;
-using TypiconOnline.Domain.Schedule;
+using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 
 namespace TypiconOnline.AppServices.Caching

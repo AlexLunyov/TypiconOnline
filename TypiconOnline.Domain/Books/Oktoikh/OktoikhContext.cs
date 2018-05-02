@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 
 namespace TypiconOnline.Domain.Books.Oktoikh
@@ -74,7 +75,7 @@ namespace TypiconOnline.Domain.Books.Oktoikh
         /// <param name="language">Язык локализации</param>
         /// <param name="stringToPaste">Строка, которая будет вставлена после названия Недели, перед гласом</param>
         /// <returns>Возвращает строку с наименованием воскресного дня. </returns>
-        public string GetSundayName(DateTime date, string language, string stringToPaste = null)
+        public ItemTextUnit GetSundayName(DateTime date, string language, string stringToPaste = null)
         {
             /* Есть три периода: Великий пост, попразднество Пасхи и все после нее.
              * Соответсвенно, имена будут зависить от удаления от дня Пасхи.
@@ -198,7 +199,8 @@ namespace TypiconOnline.Domain.Books.Oktoikh
 
                 }
             }
-            return result;
+
+            return new ItemTextUnit() { Language = language, Text = result };
         }
 
         /// <summary>
@@ -210,7 +212,7 @@ namespace TypiconOnline.Domain.Books.Oktoikh
         /// <param name="date">Дата для проверки</param>
         /// <param name="isShortName">Если true, возвращает краткое название - для файлов.</param
         /// <returns></returns>
-        public string GetWeekName(DateTime date, bool isShortName)
+        public ItemTextUnit GetWeekName(DateTime date, string language, bool isShortName)
         {
             /* Есть три периода: Великий пост, попразднество Пасхи и все после нее.
              * Соответсвенно, имена будут зависить от удаления от дня Пасхи.
@@ -306,7 +308,8 @@ namespace TypiconOnline.Domain.Books.Oktoikh
                     result = "Седмица " + week.ToString() + "-ая по Пасхе";
                 }
             }
-            return result;
+
+            return new ItemTextUnit() { Language = language, Text = result };
         }
     }
 }

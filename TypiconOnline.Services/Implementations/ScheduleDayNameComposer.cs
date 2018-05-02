@@ -7,6 +7,7 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
 
@@ -21,7 +22,7 @@ namespace TypiconOnline.AppServices.Implementations
             this.oktoikhContext = oktoikhContext ?? throw new ArgumentNullException("IOktoikhContext");
         }
 
-        public string Compose(RuleHandlerSettings settings, DateTime date)
+        public ItemTextUnit Compose(RuleHandlerSettings settings, DateTime date)
         {
             //находим самое последнее правило - добавление
             while (settings.Addition != null)
@@ -29,12 +30,14 @@ namespace TypiconOnline.AppServices.Implementations
                 settings = settings.Addition;
             }
 
+            var result = new ItemTextUnit() { Language = settings.Language.Name };
+
             if (settings.DayWorships == null || settings.DayWorships.Count == 0)
             {
-                return string.Empty;
+                return new ItemTextUnit();
             }
 
-            string result = "";
+            string resultString = "";
 
             DayWorship seniorService = settings.DayWorships[0];
 
@@ -43,7 +46,7 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 for (int i = 1; i < settings.DayWorships.Count; i++)
                 {
-                    result += settings.DayWorships[i].WorshipName.FirstOrDefault(settings.Language.Name).Text + " ";
+                    resultString += settings.DayWorships[i].WorshipName.FirstOrDefault(settings.Language.Name).Text + " ";
                 }
             }
 
@@ -55,7 +58,7 @@ namespace TypiconOnline.AppServices.Implementations
                 || (date.DayOfWeek == DayOfWeek.Sunday
                     && (seniorService.UseFullName || seniorService.WorshipShortName.IsEmpty)))
             {
-                result = $"{s} {result}";
+                resultString = $"{s} {resultString}";
             }
 
             int priority = (settings.TypiconRule is Sign sign) ? sign.Priority : settings.TypiconRule.Template.Priority;
@@ -69,17 +72,19 @@ namespace TypiconOnline.AppServices.Implementations
 
                 //Если имеется короткое название, то добавляем только его
 
-                result = oktoikhContext.GetSundayName(date, settings.Language.Name,
-                    GetShortName(settings.DayWorships, settings.Language.Name)) + " " + result;
+                resultString = oktoikhContext.GetSundayName(date, settings.Language.Name,
+                    GetShortName(settings.DayWorships, settings.Language.Name)) + " " + resultString;
 
                 //жестко задаем воскресный день
                 //handlerRequest.Rule = inputRequest.TypiconEntity.Settings.TemplateSunday;
             }
 
+            result.Text = resultString;
+
             return result;
         }
 
-        public string GetWeekName(DateTime date) => oktoikhContext.GetWeekName(date, false);
+        public ItemTextUnit GetWeekName(DateTime date, string language) => oktoikhContext.GetWeekName(date, language, false);
 
         private string GetShortName(List<DayWorship> dayServices, string language)
         {

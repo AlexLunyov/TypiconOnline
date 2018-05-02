@@ -8,7 +8,7 @@ using System.Xml;
 using System.Xml.Xsl;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Schedule;
+using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 
 namespace TypiconOnline.AppServices.Implementations
@@ -35,7 +35,7 @@ namespace TypiconOnline.AppServices.Implementations
             xslt.Load(xsltFilePath);
 
             //получаем xml-строку
-            var xml = xmlSerializer.Serialize(day.Schedule);
+            var xml = xmlSerializer.Serialize(day);
 
             var xmlreader = XmlReader.Create(new StringReader(xml));
 

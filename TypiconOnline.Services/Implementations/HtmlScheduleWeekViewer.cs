@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.Domain.Schedule;
 using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.AppServices.Implementations
@@ -29,7 +28,7 @@ namespace TypiconOnline.AppServices.Implementations
             _resultString += "<div class=\"schedule\">";
 
             //Название седмицы пропускаем. Считаем, что название седмицы будет в наименовании файла
-            _resultString += "<h4 class=\"subtitle\">" + week.Name.ToUpper() + "</h4>";
+            _resultString += "<h4 class=\"subtitle\">" + week.Name.Text.ToUpper() + "</h4>";
 
             //теперь начинаем наполнять дни
             foreach (ScheduleDay day in week.Days)
@@ -53,7 +52,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 _resultString += "<table border=0>";
 
-                foreach (var service in day.Schedule.Worships)
+                foreach (var service in day.Worships)
                 {
                     _resultString += "<tr><td>";
 

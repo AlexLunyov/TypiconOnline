@@ -9,7 +9,7 @@ using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.Schedule;
+using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Implementations;
@@ -18,7 +18,6 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.Domain.Days;
-using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Interfaces;
 using System.Collections.Generic;
@@ -384,7 +383,7 @@ namespace TypiconOnline.WinForms
                                 {
                                     DateTime datePub = _selectedDate.AddDays(-8).AddHours(17).AddMinutes(30);
 
-                                    PostToWordPress(weekResponse.Week.Name, htmlViewer.ResultString, datePub);
+                                    PostToWordPress(weekResponse.Week.Name.Text, htmlViewer.ResultString, datePub);
 
                                     MessageBox.Show($"Запись размещена на сайте. Дата публикации - {datePub.ToString("hh:mm dd MMMM yyyy года.")}", "Информация",
                                         MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -415,7 +414,7 @@ namespace TypiconOnline.WinForms
                 textBoxResult.AppendText(day.Date.ToShortDateString() + Environment.NewLine);
                 textBoxResult.AppendText(day.Name + Environment.NewLine);
                 textBoxResult.AppendText("Знак службы: " + day.SignName.Text + Environment.NewLine);
-                foreach (var el in day.Schedule.Worships)
+                foreach (var el in day.Worships)
                 {
                     string str = !string.IsNullOrEmpty(el.Time) ? $"{el.Time} " : "";
                  
@@ -547,7 +546,7 @@ namespace TypiconOnline.WinForms
 
             textBoxTesting.AppendText(dayResponse.Day.Date.ToShortDateString() + Environment.NewLine);
             textBoxTesting.AppendText(dayResponse.Day.Name + ". " + daysFromEaster + " дней до Пасхи." +Environment.NewLine);
-            foreach (var el in dayResponse.Day.Schedule.Worships)
+            foreach (var el in dayResponse.Day.Worships)
             {
                 string str = string.IsNullOrEmpty(el.Time) ? $"{el.Time} " : "";
                  

@@ -13,7 +13,6 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
-using TypiconOnline.Domain.Schedule;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Domain.ViewModels;
@@ -114,7 +113,7 @@ namespace TypiconOnline.AppServices.Implementations
 
             //if (container != null)
             //{
-                scheduleDay.Schedule.Worships.AddRange(container.Worships);
+                scheduleDay.Worships.AddRange(container);
             //}
 
             return scheduleDay;
@@ -136,7 +135,7 @@ namespace TypiconOnline.AppServices.Implementations
         {
             ScheduleWeek week = new ScheduleWeek() 
             {
-                Name = nameComposer.GetWeekName(request.Date)
+                Name = nameComposer.GetWeekName(request.Date, request.Language)
             };
 
             GetScheduleDayRequest dayRequest = new GetScheduleDayRequest()

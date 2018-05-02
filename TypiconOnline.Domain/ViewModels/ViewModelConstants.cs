@@ -17,6 +17,21 @@ namespace TypiconOnline.Domain.ViewModels
         public const string ViewModelRootNodeName = "viewmodel";
 
         /*
+         * Константы для элементов класса ScheduleWeek
+        */
+        public const string ScheduleWeekNode = "week";
+        public const string ScheduleWeekNameNode = "name";
+
+        /*
+         * Константы для элементов класса ScheduleDay
+        */
+        public const string ScheduleDayNode = "day";
+        public const string ScheduleDayNameNode = "name";
+        public const string ScheduleDayDateNode = "date";
+        public const string ScheduleDaySignNumberNode = "signnumber";
+        public const string ScheduleDaySignNameNode = "signname";
+
+        /*
          * Константы для элементов класса WorshipRuleViewModel
         */
         public const string WorshipRuleNodeName = "worship"; 

@@ -24,7 +24,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
             if (itemTextNoted.FirstOrDefault(language) is ItemTextUnit i)
             {
-                viewModel.Text = i;
+                viewModel.Text = new ItemTextUnit(i);
             }
 
             if (itemTextNoted.Note != null)
