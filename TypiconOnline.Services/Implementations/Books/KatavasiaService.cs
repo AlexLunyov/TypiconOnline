@@ -16,9 +16,9 @@ namespace TypiconOnline.AppServices.Implementations.Books
         {
         }
 
-        public InsertKatavasiaResponse Insert(InsertKatavasiaRequest request)
+        public AddKatavasiaResponse Insert(AddKatavasiaRequest request)
         {
-            InsertKatavasiaResponse resp = new InsertKatavasiaResponse();
+            AddKatavasiaResponse resp = new AddKatavasiaResponse();
 
             try
             {
@@ -28,7 +28,7 @@ namespace TypiconOnline.AppServices.Implementations.Books
                 }
                 else
                 {
-                    _unitOfWork.Repository<Katavasia>().Insert(request.Katavasia);
+                    _unitOfWork.Repository<Katavasia>().Add(request.Katavasia);
                 }
             }
             catch (Exception ex)
@@ -39,7 +39,7 @@ namespace TypiconOnline.AppServices.Implementations.Books
             return resp;
         }
 
-        public DeleteKatavasiaResponse Delete(DeletePsalmRequest request)
+        public RemoveKatavasiaResponse Delete(RemovePsalmRequest request)
         {
             throw new NotImplementedException();
         }

@@ -37,8 +37,6 @@ namespace TypiconOnline.Infrastructure.Common.Domain
 
         public void ThrowExceptionIfInvalid()
         {
-            //_brokenRules.Clear();
-            //Validate();
             if (!IsValid)
             {
                 StringBuilder issues = new StringBuilder();
@@ -50,11 +48,6 @@ namespace TypiconOnline.Infrastructure.Common.Domain
                 throw new ValueObjectIsInvalidException(issues.ToString());
             }
         }
-
-        //protected void AddBrokenConstraint(BusinessConstraint businessConstraint)
-        //{
-        //    _brokenConstraints.Add(businessConstraint);
-        //}
 
         protected void AddBrokenConstraint(BusinessConstraint businessConstraint, string constraintPath = null)
         {

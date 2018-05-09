@@ -139,6 +139,7 @@
   <ItemGroup>
     <Compile Include="Common\IntCsTest.cs" />
     <Compile Include="Common\SignMigratorTest.cs" />
+    <Compile Include="Implementation\HtmlScheduleDayViewerTest.cs" />
     <Compile Include="Implementation\ModifiedRuleServiceTest.cs" />
     <Compile Include="Implementation\ScheduleServiceTest.cs" />
     <Compile Include="Migration\FakePsalterService.cs" />
@@ -157,6 +158,9 @@
       <Link>TypiconOnlineLayers.layerdiagram</Link>
       <Visible>False</Visible>
     </AdditionalFiles>
+    <Content Include="TestData\scheduledayviewer.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="app.config" />
     <Content Include="Data\SQLiteDB.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -179,10 +183,6 @@
     <ProjectReference Include="..\TypiconOnline.Repository.EFCore\TypiconOnline.Repository.EFCore.csproj">
       <Project>{8ED6DE06-A34B-4775-BCB2-1655C36649CC}</Project>
       <Name>TypiconOnline.Repository.EFCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TypiconOnline.Repository.EF\TypiconOnline.Repository.EF.csproj">
-      <Project>{f5d4fd91-e0f6-4162-b3de-a3ec6ac9a9d7}</Project>
-      <Name>TypiconOnline.Repository.EF</Name>
     </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.Services\TypiconOnline.AppServices.csproj">
       <Project>{4ee462f2-d6af-4b99-b9b3-09aa172fe9c8}</Project>

@@ -10,8 +10,8 @@ namespace TypiconOnline.AppServices.Interfaces
 {
     public interface ITheotokionAppService : ITheotokionAppContext
     {
-        InsertTheotokionResponse InsertTheotokion(InsertTheotokionRequest request);
-        UpdateTheotokionResponse UpdateTheotokion(UpdateTheotokionRequest request);
-        DeleteTheotokionResponse DeleteTheotokion(DeleteTheotokionRequest request);
+        AddTheotokionResponse Add(AddTheotokionRequest request);
+        UpdateTheotokionResponse Update(UpdateTheotokionRequest request);
+        RemoveTheotokionResponse Remove(RemoveTheotokionRequest request);
     }
 }

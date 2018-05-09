@@ -40,7 +40,7 @@ namespace TypiconOnline.Repository.EFCore
 
         protected Dictionary<Type, object> repositories = new Dictionary<Type, object>();
 
-        public IRepository<AggregateType> Repository<AggregateType>() where AggregateType : class, IAggregateRoot
+        public IRepository<AggregateType> Repository<AggregateType>() where AggregateType : class//, IAggregateRoot
         {
             if (repositories.Keys.Contains(typeof(AggregateType)) == true)
             {

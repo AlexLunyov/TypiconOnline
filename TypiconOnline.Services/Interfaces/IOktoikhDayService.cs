@@ -10,8 +10,8 @@ namespace TypiconOnline.AppServices.Interfaces
 {
     public interface IOktoikhDayService : IOktoikhContext
     {
-        InsertOktoikhResponse InsertOktoikh(InsertOktoikhRequest request);
-        UpdateOktoikhResponse UpdateOktoikh(UpdateOktoikhRequest request);
-        DeleteOktoikhResponse DeleteOktoikh(DeleteOktoikhRequest request);
+        AddOktoikhResponse Add(AddOktoikhRequest request);
+        UpdateOktoikhResponse Update(UpdateOktoikhRequest request);
+        RemoveOktoikhResponse Remove(RemoveOktoikhRequest request);
     }
 }

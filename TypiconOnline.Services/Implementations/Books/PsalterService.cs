@@ -14,14 +14,14 @@ namespace TypiconOnline.AppServices.Implementations.Books
     {
         public PsalterService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
 
-        public DeletePsalmResponse Delete(DeletePsalmRequest request)
+        public RemovePsalmResponse Remove(RemovePsalmRequest request)
         {
             throw new NotImplementedException();
         }
 
-        public InsertPsalmResponse Insert(InsertPsalmRequest request)
+        public AddPsalmResponse Add(AddPsalmRequest request)
         {
-            var resp = new InsertPsalmResponse();
+            var resp = new AddPsalmResponse();
             try
             {
                 if (request.Psalm == null)
@@ -30,7 +30,7 @@ namespace TypiconOnline.AppServices.Implementations.Books
                 }
                 else
                 {
-                    _unitOfWork.Repository<Psalm>().Insert(request.Psalm);
+                    _unitOfWork.Repository<Psalm>().Add(request.Psalm);
                 }
             }
             catch (Exception ex)
@@ -66,7 +66,7 @@ namespace TypiconOnline.AppServices.Implementations.Books
         {
             foreach (var psalm in _unitOfWork.Repository<Psalm>().GetAll())
             {
-                _unitOfWork.Repository<Psalm>().Delete(psalm);
+                _unitOfWork.Repository<Psalm>().Remove(psalm);
             }
             
         }

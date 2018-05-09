@@ -25,7 +25,7 @@ namespace TypiconOnline.AppServices.Migration
 
         public void Migrate()
         {
-            InsertKatavasiaRequest request = new InsertKatavasiaRequest();
+            AddKatavasiaRequest request = new AddKatavasiaRequest();
 
             foreach ((string name, string content) in FileReader.ReadAllFromDirectory())
             {

@@ -43,7 +43,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 _resultString += day.Date.ToString("dd MMMM yyyy г.") + "<br/>";
                 _resultString += day.Date.ToString("dddd").ToUpper() + "<br/>";
-                _resultString += day.Name + "</strong>";
+                _resultString += day.Name.Text + "</strong>";
 
                 if (day.SignNumber == 4 || day.SignNumber == 5 || day.SignNumber == 8)
                     _resultString += "</span>";

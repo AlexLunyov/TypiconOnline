@@ -25,7 +25,9 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
             //    WithMany();
 
             builder.HasOne(e => e.Template).
-                WithMany().OnDelete(DeleteBehavior.Restrict);
+                WithMany()
+                //.OnDelete(DeleteBehavior.Restrict)
+                ;
         }
     }
 }

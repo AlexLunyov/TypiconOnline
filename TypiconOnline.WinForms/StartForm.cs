@@ -406,13 +406,13 @@ namespace TypiconOnline.WinForms
 
             textBoxResult.Clear();
 
-            textBoxResult.AppendText(weekResponse.Week.Name + Environment.NewLine);
+            textBoxResult.AppendText(weekResponse.Week.Name.Text + Environment.NewLine);
 
             foreach (ScheduleDay day in weekResponse.Week.Days)
             {
                 textBoxResult.AppendText("--------------------------" + Environment.NewLine);
                 textBoxResult.AppendText(day.Date.ToShortDateString() + Environment.NewLine);
-                textBoxResult.AppendText(day.Name + Environment.NewLine);
+                textBoxResult.AppendText(day.Name.Text + Environment.NewLine);
                 textBoxResult.AppendText("Знак службы: " + day.SignName.Text + Environment.NewLine);
                 foreach (var el in day.Worships)
                 {

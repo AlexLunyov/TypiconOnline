@@ -14,7 +14,6 @@ using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Services;
 using TypiconOnline.AppServices.Standard.Caching;
-using TypiconOnline.AppServices.Standard.Configuration;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Apostol;
 using TypiconOnline.Domain.Books.Easter;
@@ -33,6 +32,7 @@ using TypiconOnline.Repository.EFCore;
 using TypiconOnline.Repository.Caching;
 using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Repository.EFCore.Caching;
+using TypiconOnline.AppServices.Configuration;
 
 namespace TypiconOnline.WebApi
 {
@@ -57,6 +57,7 @@ namespace TypiconOnline.WebApi
             //scheduleservice
             services.AddScoped<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
             services.AddScoped<IModifiedRuleService, ModifiedRuleService>();
+            services.AddScoped<IScheduleDayNameComposer, ScheduleDayNameComposer>();
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<IRuleSerializerRoot, RuleSerializerRoot>();
             services.AddScoped<BookStorage>();

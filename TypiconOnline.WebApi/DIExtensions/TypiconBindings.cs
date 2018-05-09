@@ -17,7 +17,6 @@ using TypiconOnline.Repository.EFCore;
 using Microsoft.Extensions.Configuration;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.AppServices.Standard.Caching;
-using TypiconOnline.AppServices.Standard.Configuration;
 using Microsoft.Extensions.Caching.Memory;
 using TypiconOnline.AppServices.Caching;
 using TypiconOnline.Repository.EFCore.DataBase;
@@ -29,6 +28,7 @@ using System;
 using EFSecondLevelCache.Core;
 using EFSecondLevelCache.Core.Contracts;
 using TypiconOnline.Repository.Caching;
+using TypiconOnline.AppServices.Configuration;
 
 namespace TypiconOnline.WebApi.DIExtensions
 {

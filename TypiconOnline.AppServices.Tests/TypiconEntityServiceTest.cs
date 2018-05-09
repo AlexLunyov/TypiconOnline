@@ -5,7 +5,7 @@ using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Repository.EF;
+using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.AppServices.Tests
@@ -27,6 +27,24 @@ namespace TypiconOnline.AppServices.Tests
             service.ClearModifiedYears(1);
 
             Assert.AreEqual(response.TypiconEntity.ModifiedYears.Count, 0);
+        }
+
+        [Test]
+        public void TypiconEntity_RemoveExlicitlyModifiedRule()
+        {
+            var unitOfWork = UnitOfWorkFactory.Create();
+            var modifiedRule = unitOfWork.Repository<ModifiedRule>().Get(c => c.Parent.Year == 2017);
+
+            Assert.IsNotNull(modifiedRule);
+
+            var date = modifiedRule.Date;
+
+            unitOfWork.Repository<ModifiedRule>().Remove(modifiedRule);
+            unitOfWork.SaveChanges();
+
+            modifiedRule = unitOfWork.Repository<ModifiedRule>().Get(c => c.Date == date);
+
+            Assert.IsNull(modifiedRule);
         }
 
         [Test]

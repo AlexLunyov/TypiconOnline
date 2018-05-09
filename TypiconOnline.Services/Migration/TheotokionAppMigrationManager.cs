@@ -56,13 +56,13 @@ namespace TypiconOnline.AppServices.Migration
         /// </summary>
         private void MigrateDayTheotokions(PlaceYmnosSource source, DayOfWeek day)
         {
-            InsertTheotokionRequest request = new InsertTheotokionRequest();
+            AddTheotokionRequest request = new AddTheotokionRequest();
 
             for (int ihos = 1; ihos <= 8; ihos++)
             {
                 request.Theotokion = Factory.Create(source, ihos, day, FileReader.Read(source, ihos, day));
 
-                Service.InsertTheotokion(request);
+                Service.Add(request);
             }
         }
     }

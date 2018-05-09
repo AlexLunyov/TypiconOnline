@@ -9,7 +9,7 @@ namespace TypiconOnline.Infrastructure.Common.UnitOfWork
 {
     public interface IUnitOfWork //: IDisposable
     {
-        IRepository<AggregateType> Repository<AggregateType>() where AggregateType : class, IAggregateRoot;
+        IRepository<AggregateType> Repository<AggregateType>() where AggregateType : class;//, IAggregateRoot;
 
         void SaveChanges();
         Task<int> SaveChangesAsync();

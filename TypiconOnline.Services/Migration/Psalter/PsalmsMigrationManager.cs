@@ -73,7 +73,7 @@ namespace TypiconOnline.AppServices.Migration.Psalter
 
             if (response.Psalm == null)
             {
-                Service.Insert(new InsertPsalmRequest() { Psalm = currentPsalm });
+                Service.Add(new AddPsalmRequest() { Psalm = currentPsalm });
             }
             else
             {

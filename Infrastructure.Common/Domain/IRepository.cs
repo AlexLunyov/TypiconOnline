@@ -5,12 +5,10 @@ using System.Text;
 
 namespace TypiconOnline.Infrastructure.Common.Domain
 {
-	public interface IRepository<AggregateType> 
-		: IReadOnlyRepository<AggregateType> where AggregateType 
-		: IAggregateRoot
+	public interface IRepository<AggregateType>: IReadOnlyRepository<AggregateType> //where AggregateType : IAggregateRoot
 	{
 		void Update(AggregateType aggregate);
-		void Insert(AggregateType aggregate);
-		void Delete(AggregateType aggregate);
+		void Add(AggregateType aggregate);
+		void Remove(AggregateType aggregate);
 	}
 }

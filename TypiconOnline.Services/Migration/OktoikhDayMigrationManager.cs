@@ -41,12 +41,12 @@ namespace TypiconOnline.AppServices.Migration
 
         private void MigrateDay(int ihos, DayOfWeek day)
         {
-            InsertOktoikhRequest request = new InsertOktoikhRequest()
+            AddOktoikhRequest request = new AddOktoikhRequest()
             {
                 OktoikhDay = Factory.Create(ihos, day, FileReader.Read(ihos, day))
             };
 
-            Service.InsertOktoikh(request);
+            Service.Add(request);
         }
     }
 }

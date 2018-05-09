@@ -9,7 +9,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Repository.Caching
 {
-    public class EFCacheRepository<DomainType> : IRepository<DomainType> where DomainType : class, IAggregateRoot
+    public class EFCacheRepository<DomainType> : IRepository<DomainType> where DomainType : class//, IAggregateRoot
     {
         const string KEY_SALT = "EF2ndLvlCache";
 
@@ -25,24 +25,26 @@ namespace TypiconOnline.Repository.Caching
             this.cacheServiceProvider = cacheServiceProvider ?? throw new ArgumentNullException("cacheServiceProvider in CachingRepository");
         }
 
-        public void Delete(DomainType aggregate)
+        public void Remove(DomainType aggregate)
         {
-            repository.Delete(aggregate);
+            repository.Remove(aggregate);
         }
 
-        public DomainType Get(Expression<Func<DomainType, bool>> predicate)
+        public DomainType Get(Expression<Func<DomainType, bool>> predicate, IncludeOptions options = null)
         {
-            return GetAll(predicate).FirstOrDefault();
+            return GetAll(predicate, options).FirstOrDefault();
         }
 
-        public IQueryable<DomainType> GetAll(Expression<Func<DomainType, bool>> predicate = null)
+        public IQueryable<DomainType> GetAll(Expression<Func<DomainType, bool>> predicate = null, IncludeOptions options = null)
         {
-            return repository.GetAll(predicate).Cacheable(KEY_SALT, debugInfo, cacheKeyProvider, cacheServiceProvider);
+            string key = (options != null) ? options.GetKey() : "";
+
+            return repository.GetAll(predicate, options).Cacheable($"{KEY_SALT}{key}", debugInfo, cacheKeyProvider, cacheServiceProvider);
         }
 
-        public void Insert(DomainType aggregate)
+        public void Add(DomainType aggregate)
         {
-            repository.Insert(aggregate);
+            repository.Add(aggregate);
         }
 
         public void Update(DomainType aggregate)

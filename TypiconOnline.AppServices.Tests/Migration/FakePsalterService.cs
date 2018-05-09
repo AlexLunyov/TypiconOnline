@@ -33,14 +33,14 @@ namespace TypiconOnline.AppServices.Tests.Migration
             return base.Get(request);
         }
 
-        public DeletePsalmResponse Delete(DeletePsalmRequest request)
+        public RemovePsalmResponse Remove(RemovePsalmRequest request)
         {
             throw new NotImplementedException();
         }
 
-        public InsertPsalmResponse Insert(InsertPsalmRequest request)
+        public AddPsalmResponse Add(AddPsalmRequest request)
         {
-            var response = new InsertPsalmResponse();
+            var response = new AddPsalmResponse();
 
             try
             {

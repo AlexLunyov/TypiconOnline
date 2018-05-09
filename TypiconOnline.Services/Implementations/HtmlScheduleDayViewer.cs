@@ -47,5 +47,13 @@ namespace TypiconOnline.AppServices.Implementations
 
             return stringWriter.ToString();
         }
+
+        public string Execute(WorshipRuleViewModel viewModel)
+        {
+            var day = new ScheduleDay();
+            day.Worships.Add(viewModel);
+
+            return Execute(day);
+        }
     }
 }

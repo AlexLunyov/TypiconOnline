@@ -15,14 +15,14 @@ namespace TypiconOnline.AppServices.Implementations.Books
     {
         public OktoikhDayService(IUnitOfWork unitOfWork, IEasterContext easterContext) : base(unitOfWork, easterContext) { }
 
-        public DeleteOktoikhResponse DeleteOktoikh(DeleteOktoikhRequest request)
+        public RemoveOktoikhResponse Remove(RemoveOktoikhRequest request)
         {
             throw new NotImplementedException();
         }
                 
-        public InsertOktoikhResponse InsertOktoikh(InsertOktoikhRequest request)
+        public AddOktoikhResponse Add(AddOktoikhRequest request)
         {
-            InsertOktoikhResponse resp = new InsertOktoikhResponse();
+            AddOktoikhResponse resp = new AddOktoikhResponse();
 
             try
             {
@@ -32,7 +32,7 @@ namespace TypiconOnline.AppServices.Implementations.Books
                 }
                 else
                 {
-                    _unitOfWork.Repository<OktoikhDay>().Insert(request.OktoikhDay);
+                    _unitOfWork.Repository<OktoikhDay>().Add(request.OktoikhDay);
                 }
             }
             catch (Exception ex)
@@ -43,7 +43,7 @@ namespace TypiconOnline.AppServices.Implementations.Books
             return resp;
         }
 
-        public UpdateOktoikhResponse UpdateOktoikh(UpdateOktoikhRequest request)
+        public UpdateOktoikhResponse Update(UpdateOktoikhRequest request)
         {
             throw new NotImplementedException();
         }

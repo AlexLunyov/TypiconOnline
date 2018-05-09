@@ -165,14 +165,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TypiconOnline.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\TypiconOnline\TypiconOnline.Repository.EF\bin\Debug\TypiconOnline.Domain.dll</HintPath>
-    </Reference>
-    <Reference Include="TypiconOnline.Infrastructure.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\TypiconOnline\TypiconOnline.Repository.EF\bin\Debug\TypiconOnline.Infrastructure.Common.dll</HintPath>
-    </Reference>
     <Reference Include="TypiconOnline.Repository.EF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\TypiconOnline\TypiconOnline.Repository.EF\bin\Debug\TypiconOnline.Repository.EF.dll</HintPath>
@@ -243,22 +235,30 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure.Common\TypiconOnline.Infrastructure.Common.csproj">
+      <Project>{1F2F3F15-A8CF-4AB7-8603-FB0309EAF8C7}</Project>
+      <Name>TypiconOnline.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TypiconOnline.Domain\TypiconOnline.Domain.csproj">
+      <Project>{823205b3-c0db-428d-9038-a03382d881d5}</Project>
+      <Name>TypiconOnline.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.Repository.EFCore\TypiconOnline.Repository.EFCore.csproj">
       <Project>{8ed6de06-a34b-4775-bcb2-1655c36649cc}</Project>
       <Name>TypiconOnline.Repository.EFCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.Services\TypiconOnline.AppServices.csproj">
-      <Project>{4EE462F2-D6AF-4B99-B9B3-09AA172FE9C8}</Project>
+      <Project>{4ee462f2-d6af-4b99-b9b3-09aa172fe9c8}</Project>
       <Name>TypiconOnline.AppServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.WinServices\TypiconOnline.WinServices.csproj">
-      <Project>{611C72A4-9F5A-43B3-9418-1A478A943475}</Project>
+      <Project>{611c72a4-9f5a-43b3-9418-1a478a943475}</Project>
       <Name>TypiconOnline.WinServices</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
-    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.105.2\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.105.2\build\net451\System.Data.SQLite.Core.targets')" />

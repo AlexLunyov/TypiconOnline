@@ -13,9 +13,15 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 {
     public class TypiconDBContext : DbContext
     {
-        public TypiconDBContext() : base() { }
+        public TypiconDBContext() : base()
+        {
+            Database.EnsureCreated();
+        }
 
-        public TypiconDBContext(DbContextOptions<TypiconDBContext> options) : base(options) { }
+        public TypiconDBContext(DbContextOptions<TypiconDBContext> options) : base(options)
+        {
+            Database.EnsureCreated();
+        }
 
         #region Modeling
 

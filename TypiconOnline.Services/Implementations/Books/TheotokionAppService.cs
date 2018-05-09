@@ -14,9 +14,9 @@ namespace TypiconOnline.AppServices.Implementations.Books
     {
         public TheotokionAppService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
 
-        public InsertTheotokionResponse InsertTheotokion(InsertTheotokionRequest request)
+        public AddTheotokionResponse Add(AddTheotokionRequest request)
         {
-            InsertTheotokionResponse resp = new InsertTheotokionResponse();
+            AddTheotokionResponse resp = new AddTheotokionResponse();
 
             try
             {
@@ -26,7 +26,7 @@ namespace TypiconOnline.AppServices.Implementations.Books
                 }
                 else
                 {
-                    _unitOfWork.Repository<TheotokionApp>().Insert(request.Theotokion);
+                    _unitOfWork.Repository<TheotokionApp>().Add(request.Theotokion);
                 }
             }
             catch (Exception ex)
@@ -37,14 +37,14 @@ namespace TypiconOnline.AppServices.Implementations.Books
             return resp;
         }
 
-        public DeleteTheotokionResponse DeleteTheotokion(DeleteTheotokionRequest request)
+        public RemoveTheotokionResponse Remove(RemoveTheotokionRequest request)
         {
             throw new NotImplementedException();
         }
 
         
 
-        public UpdateTheotokionResponse UpdateTheotokion(UpdateTheotokionRequest request)
+        public UpdateTheotokionResponse Update(UpdateTheotokionRequest request)
         {
             throw new NotImplementedException();
         }

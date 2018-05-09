@@ -43,13 +43,9 @@ namespace TypiconOnline.Domain.ViewModels
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public WorshipRuleViewModel this[string id]
-        {
-            get
-            {
-                return Worships.FirstOrDefault(c => c.Id == id);
-            }
-        }
+        public WorshipRuleViewModel this[string id] => Worships.FirstOrDefault(c => c.Id == id);
+
+        public WorshipRuleViewModel this[int index] => Worships.ElementAtOrDefault(index);
     }
 }
 

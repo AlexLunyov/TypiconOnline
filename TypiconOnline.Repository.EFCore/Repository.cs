@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TypiconOnline.Repository.EFCore
 {
-    public class Repository<DomainType> : IRepository<DomainType> where DomainType : class, IAggregateRoot
+    public class Repository<DomainType> : IRepository<DomainType> where DomainType : class//, IAggregateRoot
     {
         readonly DbSet<DomainType> objectSet;
 
@@ -23,9 +23,9 @@ namespace TypiconOnline.Repository.EFCore
             objectSet = dbContext.Set<DomainType>();
         }
 
-        public IQueryable<DomainType> GetAll(Expression<Func<DomainType, bool>> predicate = null)
+        public IQueryable<DomainType> GetAll(Expression<Func<DomainType, bool>> predicate = null, IncludeOptions options = null)
         {
-            var request = new ClassPropertiesIncluder<DomainType>(objectSet).GetIncludes();
+            var request = objectSet.GetIncludes(options);
 
             if (predicate != null)
             {
@@ -38,9 +38,9 @@ namespace TypiconOnline.Repository.EFCore
             return request;
         }
 
-        public DomainType Get(Expression<Func<DomainType, bool>> predicate)
+        public DomainType Get(Expression<Func<DomainType, bool>> predicate, IncludeOptions options = null)
         {
-            return GetAll(predicate).FirstOrDefault();
+            return GetAll(predicate, options).FirstOrDefault();
         }
 
         public void Update(DomainType aggregate)
@@ -52,12 +52,12 @@ namespace TypiconOnline.Repository.EFCore
             //}
         }
 
-        public void Insert(DomainType aggregate)
+        public void Add(DomainType aggregate)
         {
             objectSet.Add(aggregate);
         }
 
-        public void Delete(DomainType aggregate)
+        public void Remove(DomainType aggregate)
         {
             objectSet.Remove(aggregate);
         }

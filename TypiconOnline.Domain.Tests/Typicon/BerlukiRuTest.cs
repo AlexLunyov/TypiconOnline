@@ -9,7 +9,7 @@ using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Repository.EF;
+
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;

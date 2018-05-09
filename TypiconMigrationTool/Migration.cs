@@ -59,7 +59,7 @@ namespace TypiconMigrationTool
             IEnumerable<TypiconEntity> typiconEntitySet = _unitOfWork.Repository<TypiconEntity>().GetAll();
             foreach (TypiconEntity element in typiconEntitySet)
             {
-                _unitOfWork.Repository<TypiconEntity>().Delete(element);
+                _unitOfWork.Repository<TypiconEntity>().Remove(element);
             }
 
             //IEnumerable<MenologyDay> menologyDaySet = _unitOfWork.Repository<MenologyDay>().GetAll();
@@ -132,7 +132,7 @@ namespace TypiconMigrationTool
                 i++;
             }
 
-            _unitOfWork.Repository<TypiconEntity>().Insert(typiconEntity);
+            _unitOfWork.Repository<TypiconEntity>().Add(typiconEntity);
 
             Commit();
 
@@ -301,7 +301,7 @@ namespace TypiconMigrationTool
                         DateB = (mineinikRow.IsDateBNull()) ? new ItemDate() : new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day),
                     };
 
-                    _unitOfWork.Repository<MenologyDay>().Insert(menologyDay);
+                    _unitOfWork.Repository<MenologyDay>().Add(menologyDay);
                 }
                 
 
@@ -389,7 +389,7 @@ namespace TypiconMigrationTool
                 day.AppendDayService(dayWorship);
                 //day.Sign = _unitOfWork.Repository<Sign>().Get(c => c.Id == row.SignID);
 
-                _unitOfWork.Repository<TriodionDay>().Insert(day);
+                _unitOfWork.Repository<TriodionDay>().Add(day);
 
                 string folderPath = Path.Combine(Properties.Settings.Default.FolderPath, typiconEntity.Name, "Triodion");
 
@@ -449,7 +449,7 @@ namespace TypiconMigrationTool
         {            
             foreach (ScheduleDBDataSet.PaskhaliaRow row in _sh.DataSet.Paskhalia)
             {
-                _unitOfWork.Repository<EasterItem>().Insert(new EasterItem { Date = row.Date });
+                _unitOfWork.Repository<EasterItem>().Add(new EasterItem { Date = row.Date });
             }
             
             //_unitOfWork.Repository<EasterStorage>().Insert(EasterStorage.Instance);

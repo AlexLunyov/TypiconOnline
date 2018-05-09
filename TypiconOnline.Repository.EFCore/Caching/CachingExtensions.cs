@@ -18,7 +18,7 @@ namespace TypiconOnline.Repository.EFCore.Caching
         /// <param name="cachedItems"></param>
         /// <returns></returns>
         public static IQueryable<DomainType> ExcludeCachedItems<DomainType>(this IQueryable<DomainType> repoItems
-            , IEnumerable<DomainType> cachedItems) where DomainType : class, IAggregateRoot
+            , IEnumerable<DomainType> cachedItems) where DomainType : class//, IAggregateRoot
         {
             foreach (var item in cachedItems)
             {
@@ -29,12 +29,13 @@ namespace TypiconOnline.Repository.EFCore.Caching
         }
 
         public static IEnumerable<DomainType> UnionWithCachedItems<DomainType>(this IQueryable<DomainType> repoItems
-            , IEnumerable<DomainType> cachedItems) where DomainType : class, IAggregateRoot
+            , IEnumerable<DomainType> cachedItems) where DomainType : class//, IAggregateRoot
         {
             return cachedItems.Union(repoItems);
         }
 
-        public static IQueryable<T> GetEntities<T>(this ICacheStorage cacheStorage, GetAllCollectionItem cachedQuery, bool prolongStoring = true) where T : IAggregateRoot
+        public static IQueryable<T> GetEntities<T>(this ICacheStorage cacheStorage, 
+            GetAllCollectionItem cachedQuery, bool prolongStoring = true) //where T : IAggregateRoot
         {
             var items = new List<T>();
 
@@ -55,7 +56,8 @@ namespace TypiconOnline.Repository.EFCore.Caching
             return items.AsQueryable();
         }
 
-        public static IQueryable<T> GetEntities<T>(this ICacheStorage cacheStorage, CachedGetCollection collection, TimeSpan durationTime, bool prolongStoring = true) where T : IAggregateRoot
+        public static IQueryable<T> GetEntities<T>(this ICacheStorage cacheStorage, CachedGetCollection collection, 
+            TimeSpan durationTime, bool prolongStoring = true) //where T : IAggregateRoot
         {
             var items = new List<T>();
 

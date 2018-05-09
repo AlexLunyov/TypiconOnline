@@ -73,7 +73,7 @@ namespace TypiconOnline.AppServices.Implementations
                 //Если имеется короткое название, то добавляем только его
 
                 resultString = oktoikhContext.GetSundayName(date, settings.Language.Name,
-                    GetShortName(settings.DayWorships, settings.Language.Name)) + " " + resultString;
+                    GetShortName(settings.DayWorships, settings.Language.Name)).Text + " " + resultString;
 
                 //жестко задаем воскресный день
                 //handlerRequest.Rule = inputRequest.TypiconEntity.Settings.TemplateSunday;

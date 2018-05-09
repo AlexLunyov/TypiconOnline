@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations.Books;
 using TypiconOnline.AppServices.Migration.Psalter;
-using TypiconOnline.Repository.EF;
+using TypiconOnline.Repository.EFCore;
 using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.AppServices.Tests.Migration
@@ -35,7 +35,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
         [Test]
         public void PsalmsMigrationManager_CsTest()
         {
-            var uof = new EFUnitOfWork();
+            var uof = UnitOfWorkFactory.Create();
             var service = new FakePsalterService(uof);
 
             var manager = new PsalmsMigrationManager(service);

@@ -397,7 +397,6 @@
   <ItemGroup>
     <Folder Include="Books\Menology\" />
     <Folder Include="Rules\Factories\" />
-    <Folder Include="Schedule\" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\TypiconOnline.Modeling\TypiconOnlineLayers.layerdiagram">

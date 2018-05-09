@@ -10,5 +10,7 @@ namespace TypiconOnline.AppServices.Interfaces
     public interface IScheduleDayViewer<T> where T: class
     {
         T Execute(ScheduleDay day);
+
+        T Execute(WorshipRuleViewModel viewModel);
     }
 }

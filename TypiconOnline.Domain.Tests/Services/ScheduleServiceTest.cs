@@ -13,7 +13,7 @@ using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.ViewModels;
-using TypiconOnline.Repository.EF;
+
 using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Services

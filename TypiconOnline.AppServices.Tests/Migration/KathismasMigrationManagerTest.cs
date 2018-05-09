@@ -81,7 +81,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
             var manager = new KathismasMigrationManager(BookStorageFactory.Create(unitOfWork).Psalter);
             manager.MigrateKathismas(new PsalterRuReader(folderPath, "cs-ru"), typicon);
 
-            unitOfWork.Repository<TypiconEntity>().Insert(typicon);
+            unitOfWork.Repository<TypiconEntity>().Add(typicon);
 
             unitOfWork.SaveChanges();
 

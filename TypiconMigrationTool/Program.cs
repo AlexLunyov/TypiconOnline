@@ -32,7 +32,7 @@ namespace TypiconMigrationTool
 
             //try
             //{
-            var container = new RegisterByContainer().Container;
+            //var container = new RegisterByContainer().Container;
 
             //var unitOfWork = container.GetInstance<IUnitOfWork>();
 

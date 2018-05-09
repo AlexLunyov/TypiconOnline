@@ -10,7 +10,7 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Repository.EF;
+
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Tests.Common;
 using TypiconOnline.AppServices.Implementations;

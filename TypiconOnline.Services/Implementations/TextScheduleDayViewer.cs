@@ -26,6 +26,11 @@ namespace TypiconOnline.AppServices.Implementations
             return _resultStringBuilder.ToString();
         }
 
+        public string Execute(WorshipRuleViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
         private void Render(WorshipRuleViewModel element)
         {
             foreach (var item in element.ChildElements)

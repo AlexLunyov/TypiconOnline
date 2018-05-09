@@ -16,11 +16,11 @@ namespace TypiconOnline.AppServices.Implementations
 {
     public class TypiconEntityService : ITypiconEntityService
     {
-        private IUnitOfWork _unitOfWork;
+        private IUnitOfWork unitOfWork;
 
         public TypiconEntityService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWork ?? throw new ArgumentNullException("_unitOfWork");
+            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException("_unitOfWork");
         }
 
         /// <summary>
@@ -33,36 +33,15 @@ namespace TypiconOnline.AppServices.Implementations
 
             if (response.TypiconEntity != null)
             {
-                while (response.TypiconEntity.ModifiedYears.Count > 0)
-                {
-                    response.TypiconEntity.ModifiedYears.Remove(response.TypiconEntity.ModifiedYears[0]);
-                }
-
-                //response.TypiconEntity.ModifiedYears
-                //    .ForEach(c =>
-                //    {
-                //        //c.ModifiedRules.ForEach(d =>
-                //        //    {
-                //        //        //d.RuleEntity = null;
-                //        //        d.Parent = null;
-                //        //    });
-                //        //c.ModifiedRules.Clear();
-                //        c.TypiconEntity = null;
-                //    });
-                //response.TypiconEntity.ModifiedYears.Clear();
-
-                //while (response.TypiconEntity.ModifiedYears.Count > 0)
+                //response.TypiconEntity.ModifiedYears.ForEach(c =>
                 //{
-                //    ModifiedYear year = response.TypiconEntity.ModifiedYears[0];
+                //    //c.ModifiedRules.ForEach(d => d.ShortName = null);
+                //    c.ModifiedRules.Clear();
+                //});
 
-                //    while (year.ModifiedRules.Count > 0)
-                //    {
-                //        _unitOfWork.Repository<ModifiedRule>().Delete(year.ModifiedRules[0]);
-                //    }
-                //    _unitOfWork.Repository<ModifiedYear>().Delete(year);
-                //}
+                response.TypiconEntity.ModifiedYears.Clear();
 
-                _unitOfWork.SaveChanges();
+                unitOfWork.SaveChanges();
             }
         }
 
@@ -72,7 +51,7 @@ namespace TypiconOnline.AppServices.Implementations
 
             try
             {
-                var typicon = _unitOfWork.Repository<TypiconEntity>().Get(x => x.Id == id);
+                var typicon = unitOfWork.Repository<TypiconEntity>().Get(x => x.Id == id);
 
                 if (typicon == null)
                 {
@@ -98,7 +77,7 @@ namespace TypiconOnline.AppServices.Implementations
 
             try
             {
-                allTypiconEntities = _unitOfWork.Repository<TypiconEntity>().GetAll();
+                allTypiconEntities = unitOfWork.Repository<TypiconEntity>().GetAll();
                 getTypiconEntitiesResponse.TypiconEntities = allTypiconEntities;
             }
             catch (Exception ex)
@@ -153,7 +132,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 ReloadCommonRules(response.TypiconEntity, folderPath);
 
-                _unitOfWork.SaveChanges();
+                unitOfWork.SaveChanges();
             }
         }
 
@@ -204,9 +183,9 @@ namespace TypiconOnline.AppServices.Implementations
 
             try
             {
-                _unitOfWork.Repository<TypiconEntity>().Update(updateTypiconEntityRequest.TypiconEntity);
+                unitOfWork.Repository<TypiconEntity>().Update(updateTypiconEntityRequest.TypiconEntity);
 
-                _unitOfWork.SaveChanges();
+                unitOfWork.SaveChanges();
             }
             catch (SqlException ex)
             {

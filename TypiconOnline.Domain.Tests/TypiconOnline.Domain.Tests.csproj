@@ -190,7 +190,6 @@
     <Compile Include="Rules\Schedule\YmnosRuleTest.cs" />
     <Compile Include="Rules\Serialization\XElementCreatorTest.cs" />
     <Compile Include="Rules\Serialization\XmlNodeCreatorTest.cs" />
-    <Compile Include="ScheduleServiceFactory.cs" />
     <Compile Include="Services\ScheduleServiceTest.cs" />
     <Compile Include="Typicon\BerlukiRuTest.cs" />
     <Compile Include="Typicon\TriodionRuleFolderTest.cs" />
@@ -221,10 +220,6 @@
     <ProjectReference Include="..\TypiconOnline.Domain\TypiconOnline.Domain.csproj">
       <Project>{823205b3-c0db-428d-9038-a03382d881d5}</Project>
       <Name>TypiconOnline.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TypiconOnline.Repository.EF\TypiconOnline.Repository.EF.csproj">
-      <Project>{F5D4FD91-E0F6-4162-B3DE-A3EC6AC9A9D7}</Project>
-      <Name>TypiconOnline.Repository.EF</Name>
     </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.Services\TypiconOnline.AppServices.csproj">
       <Project>{4EE462F2-D6AF-4B99-B9B3-09AA172FE9C8}</Project>

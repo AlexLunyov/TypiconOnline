@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TypiconOnline.AppServices.Standard.Caching;
-using TypiconOnline.AppServices.Standard.Configuration;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;

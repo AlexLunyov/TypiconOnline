@@ -11,7 +11,7 @@ using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Repository.EF;
+
 using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Rules.Executables

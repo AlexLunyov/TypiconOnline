@@ -1,6 +1,5 @@
 ﻿using System;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
-using TypiconOnline.Repository.EF;
 using StructureMap;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Implementations;
@@ -38,7 +37,6 @@ namespace TypiconOnline.WinForms
                         scan.AssemblyContainingType<ITypiconEntityService>();
                         scan.AssemblyContainingType<TypiconEntity>();
                         scan.AssemblyContainingType<IAggregateRoot>();
-                        scan.AssemblyContainingType<EFUnitOfWork>();
                         scan.AssemblyContainingType<UnitOfWork>();
                         scan.AssemblyContainingType<DocxScheduleWeekViewer>(); 
                         scan.WithDefaultConventions();

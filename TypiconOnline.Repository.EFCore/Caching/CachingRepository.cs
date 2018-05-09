@@ -9,7 +9,7 @@ using TypiconOnline.Repository.EFCore.Caching;
 
 namespace TypiconOnline.Repository.EFCore.Caching
 {
-    public class CachingRepository<DomainType> : IRepository<DomainType> where DomainType : class, IAggregateRoot
+    public class CachingRepository<DomainType> : IRepository<DomainType> where DomainType : class//, IAggregateRoot
     {
         const string KEY_CACHEDURATION = "ShortCacheDuration";
         const string KEY_GET = "RepositoryGet";
@@ -38,7 +38,7 @@ namespace TypiconOnline.Repository.EFCore.Caching
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public DomainType Get(Expression<Func<DomainType, bool>> predicate)
+        public DomainType Get(Expression<Func<DomainType, bool>> predicate, IncludeOptions options = null)
         {
             //делаем выборку из кешированных данных
             var item = cacheStorage.GetEntities<DomainType>(GetCollection, CacheDurationTime).Where(predicate).FirstOrDefault();
@@ -63,7 +63,7 @@ namespace TypiconOnline.Repository.EFCore.Caching
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public IQueryable<DomainType> GetAll(Expression<Func<DomainType, bool>> predicate = null)
+        public IQueryable<DomainType> GetAll(Expression<Func<DomainType, bool>> predicate = null, IncludeOptions options = null)
         {
             var predicateKey = (predicate != null) ? predicate.Body.ToString() : string.Empty;
 
@@ -91,11 +91,11 @@ namespace TypiconOnline.Repository.EFCore.Caching
             }
         }
 
-        public void Insert(DomainType aggregate) => repository.Insert(aggregate);
+        public void Add(DomainType aggregate) => repository.Add(aggregate);
 
         public void Update(DomainType aggregate) => repository.Update(aggregate);
 
-        public void Delete(DomainType aggregate) => repository.Delete(aggregate);
+        public void Remove(DomainType aggregate) => repository.Remove(aggregate);
 
         private TimeSpan CacheDurationTime
         {

@@ -10,8 +10,8 @@ namespace TypiconOnline.AppServices.Interfaces
 {
     public interface IKatavasiaService : IKatavasiaContext
     {
-        InsertKatavasiaResponse Insert(InsertKatavasiaRequest request);
+        AddKatavasiaResponse Insert(AddKatavasiaRequest request);
         UpdateKatavasiaResponse Update(UpdateKatavasiaRequest request);
-        DeleteKatavasiaResponse Delete(DeletePsalmRequest request);
+        RemoveKatavasiaResponse Delete(RemovePsalmRequest request);
     }
 }

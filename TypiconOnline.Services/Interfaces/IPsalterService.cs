@@ -10,8 +10,8 @@ namespace TypiconOnline.AppServices.Interfaces
 {
     public interface IPsalterService : IPsalterContext
     {
-        InsertPsalmResponse Insert(InsertPsalmRequest request);
+        AddPsalmResponse Add(AddPsalmRequest request);
         UpdatePsalmResponse Update(UpdatePsalmRequest request);
-        DeletePsalmResponse Delete(DeletePsalmRequest request);
+        RemovePsalmResponse Remove(RemovePsalmRequest request);
     }
 }

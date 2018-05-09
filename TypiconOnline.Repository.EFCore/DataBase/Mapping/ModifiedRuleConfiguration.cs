@@ -13,19 +13,8 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<ModifiedRule> builder)
         {
-            //builder.HasMany(c => c.DayRuleWorships).
-            //    WithOne();
-            //Map(m =>
-            //{
-            //    m.ToTable("DayRuleServices");
-            //    // Настройка внешних ключей промежуточной таблицы
-            //    m.MapLeftKey("DayRuleId");
-            //    m.MapRightKey("ServiceDayId");
-            //});
-            //builder.OwnsOne(c => c.Filter/*, k =>
-            //{
-            //    k.OwnsOne(m => m.ExcludedItem);
-            //}*/);
+            builder.HasKey(c => c.Id);
+
             builder.OwnsOne(c => c.ShortName, 
                 k =>
                 {
@@ -33,8 +22,11 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
                     k.Ignore(d => d.IsBold);
                     k.Ignore(d => d.IsRed);
                     k.Ignore(d => d.IsItalic);
-                });
-            builder.HasOne(c => c.RuleEntity);
+                }).HasKey("Id");
+
+            //builder.WithOne().OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(c => c.RuleEntity);//.WithMany().OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

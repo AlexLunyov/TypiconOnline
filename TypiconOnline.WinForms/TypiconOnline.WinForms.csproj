@@ -305,10 +305,6 @@
       <Project>{8ed6de06-a34b-4775-bcb2-1655c36649cc}</Project>
       <Name>TypiconOnline.Repository.EFCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TypiconOnline.Repository.EF\TypiconOnline.Repository.EF.csproj">
-      <Project>{F5D4FD91-E0F6-4162-B3DE-A3EC6AC9A9D7}</Project>
-      <Name>TypiconOnline.Repository.EF</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.Services\TypiconOnline.AppServices.csproj">
       <Project>{4EE462F2-D6AF-4B99-B9B3-09AA172FE9C8}</Project>
       <Name>TypiconOnline.AppServices</Name>

@@ -5,48 +5,23 @@ using System.Text;
 
 namespace TypiconOnline.Infrastructure.Common.Domain
 {
-	public class BusinessConstraint
-	{
-		private string _constraintDescription;
-        private string _constraintPath;
-
+    public class BusinessConstraint
+    {
         public BusinessConstraint(string principleDescription)
-		{
-            _constraintDescription = principleDescription;
-		}
+        {
+            ConstraintDescription = principleDescription;
+        }
 
         public BusinessConstraint(string principleDescription, string principlePath)
         {
-            _constraintDescription = principleDescription;
-            _constraintPath = principlePath;
+            ConstraintDescription = principleDescription;
+            ConstraintPath = principlePath;
         }
 
-        public string ConstraintDescription
-        {
-			get
-			{
-				return _constraintDescription;
-			}
-		}
+        public string ConstraintDescription { get; }
 
-        public string ConstraintPath
-        {
-            get
-            {
-                return _constraintPath;
-            }
-            set
-            {
-                _constraintPath = value;
-            }
-        }
+        public string ConstraintPath { get; set; }
 
-        public string ConstraintFullDescription
-        {
-            get
-            {
-                return _constraintPath + ": " + _constraintDescription;
-            }
-        }
+        public string ConstraintFullDescription => $"{ConstraintPath}: {ConstraintDescription}";
     }
 }
