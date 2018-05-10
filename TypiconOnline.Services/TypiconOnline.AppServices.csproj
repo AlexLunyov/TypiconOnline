@@ -64,7 +64,6 @@
     <Compile Include="Implementations\HtmlScheduleWeekViewer.cs" />
     <Compile Include="Implementations\ModificationsRuleHandler.cs" />
     <Compile Include="Implementations\ModifiedRuleService.cs" />
-    <Compile Include="Implementations\TypiconEntityModifiedRuleExtensions.cs" />
     <Compile Include="Interfaces\IModifiedRuleService.cs" />
     <Compile Include="Interfaces\IPsalterReader.cs" />
     <Compile Include="Interfaces\IPsalterService.cs" />

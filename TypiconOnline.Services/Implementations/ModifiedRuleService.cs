@@ -43,7 +43,7 @@ namespace TypiconOnline.AppServices.Implementations
                 modifiedYear = CreateModifiedYear(typicon, date, serializer);
 
                 //фиксируем изменения
-                //unitOfWork.Repository<TypiconEntity>().Update(typicon);
+                unitOfWork.Repository<ModifiedYear>().Update(modifiedYear);
                 unitOfWork.SaveChanges();
             }
 

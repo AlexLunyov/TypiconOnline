@@ -127,11 +127,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     ode.Interpret(handler);
                 }
 
-                foreach (var afterRule in AfterRules)
-                {
-                    afterRule.Interpret(handler);
-                }
-
                 handler.Execute(this);
             }
         }
