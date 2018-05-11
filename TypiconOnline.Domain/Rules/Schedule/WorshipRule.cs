@@ -97,9 +97,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             if (handler.IsAuthorized<WorshipRule>() && !this.AsAdditionHandled(handler))
             {
-                Sequence?.Interpret(handler);
-
                 handler.Execute(this);
+
+                Sequence?.Interpret(handler);
             }
         }
 

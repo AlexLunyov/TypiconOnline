@@ -24,5 +24,10 @@ namespace TypiconOnline.Domain.ItemTypes
         public string Language { get; set; }
         [XmlText()]
         public string Text { get; set; }
+
+        public override string ToString()
+        {
+            return Text;
+        }
     }
 }

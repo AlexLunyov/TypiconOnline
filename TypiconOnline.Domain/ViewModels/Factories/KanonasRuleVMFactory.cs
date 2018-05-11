@@ -206,11 +206,8 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             if (req.Element.AfterRules?.FirstOrDefault(c => c.OdiNumber == odiNumber) is KAfterRule rule)
             {
                 rule.Interpret(req.Handler);
-                //rule.ChildElements.ForEach(k => k.Interpret(req.Handler));
             }
         }
-
-        
 
         private List<TextHolder> GetHeaders(CreateViewModelRequest<KanonasRule> req)
         {

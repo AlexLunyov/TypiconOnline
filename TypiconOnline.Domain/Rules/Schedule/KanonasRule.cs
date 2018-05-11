@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Extensions;
+using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.ViewModels.Messaging;
 using TypiconOnline.Infrastructure.Common.Domain;
@@ -127,6 +128,15 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     ode.Interpret(handler);
                 }
 
+                //обрабатываем AfterRules только если это не расписание
+                if (!(handler is ScheduleHandler))
+                {
+                    foreach (var afterRule in AfterRules)
+                    {
+                        afterRule.Interpret(handler);
+                    }
+                }
+
                 handler.Execute(this);
             }
         }
@@ -152,43 +162,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
         //    if (sameAfterRules?.Count() > 0)
         //    {
         //        AddBrokenConstraint(KanonasRuleBusinessConstraint.AfterRulesWithSameNumber);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Добавляет в конец коллекции вычисляемых канонов катавасию
-        ///// </summary>
-        ///// <param name="handler"></param>
-        ///// <param name="container"></param>
-        //private void CalculateKatavasiaStructure(IRuleHandler handler, IReadOnlyList<KKatavasiaRule> container)
-        //{
-        //    if (container.FirstOrDefault() is KKatavasiaRule item)
-        //    {
-        //        _kanonesCalc.Add(item.Calculate(handler.Settings) as Kanonas);
-        //    }
-        //}
-
-
-        //private void CalculateOdesStructure(IRuleHandler handler, IReadOnlyList<KKanonasItemRule> container, bool katavasiaExists)
-        //{
-        //    for (int i = 0; i < container.Count; i++)
-        //    {
-        //        KKanonasItemRule item = container[i] as KKanonasItemRule;
-
-        //        if (item.Calculate(handler.Settings) is Kanonas k)
-        //        {
-        //            _kanonesCalc.Add(k);
-        //        }
-
-        //        //это правило для канона Утрени, определение катавасии отсутствует и канон последний
-        //        if (IsOrthros && !katavasiaExists && i == container.Count - 1)
-        //        {
-        //            //добавляем еще один канон, который будет состоять ТОЛЬКО из катавасий после 3, 6, 8, 9-х песен
-        //            if (item.CalculateEveryDayKatavasia(handler.Settings) is Kanonas k1)
-        //            {
-        //                _kanonesCalc.Add(k1);
-        //            }
-        //        }
         //    }
         //}
 

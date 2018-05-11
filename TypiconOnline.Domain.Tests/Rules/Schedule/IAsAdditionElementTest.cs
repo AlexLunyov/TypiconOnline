@@ -35,7 +35,15 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             var handler = new IsAdditionTestHandler() { Settings = mainSettings };
 
-            mainSettings.RuleContainer.Interpret(handler);
+            //mainSettings.RuleContainer.Interpret(handler);
+
+            WorshipRule worshipRule = mainSettings.RuleContainer.ChildElements[0] as WorshipRule;
+
+            var kanonasRule = worshipRule.Sequence.GetChildElements<KanonasRule>(mainSettings).FirstOrDefault();
+
+            Assert.IsNotNull(kanonasRule);
+
+            kanonasRule.AfterRules[0].Interpret(handler);
 
             var result = handler.GetResult();
 

@@ -265,7 +265,7 @@
       <Visible>False</Visible>
     </AdditionalFiles>
     <Content Include="data\SQLiteDB.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="data\BigTemplate.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
