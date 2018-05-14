@@ -17,16 +17,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Описание правил для использования текстов песнопений
     /// </summary>
-    public class YmnosRule : RuleExecutable, ICalcStructureElement, ICustomInterpreted
+    public class YmnosRule : YmnosRuleBase, ICustomInterpreted
     {
         public YmnosRule(string name) : base(name) { }
 
         #region Properties
 
-        /// <summary>
-        /// Тип песнопения (общий, славник, богородичен...)
-        /// </summary>
-        public YmnosRuleKind Kind { get; set; } = YmnosRuleKind.YmnosRule;
         /// <summary>
         /// Источник книги, откуда брать текст
         /// </summary>
@@ -138,7 +134,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <param name="date"></param>
         /// <param name="handler"></param>
         /// <returns>Если таковые не объявлены в DayService, возвращает NULL.</returns>
-        public virtual DayElementBase Calculate(RuleHandlerSettings settings)
+        public override DayElementBase Calculate(RuleHandlerSettings settings)
         {
             if (!IsValid)
             {

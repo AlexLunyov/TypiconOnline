@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<kekragaria>
+  <ymnosrule source="item1" place="kekragaria" count="3"/>
+  <ymnoscustomrule>
+    <group ihos="1">
+      <ymnos>
+        <text>
+          <item language="cs-ru">Текст тропаря</item>
+        </text>
+      </ymnos>
+    </group>
+  </ymnoscustomrule>
+</kekragaria>
+

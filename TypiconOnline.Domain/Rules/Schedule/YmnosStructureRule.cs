@@ -77,7 +77,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 {
                     switch (element)
                     {
-                        case YmnosRule r:
+                        case YmnosRuleBase r:
                             AsYmnosRule(r, s);
                             break;
                         case KSedalenRule r:
@@ -88,7 +88,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        private void AsYmnosRule(YmnosRule r, YmnosStructure s)
+        private void AsYmnosRule(YmnosRuleBase r, YmnosStructure s)
         {
             switch (r.Kind)
             {

@@ -18,10 +18,6 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             string xmlString = @"<ymnosrule source=""item1"" place=""kekragaria"" count=""3"" startfrom=""2""/>";
 
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
             var element = TestRuleSerializer.Deserialize<YmnosRule>(xmlString);
 
             Assert.IsTrue(element.IsValid);

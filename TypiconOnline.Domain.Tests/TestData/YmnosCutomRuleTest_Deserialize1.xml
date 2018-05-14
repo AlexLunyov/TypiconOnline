@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ymnoscustomrule>
+  <doxastichon ihos="1">
+    <ymnos>
+      <text>
+        <item language="cs-ru">Текст тропаря</item>
+      </text>
+    </ymnos>
+  </doxastichon>
+</ymnoscustomrule>

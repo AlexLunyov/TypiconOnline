@@ -320,6 +320,14 @@ namespace TypiconOnline.Domain.Rules
         public const string YmnosRuleStartFromAttrName = "startfrom";
 
         /*
+         * Константы для описания атрибутов элемента ymnosCustomRule
+        */
+        public const string YmnosCustomRuleNode = "ymnoscustomrule";
+        public const string YmnosCustomRuleGroupNode = "group";
+        public const string YmnosCustomRuleDoxastichonNode = "doxastichon";
+        public const string YmnosCustomRuleTheotokionNode = "theotokion";
+
+        /*
          * TextHolder
          */
         public const string TextHolderPapragraphNode = "p";

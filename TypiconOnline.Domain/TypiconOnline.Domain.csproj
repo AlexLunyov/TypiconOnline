@@ -97,6 +97,9 @@
     <Compile Include="Rules\Schedule\KOdiRule.cs" />
     <Compile Include="Rules\Schedule\PsalmRule.cs" />
     <Compile Include="Rules\Schedule\PsalmRuleSerializer.cs" />
+    <Compile Include="Rules\Schedule\YmnosCustomRule.cs" />
+    <Compile Include="Rules\Schedule\YmnosCustomRuleSerializer.cs" />
+    <Compile Include="Rules\Schedule\YmnosRuleBase.cs" />
     <Compile Include="Serialization\CreateObjectRequest.cs" />
     <Compile Include="Serialization\FillObjectRequest.cs" />
     <Compile Include="Typicon\Modifications\DayWorshipsFilter.cs" />
