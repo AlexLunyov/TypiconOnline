@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new ApostichaRule(new ApostichaVMFactory(SerializerRoot), SerializerRoot, req.Descriptor.GetElementName());
+            return new ApostichaRule(new ApostichaVMFactory(SerializerRoot), req.Descriptor.GetElementName());
         }
     }
 }

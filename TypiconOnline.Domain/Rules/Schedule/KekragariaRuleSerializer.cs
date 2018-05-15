@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new KekragariaRule(new KekragariaRuleVMFactory(SerializerRoot), SerializerRoot, req.Descriptor.GetElementName());
+            return new KekragariaRule(new KekragariaRuleVMFactory(SerializerRoot), req.Descriptor.GetElementName());
         }
 
         protected override void FillObject(FillObjectRequest req)

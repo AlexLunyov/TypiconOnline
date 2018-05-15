@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new SedalenRule(new SedalenVMFactory(SerializerRoot), SerializerRoot, req.Descriptor.GetElementName());
+            return new SedalenRule(new SedalenVMFactory(SerializerRoot), req.Descriptor.GetElementName());
         }
     }
 }

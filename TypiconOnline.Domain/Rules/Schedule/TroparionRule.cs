@@ -14,8 +14,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class TroparionRule : YmnosStructureRule
     {
-        public TroparionRule(IElementViewModelFactory<YmnosStructureRule> viewModelFactory,
-            IRuleSerializerRoot serializer, string name) : base(viewModelFactory, serializer, name) { }
+        public TroparionRule(IElementViewModelFactory<YmnosStructureRule> viewModelFactory, string name) 
+            : base(viewModelFactory, name) { }
 
     }
 }

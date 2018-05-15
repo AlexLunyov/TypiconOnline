@@ -19,10 +19,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KekragariaRule : YmnosStructureRule
     {
-        public KekragariaRule(IElementViewModelFactory<YmnosStructureRule> viewModelFactory,
-            IRuleSerializerRoot serializer, string name) : base(viewModelFactory, serializer, name)
-        {
-        }
+        public KekragariaRule(IElementViewModelFactory<YmnosStructureRule> viewModelFactory, string name) 
+            : base(viewModelFactory, name) { }
 
         #region Properties
 

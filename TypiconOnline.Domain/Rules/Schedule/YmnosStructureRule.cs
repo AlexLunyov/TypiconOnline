@@ -22,9 +22,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public abstract class YmnosStructureRule : ExecContainer, ICustomInterpreted, IViewModelElement
     {
-        public YmnosStructureRule(IElementViewModelFactory<YmnosStructureRule> viewModelFactory, IRuleSerializerRoot serializer, string name) : base(name)
+        public YmnosStructureRule(IElementViewModelFactory<YmnosStructureRule> viewModelFactory, string name) : base(name)
         {
-            Serializer = serializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
             ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException("IElementViewModelFactory in YmnosStructureRule");
         }
 
@@ -44,8 +43,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// Вычисленная последовательность богослужебных текстов
         /// </summary>
         public YmnosStructure Structure { get; private set; }
-
-        public IRuleSerializerRoot Serializer { get; }
 
         protected IElementViewModelFactory<YmnosStructureRule> ViewModelFactory { get; }
 

@@ -14,8 +14,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class SedalenRule : YmnosStructureRule
     {
-        public SedalenRule(IElementViewModelFactory<YmnosStructureRule> viewModelFactory, 
-            IRuleSerializerRoot serializer, string name) : base(viewModelFactory, serializer, name) { }
-
+        public SedalenRule(IElementViewModelFactory<YmnosStructureRule> viewModelFactory, string name) 
+            : base(viewModelFactory, name) { }
     }
 }
