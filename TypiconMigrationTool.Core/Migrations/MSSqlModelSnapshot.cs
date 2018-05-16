@@ -93,6 +93,20 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.ToTable("TheotokionApp");
                 });
 
+            modelBuilder.Entity("TypiconOnline.Domain.Books.WeekDayApp.WeekDayApp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DayOfWeek");
+
+                    b.Property<string>("Definition");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WeekDayApp");
+                });
+
             modelBuilder.Entity("TypiconOnline.Domain.DayRuleWorship", b =>
                 {
                     b.Property<int>("DayRuleId");

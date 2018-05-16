@@ -11,6 +11,7 @@ using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Books.Katavasia;
+using TypiconOnline.Domain.Books.WeekDayApp;
 
 namespace TypiconOnline.Domain.Books
 {
@@ -39,6 +40,7 @@ namespace TypiconOnline.Domain.Books
         public ITheotokionAppContext TheotokionApp { get; private set; }
         public IEasterContext Easters { get; private set; }
         public IKatavasiaContext Katavasia { get; private set; }
+        public IWeekDayAppContext WeekDayApp { get; private set; }
 
         private BookStorage()
         {
@@ -56,7 +58,8 @@ namespace TypiconOnline.Domain.Books
             IOktoikhContext oktoikhContext,
             ITheotokionAppContext theotokionApp,
             IEasterContext easterContext,
-            IKatavasiaContext katavasia)
+            IKatavasiaContext katavasia,
+            IWeekDayAppContext weekDayApp)
         {
             Evangelion = evangelionService ?? throw new ArgumentNullException("evangelionService");
             Apostol = apostolService ?? throw new ArgumentNullException("apostolService");
@@ -66,6 +69,7 @@ namespace TypiconOnline.Domain.Books
             TheotokionApp = theotokionApp ?? throw new ArgumentNullException("theotokionApp");
             Easters = easterContext ?? throw new ArgumentNullException("easterContext");
             Katavasia = katavasia ?? throw new ArgumentNullException("katavasia");
+            WeekDayApp = weekDayApp ?? throw new ArgumentNullException("weekDayApp");
         }
 
         #region Singletone pattern

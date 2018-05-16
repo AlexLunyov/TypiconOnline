@@ -38,7 +38,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// Прокимен
         /// </summary>
         [XmlElement(RuleConstants.ProkeimenonNode)]
-        public Prokeimenon Prokeimenon { get; set; }
+        public List<Prokeimenon> Prokeimeni { get; set; }
 
         /// <summary>
         /// Апостольские чтения
@@ -51,7 +51,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// Аллилуиа
         /// </summary>
         [XmlElement(RuleConstants.AlleluiaNode)]
-        public Prokeimenon Alleluia { get; set; }
+        public List<Prokeimenon> Alleluias { get; set; }
 
         /// <summary>
         /// Евангельские чтения
@@ -64,7 +64,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// Причастен
         /// </summary>
         [XmlElement(RuleConstants.KinonikNode)]
-        public ItemText Kinonik { get; set; }
+        public List<Kinonik> Kinoniki { get; set; }
 
         #endregion
 
@@ -86,14 +86,27 @@ namespace TypiconOnline.Domain.Rules.Days
                 }
             }
 
-            if (Prokeimenon?.IsValid == false)
+            if (Prokeimeni != null)
             {
-                AppendAllBrokenConstraints(Prokeimenon, RuleConstants.ProkeimenonNode);
+                foreach (var prokeimenon in Prokeimeni)
+                {
+                    if (!prokeimenon.IsValid)
+                    {
+                        AppendAllBrokenConstraints(prokeimenon, RuleConstants.ProkeimenonNode);
+                    }
+                }
             }
 
-            if (Alleluia?.IsValid == false)
+
+            if (Alleluias != null)
             {
-                AppendAllBrokenConstraints(Alleluia, RuleConstants.AlleluiaNode);
+                foreach (var alleluia in Alleluias)
+                {
+                    if (!alleluia.IsValid)
+                    {
+                        AppendAllBrokenConstraints(alleluia, RuleConstants.AlleluiaNode);
+                    }
+                }
             }
 
             if (Apostles != null)
@@ -118,9 +131,15 @@ namespace TypiconOnline.Domain.Rules.Days
                 }
             }
 
-            if (Kinonik?.IsValid == false)
+            if (Kinoniki != null)
             {
-                AppendAllBrokenConstraints(Kinonik, RuleConstants.KinonikNode);
+                foreach (var kinonik in Kinoniki)
+                {
+                    if (!kinonik.IsValid)
+                    {
+                        AppendAllBrokenConstraints(kinonik, RuleConstants.KinonikNode);
+                    }
+                }
             }
         }
     }

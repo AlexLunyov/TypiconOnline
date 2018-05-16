@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TypiconMigrationTool.Core.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -125,6 +125,20 @@ namespace TypiconMigrationTool.Core.Migrations
                         principalTable: "TypiconEntity",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WeekDayApp",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DayOfWeek = table.Column<int>(nullable: false),
+                    Definition = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WeekDayApp", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -664,6 +678,9 @@ namespace TypiconMigrationTool.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "TheotokionApp");
+
+            migrationBuilder.DropTable(
+                name: "WeekDayApp");
 
             migrationBuilder.DropTable(
                 name: "DayWorship");

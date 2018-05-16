@@ -50,6 +50,8 @@ namespace TypiconMigrationTool
             MigrateOktoikh();
             Console.WriteLine("MigrateKatavasia()");
             MigrateKatavasia();
+            Console.WriteLine("MigrateWeekDayApp()");
+            MigrateWeekDayApp();
 
             Commit();
         }               
@@ -158,7 +160,7 @@ namespace TypiconMigrationTool
 
             IMigrationManager manager = new TheotokionAppMigrationManager(factory, reader, service);
 
-            manager.Migrate();
+            manager.Import();
         }
 
         private void MigrateOktoikh()
@@ -175,7 +177,7 @@ namespace TypiconMigrationTool
 
             IMigrationManager manager = new OktoikhDayMigrationManager(factory, reader, service);
 
-            manager.Migrate();
+            manager.Import();
         }
 
         private void MigrateKatavasia()
@@ -190,7 +192,22 @@ namespace TypiconMigrationTool
 
             IMigrationManager manager = new KatavasiaMigrationManager(factory, reader, service);
 
-            manager.Migrate();
+            manager.Import();
+        }
+
+        private void MigrateWeekDayApp()
+        {
+            string folder = Path.Combine(Properties.Settings.Default.FolderPath, @"Books\WeekDayApp");
+
+            IFileReader reader = new FileReader(folder);
+
+            var service = new WeekDayAppService(_unitOfWork);
+
+            var factory = new WeekDayAppFactory();
+
+            IMigrationManager manager = new WeekDayAppMigrationManager(factory, reader, service);
+
+            manager.Import();
         }
 
         private void MigratePsalms()

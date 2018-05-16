@@ -8,6 +8,7 @@ namespace TypiconOnline.AppServices.Interfaces
 {
     public interface IMigrationManager
     {
-        void Migrate();
+        void Import();
+        void Export();
     }
 }

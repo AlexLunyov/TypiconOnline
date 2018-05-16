@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new TheotokionRule(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.TheotokionApp);
+            return new TheotokionRule(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.TheotokionApp, SerializerRoot.BookStorage.WeekDayApp);
         }
 
         protected override void FillObject(FillObjectRequest req)

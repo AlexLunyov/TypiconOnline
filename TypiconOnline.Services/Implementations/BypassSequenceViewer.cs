@@ -15,6 +15,7 @@ using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Books.TheotokionApp;
+using TypiconOnline.Domain.Books.WeekDayApp;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -97,7 +98,8 @@ namespace TypiconOnline.AppServices.Implementations
                                     oktoikhContext,
                                     new TheotokionAppContext(_unitOfWork),
                                     easters,
-                                    new KatavasiaContext(_unitOfWork));
+                                    new KatavasiaContext(_unitOfWork),
+                                    new WeekDayAppContext(_unitOfWork));
 
             IRuleSerializerRoot serializerRoot = new RuleSerializerRoot(bookStorage);
 

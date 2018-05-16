@@ -14,6 +14,7 @@ using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Books.TheotokionApp;
+using TypiconOnline.Domain.Books.WeekDayApp;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Repository.EFCore;
 using TypiconOnline.Repository.EFCore.DataBase;
@@ -38,7 +39,8 @@ namespace TypiconOnline.Tests.Common
                                     new OktoikhContext(unitOfWork, easters),
                                     new TheotokionAppContext(unitOfWork),
                                     easters,
-                                    new KatavasiaContext(unitOfWork));
+                                    new KatavasiaContext(unitOfWork),
+                                    new WeekDayAppContext(unitOfWork));
         }
     }
 }

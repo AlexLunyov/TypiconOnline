@@ -13,8 +13,8 @@ using TypiconOnline.Domain.Rules;
 namespace TypiconMigrationTool.Core.Migrations
 {
     [DbContext(typeof(MSSql))]
-    [Migration("20180509164806_initial")]
-    partial class initial
+    [Migration("20180516171329_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -92,6 +92,20 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TheotokionApp");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Books.WeekDayApp.WeekDayApp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DayOfWeek");
+
+                    b.Property<string>("Definition");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WeekDayApp");
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.DayRuleWorship", b =>

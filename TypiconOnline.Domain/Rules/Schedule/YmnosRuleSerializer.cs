@@ -18,7 +18,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.YmnosRuleDoxastichonNode };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req) => new YmnosRule(req.Descriptor.GetElementName());
+        protected override RuleElement CreateObject(CreateObjectRequest req) 
+            => new YmnosRule(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.WeekDayApp);
 
         protected override void FillObject(FillObjectRequest req)
         {

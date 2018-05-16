@@ -8,15 +8,15 @@ using TypiconOnline.AppServices.Messaging.Books;
 
 namespace TypiconOnline.AppServices.Migration
 {
-    public class KatavasiaMigrationManager : IMigrationManager
+    public class WeekDayAppMigrationManager : IMigrationManager
     {
-        public IKatavasiaFactory Factory { get; private set; }
+        public IWeekDayAppFactory Factory { get; private set; }
         public IFileReader FileReader { get; private set; }
-        public IKatavasiaService Service { get; private set; }
+        public IWeekDayAppService Service { get; private set; }
 
-        public KatavasiaMigrationManager(IKatavasiaFactory factory,
+        public WeekDayAppMigrationManager(IWeekDayAppFactory factory,
                                                     IFileReader fileReader,
-                                                    IKatavasiaService service)
+                                                    IWeekDayAppService service)
         {
             Factory = factory ?? throw new ArgumentNullException("factory");
             FileReader = fileReader ?? throw new ArgumentNullException("fileReader");
@@ -25,11 +25,11 @@ namespace TypiconOnline.AppServices.Migration
 
         public void Import()
         {
-            AddKatavasiaRequest request = new AddKatavasiaRequest();
+            var request = new AddWeekDayAppRequest();
 
             foreach ((string name, string content) in FileReader.ReadAllFromDirectory())
             {
-                request.Katavasia = Factory.Create(name, content);
+                request.WeekDayApp = Factory.Create(name, content);
 
                 Service.Insert(request);
             }

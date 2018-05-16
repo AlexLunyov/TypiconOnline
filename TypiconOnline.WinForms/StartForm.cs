@@ -32,6 +32,7 @@ using TypiconOnline.AppServices.Services;
 using TypiconOnline.WinServices.Interfaces;
 using TypiconOnline.WinServices.Messaging;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
+using TypiconOnline.Domain.Books.WeekDayApp;
 
 namespace TypiconOnline.WinForms
 {
@@ -77,7 +78,8 @@ namespace TypiconOnline.WinForms
                 container.With(_unitOfWork).GetInstance<IOktoikhContext>(),
                 container.With(_unitOfWork).GetInstance<ITheotokionAppContext>(),
                 container.With(_unitOfWork).GetInstance<IEasterContext>(),
-                container.With(_unitOfWork).GetInstance<IKatavasiaContext>());
+                container.With(_unitOfWork).GetInstance<IKatavasiaContext>(),
+                container.With(_unitOfWork).GetInstance<IWeekDayAppContext>());
 
             //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 

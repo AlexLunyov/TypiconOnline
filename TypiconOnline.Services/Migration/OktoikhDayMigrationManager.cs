@@ -23,7 +23,7 @@ namespace TypiconOnline.AppServices.Migration
             Service = service ?? throw new ArgumentNullException("service");
         }
 
-        public void Migrate()
+        public void Import()
         {
             for (int ihos = 1; ihos <= 8; ihos++)
             {
@@ -47,6 +47,11 @@ namespace TypiconOnline.AppServices.Migration
             };
 
             Service.Add(request);
+        }
+
+        public void Export()
+        {
+            throw new NotImplementedException();
         }
     }
 }

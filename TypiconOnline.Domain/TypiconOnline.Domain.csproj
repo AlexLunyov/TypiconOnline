@@ -53,6 +53,11 @@
     <Compile Include="Books\Evangelion\EvangelionContext.cs" />
     <Compile Include="Books\Evangelion\IEvangelionContext.cs" />
     <Compile Include="Books\GetBookElementResponseBase.cs" />
+    <Compile Include="Books\WeekDayApp\GetWeekDayRequest.cs" />
+    <Compile Include="Books\WeekDayApp\GetWeekDayResponse.cs" />
+    <Compile Include="Books\WeekDayApp\IWeekDayAppContext.cs" />
+    <Compile Include="Books\WeekDayApp\WeekDayApp.cs" />
+    <Compile Include="Books\WeekDayApp\WeekDayAppContext.cs" />
     <Compile Include="DayStructureBase.cs" />
     <Compile Include="Interfaces\IAsAdditionElement.cs" />
     <Compile Include="Interfaces\IBookElement.cs" />
@@ -81,6 +86,7 @@
     <Compile Include="ItemTypes\TextStyle.cs" />
     <Compile Include="Rules\Days\BookReading.cs" />
     <Compile Include="Rules\Days\BookStihos.cs" />
+    <Compile Include="Rules\Days\Kinonik.cs" />
     <Compile Include="Rules\Executables\RootContainer.cs" />
     <Compile Include="Rules\Executables\RootContainerSerializer.cs" />
     <Compile Include="Rules\Extensions\XmlNodeExtensions.cs" />

@@ -21,6 +21,7 @@ using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Books.TheotokionApp;
+using TypiconOnline.Domain.Books.WeekDayApp;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
@@ -61,7 +62,8 @@ namespace TypiconOnline.WinForms
                 container.With(unitOfWork).GetInstance<IOktoikhContext>(),
                 container.With(unitOfWork).GetInstance<ITheotokionAppContext>(),
                 container.With(unitOfWork).GetInstance<IEasterContext>(),
-                container.With(unitOfWork).GetInstance<IKatavasiaContext>());
+                container.With(unitOfWork).GetInstance<IKatavasiaContext>(),
+                container.With(unitOfWork).GetInstance<IWeekDayAppContext>());
 
             IRuleSerializerRoot serializerRoot = container.With(bookStorage).GetInstance<IRuleSerializerRoot>();
             var modifiedRuleService = container.With(unitOfWork).GetInstance<IModifiedRuleService>();

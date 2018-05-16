@@ -28,9 +28,11 @@ namespace TypiconOnline.Domain.Rules.Days
         [XmlAttribute(RuleConstants.YmnosIhosAttrName)]
         public int Ihos { get; set; }
 
-        [XmlAttribute(RuleConstants.ProkeimenonKindAttr)]//(AttributeName = RuleConstants.ProkeimenonKindAttr, Type = typeof(ProkiemenonKind))]
-        [DefaultValue(ProkiemenonKind.Prokiemenon)]
-        public ProkiemenonKind Kind { get; set; }
+        /// <summary>
+        /// Разновидность песнопения (троичен, богородиен, мученичен...)
+        /// </summary>
+        [XmlAttribute(RuleConstants.ProkeimenonKindAttr)]
+        public YmnosKind Kind { get; set; } = YmnosKind.Ymnos;
 
         private List<ItemText> _stihoi = new List<ItemText>();
         /// <summary>

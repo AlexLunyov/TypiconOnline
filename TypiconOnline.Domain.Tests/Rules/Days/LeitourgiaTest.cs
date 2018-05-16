@@ -26,11 +26,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
 
             Assert.AreEqual(element.Makarismi.Links.Count, 2);
             Assert.AreEqual(element.Makarismi.Ymnis.Ymnis.Count, 6);
-            Assert.AreEqual(element.Prokeimenon.Ihos, 7);
+            Assert.AreEqual(element.Prokeimeni[0].Ihos, 7);
             Assert.AreEqual(element.Apostles[0].Number, 213);
-            Assert.AreEqual(element.Alleluia.Stihoi.Count, 2);
+            Assert.AreEqual(element.Alleluias[0].Stihoi.Count, 2);
             Assert.AreEqual(element.Evangelion[0].BookName, EvangelionBook.Мф);
-            Assert.NotNull(element.Kinonik);
+            Assert.AreEqual(2, element.Kinoniki.Count);
         }
     }
 }

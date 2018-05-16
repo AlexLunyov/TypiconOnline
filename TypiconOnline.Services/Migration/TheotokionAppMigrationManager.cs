@@ -29,7 +29,7 @@ namespace TypiconOnline.AppServices.Migration
             Service = service ?? throw new ArgumentNullException("service");
         }
 
-        public void Migrate()
+        public void Import()
         {
             MigrateDayTheotokions(PlaceYmnosSource.app1_kekragaria, DayOfWeek.Sunday);
             MigrateDayTheotokions(PlaceYmnosSource.app1_aposticha, DayOfWeek.Sunday);
@@ -64,6 +64,11 @@ namespace TypiconOnline.AppServices.Migration
 
                 Service.Add(request);
             }
+        }
+
+        public void Export()
+        {
+            throw new NotImplementedException();
         }
     }
 }

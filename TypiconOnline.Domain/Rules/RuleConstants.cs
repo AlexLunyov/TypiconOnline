@@ -366,7 +366,7 @@ namespace TypiconOnline.Domain.Rules
     /// <summary>
     /// Перечисление источников (богослужебных книг) для текстов богослужения
     /// </summary>
-    public enum YmnosSource { Oktoikh = 0, Item1 = 1, Item2 = 2, Item3 = 3, Irmologion = 4 }
+    public enum YmnosSource { Oktoikh = 0, Item1 = 1, Item2 = 2, Item3 = 3, Irmologion = 4, WeekDay = 5 }
 
     /// <summary>
     /// Перечисление источников (богослужебных книг) для канонов

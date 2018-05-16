@@ -39,6 +39,21 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         }
 
         [Test]
+        public void YmnosRule_InvalidSource_WeekDay()
+        {
+            string xmlString = @"<ymnosrule source=""weekday"" place=""kekragaria"" count=""3"" startfrom=""2""/>";
+
+            XmlDocument xmlDoc = new XmlDocument();
+
+            xmlDoc.LoadXml(xmlString);
+
+            var element = TestRuleSerializer.Deserialize<YmnosRule>(xmlString);
+
+            Assert.IsFalse(element.IsValid);
+            Assert.AreEqual(element.GetBrokenConstraints().Count, 1);
+        }
+
+        [Test]
         public void YmnosRule_NoSource()
         {
             string xmlString = @"<ymnosrule place=""kekragaria"" count=""3"" startfrom=""2""/>";

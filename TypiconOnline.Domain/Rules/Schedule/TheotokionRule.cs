@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.TheotokionApp;
+using TypiconOnline.Domain.Books.WeekDayApp;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -19,7 +20,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         ITheotokionAppContext theotokionApp;
 
-        public TheotokionRule(string name, ITheotokionAppContext context) : base(name)
+        public TheotokionRule(string name, ITheotokionAppContext context, IWeekDayAppContext weekDayAppContext) : base(name, weekDayAppContext)
         {
             theotokionApp = context ?? throw new ArgumentNullException("ITheotokionAppContext");
         }
@@ -69,7 +70,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 int calcIhos = (ReferenceYmnos.Calculate(settings) as YmnosStructure).Ihos;
 
                 GetTheotokionResponse response = theotokionApp.Get(
-                    new GetTheotokionRequest() { Place = Place.Value, Ihos = calcIhos, DayOfWeek = settings.Date.DayOfWeek });
+                    new GetTheotokionRequest() { Place = Place, Ihos = calcIhos, DayOfWeek = settings.Date.DayOfWeek });
 
                 if (response.Exception == null && response.BookElement != null)
                 {

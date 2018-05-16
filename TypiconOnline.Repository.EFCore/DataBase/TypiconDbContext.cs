@@ -4,6 +4,7 @@ using TypiconOnline.Domain.Books.Katavasia;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Books.TheotokionApp;
+using TypiconOnline.Domain.Books.WeekDayApp;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Psalter;
@@ -65,6 +66,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase
             modelBuilder.Entity<OktoikhDay>();
             modelBuilder.Entity<TheotokionApp>();
             modelBuilder.Entity<Katavasia>();
+            modelBuilder.Entity<WeekDayApp>();
 
             modelBuilder.ApplyConfiguration(new KathismaConfiguration()); 
             modelBuilder.ApplyConfiguration(new SlavaElementConfiguration());
