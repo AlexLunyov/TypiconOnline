@@ -15,7 +15,7 @@ namespace TypiconOnline.AppServices.Migration
     {
         public TheotokionAppFileReader(IFileReader fileReader) : base(fileReader) { }
 
-        public string Read(PlaceYmnosSource place, int ihos, DayOfWeek dayOfWeek)
+        public string Read(TheotokionAppPlace place, int ihos, DayOfWeek dayOfWeek)
         {
             string result = _fileReader.Read(string.Format("{0}.{1}.{2}", place, ihos, dayOfWeek));
 
@@ -28,7 +28,7 @@ namespace TypiconOnline.AppServices.Migration
             return result;
         }
 
-        private string CreateFakeXml(PlaceYmnosSource place, int ihos, DayOfWeek dayOfWeek)
+        private string CreateFakeXml(TheotokionAppPlace place, int ihos, DayOfWeek dayOfWeek)
         {
             string text = string.Format("[{0}] [глас {1}] [{2}] Богородичен из Приложения Ирмология", place, ihos, dayOfWeek);
 

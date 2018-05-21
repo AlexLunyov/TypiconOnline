@@ -1,7 +1,153 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<kanonasrule>
-  <!-- ПРАВИЛА ДЛЯ КАНОНОВ-->
+<kanonasrule isorthros="true">
+  <k_after number="3">
+    <commonrule name="Ектения_малая3"/>
+    <sedalen>
+      <!-- ПРАВИЛА ДЛЯ СЕДАЛЬНОВ ПО 3-Й ПЕСНЕ-->
+      <if>
+        <!-- Два святых-->
+        <expression>
+          <istwosaints/>
+        </expression>
+        <then>
+          <if>
+            <!-- если предпразднество или попразднество-->
+            <expression>
+              <iscelebrating/>
+            </expression>
+            <then>
+              <kontakionrule kind="ymnos" source="item2" place="orthros1" showikos="true"/>
+              <kontakionrule kind="ymnos" source="item3" place="orthros1" showikos="true"/>
+              <ymnosrule kind="ymnos" source="item2" place="sedalen_kanonas" count="0"/>
+              <ymnosrule kind="ymnos" source="item3" place="sedalen_kanonas" count="0"/>
+              <ymnosrule kind="theotokion" source="item1" place="sedalen_kanonas_theotokion"/>
+            </then>
+            <else>
+              <if>
+                <!-- Если есть кондаки у Минеи1 и Минеи2 -->
+                <expression>
+                  <and>
+                    <exists>
+                      <kontakionrule kind="ymnos" source="item1" place="orthros1"/>
+                    </exists>
+                    <exists>
+                      <kontakionrule kind="ymnos" source="item2" place="orthros1"/>
+                    </exists>
+                  </and>
+                </expression>
+                <then>
+                  <kontakionrule kind="ymnos" source="item1" place="orthros1" showikos="true"/>
+                  <ymnosrule kind="ymnos" source="item1" place="sedalen_kanonas" count="0"/>
+                  <ymnosrule kind="ymnos" source="item2" place="sedalen_kanonas" count="0"/>
+                  <if>
+                    <expression>
+                      <!-- среда или пятница-->
+                      <or>
+                        <equals>
+                          <getdayofweek>
+                            <date/>
+                          </getdayofweek>
+                          <getdayofweek name="среда"/>
+                        </equals>
+                        <equals>
+                          <getdayofweek>
+                            <date/>
+                          </getdayofweek>
+                          <getdayofweek name="пятница"/>
+                        </equals>
+                      </or>
+                    </expression>
+                    <then>
+                      <ymnosrule kind="theotokion" source="item2" place="sedalen_kanonas_stavrostheotokion"/>
+                    </then>
+                    <else>
+                      <ymnosrule kind="theotokion" source="item2" place="sedalen_kanonas_theotokion"/>
+                    </else>
+                  </if>
+                </then>
+              </if>
+            </else>
+          </if>
+        </then>
+      </if>
+    </sedalen>
+  </k_after>
+  <k_after number="6">
+    <commonrule name="Ектения_малая6"/>
+    <!-- ПРАВИЛА ДЛЯ КОНДАКОВ ПО 6-Й ПЕСНЕ-->
+    <if>
+      <!-- если предпразднество или попразднество-->
+      <expression>
+        <iscelebrating/>
+      </expression>
+      <then>
+        <kontakionrule source="item1" place="orthros1" showikos="true"/>
+      </then>
+      <else>
+        <if>
+          <!-- если два святых-->
+          <expression>
+            <istwosaints/>
+          </expression>
+          <then>
+            <if>
+              <!-- Если есть кондаки у Минеи1 и Минеи2 -->
+              <expression>
+                <and>
+                  <exists>
+                    <kontakionrule source="item1" place="orthros1" showikos="true"/>
+                  </exists>
+                  <exists>
+                    <kontakionrule source="item2" place="orthros1" showikos="true"/>
+                  </exists>
+                </and>
+              </expression>
+              <then>
+                <kontakionrule source="item2" place="orthros1" showikos="true"/>
+              </then>
+              <else>
+                <!-- Кондак из Минеи у кого есть -->
+                <if>
+                  <expression>
+                    <exists>
+                      <kontakionrule source="item1" place="orthros1"/>
+                    </exists>
+                  </expression>
+                  <then>
+                    <kontakionrule source="item1" place="orthros1" showikos="true"/>
+                  </then>
+                  <else>
+                    <if>
+                      <expression>
+                        <exists>
+                          <kontakionrule source="item2" place="orthros1"/>
+                        </exists>
+                      </expression>
+                      <then>
+                        <kontakionrule source="item2" place="orthros1" showikos="true"/>
+                      </then>
+                    </if>
+                  </else>
+                </if>
+              </else>
+            </if>
+          </then>
+          <else>
+            <!-- При одном святом-->
+            <kontakionrule source="item1" place="orthros1" showikos="true"/>
+          </else>
+        </if>
+      </else>
+    </if>
+  </k_after>
+  <k_after number="8">
+    <commonrule name="Честнейшую"/>
+  </k_after>
+  <k_after number="9">
+    <commonrule name="Ектения_малая9"/>
+  </k_after>
   <k_odi>
+    <!-- ПРАВИЛА ДЛЯ КАНОНОВ-->
     <if>
       <!-- если два святых-->
       <expression>
@@ -47,86 +193,28 @@
                 <k_kanonas source="oktoikh" kanonas="orthros1" count="6" irmoscount="1"/>
                 <k_kanonas source="item1" kanonas="orthros1" count="4"/>
                 <k_kanonas source="item2" kanonas="orthros1" count="4"/>
-                <k_katavasia name="отверзу_уста_моя"/>
               </else>
             </if>
           </else>
         </if>
       </then>
       <else>
-        <k_kanonas source="oktoikh" kanonas="orthros1" count="4" irmoscount="1" martyrion="false"/>
-        <k_kanonas source="oktoikh" kanonas="orthros2" count="4"/>
-        <k_kanonas source="item1" kanonas="orthros1" count="3"/>
-      </else>
-    </if>
-  </k_odi>
-  <k_after number="3">
-    <!-- ПРАВИЛА ДЛЯ СЕДАЛЬНОВ ПО 3-Й ПЕСНЕ-->
-    <if>
-      <!-- Два святых-->
-      <expression>
-        <istwosaints/>
-      </expression>
-      <then>
         <if>
-          <!-- если предпразднество или попразднество-->
           <expression>
+            <!-- если предпразднество или попразднество-->
             <iscelebrating/>
           </expression>
           <then>
-            <k_sedalen source="item2" kanonas="orthros1" place="kontakion"/>
-            <k_sedalen source="item3" kanonas="orthros1" place="kontakion"/>
-            <k_sedalen source="item2" kanonas="orthros1" place="sedalen"/>
-            <k_sedalen source="item3" kanonas="orthros1" place="sedalen"/>
-            <k_sedalentheotokion source="item1" kanonas="orthros1" place="sedalen"/>
+            <k_kanonas source="item1" kanonas="orthros1" count="8" irmoscount="2"/>
+            <k_kanonas source="item2" kanonas="orthros1" count="4"/>
           </then>
           <else>
-            <if>
-              <!-- Если есть кондаки у Минеи1 и Минеи2 -->
-              <expression>
-                <and>
-                  <exists>
-                    <kontakion source="item1" kanonas="orthros1"/>
-                  </exists>
-                  <exists>
-                    <kontakion source="item2" kanonas="orthros1"/>
-                  </exists>
-                </and>
-              </expression>
-              <then>
-                <k_sedalen source="item1" kanonas="orthros1" place="kontakion"/>
-                <k_sedalen source="item1" kanonas="orthros1" place="sedalen"/>
-                <k_sedalen source="item2" kanonas="orthros1" place="sedalen"/>
-                <if>
-                  <expression>
-                    <!-- среда или пятница-->
-                    <or>
-                      <equals>
-                        <getdayofweek>
-                          <date/>
-                        </getdayofweek>
-                        <getdayofweek name="среда"/>
-                      </equals>
-                      <equals>
-                        <getdayofweek>
-                          <date/>
-                        </getdayofweek>
-                        <getdayofweek name="пятница"/>
-                      </equals>
-                    </or>
-                  </expression>
-                  <then>
-                    <k_sedalentheotokion source="item2" place="sedalen_stavrostheotokion" kanonas="orthros1"/>
-                  </then>
-                  <else>
-                    <k_sedalentheotokion source="item2" place="sedalen_theotokion" kanonas="orthros1"/>
-                  </else>
-                </if>
-              </then>
-            </if>
+            <k_kanonas source="oktoikh" kanonas="orthros1" count="6" irmoscount="1"/>
+            <k_kanonas source="oktoikh" kanonas="orthros2" count="4"/>
+            <k_kanonas source="item1" kanonas="orthros1" count="4"/>
           </else>
         </if>
-      </then>
+      </else>
     </if>
-  </k_after>
+  </k_odi>
 </kanonasrule>

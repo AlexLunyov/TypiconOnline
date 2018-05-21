@@ -31,19 +31,19 @@ namespace TypiconOnline.AppServices.Migration
 
         public void Import()
         {
-            MigrateDayTheotokions(PlaceYmnosSource.app1_kekragaria, DayOfWeek.Sunday);
-            MigrateDayTheotokions(PlaceYmnosSource.app1_aposticha, DayOfWeek.Sunday);
+            MigrateDayTheotokions(TheotokionAppPlace.app1_kekragaria, DayOfWeek.Sunday);
+            MigrateDayTheotokions(TheotokionAppPlace.app1_aposticha, DayOfWeek.Sunday);
 
-            MigrateWeekTheotokions(PlaceYmnosSource.app2_esperinos);
-            MigrateWeekTheotokions(PlaceYmnosSource.app2_orthros);
+            MigrateWeekTheotokions(TheotokionAppPlace.app2_esperinos);
+            MigrateWeekTheotokions(TheotokionAppPlace.app2_orthros);
 
-            MigrateWeekTheotokions(PlaceYmnosSource.app3);
+            MigrateWeekTheotokions(TheotokionAppPlace.app3);
 
-            MigrateWeekTheotokions(PlaceYmnosSource.app4_esperinos);
-            MigrateWeekTheotokions(PlaceYmnosSource.app4_orthros);
+            MigrateWeekTheotokions(TheotokionAppPlace.app4_esperinos);
+            MigrateWeekTheotokions(TheotokionAppPlace.app4_orthros);
         }
 
-        private void MigrateWeekTheotokions(PlaceYmnosSource source)
+        private void MigrateWeekTheotokions(TheotokionAppPlace source)
         {
             foreach (DayOfWeek day in Enum.GetValues(typeof(DayOfWeek)))
             {
@@ -54,7 +54,7 @@ namespace TypiconOnline.AppServices.Migration
         /// <summary>
         /// Воскресные богородичны первого приложения
         /// </summary>
-        private void MigrateDayTheotokions(PlaceYmnosSource source, DayOfWeek day)
+        private void MigrateDayTheotokions(TheotokionAppPlace source, DayOfWeek day)
         {
             AddTheotokionRequest request = new AddTheotokionRequest();
 

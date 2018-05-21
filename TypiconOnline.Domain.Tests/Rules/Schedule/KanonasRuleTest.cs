@@ -20,11 +20,6 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
     [TestFixture]
     public class KanonasRuleTest
     {
-        [Test]
-        public void KanonasRule_Deserialize()
-        {
-
-        }
 
         [Test]
         public void KanonasRule_FromDB()

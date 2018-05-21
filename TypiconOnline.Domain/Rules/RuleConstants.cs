@@ -168,8 +168,8 @@ namespace TypiconOnline.Domain.Rules
          * Константы для описания атрибутов элемента KanonasItem
         */
         public const string KanonasItemNode = "k_kanonas";
-        //public const string KanonasSourceAttrName = "source"; 
-        //public const string KanonasPlaceAttrName = "place";
+        public const string KanonasSourceAttrName = "source";
+        public const string KanonasKindAttrName = "kanonas";
         public const string KanonasCountAttrName = "count"; 
         public const string KanonasMartyrionAttrName = "martyrion";
         public const string KanonasIrmosCountAttrName = "irmoscount";
@@ -177,10 +177,8 @@ namespace TypiconOnline.Domain.Rules
         /*
          * Константы для описания атрибутов элемента KKontakionRule
         */
-        public const string KKontakionNode = "kontakion";//"k_kontakion";
-        public const string KKontakionSourceAttrName = "source";
-        public const string KKontakionKanonasAttrName = "kanonas";
-
+        public const string KontakionRuleNode = "kontakionrule";
+        public const string KontakionPlaceAttrName = "place";
         public const string KontakionShowIkosAttrName = "showikos";
 
         /*
@@ -249,12 +247,14 @@ namespace TypiconOnline.Domain.Rules
         public const string OdiTroparionKindAttr = "kind";
 
         public const string YmnosKindAttrValue = "ymnos";
+        public const string DoxastichonKindAttrValue = "doxastichon";
         public const string TheotokionKindAttrValue = "theotokion";
         public const string TriadikoKindAttrValue = "triadiko";
         public const string MartyrionKindAttrValue = "martyrion";
 
-        public const string KanonasSedalenNode = "sedalen"; 
-        public const string KanonasKontakionNode = "kontakion";
+        public const string KanonasSedalenNode = "sedalen_kanonas";
+        public const string KontakiaNode = "kontakia";
+        public const string KontakionNode = "kontakion";
         public const string IkosNode = "ikos";
         public const string KanonasExapostilarionNode = "exapostilarion";
         public const string KanonasExapostilarionYmnosNode = "ymnos";
@@ -312,12 +312,17 @@ namespace TypiconOnline.Domain.Rules
          * Константы для описания атрибутов элемента ymnosRule
         */
         public const string YmnosRuleNode = "ymnosrule";
-        public const string YmnosRuleDoxastichonNode = "doxastichonrule";
-        public const string YmnosRuleTheotokionNode = "theotokionrule";
+        public const string YmnosRuleKindAttrName = "kind";
         public const string YmnosRuleSourceAttrName = "source";
         public const string YmnosRulePlaceAttrName = "place";
         public const string YmnosRuleCountAttrName = "count";
         public const string YmnosRuleStartFromAttrName = "startfrom";
+
+        /*
+         * Константы для описания атрибутов элемента TheotokionAppRule
+        */
+        public const string TheotokionAppRuleNode = "theotokionapprule";
+        public const string TheotokionAppRulePlaceAttrName = "place";
 
         /*
          * Константы для описания атрибутов элемента ymnosCustomRule
@@ -366,7 +371,7 @@ namespace TypiconOnline.Domain.Rules
     /// <summary>
     /// Перечисление источников (богослужебных книг) для текстов богослужения
     /// </summary>
-    public enum YmnosSource { Oktoikh = 0, Item1 = 1, Item2 = 2, Item3 = 3, Irmologion = 4, WeekDay = 5 }
+    public enum YmnosSource { Oktoikh = 0, Item1 = 1, Item2 = 2, Item3 = 3, WeekDay = 4 }
 
     /// <summary>
     /// Перечисление источников (богослужебных книг) для канонов
@@ -379,36 +384,30 @@ namespace TypiconOnline.Domain.Rules
     public enum PlaceYmnosSource
     {
         //kekragaria
-        kekragaria = 0,
-        kekragaria_doxastichon = 1,
-        kekragaria_theotokion = 2,
-        kekragaria_stavrostheotokion = 22,
+        kekragaria,
+        kekragaria_doxastichon,
+        kekragaria_theotokion,
+        kekragaria_stavrostheotokion,
         //liti
-        liti = 3,
-        liti_doxastichon = 4,
-        liti_theotokion = 5,
+        liti,
+        liti_doxastichon,
+        liti_theotokion,
         //aposticha_esperinos
-        aposticha_esperinos = 6,
-        aposticha_esperinos_doxastichon = 7,
-        aposticha_esperinos_theotokion = 8,
+        aposticha_esperinos,
+        aposticha_esperinos_doxastichon,
+        aposticha_esperinos_theotokion,
         //ainoi
-        ainoi = 9,
-        ainoi_doxastichon = 10,
-        ainoi_theotokion = 11,
+        ainoi,
+        ainoi_doxastichon,
+        ainoi_theotokion,
         //aposticha_orthros
-        aposticha_orthros = 12,
-        aposticha_orthros_doxastichon = 13,
-        aposticha_orthros_theotokion = 14,
-        //Irmologion
-        app1_kekragaria = 15,
-        app1_aposticha = 16,
-        app2_esperinos = 17,
-        app2_orthros = 18,
-        app3 = 19,
-        app4_esperinos = 20,
-        app4_orthros = 21,
+        aposticha_orthros,
+        aposticha_orthros_doxastichon,
+        aposticha_orthros_theotokion,
         //troparion
-        troparion = 23,
+        troparion,
+        troparion_doxastichon,
+        troparion_theotokion,
         //Sedalen
         sedalen1,
         sedalen1_doxastichon,
@@ -418,7 +417,24 @@ namespace TypiconOnline.Domain.Rules
         sedalen2_theotokion,
         sedalen3,
         sedalen3_doxastichon,
-        sedalen3_theotokion
+        sedalen3_theotokion,
+        sedalen_kanonas,
+        sedalen_kanonas_theotokion,
+        sedalen_kanonas_stavrostheotokion,
+    }
+
+    /// <summary>
+    /// Перечисление мест в богослужебных книгах для богородичных приложений из Ирмология
+    /// </summary>
+    public enum TheotokionAppPlace
+    {
+        app1_kekragaria,
+        app1_aposticha,
+        app2_esperinos,
+        app2_orthros,
+        app3,
+        app4_esperinos,
+        app4_orthros
     }
 
     /// <summary>
@@ -478,9 +494,11 @@ namespace TypiconOnline.Domain.Rules
     /// </summary>
     public enum YmnosRuleKind {
         [XmlEnum(Name = RuleConstants.YmnosKindAttrValue)]
-        YmnosRule,
-        DoxastichonRule,
-        TheotokionRule
+        Ymnos,
+        [XmlEnum(Name = RuleConstants.DoxastichonKindAttrValue)]
+        Doxastichon,
+        [XmlEnum(Name = RuleConstants.TheotokionKindAttrValue)]
+        Theotokion
     }
     
     public enum YmnosStructureKind { Kekragaria, Aposticha, Liti, Ainoi }
@@ -510,6 +528,15 @@ namespace TypiconOnline.Domain.Rules
         sedalen_theotokion,
         sedalen_stavrostheotokion,
         kontakion
+    }
+
+    /// <summary>
+    /// Определение места кондака в тексте богослужения
+    /// </summary>
+    public enum KontakionPlace
+    {
+        orthros1,
+        orthros2
     }
 
     /// <summary>

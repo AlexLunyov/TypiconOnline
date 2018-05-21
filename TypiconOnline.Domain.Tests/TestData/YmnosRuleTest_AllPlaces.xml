@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rule>
+  <kekragaria>
+    <ymnosrule kind="ymnos" source="item1" place="[place]" count="1"/>
+    <ymnosrule kind="doxastichon" source="item1" place="[place]" count="1"/>
+    <ymnosrule kind="theotokion" source="item1" place="[place]" count="1"/>
+  </kekragaria>
+</rule>

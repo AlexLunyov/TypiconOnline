@@ -11,18 +11,15 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class YmnosCustomRule : YmnosRuleBase, ICustomInterpreted
+    public class YmnosCustomRule : RuleExecutable, IYmnosStructureRuleElement, ICustomInterpreted
     {
         public YmnosCustomRule(string name) : base(name) { }
 
         public YmnosGroup Element { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="settings"></param>
-        /// <returns>YmnosStructure</returns>
-        public override DayElementBase Calculate(RuleHandlerSettings settings)
+        public YmnosRuleKind Kind { get; set; }
+
+        public YmnosStructure GetStructure(RuleHandlerSettings settings)
         {
             if (!IsValid)
             {
@@ -33,13 +30,13 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             switch (Kind)
             {
-                case YmnosRuleKind.YmnosRule:
+                case YmnosRuleKind.Ymnos:
                     result.Groups.Add(Element);
                     break;
-                case YmnosRuleKind.DoxastichonRule:
+                case YmnosRuleKind.Doxastichon:
                     result.Doxastichon = Element;
                     break;
-                case YmnosRuleKind.TheotokionRule:
+                case YmnosRuleKind.Theotokion:
                     result.Theotokion.Add(Element);
                     break;
             }

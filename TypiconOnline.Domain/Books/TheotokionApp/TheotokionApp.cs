@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Books.TheotokionApp
     /// </summary>
     public class TheotokionApp : BookElementBase<Ymnos>, IAggregateRoot
     {
-        public virtual PlaceYmnosSource Place { get; set; }
+        public virtual TheotokionAppPlace Place { get; set; }
         public virtual int Ihos { get; set; }
         public virtual DayOfWeek DayOfWeek { get; set; }
 

@@ -58,7 +58,6 @@
     <Compile Include="Caching\CachingScheduleService.cs" />
     <Compile Include="Caching\CachingTypiconEntityService.cs" />
     <Compile Include="Implementations\CustomRuleSettingsFactory.cs" />
-    <Compile Include="Implementations\DayContainerService.cs" />
     <Compile Include="Implementations\FileReader.cs" />
     <Compile Include="Implementations\HtmlInnerScheduleWeekViewer.cs" />
     <Compile Include="Implementations\HtmlScheduleDayViewer.cs" />
@@ -91,7 +90,6 @@
     <Compile Include="Implementations\ScheduleService.cs" />
     <Compile Include="Implementations\TextScheduleDayViewer.cs" />
     <Compile Include="Implementations\TypiconEntityService.cs" />
-    <Compile Include="Interfaces\IDayContainerService.cs" />
     <Compile Include="Interfaces\IFileReader.cs" />
     <Compile Include="Interfaces\IKatavasiaFactory.cs" />
     <Compile Include="Interfaces\IKatavasiaService.cs" />

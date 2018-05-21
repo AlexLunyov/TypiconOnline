@@ -29,19 +29,19 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 {
                     case RuleConstants.YmnosCustomRuleGroupNode:
                         {
-                            element.Kind = YmnosRuleKind.YmnosRule;
+                            element.Kind = YmnosRuleKind.Ymnos;
                             element.Element = Deserialize(node.OuterXml, RuleConstants.YmnosCustomRuleGroupNode);
                         }
                         break;
                     case RuleConstants.YmnosCustomRuleDoxastichonNode:
                         {
-                            element.Kind = YmnosRuleKind.DoxastichonRule;
+                            element.Kind = YmnosRuleKind.Doxastichon;
                             element.Element = Deserialize(node.OuterXml, RuleConstants.YmnosCustomRuleDoxastichonNode);
                         }
                         break;
                     case RuleConstants.YmnosCustomRuleTheotokionNode:
                         {
-                            element.Kind = YmnosRuleKind.TheotokionRule;
+                            element.Kind = YmnosRuleKind.Theotokion;
                             element.Element = Deserialize(node.OuterXml, RuleConstants.YmnosCustomRuleTheotokionNode);
                         }
                         break;

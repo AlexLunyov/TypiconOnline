@@ -9,10 +9,10 @@
         </equals>
       </expression>
       <then>
-        <ymnosrule source="item1" place="kekragaria" count="3"/>
-        <theotokionrule source="irmologion" place="app2_esperinos">
-          <ymnosrule source="item1" place="kekragaria"/>
-        </theotokionrule>
+        <ymnosrule kind="ymnos" source="item1" place="kekragaria" count="3"/>
+        <theotokionapprule place="app3">
+          <ymnosrule kind="ymnos" source="item1" place="kekragaria"/>
+        </theotokionapprule>
       </then>
     </if>
   </kekragaria>

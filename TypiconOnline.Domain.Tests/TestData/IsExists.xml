@@ -14,7 +14,7 @@
             <date>--01-16</date>
           </equals>
           <exists>
-            <ymnosrule source="item3" place="kekragaria_doxastichon"/>
+            <ymnosrule kind="ymnos" source="item3" place="kekragaria_doxastichon"/>
           </exists>
         </and>
       </expression>
@@ -34,7 +34,7 @@
             <date>--02-09</date>
           </equals>
           <exists>
-            <ymnosrule source="item1" place="kekragaria_doxastichon"/>
+            <ymnosrule kind="ymnos" source="item1" place="kekragaria_doxastichon"/>
           </exists>
         </and>
       </expression>

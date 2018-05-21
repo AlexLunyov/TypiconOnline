@@ -9,32 +9,22 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class YmnosRuleSerializer : RuleXmlSerializerBase, IRuleSerializer<YmnosRule>
+    public class YmnosRuleSerializer : SourceHavingRuleBaseSerializer, IRuleSerializer<YmnosRule>
     {
         public YmnosRuleSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] {
-                RuleConstants.YmnosRuleNode,
-                RuleConstants.YmnosRuleDoxastichonNode };
+                RuleConstants.YmnosRuleNode };
         }
 
         protected override RuleElement CreateObject(CreateObjectRequest req) 
-            => new YmnosRule(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.WeekDayApp);
+            => new YmnosRule(req.Descriptor.GetElementName(), typiconSerializer, SerializerRoot.BookStorage.WeekDayApp);
 
         protected override void FillObject(FillObjectRequest req)
         {
-            if (Enum.TryParse(req.Descriptor.Element.Name, true, out YmnosRuleKind kind))
-            {
-                (req.Element as YmnosRule).Kind = kind;
-            }
+            base.FillObject(req);
 
-            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.YmnosRuleSourceAttrName];
-            if (Enum.TryParse(attr?.Value, true, out YmnosSource source))
-            {
-                (req.Element as YmnosRule).Source = source;
-            }
-
-            attr = req.Descriptor.Element.Attributes[RuleConstants.YmnosRulePlaceAttrName];
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.YmnosRulePlaceAttrName];
             if (Enum.TryParse(attr?.Value, true, out PlaceYmnosSource place))
             {
                 (req.Element as YmnosRule).Place = place;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.ViewModels;
@@ -12,10 +13,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Правило для составления канонов
     /// </summary>
-    public class KanonasRule : IncludingRulesElement, ICustomInterpreted, IViewModelElement, IAsAdditionElement
+    public class KanonasRule : ExecContainer, ICustomInterpreted, IViewModelElement, IAsAdditionElement
     {
-        public KanonasRule(string name, IRuleSerializerRoot serializerRoot,
-            IElementViewModelFactory<KanonasRule> viewModelFactory, IAsAdditionElement parent) : base(name, serializerRoot)
+        public KanonasRule(string name, IElementViewModelFactory<KanonasRule> viewModelFactory, IAsAdditionElement parent) : base(name)
         {
             ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException("IElementViewModelFactory in KanonasRuleBase");
 

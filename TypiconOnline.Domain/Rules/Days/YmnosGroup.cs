@@ -27,17 +27,7 @@ namespace TypiconOnline.Domain.Rules.Days
 
         public YmnosGroup(YmnosGroup source) 
         {
-            if (source.Prosomoion != null)
-            {
-                Prosomoion = new Prosomoion(source.Prosomoion);
-            }
-
-            if (source.Annotation != null)
-            {
-                Annotation = new ItemText(source.Annotation);
-            }
-
-            Ihos = source.Ihos;
+            CloneValues(source);
 
             source.Ymnis.ForEach(c => Ymnis.Add(new Ymnos(c)));
         }
@@ -123,6 +113,41 @@ namespace TypiconOnline.Domain.Rules.Days
                 && Prosomoion == ymnosGroup.Prosomoion);
                 //&& Annotation?.Equals(ymnosGroup.Annotation) == true 
                 //&& Prosomoion?.Equals(ymnosGroup.Prosomoion) == true);
+        }
+
+        private void CloneValues(YmnosGroup source)
+        {
+            if (source.Prosomoion != null)
+            {
+                Prosomoion = new Prosomoion(source.Prosomoion);
+            }
+
+            if (source.Annotation != null)
+            {
+                Annotation = new ItemText(source.Annotation);
+            }
+
+            Ihos = source.Ihos;
+        }
+
+        /// <summary>
+        /// Возвращает группу с параметрами родителя и с одним песнопением по указанному индексу
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public YmnosGroup GetGroupWithSingleYmnos(int index)
+        {
+            if (index < 0 || index >= Ymnis.Count)
+            {
+                throw new IndexOutOfRangeException("GetGroupWithSingleYmnos");
+            }
+
+            var result = new YmnosGroup();
+
+            result.CloneValues(this);
+            result.Ymnis.Add(new Ymnos(Ymnis[index]));
+
+            return result;
         }
     }
 }

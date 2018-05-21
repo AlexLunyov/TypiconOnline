@@ -17,13 +17,13 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void FillObject(FillObjectRequest req)
         {
-            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.KKontakionSourceAttrName];
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.KanonasSourceAttrName];
             if (Enum.TryParse(attr?.Value, true, out KanonasSource source))
             {
                 (req.Element as KanonasItemRuleBase).Source = source;
             }
 
-            attr = req.Descriptor.Element.Attributes[RuleConstants.KKontakionKanonasAttrName];
+            attr = req.Descriptor.Element.Attributes[RuleConstants.KanonasKindAttrName];
             if (Enum.TryParse(attr?.Value, true, out KanonasKind kanonas))
             {
                 (req.Element as KanonasItemRuleBase).Kanonas = kanonas;

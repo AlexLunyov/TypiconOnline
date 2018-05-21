@@ -56,21 +56,7 @@ namespace TypiconOnline.Domain.Rules.Days
         [XmlArray(RuleConstants.KanonasOdesNode)]
         [XmlArrayItem(ElementName = RuleConstants.KanonasOdiNode, Type = typeof(Odi))]
         public List<Odi> Odes { get; set; } = new List<Odi>();
-        /// <summary>
-        /// седален по 3-ой песне
-        /// </summary>
-        [XmlElement(RuleConstants.KanonasSedalenNode)]
-        public YmnosStructure Sedalen { get; set; }
-        /// <summary>
-        /// кондак по 6-ой песне
-        /// </summary>
-        [XmlElement(RuleConstants.KanonasKontakionNode)]
-        public Kontakion Kontakion { get; set; }
-        /// <summary>
-        /// Эксапостиларий по 9-й песне
-        /// </summary>
-        [XmlElement(RuleConstants.KanonasExapostilarionNode)]
-        public Exapostilarion Exapostilarion { get; set; }
+        
 
         
 
@@ -107,20 +93,7 @@ namespace TypiconOnline.Domain.Rules.Days
                 }
             }
 
-            if (Sedalen?.IsValid == false)
-            {
-                AppendAllBrokenConstraints(Sedalen, RuleConstants.KanonasSedalenNode);
-            }
-
-            if (Kontakion?.IsValid == false)
-            {
-                AppendAllBrokenConstraints(Kontakion, RuleConstants.KanonasKontakionNode);
-            }
-
-            if (Exapostilarion?.IsValid == false)
-            {
-                AppendAllBrokenConstraints(Exapostilarion, RuleConstants.KanonasExapostilarionNode);
-            }
+            
         }
     }
 }

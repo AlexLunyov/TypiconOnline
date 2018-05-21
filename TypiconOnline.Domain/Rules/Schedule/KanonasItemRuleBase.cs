@@ -63,10 +63,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             //}
         }
 
-        public virtual DayElementBase Calculate(RuleHandlerSettings settings)
-        {
-            return (IsValid) ? GetKanonas(settings)?.Kontakion : null;
-        }
+        public abstract DayElementBase Calculate(RuleHandlerSettings settings);
 
         protected Kanonas GetKanonas(RuleHandlerSettings settings)
         {

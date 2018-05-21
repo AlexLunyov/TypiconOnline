@@ -77,6 +77,22 @@ namespace TypiconOnline.Domain.Rules.Days
         [XmlArrayItem(RuleConstants.KanonasNode)]
         public List<Kanonas> Kanones { get; set; }
         /// <summary>
+        /// седален по 3-ой песне
+        /// </summary>
+        [XmlElement(RuleConstants.KanonasSedalenNode)]
+        public YmnosStructure SedalenKanonas { get; set; }
+        /// <summary>
+        /// кондак по 6-ой песне
+        /// </summary>
+        [XmlArray(RuleConstants.KontakiaNode)]
+        [XmlArrayItem(RuleConstants.KontakionNode)]
+        public List<Kontakion> Kontakia { get; set; }
+        /// <summary>
+        /// Эксапостиларий по 9-й песне
+        /// </summary>
+        [XmlElement(RuleConstants.KanonasExapostilarionNode)]
+        public Exapostilarion Exapostilarion { get; set; }
+        /// <summary>
         /// Стихиры на Хвалитех
         /// </summary>
         [XmlElement(RuleConstants.AinoiNode)]
@@ -168,6 +184,27 @@ namespace TypiconOnline.Domain.Rules.Days
                         AppendAllBrokenConstraints(kanonas, /*ElementName + "." + */RuleConstants.KanonasNode);
                     }
                 }
+            }
+
+            if (SedalenKanonas?.IsValid == false)
+            {
+                AppendAllBrokenConstraints(SedalenKanonas, RuleConstants.KanonasSedalenNode);
+            }
+
+            if (Kontakia != null)
+            {
+                foreach (var element in Kontakia)
+                {
+                    if (!element.IsValid)
+                    {
+                        AppendAllBrokenConstraints(element, /*ElementName + "." + */RuleConstants.KontakionNode);
+                    }
+                }
+            }
+    
+            if (Exapostilarion?.IsValid == false)
+            {
+                AppendAllBrokenConstraints(Exapostilarion, RuleConstants.KanonasExapostilarionNode);
             }
 
             if (Ainoi?.IsValid == false)

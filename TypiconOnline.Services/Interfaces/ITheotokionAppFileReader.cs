@@ -9,6 +9,6 @@ namespace TypiconOnline.AppServices.Interfaces
 {
     public interface ITheotokionAppFileReader 
     {
-        string Read(PlaceYmnosSource place, int ihos, DayOfWeek dayOfWeek);
+        string Read(TheotokionAppPlace place, int ihos, DayOfWeek dayOfWeek);
     }
 }

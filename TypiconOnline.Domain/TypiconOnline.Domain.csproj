@@ -81,15 +81,19 @@
     <Compile Include="Interfaces\IPsalterElement.cs" />
     <Compile Include="Books\Psalter\PsalterContext.cs" />
     <Compile Include="Interfaces\ITypiconSerializer.cs" />
+    <Compile Include="Interfaces\IYmnosStructureRuleElement.cs" />
     <Compile Include="ItemTypes\ItemTextHeader.cs" />
     <Compile Include="ItemTypes\ItemTextUnit.cs" />
     <Compile Include="ItemTypes\TextStyle.cs" />
     <Compile Include="Rules\Days\BookReading.cs" />
     <Compile Include="Rules\Days\BookStihos.cs" />
     <Compile Include="Rules\Days\Kinonik.cs" />
+    <Compile Include="Rules\Days\YmnosGroupCollection.cs" />
     <Compile Include="Rules\Executables\RootContainer.cs" />
     <Compile Include="Rules\Executables\RootContainerSerializer.cs" />
+    <Compile Include="Rules\Extensions\DayContainerExtensions.cs" />
     <Compile Include="Rules\Extensions\XmlNodeExtensions.cs" />
+    <Compile Include="Rules\Extensions\YmnosStructureExtensions.cs" />
     <Compile Include="Rules\Handlers\IntConverters\IntConverter.cs" />
     <Compile Include="Rules\Handlers\IntConverters\IntCsConverter.cs" />
     <Compile Include="Rules\Handlers\LanguageSettings.cs" />
@@ -103,9 +107,11 @@
     <Compile Include="Rules\Schedule\KOdiRule.cs" />
     <Compile Include="Rules\Schedule\PsalmRule.cs" />
     <Compile Include="Rules\Schedule\PsalmRuleSerializer.cs" />
+    <Compile Include="Rules\Schedule\SourceHavingRuleBase.cs" />
+    <Compile Include="Rules\Schedule\TheotokionAppRule.cs" />
     <Compile Include="Rules\Schedule\YmnosCustomRule.cs" />
     <Compile Include="Rules\Schedule\YmnosCustomRuleSerializer.cs" />
-    <Compile Include="Rules\Schedule\YmnosRuleBase.cs" />
+    <Compile Include="Rules\Schedule\SourceHavingRuleBaseSerializer.cs" />
     <Compile Include="Serialization\CreateObjectRequest.cs" />
     <Compile Include="Serialization\FillObjectRequest.cs" />
     <Compile Include="Typicon\Modifications\DayWorshipsFilter.cs" />
@@ -247,8 +253,6 @@
     <Compile Include="Rules\Schedule\KKatavasiaRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\KontakionRule.cs" />
     <Compile Include="Rules\Schedule\KontakionRuleSerializer.cs" />
-    <Compile Include="Rules\Schedule\KSedalenTheotokionRuleSerializer.cs" />
-    <Compile Include="Rules\Schedule\KSedalenRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\KKanonasItemRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\NoticeSerializer.cs" />
     <Compile Include="Rules\Schedule\WorshipRuleSerializer.cs" />
@@ -260,7 +264,7 @@
     <Compile Include="Rules\Schedule\WorshipSequenceSerializer.cs" />
     <Compile Include="Rules\Schedule\TroparionRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\WorshipSequence.cs" />
-    <Compile Include="Rules\Schedule\TheotokionRuleSerializer.cs" />
+    <Compile Include="Rules\Schedule\TheotokionAppRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\EktenisRuleSerializer.cs" />
     <Compile Include="Rules\Schedule\YmnosRuleSerializer.cs" />
     <Compile Include="Serialization\RuleSerializerContainerBase.cs" />
@@ -290,9 +294,6 @@
     <Compile Include="Rules\Schedule\KanonasRule.cs" />
     <Compile Include="Rules\Schedule\KKatavasiaRule.cs" />
     <Compile Include="Rules\Schedule\KKatavasiaRuleBusinessConstraint.cs" />
-    <Compile Include="Rules\Schedule\KSedalenRuleBusinessConstraint.cs" />
-    <Compile Include="Rules\Schedule\KSedalenRule.cs" />
-    <Compile Include="Rules\Schedule\KSedalenTheotokionRule.cs" />
     <Compile Include="Rules\Schedule\SedalenRule.cs" />
     <Compile Include="Rules\Schedule\TroparionRule.cs" />
     <Compile Include="Rules\Schedule\ApostichaRule.cs" />
@@ -307,8 +308,6 @@
     <Compile Include="Rules\Schedule\KekragariaRule.cs" />
     <Compile Include="Rules\Schedule\WorshipRule.cs" />
     <Compile Include="Rules\Schedule\TextHolderBusinessConstraint.cs" />
-    <Compile Include="Rules\Schedule\TheotokionRule.cs" />
-    <Compile Include="Rules\Schedule\TheotokionRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\KanonasItemBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\KKontakionRuleBusinessConstraint.cs" />
     <Compile Include="Rules\Schedule\YmnosRuleBusinessConstraint.cs" />
@@ -419,6 +418,7 @@
     <None Include="ClassDiagrams\Rules.ViewModel.cd" />
     <None Include="ClassDiagrams\Rules.Days.cd" />
     <None Include="packages.config" />
+    <None Include="Rules\Schedule\Schedule.cd" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />

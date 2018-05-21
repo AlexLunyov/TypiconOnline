@@ -10,6 +10,7 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
+using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.ViewModels;
@@ -54,7 +55,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 //используем специальный обработчик для YmnosStructureRule,
                 //чтобы создать список источников стихир на обработку
-                var container = GetChildElements<ICalcStructureElement>(handler.Settings);
+                var container = GetChildElements<IYmnosStructureRuleElement>(handler.Settings);
 
                 if (container != null)
                 {
@@ -65,51 +66,29 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        private void CalculateYmnosStructure(RuleHandlerSettings settings, IEnumerable<ICalcStructureElement> container)
+        private void CalculateYmnosStructure(RuleHandlerSettings settings, IEnumerable<IYmnosStructureRuleElement> container)
         {
             Structure = new YmnosStructure();
-            foreach (ICalcStructureElement element in container)
+            foreach (var element in container)
             {
-                if (element.Calculate(settings) is YmnosStructure s)
+                var elemStructure = element.GetStructure(settings);
+
+                if (elemStructure != null)
                 {
-                    switch (element)
-                    {
-                        case YmnosRuleBase r:
-                            AsYmnosRule(r, s);
-                            break;
-                        case KSedalenRule r:
-                            AsKanonasSedalenRule(r, s);
-                            break;
-                    }
+                    Structure.Merge(elemStructure);
+                    //switch (element.Kind)
+                    //{
+                    //    case YmnosRuleKind.Ymnos:
+                    //        Structure.Groups.AddRange(elemStructure.Groups);
+                    //        break;
+                    //    case YmnosRuleKind.Doxastichon:
+                    //        Structure.Doxastichon = elemStructure.Doxastichon;
+                    //        break;
+                    //    case YmnosRuleKind.Theotokion:
+                    //        Structure.Theotokion = elemStructure.Theotokion;
+                    //        break;
+                    //}
                 }
-            }
-        }
-
-        private void AsYmnosRule(YmnosRuleBase r, YmnosStructure s)
-        {
-            switch (r.Kind)
-            {
-                case YmnosRuleKind.YmnosRule:
-                    Structure.Groups.AddRange(s.Groups);
-                    break;
-                case YmnosRuleKind.DoxastichonRule:
-                    Structure.Doxastichon = s.Doxastichon;
-                    break;
-                case YmnosRuleKind.TheotokionRule:
-                    Structure.Theotokion = s.Theotokion;
-                    break;
-            }
-        }
-
-        private void AsKanonasSedalenRule(KSedalenRule r, YmnosStructure s)
-        {
-            if (r is KSedalenTheotokionRule)
-            {
-                Structure.Theotokion = s.Theotokion;
-            }
-            else
-            {
-                Structure.Groups.AddRange(s.Groups);
             }
         }
 

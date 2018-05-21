@@ -11,7 +11,7 @@ namespace TypiconOnline.AppServices.Migration
 {
     public class TheotokionAppFactory : ITheotokionAppFactory
     {
-        public TheotokionApp Create(PlaceYmnosSource source, int ihos, DayOfWeek day, string stringDefinition)
+        public TheotokionApp Create(TheotokionAppPlace source, int ihos, DayOfWeek day, string stringDefinition)
         {
             return new TheotokionApp()
             {

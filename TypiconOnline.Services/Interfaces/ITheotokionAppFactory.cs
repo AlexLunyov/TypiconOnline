@@ -10,6 +10,6 @@ namespace TypiconOnline.AppServices.Interfaces
 {
     public interface ITheotokionAppFactory
     {
-        TheotokionApp Create(PlaceYmnosSource source, int ihos, DayOfWeek day, string stringDefinition);
+        TheotokionApp Create(TheotokionAppPlace source, int ihos, DayOfWeek day, string stringDefinition);
     }
 }

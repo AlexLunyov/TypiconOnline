@@ -5,7 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Rules.Executables;
+using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
+using TypiconOnline.Domain.Tests.Common;
+using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Rules.Schedule
@@ -24,21 +30,6 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         }
 
         [Test]
-        public void YmnosRule_InvalidSource()
-        {
-            string xmlString = @"<ymnosrule source=""item"" place=""kekragaria"" count=""3"" startfrom=""2""/>";
-
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.LoadXml(xmlString);
-
-            var element = TestRuleSerializer.Deserialize<YmnosRule>(xmlString);
-
-            Assert.IsFalse(element.IsValid);
-            Assert.AreEqual(element.GetBrokenConstraints().Count, 1);
-        }
-
-        [Test]
         public void YmnosRule_InvalidSource_WeekDay()
         {
             string xmlString = @"<ymnosrule source=""weekday"" place=""kekragaria"" count=""3"" startfrom=""2""/>";
@@ -54,63 +45,52 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         }
 
         [Test]
-        public void YmnosRule_NoSource()
+        public void YmnosRule_AllPlaces()
         {
-            string xmlString = @"<ymnosrule place=""kekragaria"" count=""3"" startfrom=""2""/>";
+            string xmlRule = TestDataXmlReader.GetXmlString("YmnosRuleTest_AllPlaces.xml");
+            string xmlText = TestDataXmlReader.GetXmlString("YmnosRuleTest_AllPlaces_Worship.xml");
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var handler = new IsAdditionTestHandler();
 
-            xmlDoc.LoadXml(xmlString);
+            foreach (PlaceYmnosSource place in Enum.GetValues(typeof(PlaceYmnosSource)))
+            {
+                var xmlModRule = xmlRule.Replace("[place]", place.ToString());
+                handler.Settings = CreateFakeSettings(xmlModRule, xmlText);
 
-            var element = TestRuleSerializer.Deserialize<YmnosRule>(xmlString);
+                var rule = handler.Settings.RuleContainer.ChildElements[0] as KekragariaRule;
 
-            Assert.IsFalse(element.IsValid);
-            Assert.AreEqual(element.GetBrokenConstraints().Count, 1);
+                rule.Interpret(handler);
+
+                Assert.AreEqual(1, rule.Structure.YmnosStructureCount, $"Groups. place={place.ToString()}");
+                Assert.AreEqual(1, rule.Structure.Doxastichon.Ymnis.Count, $"Doxastichon. place={place.ToString()}");
+                Assert.AreEqual(1, rule.Structure.Theotokion[0].Ymnis.Count, $"Theotokion. place={place.ToString()}");
+            }
         }
 
-        [Test]
-        public void YmnosRule_InvalidPlace()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rule">Правило</param>
+        /// <param name="text">Текст службы</param>
+        /// <returns></returns>
+        private RuleHandlerSettings CreateFakeSettings(string rule, string text)
         {
-            string xmlString = @"<ymnosrule source=""item1"" place=""kekragaria11"" count=""3"" startfrom=""2""/>";
+            var menologyRule = new MenologyRule
+            {
+                RuleDefinition = rule
+            };
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var dayWorships = new List<DayWorship>() { new DayWorship() { Definition = text } };
 
-            xmlDoc.LoadXml(xmlString);
+            var ruleContainer = TestRuleSerializer.Deserialize<RootContainer>(rule);// menologyRule.GetRule<ExecContainer>(TestRuleSerializer.Root);
 
-            var element = TestRuleSerializer.Deserialize<YmnosRule>(xmlString);
-
-            Assert.IsFalse(element.IsValid);
-            Assert.AreEqual(element.GetBrokenConstraints().Count, 1);
+            return new RuleHandlerSettings
+            {
+                Date = DateTime.Today,
+                //TypiconRule = menologyRule,
+                DayWorships = dayWorships,
+                RuleContainer = ruleContainer
+            };
         }
-
-        //[Test]
-        //public void YmnosRule_InvalidCount()
-        //{
-        //    string xmlString = @"<ymnosrule source=""item1"" place=""kekragaria"" count=""3ss"" startfrom=""2""/>";
-
-        //    XmlDocument xmlDoc = new XmlDocument();
-
-        //    xmlDoc.LoadXml(xmlString);
-
-        //    var element = TestRuleSerializer.Deserialize<YmnosRule>(xmlString);
-
-        //    Assert.IsFalse(element.IsValid);
-        //    Assert.AreEqual(element.GetBrokenConstraints().Count, 1);
-        //}
-
-        //[Test]
-        //public void YmnosRule_InvalidStartFrom()
-        //{
-        //    string xmlString = @"<ymnosrule source=""item1"" place=""kekragaria"" count=""3"" startfrom=""2s""/>";
-
-        //    XmlDocument xmlDoc = new XmlDocument();
-
-        //    xmlDoc.LoadXml(xmlString);
-
-        //    var element = TestRuleSerializer.Deserialize<YmnosRule>(xmlString);
-
-        //    Assert.IsFalse(element.IsValid);
-        //    Assert.AreEqual(element.GetBrokenConstraints().Count, 1);
-        //}
     }
 }

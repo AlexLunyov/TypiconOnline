@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.Rules
             //Проверка для всех элементов правил. 
             //Если неверно составлен, то либо выкидывается исключение (в случае соответствующей настройки),
             //либо просто ничего не обрабатывается
-            if (ThrowExceptionIfInvalid(handler))
+            if (ThrowExceptionIfInvalid(handler.Settings))
             {
                 return;
             }
@@ -58,11 +58,11 @@ namespace TypiconOnline.Domain.Rules
         /// </summary>
         /// <param name="handler"></param>
         /// <returns>Возвращает true, если элемент неверно заполнен</returns>
-        public bool ThrowExceptionIfInvalid(IRuleHandler handler)
+        public bool ThrowExceptionIfInvalid(RuleHandlerSettings settings)
         {
             if (!IsValid)
             {
-                //if (handler.Settings.ThrowExceptionIfInvalid)
+                //if (settings.ThrowExceptionIfInvalid)
                 //{
                 //    ThrowExceptionIfInvalid();
                 //}

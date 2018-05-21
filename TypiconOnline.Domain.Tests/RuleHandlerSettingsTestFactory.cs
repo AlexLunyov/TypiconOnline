@@ -45,5 +45,10 @@ namespace TypiconOnline.Domain.Tests
                 RuleContainer = ruleContainer
             };
         }
+
+        public static RuleHandlerSettings Create(DateTime date, string ruleDefinition, RuleHandlerSettings addition = null)
+        {
+            return new RuleHandlerSettingsTestFactory().CreateSettings(date, ruleDefinition, addition);
+        }
     }
 }

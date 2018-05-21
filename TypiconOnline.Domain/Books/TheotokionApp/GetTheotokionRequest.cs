@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Books.TheotokionApp
     /// </summary>
     public class GetTheotokionRequest: ServiceRequestBase
     {
-        public PlaceYmnosSource Place { get; set; }
+        public TheotokionAppPlace Place { get; set; }
         public int Ihos { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
     }

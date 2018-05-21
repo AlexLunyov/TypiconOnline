@@ -22,7 +22,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new KanonasRule(req.Descriptor.GetElementName(), SerializerRoot, new KanonasRuleVMFactory(SerializerRoot), req.Parent);
+            return new KanonasRule(req.Descriptor.GetElementName(), new KanonasRuleVMFactory(SerializerRoot), req.Parent);
         }
 
         protected override void FillObject(FillObjectRequest req)

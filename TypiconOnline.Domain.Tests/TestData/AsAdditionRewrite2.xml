@@ -8,8 +8,8 @@
       <kanonasrule>
         <k_after number="3">
           <sedalen>
-            <k_sedalen source="item1" place="sedalen" kanonas="orthros1"/>
-            <k_sedalentheotokion source="item1" place="sedalen" kanonas="orthros1"/>
+            <ymnosrule kind="ymnos" source="item1" place="sedalen_kanonas" count="0"/>
+            <ymnosrule kind="theotokion" source="item1" place="sedalen_kanonas_theotokion" count="0"/>
           </sedalen>
         </k_after>
       </kanonasrule>

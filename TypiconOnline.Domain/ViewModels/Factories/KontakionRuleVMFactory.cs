@@ -21,29 +21,26 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
         public override void Create(CreateViewModelRequest<KontakionRule> req)
         {
-            if (req.Element?.Calculate(req.Handler.Settings) is YmnosStructure kontakion
-                && kontakion.Groups.Count > 0)
+            if (req.Element?.Calculate(req.Handler.Settings) is Kontakion kontakion)
             {
                 var headers = GetHeaders(req, kontakion);
 
                 AppendKontakion(req, kontakion, headers.Kontakion);
 
-                if (req.Element.ShowIkos && kontakion.Groups[0].Ymnis.Count > 1)
+                if (req.Element.ShowIkos && kontakion.Ikos != null)
                 {
-                    AppendIkos(req, kontakion.Groups[0].Ymnis[1].Text, headers.Ikos);
+                    AppendIkos(req, kontakion.Ikos, headers.Ikos);
                 }
             }
         }
 
-        private void AppendKontakion(CreateViewModelRequest<KontakionRule> req, YmnosStructure kontakion, ViewModelItem view)
+        private void AppendKontakion(CreateViewModelRequest<KontakionRule> req, Kontakion kontakion, ViewModelItem view)
         {
             var viewModel = new ElementViewModel() { view };
 
-            var group = kontakion.Groups[0];
-
-            group.Annotation.AppendViewModel(req.Handler, viewModel);
-            group.Prosomoion.AppendViewModel(req.Handler, Serializer, viewModel);
-            group.Ymnis[0].Text.AppendViewModel(req.Handler, viewModel);
+            kontakion.Annotation.AppendViewModel(req.Handler, viewModel);
+            kontakion.Prosomoion.AppendViewModel(req.Handler, Serializer, viewModel);
+            kontakion.Ymnos.AppendViewModel(req.Handler, viewModel);
 
             req.AppendModelAction(viewModel);
         }
@@ -57,7 +54,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             req.AppendModelAction(viewModel);
         }
 
-        private (ViewModelItem Kontakion, ViewModelItem Ikos) GetHeaders(CreateViewModelRequest<KontakionRule> req, YmnosStructure kontakion)
+        private (ViewModelItem Kontakion, ViewModelItem Ikos) GetHeaders(CreateViewModelRequest<KontakionRule> req, Kontakion kontakion)
         {
             List<TextHolder> headers = req.Handler.Settings.TypiconRule.Owner.GetCommonRuleChildren(
                     new CommonRuleServiceRequest() { Key = CommonRuleConstants.Kontakion, RuleSerializer = Serializer }).Cast<TextHolder>().ToList();
