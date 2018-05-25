@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Элемент, являющийся ссылкой на общее правило CommonRule
     /// </summary>
-    public class CommonRuleElement : IncludingRulesElement, ICustomInterpreted//, IViewModelElement
+    public class CommonRuleElement : IncludingRulesElement//, ICustomInterpreted//, IViewModelElement
     {
         public string CommonRuleName { get; set; }
 
@@ -30,8 +30,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-            if (handler.IsAuthorized<CommonRuleElement>())
-            {
+            //if (handler.IsAuthorized<CommonRuleElement>())
+            //{
                 //находим правило
                 CommonRule commonRule = handler.Settings.TypiconRule.Owner.GetCommonRule(c => c.Name == CommonRuleName);
 
@@ -43,7 +43,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     //значит просто включаем его
                     container.ChildElements.ForEach(c => c.Interpret(handler));
                 }
-            }
+            //}
         }
 
         protected override void Validate()

@@ -256,8 +256,9 @@ namespace TypiconOnline.Domain.Rules
         public const string KontakiaNode = "kontakia";
         public const string KontakionNode = "kontakion";
         public const string IkosNode = "ikos";
-        public const string KanonasExapostilarionNode = "exapostilarion";
-        public const string KanonasExapostilarionYmnosNode = "ymnos";
+        public const string ExapostilarionNode = "exapostilarion";
+        public const string ExapostilarionYmnosNode = "ymnos";
+        public const string ExapostilarionTheotokionNode = "theotokion";
 
         public const string YmnosStructureGroupsNode = "groups"; 
         public const string YmnosStructureGroupNode = "group";
@@ -325,12 +326,25 @@ namespace TypiconOnline.Domain.Rules
         public const string TheotokionAppRulePlaceAttrName = "place";
 
         /*
-         * Константы для описания атрибутов элемента ymnosCustomRule
+         * Константы для описания атрибутов элемента YmnosCustomRule
         */
         public const string YmnosCustomRuleNode = "ymnoscustomrule";
         public const string YmnosCustomRuleGroupNode = "group";
         public const string YmnosCustomRuleDoxastichonNode = "doxastichon";
         public const string YmnosCustomRuleTheotokionNode = "theotokion";
+
+        /*
+         * Константы для описания атрибутов элемента ExapostilarionRule
+        */
+        public const string ExapostilarionRuleNode = "exapostilarionrule";
+
+        /*
+         * Константы для описания атрибутов элемента ExapostilarionItemRule
+        */
+        public const string ExapostilarionItemRuleNode = "exap_item";
+        public const string ExapostilarionItemRulePlaceAttrName = "place";
+        public const string ExapostilarionItemRuleKindAttrName = "kind";
+        public const string ExapostilarionItemRuleCountAttrName = "count";
 
         /*
          * TextHolder
@@ -506,6 +520,18 @@ namespace TypiconOnline.Domain.Rules
     public enum WorshipSequenceKind { MikrosEsperinos, Esperinos, MegalisEsperinos, MikrosApodipno, MegalisApodipno, Mesoniktiko, Orthros, Hour, Leitourgia }
 
     public enum TextHolderKind { Choir, Lector, Priest, Deacon, Stihos, Text, Undefined }
+
+    /// <summary>
+    /// Разновидность песнопений элемента последовательности эксапостилария 
+    /// (используется при составлении ПРАВИЛ)
+    /// </summary>
+    public enum ExapostilarionItemKind { Exap, Theotokion }
+
+    /// <summary>
+    /// Разновидность песнопений элемента последовательности эксапостилария 
+    /// (используется при составлении ПРАВИЛ)
+    /// </summary>
+    public enum ExapostilarionItemPlace { Exap1, Exap2, Theotokion }
 
     /// <summary>
     /// Опредения места канона в богослужебном тексте

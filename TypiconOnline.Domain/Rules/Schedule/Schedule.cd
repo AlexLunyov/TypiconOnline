@@ -1,124 +1,108 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="TypiconOnline.Domain.Rules.Schedule.AinoiRule" Collapsed="true">
-    <Position X="3" Y="7.5" Width="1.5" />
+    <Position X="3.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Schedule\AinoiRule.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Schedule.ApostichaRule" Collapsed="true">
-    <Position X="0.75" Y="6" Width="1.5" />
+    <Position X="1" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Schedule\ApostichaRule.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Schedule.CommonRuleElement" Collapsed="true">
-    <Position X="0.5" Y="15" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
-      <FileName>Rules\Schedule\CommonRuleElement.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Schedule.IncludingRulesElement" Collapsed="true">
-    <Position X="0.5" Y="13.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Rules\Schedule\IncludingRulesElement.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Schedule.KanonasItemRuleBase" Collapsed="true">
-    <Position X="3" Y="10.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAIAEAAgCAAAAAAAAAAAAAACAAAAAAAAAAEAAAAAA=</HashCode>
-      <FileName>Rules\Schedule\KanonasItemRuleBase.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="TypiconOnline.Domain.Rules.Schedule.KekragariaRule" Collapsed="true">
-    <Position X="3" Y="6" Width="1.5" />
+    <Position X="3.25" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Schedule\KekragariaRule.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Schedule.KKanonasItemRule" Collapsed="true">
-    <Position X="0.75" Y="12" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AIAAIAAAAACAAAAAAAAACAQAACAAAAgAAAAAAQAAAAA=</HashCode>
-      <FileName>Rules\Schedule\KKanonasItemRule.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Schedule.KKatavasiaRule" Collapsed="true">
-    <Position X="3" Y="12" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAQIAABAACAAAAAAAAAAAQAACBAAAAAAAAAAAAQAAA=</HashCode>
-      <FileName>Rules\Schedule\KKatavasiaRule.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Schedule.KSedalenRule" Collapsed="true">
-    <Position X="5.25" Y="12" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAACAAAAAAAEAAAAAAAAA=</HashCode>
-      <FileName>Rules\Schedule\KSedalenRule.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Schedule.KSedalenTheotokionRule" Collapsed="true">
-    <Position X="5.25" Y="13.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Rules\Schedule\KSedalenTheotokionRule.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="TypiconOnline.Domain.Rules.Schedule.SedalenRule" Collapsed="true">
-    <Position X="7.5" Y="6" Width="1.5" />
+    <Position X="7.75" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Schedule\SedalenRule.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Rules.Schedule.TroparionRule" Collapsed="true">
-    <Position X="5.25" Y="6" Width="1.5" />
+    <Position X="5.5" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Schedule\TroparionRule.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Schedule.YmnosRule">
+    <Position X="3" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAADABAAAAAEAAAQAACAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Rules\Schedule\YmnosRule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Schedule.YmnosStructureRule" Collapsed="true">
+    <Position X="4.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAEADAAAAACAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rules\Schedule\YmnosStructureRule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Class Name="TypiconOnline.Domain.Rules.Schedule.YmnosCustomRule" Collapsed="true">
-    <Position X="8.5" Y="13" Width="1.5" />
+    <Position X="12.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAADABAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rules\Schedule\YmnosCustomRule.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Schedule.YmnosRule" Collapsed="true">
-    <Position X="10.75" Y="13" Width="1.5" />
+  <Class Name="TypiconOnline.Domain.Rules.Schedule.SourceHavingRuleBase">
+    <Position X="2" Y="12.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAADABAAAAAEAAAQAAAAAAAAAAEAAAAAAAAA=</HashCode>
-      <FileName>Rules\Schedule\YmnosRule.cs</FileName>
+      <HashCode>AAAAAAAAIgAAAAAAAAAAAACAACAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Rules\Schedule\SourceHavingRuleBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Schedule.YmnosStructureRule" Collapsed="true">
-    <Position X="4" Y="4.5" Width="1.5" />
+  <Class Name="TypiconOnline.Domain.Rules.Schedule.KontakionRule">
+    <Position X="0.75" Y="16.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAAIAAAEADAAAAACAACAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Rules\Schedule\YmnosStructureRule.cs</FileName>
+      <HashCode>AAAAIAAAEADABAAACAAAAAAAAKAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Rules\Schedule\KontakionRule.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="TypiconOnline.Domain.Rules.Schedule.TheotokionAppRule" Collapsed="true">
-    <Position X="10.75" Y="14.5" Width="1.5" />
+  <Class Name="TypiconOnline.Domain.Rules.Schedule.ExapostilarionItemRule">
+    <Position X="5.75" Y="16.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAADABAAAAAAAAAAAACAAAAAAAAAAAAEIAAA=</HashCode>
-      <FileName>Rules\Schedule\TheotokionAppRule.cs</FileName>
+      <HashCode>AAAAIAAAAADABAAAAAAAAAQAACAAAAAAAEBAAQAAAAA=</HashCode>
+      <FileName>Rules\Schedule\ExapostilarionItemRule.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Interface Name="TypiconOnline.Domain.Interfaces.IStructureRuleChildElement&lt;T&gt;">
+    <Position X="3.5" Y="8.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IStructureRuleChildElement.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TypiconOnline.Domain.Interfaces.IYmnosStructureRuleElement">
+    <Position X="1" Y="10.25" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IYmnosStructureRuleElement.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TypiconOnline.Domain.Interfaces.IExapostilarionRuleElement">
+    <Position X="5.25" Y="10.25" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IExapostilarionRuleElement.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

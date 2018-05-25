@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Базовый класс для описания правил стихир в последовательности богослужений
     /// </summary>
-    public abstract class YmnosStructureRule : ExecContainer, ICustomInterpreted, IViewModelElement
+    public abstract class YmnosStructureRule : StructureRuleBase<YmnosStructure, IYmnosStructureRuleElement>, IViewModelElement
     {
         public YmnosStructureRule(IElementViewModelFactory<YmnosStructureRule> viewModelFactory, string name) : base(name)
         {
@@ -40,63 +40,17 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// </summary>
         public int TotalYmnosCount { get; set; }
 
-        /// <summary>
-        /// Вычисленная последовательность богослужебных текстов
-        /// </summary>
-        public YmnosStructure Structure { get; private set; }
-
         protected IElementViewModelFactory<YmnosStructureRule> ViewModelFactory { get; }
 
         #endregion
-
-        protected override void InnerInterpret(IRuleHandler handler)
-        {
-            if (handler.IsAuthorized<YmnosStructureRule>())
-            {
-                //используем специальный обработчик для YmnosStructureRule,
-                //чтобы создать список источников стихир на обработку
-                var container = GetChildElements<IYmnosStructureRuleElement>(handler.Settings);
-
-                if (container != null)
-                {
-                    CalculateYmnosStructure(handler.Settings, container);
-                }
-
-                handler.Execute(this);
-            }
-        }
-
-        private void CalculateYmnosStructure(RuleHandlerSettings settings, IEnumerable<IYmnosStructureRuleElement> container)
-        {
-            Structure = new YmnosStructure();
-            foreach (var element in container)
-            {
-                var elemStructure = element.GetStructure(settings);
-
-                if (elemStructure != null)
-                {
-                    Structure.Merge(elemStructure);
-                    //switch (element.Kind)
-                    //{
-                    //    case YmnosRuleKind.Ymnos:
-                    //        Structure.Groups.AddRange(elemStructure.Groups);
-                    //        break;
-                    //    case YmnosRuleKind.Doxastichon:
-                    //        Structure.Doxastichon = elemStructure.Doxastichon;
-                    //        break;
-                    //    case YmnosRuleKind.Theotokion:
-                    //        Structure.Theotokion = elemStructure.Theotokion;
-                    //        break;
-                    //}
-                }
-            }
-        }
 
         protected override void Validate()
         {
             base.Validate();
             //TODO: добавить проверку на наличие элементов stichira в дочерних элементах
         }
+
+        protected override bool IsAuthorized(IRuleHandler handler) => handler.IsAuthorized<YmnosStructureRule>();
 
         public virtual void CreateViewModel(IRuleHandler handler, Action<ElementViewModel> append)
         {

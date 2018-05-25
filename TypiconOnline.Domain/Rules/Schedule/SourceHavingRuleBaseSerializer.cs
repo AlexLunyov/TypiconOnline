@@ -20,13 +20,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             var obj = req.Element as SourceHavingRuleBase;
 
-            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.YmnosRuleKindAttrName];
-            if (Enum.TryParse(attr?.Value, true, out YmnosRuleKind kind))
-            {
-                obj.Kind = kind;
-            }
-
-            attr = req.Descriptor.Element.Attributes[RuleConstants.YmnosRuleSourceAttrName];
+            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.YmnosRuleSourceAttrName];
             if (Enum.TryParse(attr?.Value, true, out YmnosSource source))
             {
                 obj.Source = source;

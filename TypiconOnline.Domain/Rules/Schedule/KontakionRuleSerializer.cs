@@ -12,8 +12,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class KontakionRuleSerializer : SourceHavingRuleBaseSerializer, IRuleSerializer<KontakionRule>
     {
-        private readonly ITypiconSerializer typiconSerializer = new TypiconSerializer();
-
         public KontakionRuleSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.KontakionRuleNode };
@@ -26,16 +24,24 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             base.FillObject(req);
 
+            KontakionRule obj = req.Element as KontakionRule;
+
             XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.KontakionPlaceAttrName];
             if (Enum.TryParse(attr?.Value, true, out KontakionPlace place))
             {
-                (req.Element as KontakionRule).Place = place;
+                obj.Place = place;
+            }
+
+            attr = req.Descriptor.Element.Attributes[RuleConstants.YmnosRuleKindAttrName];
+            if (Enum.TryParse(attr?.Value, true, out YmnosRuleKind kind))
+            {
+                obj.Kind = kind;
             }
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.KontakionShowIkosAttrName];
             if (bool.TryParse(attr?.Value, out bool val))
             {
-                (req.Element as KontakionRule).ShowIkos = val;
+                obj.ShowIkos = val;
             }
         }
 

@@ -90,7 +90,7 @@ namespace TypiconOnline.Domain.Rules.Days
         /// <summary>
         /// Эксапостиларий по 9-й песне
         /// </summary>
-        [XmlElement(RuleConstants.KanonasExapostilarionNode)]
+        [XmlElement(RuleConstants.ExapostilarionNode)]
         public Exapostilarion Exapostilarion { get; set; }
         /// <summary>
         /// Стихиры на Хвалитех
@@ -204,7 +204,7 @@ namespace TypiconOnline.Domain.Rules.Days
     
             if (Exapostilarion?.IsValid == false)
             {
-                AppendAllBrokenConstraints(Exapostilarion, RuleConstants.KanonasExapostilarionNode);
+                AppendAllBrokenConstraints(Exapostilarion, RuleConstants.ExapostilarionNode);
             }
 
             if (Ainoi?.IsValid == false)

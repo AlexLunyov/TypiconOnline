@@ -28,6 +28,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
         public KontakionPlace Place { get; set; }
 
         /// <summary>
+        /// Место для вставки песнопения
+        /// </summary>
+        public YmnosRuleKind Kind { get; set; }
+
+        /// <summary>
         /// Признак, показывать ли вместе с кондаком и Икос. По умолчанию - false
         /// </summary>
         public bool ShowIkos { get; set; } = false;
@@ -46,7 +51,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// </summary>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public override YmnosStructure GetStructure(RuleHandlerSettings settings)
+        public YmnosStructure GetStructure(RuleHandlerSettings settings)
         {
             return (Calculate(settings) is Kontakion k) 
                 ? k.ToYmnosStructure(ShowIkos && (Kind == YmnosRuleKind.Ymnos)) 

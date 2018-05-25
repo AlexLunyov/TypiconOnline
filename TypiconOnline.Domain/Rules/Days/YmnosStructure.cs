@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Infrastructure.Common.Domain;
 
@@ -15,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Days
     /// Таквыми являются Стихиры на Господи воззвах, на Хвалитех, и т.д.
     /// </summary>
     [Serializable]
-    public class YmnosStructure : DayElementBase
+    public class YmnosStructure : DayElementBase, IMergable<YmnosStructure>
     {
         public YmnosStructure() { }
 
@@ -129,6 +130,26 @@ namespace TypiconOnline.Domain.Rules.Days
                 }
 
                 return result;
+            }
+        }
+
+        public void Merge(YmnosStructure source)
+        {
+            if (source == null)
+            {
+                return;
+            }
+
+            Groups.AddRange(source.Groups);
+
+            if (source.Doxastichon != null)
+            {
+                Doxastichon = source.Doxastichon;
+            }
+
+            if (source.Theotokion?.Count > 0)
+            {
+                Theotokion = source.Theotokion;
             }
         }
     }

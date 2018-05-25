@@ -59,7 +59,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
 
             Assert.AreEqual(1, element.Kontakia.Count);
             Assert.AreEqual(1, element.Exapostilarion.Ymnis.Count);
-            Assert.AreEqual(1, element.Exapostilarion.Theotokion.Count);
+            Assert.NotNull(element.Exapostilarion.Theotokion);
 
             Assert.NotNull(element.Ainoi);
             Assert.IsNull(element.Aposticha);

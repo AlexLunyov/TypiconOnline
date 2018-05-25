@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Описание правил для использования текстов песнопений
     /// </summary>
-    public class YmnosRule : SourceHavingRuleBase, ICustomInterpreted
+    public class YmnosRule : SourceHavingRuleBase, ICustomInterpreted, IYmnosStructureRuleElement
     {
         public YmnosRule(string name, ITypiconSerializer serializer, IWeekDayAppContext weekDayAppContext) 
             : base(name, serializer, weekDayAppContext)
@@ -33,6 +33,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// Источник книги, откуда брать текст
         /// </summary>
         public PlaceYmnosSource Place { get; set; }
+
+        /// <summary>
+        /// Место для вставки песнопения
+        /// </summary>
+        public YmnosRuleKind Kind { get; set; }
+
         /// <summary>
         /// Количество стихир, которые берутся из выбранного источника. По умолчанию - 1
         /// </summary>
@@ -82,7 +88,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// </summary>
         /// <param name="settings"></param>
         /// <returns>Если таковые не объявлены в DayWorship, возвращает NULL.</returns>
-        public override YmnosStructure GetStructure(RuleHandlerSettings settings)
+        public YmnosStructure GetStructure(RuleHandlerSettings settings)
         {
             YmnosStructure result = null;
 

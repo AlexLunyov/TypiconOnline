@@ -16,7 +16,7 @@ using TypiconOnline.Domain.Serialization;
 namespace TypiconOnline.Domain.ItemTypes
 {
     [Serializable]
-    public class ItemText : ItemType
+    public class ItemText : ItemType, IEquatable<ItemText>
     {
         private List<ItemTextUnit> items = new List<ItemTextUnit>();
         
@@ -165,6 +165,44 @@ namespace TypiconOnline.Domain.ItemTypes
         public override string ToString()
         {
             return (items.Count > 0) ? items.First().Text : base.ToString();
+        }
+
+        /// <summary>
+        /// Сравниваем только элементы Items
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(ItemText other)
+        {
+            bool result = false;
+
+            if (other?.items.Count == items.Count)
+            {
+                result = true;
+                for (int i = 0; i < items.Count; i++)
+                {
+                    if (items[i].Language != other.items[i].Language
+                        || items[i].Text != other.items[i].Text)
+                    {
+                        result = false;
+                        break;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public override int GetHashCode() => base.GetHashCode();
+
+        public static bool operator ==(ItemText text1, ItemText text2)
+        {
+            return EqualityComparer<ItemText>.Default.Equals(text1, text2);
+        }
+
+        public static bool operator !=(ItemText text1, ItemText text2)
+        {
+            return !(text1 == text2);
         }
     }
 }

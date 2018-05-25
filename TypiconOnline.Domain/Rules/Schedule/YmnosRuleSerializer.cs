@@ -24,22 +24,30 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             base.FillObject(req);
 
+            YmnosRule obj = req.Element as YmnosRule;
+
             XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.YmnosRulePlaceAttrName];
             if (Enum.TryParse(attr?.Value, true, out PlaceYmnosSource place))
             {
-                (req.Element as YmnosRule).Place = place;
+                obj.Place = place;
+            }
+
+            attr = req.Descriptor.Element.Attributes[RuleConstants.YmnosRuleKindAttrName];
+            if (Enum.TryParse(attr?.Value, true, out YmnosRuleKind kind))
+            {
+                obj.Kind = kind;
             }
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.YmnosRuleCountAttrName];
             if (int.TryParse(attr?.Value, out int intValue))
             {
-                (req.Element as YmnosRule).Count = intValue;
+                obj.Count = intValue;
             }
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.YmnosRuleStartFromAttrName];
             if (int.TryParse(attr?.Value, out intValue))
             {
-                (req.Element as YmnosRule).StartFrom = intValue;
+                obj.StartFrom = intValue;
             }
         }
 

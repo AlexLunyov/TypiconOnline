@@ -11,7 +11,7 @@ using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public abstract class SourceHavingRuleBase: RuleExecutable, IYmnosStructureRuleElement, ICalcStructureElement
+    public abstract class SourceHavingRuleBase: RuleExecutable, ICalcStructureElement
     {
         private readonly ITypiconSerializer serializer;
         private readonly IWeekDayAppContext weekDayAppContext;
@@ -26,10 +26,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// Источник книги, откуда брать текст
         /// </summary>
         public YmnosSource Source { get; set; }
-        /// <summary>
-        /// Место для вставки песнопения
-        /// </summary>
-        public YmnosRuleKind Kind { get; set; }
+        
 
         protected DayContainer GetDayContainer(RuleHandlerSettings settings)
         {
@@ -68,7 +65,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
             return dayContainer?.GetElement(serializer);
         }
 
-        public abstract YmnosStructure GetStructure(RuleHandlerSettings settings);
         public abstract DayElementBase Calculate(RuleHandlerSettings settings);
     }
 }

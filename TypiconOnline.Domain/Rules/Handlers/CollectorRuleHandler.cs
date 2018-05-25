@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         {
             AuthorizedTypes = new List<Type>()
             {
-                typeof(T),
+                typeof(T)
             };
 
             ClearResult();

@@ -12,9 +12,9 @@ namespace TypiconOnline.Domain.Interfaces
     /// <summary>
     /// Интерфейс для дочерних элементов в Правиле, составляющем последовательность стихир
     /// </summary>
-    public interface IYmnosStructureRuleElement
+    public interface IYmnosStructureRuleElement : IStructureRuleChildElement<YmnosStructure>
     {
-        YmnosRuleKind Kind { get; set; }
-        YmnosStructure GetStructure(RuleHandlerSettings settings);
+        
+        //YmnosStructure GetStructure(RuleHandlerSettings settings);
     }
 }
