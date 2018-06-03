@@ -20,42 +20,30 @@ namespace TypiconOnline.Repository.EFCore
     {
         public static IQueryable<DomainType> GetIncludes<DomainType>(this DbSet<DomainType> dbSet, IncludeOptions options) where DomainType : class
         {
-            //IQueryable<DomainType> request = dbSet;
-
-            //Type type = typeof(DomainType);
-
-            ////смотрим каждое свойство
-            //foreach (var property in type.GetProperties())
-            //{
-            //    //добавляем одиночные свойства
-            //    if (options == null || options.IncludeSingleEntities)
-            //    {
-            //        if (IsClass(property.PropertyType))
-            //        {
-            //            request = request.Include(property.Name);
-            //        }
-            //    }
-
-            //    //добавляем коллекции
-            //    if (options == null || options.IncludeCollections)
-            //    {
-            //        if (IsNonStringEnumerable(property.PropertyType))
-            //        {
-            //            //для каждого свойства вложенного класса
-            //            //также просматриваем, класс ли это или коллекция и подгружаем
-            //            //но только через метод ThenInclude
-            //            request = request.Include(property.Name);
-
-            //            request = AddThenIncludes
-            //        }
-            //    }
-            //}
-
             IQueryable<DomainType> request = dbSet;
 
-            if (options == null || options.LoadRelatedEntities)
+            if (options?.Includes.Count() > 0)
             {
+                request = dbSet.GetIncludes(options.Includes);
+            }
+            else
+            { 
                 request = dbSet.GetIncludes();
+            }
+
+            return request;
+        }
+
+        public static IQueryable<DomainType> GetIncludes<DomainType>(this DbSet<DomainType> dbSet, string[] includes) where DomainType : class
+        {
+            IQueryable<DomainType> request = dbSet;
+
+            if (includes != null)
+            {
+                foreach (var element in includes)
+                {
+                    request = request.Include(element);
+                }
             }
 
             return request;
@@ -196,7 +184,6 @@ namespace TypiconOnline.Repository.EFCore
                     .ThenInclude(c => c.DayRuleWorships)
                         .ThenInclude(k => k.DayWorship)
                             .ThenInclude(k => k.Parent)
-                .Include(c => c.Settings)
                 .Include(c => c.ModifiedYears)
                     .ThenInclude(k => k.ModifiedRules)
                         .ThenInclude(c => c.RuleEntity)

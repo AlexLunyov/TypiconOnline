@@ -15,6 +15,7 @@ using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.WeekDayApp;
+using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Repository.EFCore;
 using TypiconOnline.Repository.EFCore.DataBase;
@@ -40,7 +41,8 @@ namespace TypiconOnline.Tests.Common
                                     new TheotokionAppContext(unitOfWork),
                                     easters,
                                     new KatavasiaContext(unitOfWork),
-                                    new WeekDayAppContext(unitOfWork));
+                                    new WeekDayAppContext(unitOfWork),
+                                    new RulesExtractor(unitOfWork));
         }
     }
 }

@@ -58,12 +58,15 @@
     <Compile Include="Caching\CachingScheduleService.cs" />
     <Compile Include="Caching\CachingTypiconEntityService.cs" />
     <Compile Include="Implementations\CustomRuleSettingsFactory.cs" />
+    <Compile Include="Implementations\Extensions\MenologyRuleExtensions.cs" />
     <Compile Include="Implementations\FileReader.cs" />
     <Compile Include="Implementations\HtmlInnerScheduleWeekViewer.cs" />
     <Compile Include="Implementations\HtmlScheduleDayViewer.cs" />
     <Compile Include="Implementations\HtmlScheduleWeekViewer.cs" />
     <Compile Include="Implementations\ModificationsRuleHandler.cs" />
     <Compile Include="Implementations\ModifiedRuleService.cs" />
+    <Compile Include="Implementations\ModifiedYearFactory.cs" />
+    <Compile Include="Interfaces\IModifiedYearFactory.cs" />
     <Compile Include="Interfaces\IWeekDayAppService.cs" />
     <Compile Include="Interfaces\IWeekDayAppFactory.cs" />
     <Compile Include="Interfaces\IModifiedRuleService.cs" />
@@ -83,7 +86,6 @@
     <Compile Include="Messaging\Books\UpdateWeekDayAppResponse.cs" />
     <Compile Include="Messaging\Books\UpdatePsalmRequest.cs" />
     <Compile Include="Messaging\Books\UpdatePsalmResponse.cs" />
-    <Compile Include="Messaging\Schedule\ModificationsRuleRequest.cs" />
     <Compile Include="Implementations\RuleHandlerSettingsFactory.cs" />
     <Compile Include="Implementations\RuleToHandle.cs" />
     <Compile Include="Implementations\ScheduleDayNameComposer.cs" />

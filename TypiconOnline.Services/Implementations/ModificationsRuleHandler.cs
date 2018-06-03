@@ -10,6 +10,7 @@ using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.AppServices.Messaging.Schedule;
+using TypiconOnline.Domain.Typicon.Modifications;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -18,19 +19,18 @@ namespace TypiconOnline.AppServices.Implementations
     /// </summary>
     public class ModificationsRuleHandler : RuleHandlerBase
     {
-        readonly IModifiedRuleService modifiedRuleService;
-        readonly int yearToModify;
+        IRulesExtractor rulesExtractor;
+        readonly ModifiedYear modifiedYear;
 
-        public ModificationsRuleHandler(IModifiedRuleService modifiedRuleService, int year) 
+        public ModificationsRuleHandler(IRulesExtractor rulesExtractor, ModifiedYear modifiedYear) 
         {
+            this.rulesExtractor = rulesExtractor ?? throw new ArgumentNullException("rulesExtractor in ModificationsRuleHandler");
+            this.modifiedYear = modifiedYear ?? throw new ArgumentNullException("modifiedYear in ModificationsRuleHandler");
+
             AuthorizedTypes = new List<Type>()
             {
                 typeof(ModifyDay)
             };
-
-            this.modifiedRuleService = modifiedRuleService ?? throw new ArgumentNullException("modifiedRuleService in ModificationsRuleHandler");
-
-            yearToModify = year;
         }
 
         public override void ClearResult()
@@ -42,20 +42,18 @@ namespace TypiconOnline.AppServices.Implementations
         {
             bool result = false;
 
-            var typiconEntity = _settings.TypiconRule.Owner;
-
             if (element is ModifyReplacedDay modifyReplacedDay)
             {
                 DayRule ruleToModify;
 
                 if (modifyReplacedDay.Kind == KindOfReplacedDay.Menology)
                 {
-                    ruleToModify = typiconEntity.GetMenologyRule(modifyReplacedDay.DateToReplaceCalculated);
+                    ruleToModify = rulesExtractor.GetMenologyRule(modifiedYear.TypiconEntityId, modifyReplacedDay.DateToReplaceCalculated);
                 }
                 else //if ((element as ModifyReplacedDay).Kind == RuleConstants.KindOfReplacedDay.triodion)
                 {
                     int daysFromEaster = modifyReplacedDay.EasterContext.GetDaysFromCurrentEaster(modifyReplacedDay.DateToReplaceCalculated);
-                    ruleToModify = typiconEntity.GetTriodionRule(daysFromEaster);
+                    ruleToModify = rulesExtractor.GetTriodionRule(modifiedYear.TypiconEntityId, daysFromEaster);
                 }
 
                 int? priority = modifyReplacedDay.Priority;
@@ -67,12 +65,12 @@ namespace TypiconOnline.AppServices.Implementations
 
                 var request = CreateRequest(ruleToModify, modifyReplacedDay, (int)priority);
 
-                modifiedRuleService.AddModifiedRule(typiconEntity, request);
+                modifiedYear.AddModifiedRule(request);
 
                 result = true;
             }
             else if ((element is ModifyDay modifyDay) 
-                && (modifyDay.MoveDateCalculated.Year == yearToModify))
+                && (modifyDay.MoveDateCalculated.Year == modifiedYear.Year))
             {
                 int? priority = modifyDay.Priority;
 
@@ -85,7 +83,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 var request = CreateRequest(dayRule, modifyDay, (int)priority);
 
-                modifiedRuleService.AddModifiedRule(typiconEntity, request);
+                modifiedYear.AddModifiedRule(request);
 
                 result = true;
             }

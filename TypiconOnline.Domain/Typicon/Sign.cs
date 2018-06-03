@@ -6,6 +6,8 @@ namespace TypiconOnline.Domain.Typicon
 {
     public class Sign : TypiconRule
     {
+        public Sign() { }
+
         /// <summary>
         /// Предустановленный номер, согласно знакам служб Типикона. 
         /// Например, для служб без знака, 6-ричных, славословных, полиелейных, бденных и т.д.
@@ -21,12 +23,9 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         public ItemText SignName { get; set; } = new ItemText();
 
-        public override string Name
+        public override string GetNameByLanguage(string language)
         {
-            get
-            {
-                return SignName.FirstOrDefault((Owner != null) ? Owner.Settings.DefaultLanguage : "").Text;
-            }
+            return SignName.FirstOrDefault(language).Text;
         }
 
         protected override void Validate()

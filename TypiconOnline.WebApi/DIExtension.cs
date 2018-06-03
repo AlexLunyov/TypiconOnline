@@ -33,6 +33,7 @@ using TypiconOnline.Repository.Caching;
 using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Repository.EFCore.Caching;
 using TypiconOnline.AppServices.Configuration;
+using TypiconOnline.Domain.Typicon;
 
 namespace TypiconOnline.WebApi
 {
@@ -56,6 +57,8 @@ namespace TypiconOnline.WebApi
             
             //scheduleservice
             services.AddScoped<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
+            services.AddScoped<IModifiedYearFactory, ModifiedYearFactory>();
+            services.AddScoped<IRulesExtractor, RulesExtractor>();
             services.AddScoped<IModifiedRuleService, ModifiedRuleService>();
             services.AddScoped<IScheduleDayNameComposer, ScheduleDayNameComposer>();
             services.AddScoped<IScheduleService, ScheduleService>();

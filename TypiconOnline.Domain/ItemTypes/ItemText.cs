@@ -131,6 +131,11 @@ namespace TypiconOnline.Domain.ItemTypes
             }
         }
 
+        /// <summary>
+        /// Возвращает текст согласно введенному языку, либо первый попавшийся
+        /// </summary>
+        /// <param name="language"></param>
+        /// <returns></returns>
         public ItemTextUnit FirstOrDefault(string language)
         {
             ItemTextUnit result = null;

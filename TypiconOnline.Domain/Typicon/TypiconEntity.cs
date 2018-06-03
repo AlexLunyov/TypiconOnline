@@ -50,45 +50,6 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         public virtual List<Sign> Signs { get; set; }
 
-        //private TypiconFolderEntity _rulesFolder;
-        /// <summary>
-        /// Структуирозованное типизированное хранилище правил для правил
-        /// </summary>
-        //public virtual TypiconFolderEntity RulesFolder
-        //{
-        //    get
-        //    {
-        //        //if (_rulesFolder == null)
-        //        //{
-        //        //    _rulesFolder = new FolderEntity() { Name = "Правила (шаблон)", Owner = this };
-        //        //}
-        //        return _rulesFolder;
-        //    }
-        //    set
-        //    {
-        //        _rulesFolder = value;
-        //        RulesFolder.Owner = this;
-        //    }
-        //}
-
-        //private Sign _templateSunday;
-
-        //public Sign TemplateSunday
-        //{
-        //    get
-        //    {
-        //        //TODO: реализовать покрасивей
-        //        //должен быть добавлен признак IsTemplateSunday в Sign
-        //        if (_templateSunday == null)
-        //        {
-        //            _templateSunday = Signs.Find(c => c.Number == 6);
-        //        }
-        //        return _templateSunday;
-        //    }
-        //}
-
-        //private Dictionary<int, List<ModifiedRule>> _modifiedYearsDict = new Dictionary<int, List<ModifiedRule>>();
-
         public virtual List<ModifiedYear> ModifiedYears { get; set; }
 
         public virtual List<CommonRule> CommonRules { get; set; }
@@ -97,25 +58,7 @@ namespace TypiconOnline.Domain.Typicon
 
         public virtual List<Kathisma> Kathismas { get; set; }
 
-        private TypiconSettings _settings;
-        public virtual TypiconSettings Settings
-        {
-            get
-            {
-                //if (_settings == null)
-                //    _settings = new TypiconSettings() { TypiconEntity = this };
-                return _settings;
-            }
-            set
-            {
-                _settings = value;
-                
-                if (_settings != null)
-                {
-                    _settings.TypiconEntity = this;
-                }
-            }
-        }
+        public virtual string DefaultLanguage { get; set; }
 
         #endregion
 

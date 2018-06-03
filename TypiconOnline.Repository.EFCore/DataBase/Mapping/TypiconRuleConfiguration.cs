@@ -15,9 +15,9 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
         {
             builder.HasKey(c => new { c.Id, c.OwnerId });
 
-            builder.HasOne(e => e.Owner)
-                .WithMany()
-                .HasForeignKey(c => c.OwnerId);
+            //builder.HasOne(e => e.Owner)
+            //    .WithMany()
+            //    .HasForeignKey(c => c.OwnerId);
 
             //builder.HasOne(e => e.Owner).
             //    WithMany();

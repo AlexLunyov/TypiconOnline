@@ -10,6 +10,7 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
+using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 
 namespace TypiconOnline.AppServices.Implementations
@@ -22,6 +23,43 @@ namespace TypiconOnline.AppServices.Implementations
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException("_unitOfWork");
         }
+
+        /*
+         * .Include(c => c.Template)
+                .Include(c => c.Signs)
+                    .ThenInclude(c => c.SignName)
+                .Include(c => c.Signs)
+                    .ThenInclude(c => c.Template)
+                .Include(c => c.CommonRules)
+                .Include(c => c.MenologyRules)
+                    .ThenInclude(c => c.Date)
+                .Include(c => c.MenologyRules)
+                    .ThenInclude(c => c.DateB)
+        */
+
+        private readonly IncludeOptions Includes = new IncludeOptions()
+        {
+            Includes = new string[]
+            {
+                "Template",
+                "Signs.SignName",
+                "Signs.Template",
+                "CommonRules",
+                "MenologyRules.Date",
+                "MenologyRules.DateB",
+                "MenologyRules.Template",
+                "MenologyRules.DayRuleWorships.DayWorship.WorshipName",
+                "MenologyRules.DayRuleWorships.DayWorship.WorshipShortName",
+                "MenologyRules.DayRuleWorships.DayWorship.Parent",
+                "TriodionRules.Template",
+                "TriodionRules.DayRuleWorships.DayWorship.WorshipName",
+                "TriodionRules.DayRuleWorships.DayWorship.WorshipShortName",
+                "TriodionRules.DayRuleWorships.DayWorship.Parent",
+                "ModifiedYears.ModifiedRules.RuleEntity",
+                "ModifiedYears.ModifiedRules.Filter",
+                "Kathismas.SlavaElements.PsalmLinks.Psalm"
+            }
+        };
 
         /// <summary>
         /// Удаляет все переходящие праздники у Устава с заданным Id
@@ -51,7 +89,7 @@ namespace TypiconOnline.AppServices.Implementations
 
             try
             {
-                var typicon = unitOfWork.Repository<TypiconEntity>().Get(x => x.Id == id);
+                var typicon = unitOfWork.Repository<TypiconEntity>().Get(x => x.Id == id, Includes);
 
                 if (typicon == null)
                 {
@@ -101,7 +139,7 @@ namespace TypiconOnline.AppServices.Implementations
                 {
                     if (rule.Date.IsEmpty && rule.DateB.IsEmpty)
                     {
-                        rule.RuleDefinition = fileReader.Read(rule.Name);
+                        rule.RuleDefinition = fileReader.Read(rule.GetNameByLanguage(response.TypiconEntity.DefaultLanguage));
                     }
                     else
                     {
@@ -125,7 +163,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 foreach (Sign sign in response.TypiconEntity.Signs)
                 {
-                    sign.RuleDefinition = fileReader.Read(sign.Name);
+                    sign.RuleDefinition = fileReader.Read(sign.GetNameByLanguage(response.TypiconEntity.DefaultLanguage));
                 }
 
                 //commonRules

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
+using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Serialization
 {
@@ -13,12 +15,15 @@ namespace TypiconOnline.Domain.Serialization
     {
         protected Dictionary<string, object> factories = new Dictionary<string, object>();
 
-        public RuleSerializerRoot(BookStorage bookStorage)
+        public RuleSerializerRoot([NotNull] BookStorage bookStorage/*, [NotNull] IDataQueryProcessor queryProcessor*/)
         {
-            BookStorage = bookStorage ?? throw new ArgumentNullException("BookStorage");
+            BookStorage = bookStorage;
+            //QueryProcessor = queryProcessor;
         }
 
         public BookStorage BookStorage { get; }
+
+        public IDataQueryProcessor QueryProcessor { get; }
 
         /// <summary>
         /// Контейнер фабрик для элемента Правила или его наследников

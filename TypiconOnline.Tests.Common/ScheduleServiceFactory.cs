@@ -20,9 +20,11 @@ namespace TypiconOnline.Tests.Common
             var bookStorage = BookStorageFactory.Create(unitOfWork);
             IRuleSerializerRoot serializerRoot = new RuleSerializerRoot(bookStorage);
 
+            var modifiedYearFactory = new ModifiedYearFactory(unitOfWork, serializerRoot);
 
-            return new ScheduleService(new RuleHandlerSettingsFactory(serializerRoot, new ModifiedRuleService(unitOfWork))
-                                     , new ScheduleDayNameComposer(bookStorage.Oktoikh));
+            return new ScheduleService(new RuleHandlerSettingsFactory(serializerRoot
+                , new ModifiedRuleService(unitOfWork, modifiedYearFactory))
+                , new ScheduleDayNameComposer(bookStorage.Oktoikh));
         }
     }
 }

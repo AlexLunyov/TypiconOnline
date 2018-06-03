@@ -10,26 +10,12 @@ namespace TypiconOnline.Domain.Typicon
 {
     public abstract class DayRule : TypiconRule, IDayRule
     {
-        public DayRule()
-        {
-            DayRuleWorships = new List<DayRuleWorship>();
-        }
+        public DayRule() { }
 
         /// <summary>
         /// Список последований текстов служб для данного дня Устава
         /// </summary>
-        public virtual List<DayRuleWorship> DayRuleWorships { get; set; }
-
-        /// <summary>
-        /// Возвращает объединенную строку всех служб для языка по умолчанию для данного Устава
-        /// </summary>
-        public override string Name
-        {
-            get
-            {
-                return GetNameByLanguage((Owner != null) ? Owner.Settings.DefaultLanguage : "");
-            }
-        }
+        public virtual ICollection<DayRuleWorship> DayRuleWorships { get; set; } = new List<DayRuleWorship>();
 
         public List<DayWorship> DayWorships
         {
@@ -42,7 +28,7 @@ namespace TypiconOnline.Domain.Typicon
         /// <summary>
         /// Возвращает объединенную строку всех служб для определенного языка
         /// </summary>
-        public string GetNameByLanguage(string language)
+        public override string GetNameByLanguage(string language)
         {
             string result = "";
             if (DayWorships.Count > 0)

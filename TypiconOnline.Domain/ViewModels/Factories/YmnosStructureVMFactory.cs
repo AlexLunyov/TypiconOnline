@@ -66,12 +66,12 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             {
                 //слава
                 req.Key = CommonRuleConstants.SlavaText;
-                ymnosStructure.Doxastichon.Ymnis[0].Stihoi.Add(typicon.GetCommonRuleItemTextValue(req));
+                ymnosStructure.Doxastichon.Ymnis[0].Stihoi.Add(typicon.GetItemTextValue(req));
                 //и ныне
                 if (ymnosStructure.Theotokion?.Count > 0)
                 {
                     req.Key = CommonRuleConstants.InyneText;
-                    ymnosStructure.Theotokion[0].Ymnis[0].Stihoi.Add(typicon.GetCommonRuleItemTextValue(req));
+                    ymnosStructure.Theotokion[0].Ymnis[0].Stihoi.Add(typicon.GetItemTextValue(req));
                 }
             }
             else
@@ -80,7 +80,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 if (ymnosStructure.Theotokion?.Count > 0)
                 {
                     req.Key = CommonRuleConstants.SlavaInyneText;
-                    ymnosStructure.Theotokion[0].Ymnis[0].Stihoi.Add(typicon.GetCommonRuleItemTextValue(req));
+                    ymnosStructure.Theotokion[0].Ymnis[0].Stihoi.Add(typicon.GetItemTextValue(req));
                 }
             }
         }

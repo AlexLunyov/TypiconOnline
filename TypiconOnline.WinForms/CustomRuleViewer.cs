@@ -63,7 +63,8 @@ namespace TypiconOnline.WinForms
                 container.With(unitOfWork).GetInstance<ITheotokionAppContext>(),
                 container.With(unitOfWork).GetInstance<IEasterContext>(),
                 container.With(unitOfWork).GetInstance<IKatavasiaContext>(),
-                container.With(unitOfWork).GetInstance<IWeekDayAppContext>());
+                container.With(unitOfWork).GetInstance<IWeekDayAppContext>(),
+                container.With(unitOfWork).GetInstance<IRulesExtractor>());
 
             IRuleSerializerRoot serializerRoot = container.With(bookStorage).GetInstance<IRuleSerializerRoot>();
             var modifiedRuleService = container.With(unitOfWork).GetInstance<IModifiedRuleService>();

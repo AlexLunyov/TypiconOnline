@@ -12,11 +12,11 @@ namespace TypiconOnline.Domain.Typicon
     /// </summary>
     public class CommonRule : RuleEntity
     {
-        public int OwnerId { get; set; }
-
-        public virtual TypiconEntity Owner { get; set; }
-        
-        
+        /// <summary>
+        /// Наименование Общего правила.
+        /// Должно быть уникальным в рамках Устава
+        /// </summary>
+        public virtual string Name { get; set; }
     }
 }
 

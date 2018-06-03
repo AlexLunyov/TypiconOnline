@@ -79,7 +79,8 @@ namespace TypiconOnline.WinForms
                 container.With(_unitOfWork).GetInstance<ITheotokionAppContext>(),
                 container.With(_unitOfWork).GetInstance<IEasterContext>(),
                 container.With(_unitOfWork).GetInstance<IKatavasiaContext>(),
-                container.With(_unitOfWork).GetInstance<IWeekDayAppContext>());
+                container.With(_unitOfWork).GetInstance<IWeekDayAppContext>(),
+                container.With(_unitOfWork).GetInstance<IRulesExtractor>());
 
             //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
@@ -277,6 +278,7 @@ namespace TypiconOnline.WinForms
                 GetScheduleWeekRequest weekRequest = new GetScheduleWeekRequest()
                 {
                     Date = SelectedDate,
+                    TypiconId = _typiconEntity.Id,
                     Typicon = _typiconEntity,
                     Handler = new ScheduleHandler(),
                     Language = "cs-ru",

@@ -29,8 +29,8 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
             builder.HasMany(c => c.TriodionRules).WithOne(d => d.Owner).HasForeignKey(c => c.OwnerId);
             builder.HasMany(c => c.Kathismas).WithOne(d => d.TypiconEntity);
 
-            builder.HasOne(e => e.Settings).
-                WithOne().HasForeignKey<TypiconSettings>("TypiconEntity.Id");
+            //builder.HasOne(e => e.Settings).
+            //    WithOne().HasForeignKey<TypiconSettings>(c => c.TypiconEntityId);
 
             //builder.ToTable("TypiconEntities");
             //ToTable("TypiconEntities");

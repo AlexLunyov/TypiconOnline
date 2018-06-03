@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.Annotations, Version=11.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.11.1.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -82,6 +85,7 @@
     <Compile Include="Interfaces\IMergable.cs" />
     <Compile Include="Interfaces\IPsalterElement.cs" />
     <Compile Include="Books\Psalter\PsalterContext.cs" />
+    <Compile Include="Interfaces\IRulesExtractor.cs" />
     <Compile Include="Interfaces\IStructureRuleChildElement.cs" />
     <Compile Include="Interfaces\ITypiconSerializer.cs" />
     <Compile Include="Interfaces\IYmnosStructureRuleElement.cs" />
@@ -123,6 +127,7 @@
     <Compile Include="Serialization\CreateObjectRequest.cs" />
     <Compile Include="Serialization\FillObjectRequest.cs" />
     <Compile Include="Typicon\Modifications\DayWorshipsFilter.cs" />
+    <Compile Include="Typicon\Modifications\ModificationsRuleRequest.cs" />
     <Compile Include="Typicon\Psalter\PsalmLink.cs" />
     <Compile Include="Typicon\Psalter\SlavaElement.cs" />
     <Compile Include="Books\TheotokionApp\GetAllTheotokionResponse.cs" />
@@ -287,13 +292,11 @@
     <Compile Include="Rules\Handlers\CustomParameters\KekragariaCustomParameter.cs" />
     <Compile Include="Interfaces\IRuleHandler.cs" />
     <Compile Include="Interfaces\ICustomInterpreted.cs" />
-    <Compile Include="RuleEntityBusinessConstraint.cs" />
-    <Compile Include="RuleEntity.cs" />
+    <Compile Include="Typicon\RuleEntity.cs" />
     <Compile Include="Days\DayWorship.cs" />
     <Compile Include="Days\MenologyDay.cs" />
     <Compile Include="Days\MenologyDayBusinessConstraint.cs" />
     <Compile Include="Rules\Handlers\ServiceSequenceHandler.cs" />
-    <Compile Include="Rules\Handlers\YmnosStructureRuleHandler.cs" />
     <Compile Include="Rules\Handlers\RuleHandlerBase.cs" />
     <Compile Include="Rules\Handlers\RuleHandlerSettings.cs" />
     <Compile Include="Rules\Handlers\ScheduleHandler.cs" />
@@ -323,6 +326,7 @@
     <Compile Include="Rules\Schedule\YmnosStructureRule.cs" />
     <Compile Include="Rules\Schedule\YmnosRule.cs" />
     <Compile Include="Rules\Schedule\YmnosStructureRuleSerializer.cs" />
+    <Compile Include="Typicon\RulesExtractor.cs" />
     <Compile Include="ViewModels\Factories\ExapostiliarionRuleVMFactory.cs" />
     <Compile Include="ViewModels\ScheduleWeek.cs" />
     <Compile Include="Serialization\TypiconSerializer.cs" />
@@ -379,7 +383,6 @@
     <Compile Include="ItemTypes\ItemDateBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemType.cs" />
     <Compile Include="Typicon\TypiconEntity.cs" />
-    <Compile Include="Typicon\TypiconSettings.cs" />
     <Compile Include="ViewModels\Factories\AinoiRuleVMFactory.cs" />
     <Compile Include="ViewModels\Factories\ApostichaVMFactory.cs" />
     <Compile Include="ViewModels\Factories\KanonasRuleVMFactory.cs" />

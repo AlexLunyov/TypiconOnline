@@ -31,11 +31,11 @@ namespace TypiconOnline.AppServices.Implementations
     /// </summary>
     public class BypassSequenceViewer : ISequenceViewer
     {
-        private IUnitOfWork _unitOfWork;
+        private IUnitOfWork unitOfWork;
 
         public BypassSequenceViewer(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork");
+            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork");
         }
         //public GetSequenceResponse GetSequence(GetSequenceRequest request)
         //{
@@ -59,7 +59,7 @@ namespace TypiconOnline.AppServices.Implementations
 
         public GetSequenceResponse GetSequence(GetSequenceRequest request)
         {
-            TypiconEntityService typService = new TypiconEntityService(_unitOfWork);
+            TypiconEntityService typService = new TypiconEntityService(unitOfWork);
 
             GetTypiconEntityResponse resp = typService.GetTypiconEntity(request.TypiconId);
 
@@ -87,23 +87,26 @@ namespace TypiconOnline.AppServices.Implementations
 
         private ScheduleService CreateScheduleService()
         {
-            var easters = new EasterContext(_unitOfWork);
+            var easters = new EasterContext(unitOfWork);
 
-            var oktoikhContext = new OktoikhContext(_unitOfWork, easters);
+            var oktoikhContext = new OktoikhContext(unitOfWork, easters);
 
-            BookStorage bookStorage = new BookStorage(new EvangelionContext(_unitOfWork),
-                                    new ApostolContext(_unitOfWork),
-                                    new OldTestamentContext(_unitOfWork),
-                                    new PsalterContext(_unitOfWork),
+            BookStorage bookStorage = new BookStorage(new EvangelionContext(unitOfWork),
+                                    new ApostolContext(unitOfWork),
+                                    new OldTestamentContext(unitOfWork),
+                                    new PsalterContext(unitOfWork),
                                     oktoikhContext,
-                                    new TheotokionAppContext(_unitOfWork),
+                                    new TheotokionAppContext(unitOfWork),
                                     easters,
-                                    new KatavasiaContext(_unitOfWork),
-                                    new WeekDayAppContext(_unitOfWork));
+                                    new KatavasiaContext(unitOfWork),
+                                    new WeekDayAppContext(unitOfWork),
+                                    new RulesExtractor(unitOfWork));
 
             IRuleSerializerRoot serializerRoot = new RuleSerializerRoot(bookStorage);
 
-            return new ScheduleService(new RuleHandlerSettingsFactory(serializerRoot, new ModifiedRuleService(_unitOfWork))
+            var modifiedYearFactory = new ModifiedYearFactory(unitOfWork, serializerRoot);
+
+            return new ScheduleService(new RuleHandlerSettingsFactory(serializerRoot, new ModifiedRuleService(unitOfWork, modifiedYearFactory))
                                      , new ScheduleDayNameComposer(oktoikhContext));
         }
     }

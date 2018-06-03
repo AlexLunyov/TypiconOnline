@@ -213,7 +213,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             if (headers == null)
             {
-                headers = req.Handler.Settings.TypiconRule.Owner.GetCommonRuleChildren(
+                headers = req.Handler.Settings.TypiconRule.Owner.GetChildren(
                     new CommonRuleServiceRequest() { Key = CommonRuleConstants.KanonasRule, RuleSerializer = Serializer }).Cast<TextHolder>().ToList();
             }
             return headers;

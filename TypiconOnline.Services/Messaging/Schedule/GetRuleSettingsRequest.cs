@@ -18,7 +18,8 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
         //public TriodionRule TriodionRule { get; set; }
         //public OktoikhDay OktoikhDay { get; set; }
         //public ModifiedRule ModifiedRule { get; set; }
-        public TypiconEntity Typicon { get; set; }
+        //public TypiconEntity Typicon { get; set; }
+        public int TypiconId { get; set; }
         public DateTime Date { get; set; }
         public string Language { get; set; }
         public CustomParamsCollection<IRuleApplyParameter> ApplyParameters { get; set; }

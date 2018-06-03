@@ -28,10 +28,9 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // настройка полей с помощью Fluent API
+            // настройка полей с помощью Fluent API TypiconSettings
 
             modelBuilder.ApplyConfiguration(new TypiconEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new TypiconSettingsConfiguration());
 
             //modelBuilder.ApplyConfiguration(new TypiconRuleConfiguration());
 
@@ -44,9 +43,10 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 
             modelBuilder.ApplyConfiguration(new CommonRuleConfiguration());
 
-            modelBuilder.ApplyConfiguration(new DayRuleConfiguration()); 
+            //modelBuilder.ApplyConfiguration(new DayRuleConfiguration()); 
             modelBuilder.ApplyConfiguration(new DayWorshipConfiguration());
             modelBuilder.ApplyConfiguration(new DayRuleWorshipConfiguration());
+
             modelBuilder.ApplyConfiguration(new MenologyRuleConfiguration());
             modelBuilder.ApplyConfiguration(new TriodionRuleConfiguration());
 

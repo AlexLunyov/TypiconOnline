@@ -31,7 +31,7 @@ namespace TypiconOnline.Repository.EFCore.Tests.Common
         {
             var unitOfWork = UnitOfWorkFactory.Create();
 
-            var typicon = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1, new IncludeOptions() { LoadRelatedEntities = false });
+            var typicon = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1, new IncludeOptions());
 
             Assert.AreEqual(0, typicon.MenologyRules.Count);
 
@@ -45,7 +45,7 @@ namespace TypiconOnline.Repository.EFCore.Tests.Common
         {
             var unitOfWork = EFCacheUOFFactory.Create();
 
-            var typicon = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1, new IncludeOptions() { LoadRelatedEntities = false });
+            var typicon = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1, new IncludeOptions());
 
             Assert.AreEqual(0, typicon.MenologyRules.Count);
 

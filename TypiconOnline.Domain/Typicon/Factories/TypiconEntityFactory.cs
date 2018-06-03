@@ -13,10 +13,7 @@ namespace TypiconOnline.Domain.Typicon.Factories
             TypiconEntity typiconEntity = new TypiconEntity()
             {
                 Name = "Типикон",
-                Settings = new TypiconSettings()
-                {
-                    DefaultLanguage = "cs-ru"
-                }
+                DefaultLanguage = "cs-ru"
             };
 
             return typiconEntity;

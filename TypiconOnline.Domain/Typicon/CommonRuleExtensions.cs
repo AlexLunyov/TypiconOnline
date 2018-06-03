@@ -17,9 +17,9 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public static ItemText GetCommonRuleItemTextValue(this TypiconEntity typicon, CommonRuleServiceRequest request)
+        public static ItemText GetItemTextValue(this TypiconEntity typicon, CommonRuleServiceRequest request)
         {
-            TextHolder textHolder = (TextHolder)GetCommonRuleChildren(typicon, request).FirstOrDefault();
+            TextHolder textHolder = (TextHolder)GetChildren(typicon, request).FirstOrDefault();
 
             return (textHolder?.Paragraphs.Count > 0) ? textHolder.Paragraphs[0] : new ItemText();
         }
@@ -29,9 +29,9 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public static string GetCommonRuleTextValue(this TypiconEntity typicon, CommonRuleServiceRequest request, string language)
+        public static string GetTextValue(this TypiconEntity typicon, CommonRuleServiceRequest request, string language)
         {
-            return GetCommonRuleItemTextValue(typicon, request).FirstOrDefault(language).Text;
+            return GetItemTextValue(typicon, request).FirstOrDefault(language).Text;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public static IEnumerable<RuleElement> GetCommonRuleChildren(this TypiconEntity typicon, CommonRuleServiceRequest request)
+        public static IEnumerable<RuleElement> GetChildren(this TypiconEntity typicon, CommonRuleServiceRequest request)
         {
             if (request == null
                 || request.RuleSerializer == null) throw new ArgumentNullException("CommonRuleServiceRequest");
@@ -72,10 +72,10 @@ namespace TypiconOnline.Domain.Typicon
         /// <param name="request"></param>
         /// <param name="index">Номер TextHolder-ы в коллекции Правила</param>
         /// <returns></returns>
-        public static string GetCommonRuleIndexedString(this TypiconEntity typicon, CommonRuleServiceRequest request, int index, string language)
+        public static string GetIndexedString(this TypiconEntity typicon, CommonRuleServiceRequest request, int index, string language)
         {
             string result = "";
-            if (GetCommonRuleChildren(typicon, request).ElementAtOrDefault(index) is TextHolder t && t.Paragraphs?.Count > 0)
+            if (GetChildren(typicon, request).ElementAtOrDefault(index) is TextHolder t && t.Paragraphs?.Count > 0)
             {
                 result = t.Paragraphs[0]?.FirstOrDefault(language).Text;
             }

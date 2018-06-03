@@ -28,6 +28,10 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// </summary>
         public RuleHandlerSettings Addition { get; set; }
         /// <summary>
+        /// Id Устава
+        /// </summary>
+        public int TypiconId { get; set; }
+        /// <summary>
         /// Правило для обработки
         /// </summary>
         public TypiconRule TypiconRule { get; set; }

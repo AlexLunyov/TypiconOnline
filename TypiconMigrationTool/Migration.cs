@@ -25,6 +25,8 @@ namespace TypiconMigrationTool
 {
     public class Migration
     {
+        const string DEFAULT_LANGUAGE = "cs-ru";
+
         IUnitOfWork _unitOfWork;
         ScheduleHandler _sh;
 
@@ -83,15 +85,10 @@ namespace TypiconMigrationTool
         {
             TypiconEntity typiconEntity = new TypiconEntity()
             {
+                Id = 1,
                 Name = "Типикон",
-                Settings = new TypiconSettings()
-                {
-                    DefaultLanguage = "cs-ru",
-                    //IsExceptionThrownWhenInvalid = true
-                }
+                DefaultLanguage = DEFAULT_LANGUAGE
             };
-
-            //typiconEntity.RulesFolder = new TypiconFolderEntity() { Name = "Правила", Owner = typiconEntity };
 
             string folderPath = Path.Combine(Properties.Settings.Default.FolderPath, typiconEntity.Name, "Sign"); 
 
@@ -101,27 +98,24 @@ namespace TypiconMigrationTool
 
             foreach (ScheduleDBDataSet.ServiceSignsRow row in _sh.DataSet.ServiceSigns.Rows)
             {
-                //int priority = _signPriorites.ContainsKey(row.Name) ? _signPriorites[row.Name] : row.ID;
-
                 SignMigrator signMigrator = new SignMigrator(row.Number);
 
                 Sign sign = new Sign()
                 {
                     //Id = signMigrator.NewId,
-                    Name = row.Name,
                     Priority = signMigrator.Priority,
                     Owner = typiconEntity,
                     IsTemplate = row.IsTemplate,
                     RuleDefinition = fileReader.Read(row.Name),
-                    //SignName = new ItemText()// { StringExpression = row.Name }
                 };
+                sign.SignName.AddOrUpdate(DEFAULT_LANGUAGE, row.Name);
 
                 if (signMigrator.Number != null)
                 {
                     sign.Number = (int)signMigrator.Number;
                 }
 
-                sign.SignName.AddOrUpdate("cs-ru", row.Name);
+                sign.SignName.AddOrUpdate(DEFAULT_LANGUAGE, row.Name);
 
                 if (signMigrator.TemplateId != null)
                 {
@@ -219,7 +213,7 @@ namespace TypiconMigrationTool
 
             var manager = new PsalmsMigrationManager(service);
 
-            manager.MigratePsalms(new PsalterRuReader(folder, "cs-ru"));
+            manager.MigratePsalms(new PsalterRuReader(folder, DEFAULT_LANGUAGE));
             Commit();
             manager.MigratePsalms(new PsalterCsReader(folder, "cs-cs"));
             Commit();
@@ -233,7 +227,7 @@ namespace TypiconMigrationTool
             var context = new PsalterContext(_unitOfWork);
 
             var manager = new KathismasMigrationManager(context);
-            manager.MigrateKathismas(new PsalterRuReader(folder, "cs-ru"), typiconEntity);
+            manager.MigrateKathismas(new PsalterRuReader(folder, DEFAULT_LANGUAGE), typiconEntity);
             //Commit();
             manager.MigrateKathismas(new PsalterCsReader(folder, "cs-cs"), typiconEntity, true);
             Commit();
@@ -343,7 +337,7 @@ namespace TypiconMigrationTool
                         DateB = menologyDay.DateB,
                         Owner = typiconEntity,
                         //IsAddition = true,
-                        Template = typiconEntity.Signs.First(c => c.SignName.FirstOrDefault("cs-ru").Text == mineinikRow.ServiceSignsRow.Name),
+                        Template = typiconEntity.Signs.First(c => c.SignName.FirstOrDefault(DEFAULT_LANGUAGE).Text == mineinikRow.ServiceSignsRow.Name),
                     };
 
                     menologyRule.DayRuleWorships.Add( new DayRuleWorship() { DayRule = menologyRule, DayWorship = dayWorship } );
@@ -353,7 +347,7 @@ namespace TypiconMigrationTool
                     //берем xml-правило из файла
                     menologyRule.RuleDefinition = (!mineinikRow.IsDateBNull())
                                                     ? fileRuleReader.Read(menologyDay.DateB.Expression)
-                                                    : fileRuleReader.Read(menologyRule.Name);
+                                                    : fileRuleReader.Read(menologyRule.GetNameByLanguage(DEFAULT_LANGUAGE));
                 }
                 else
                 {
@@ -389,7 +383,7 @@ namespace TypiconMigrationTool
                     WorshipName = new ItemTextStyled()
                 };
                 dayWorship.WorshipName.IsBold = row.IsNameBold;
-                dayWorship.WorshipName.AddOrUpdate("cs-ru", row.Name);
+                dayWorship.WorshipName.AddOrUpdate(DEFAULT_LANGUAGE, row.Name);
 
                 //DayWorship dayWorship = new DayWorship()
                 //{
@@ -418,7 +412,7 @@ namespace TypiconMigrationTool
                     DaysFromEaster = day.DaysFromEaster,
                     Owner = typiconEntity,
                     //IsAddition = true,
-                    Template = typiconEntity.Signs.First(c => c.SignName.FirstOrDefault("cs-ru").Text == row.ServiceSignsRow.Name),
+                    Template = typiconEntity.Signs.First(c => c.SignName.FirstOrDefault(DEFAULT_LANGUAGE).Text == row.ServiceSignsRow.Name),
                     RuleDefinition = fileReader.Read(row.DayFromEaster.ToString()),
                     
                 };

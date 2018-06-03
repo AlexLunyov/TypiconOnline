@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             //if (handler.IsAuthorized<CommonRuleElement>())
             //{
                 //находим правило
-                CommonRule commonRule = handler.Settings.TypiconRule.Owner.GetCommonRule(c => c.Name == CommonRuleName);
+                CommonRule commonRule = SerializerRoot.BookStorage.RulesExtractor.GetCommonRule(handler.Settings.TypiconId, CommonRuleName);
 
                 var container = commonRule?.GetRule<ExecContainer>(SerializerRoot);
 

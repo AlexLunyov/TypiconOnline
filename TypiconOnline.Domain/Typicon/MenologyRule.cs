@@ -10,8 +10,6 @@ namespace TypiconOnline.Domain.Typicon
 {
     public class MenologyRule : DayRule
     {
-        //public virtual MenologyDay Day { get; set; }
-
         public MenologyRule()
         {
             Date = new ItemDate();

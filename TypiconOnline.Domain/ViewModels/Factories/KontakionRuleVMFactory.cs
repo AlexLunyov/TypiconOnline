@@ -56,7 +56,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
         private (ViewModelItem Kontakion, ViewModelItem Ikos) GetHeaders(CreateViewModelRequest<KontakionRule> req, Kontakion kontakion)
         {
-            List<TextHolder> headers = req.Handler.Settings.TypiconRule.Owner.GetCommonRuleChildren(
+            List<TextHolder> headers = req.Handler.Settings.TypiconRule.Owner.GetChildren(
                     new CommonRuleServiceRequest() { Key = CommonRuleConstants.Kontakion, RuleSerializer = Serializer }).Cast<TextHolder>().ToList();
 
             var viewKontakion = ViewModelItemFactory.Create(headers[0], req.Handler, Serializer);

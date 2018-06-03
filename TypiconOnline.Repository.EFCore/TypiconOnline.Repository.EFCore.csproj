@@ -7,13 +7,15 @@
   <ItemGroup>
     <Compile Remove="Caching\EFCacheRepository.cs" />
     <Compile Remove="Caching\EFCacheRepositoryFactory.cs" />
+    <Compile Remove="DataBase\Mapping\TypiconRuleConfiguration.cs" />
+    <Compile Remove="DataBase\Mapping\TypiconSettingsConfiguration.cs" />
     <Compile Remove="DataBase\MSSqlDBContext.cs" />
     <Compile Remove="DataBase\SQLiteDBContext.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />

@@ -56,7 +56,7 @@ namespace TypiconOnline.AppServices.Implementations
             var settingsRequest = new GetRuleSettingsRequest()
             {
                 Date = request.Date,
-                Typicon = request.Typicon,
+                TypiconId = request.TypiconId,
                 Language = request.Language,
                 ApplyParameters = request.ApplyParameters,
                 CheckParameters = request.CheckParameters
@@ -141,6 +141,7 @@ namespace TypiconOnline.AppServices.Implementations
             GetScheduleDayRequest dayRequest = new GetScheduleDayRequest()
             {
                 Date = request.Date,
+                TypiconId = request.TypiconId,
                 Typicon = request.Typicon,
                 Handler = request.Handler,
                 Language = request.Language,

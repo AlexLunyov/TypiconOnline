@@ -49,20 +49,20 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 //текст "Глас"
                 req.Key = CommonRuleConstants.IhosText;
                 string ihosString = language.IntConverter.ToString((int)ihos);
-                str += $"{typ.GetCommonRuleTextValue(req, language.Name)} {ihosString}. ";
+                str += $"{typ.GetTextValue(req, language.Name)} {ihosString}. ";
             }
 
             //самоподобен?
             if (prosomoion?.Self == true)
             {
                 req.Key = CommonRuleConstants.SelfText;
-                str += typ.GetCommonRuleTextValue(req, language.Name);
+                str += typ.GetTextValue(req, language.Name);
             }
             //если подобен
             else if (prosomoion?.IsEmpty == false)
             {
                 req.Key = CommonRuleConstants.ProsomoionText;
-                string p = typ.GetCommonRuleTextValue(req, language.Name);
+                string p = typ.GetTextValue(req, language.Name);
 
                 str += $"{p}: \"{ prosomoion.FirstOrDefault(language.Name).Text }\"";
             }
@@ -96,10 +96,10 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
             //находим Стих и Хор для дальнешей вставки
             req.Key = CommonRuleConstants.StihosRule;
-            string stihos = handler.Settings.TypiconRule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language.Name);
+            string stihos = handler.Settings.TypiconRule.Owner.GetTextValue(req, handler.Settings.Language.Name);
 
             req.Key = CommonRuleConstants.ChoirRule;
-            string choir = handler.Settings.TypiconRule.Owner.GetCommonRuleTextValue(req, handler.Settings.Language.Name);
+            string choir = handler.Settings.TypiconRule.Owner.GetTextValue(req, handler.Settings.Language.Name);
 
             return (stihos, choir);
         }

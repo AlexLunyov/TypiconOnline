@@ -12,9 +12,10 @@ namespace TypiconOnline.Infrastructure.Common.Domain
     public class IncludeOptions
     {
         /// <summary>
-        /// Пока работать будет только этот признак.
+        /// Список свойств, которые необходимо загрузить.
+        /// Если необходимо загрузить вложенные свойства объектов, пишем через "."
         /// </summary>
-        public bool LoadRelatedEntities { get; set; }
+        public string[] Includes { get; set; }
         /// <summary>
         /// Признак, загружать ли единичные связанные объекты
         /// </summary>
@@ -26,7 +27,7 @@ namespace TypiconOnline.Infrastructure.Common.Domain
 
         public string GetKey()
         {
-            string result = LoadRelatedEntities ? "" : "nlre";
+            string result = (Includes != null) ? "" : "nlre";
 
             return result;
         }

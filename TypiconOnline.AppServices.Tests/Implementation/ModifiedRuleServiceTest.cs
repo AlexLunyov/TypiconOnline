@@ -24,33 +24,33 @@ namespace TypiconOnline.AppServices.Tests.Implementation
         [Test]
         public void ModifiedRuleService_Test()
         {
-            var typicon = new TypiconEntity();
+            //var typicon = new TypiconEntity();
 
-            var sign = new Sign
-            {
-                Owner = typicon,
-                RuleDefinition = TestDataXmlReader.GetXmlString("ModifiedRuleService_Test1.xml")
-            };
+            //var sign = new Sign
+            //{
+            //    Owner = typicon,
+            //    RuleDefinition = TestDataXmlReader.GetXmlString("ModifiedRuleService_Test1.xml")
+            //};
 
-            typicon.Signs.Add(sign);
+            //typicon.Signs.Add(sign);
 
-            var menologyRule = new MenologyRule()
-            {
-                Owner = typicon,
-                Template = sign,
-                IsAddition = true,
-                Date = new ItemDate(1, 1),
-                DateB = new ItemDate(1, 1),
-                RuleDefinition = TestDataXmlReader.GetXmlString("ModifiedRuleService_Test2.xml")
-            };
+            //var menologyRule = new MenologyRule()
+            //{
+            //    Owner = typicon,
+            //    Template = sign,
+            //    IsAddition = true,
+            //    Date = new ItemDate(1, 1),
+            //    DateB = new ItemDate(1, 1),
+            //    RuleDefinition = TestDataXmlReader.GetXmlString("ModifiedRuleService_Test2.xml")
+            //};
 
-            typicon.MenologyRules.Add(menologyRule);
+            //typicon.MenologyRules.Add(menologyRule);
 
-            var service = new ModifiedRuleService(GetUnitOfWork());
+            //var service = new ModifiedRuleService(GetUnitOfWork(), new ModifiedYearFactory());
 
-            service.GetModifiedRules(typicon, new DateTime(2018, 1, 1), TestRuleSerializer.Root);
+            //service.GetModifiedRules(typicon.Id, new DateTime(2018, 1, 1));
 
-            Assert.AreEqual(3, typicon.ModifiedYears.FirstOrDefault().ModifiedRules.Count);
+            //Assert.AreEqual(3, typicon.ModifiedYears.FirstOrDefault().ModifiedRules.Count);
         }
 
         private IUnitOfWork GetUnitOfWork()

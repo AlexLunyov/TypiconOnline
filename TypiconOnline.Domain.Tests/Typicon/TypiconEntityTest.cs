@@ -31,7 +31,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
             {
                 Id = 1,
                 Name = "Типикон",
-                Signs = new List<Sign>() { new Sign() { Id = 1, Name = "Бдение с литией" } }
+                Signs = new List<Sign>() { new Sign() { Id = 1 } }
             };
 
             //FolderEntity folder = new FolderEntity()

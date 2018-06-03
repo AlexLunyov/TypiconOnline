@@ -23,7 +23,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
         protected virtual void InnerAppendCustomForm(CreateViewModelRequest<YmnosStructureRule> req, string key)
         {
-            TextHolder header = req.Handler.Settings.TypiconRule.Owner.GetCommonRuleChildren(
+            TextHolder header = req.Handler.Settings.TypiconRule.Owner.GetChildren(
                 new CommonRuleServiceRequest() { Key = key, RuleSerializer = Serializer })
                 .FirstOrDefault() as TextHolder;
 

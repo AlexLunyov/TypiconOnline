@@ -31,7 +31,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
         private void AppendHeader(CreateViewModelRequest<PsalmRule> req)
         {
-            TextHolder header = req.Handler.Settings.TypiconRule.Owner.GetCommonRuleChildren(
+            TextHolder header = req.Handler.Settings.TypiconRule.Owner.GetChildren(
                 new CommonRuleServiceRequest() { Key = CommonRuleConstants.Psalm, RuleSerializer = Serializer })
                 .FirstOrDefault() as TextHolder;
 
