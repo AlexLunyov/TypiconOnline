@@ -28,7 +28,6 @@ using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.OldTestament;
 using TypiconOnline.Domain.Books.Katavasia;
-using TypiconOnline.AppServices.Services;
 using TypiconOnline.WinServices.Interfaces;
 using TypiconOnline.WinServices.Messaging;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;

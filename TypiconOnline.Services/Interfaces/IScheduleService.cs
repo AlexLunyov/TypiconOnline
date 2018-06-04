@@ -1,6 +1,6 @@
 ﻿using TypiconOnline.AppServices.Messaging.Schedule;
 
-namespace TypiconOnline.AppServices.Services
+namespace TypiconOnline.AppServices.Interfaces
 {
     public interface IScheduleService
     {

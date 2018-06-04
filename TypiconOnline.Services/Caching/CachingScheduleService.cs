@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Messaging.Schedule;
-using TypiconOnline.AppServices.Services;
+using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.AppServices.Services;
 using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Interfaces;

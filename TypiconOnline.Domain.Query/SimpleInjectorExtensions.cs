@@ -8,7 +8,7 @@ namespace TypiconOnline.Domain.Query
 {
     public static class SimpleInjectorExtensions
     {
-        public static void RegisterTypiconQueryClasses(this Container container)
+        public static Container RegisterTypiconQueryClasses(this Container container)
         {
             //container.Register(typeof(IDataQuery<>), typeof(QueryProcessor).Assembly);
             container.Register(typeof(IDataQueryHandler<,>), typeof(QueryProcessor).Assembly);
@@ -17,6 +17,8 @@ namespace TypiconOnline.Domain.Query
             //container.Register(typeof(IQuery<>), typeof(QueryProcessor).Assembly);
             container.Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly);
             container.Register<IQueryProcessor, QueryProcessor>();
+
+            return container;
         }
     }
 }

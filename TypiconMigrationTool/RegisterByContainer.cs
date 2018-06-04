@@ -14,7 +14,6 @@ using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.Easter;
-using TypiconOnline.AppServices.Services;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
 

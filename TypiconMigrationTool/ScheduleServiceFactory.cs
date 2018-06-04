@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
-using TypiconOnline.AppServices.Services;
+using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;

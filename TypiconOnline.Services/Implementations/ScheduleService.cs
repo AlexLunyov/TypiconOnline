@@ -5,7 +5,6 @@ using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
-using TypiconOnline.AppServices.Services;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Days;

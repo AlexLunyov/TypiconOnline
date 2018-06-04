@@ -7,10 +7,10 @@ using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
-using TypiconOnline.AppServices.Services;
 using TypiconMigrationTool.Tests;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.AppServices.Interfaces;
 
 namespace TypiconMigrationTool
 {

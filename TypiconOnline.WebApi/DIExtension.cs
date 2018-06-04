@@ -12,7 +12,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.AppServices.Services;
 using TypiconOnline.AppServices.Standard.Caching;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Apostol;
