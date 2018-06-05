@@ -59,36 +59,24 @@ namespace TypiconOnline.WinForms
 
         private void InitializeIoC()
         {
-            var container = new RegisterByContainer().Container;
+            var container = SimpleInjectorFactory.Create();
 
             _unitOfWork = container.GetInstance<IUnitOfWork>();
 
-            _typiconEntityService = container.With(_unitOfWork).GetInstance<ITypiconEntityService>();
+            _typiconEntityService = container.GetInstance<ITypiconEntityService>();
 
             GetTypiconEntityResponse response = _typiconEntityService.GetTypiconEntity(1);// _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
 
             _typiconEntity = response.TypiconEntity;
 
-            _bookStorage = new BookStorage(
-                container.With(_unitOfWork).GetInstance<IEvangelionContext>(),
-                container.With(_unitOfWork).GetInstance<IApostolContext>(),
-                container.With(_unitOfWork).GetInstance<IOldTestamentContext>(),
-                container.With(_unitOfWork).GetInstance<IPsalterContext>(),
-                container.With(_unitOfWork).GetInstance<IOktoikhContext>(),
-                container.With(_unitOfWork).GetInstance<ITheotokionAppContext>(),
-                container.With(_unitOfWork).GetInstance<IEasterContext>(),
-                container.With(_unitOfWork).GetInstance<IKatavasiaContext>(),
-                container.With(_unitOfWork).GetInstance<IWeekDayAppContext>(),
-                container.With(_unitOfWork).GetInstance<IRulesExtractor>());
-
             //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
 
-            IRuleSerializerRoot serializerRoot = container.With(_bookStorage).GetInstance<IRuleSerializerRoot>();
+            IRuleSerializerRoot serializerRoot = container.GetInstance<IRuleSerializerRoot>();
             var settingsFactory = container.GetInstance<IRuleHandlerSettingsFactory>();
 
-            _scheduleService = container.With(settingsFactory).With(serializerRoot).GetInstance<IScheduleService>();
+            _scheduleService = container.GetInstance<IScheduleService>();
 
-            _docxTemplateService = container.With(_bookStorage.Oktoikh).GetInstance<IDocxTemplateService>();
+            _docxTemplateService = container.GetInstance<IDocxTemplateService>();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

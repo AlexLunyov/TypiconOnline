@@ -24,7 +24,7 @@ namespace TypiconOnline.Tests.Common
 
             var dbContext = new CachedDbContext(optionsBuilder.Options);
 
-            return new UnitOfWork(dbContext);
+            return new UnitOfWork(dbContext, new RepositoryFactory());
         }
     }
 }

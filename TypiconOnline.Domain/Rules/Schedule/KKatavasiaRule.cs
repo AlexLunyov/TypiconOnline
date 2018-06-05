@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,9 +8,11 @@ using System.Xml;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Katavasia;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Query.Books;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -18,11 +21,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KKatavasiaRule : KanonasItemRuleBase, ICustomInterpreted, ICalcStructureElement
     {
-        IKatavasiaContext katavasiaContext;
+        IDataQueryProcessor queryProcessor;
 
-        public KKatavasiaRule(string name, IKatavasiaContext context) : base(name)
+        public KKatavasiaRule(string name, [NotNull] IDataQueryProcessor queryProcessor) : base(name)
         {
-            katavasiaContext = context ?? throw new ArgumentNullException("IKatavasiaContext");
+            this.queryProcessor = queryProcessor;
         }
 
         #region Properties
@@ -71,13 +74,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             if (_katavasia == null)
             {
-                GetKatavasiaResponse response = katavasiaContext.Get(
-                    new GetKatavasiaRequest() { Name = Name });
-
-                if (response.Exception == null && response.BookElement != null)
-                {
-                    _katavasia = response.BookElement;
-                }
+                _katavasia = queryProcessor.Process(new KatavasiaQuery(Name));
             }
 
             return _katavasia;

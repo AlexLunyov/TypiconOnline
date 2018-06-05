@@ -12,13 +12,15 @@ namespace TypiconOnline.Tests.Common
 {
     public class DataQueryProcessorFactory
     {
-        public static IDataQueryProcessor Create()
+        public static IDataQueryProcessor Create() => Create(UnitOfWorkFactory.Create());
+
+        public static IDataQueryProcessor Create(IUnitOfWork unitOfWork)
         {
             var container = new SimpleInjector.Container();
 
             container.RegisterTypiconQueryClasses();
 
-            container.Register(UnitOfWorkFactory.Create, SimpleInjector.Lifestyle.Singleton);
+            container.RegisterInstance(unitOfWork);
 
             var processor = container.GetInstance<IDataQueryProcessor>();
 

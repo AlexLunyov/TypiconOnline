@@ -26,6 +26,8 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             //находим первый попавшийся MenologyRule
             var unitOfWork = UnitOfWorkFactory.Create();
 
+            var serializer = TestRuleSerializer.Create(unitOfWork);
+
             var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
 
             ServiceSequenceHandler handler = new ServiceSequenceHandler()
@@ -47,7 +49,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             handler.Settings.TypiconRule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
 
-            rule.GetRule(TestRuleSerializer.Root).Interpret(handler);
+            rule.GetRule(serializer).Interpret(handler);
 
             var model = handler.GetResult();            
 
@@ -63,7 +65,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             handler.Settings.DayWorships = rule.DayWorships;
 
             handler.ClearResult();
-            rule.GetRule(TestRuleSerializer.Root).Interpret(handler);
+            rule.GetRule(serializer).Interpret(handler);
 
             model = handler.GetResult();
 

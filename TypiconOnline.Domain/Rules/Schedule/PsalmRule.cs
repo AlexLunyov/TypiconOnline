@@ -1,10 +1,12 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Query.Books;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -12,6 +14,7 @@ using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.ViewModels.Messaging;
 using TypiconOnline.Infrastructure.Common.Domain;
+using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -20,10 +23,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class PsalmRule : RuleExecutable, ICustomInterpreted, IViewModelElement, ICalcStructureElement
     {
-        public PsalmRule(string name, IPsalterContext psalterContext, IElementViewModelFactory<PsalmRule> viewModelFactory) : base(name)
+        IDataQueryProcessor queryProcessor;
+
+        public PsalmRule(string name, [NotNull] IDataQueryProcessor queryProcessor, [NotNull] IElementViewModelFactory<PsalmRule> viewModelFactory) : base(name)
         {
-            PsalterContext = psalterContext ?? throw new ArgumentNullException("IPsalterContext in PsalmRule");
-            ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException("IElementViewModelFactory in PsalmRule");
+            this.queryProcessor = queryProcessor;
+            ViewModelFactory = viewModelFactory;
         }
 
         /// <summary>
@@ -42,8 +47,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// </summary>
         /// <remarks>1-ориентированный</remarks>
         public int? EndStihos { get; set; }
-
-        public IPsalterContext PsalterContext { get; }
 
         protected IElementViewModelFactory<PsalmRule> ViewModelFactory { get; }
 
@@ -90,13 +93,13 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         public DayElementBase Calculate(RuleHandlerSettings settings)
         {
-            var response = PsalterContext.Get(new GetPsalmRequest() { Number = Number });
+            var psalm = queryProcessor.Process(new PsalmQuery(Number));
 
             BookReading psalmReading = null;
 
-            if (response.Psalm != null)
+            if (psalm != null)
             {
-                psalmReading = GetPsalm(response.Psalm);
+                psalmReading = GetPsalm(psalm);
             }
             return psalmReading;
         }

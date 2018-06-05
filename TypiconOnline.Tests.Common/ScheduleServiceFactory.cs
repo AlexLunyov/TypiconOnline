@@ -18,13 +18,13 @@ namespace TypiconOnline.Tests.Common
         public static ScheduleService Create(IUnitOfWork unitOfWork)
         {
             var bookStorage = BookStorageFactory.Create(unitOfWork);
-            IRuleSerializerRoot serializerRoot = new RuleSerializerRoot(bookStorage);
+            IRuleSerializerRoot serializerRoot = TestRuleSerializer.Create(unitOfWork);
 
             var modifiedYearFactory = new ModifiedYearFactory(unitOfWork, serializerRoot);
 
             return new ScheduleService(new RuleHandlerSettingsFactory(serializerRoot
                 , new ModifiedRuleService(unitOfWork, modifiedYearFactory))
-                , new ScheduleDayNameComposer(bookStorage.Oktoikh));
+                , new ScheduleDayNameComposer(serializerRoot.QueryProcessor));
         }
     }
 }

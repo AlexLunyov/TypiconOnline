@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new DaysFromEaster(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.Easters);
+            return new DaysFromEaster(req.Descriptor.GetElementName(), SerializerRoot.QueryProcessor);
         }
 
         protected override void FillObject(FillObjectRequest req)

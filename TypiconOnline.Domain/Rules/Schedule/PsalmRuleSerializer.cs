@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         }
 
         protected override RuleElement CreateObject(CreateObjectRequest req) 
-            => new PsalmRule(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.Psalter, new PsalmRuleVMFactory(SerializerRoot));
+            => new PsalmRule(req.Descriptor.GetElementName(), SerializerRoot.QueryProcessor, new PsalmRuleVMFactory(SerializerRoot));
 
         protected override void FillObject(FillObjectRequest req)
         {

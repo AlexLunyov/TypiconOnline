@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Infrastructure.Common.Query;

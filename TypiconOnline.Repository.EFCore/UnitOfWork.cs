@@ -20,8 +20,6 @@ namespace TypiconOnline.Repository.EFCore
 
         //private bool disposed = false;
 
-        public UnitOfWork(TypiconDBContext dbContext) : this(dbContext, new RepositoryFactory()) { }
-
         public UnitOfWork(TypiconDBContext dbContext, IRepositoryFactory repositoryFactory)
         {
             this.dbContext = dbContext ?? throw new ArgumentNullException("dbContext in UnitOfWorkBase");

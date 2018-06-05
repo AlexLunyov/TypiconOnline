@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TypiconOnline.Domain</RootNamespace>
     <AssemblyName>TypiconOnline.Domain</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,8 +37,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,9 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookElementBase.cs" />
     <Compile Include="Books\Apostol\ApostolContext.cs" />
     <Compile Include="Books\Apostol\IApostolContext.cs" />
-    <Compile Include="BookElementBase.cs" />
     <Compile Include="Books\BookServiceBase.cs" />
     <Compile Include="Books\BookStorageFactory.cs" />
     <Compile Include="Books\Easter\EasterContext.cs" />
@@ -92,6 +93,35 @@
     <Compile Include="ItemTypes\ItemTextHeader.cs" />
     <Compile Include="ItemTypes\ItemTextUnit.cs" />
     <Compile Include="ItemTypes\TextStyle.cs" />
+    <Compile Include="Query\Books\CurrentEasterQuery.cs" />
+    <Compile Include="Query\Books\CurrentEasterQueryHandler.cs" />
+    <Compile Include="Query\Books\KatavasiaQuery.cs" />
+    <Compile Include="Query\Books\KatavasiaQueryHandler.cs" />
+    <Compile Include="Query\Books\OktoikhDayQuery.cs" />
+    <Compile Include="Query\Books\OktoikhDayQueryHandler.cs" />
+    <Compile Include="Query\Books\TheotokionAppQueryHandler.cs" />
+    <Compile Include="Query\Books\TheotokionAppQuery.cs" />
+    <Compile Include="Query\Books\PsalmQuery.cs" />
+    <Compile Include="Query\Books\PsalmQueryHandler.cs" />
+    <Compile Include="Query\Books\SundayNameQuery.cs" />
+    <Compile Include="Query\Books\SundayNameQueryHandler.cs" />
+    <Compile Include="Query\Books\WeekDayAppQuery.cs" />
+    <Compile Include="Query\Books\WeekDayAppQueryHandler.cs" />
+    <Compile Include="Query\Books\WeekNameQuery.cs" />
+    <Compile Include="Query\Books\WeekNameQueryHandler.cs" />
+    <Compile Include="Query\Exceptions\ResourceNotFoundException.cs" />
+    <Compile Include="Query\QueryStrategyHandlerBase.cs" />
+    <Compile Include="Query\Typicon\AllMenologyRulesQuery.cs" />
+    <Compile Include="Query\Typicon\AllMenologyRulesQueryHandler.cs" />
+    <Compile Include="Query\Typicon\AllTriodionRulesQuery.cs" />
+    <Compile Include="Query\Typicon\AllTriodionRulesQueryHandler.cs" />
+    <Compile Include="Query\Typicon\CommonRuleQuery.cs" />
+    <Compile Include="Query\Typicon\CommonRuleQueryHandler.cs" />
+    <Compile Include="Query\Typicon\MenologyRuleQuery.cs" />
+    <Compile Include="Query\Typicon\MenologyRuleQueryHandler.cs" />
+    <Compile Include="Query\Typicon\TriodionRuleQuery.cs" />
+    <Compile Include="Query\Typicon\TriodionRuleQueryHandler.cs" />
+    <Compile Include="Query\UnitOfWorkHandlerBase.cs" />
     <Compile Include="Rules\Days\BookReading.cs" />
     <Compile Include="Rules\Days\BookStihos.cs" />
     <Compile Include="Rules\Days\Kinonik.cs" />

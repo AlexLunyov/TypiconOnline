@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Books.Oktoikh;
+using TypiconOnline.Domain.Query.Books;
+using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.WinServices.Interfaces;
 using TypiconOnline.WinServices.Messaging;
 
@@ -13,11 +16,11 @@ namespace TypiconOnline.WinServices.Implementations
 {
     public class DocxTemplateService : IDocxTemplateService
     {
-        IOktoikhContext oktoikhContext;
+        IDataQueryProcessor queryProcessor;
 
-        public DocxTemplateService(IOktoikhContext oktoikhContext)
+        public DocxTemplateService([NotNull] IDataQueryProcessor queryProcessor)
         {
-            this.oktoikhContext = oktoikhContext ?? throw new ArgumentNullException("IOktoikhContext");
+            this.queryProcessor = queryProcessor;
         }
 
         public HandleTemplateResponse Operate(HandleTemplateRequest request)
@@ -73,7 +76,9 @@ namespace TypiconOnline.WinServices.Implementations
 
         private string GetFileName(string folderPath, string fileStart, DateTime date)
         {
-            string fileName = $"{fileStart} {date.ToString("yyyy-MM-dd")} {date.AddDays(6).ToString("yyyy-MM-dd")} {oktoikhContext.GetWeekName(date, "cs-ru", true).Text}..docx";
+            var weekName = queryProcessor.Process(new WeekNameQuery(date, "cs-ru", true));
+
+            string fileName = $"{fileStart} {date.ToString("yyyy-MM-dd")} {date.AddDays(6).ToString("yyyy-MM-dd")} {weekName.Text}..docx";
             return Path.Combine(folderPath, fileName);
         }
     }

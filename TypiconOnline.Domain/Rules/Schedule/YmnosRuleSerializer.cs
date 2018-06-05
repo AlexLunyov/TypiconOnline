@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         }
 
         protected override RuleElement CreateObject(CreateObjectRequest req) 
-            => new YmnosRule(req.Descriptor.GetElementName(), typiconSerializer, SerializerRoot.BookStorage.WeekDayApp);
+            => new YmnosRule(req.Descriptor.GetElementName(), typiconSerializer, SerializerRoot.QueryProcessor);
 
         protected override void FillObject(FillObjectRequest req)
         {

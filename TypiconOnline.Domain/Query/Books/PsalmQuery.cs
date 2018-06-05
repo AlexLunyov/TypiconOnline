@@ -13,6 +13,6 @@ namespace TypiconOnline.Domain.Query.Books
             Number = number;
         }
 
-        public int Number { get; set; }
+        public int Number { get; }
     }
 }

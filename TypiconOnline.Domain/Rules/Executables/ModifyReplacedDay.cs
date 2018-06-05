@@ -12,16 +12,11 @@ namespace TypiconOnline.Domain.Rules.Executables
 {
     public class ModifyReplacedDay : ModifyDay
     {
-        public ModifyReplacedDay(string name, IEasterContext context, IAsAdditionElement parent) : base(name, parent)
-        {
-            EasterContext = context ?? throw new ArgumentNullException("IEasterContext");
-        }
+        public ModifyReplacedDay(string name, IAsAdditionElement parent) : base(name, parent) { }
 
         #region Properties
 
         public KindOfReplacedDay Kind { get; set; }
-
-        public IEasterContext EasterContext { get; }
 
         /// <summary>
         /// Дата, по которой будет совершаться поиск правила для модификации

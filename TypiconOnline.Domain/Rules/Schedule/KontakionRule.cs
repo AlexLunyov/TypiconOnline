@@ -11,6 +11,7 @@ using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule.Extensions;
 using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.ViewModels.Messaging;
+using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -19,8 +20,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KontakionRule : SourceHavingRuleBase, IViewModelElement, ICustomInterpreted, IYmnosStructureRuleElement
     {
-        public KontakionRule(string name, ITypiconSerializer serializer, IWeekDayAppContext weekDayAppContext, 
-            IElementViewModelFactory<KontakionRule> viewModelFactory) : base(name, serializer, weekDayAppContext)
+        public KontakionRule(string name, ITypiconSerializer serializer, IDataQueryProcessor queryProcessor, 
+            IElementViewModelFactory<KontakionRule> viewModelFactory) : base(name, serializer, queryProcessor)
         {
             ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException("IElementViewModelFactory in KontakionRule");
         }

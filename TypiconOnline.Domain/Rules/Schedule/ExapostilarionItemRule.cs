@@ -5,13 +5,14 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Infrastructure.Common.Domain;
+using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class ExapostilarionItemRule : SourceHavingRuleBase, IExapostilarionRuleElement, ICustomInterpreted
     {
-        public ExapostilarionItemRule(string name, ITypiconSerializer serializer, IWeekDayAppContext weekDayAppContext) 
-            : base(name, serializer, weekDayAppContext)
+        public ExapostilarionItemRule(string name, ITypiconSerializer serializer, IDataQueryProcessor queryProcessor) 
+            : base(name, serializer, queryProcessor)
         {
         }
 

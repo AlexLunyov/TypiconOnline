@@ -59,9 +59,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
                                 </rule>";
             #endregion
 
-            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
+            var serializer = TestRuleSerializer.Create();
 
-            var element = unitOfWork.Container<ExecContainer>()
+            var element = serializer.Container<ExecContainer>()
                 .Deserialize(new XmlDescriptor() { Description = xmlString }, null);
             //3
             int choirCount = element.ChildElements.Where(c => (c is TextHolder) && (c as TextHolder).Kind == TextHolderKind.Choir).Count();

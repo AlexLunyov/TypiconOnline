@@ -73,7 +73,7 @@ namespace TypiconMigrationTool
                     var connectionString = ConfigurationManager.ConnectionStrings["DBTypicon"].ConnectionString;
                     optionsBuilder.UseSqlServer(connectionString);
 
-                    return new UnitOfWork(new TypiconDBContext(optionsBuilder.Options));
+                    return new UnitOfWork(new TypiconDBContext(optionsBuilder.Options), new RepositoryFactory());
                 };
 
                 IUnitOfWork GetSQLiteUnitOfWork()
@@ -82,7 +82,7 @@ namespace TypiconMigrationTool
                     var connectionString = @"FileName=data\SQLiteDB.db";
                     optionsBuilder.UseSqlite(connectionString);
 
-                    return new UnitOfWork(new TypiconDBContext(optionsBuilder.Options));
+                    return new UnitOfWork(new TypiconDBContext(optionsBuilder.Options), new RepositoryFactory());
                 };
             }
 

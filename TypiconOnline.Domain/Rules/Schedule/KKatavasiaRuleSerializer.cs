@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override RuleElement CreateObject(CreateObjectRequest req)
         {
-            return new KKatavasiaRule(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.Katavasia);
+            return new KKatavasiaRule(req.Descriptor.GetElementName(), SerializerRoot.QueryProcessor);
         }
 
         protected override void FillObject(FillObjectRequest req)

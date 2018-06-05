@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
@@ -33,7 +34,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             //if (handler.IsAuthorized<CommonRuleElement>())
             //{
                 //находим правило
-                CommonRule commonRule = SerializerRoot.BookStorage.RulesExtractor.GetCommonRule(handler.Settings.TypiconId, CommonRuleName);
+                CommonRule commonRule = SerializerRoot.QueryProcessor.Process(new CommonRuleQuery(handler.Settings.TypiconId, CommonRuleName));
 
                 var container = commonRule?.GetRule<ExecContainer>(SerializerRoot);
 

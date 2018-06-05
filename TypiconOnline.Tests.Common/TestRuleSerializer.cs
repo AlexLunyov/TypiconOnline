@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Tests.Common
@@ -14,17 +15,16 @@ namespace TypiconOnline.Tests.Common
     {
         public static T Deserialize<T>(string description) where T: RuleElement
         {
-            var serializer = new RuleSerializerRoot(BookStorageFactory.Create());
+            var serializer = Create();
 
             return serializer.Container<T>().Deserialize(description);
         }
 
-        public static IRuleSerializerRoot Root
+        public static IRuleSerializerRoot Create() => Create(UnitOfWorkFactory.Create());
+
+        public static IRuleSerializerRoot Create(IUnitOfWork unitOfWork)
         {
-            get
-            {
-                return new RuleSerializerRoot(BookStorageFactory.Create());
-            }
+            return new RuleSerializerRoot(DataQueryProcessorFactory.Create(unitOfWork));
         }
     }
 }

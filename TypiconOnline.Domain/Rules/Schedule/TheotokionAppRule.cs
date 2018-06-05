@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,12 @@ using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.WeekDayApp;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Query.Books;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Infrastructure.Common.Domain;
+using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -20,11 +23,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class TheotokionAppRule : RuleExecutable, ICustomInterpreted, IYmnosStructureRuleElement
     {
-        ITheotokionAppContext theotokionApp;
+        IDataQueryProcessor queryProcessor;
 
-        public TheotokionAppRule(string name, ITheotokionAppContext context) : base(name)
+        public TheotokionAppRule(string name, [NotNull] IDataQueryProcessor queryProcessor) : base(name)
         {
-            theotokionApp = context ?? throw new ArgumentNullException("ITheotokionAppContext");
+            this.queryProcessor = queryProcessor;
         }
 
         /// <summary>
@@ -58,12 +61,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
             {
                 int calcIhos = (ReferenceYmnos.GetStructure(settings) as YmnosStructure).Ihos;
 
-                GetTheotokionResponse response = theotokionApp.Get(
-                    new GetTheotokionRequest() { Place = Place, Ihos = calcIhos, DayOfWeek = settings.Date.DayOfWeek });
+                var response = queryProcessor.Process(
+                    new TheotokionAppQuery(Place, calcIhos, settings.Date.DayOfWeek));
 
-                if (response.Exception == null && response.BookElement != null)
+                if (response != null)
                 {
-                    result.Theotokion.Add(response.BookElement);
+                    result.Theotokion.Add(response);
                 }
             }
             return result;

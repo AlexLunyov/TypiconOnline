@@ -15,23 +15,26 @@ using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Easter;
+using TypiconOnline.Infrastructure.Common.Query;
+using JetBrains.Annotations;
+using TypiconOnline.Domain.Query.Books;
 
 namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class DaysFromEaster : Int
     {
-        IEasterContext easterContext;
+        IDataQueryProcessor queryProcessor;
 
-        public DaysFromEaster(string name, IEasterContext context) : base(name)
+        public DaysFromEaster(string name, [NotNull] IDataQueryProcessor queryProcessor) : base(name)
         {
-            easterContext = context ?? throw new ArgumentNullException("IEasterContext");
+            this.queryProcessor = queryProcessor;
         }
 
         public DateExpression ChildExpression { get; set; }
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-            DateTime easterDate = easterContext.GetCurrentEaster(handler.Settings.Date.Year);
+            DateTime easterDate = queryProcessor.Process(new CurrentEasterQuery(handler.Settings.Date.Year));
 
             ChildExpression.Interpret(handler);
 

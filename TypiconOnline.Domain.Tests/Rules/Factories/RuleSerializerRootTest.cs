@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Factories
         [Test]
         public void RuleSerializerRoot_ExecContainer()
         {
-            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
+            var unitOfWork = TestRuleSerializer.Create();
 
             var factoryContainer = unitOfWork.Container<ExecContainer>();
 
@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Factories
         [Test]
         public void RuleSerializerRoot_RuleElement()
         {
-            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
+            var unitOfWork = TestRuleSerializer.Create();
 
             var factoryContainer = unitOfWork.Container<RuleElement>();
 
@@ -41,7 +41,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Factories
         [Test]
         public void RuleSerializerRoot_If()
         {
-            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
+            var unitOfWork = TestRuleSerializer.Create();
 
             var factoryContainer = unitOfWork.Container<If>();
 
@@ -58,7 +58,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Factories
         [Test]
         public void RuleSerializerRoot_Additional()
         {
-            var unitOfWork = new RuleSerializerRoot(BookStorageFactory.Create());
+            var unitOfWork = TestRuleSerializer.Create();
 
             var factoryContainer = unitOfWork.Container<RuleExecutable, ICalcStructureElement>();
 

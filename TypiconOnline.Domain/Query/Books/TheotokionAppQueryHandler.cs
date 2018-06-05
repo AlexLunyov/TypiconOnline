@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
+using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Books.TheotokionApp;
-using TypiconOnline.Domain.Books.WeekDayApp;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
@@ -21,8 +21,7 @@ namespace TypiconOnline.Domain.Query.Books
                                                     && c.Place == query.Place
                                                     && c.DayOfWeek == query.DayOfWeek);
 
-            var group = new YmnosGroup() { Ihos = theotokion.Ihos };
-
+            YmnosGroup group = new YmnosGroup() { Ihos = theotokion.Ihos };
             group.Ymnis.Add(theotokion.GetElement());
 
             return group;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,18 +9,20 @@ using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Query.Books;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.AppServices.Implementations
 {
     public class ScheduleDayNameComposer : IScheduleDayNameComposer
     {
-        IOktoikhContext oktoikhContext;
+        IDataQueryProcessor queryProcessor;
 
-        public ScheduleDayNameComposer(IOktoikhContext oktoikhContext)
+        public ScheduleDayNameComposer([NotNull] IDataQueryProcessor queryProcessor)
         {
-            this.oktoikhContext = oktoikhContext ?? throw new ArgumentNullException("IOktoikhContext");
+            this.queryProcessor = queryProcessor;
         }
 
         public ItemTextUnit Compose(RuleHandlerSettings settings, DateTime date)
@@ -72,8 +75,10 @@ namespace TypiconOnline.AppServices.Implementations
 
                 //Если имеется короткое название, то добавляем только его
 
-                resultString = oktoikhContext.GetSundayName(date, settings.Language.Name,
-                    GetShortName(settings.DayWorships, settings.Language.Name)).Text + " " + resultString;
+                var sundayName = queryProcessor.Process(new SundayNameQuery(date, settings.Language.Name,
+                    GetShortName(settings.DayWorships, settings.Language.Name)));
+
+                resultString = sundayName.Text + " " + resultString;
 
                 //жестко задаем воскресный день
                 //handlerRequest.Rule = inputRequest.TypiconEntity.Settings.TemplateSunday;
@@ -84,7 +89,7 @@ namespace TypiconOnline.AppServices.Implementations
             return result;
         }
 
-        public ItemTextUnit GetWeekName(DateTime date, string language) => oktoikhContext.GetWeekName(date, language, false);
+        public ItemTextUnit GetWeekName(DateTime date, string language) => queryProcessor.Process(new WeekNameQuery(date, language, false));
 
         private string GetShortName(List<DayWorship> dayServices, string language)
         {

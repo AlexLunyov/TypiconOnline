@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,10 @@ using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Query.Books;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Infrastructure.Common.Domain;
+using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Rules.Expressions
 {
@@ -20,11 +23,11 @@ namespace TypiconOnline.Domain.Rules.Expressions
     /// </summary>
     public class DateByDaysFromEaster : DateExpression
     {
-        IEasterContext easterContext;
+        IDataQueryProcessor queryProcessor;
 
-        public DateByDaysFromEaster(string name, IEasterContext context) : base(name)
+        public DateByDaysFromEaster(string name, [NotNull] IDataQueryProcessor queryProcessor) : base(name)
         {
-            easterContext = context ?? throw new ArgumentNullException("IEasterContext");
+            this.queryProcessor = queryProcessor;
         }
 
         public IntExpression ChildExpression { get; set; }
@@ -33,7 +36,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
             ChildExpression.Interpret(handler);
 
-            DateTime easterDate = easterContext.GetCurrentEaster(handler.Settings.Date.Year);
+            DateTime easterDate = queryProcessor.Process(new CurrentEasterQuery(handler.Settings.Date.Year));
 
             ValueCalculated = easterDate.AddDays((int)ChildExpression.ValueCalculated);
         }

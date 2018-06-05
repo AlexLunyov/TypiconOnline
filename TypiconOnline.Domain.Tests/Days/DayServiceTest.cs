@@ -24,7 +24,7 @@ namespace TypiconOnline.Domain.Tests.Days
 
             MenologyRule menologyRule = typiconEntity.GetMenologyRule(new DateTime(2017, 09, 28));
 
-            Assert.NotNull(menologyRule.GetRule(TestRuleSerializer.Root));
+            Assert.NotNull(menologyRule.GetRule(TestRuleSerializer.Create()));
         }
     }
 }

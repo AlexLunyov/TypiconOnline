@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Rules.Executables
         }
 
         protected override RuleElement CreateObject(CreateObjectRequest req) 
-            => new ModifyReplacedDay(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.Easters, req.Parent);
+            => new ModifyReplacedDay(req.Descriptor.GetElementName(), req.Parent);
 
         protected override void FillObject(FillObjectRequest req)
         {

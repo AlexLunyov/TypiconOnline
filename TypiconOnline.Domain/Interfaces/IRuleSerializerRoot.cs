@@ -12,8 +12,6 @@ namespace TypiconOnline.Domain.Interfaces
 {
     public interface IRuleSerializerRoot
     {
-        BookStorage BookStorage { get; }
-
         /// <summary>
         /// Единая точка для обработки запросов
         /// </summary>

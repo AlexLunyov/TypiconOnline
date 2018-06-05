@@ -15,10 +15,9 @@ namespace TypiconOnline.Domain.Serialization
     {
         protected Dictionary<string, object> factories = new Dictionary<string, object>();
 
-        public RuleSerializerRoot([NotNull] BookStorage bookStorage/*, [NotNull] IDataQueryProcessor queryProcessor*/)
+        public RuleSerializerRoot([NotNull] IDataQueryProcessor queryProcessor)
         {
-            BookStorage = bookStorage;
-            //QueryProcessor = queryProcessor;
+            QueryProcessor = queryProcessor;
         }
 
         public BookStorage BookStorage { get; }

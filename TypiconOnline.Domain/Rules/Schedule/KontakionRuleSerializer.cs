@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         }
 
         protected override RuleElement CreateObject(CreateObjectRequest req) 
-            => new KontakionRule(req.Descriptor.GetElementName(), typiconSerializer, SerializerRoot.BookStorage.WeekDayApp, new KontakionRuleVMFactory(SerializerRoot));
+            => new KontakionRule(req.Descriptor.GetElementName(), typiconSerializer, SerializerRoot.QueryProcessor, new KontakionRuleVMFactory(SerializerRoot));
 
         protected override void FillObject(FillObjectRequest req)
         {

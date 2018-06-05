@@ -8,6 +8,8 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Query.Books;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
@@ -47,10 +49,10 @@ namespace TypiconOnline.AppServices.Implementations
 
         private void Fill(ModifiedYear modifiedYear)
         {
-            var handler = new ModificationsRuleHandler(serializer.BookStorage.RulesExtractor, modifiedYear);
+            var handler = new ModificationsRuleHandler(serializer.QueryProcessor, modifiedYear);
 
             //MenologyRules
-            var menologyRules = serializer.BookStorage.RulesExtractor.GetAllMenologyRules(modifiedYear.TypiconEntityId);
+            var menologyRules = serializer.QueryProcessor.Process(new AllMenologyRulesQuery(modifiedYear.TypiconEntityId));
 
             DateTime firstJanuary = new DateTime(modifiedYear.Year, 1, 1);
 
@@ -86,9 +88,9 @@ namespace TypiconOnline.AppServices.Implementations
 
             //найти текущую Пасху
             //Для каждого правила выполнять interpret(), где date = текущая Пасха. AddDays(Day.DaysFromEaster)
-            DateTime easter = serializer.BookStorage.Easters.GetCurrentEaster(modifiedYear.Year);
+            DateTime easter = serializer.QueryProcessor.Process(new CurrentEasterQuery(modifiedYear.Year));
 
-            var triodionRules = serializer.BookStorage.RulesExtractor.GetAllTriodionRules(modifiedYear.TypiconEntityId);
+            var triodionRules = serializer.QueryProcessor.Process(new AllTriodionRulesQuery(modifiedYear.TypiconEntityId));
 
             foreach (var triodionRule in triodionRules)
             {

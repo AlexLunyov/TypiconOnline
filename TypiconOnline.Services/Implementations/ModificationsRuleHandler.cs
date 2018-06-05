@@ -11,6 +11,9 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Typicon.Modifications;
+using TypiconOnline.Infrastructure.Common.Query;
+using JetBrains.Annotations;
+using TypiconOnline.Domain.Query.Typicon;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -19,12 +22,12 @@ namespace TypiconOnline.AppServices.Implementations
     /// </summary>
     public class ModificationsRuleHandler : RuleHandlerBase
     {
-        IRulesExtractor rulesExtractor;
+        IDataQueryProcessor queryProcessor;
         readonly ModifiedYear modifiedYear;
 
-        public ModificationsRuleHandler(IRulesExtractor rulesExtractor, ModifiedYear modifiedYear) 
+        public ModificationsRuleHandler([NotNull] IDataQueryProcessor queryProcessor, ModifiedYear modifiedYear) 
         {
-            this.rulesExtractor = rulesExtractor ?? throw new ArgumentNullException("rulesExtractor in ModificationsRuleHandler");
+            this.queryProcessor = queryProcessor;
             this.modifiedYear = modifiedYear ?? throw new ArgumentNullException("modifiedYear in ModificationsRuleHandler");
 
             AuthorizedTypes = new List<Type>()
@@ -48,12 +51,11 @@ namespace TypiconOnline.AppServices.Implementations
 
                 if (modifyReplacedDay.Kind == KindOfReplacedDay.Menology)
                 {
-                    ruleToModify = rulesExtractor.GetMenologyRule(modifiedYear.TypiconEntityId, modifyReplacedDay.DateToReplaceCalculated);
+                    ruleToModify = queryProcessor.Process(new MenologyRuleQuery(modifiedYear.TypiconEntityId, modifyReplacedDay.DateToReplaceCalculated));
                 }
                 else //if ((element as ModifyReplacedDay).Kind == RuleConstants.KindOfReplacedDay.triodion)
                 {
-                    int daysFromEaster = modifyReplacedDay.EasterContext.GetDaysFromCurrentEaster(modifyReplacedDay.DateToReplaceCalculated);
-                    ruleToModify = rulesExtractor.GetTriodionRule(modifiedYear.TypiconEntityId, daysFromEaster);
+                    ruleToModify = queryProcessor.Process(new TriodionRuleQuery(modifiedYear.TypiconEntityId, modifyReplacedDay.DateToReplaceCalculated));
                 }
 
                 int? priority = modifyReplacedDay.Priority;

@@ -9,6 +9,8 @@ using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Query.Books;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Serialization;
@@ -45,17 +47,16 @@ namespace TypiconOnline.AppServices.Implementations
 
             //заполняем Правила и день Октоиха
             //находим MenologyRule - не может быть null
-            var menologyRule = ruleSerializer.BookStorage.RulesExtractor.GetMenologyRule(req.TypiconId, req.Date) ?? throw new NullReferenceException("MenologyRule");
+            var menologyRule = ruleSerializer.QueryProcessor.Process(new MenologyRuleQuery(req.TypiconId, req.Date)) ?? throw new NullReferenceException("MenologyRule");
 
             //находим TriodionRule
-            int daysFromEaster = ruleSerializer.BookStorage.Easters.GetDaysFromCurrentEaster(req.Date);
-            var triodionRule = ruleSerializer.BookStorage.RulesExtractor.GetTriodionRule(req.TypiconId, daysFromEaster);
+            var triodionRule = ruleSerializer.QueryProcessor.Process( new TriodionRuleQuery(req.TypiconId, req.Date));
 
             //находим ModifiedRule с максимальным приоритетом
             var modifiedRule = modifiedRuleService.GetModifiedRuleHighestPriority(req.TypiconId, req.Date);
 
             //находим день Октоиха - не может быть null
-            var oktoikhDay = ruleSerializer.BookStorage.Oktoikh.Get(req.Date) ?? throw new NullReferenceException("OktoikhDay");
+            var oktoikhDay = ruleSerializer.QueryProcessor.Process(new OktoikhDayQuery(req.Date)) ?? throw new NullReferenceException("OktoikhDay");
 
             //создаем выходной объект
             RuleHandlerSettings settings = null;
