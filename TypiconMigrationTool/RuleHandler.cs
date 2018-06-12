@@ -40,20 +40,5 @@ namespace TypiconMigrationTool
 
             _scheduleService = ScheduleServiceFactory.Create(_unitOfWork, easterContext);
         }
-
-        public ScheduleDay GetDay(DateTime date)
-        {
-            GetScheduleDayRequest request = new GetScheduleDayRequest()
-            {
-                Date = date,
-                Typicon = _typiconEntity,
-                Handler = new ScheduleHandler(),
-                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.All)
-            };
-
-            GetScheduleDayResponse response = _scheduleService.GetScheduleDay(request);
-
-            return response?.Day;
-        }
     }
 }

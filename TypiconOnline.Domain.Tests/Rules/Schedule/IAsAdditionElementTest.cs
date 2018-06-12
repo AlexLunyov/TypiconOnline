@@ -27,11 +27,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             string xml = TestDataXmlReader.GetXmlString("AsAdditionRewrite1.xml");
 
-            var additionalSettings = factory.CreateSettings(new DateTime(2017, 11, 09), xml);
+            var additionalSettings = factory.CreateSettings(1, new DateTime(2017, 11, 09), xml);
 
             xml = TestDataXmlReader.GetXmlString("AsAdditionRewrite2.xml");
 
-            var mainSettings = factory.CreateSettings(new DateTime(2017, 11, 09), xml, additionalSettings);
+            var mainSettings = factory.CreateSettings(1, new DateTime(2017, 11, 09), xml, additionalSettings);
 
             var handler = new IsAdditionTestHandler() { Settings = mainSettings };
 
@@ -57,11 +57,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             string xml = TestDataXmlReader.GetXmlString("AsAdditionAppend2.xml");
 
-            var additionalSettings = factory.CreateSettings(new DateTime(2017, 11, 09), xml);
+            var additionalSettings = factory.CreateSettings(1, new DateTime(2017, 11, 09), xml);
 
             xml = TestDataXmlReader.GetXmlString("AsAdditionAppend1.xml");
 
-            var mainSettings = factory.CreateSettings(new DateTime(2017, 11, 09), xml, additionalSettings);
+            var mainSettings = factory.CreateSettings(1, new DateTime(2017, 11, 09), xml, additionalSettings);
 
             var handler = new IsAdditionTestHandler() { Settings = mainSettings };
 
@@ -79,11 +79,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             string xml = TestDataXmlReader.GetXmlString("AsAdditionRemove2.xml");
 
-            var additionalSettings = factory.CreateSettings(new DateTime(2017, 11, 09), xml);
+            var additionalSettings = factory.CreateSettings(1, new DateTime(2017, 11, 09), xml);
 
             xml = TestDataXmlReader.GetXmlString("AsAdditionRemove1.xml");
 
-            var mainSettings = factory.CreateSettings(new DateTime(2017, 11, 09), xml, additionalSettings);
+            var mainSettings = factory.CreateSettings(1, new DateTime(2017, 11, 09), xml, additionalSettings);
 
             var handler = new IsAdditionTestHandler() { Settings = mainSettings };
 

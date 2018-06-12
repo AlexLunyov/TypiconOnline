@@ -19,7 +19,8 @@ namespace TypiconOnline.Domain.ItemTypes
     public class ItemText : ItemType, IEquatable<ItemText>
     {
         private List<ItemTextUnit> items = new List<ItemTextUnit>();
-        
+
+        const string DEFAULT_ROOTNAME = "ItemText";
 
         public ItemText() : this(new TypiconSerializer()) { }
 
@@ -28,7 +29,11 @@ namespace TypiconOnline.Domain.ItemTypes
             Serializer = serializer ?? throw new ArgumentNullException("serializer in ItemText");
         }
 
-        public ItemText(string exp) : this() { }
+        public ItemText(string exp) : this()
+        {
+            RootName = DEFAULT_ROOTNAME;
+            StringExpression = exp;
+        }
 
         /// <summary>
         /// 
@@ -200,14 +205,9 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public override int GetHashCode() => base.GetHashCode();
 
-        public static bool operator ==(ItemText text1, ItemText text2)
+        public override bool Equals(object obj)
         {
-            return EqualityComparer<ItemText>.Default.Equals(text1, text2);
-        }
-
-        public static bool operator !=(ItemText text1, ItemText text2)
-        {
-            return !(text1 == text2);
+            return Equals(obj as ItemText);
         }
     }
 }

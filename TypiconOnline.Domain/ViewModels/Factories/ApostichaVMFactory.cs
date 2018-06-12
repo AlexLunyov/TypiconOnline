@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Typicon;
@@ -23,8 +24,8 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
         protected virtual void InnerAppendCustomForm(CreateViewModelRequest<YmnosStructureRule> req, string key)
         {
-            TextHolder header = req.Handler.Settings.TypiconRule.Owner.GetChildren(
-                new CommonRuleServiceRequest() { Key = key, RuleSerializer = Serializer })
+            TextHolder header = Serializer.QueryProcessor.
+                Process(new CommonRuleChildrenQuery(req.Handler.Settings.TypiconId, key, Serializer))
                 .FirstOrDefault() as TextHolder;
 
             req.AppendModelAction(new ElementViewModel() { ViewModelItemFactory.Create(header, req.Handler, Serializer) });

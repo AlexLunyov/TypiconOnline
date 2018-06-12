@@ -158,7 +158,6 @@
   <ItemGroup>
     <Compile Include="Books\TheotokionApp\TheotokionAppContextTest.cs" />
     <Compile Include="Common\IsAdditionTestHandler.cs" />
-    <Compile Include="Days\DayServiceTest.cs" />
     <Compile Include="Days\EsperinosTest.cs" />
     <Compile Include="DbContextOptionsBuilder.cs" />
     <Compile Include="Experiments\Experiment.cs" />

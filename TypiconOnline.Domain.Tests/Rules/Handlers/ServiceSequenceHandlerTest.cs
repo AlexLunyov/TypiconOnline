@@ -23,15 +23,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Handlers
         [Test]
         public void ServiceSequenceHandler_Working()
         {
-            var unitOfWork = UnitOfWorkFactory.Create();
-
-            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
-
             GetScheduleDayRequest request = new GetScheduleDayRequest()
             {
                 Date = new DateTime(2017, 11, 13),//DateTime.Today,
                 Handler = new ServiceSequenceHandler(),
-                Typicon = typiconEntity,
+                TypiconId = 1,
                 CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };
 

@@ -35,7 +35,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             (req.Element as KKanonasItemRule).IrmosCount = int.TryParse(attr?.Value, out int i) ? i : 0;
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

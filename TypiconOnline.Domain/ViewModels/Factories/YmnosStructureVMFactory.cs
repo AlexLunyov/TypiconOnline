@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -41,7 +43,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 viewModel.AddRange(group.GetViewModel(req.Handler, Serializer));
             }
 
-            SetStringCommonRules(ymnosStructure, req.Handler.Settings.TypiconRule.Owner);
+            SetStringCommonRules(ymnosStructure, req.Handler.Settings.TypiconId);
 
             //Doxastichon
             if (ymnosStructure.Doxastichon != null)
@@ -57,31 +59,31 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             req.AppendModelAction(viewModel);
         }
 
-        private void SetStringCommonRules(YmnosStructure ymnosStructure, TypiconEntity typicon)
+        private void SetStringCommonRules(YmnosStructure ymnosStructure, int typiconId)
         {
-            CommonRuleServiceRequest req = new CommonRuleServiceRequest() { RuleSerializer = Serializer };
-
             //добавляем стихи к славнику и богородичну
             if (ymnosStructure.Doxastichon != null)
             {
                 //слава
-                req.Key = CommonRuleConstants.SlavaText;
-                ymnosStructure.Doxastichon.Ymnis[0].Stihoi.Add(typicon.GetItemTextValue(req));
+                AddPredefinedStihos(ymnosStructure.Doxastichon.Ymnis[0].Stihoi, CommonRuleConstants.SlavaText);
+
                 //и ныне
                 if (ymnosStructure.Theotokion?.Count > 0)
                 {
-                    req.Key = CommonRuleConstants.InyneText;
-                    ymnosStructure.Theotokion[0].Ymnis[0].Stihoi.Add(typicon.GetItemTextValue(req));
+                    AddPredefinedStihos(ymnosStructure.Theotokion[0].Ymnis[0].Stihoi, CommonRuleConstants.InyneText);
                 }
             }
-            else
+            //слава и ныне
+            else if (ymnosStructure.Theotokion?.Count > 0)
             {
-                //слава и ныне
-                if (ymnosStructure.Theotokion?.Count > 0)
-                {
-                    req.Key = CommonRuleConstants.SlavaInyneText;
-                    ymnosStructure.Theotokion[0].Ymnis[0].Stihoi.Add(typicon.GetItemTextValue(req));
-                }
+                AddPredefinedStihos(ymnosStructure.Theotokion[0].Ymnis[0].Stihoi, CommonRuleConstants.SlavaInyneText);
+            }
+
+            void AddPredefinedStihos(List<ItemText> stihoi, string key)
+            {
+                var itemText = Serializer.QueryProcessor.Process(new CommonRuleItemTextValueQuery(typiconId, key, Serializer));
+
+                stihoi.Add(itemText);
             }
         }
 

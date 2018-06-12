@@ -24,17 +24,11 @@ namespace TypiconOnline.Domain.Tests.Services
         [Test]
         public void ScheduleService_GetService()
         {
-            var unitOfWork = UnitOfWorkFactory.Create();
-
-            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
-
-            ScheduleHandler handler = new ScheduleHandler();
-
             GetScheduleDayRequest request = new GetScheduleDayRequest()
             {
                 Date = new DateTime(2018, 5, 21),//DateTime.Today,
                 Handler = new ScheduleHandler(),
-                Typicon = typiconEntity,
+                TypiconId = 1,
                 CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };
 

@@ -9,6 +9,7 @@ using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.ViewModels.Messaging;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Query.Typicon;
 
 namespace TypiconOnline.Domain.ViewModels.Factories
 {
@@ -31,9 +32,9 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
         private void AppendHeader(CreateViewModelRequest<PsalmRule> req)
         {
-            TextHolder header = req.Handler.Settings.TypiconRule.Owner.GetChildren(
-                new CommonRuleServiceRequest() { Key = CommonRuleConstants.Psalm, RuleSerializer = Serializer })
-                .FirstOrDefault() as TextHolder;
+            TextHolder header = Serializer.QueryProcessor
+                    .Process(new CommonRuleChildrenQuery(req.Handler.Settings.TypiconId, CommonRuleConstants.Psalm, Serializer))
+                    .FirstOrDefault() as TextHolder;
 
             var viewHeader = ViewModelItemFactory.Create(header, req.Handler, Serializer);
 

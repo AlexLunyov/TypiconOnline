@@ -20,19 +20,15 @@ namespace TypiconOnline.AppServices.Tests.Implementation
     public class HtmlScheduleDayViewerTest
     {
         [Test]
-        public void TestMethod()
+        public void HtmlScheduleDayViewer_Test()
         {
-            var unitOfWork = UnitOfWorkFactory.Create();
-
-            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
-
-            var service = ScheduleServiceFactory.Create(unitOfWork);
+            var service = ScheduleServiceFactory.Create();
 
             var scheduleDay = service.GetScheduleDay(new GetScheduleDayRequest()
             {
                 Handler = new ServiceSequenceHandler(),
                 Date = new DateTime(2017, 11, 13),
-                Typicon = typiconEntity
+                TypiconId = 1
             });
 
             string path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData/scheduledayviewer.xslt");

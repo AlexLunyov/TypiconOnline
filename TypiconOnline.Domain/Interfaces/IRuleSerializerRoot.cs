@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Interfaces
         /// Единая точка для обработки запросов
         /// </summary>
         IDataQueryProcessor QueryProcessor { get; }
-        RuleSerializerContainerBase<T> Container<T>() where T : RuleElement;
-        RuleSerializerContainerBase<T> Container<T, U>() where T : RuleElement;
+        RuleSerializerContainerBase<T> Container<T>() where T : IRuleElement;
+        RuleSerializerContainerBase<T> Container<T, U>() where T : IRuleElement;
     }
 }

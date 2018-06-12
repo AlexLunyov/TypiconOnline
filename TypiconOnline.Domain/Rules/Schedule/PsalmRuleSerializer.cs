@@ -42,7 +42,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

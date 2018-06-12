@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.Serialization
     /// Абстрактный контейнер для сериализаторов для создания элементов правил
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class RuleSerializerContainerBase<T> where T: RuleElement
+    public abstract class RuleSerializerContainerBase<T> where T: IRuleElement
     {
         protected Dictionary<string, IRuleSerializer> _factories = new Dictionary<string, IRuleSerializer>();
 
@@ -47,7 +47,7 @@ namespace TypiconOnline.Domain.Serialization
 
             if (_factories.ContainsKey(elementName))
             {
-                return _factories[elementName].Deserialize(descriptor, parent) as T;
+                return (T) _factories[elementName].Deserialize(descriptor, parent);
             }
 
             return default(T);

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Schedule;
@@ -28,8 +29,9 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             this.appendModelAction = appendModelAction ?? throw new ArgumentNullException("Action<ElementViewModel> in OdiViewModelHandler");
             this.serializer = serializer ?? throw new ArgumentNullException("IRuleSerializerRoot in OdiViewModelHandler");
 
-            choruses = handler.Settings.TypiconRule.Owner.GetChildren(
-                    new CommonRuleServiceRequest() { Key = CommonRuleConstants.KanonasChorusRule, RuleSerializer = serializer }).Cast<TextHolder>().ToList();
+            choruses = serializer.QueryProcessor
+                    .Process(new CommonRuleChildrenQuery(handler.Settings.TypiconId, CommonRuleConstants.KanonasChorusRule, serializer))
+                    .Cast<TextHolder>().ToList();
         }
 
         /// <summary>

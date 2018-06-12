@@ -18,9 +18,9 @@ namespace TypiconOnline.Repository.EFCore
     /// </summary>
     internal static class DbSetExtensions
     {
-        public static IQueryable<DomainType> GetIncludes<DomainType>(this DbSet<DomainType> dbSet, IncludeOptions options) where DomainType : class
+        public static IQueryable<TDomain> GetIncludes<TDomain>(this DbSet<TDomain> dbSet, IncludeOptions options) where TDomain : class
         {
-            IQueryable<DomainType> request = dbSet;
+            IQueryable<TDomain> request = dbSet;
 
             if (options?.Includes.Count() > 0)
             {
@@ -34,9 +34,9 @@ namespace TypiconOnline.Repository.EFCore
             return request;
         }
 
-        public static IQueryable<DomainType> GetIncludes<DomainType>(this DbSet<DomainType> dbSet, string[] includes) where DomainType : class
+        public static IQueryable<TDomain> GetIncludes<TDomain>(this DbSet<TDomain> dbSet, string[] includes) where TDomain : class
         {
-            IQueryable<DomainType> request = dbSet;
+            IQueryable<TDomain> request = dbSet;
 
             if (includes != null)
             {
@@ -49,31 +49,14 @@ namespace TypiconOnline.Repository.EFCore
             return request;
         }
 
-        private static bool IsClass(Type propertyType)
-        {
-            return propertyType.IsClass;
-        }
-
-        /// <summary>
-        /// Возвращает, является ли Тип коллекцией, за исключением строкового типа
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        private static bool IsNonStringEnumerable(this Type type)
-        {
-            if (type == null || type == typeof(string))
-                return false;
-            return typeof(IEnumerable).IsAssignableFrom(type);
-        }
-
-        public static IQueryable<DomainType> GetIncludes<DomainType>(this DbSet<DomainType> dbSet) 
-            where DomainType : class//, IAggregateRoot
+        public static IQueryable<TDomain> GetIncludes<TDomain>(this DbSet<TDomain> dbSet) 
+            where TDomain : class//, IAggregateRoot
         {
             //TODO: убираем AsNoTracking - необходимо протестировать ScheduleService 
             //- не будут ли портиться связи и ссылки на службы
-            IQueryable<DomainType> request = dbSet;//.AsNoTracking();
+            IQueryable<TDomain> request = dbSet;//.AsNoTracking();
 
-            Type type = typeof(DomainType);
+            Type type = typeof(TDomain);
             switch (true)
             {
                 case bool _ when type == typeof(TypiconEntity):
@@ -96,7 +79,7 @@ namespace TypiconOnline.Repository.EFCore
             return request;
         }
 
-        private static IQueryable<DomainType> GetDayRuleIncludes<DomainType>(DbSet<DomainType> dbSet) where DomainType : class
+        private static IQueryable<TDomain> GetDayRuleIncludes<TDomain>(DbSet<TDomain> dbSet) where TDomain : class
         {
             return (dbSet as DbSet<DayRule>)
                 .Include(c => c.Template)
@@ -104,10 +87,10 @@ namespace TypiconOnline.Repository.EFCore
                     .ThenInclude(c => c.WorshipName)
                 .Include(c => c.DayWorships)
                     .ThenInclude(c => c.WorshipShortName)
-                as IQueryable<DomainType>;
+                as IQueryable<TDomain>;
         }
 
-        private static IQueryable<MenologyDay> MenologyDayInc<DomainType>(IQueryable<MenologyDay> request) where DomainType : class
+        private static IQueryable<MenologyDay> MenologyDayInc<TDomain>(IQueryable<MenologyDay> request) where TDomain : class
         {
             return request
                 .Include(c => c.Date)
@@ -115,7 +98,7 @@ namespace TypiconOnline.Repository.EFCore
                 .Include(c => c.DayWorships);
         }
 
-        private static IQueryable<DomainType> GetMenologyDayIncludes<DomainType>(DbSet<DomainType> dbSet) where DomainType : class
+        private static IQueryable<TDomain> GetMenologyDayIncludes<TDomain>(DbSet<TDomain> dbSet) where TDomain : class
         {
             return (dbSet as DbSet<MenologyDay>)
                 .Include(c => c.Date)
@@ -124,10 +107,10 @@ namespace TypiconOnline.Repository.EFCore
                     .ThenInclude(c => c.WorshipName)
                 .Include(c => c.DayWorships)
                     .ThenInclude(c => c.WorshipShortName)
-                as IQueryable<DomainType>;
+                as IQueryable<TDomain>;
         }
 
-        private static IQueryable<DayWorship> DayWorshipInc<DomainType>(IQueryable<DayWorship> request) where DomainType : class
+        private static IQueryable<DayWorship> DayWorshipInc<TDomain>(IQueryable<DayWorship> request) where TDomain : class
         {
             return request
                 .Include(c => c.WorshipName)
@@ -135,15 +118,15 @@ namespace TypiconOnline.Repository.EFCore
                 as IQueryable<DayWorship>;
         }
 
-        private static IQueryable<DomainType> GetDayWorshipIncludes<DomainType>(DbSet<DomainType> dbSet) where DomainType : class
+        private static IQueryable<TDomain> GetDayWorshipIncludes<TDomain>(DbSet<TDomain> dbSet) where TDomain : class
         {
             return (dbSet as DbSet<DayWorship>)
                 .Include(c => c.WorshipName)
                 .Include(c => c.WorshipShortName)
-                as IQueryable<DomainType>;
+                as IQueryable<TDomain>;
         }
 
-        private static IQueryable<DomainType> GetTypiconEntityIncludes<DomainType>(DbSet<DomainType> dbSet) where DomainType : class
+        private static IQueryable<TDomain> GetTypiconEntityIncludes<TDomain>(DbSet<TDomain> dbSet) where TDomain : class
         {
             return (dbSet as DbSet<TypiconEntity>)
                 .Include(c => c.Template)
@@ -196,7 +179,7 @@ namespace TypiconOnline.Repository.EFCore
                 .Include(c => c.Kathismas)
                     .ThenInclude(c => c.SlavaElements)
                         .ThenInclude(c => c.PsalmLinks)
-                            .ThenInclude(c => c.Psalm) as IQueryable<DomainType>;
+                            .ThenInclude(c => c.Psalm) as IQueryable<TDomain>;
         }
     }
 }

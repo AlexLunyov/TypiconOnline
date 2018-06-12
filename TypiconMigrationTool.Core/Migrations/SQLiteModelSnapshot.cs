@@ -181,13 +181,9 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<string>("RuleDefinition");
 
-                    b.Property<int?>("TypiconEntityId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
-
-                    b.HasIndex("TypiconEntityId");
 
                     b.ToTable("CommonRule");
                 });
@@ -206,7 +202,7 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<string>("RuleDefinition");
 
-                    b.Property<int?>("TemplateId");
+                    b.Property<int>("TemplateId");
 
                     b.HasKey("Id");
 
@@ -503,13 +499,9 @@ namespace TypiconMigrationTool.Core.Migrations
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.CommonRule", b =>
                 {
                     b.HasOne("TypiconOnline.Domain.Typicon.TypiconEntity", "Owner")
-                        .WithMany()
+                        .WithMany("CommonRules")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconEntity")
-                        .WithMany("CommonRules")
-                        .HasForeignKey("TypiconEntityId");
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.DayRule", b =>
@@ -606,7 +598,8 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.HasOne("TypiconOnline.Domain.Typicon.Sign", "Template")
                         .WithMany()
-                        .HasForeignKey("TemplateId");
+                        .HasForeignKey("TemplateId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.OwnsOne("TypiconOnline.Domain.ItemTypes.ItemText", "SignName", b1 =>
                         {

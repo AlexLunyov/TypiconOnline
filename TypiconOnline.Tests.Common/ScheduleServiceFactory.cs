@@ -17,13 +17,14 @@ namespace TypiconOnline.Tests.Common
 
         public static ScheduleService Create(IUnitOfWork unitOfWork)
         {
-            var bookStorage = BookStorageFactory.Create(unitOfWork);
             IRuleSerializerRoot serializerRoot = TestRuleSerializer.Create(unitOfWork);
 
-            var modifiedYearFactory = new ModifiedYearFactory(unitOfWork, serializerRoot);
+            var settingsFactory = new RuleHandlerSettingsFactory(serializerRoot);
 
-            return new ScheduleService(new RuleHandlerSettingsFactory(serializerRoot
-                , new ModifiedRuleService(unitOfWork, modifiedYearFactory))
+            var modifiedYearFactory = new ModifiedYearFactory(unitOfWork, serializerRoot, settingsFactory);
+
+            return new ScheduleService(new ScheduleDataCalculator(serializerRoot
+                , new ModifiedRuleService(unitOfWork, modifiedYearFactory), settingsFactory)
                 , new ScheduleDayNameComposer(serializerRoot.QueryProcessor));
         }
     }

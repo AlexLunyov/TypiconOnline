@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Schedule;
@@ -146,8 +147,9 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
             if (index >= 0)
             {
-                result = handler.Settings.TypiconRule.Owner.GetIndexedString(
-                    new CommonRuleServiceRequest() { Key = CommonRuleConstants.ViewModelKind, RuleSerializer = ruleSerializer }, index, handler.Settings.Language.Name);
+                result = ruleSerializer.QueryProcessor
+                    .Process(new CommonRuleIndexedStringValueQuery(handler.Settings.TypiconId, CommonRuleConstants.ViewModelKind,
+                        ruleSerializer, handler.Settings.Language.Name, index));
             }
 
             return result;

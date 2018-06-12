@@ -27,7 +27,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             string xml = TestDataXmlReader.GetXmlString("TheotokionRuleTest.xml");
 
-            var settings = factory.CreateSettings(new DateTime(2017, 01, 16), xml);
+            var settings = factory.CreateSettings(1, new DateTime(2017, 01, 16), xml);
 
             //Дата --01-16 exists - false
             var handler = new ServiceSequenceHandler() { Settings = settings };

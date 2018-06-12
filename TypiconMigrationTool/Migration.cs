@@ -104,7 +104,8 @@ namespace TypiconMigrationTool
                 {
                     //Id = signMigrator.NewId,
                     Priority = signMigrator.Priority,
-                    Owner = typiconEntity,
+                    OwnerId = typiconEntity.Id,
+                    //Owner = typiconEntity,
                     IsTemplate = row.IsTemplate,
                     RuleDefinition = fileReader.Read(row.Name),
                 };
@@ -335,7 +336,8 @@ namespace TypiconMigrationTool
                         //Name = menologyDay.Name,
                         Date = menologyDay.Date,
                         DateB = menologyDay.DateB,
-                        Owner = typiconEntity,
+                        OwnerId = typiconEntity.Id,
+                        //Owner = typiconEntity,
                         //IsAddition = true,
                         Template = typiconEntity.Signs.First(c => c.SignName.FirstOrDefault(DEFAULT_LANGUAGE).Text == mineinikRow.ServiceSignsRow.Name),
                     };
@@ -410,7 +412,8 @@ namespace TypiconMigrationTool
                 {
                     //Name = day.Name,
                     DaysFromEaster = day.DaysFromEaster,
-                    Owner = typiconEntity,
+                    OwnerId = typiconEntity.Id,
+                    //Owner = typiconEntity,
                     //IsAddition = true,
                     Template = typiconEntity.Signs.First(c => c.SignName.FirstOrDefault(DEFAULT_LANGUAGE).Text == row.ServiceSignsRow.Name),
                     RuleDefinition = fileReader.Read(row.DayFromEaster.ToString()),
@@ -447,7 +450,8 @@ namespace TypiconMigrationTool
                 {
                     Name = file.name,
                     RuleDefinition = file.content,
-                    Owner = typiconEntity
+                    OwnerId = typiconEntity.Id,
+                    //Owner = typiconEntity
                 };
                 typiconEntity.CommonRules.Add(commonRule);
             }

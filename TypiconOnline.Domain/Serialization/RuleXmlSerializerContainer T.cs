@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Serialization
     /// Реализация контейнера фабрик для xml-вариации представления элементов правил
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class RuleXmlSerializerContainer<T> : RuleSerializerContainerBase<T> where T: RuleElement
+    public class RuleXmlSerializerContainer<T> : RuleSerializerContainerBase<T> where T: IRuleElement
     {
         public RuleXmlSerializerContainer(IRuleSerializerRoot serializerRoot) : base(serializerRoot, new XmlDescriptor()) { }
 

@@ -61,7 +61,8 @@
     <Compile Include="Implementations\Books\TheotokionAppService.cs" />
     <Compile Include="Caching\CachingScheduleService.cs" />
     <Compile Include="Caching\CachingTypiconEntityService.cs" />
-    <Compile Include="Implementations\CustomRuleSettingsFactory.cs" />
+    <Compile Include="Implementations\CustomScheduleDataCalculator.cs" />
+    <Compile Include="Implementations\Extensions\ITemplateHavingEntityExtensions.cs" />
     <Compile Include="Implementations\Extensions\MenologyRuleExtensions.cs" />
     <Compile Include="Implementations\FileReader.cs" />
     <Compile Include="Implementations\HtmlInnerScheduleWeekViewer.cs" />
@@ -70,7 +71,9 @@
     <Compile Include="Implementations\ModificationsRuleHandler.cs" />
     <Compile Include="Implementations\ModifiedRuleService.cs" />
     <Compile Include="Implementations\ModifiedYearFactory.cs" />
+    <Compile Include="Implementations\ScheduleDataCalculator.cs" />
     <Compile Include="Interfaces\IModifiedYearFactory.cs" />
+    <Compile Include="Interfaces\IScheduleDataCalculator.cs" />
     <Compile Include="Interfaces\IWeekDayAppService.cs" />
     <Compile Include="Interfaces\IWeekDayAppFactory.cs" />
     <Compile Include="Interfaces\IModifiedRuleService.cs" />
@@ -132,12 +135,15 @@
     <Compile Include="Messaging\Books\UpdateTheotokionResponse.cs" />
     <Compile Include="Messaging\Common\CreateItemTextRequest.cs" />
     <Compile Include="Messaging\Schedule\GetRuleSettingsRequest.cs" />
+    <Compile Include="Messaging\Schedule\ScheduleDataCalculatorResponse.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleDayRequest.cs" />
+    <Compile Include="Messaging\Schedule\GetRuleSettingsResponse.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleDayResponse.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleWeekRequest.cs" />
     <Compile Include="Messaging\Schedule\GetScheduleWeekResponse.cs" />
     <Compile Include="Messaging\Schedule\GetSequenceRequest.cs" />
     <Compile Include="Messaging\Schedule\GetSequenceResponse.cs" />
+    <Compile Include="Messaging\Schedule\ScheduleDataCalculatorRequest.cs" />
     <Compile Include="Messaging\Typicon\DeleteTypiconEntityRequest.cs" />
     <Compile Include="Messaging\Typicon\DeleteTypiconEntityResponse.cs" />
     <Compile Include="Messaging\Typicon\GetTypiconEntitiesResponse.cs" />

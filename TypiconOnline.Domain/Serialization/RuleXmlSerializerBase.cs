@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Serialization
 
         public IEnumerable<string> ElementNames { get; protected set; }
 
-        public virtual RuleElement Deserialize(IDescriptor descriptor, IAsAdditionElement parent)
+        public virtual IRuleElement Deserialize(IDescriptor descriptor, IAsAdditionElement parent)
         {
             RuleElement element = null;
 
@@ -44,6 +44,6 @@ namespace TypiconOnline.Domain.Serialization
         protected abstract RuleElement CreateObject(CreateObjectRequest req);
         protected abstract void FillObject(FillObjectRequest req);
 
-        public abstract string Serialize(RuleElement element);
+        public abstract string Serialize(IRuleElement element);
     }
 }

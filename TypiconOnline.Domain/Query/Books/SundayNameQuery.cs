@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Books
@@ -17,14 +18,14 @@ namespace TypiconOnline.Domain.Query.Books
         /// <param name="language">Язык локализации</param>
         /// <param name="stringToPaste">Строка, которая будет вставлена после названия Недели, перед гласом</param>
         /// <returns>Возвращает строку с наименованием воскресного дня. </returns>
-        public SundayNameQuery(DateTime date, string language, string stringToPaste = null)
+        public SundayNameQuery(DateTime date, LanguageSettings language, string stringToPaste = null)
         {
             Date = date;
             Language = language;
             StringToPaste = stringToPaste;
         }
         public DateTime Date { get; }
-        public string Language { get; }
+        public LanguageSettings Language { get; }
         public string StringToPaste { get; }
     }
 }

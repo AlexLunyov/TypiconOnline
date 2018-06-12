@@ -10,7 +10,7 @@ namespace TypiconOnline.Domain.Query.Typicon
         public CommonRuleQuery(int typiconId, string name)
         {
             TypiconId = typiconId;
-            Name = Name;
+            Name = name;
         }
 
         public int TypiconId { get; }

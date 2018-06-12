@@ -22,6 +22,8 @@ namespace TypiconOnline.WebApi.Controllers
     [Route("[controller]")]
     public class BerlukiRuController : Controller
     {
+        const int TYPICON_ID = 1;
+
         IScheduleService _scheduleService;
         IUnitOfWork unitOfWork;
 
@@ -46,8 +48,6 @@ namespace TypiconOnline.WebApi.Controllers
 
         private ActionResult GetHtmlString(DateTime date)
         {
-            var typicon = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
-            
             if ((date.DayOfWeek == DayOfWeek.Sunday) && (date.Hour > 17))
             {
                 date = date.AddDays(1);
@@ -56,7 +56,7 @@ namespace TypiconOnline.WebApi.Controllers
             var weekRequest = new GetScheduleWeekRequest()
             {
                 Date = date,
-                Typicon = typicon,
+                TypiconId = TYPICON_ID,
                 Handler = new ScheduleHandler(),
                 CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };

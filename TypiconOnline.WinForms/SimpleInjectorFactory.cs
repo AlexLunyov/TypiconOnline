@@ -53,7 +53,8 @@ namespace TypiconOnline.WinForms
             container.Register<IScheduleService, ScheduleService>();
             container.Register<IScheduleDayNameComposer, ScheduleDayNameComposer>();
             container.Register<IRuleSerializerRoot, RuleSerializerRoot>();
-            container.Register<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>(); 
+            container.Register<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
+            container.Register<IScheduleDataCalculator, ScheduleDataCalculator>();
             container.Register<IModifiedRuleService, ModifiedRuleService>(); 
             container.Register<IModifiedYearFactory, ModifiedYearFactory>(); 
             container.Register<IDocxTemplateService, DocxTemplateService>();

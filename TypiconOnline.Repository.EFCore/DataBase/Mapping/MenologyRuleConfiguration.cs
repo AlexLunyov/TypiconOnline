@@ -16,6 +16,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
             builder.HasOne(e => e.Template).
                 WithMany()
                 .OnDelete(DeleteBehavior.SetNull)
+                .HasForeignKey(c => c.TemplateId)
                 ;
         }
     }

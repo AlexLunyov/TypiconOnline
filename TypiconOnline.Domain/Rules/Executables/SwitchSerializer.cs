@@ -54,7 +54,7 @@ namespace TypiconOnline.Domain.Rules.Executables
             }
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

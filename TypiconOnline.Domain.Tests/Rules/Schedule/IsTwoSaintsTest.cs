@@ -45,7 +45,6 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             MenologyRule rule = typiconEntity.GetMenologyRule(new DateTime(2017, 09, 28));
             rule.RuleDefinition = xml;
 
-            handler.Settings.TypiconRule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
 
             rule.GetRule(serializer).Interpret(handler);
@@ -64,7 +63,6 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             rule.DayWorships.AddRange(triodRule.DayWorships);
 
-            handler.Settings.TypiconRule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
 
             handler.ClearResult();
@@ -80,7 +78,6 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             rule = typiconEntity.GetMenologyRule(new DateTime(2017, 5, 31));
             rule.RuleDefinition = xml;
 
-            handler.Settings.TypiconRule = rule;
             handler.Settings.DayWorships = rule.DayWorships;
 
             handler.ClearResult();

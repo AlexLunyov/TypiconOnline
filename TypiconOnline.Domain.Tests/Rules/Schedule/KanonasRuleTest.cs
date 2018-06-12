@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.Domain.Books.Oktoikh;
+using TypiconOnline.Domain.Query.Books;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
@@ -24,32 +26,13 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void KanonasRule_FromDB()
         {
-            var unitOfWork = UnitOfWorkFactory.Create();
-
-            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
+            DateTime date = new DateTime(2017, 11, 11);
+            string xml = TestDataXmlReader.GetXmlString("KanonasRuleTest.xml");
 
             ServiceSequenceHandler handler = new ServiceSequenceHandler()
             {
-                Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru") }
+                Settings = RuleHandlerSettingsTestFactory.Create(1, date, xml)
             };
-
-            string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
-            FileReader reader = new FileReader(folderPath);
-            string xml = reader.Read("KanonasRuleTest.xml");
-
-            DateTime date = new DateTime(2017, 11, 11);
-
-            MenologyRule rule = typiconEntity.GetMenologyRule(date);
-            rule.RuleDefinition = xml;
-
-            handler.Settings.TypiconRule = rule;
-            handler.Settings.DayWorships = rule.DayWorships;
-            handler.Settings.Date = date;
-
-            var bookStorage = BookStorageFactory.Create();
-
-            OktoikhDay oktoikhDay = bookStorage.Oktoikh.Get(date);
-            handler.Settings.OktoikhDay = oktoikhDay;
 
             handler.ClearResult();
             KanonasRule kanonasRule = TestRuleSerializer.Deserialize<KanonasRule>(xml);

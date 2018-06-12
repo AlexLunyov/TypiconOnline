@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             string xml = TestDataXmlReader.GetXmlString("YmnosCutomRuleTest_InStructureGroup.xml");
 
-            var settings = new RuleHandlerSettingsTestFactory().CreateSettings(new DateTime(2017, 11, 09), xml);
+            var settings = new RuleHandlerSettingsTestFactory().CreateSettings(1, new DateTime(2017, 11, 09), xml);
 
             var mockFactory = new Mock<IRuleHandler>();
             mockFactory.Setup(c => c.Execute((It.IsAny<ICustomInterpreted>())));
@@ -51,7 +51,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             string xml = TestDataXmlReader.GetXmlString("YmnosCutomRuleTest_InStructureDoxastichon.xml");
 
-            var settings = new RuleHandlerSettingsTestFactory().CreateSettings(new DateTime(2017, 11, 09), xml);
+            var settings = new RuleHandlerSettingsTestFactory().CreateSettings(1, new DateTime(2017, 11, 09), xml);
 
             var mockFactory = new Mock<IRuleHandler>();
             mockFactory.Setup(c => c.Execute((It.IsAny<ICustomInterpreted>())));
@@ -70,7 +70,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             string xml = TestDataXmlReader.GetXmlString("YmnosCutomRuleTest_InStructureTheotokion.xml");
 
-            var settings = new RuleHandlerSettingsTestFactory().CreateSettings(new DateTime(2017, 11, 09), xml);
+            var settings = new RuleHandlerSettingsTestFactory().CreateSettings(1, new DateTime(2017, 11, 09), xml);
 
             var mockFactory = new Mock<IRuleHandler>();
             mockFactory.Setup(c => c.Execute((It.IsAny<ICustomInterpreted>())));

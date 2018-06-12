@@ -25,6 +25,13 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 
             builder.OwnsOne(c => c.SignName, k => k.Ignore(d => d.Items));
 
+            builder.HasOne(e => e.Template).
+                WithMany()
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasForeignKey(c => c.TemplateId)
+                .IsRequired(false)
+                ;
+
             //builder.Ignore(c => c.IsTemplate);
         }
     }

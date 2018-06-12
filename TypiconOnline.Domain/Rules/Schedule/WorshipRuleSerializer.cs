@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.WorshipRuleNodeName };
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

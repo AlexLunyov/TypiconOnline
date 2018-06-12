@@ -11,10 +11,10 @@ using TypiconOnline.Domain.Rules.Handlers;
 
 namespace TypiconOnline.Domain.Typicon
 {
-    public abstract class TypiconRule : RuleEntity
+    public abstract class TypiconRule : RuleEntity, ITemplateHavingEntity
     {
+        public virtual int TemplateId { get; set; }
         public virtual Sign Template { get; set; }
-
         /// <summary>
         /// Признак, использовать ли определение RuleDefinition как дополнение к шаблону Template
         /// </summary>
@@ -26,13 +26,13 @@ namespace TypiconOnline.Domain.Typicon
         /// <typeparam name="T"></typeparam>
         /// <param name="serializerRoot"></param>
         /// <returns></returns>
-        public override T GetRule<T>(IRuleSerializerRoot serializerRoot)
+        public override T GetRule<T>(IRuleSerializerRoot serializerRoot) 
         {
             T baseRule = base.GetRule<T>(serializerRoot);
 
             if ((baseRule == null) && string.IsNullOrEmpty(RuleDefinition))
             {
-                return Template?.GetRule<T>(serializerRoot);
+                return (Template != null ) ? Template.GetRule<T>(serializerRoot) : default(T);
             }
 
             return baseRule;

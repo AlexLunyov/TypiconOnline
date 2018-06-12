@@ -22,7 +22,7 @@ namespace TypiconOnline.Domain.Tests.ViewModels
 
             string xml = TestDataXmlReader.GetXmlString("ViewModel_Deserialize.xml");
 
-            var settings = factory.CreateSettings(new DateTime(2017, 11, 13), xml);
+            var settings = factory.CreateSettings(1, new DateTime(2017, 11, 13), xml);
 
             var handler = new ServiceSequenceHandler() { Settings = settings };
 
@@ -41,17 +41,13 @@ namespace TypiconOnline.Domain.Tests.ViewModels
         [Test]
         public void ViewModelSerialization_DeserializeFull()
         {
-            var unitOfWork = UnitOfWorkFactory.Create();
-
-            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
-
-            var service = ScheduleServiceFactory.Create(unitOfWork);
+            var service = ScheduleServiceFactory.Create();
 
             var scheduleDay = service.GetScheduleDay(new GetScheduleDayRequest()
             {
                 Handler = new ServiceSequenceHandler(),
                 Date = new DateTime(2017, 11, 13),
-                Typicon = typiconEntity
+                TypiconId = 1
             });
 
             var serializer = new TypiconSerializer();

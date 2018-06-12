@@ -22,7 +22,6 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
             ThrowExceptionIfInvalid = false;
         }
         public int TypiconId { get; set; }
-        public TypiconEntity Typicon { get; set; }
         public virtual DateTime Date { get; set; }
         
         //TODO: ???? нужен ли? - не нужен при первой возможности УДАЛИТЬ

@@ -35,88 +35,86 @@ namespace TypiconOnline.AppServices.Implementations
                 typeof(ModifyDay)
             };
         }
-
-        public override void ClearResult()
-        {
-            //nothing
-        }
+        
+        /// <summary>
+        /// Правило дня, для которого в данный момент совершается операция модификации.
+        /// Назначается извне перед вызовом метода Interpret у элемента правила.
+        /// </summary>
+        public DayRule ProcessingDayRule { get; set; }
 
         public override bool Execute(ICustomInterpreted element)
         {
             bool result = false;
 
-            if (element is ModifyReplacedDay modifyReplacedDay)
+            DayRule dayRule = GetDayRule(element);
+
+            if (dayRule != null)
             {
-                DayRule ruleToModify;
-
-                if (modifyReplacedDay.Kind == KindOfReplacedDay.Menology)
-                {
-                    ruleToModify = queryProcessor.Process(new MenologyRuleQuery(modifiedYear.TypiconEntityId, modifyReplacedDay.DateToReplaceCalculated));
-                }
-                else //if ((element as ModifyReplacedDay).Kind == RuleConstants.KindOfReplacedDay.triodion)
-                {
-                    ruleToModify = queryProcessor.Process(new TriodionRuleQuery(modifiedYear.TypiconEntityId, modifyReplacedDay.DateToReplaceCalculated));
-                }
-
-                int? priority = modifyReplacedDay.Priority;
-
-                if (priority == null)
-                {
-                    priority = ruleToModify.Template.Priority;
-                }
-
-                var request = CreateRequest(ruleToModify, modifyReplacedDay, (int)priority);
-
-                modifiedYear.AddModifiedRule(request);
-
-                result = true;
-            }
-            else if ((element is ModifyDay modifyDay) 
-                && (modifyDay.MoveDateCalculated.Year == modifiedYear.Year))
-            {
-                int? priority = modifyDay.Priority;
-
-                DayRule dayRule = FindDayRule(_settings);
+                int? priority = (element as ModifyDay).Priority;
 
                 if (priority == null)
                 {
                     priority = dayRule.Template.Priority;
                 }
 
-                var request = CreateRequest(dayRule, modifyDay, (int)priority);
+                var request = CreateRequest(dayRule, element as ModifyDay, (int)priority);
 
                 modifiedYear.AddModifiedRule(request);
 
                 result = true;
             }
 
-            ModificationsRuleRequest CreateRequest(DayRule caller, ModifyDay md, int priority)
+            return result;
+        }
+
+        private ModificationsRuleRequest CreateRequest(DayRule caller, ModifyDay md, int priority)
+        {
+            return new ModificationsRuleRequest()
             {
-                return new ModificationsRuleRequest()
+                Caller = caller,
+                Date = md.MoveDateCalculated,
+                Priority = priority,
+                ShortName = md.ShortName,
+                AsAddition = md.AsAddition,
+                IsLastName = md.IsLastName,
+                UseFullName = md.UseFullName,
+                SignNumber = md.SignNumber,
+                Filter = md.Filter
+            };
+        }
+
+        private DayRule GetDayRule(ICustomInterpreted element)
+        {
+            DayRule result = null;
+
+            if (element is ModifyReplacedDay modifyReplacedDay)
+            {
+                if (modifyReplacedDay.Kind == KindOfReplacedDay.Menology)
                 {
-                    Caller = caller,
-                    Date = md.MoveDateCalculated,
-                    Priority = priority,
-                    ShortName = md.ShortName,
-                    AsAddition = md.AsAddition,
-                    IsLastName = md.IsLastName,
-                    UseFullName = md.UseFullName,
-                    SignNumber = md.SignNumber,
-                    Filter = md.Filter
-                };
+                    result = queryProcessor.Process(new MenologyRuleQuery(modifiedYear.TypiconEntityId, modifyReplacedDay.DateToReplaceCalculated));
+                }
+                else
+                {
+                    result = queryProcessor.Process(new TriodionRuleQuery(modifiedYear.TypiconEntityId, modifyReplacedDay.DateToReplaceCalculated));
+                }
+            }
+            else if ((element is ModifyDay modifyDay)
+                && (modifyDay.MoveDateCalculated.Year == modifiedYear.Year))
+            {
+                result = ProcessingDayRule;
             }
 
             return result;
         }
 
-        private DayRule FindDayRule(RuleHandlerSettings settings)
+        public override void ClearResult()
         {
-            return (settings.TypiconRule is DayRule) ? settings.TypiconRule as DayRule : FindDayRule(settings.Addition);
+            //nothing
         }
 
-        //public override RenderContainer GetResult()
+        //private DayRule FindDayRule(RuleHandlerSettings settings)
         //{
-        //    throw new NotImplementedException();
+        //    return (settings.TypiconRule is DayRule) ? settings.TypiconRule as DayRule : FindDayRule(settings.Addition);
         //}
     }
 }

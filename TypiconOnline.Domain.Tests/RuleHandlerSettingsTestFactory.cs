@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Query.Books;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Tests.Rules;
@@ -25,30 +27,27 @@ namespace TypiconOnline.Domain.Tests
             typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
         }
 
-        public RuleHandlerSettings CreateSettings(DateTime date, string ruleDefinition, RuleHandlerSettings addition = null)
+        public RuleHandlerSettings CreateSettings(int typiconId, DateTime date, string ruleDefinition, RuleHandlerSettings addition = null)
         {
-            var menologyRule = typiconEntity.GetMenologyRule(date);
-            menologyRule.RuleDefinition = ruleDefinition;
-
-            var bookStorage = BookStorageFactory.Create();
-            var oktoikhDay = bookStorage.Oktoikh.Get(date);
+            var menologyRule = DataQueryProcessorFactory.Instance.Process(new MenologyRuleQuery(1, date));
+            var oktoikhDay = DataQueryProcessorFactory.Instance.Process(new OktoikhDayQuery(date));
 
             var ruleContainer = TestRuleSerializer.Deserialize<RootContainer>(ruleDefinition);// menologyRule.GetRule<ExecContainer>(TestRuleSerializer.Root);
 
             return new RuleHandlerSettings
             {
+                TypiconId = typiconId,
                 Date = date,
                 Addition = addition,
-                TypiconRule = menologyRule,
                 DayWorships = menologyRule.DayWorships,
                 OktoikhDay = oktoikhDay,
                 RuleContainer = ruleContainer
             };
         }
 
-        public static RuleHandlerSettings Create(DateTime date, string ruleDefinition, RuleHandlerSettings addition = null)
+        public static RuleHandlerSettings Create(int typiconId, DateTime date, string ruleDefinition, RuleHandlerSettings addition = null)
         {
-            return new RuleHandlerSettingsTestFactory().CreateSettings(date, ruleDefinition, addition);
+            return new RuleHandlerSettingsTestFactory().CreateSettings(typiconId, date, ruleDefinition, addition);
         }
     }
 }

@@ -75,7 +75,7 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
             ItemText element = ser.Deserialize<ItemText>(xmlString);
 
             Assert.IsNotNull(element);
-            Assert.IsFalse(element.IsEmpty);
+            Assert.AreEqual(4, element.Items.Count());
         }
 
         [Test]

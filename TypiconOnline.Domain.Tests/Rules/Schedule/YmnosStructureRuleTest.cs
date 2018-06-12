@@ -23,36 +23,15 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void YmnosStructureRule_FromRealDB()
         {
-            var unitOfWork = UnitOfWorkFactory.Create();
-
-            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
+            DateTime date = new DateTime(2017, 11, 09);
+            string xml = TestDataXmlReader.GetXmlString("YmnosStructureRuleTest.xml");
 
             ServiceSequenceHandler handler = new ServiceSequenceHandler()
             {
-                Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru") }
+                Settings = RuleHandlerSettingsTestFactory.Create(1, date, xml)
             };
 
-            string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
-            FileReader reader = new FileReader(folderPath);
-            string xml = reader.Read("YmnosStructureRuleTest.xml");
-
-            //Дата --11-09 exists - true
-            DateTime date = new DateTime(2017, 11, 09);
-
-            MenologyRule rule = typiconEntity.GetMenologyRule(date);
-            rule.RuleDefinition = xml;
-
-            handler.Settings.TypiconRule = rule;
-            handler.Settings.DayWorships = rule.DayWorships;
-            handler.Settings.Date = date;
-
-            var bookStorage = BookStorageFactory.Create();
-
-            OktoikhDay oktoikhDay = bookStorage.Oktoikh.Get(date);
-
-            handler.Settings.OktoikhDay = oktoikhDay;
-
-            var ruleContainer = TestRuleSerializer.Deserialize<SedalenRule>(xml);// rule.GetRule<SedalenRule>(TestRuleSerializer.Root);
+            var ruleContainer = TestRuleSerializer.Deserialize<SedalenRule>(xml);
             ruleContainer.Interpret(handler);
 
             Assert.AreEqual(3, ruleContainer.Structure.YmnosStructureCount);

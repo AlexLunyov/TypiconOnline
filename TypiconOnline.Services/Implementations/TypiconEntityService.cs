@@ -192,7 +192,8 @@ namespace TypiconOnline.AppServices.Implementations
                     {
                         Name = name,
                         RuleDefinition = content,
-                        Owner = typiconEntity
+                        OwnerId = typiconEntity.Id,
+                        //Owner = typiconEntity
                     };
                     typiconEntity.CommonRules.Add(commonRule);
                 }

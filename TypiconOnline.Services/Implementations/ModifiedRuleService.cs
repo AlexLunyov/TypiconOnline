@@ -25,10 +25,7 @@ namespace TypiconOnline.AppServices.Implementations
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork in ModifiedRuleService");
             this.modifiedYearFactory = modifiedYearFactory ?? throw new ArgumentNullException("modifiedYearFactory in ModifiedRuleService");
-            //Serializer = serializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
         }
-
-        //public IRuleSerializerRoot Serializer { get; }
 
         /// <summary>
         /// Возвращает список измененных правил для конкретной даты

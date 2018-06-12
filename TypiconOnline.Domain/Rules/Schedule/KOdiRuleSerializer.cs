@@ -35,7 +35,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             (req.Element as KOdiRule).FillElement(req.Descriptor.Element);
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

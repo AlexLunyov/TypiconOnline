@@ -6,6 +6,7 @@ using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
+using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.AppServices.Tests
@@ -16,15 +17,16 @@ namespace TypiconOnline.AppServices.Tests
         [Test]
         public void TypiconEntityService_ClearModifiedYears()
         {
-            var _unitOfWork = UnitOfWorkFactory.Create();
+            var unitOfWork = UnitOfWorkFactory.Create();
+            CreateModifiedYear(2017, unitOfWork);
 
             //BookStorage.Instance = BookStorageFactory.Create();
 
-            TypiconEntityService service = new TypiconEntityService(_unitOfWork);
-
-            GetTypiconEntityResponse response = service.GetTypiconEntity(1);
+            TypiconEntityService service = new TypiconEntityService(unitOfWork);
 
             service.ClearModifiedYears(1);
+
+            GetTypiconEntityResponse response = service.GetTypiconEntity(1);
 
             Assert.AreEqual(response.TypiconEntity.ModifiedYears.Count, 0);
         }
@@ -33,6 +35,8 @@ namespace TypiconOnline.AppServices.Tests
         public void TypiconEntity_RemoveExlicitlyModifiedRule()
         {
             var unitOfWork = UnitOfWorkFactory.Create();
+
+            CreateModifiedYear(2017, unitOfWork);
             var modifiedRule = unitOfWork.Repository<ModifiedRule>().Get(c => c.Parent.Year == 2017);
 
             Assert.IsNotNull(modifiedRule);
@@ -73,6 +77,17 @@ namespace TypiconOnline.AppServices.Tests
             GetTypiconEntityResponse response = service.GetTypiconEntity(1);
 
             Assert.NotNull(response.TypiconEntity);
+        }
+
+        private void CreateModifiedYear(int year, IUnitOfWork unitOfWork)
+        {
+            var serializerRoot = TestRuleSerializer.Create(unitOfWork);
+
+            var settingsFactory = new RuleHandlerSettingsFactory(serializerRoot);
+
+            var modifiedYearFactory = new ModifiedYearFactory(unitOfWork, serializerRoot, settingsFactory);
+
+            modifiedYearFactory.Create(1, year);
         }
     }
 }

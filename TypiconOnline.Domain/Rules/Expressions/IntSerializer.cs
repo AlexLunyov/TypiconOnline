@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
             (req.Element as Int).ValueExpression = new ItemInt(req.Descriptor.Element.InnerText);
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

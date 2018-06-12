@@ -9,12 +9,12 @@ using TypiconOnline.Domain.Typicon;
 
 namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 {
-    class CommonRuleConfiguration : IEntityTypeConfiguration<CommonRule>
+    class CommonRuleConfiguration : IEntityTypeConfiguration<CommonRule>    
     {
         public void Configure(EntityTypeBuilder<CommonRule> builder)
         {
-            builder.HasOne(e => e.Owner).
-                WithMany().IsRequired();
+            //builder.HasOne(e => e.Owner).
+            //    WithMany().IsRequired();
         }
     }
 }

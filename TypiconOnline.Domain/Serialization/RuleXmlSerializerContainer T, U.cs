@@ -9,7 +9,7 @@ using TypiconOnline.Domain.Rules;
 
 namespace TypiconOnline.Domain.Serialization
 {
-    public class RuleXmlSerializerContainer<T, U> : RuleXmlSerializerContainer<T> where T : RuleElement
+    public class RuleXmlSerializerContainer<T, U> : RuleXmlSerializerContainer<T> where T : IRuleElement
     {
         public RuleXmlSerializerContainer(IRuleSerializerRoot root) : base(root) { }
 

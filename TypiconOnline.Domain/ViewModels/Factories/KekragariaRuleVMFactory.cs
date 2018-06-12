@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Schedule;
@@ -24,8 +25,11 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
         protected virtual void ConstructWithCommonRule(CreateViewModelRequest<YmnosStructureRule> req, string key)
         {
-            List<RuleElement> children = req.Handler.Settings.TypiconRule.Owner.GetChildren(
-                new CommonRuleServiceRequest() { Key = key, RuleSerializer = Serializer }).ToList();
+            var children = Serializer.QueryProcessor
+                    .Process(new CommonRuleChildrenQuery(req.Handler.Settings.TypiconId, key, Serializer)).ToList();
+
+            //List<RuleElement> children = req.Handler.Settings.TypiconRule.Owner.GetChildren(
+            //    new CommonRuleServiceRequest() { Key = key, RuleSerializer = Serializer }).ToList();
 
             if (req.Element.Structure.Groups.Count > 0)
             {

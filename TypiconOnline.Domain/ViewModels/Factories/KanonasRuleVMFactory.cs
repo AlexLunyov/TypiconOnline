@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Schedule;
@@ -213,8 +214,9 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             if (headers == null)
             {
-                headers = req.Handler.Settings.TypiconRule.Owner.GetChildren(
-                    new CommonRuleServiceRequest() { Key = CommonRuleConstants.KanonasRule, RuleSerializer = Serializer }).Cast<TextHolder>().ToList();
+                headers = Serializer.QueryProcessor
+                    .Process(new CommonRuleChildrenQuery(req.Handler.Settings.TypiconId, CommonRuleConstants.KanonasRule, Serializer))
+                    .Cast<TextHolder>().ToList();
             }
             return headers;
         }

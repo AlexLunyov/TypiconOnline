@@ -53,7 +53,7 @@ namespace TypiconOnline.Domain.Query.Books
 
             string text = CalculateStringValue(date, dEaster, dPastEaster, query.StringToPaste);
 
-            return new ItemTextUnit() { Language = query.Language, Text = text };
+            return new ItemTextUnit() { Language = query.Language.Name, Text = text };
         }
 
         private string CalculateStringValue(DateTime date, DateTime dEaster, DateTime dPastEaster, string stringToPaste)

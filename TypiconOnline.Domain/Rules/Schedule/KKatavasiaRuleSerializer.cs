@@ -28,7 +28,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             (req.Element as KKatavasiaRule).Name = req.Descriptor.Element.Attributes[RuleConstants.KKatavasiaNameAttr]?.Value;
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

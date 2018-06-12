@@ -20,30 +20,13 @@ namespace TypiconOnline.AppServices.Implementations
 {
     public class ScheduleService : IScheduleService
     {
-        //ITypiconEntityService _typiconEntityService;
-        IRuleHandlerSettingsFactory settingsFactory;// = new RuleHandlerSettingsFactory();
-        //IModifiedRuleService modifiedRuleService;
-        //IRuleHandler _ruleHandler;
-        //BookStorage _bookStorage;
+        IScheduleDataCalculator dataCalculator;
         IScheduleDayNameComposer nameComposer;
-        //IRuleSerializerRoot ruleSerializer;
 
-        public ScheduleService(/*ITypiconEntityService typiconEntityService
-            , */IRuleHandlerSettingsFactory settingsFactory
-            //, IRuleSerializerRoot ruleSerializer
-            //, IModifiedRuleService modifiedRuleService
-            , IScheduleDayNameComposer nameComposer
-            //, IRuleHandler ruleHandler
-            )
+        public ScheduleService(IScheduleDataCalculator dataCalculator, IScheduleDayNameComposer nameComposer)
         {
-            //_typiconEntityService = typiconEntityService ?? throw new ArgumentNullException("ITypiconEntityService");
-            this.settingsFactory = settingsFactory ?? throw new ArgumentNullException("IRuleHandlerSettingsFactory");
-            //this.modifiedRuleService = modifiedRuleService ?? throw new ArgumentNullException("modifiedRuleService");
-            //this.ruleSerializer = ruleSerializer ?? throw new ArgumentNullException("IRuleSerializerRoot");
-
-            this.nameComposer = nameComposer ?? throw new ArgumentNullException("nameComposer");//;new ScheduleDayNameComposer(this.ruleSerializer.BookStorage.Oktoikh);
-
-            //_ruleHandler = ruleHandler ?? throw new ArgumentNullException("IRuleHandler");
+            this.dataCalculator = dataCalculator ?? throw new ArgumentNullException("dataCalculator");
+            this.nameComposer = nameComposer ?? throw new ArgumentNullException("nameComposer");
         }
 
         public GetScheduleDayResponse GetScheduleDay(GetScheduleDayRequest request)
@@ -52,7 +35,7 @@ namespace TypiconOnline.AppServices.Implementations
             HandlingMode mode = request.CheckParameters.GetMode();
             
             //Формируем данные для обработки
-            var settingsRequest = new GetRuleSettingsRequest()
+            var settingsRequest = new ScheduleDataCalculatorRequest()
             {
                 Date = request.Date,
                 TypiconId = request.TypiconId,
@@ -81,10 +64,12 @@ namespace TypiconOnline.AppServices.Implementations
 
         
 
-        private ScheduleDay GetOrFillScheduleDay(GetRuleSettingsRequest request, ScheduleHandler handler, ScheduleDay scheduleDay = null)
+        private ScheduleDay GetOrFillScheduleDay(ScheduleDataCalculatorRequest request, ScheduleHandler handler, ScheduleDay scheduleDay = null)
         {
             //Формируем данные для обработки
-            var settings = settingsFactory.Create(request);
+            var response = dataCalculator.Calculate(request);
+
+            var settings = response.Settings;
 
             handler.Settings = settings;
 
@@ -95,7 +80,7 @@ namespace TypiconOnline.AppServices.Implementations
             if (scheduleDay == null)
             {
                 //Sign sign = (settings.Rule is Sign s) ? s : GetTemplateSign(settings.Rule.Template);
-                Sign sign = GetRootAdditionSign(settings);
+                Sign sign = response.Rule.Template.GetPredefinedTemplate();
 
                 //Если settings.SignNumber определен в ModifiedRule, то назначаем его
                 int signNumber = settings.SignNumber ?? (int)sign.Number;
@@ -103,7 +88,7 @@ namespace TypiconOnline.AppServices.Implementations
                 scheduleDay = new ScheduleDay
                 {
                     //задаем имя дню
-                    Name = nameComposer.Compose(settings, request.Date),
+                    Name = nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.DayWorships, settings.Language),
                     Date = request.Date,
                     SignNumber = signNumber,
                     SignName = sign.SignName.FirstOrDefault(settings.Language.Name),
@@ -118,18 +103,6 @@ namespace TypiconOnline.AppServices.Implementations
             return scheduleDay;
         }
 
-        private Sign GetRootAdditionSign(RuleHandlerSettings settings)
-        {
-            if (settings.Addition == null)
-            {
-                var sign = (settings.TypiconRule is Sign s) ? s : settings.TypiconRule.Template;
-
-                return sign?.GetPredefinedTemplate();
-            }
-            
-            return GetRootAdditionSign(settings.Addition);
-        }
-
         public GetScheduleWeekResponse GetScheduleWeek(GetScheduleWeekRequest request)
         {
             ScheduleWeek week = new ScheduleWeek() 
@@ -141,7 +114,6 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 Date = request.Date,
                 TypiconId = request.TypiconId,
-                Typicon = request.Typicon,
                 Handler = request.Handler,
                 Language = request.Language,
                 ThrowExceptionIfInvalid = request.ThrowExceptionIfInvalid,

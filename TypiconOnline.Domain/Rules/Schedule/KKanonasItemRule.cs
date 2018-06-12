@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Правило для определения конкретного канона 
     /// </summary>
-    public class KKanonasItemRule : KanonasItemRuleBase, ICustomInterpreted
+    public class KKanonasItemRule : KanonasItemRuleBase
     {
         public KKanonasItemRule(string name) : base(name) { }
 

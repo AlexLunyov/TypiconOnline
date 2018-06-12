@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
             (req.Element as Date).ValueExpression = new ItemDate(req.Descriptor.Element.InnerText);
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

@@ -173,40 +173,6 @@ namespace TypiconMigrationTool
             }*/
         }
 
-        private static void TestDate(IUnitOfWork unitOfWork)
-        {
-            RuleHandler ruleHandler = new RuleHandler(unitOfWork);
-
-            while (true)
-            {
-                Console.WriteLine("Введите дату в формате дд-мм-гггг");
-                string line = Console.ReadLine();
-
-                DateTime date;
-
-                if (DateTime.TryParseExact(line, "dd-MM-yyyy", new CultureInfo("ru-RU"), DateTimeStyles.None, out date))
-                {
-                    ScheduleDay day = ruleHandler.GetDay(date);
-
-                    if (day != null)
-                    {
-                        StringBuilder stringBuilder = new StringBuilder();
-                        stringBuilder.AppendLine(day.Date.ToShortDateString());
-                        stringBuilder.AppendLine(day.Name.Text);
-                        foreach (WorshipRuleViewModel service in day.Worships)
-                        {
-                            stringBuilder.AppendLine(service.Time + " " + service.Name + " " + service.AdditionalName);
-                        }
-
-                        Console.WriteLine(stringBuilder.ToString());
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Неверный формат даты.");
-                }
-            }
-        }
 
         private static void Migrate(IUnitOfWork unitOfWork)
         {

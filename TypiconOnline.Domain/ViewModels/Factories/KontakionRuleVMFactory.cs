@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Schedule;
@@ -56,8 +57,9 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
         private (ViewModelItem Kontakion, ViewModelItem Ikos) GetHeaders(CreateViewModelRequest<KontakionRule> req, Kontakion kontakion)
         {
-            List<TextHolder> headers = req.Handler.Settings.TypiconRule.Owner.GetChildren(
-                    new CommonRuleServiceRequest() { Key = CommonRuleConstants.Kontakion, RuleSerializer = Serializer }).Cast<TextHolder>().ToList();
+            List<TextHolder> headers = Serializer.QueryProcessor
+                    .Process(new CommonRuleChildrenQuery(req.Handler.Settings.TypiconId, CommonRuleConstants.Kontakion, Serializer))
+                    .Cast<TextHolder>().ToList();
 
             var viewKontakion = ViewModelItemFactory.Create(headers[0], req.Handler, Serializer);
 

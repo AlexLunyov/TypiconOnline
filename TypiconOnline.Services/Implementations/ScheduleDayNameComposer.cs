@@ -25,37 +25,31 @@ namespace TypiconOnline.AppServices.Implementations
             this.queryProcessor = queryProcessor;
         }
 
-        public ItemTextUnit Compose(RuleHandlerSettings settings, DateTime date)
+        public ItemTextUnit Compose(DateTime date, int seniorRulePriority, ICollection<DayWorship> dayWorships, LanguageSettings language)
         {
-            //находим самое последнее правило - добавление
-            while (settings.Addition != null)
-            {
-                settings = settings.Addition;
-            }
+            var result = new ItemTextUnit() { Language = language.Name };
 
-            var result = new ItemTextUnit() { Language = settings.Language.Name };
-
-            if (settings.DayWorships == null || settings.DayWorships.Count == 0)
+            if (dayWorships == null || dayWorships.Count == 0)
             {
-                return new ItemTextUnit();
+                return result;
             }
 
             string resultString = "";
 
-            DayWorship seniorService = settings.DayWorships[0];
+            DayWorship seniorService = dayWorships.First();
 
             //собираем все имена текстов, кроме главного
-            if (settings.DayWorships.Count > 1)
+            if (dayWorships.Count > 1)
             {
-                for (int i = 1; i < settings.DayWorships.Count; i++)
+                for (int i = 1; i < dayWorships.Count; i++)
                 {
-                    resultString += settings.DayWorships[i].WorshipName.FirstOrDefault(settings.Language.Name).Text + " ";
+                    resultString += dayWorships.ElementAt(i).WorshipName.FirstOrDefault(language.Name).Text + " ";
                 }
             }
 
             //а теперь разбираемся с главным
 
-            string s = seniorService.WorshipName.FirstOrDefault(settings.Language.Name).Text;
+            string s = seniorService.WorshipName.FirstOrDefault(language.Name).Text;
 
             if (date.DayOfWeek != DayOfWeek.Sunday
                 || (date.DayOfWeek == DayOfWeek.Sunday
@@ -64,24 +58,21 @@ namespace TypiconOnline.AppServices.Implementations
                 resultString = $"{s} {resultString}";
             }
 
-            int priority = (settings.TypiconRule is Sign sign) ? sign.Priority : settings.TypiconRule.Template.Priority;
+            //Воскресный день
 
             if (/*(settings.Rule is MenologyRule)
                 && */(date.DayOfWeek == DayOfWeek.Sunday)
-                && (priority > 1))
+                && (seniorRulePriority > 1))
             {
                 //Если Триоди нет и воскресенье, находим название Недели из Октоиха
                 //и добавляем название Недели в начало Name
 
                 //Если имеется короткое название, то добавляем только его
+                var shortName = GetShortName(dayWorships, language.Name);
 
-                var sundayName = queryProcessor.Process(new SundayNameQuery(date, settings.Language.Name,
-                    GetShortName(settings.DayWorships, settings.Language.Name)));
+                var sundayName = queryProcessor.Process(new SundayNameQuery(date, language, shortName));
 
                 resultString = sundayName.Text + " " + resultString;
-
-                //жестко задаем воскресный день
-                //handlerRequest.Rule = inputRequest.TypiconEntity.Settings.TemplateSunday;
             }
 
             result.Text = resultString;
@@ -91,17 +82,17 @@ namespace TypiconOnline.AppServices.Implementations
 
         public ItemTextUnit GetWeekName(DateTime date, string language) => queryProcessor.Process(new WeekNameQuery(date, language, false));
 
-        private string GetShortName(List<DayWorship> dayServices, string language)
+        private string GetShortName(ICollection<DayWorship> dayServices, string language)
         {
             string result = "";
 
             for (int i = 0; i < dayServices.Count; i++)
             {
-                string s = dayServices[i].WorshipShortName.FirstOrDefault(language)?.Text;
+                string s = dayServices.ElementAt(i).WorshipShortName.FirstOrDefault(language)?.Text;
 
                 if (!string.IsNullOrEmpty(s))
                 {
-                    result = (!string.IsNullOrEmpty(result)) ? result + ", " + s : s;
+                    result = (!string.IsNullOrEmpty(result)) ? $"{result}, {s}" : s;
                 }
             }
 

@@ -37,6 +37,8 @@ namespace TypiconOnline.WinForms
 {
     public partial class StartForm : Form
     {
+        const int TYPICON_ID = 1;
+
         //private ScheduleHandling.ScheduleHandler _sh = null;
         private IUnitOfWork _unitOfWork;
         private IScheduleService _scheduleService;
@@ -65,14 +67,9 @@ namespace TypiconOnline.WinForms
 
             _typiconEntityService = container.GetInstance<ITypiconEntityService>();
 
-            GetTypiconEntityResponse response = _typiconEntityService.GetTypiconEntity(1);// _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
+            GetTypiconEntityResponse response = _typiconEntityService.GetTypiconEntity(TYPICON_ID);// _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
 
             _typiconEntity = response.TypiconEntity;
-
-            //EasterStorage.Instance.EasterDays = _unitOfWork.Repository<EasterItem>().GetAll().ToList();
-
-            IRuleSerializerRoot serializerRoot = container.GetInstance<IRuleSerializerRoot>();
-            var settingsFactory = container.GetInstance<IRuleHandlerSettingsFactory>();
 
             _scheduleService = container.GetInstance<IScheduleService>();
 
@@ -266,7 +263,6 @@ namespace TypiconOnline.WinForms
                 {
                     Date = SelectedDate,
                     TypiconId = _typiconEntity.Id,
-                    Typicon = _typiconEntity,
                     Handler = new ScheduleHandler(),
                     Language = "cs-ru",
                     ThrowExceptionIfInvalid = checkBoxException.Checked,
@@ -520,7 +516,7 @@ namespace TypiconOnline.WinForms
             GetScheduleDayRequest dayRequest = new GetScheduleDayRequest()
             {
                 Date = dateTimePickerTesting.Value,
-                Typicon = _typiconEntity,
+                TypiconId = TYPICON_ID,
                 Handler = new ScheduleHandler(),
                 CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };
@@ -609,7 +605,7 @@ namespace TypiconOnline.WinForms
                 GetScheduleDayRequest request = new GetScheduleDayRequest()
                 {
                     Date = monthCalendarSequence.SelectionStart,
-                    Typicon = _typiconEntity,
+                    TypiconId = TYPICON_ID,
                     Handler = new ServiceSequenceHandler(),
                     Language = "cs-ru",
                     ApplyParameters = CustomParameters,
@@ -656,10 +652,6 @@ namespace TypiconOnline.WinForms
 
         private void btnCustomRule_Click(object sender, EventArgs e)
         {
-            using (CustomRuleViewer dialog = new CustomRuleViewer())
-            {
-                // Show testDialog as a modal dialog and determine if DialogResult = OK.
-            }
         }
     }
 }

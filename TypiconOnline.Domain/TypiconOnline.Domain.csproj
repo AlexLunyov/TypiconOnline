@@ -34,6 +34,9 @@
     <Reference Include="JetBrains.Annotations, Version=11.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\packages\JetBrains.Annotations.11.1.0\lib\net20\JetBrains.Annotations.dll</HintPath>
     </Reference>
+    <Reference Include="Mapster, Version=3.1.8.0, Culture=neutral, PublicKeyToken=2f39883af23c29a8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapster.3.1.8\lib\net45\Mapster.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -86,8 +89,10 @@
     <Compile Include="Interfaces\IMergable.cs" />
     <Compile Include="Interfaces\IPsalterElement.cs" />
     <Compile Include="Books\Psalter\PsalterContext.cs" />
+    <Compile Include="Interfaces\IRuleElement.cs" />
     <Compile Include="Interfaces\IRulesExtractor.cs" />
     <Compile Include="Interfaces\IStructureRuleChildElement.cs" />
+    <Compile Include="Interfaces\ITemplateHavingEntity.cs" />
     <Compile Include="Interfaces\ITypiconSerializer.cs" />
     <Compile Include="Interfaces\IYmnosStructureRuleElement.cs" />
     <Compile Include="ItemTypes\ItemTextHeader.cs" />
@@ -115,11 +120,24 @@
     <Compile Include="Query\Typicon\AllMenologyRulesQueryHandler.cs" />
     <Compile Include="Query\Typicon\AllTriodionRulesQuery.cs" />
     <Compile Include="Query\Typicon\AllTriodionRulesQueryHandler.cs" />
+    <Compile Include="Query\Typicon\CommonRuleChildrenQuery.cs" />
+    <Compile Include="Query\Typicon\CommonRuleIndexedStringValueQuery.cs" />
+    <Compile Include="Query\Typicon\CommonRuleStringValueQuery.cs" />
+    <Compile Include="Query\Typicon\CommonRuleItemTextValueQuery.cs" />
+    <Compile Include="Query\Typicon\CommonRuleIndexedStringValueQueryHandler.cs" />
+    <Compile Include="Query\Typicon\CommonRuleStringValueQueryHandler.cs" />
     <Compile Include="Query\Typicon\CommonRuleQuery.cs" />
+    <Compile Include="Query\Typicon\CommonRuleChildrenQueryHandler.cs" />
+    <Compile Include="Query\Typicon\CommonRuleItemTextValueQueryHandler.cs" />
     <Compile Include="Query\Typicon\CommonRuleQueryHandler.cs" />
+    <Compile Include="Query\Typicon\AllSignsQuery.cs" />
     <Compile Include="Query\Typicon\MenologyRuleQuery.cs" />
+    <Compile Include="Query\Typicon\AllSignsQueryHandler.cs" />
     <Compile Include="Query\Typicon\MenologyRuleQueryHandler.cs" />
+    <Compile Include="Query\Typicon\SignDTO.cs" />
+    <Compile Include="Query\Typicon\SignQuery.cs" />
     <Compile Include="Query\Typicon\TriodionRuleQuery.cs" />
+    <Compile Include="Query\Typicon\SignQueryHandler.cs" />
     <Compile Include="Query\Typicon\TriodionRuleQueryHandler.cs" />
     <Compile Include="Query\UnitOfWorkHandlerBase.cs" />
     <Compile Include="Rules\Days\BookReading.cs" />
@@ -363,8 +381,6 @@
     <Compile Include="Serialization\XElementCreator.cs" />
     <Compile Include="Serialization\XmlNodeCreator.cs" />
     <Compile Include="Typicon\CommonRule.cs" />
-    <Compile Include="Typicon\CommonRuleExtensions.cs" />
-    <Compile Include="Typicon\CommonRuleServiceRequest.cs" />
     <Compile Include="Typicon\DayRule.cs" />
     <Compile Include="Typicon\Factories\TypiconEntityFactory.cs" />
     <Compile Include="Typicon\Modifications\ModifiedRule.cs" />

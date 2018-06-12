@@ -24,7 +24,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
             return new Equals(req.Descriptor.GetElementName());
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

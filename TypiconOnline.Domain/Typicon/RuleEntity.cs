@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Typicon
     /// </summary>
     public abstract class RuleEntity : EntityBase<int>
     {
-        RuleElement _rule;
+        IRuleElement _rule;
 
         /// <summary>
         /// Id Устава (TypiconEntity)
@@ -54,7 +54,7 @@ namespace TypiconOnline.Domain.Typicon
         /// <typeparam name="T">Коренной элемент</typeparam>
         /// <param name="serializerRoot">Сериализатор</param>
         /// <returns></returns>
-        public virtual T GetRule<T>(IRuleSerializerRoot serializerRoot) where T: RuleElement
+        public virtual T GetRule<T>(IRuleSerializerRoot serializerRoot) where T: IRuleElement
         {
             if (serializerRoot == null) throw new ArgumentNullException("IRuleSerializerRoot");
 
@@ -63,7 +63,7 @@ namespace TypiconOnline.Domain.Typicon
                 _rule = serializerRoot.Container<T>().Deserialize(RuleDefinition);
             }
 
-            return _rule as T;
+            return (T) _rule;
         }
 
         protected override void Validate()
@@ -74,7 +74,7 @@ namespace TypiconOnline.Domain.Typicon
             }
             else */if (_rule?.IsValid == false)
             {
-                AppendAllBrokenConstraints(_rule);
+                AppendAllBrokenConstraints(_rule.GetBrokenConstraints());
             }
         }
     }

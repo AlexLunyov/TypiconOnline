@@ -73,9 +73,17 @@ namespace TypiconOnline.Infrastructure.Common.Domain
             }
         }
 
+        protected void AppendAllBrokenConstraints(IReadOnlyCollection<BusinessConstraint> businessConstraints)
+        {
+            foreach (BusinessConstraint brokenBR in businessConstraints)
+            {
+                AddBrokenConstraint(brokenBR, string.Empty);
+            }
+        }
+
         protected void AppendAllBrokenConstraints(ValueObjectBase element)
         {
-            AppendAllBrokenConstraints(element, string.Empty);
+            AppendAllBrokenConstraints(element.GetBrokenConstraints());
         }
     }
 }

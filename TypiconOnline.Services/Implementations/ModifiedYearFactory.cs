@@ -22,11 +22,13 @@ namespace TypiconOnline.AppServices.Implementations
     {
         IUnitOfWork unitOfWork;
         IRuleSerializerRoot serializer;
+        IRuleHandlerSettingsFactory settingsFactory;
 
-        public ModifiedYearFactory(IUnitOfWork unitOfWork, IRuleSerializerRoot serializer)
+        public ModifiedYearFactory(IUnitOfWork unitOfWork, IRuleSerializerRoot serializer, IRuleHandlerSettingsFactory settingsFactory)
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork in ModifiedYearFactory");
             this.serializer = serializer ?? throw new ArgumentNullException("serializer in ModifiedYearFactory");
+            this.settingsFactory = settingsFactory ?? throw new ArgumentNullException("settingsFactory in ModifiedYearFactory");
         }
 
         public ModifiedYear Create(int typiconId, int year)
@@ -97,40 +99,23 @@ namespace TypiconOnline.AppServices.Implementations
                 InterpretRule(triodionRule, easter.AddDays(triodionRule.DaysFromEaster), handler);
             }
 
-            void InterpretRule(TypiconRule rule, DateTime dateToInterpret, ModificationsRuleHandler h)
+            void InterpretRule(DayRule rule, DateTime dateToInterpret, ModificationsRuleHandler h)
             {
                 if (rule != null)
                 {
-                    h.Settings = CreateSettings(modifiedYear.TypiconEntityId, rule, dateToInterpret, serializer);
+                    h.ProcessingDayRule = rule;
+
+                    h.Settings = settingsFactory.Create(new GetRuleSettingsRequest()
+                    {
+                        TypiconId = modifiedYear.TypiconEntityId,
+                        Rule = rule,
+                        Date = dateToInterpret
+                    });
 
                     //выполняем его
-                    h.Settings.RuleContainer.Interpret(h);
+                    h.Settings?.RuleContainer.Interpret(h);
                 }
             }
-        }
-
-        /// <summary>
-        /// Рекурсивно создает настройки для обработчика
-        /// </summary>
-        /// <returns></returns>
-        private RuleHandlerSettings CreateSettings(int typiconId, TypiconRule rule, DateTime dateToInterpret,
-            IRuleSerializerRoot serializer, RuleHandlerSettings additionalSettings = null)
-        {
-            var settings = new RuleHandlerSettings()
-            {
-                TypiconId = typiconId,
-                TypiconRule = rule,
-                RuleContainer = rule.GetRule<RootContainer>(serializer),
-                Date = dateToInterpret,
-                Addition = additionalSettings
-            };
-
-            if (rule.IsAddition && rule.Template != null)
-            {
-                settings = CreateSettings(typiconId, rule.Template, dateToInterpret, serializer, settings);
-            }
-
-            return settings;
         }
 
         private ModifiedYear InnerCreate(int typiconId, int year)

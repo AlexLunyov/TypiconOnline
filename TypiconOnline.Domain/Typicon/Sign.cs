@@ -1,12 +1,17 @@
 ﻿using System;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Executables;
 
 namespace TypiconOnline.Domain.Typicon
 {
-    public class Sign : TypiconRule
+    public class Sign : RuleEntity, ITemplateHavingEntity
     {
         public Sign() { }
+
+        public virtual int? TemplateId { get; set; }
+        public virtual Sign Template { get; set; }
+        public virtual bool IsAddition { get; set; }
 
         /// <summary>
         /// Предустановленный номер, согласно знакам служб Типикона. 
@@ -23,7 +28,7 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         public ItemText SignName { get; set; } = new ItemText();
 
-        public override string GetNameByLanguage(string language)
+        public string GetNameByLanguage(string language)
         {
             return SignName.FirstOrDefault(language).Text;
         }
@@ -54,11 +59,6 @@ namespace TypiconOnline.Domain.Typicon
             return result;
         }
 
-        /// <summary>
-        /// Возвращает предустановленный Знак службы. Если сам не является таковым, смотрит у родителя.
-        /// Если таковой отсутствует, возвращает Null.
-        /// </summary>
-        /// <returns></returns>
         public Sign GetPredefinedTemplate()
         {
             return (Number != null) ? this : Template?.GetPredefinedTemplate();

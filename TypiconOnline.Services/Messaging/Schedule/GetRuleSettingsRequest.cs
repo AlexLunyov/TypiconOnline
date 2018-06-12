@@ -4,25 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Books.Oktoikh;
+using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
 
 namespace TypiconOnline.AppServices.Messaging.Schedule
 {
-    public class GetRuleSettingsRequest
+    /// <summary>
+    /// Используется для создания настроек для IRuleHandler
+    /// </summary>
+    public class GetRuleSettingsRequest : ScheduleDataCalculatorRequest
     {
-        //public MenologyRule MenologyRule { get; set; }
-        //public TriodionRule TriodionRule { get; set; }
-        //public OktoikhDay OktoikhDay { get; set; }
-        //public ModifiedRule ModifiedRule { get; set; }
-        //public TypiconEntity Typicon { get; set; }
-        public int TypiconId { get; set; }
-        public DateTime Date { get; set; }
-        public string Language { get; set; }
-        public CustomParamsCollection<IRuleApplyParameter> ApplyParameters { get; set; }
-        public CustomParamsCollection<IRuleCheckParameter> CheckParameters { get; set; }
+        public GetRuleSettingsRequest() { }
+
+        public GetRuleSettingsRequest(ScheduleDataCalculatorRequest request)
+        {
+            
+            TypiconId = request.TypiconId;
+            Date = request.Date;
+            Language = request.Language;
+            ApplyParameters = request.ApplyParameters;
+            CheckParameters = request.CheckParameters;
+        }
+
+        public ITemplateHavingEntity Rule { get; set; }
+        public IEnumerable<DayWorship> DayWorships { get; set; }
+        public OktoikhDay OktoikhDay { get; set; }
+        public RuleHandlerSettings AdditionalSettings { get; set; }
+        public int? SignNumber { get; set; }
     }
 }

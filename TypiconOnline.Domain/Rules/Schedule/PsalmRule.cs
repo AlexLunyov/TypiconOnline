@@ -23,12 +23,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class PsalmRule : RuleExecutable, ICustomInterpreted, IViewModelElement, ICalcStructureElement
     {
-        IDataQueryProcessor queryProcessor;
+        
 
         public PsalmRule(string name, [NotNull] IDataQueryProcessor queryProcessor, [NotNull] IElementViewModelFactory<PsalmRule> viewModelFactory) : base(name)
         {
-            this.queryProcessor = queryProcessor;
-            ViewModelFactory = viewModelFactory;
+            QueryProcessor = queryProcessor ?? throw new ArgumentNullException("queryProcessor in PsalmRule");
+            ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException("viewModelFactory in PsalmRule");
         }
 
         /// <summary>
@@ -47,6 +47,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// </summary>
         /// <remarks>1-ориентированный</remarks>
         public int? EndStihos { get; set; }
+
+        protected IDataQueryProcessor QueryProcessor { get; }
 
         protected IElementViewModelFactory<PsalmRule> ViewModelFactory { get; }
 
@@ -93,7 +95,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         public DayElementBase Calculate(RuleHandlerSettings settings)
         {
-            var psalm = queryProcessor.Process(new PsalmQuery(Number));
+            var psalm = QueryProcessor.Process(new PsalmQuery(Number));
 
             BookReading psalmReading = null;
 

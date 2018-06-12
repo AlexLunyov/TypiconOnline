@@ -39,7 +39,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
             }
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

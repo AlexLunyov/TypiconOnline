@@ -7,7 +7,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules
 {
-    public abstract class RuleElement : ValueObjectBase
+    public abstract class RuleElement : ValueObjectBase, IRuleElement
     {
         //RuleElement ParentElement { get;set; }
 

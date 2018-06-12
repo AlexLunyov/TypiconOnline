@@ -31,7 +31,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             MenologyRule rule = typiconEntity.MenologyRules[0];
             ServiceSequenceHandler handler = new ServiceSequenceHandler
             {
-                Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru"), TypiconRule = rule, Date = DateTime.Today }
+                Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru"), Date = DateTime.Today, TypiconId = 1 }
             };
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");

@@ -9,6 +9,7 @@ using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Katavasia;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Query.Books;
+using TypiconOnline.Domain.Query.Exceptions;
 using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -19,7 +20,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// <summary>
     /// Приавло для использования катавасии в каноне
     /// </summary>
-    public class KKatavasiaRule : KanonasItemRuleBase, ICustomInterpreted, ICalcStructureElement
+    public class KKatavasiaRule : KanonasItemRuleBase
     {
         IDataQueryProcessor queryProcessor;
 
@@ -52,11 +53,18 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 base.Validate();
             }
             //находим в хранилище
-            else if (GetFromRepository() == null)
+            else
             {
-                AddBrokenConstraint(KKatavasiaRuleBusinessConstraint.InvalidName, ElementName);
+                try
+                {
+                    GetFromRepository();
+                }
+                catch (ResourceNotFoundException)
+                {
+                    AddBrokenConstraint(KKatavasiaRuleBusinessConstraint.InvalidName, ElementName);
+                }
             }
-
+            
             //двойное определение
             if (!string.IsNullOrEmpty(Name)
                 && (Source != null || Kanonas != null))
