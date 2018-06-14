@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon.Modifications

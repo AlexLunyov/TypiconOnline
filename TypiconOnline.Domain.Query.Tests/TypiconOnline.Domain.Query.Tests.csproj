@@ -153,6 +153,10 @@
       <Project>{1F2F3F15-A8CF-4AB7-8603-FB0309EAF8C7}</Project>
       <Name>TypiconOnline.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TypiconOnline.Domain.Query\TypiconOnline.Domain.Query.csproj">
+      <Project>{C3D5231E-740B-4168-ABBD-58E8F739BE13}</Project>
+      <Name>TypiconOnline.Domain.Query</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.Domain\TypiconOnline.Domain.csproj">
       <Project>{823205B3-C0DB-428D-9038-A03382D881D5}</Project>
       <Name>TypiconOnline.Domain</Name>

@@ -11,7 +11,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
             ElementNames = new string[] { RuleConstants.IsTwoSaintsNodeName };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req)
+        protected override IRuleElement CreateObject(CreateObjectRequest req)
         {
             return new IsTwoSaints(req.Descriptor.GetElementName());
         }
@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
         {
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

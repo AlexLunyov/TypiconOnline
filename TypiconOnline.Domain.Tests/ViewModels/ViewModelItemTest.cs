@@ -1,11 +1,8 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using System.Threading.Tasks;
 using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.ViewModels.Factories;
 

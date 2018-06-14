@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Domain.Rules.ViewModels.Factories;
+using TypiconOnline.Domain.ViewModels.Factories;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -24,7 +19,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.TextHolderTextNode };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req)
+        protected override IRuleElement CreateObject(CreateObjectRequest req)
         {
             return new TextHolder(new TextHolderVMFactory(SerializerRoot), req.Descriptor.GetElementName());
         }
@@ -53,7 +48,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

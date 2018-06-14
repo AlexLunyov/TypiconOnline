@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using TypiconOnline.Domain.Books;
-using TypiconOnline.Domain.Books.WeekDayApp;
-using TypiconOnline.Domain.Days;
+﻿using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.Rules.Days;
-using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Interfaces;
+using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -21,8 +12,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class YmnosRule : SourceHavingRuleBase, ICustomInterpreted, IYmnosStructureRuleElement
     {
-        public YmnosRule(string name, ITypiconSerializer serializer, IWeekDayAppContext weekDayAppContext) 
-            : base(name, serializer, weekDayAppContext)
+        public YmnosRule(string name, ITypiconSerializer serializer, IDataQueryProcessor queryProcessor) 
+            : base(name, serializer, queryProcessor)
         {
 
         }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 
-namespace TypiconOnline.AppServices.Standard.Caching
+namespace TypiconOnline.AppServices.Caching
 {
     public class MemoryCacheStorage : ICacheStorage
     {

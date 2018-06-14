@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Xml;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Domain.Rules.ViewModels.Factories;
+using TypiconOnline.Domain.ViewModels.Factories;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -20,7 +14,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.KanonasRuleNode };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req)
+        protected override IRuleElement CreateObject(CreateObjectRequest req)
         {
             return new KanonasRule(req.Descriptor.GetElementName(), new KanonasRuleVMFactory(SerializerRoot), req.Parent);
         }

@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
-using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.Rules.Schedule;
-using TypiconOnline.Domain.Typicon;
 
-namespace TypiconOnline.Domain.Rules.ViewModels
+namespace TypiconOnline.Domain.ViewModels
 {
     /// <summary>
     /// Элементарная частичка выходной формы последовательности богослужений

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
@@ -16,7 +12,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.KanonasItemNode };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req) => new KKanonasItemRule(req.Descriptor.GetElementName());
+        protected override IRuleElement CreateObject(CreateObjectRequest req) => new KKanonasItemRule(req.Descriptor.GetElementName());
 
         protected override void FillObject(FillObjectRequest req)
         {
@@ -35,7 +31,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             (req.Element as KKanonasItemRule).IrmosCount = int.TryParse(attr?.Value, out int i) ? i : 0;
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

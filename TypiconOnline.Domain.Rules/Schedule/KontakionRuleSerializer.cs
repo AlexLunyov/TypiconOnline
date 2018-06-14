@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Domain.Rules.ViewModels.Factories;
+using TypiconOnline.Domain.ViewModels.Factories;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -17,8 +13,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.KontakionRuleNode };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req) 
-            => new KontakionRule(req.Descriptor.GetElementName(), typiconSerializer, SerializerRoot.BookStorage.WeekDayApp, new KontakionRuleVMFactory(SerializerRoot));
+        protected override IRuleElement CreateObject(CreateObjectRequest req) 
+            => new KontakionRule(req.Descriptor.GetElementName(), typiconSerializer, SerializerRoot.QueryProcessor, new KontakionRuleVMFactory(SerializerRoot));
 
         protected override void FillObject(FillObjectRequest req)
         {
@@ -45,7 +41,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

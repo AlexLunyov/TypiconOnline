@@ -5,7 +5,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TypiconOnline.AppServices.Standard.Caching;
+using TypiconOnline.AppServices.Caching;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;

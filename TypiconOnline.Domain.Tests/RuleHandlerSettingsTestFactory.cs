@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TypiconOnline.Domain.Query.Books;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.Tests.Rules;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests

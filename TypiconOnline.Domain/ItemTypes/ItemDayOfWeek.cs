@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.Infrastructure.Common.Domain;
-using System.Text.RegularExpressions;
-using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Books.Elements;
 
 namespace TypiconOnline.Domain.ItemTypes
 {
@@ -35,31 +28,31 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 _isValid = true;
 
-                if (exp == RuleConstants.DefinitionsDayOfWeek.понедельник.ToString())
+                if (exp == DefinitionsDayOfWeek.понедельник.ToString())
                 {
                     _value = DayOfWeek.Monday;
                 }
-                else if (exp == RuleConstants.DefinitionsDayOfWeek.вторник.ToString())
+                else if (exp == DefinitionsDayOfWeek.вторник.ToString())
                 {
                     _value = DayOfWeek.Tuesday;
                 }
-                else if (exp == RuleConstants.DefinitionsDayOfWeek.среда.ToString())
+                else if (exp == DefinitionsDayOfWeek.среда.ToString())
                 {
                     _value = DayOfWeek.Wednesday;
                 }
-                else if (exp == RuleConstants.DefinitionsDayOfWeek.четверг.ToString())
+                else if (exp == DefinitionsDayOfWeek.четверг.ToString())
                 {
                     _value = DayOfWeek.Thursday;
                 }
-                else if (exp == RuleConstants.DefinitionsDayOfWeek.пятница.ToString())
+                else if (exp == DefinitionsDayOfWeek.пятница.ToString())
                 {
                     _value = DayOfWeek.Friday;
                 }
-                else if (exp == RuleConstants.DefinitionsDayOfWeek.суббота.ToString())
+                else if (exp == DefinitionsDayOfWeek.суббота.ToString())
                 {
                     _value = DayOfWeek.Saturday;
                 }
-                else if (exp == RuleConstants.DefinitionsDayOfWeek.воскресенье.ToString())
+                else if (exp == DefinitionsDayOfWeek.воскресенье.ToString())
                 {
                     _value = DayOfWeek.Sunday;
                 }

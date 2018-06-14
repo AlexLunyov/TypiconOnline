@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Days;
-using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Books.TheotokionApp

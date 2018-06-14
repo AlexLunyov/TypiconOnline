@@ -1,12 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.AppServices.Implementations;
-using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Tests.Common;
 using TypiconOnline.Tests.Common;
@@ -37,7 +32,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             //mainSettings.RuleContainer.Interpret(handler);
 
-            WorshipRule worshipRule = mainSettings.RuleContainer.ChildElements[0] as WorshipRule;
+            WorshipRule worshipRule = (mainSettings.RuleContainer as ExecContainer).ChildElements[0] as WorshipRule;
 
             var kanonasRule = worshipRule.Sequence.GetChildElements<KanonasRule>(mainSettings).FirstOrDefault();
 

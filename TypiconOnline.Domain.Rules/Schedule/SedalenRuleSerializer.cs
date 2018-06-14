@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules.Executables;
+﻿using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Domain.Rules.ViewModels.Factories;
+using TypiconOnline.Domain.ViewModels.Factories;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -15,10 +9,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
         public SedalenRuleSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] {
-                RuleConstants.SedalenNode };
+                RuleConstants.SedalenRuleNode };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req)
+        protected override IRuleElement CreateObject(CreateObjectRequest req)
         {
             return new SedalenRule(new SedalenVMFactory(SerializerRoot), req.Descriptor.GetElementName());
         }

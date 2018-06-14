@@ -43,12 +43,12 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 
             modelBuilder.ApplyConfiguration(new CommonRuleConfiguration());
 
-            //modelBuilder.ApplyConfiguration(new DayRuleConfiguration()); 
+            modelBuilder.ApplyConfiguration(new DayRuleConfiguration());
             modelBuilder.ApplyConfiguration(new DayWorshipConfiguration());
             modelBuilder.ApplyConfiguration(new DayRuleWorshipConfiguration());
 
-            modelBuilder.ApplyConfiguration(new MenologyRuleConfiguration());
-            modelBuilder.ApplyConfiguration(new TriodionRuleConfiguration());
+            //modelBuilder.ApplyConfiguration(new MenologyRuleConfiguration());
+            //modelBuilder.ApplyConfiguration(new TriodionRuleConfiguration());
 
             modelBuilder.ApplyConfiguration(new MenologyDayConfiguration());
             modelBuilder.ApplyConfiguration(new TriodionDayConfiguration());

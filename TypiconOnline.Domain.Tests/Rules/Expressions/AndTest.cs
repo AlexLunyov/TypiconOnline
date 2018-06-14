@@ -1,8 +1,5 @@
-﻿using System;
-using NUnit.Framework;
-using System.Xml;
+﻿using NUnit.Framework;
 using TypiconOnline.Domain.Rules.Expressions;
-using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Tests.Common;
 

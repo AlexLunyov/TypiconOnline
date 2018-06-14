@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TypiconOnline.Domain.Rules;
-
-namespace TypiconOnline.Domain.Typicon
+﻿namespace TypiconOnline.Domain.Typicon
 {
     /// <summary>
     /// Правило для описания повторяющихся элементов, которые можно в дальнейшем неоднократно использовать.

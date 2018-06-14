@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Xml;
-using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Infrastructure.Common.Domain;
+using TypiconOnline.Domain.Rules.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Expressions
 {

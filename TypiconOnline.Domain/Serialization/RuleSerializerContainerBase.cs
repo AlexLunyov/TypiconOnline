@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Executables;
 
 namespace TypiconOnline.Domain.Serialization
 {

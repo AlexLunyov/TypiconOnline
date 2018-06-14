@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using TypiconOnline.Domain.Rules;
-
-namespace TypiconOnline.Domain.Interfaces
+﻿namespace TypiconOnline.Domain.Interfaces
 {
     /// <summary>
     /// Наследник IRuleSerializer. Generic параметр используется лишь для фильтрации в контейнере

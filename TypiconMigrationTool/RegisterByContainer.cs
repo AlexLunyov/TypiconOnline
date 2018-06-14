@@ -1,5 +1,4 @@
-﻿using System;
-using TypiconOnline.Infrastructure.Common.UnitOfWork;
+﻿using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Repository.EF;
 using StructureMap;
 using TypiconOnline.AppServices.Interfaces;

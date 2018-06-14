@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Days;
+using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Rules.Schedule.Extensions;
-using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.Rules.ViewModels.Messaging;
+using TypiconOnline.Domain.ViewModels.Messaging;
 
-namespace TypiconOnline.Domain.Rules.ViewModels.Factories
+namespace TypiconOnline.Domain.ViewModels.Factories
 {
     public class KanonasRuleVMFactory : ViewModelFactoryBase<KanonasRule>
     {
-        List<TextHolder> headers;
+        IReadOnlyList<TextHolder> headers;
         Dictionary<int, ViewModelItem> kanonasHeaders;
         ViewModelItem katavasiaHeader;
         OdiViewModelFactory odiView;
@@ -209,12 +207,11 @@ namespace TypiconOnline.Domain.Rules.ViewModels.Factories
             }
         }
 
-        private List<TextHolder> GetHeaders(CreateViewModelRequest<KanonasRule> req)
+        private IReadOnlyList<TextHolder> GetHeaders(CreateViewModelRequest<KanonasRule> req)
         {
             if (headers == null)
             {
-                headers = req.Handler.Settings.TypiconRule.Owner.GetChildren(
-                    new CommonRuleServiceRequest() { Key = CommonRuleConstants.KanonasRule, RuleSerializer = Serializer }).Cast<TextHolder>().ToList();
+                headers = Serializer.GetCommonRuleChildren<TextHolder>(req.Handler.Settings.TypiconId, CommonRuleConstants.KanonasRule);
             }
             return headers;
         }

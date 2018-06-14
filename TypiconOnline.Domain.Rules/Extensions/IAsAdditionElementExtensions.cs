@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Rules.Executables;
+using TypiconOnline.Domain.Rules.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Extensions
 {
@@ -19,11 +18,10 @@ namespace TypiconOnline.Domain.Rules.Extensions
         public static bool AsAdditionHandled(this IAsAdditionElement element, IRuleHandler handler)
         {
             bool result = false;
-            if (handler.Settings.Addition != null)
+            if (handler.Settings.Addition?.RuleContainer is ExecContainer container)
             {
                 //ищем элемент для замены
-                var found = handler.Settings.Addition.RuleContainer
-                    .GetChildElements<IAsAdditionElement>(handler.Settings.Addition,
+                var found = container.GetChildElements<IAsAdditionElement>(handler.Settings.Addition,
                         c => c.AsAdditionName == element.AsAdditionName 
                             && (c.AsAdditionMode == AsAdditionMode.Rewrite || c.AsAdditionMode == AsAdditionMode.Remove)).FirstOrDefault();
 

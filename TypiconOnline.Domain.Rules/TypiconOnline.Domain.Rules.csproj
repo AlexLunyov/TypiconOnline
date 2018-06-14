@@ -5,7 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Factories\" />
+    <Compile Remove="Schedule\KanonasCustomRule.cs" />
+    <Compile Remove="Schedule\KanonasRuleBase.cs" />
+    <Compile Remove="Schedule\KanonasRuleBaseSerializer.cs" />
+    <Compile Remove="ViewModels\ContainerViewModel.cs" />
+    <Compile Remove="ViewModels\YmnosGroupViewModel.cs" />
+    <Compile Remove="ViewModels\YmnosStructureViewModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
   </ItemGroup>
 
   <ItemGroup>

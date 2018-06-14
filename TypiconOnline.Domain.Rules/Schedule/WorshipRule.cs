@@ -2,6 +2,7 @@
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Extensions;
+using TypiconOnline.Domain.Rules.Interfaces;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Schedule

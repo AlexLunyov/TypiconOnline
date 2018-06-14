@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.Domain.Books.WeekDayApp;
+using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules.Days;
-using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Interfaces;
 using TypiconOnline.Domain.Rules.Schedule.Extensions;
-using TypiconOnline.Domain.Rules.ViewModels;
-using TypiconOnline.Domain.Rules.ViewModels.Messaging;
+using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.ViewModels.Messaging;
+using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -19,8 +15,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KontakionRule : SourceHavingRuleBase, IViewModelElement, ICustomInterpreted, IYmnosStructureRuleElement
     {
-        public KontakionRule(string name, ITypiconSerializer serializer, IWeekDayAppContext weekDayAppContext, 
-            IElementViewModelFactory<KontakionRule> viewModelFactory) : base(name, serializer, weekDayAppContext)
+        public KontakionRule(string name, ITypiconSerializer serializer, IDataQueryProcessor queryProcessor, 
+            IElementViewModelFactory<KontakionRule> viewModelFactory) : base(name, serializer, queryProcessor)
         {
             ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException("IElementViewModelFactory in KontakionRule");
         }

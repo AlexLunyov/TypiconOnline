@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.Domain.Rules.Executables;
-using TypiconOnline.Domain.Rules.Schedule;
 
-namespace TypiconOnline.Domain.Rules.ViewModels
+namespace TypiconOnline.Domain.ViewModels
 {
     /// <summary>
     /// Коллекция выходных форм правил, которые будут выводиться наружу,

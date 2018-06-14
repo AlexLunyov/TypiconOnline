@@ -1,19 +1,11 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.Domain.Serialization;
 using TypiconOnline.AppServices.Messaging.Schedule;
-using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.Typicon;
-
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Tests.Common;
 

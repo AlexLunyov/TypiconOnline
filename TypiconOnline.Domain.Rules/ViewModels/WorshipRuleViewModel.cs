@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Schedule;
 
-namespace TypiconOnline.Domain.Rules.ViewModels
+namespace TypiconOnline.Domain.ViewModels
 {
     [Serializable]
     [XmlRoot(ViewModelConstants.WorshipRuleNodeName)]

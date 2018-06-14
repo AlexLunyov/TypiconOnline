@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules.Expressions;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Executables
@@ -17,8 +12,8 @@ namespace TypiconOnline.Domain.Rules.Executables
             ElementNames = new string[] { RuleConstants.ModifyReplacedDayNodeName };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req) 
-            => new ModifyReplacedDay(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.Easters, req.Parent);
+        protected override IRuleElement CreateObject(CreateObjectRequest req) 
+            => new ModifyReplacedDay(req.Descriptor.GetElementName(), req.Parent);
 
         protected override void FillObject(FillObjectRequest req)
         {
@@ -32,7 +27,7 @@ namespace TypiconOnline.Domain.Rules.Executables
             }
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

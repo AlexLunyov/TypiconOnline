@@ -1,14 +1,9 @@
 ﻿using NUnit.Framework;
 using System;
 using Moq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Tests.Common;
-using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Rules.Interfaces;
 
 namespace TypiconOnline.Domain.Tests.Rules.Schedule
 {

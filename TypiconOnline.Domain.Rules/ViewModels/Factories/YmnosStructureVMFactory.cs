@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Days;
-using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Rules.Schedule;
-using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.Rules.ViewModels.Messaging;
+using TypiconOnline.Domain.ViewModels.Messaging;
 
-namespace TypiconOnline.Domain.Rules.ViewModels.Factories
+namespace TypiconOnline.Domain.ViewModels.Factories
 {
     public abstract class YmnosStructureVMFactory : ViewModelFactoryBase<YmnosStructureRule>
     {
@@ -41,7 +38,7 @@ namespace TypiconOnline.Domain.Rules.ViewModels.Factories
                 viewModel.AddRange(group.GetViewModel(req.Handler, Serializer));
             }
 
-            SetStringCommonRules(ymnosStructure, req.Handler.Settings.TypiconRule.Owner);
+            SetStringCommonRules(ymnosStructure, req.Handler.Settings.TypiconId);
 
             //Doxastichon
             if (ymnosStructure.Doxastichon != null)
@@ -57,31 +54,31 @@ namespace TypiconOnline.Domain.Rules.ViewModels.Factories
             req.AppendModelAction(viewModel);
         }
 
-        private void SetStringCommonRules(YmnosStructure ymnosStructure, TypiconEntity typicon)
+        private void SetStringCommonRules(YmnosStructure ymnosStructure, int typiconId)
         {
-            CommonRuleServiceRequest req = new CommonRuleServiceRequest() { RuleSerializer = Serializer };
-
             //добавляем стихи к славнику и богородичну
             if (ymnosStructure.Doxastichon != null)
             {
                 //слава
-                req.Key = CommonRuleConstants.SlavaText;
-                ymnosStructure.Doxastichon.Ymnis[0].Stihoi.Add(typicon.GetItemTextValue(req));
+                AddPredefinedStihos(ymnosStructure.Doxastichon.Ymnis[0].Stihoi, CommonRuleConstants.SlavaText);
+
                 //и ныне
                 if (ymnosStructure.Theotokion?.Count > 0)
                 {
-                    req.Key = CommonRuleConstants.InyneText;
-                    ymnosStructure.Theotokion[0].Ymnis[0].Stihoi.Add(typicon.GetItemTextValue(req));
+                    AddPredefinedStihos(ymnosStructure.Theotokion[0].Ymnis[0].Stihoi, CommonRuleConstants.InyneText);
                 }
             }
-            else
+            //слава и ныне
+            else if (ymnosStructure.Theotokion?.Count > 0)
             {
-                //слава и ныне
-                if (ymnosStructure.Theotokion?.Count > 0)
-                {
-                    req.Key = CommonRuleConstants.SlavaInyneText;
-                    ymnosStructure.Theotokion[0].Ymnis[0].Stihoi.Add(typicon.GetItemTextValue(req));
-                }
+                AddPredefinedStihos(ymnosStructure.Theotokion[0].Ymnis[0].Stihoi, CommonRuleConstants.SlavaInyneText);
+            }
+
+            void AddPredefinedStihos(ICollection<ItemText> stihoi, string key)
+            {
+                var itemText = Serializer.GetCommonRuleItemTextValue(typiconId, key);
+
+                stihoi.Add(itemText);
             }
         }
 

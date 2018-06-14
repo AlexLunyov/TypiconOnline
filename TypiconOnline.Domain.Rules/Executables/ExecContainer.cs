@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Infrastructure.Common.Domain;
+using TypiconOnline.Domain.Rules.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Executables
 {
@@ -48,7 +45,7 @@ namespace TypiconOnline.Domain.Rules.Executables
             }
             else
             {
-                foreach (RuleElement element in ChildElements)
+                foreach (var element in ChildElements)
                 {
                     if (element == null)
                     {

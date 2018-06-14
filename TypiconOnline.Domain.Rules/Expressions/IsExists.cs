@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using TypiconOnline.Domain.Days;
-using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules.Expressions;
-using TypiconOnline.Domain.Rules.Handlers;
+﻿using TypiconOnline.Domain.Rules.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Expressions
 {

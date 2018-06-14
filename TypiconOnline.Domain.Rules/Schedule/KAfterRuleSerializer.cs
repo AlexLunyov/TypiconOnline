@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Extensions;
@@ -18,7 +13,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.KAfterNode };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req) 
+        protected override IRuleElement CreateObject(CreateObjectRequest req) 
             => new KAfterRule(req.Descriptor.GetElementName(), req.Parent as KanonasRule);
 
         protected override void FillObject(FillObjectRequest req)
@@ -36,7 +31,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             (req.Element as KAfterRule).FillElement(req.Descriptor.Element);
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

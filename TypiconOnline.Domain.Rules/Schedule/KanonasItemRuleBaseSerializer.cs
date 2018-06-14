@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
@@ -13,7 +9,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         public KanonasItemRuleBaseSerializer(IRuleSerializerRoot root) : base(root) { }
 
-        //protected override RuleElement CreateObject(CreateObjectRequest req) => new KontakionRule(req.Descriptor.GetElementName());
+        //protected override IRuleElement CreateObject(CreateObjectRequest req) => new KontakionRule(req.Descriptor.GetElementName());
 
         protected override void FillObject(FillObjectRequest req)
         {
@@ -30,7 +26,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

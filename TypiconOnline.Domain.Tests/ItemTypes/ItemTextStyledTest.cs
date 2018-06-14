@@ -1,15 +1,8 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
-using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Domain.Tests.Experiments;
+
 //using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.Tests.ItemTypes

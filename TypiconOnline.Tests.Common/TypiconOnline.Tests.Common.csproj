@@ -154,8 +154,12 @@
       <Project>{1F2F3F15-A8CF-4AB7-8603-FB0309EAF8C7}</Project>
       <Name>TypiconOnline.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TypiconOnline.AppServices.Standard\TypiconOnline.AppServices.csproj">
+      <Project>{e5888f71-c704-408d-b928-e16c5528607a}</Project>
+      <Name>TypiconOnline.AppServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.Domain.Query\TypiconOnline.Domain.Query.csproj">
-      <Project>{6D661407-AED3-4215-88F2-C78FDC47BFC4}</Project>
+      <Project>{c3d5231e-740b-4168-abbd-58e8f739be13}</Project>
       <Name>TypiconOnline.Domain.Query</Name>
     </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.Domain\TypiconOnline.Domain.csproj">
@@ -165,10 +169,6 @@
     <ProjectReference Include="..\TypiconOnline.Repository.EFCore\TypiconOnline.Repository.EFCore.csproj">
       <Project>{8ED6DE06-A34B-4775-BCB2-1655C36649CC}</Project>
       <Name>TypiconOnline.Repository.EFCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TypiconOnline.Services\TypiconOnline.AppServices.csproj">
-      <Project>{4ee462f2-d6af-4b99-b9b3-09aa172fe9c8}</Project>
-      <Name>TypiconOnline.AppServices</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

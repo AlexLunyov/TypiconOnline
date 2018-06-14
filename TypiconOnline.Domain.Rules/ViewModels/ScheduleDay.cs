@@ -1,14 +1,10 @@
 ﻿using System;
-using TypiconOnline.Domain.Rules.ViewModels;
-using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Executables;
-using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.ItemTypes;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TypiconOnline.Domain.Rules.ViewModels
+namespace TypiconOnline.Domain.ViewModels
 {
     /// <summary>
     /// 

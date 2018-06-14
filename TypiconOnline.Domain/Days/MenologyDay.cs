@@ -1,6 +1,5 @@
 ﻿using System;
 using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Days
 {

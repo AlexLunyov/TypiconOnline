@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.Infrastructure.Common.Domain;
-using System.Text.RegularExpressions;
-using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Books.Elements;
 
 namespace TypiconOnline.Domain.ItemTypes
 {
@@ -47,7 +41,7 @@ namespace TypiconOnline.Domain.ItemTypes
                 _stringExpression = value;
 
                 DateTime date = new DateTime();
-                if (DateTime.TryParseExact(_stringExpression, RuleConstants.ItemTimeParsing, new CultureInfo("ru-RU"), DateTimeStyles.None, out date))
+                if (DateTime.TryParseExact(_stringExpression, ElementConstants.ItemTimeParsing, new CultureInfo("ru-RU"), DateTimeStyles.None, out date))
                 {
                     Hour = date.Hour;
                     Minute = date.Minute;
@@ -78,7 +72,7 @@ namespace TypiconOnline.Domain.ItemTypes
             if (!IsEmpty)
             {
                 DateTime date = new DateTime();
-                if (!DateTime.TryParseExact(this.ToString(), RuleConstants.ItemTimeParsing, new CultureInfo("ru-RU"), DateTimeStyles.None, out date))
+                if (!DateTime.TryParseExact(this.ToString(), ElementConstants.ItemTimeParsing, new CultureInfo("ru-RU"), DateTimeStyles.None, out date))
                 {
                     AddBrokenConstraint(ItemTimeBusinessConstraint.TimeTypeMismatch, "ItemTime");
                     //throw new DefinitionsParsingException("Ошибка: неверно введена дата в элементе " + node.Name);

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
+using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
@@ -17,7 +13,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.YmnosCustomRuleNode };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req) => new YmnosCustomRule(req.Descriptor.GetElementName());
+        protected override IRuleElement CreateObject(CreateObjectRequest req) => new YmnosCustomRule(req.Descriptor.GetElementName());
 
         protected override void FillObject(FillObjectRequest req)
         {
@@ -51,7 +47,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             YmnosGroup Deserialize(string xml, string rootElement) => new TypiconSerializer().Deserialize<YmnosGroup>(xml, rootElement);
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

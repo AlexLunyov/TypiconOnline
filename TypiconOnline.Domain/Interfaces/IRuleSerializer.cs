@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TypiconOnline.Domain.Rules;
 
 namespace TypiconOnline.Domain.Interfaces
 {

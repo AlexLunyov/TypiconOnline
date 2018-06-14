@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Xml;
+using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.Rules.Extensions
@@ -16,7 +12,7 @@ namespace TypiconOnline.Domain.Rules.Extensions
 
             if (node != null)
             {
-                var attr = node.Attributes[RuleConstants.ItemTextLanguageAttr];
+                var attr = node.Attributes[ElementConstants.ItemTextLanguageAttr];
 
                 var language = (attr != null) ? attr.Value : string.Empty;
 

@@ -4,8 +4,9 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.Rules.ViewModels;
-using TypiconOnline.Domain.Rules.ViewModels.Messaging;
+using TypiconOnline.Domain.Rules.Interfaces;
+using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.ViewModels.Messaging;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Schedule

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules;
 
 namespace TypiconOnline.Domain.Rules.Handlers.CustomParameters
 {

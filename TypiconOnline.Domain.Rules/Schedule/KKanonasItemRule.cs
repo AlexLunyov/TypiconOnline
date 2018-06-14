@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.Rules.Days;
-using TypiconOnline.Domain.Rules.Executables;
+using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
     /// <summary>
     /// Правило для определения конкретного канона 
     /// </summary>
-    public class KKanonasItemRule : KanonasItemRuleBase, ICustomInterpreted
+    public class KKanonasItemRule : KanonasItemRuleBase
     {
         public KKanonasItemRule(string name) : base(name) { }
 

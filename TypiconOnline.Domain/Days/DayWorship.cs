@@ -1,7 +1,4 @@
 ﻿using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Days;
-using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Days
 {

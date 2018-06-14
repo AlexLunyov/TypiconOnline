@@ -78,7 +78,6 @@ namespace TypiconOnline.WinForms
                     x.For<ITheotokionAppContext>().Use<TheotokionAppContext>();
                     x.For<IEasterContext>().Use<EasterContext>();
                     x.For<IModifiedYearFactory>().Use<ModifiedYearFactory>();
-                    x.For<IRulesExtractor>().Use<RulesExtractor>();
                     x.For<IScheduleService>().Use<ScheduleService>(); 
                     x.For<IRuleSerializerRoot>().Use<RuleSerializerRoot>();
                     x.For<IScheduleWeekViewer>().Use<DocxScheduleWeekViewer>();

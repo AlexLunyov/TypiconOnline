@@ -1,27 +1,16 @@
 ﻿using TypiconOnline.Infrastructure.Common.UnitOfWork;
-using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.Days;
-using TypiconOnline.Domain.ItemTypes;
 using ScheduleHandling;
 using System;
 using TypiconMigrationTool.Experiments;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-using TypiconOnline.Domain.Rules.Schedule;
-using TypiconOnline.Domain.Books.Easter;
-using TypiconOnline.Domain.ViewModels;
 using TypiconMigrationTool.Experiments.XmlSerialization;
-using TypiconOnline.AppServices.Implementations;
-using TypiconOnline.Domain.Rules.Days;
 using System.IO;
 using System.Xml.Serialization;
 using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Repository.EF;
 using System.Configuration;
 using TypiconOnline.Repository.EFCore;
 using TypiconOnline.Repository.EFCore.DataBase;
 using Microsoft.EntityFrameworkCore;
+using TypiconOnline.Domain.Books.Elements;
 
 namespace TypiconMigrationTool
 {

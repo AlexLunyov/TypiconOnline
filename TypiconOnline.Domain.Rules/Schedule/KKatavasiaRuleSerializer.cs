@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
 
@@ -16,9 +11,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.KKatavasiaNode };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req)
+        protected override IRuleElement CreateObject(CreateObjectRequest req)
         {
-            return new KKatavasiaRule(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.Katavasia);
+            return new KKatavasiaRule(req.Descriptor.GetElementName(), SerializerRoot.QueryProcessor);
         }
 
         protected override void FillObject(FillObjectRequest req)
@@ -28,7 +23,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             (req.Element as KKatavasiaRule).Name = req.Descriptor.Element.Attributes[RuleConstants.KKatavasiaNameAttr]?.Value;
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

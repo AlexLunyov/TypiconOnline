@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using TypiconOnline.AppServices.Messaging.Schedule;
-using TypiconOnline.Domain.Books.Easter;
-using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.ViewModels;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.Rules;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconMigrationTool.Tests;
-using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
-using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.AppServices.Interfaces;
 
 namespace TypiconMigrationTool

@@ -32,6 +32,7 @@ using TypiconOnline.WinServices.Interfaces;
 using TypiconOnline.WinServices.Messaging;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Books.WeekDayApp;
+using TypiconOnline.Domain.Common;
 
 namespace TypiconOnline.WinForms
 {

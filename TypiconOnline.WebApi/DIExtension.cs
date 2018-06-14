@@ -12,7 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.AppServices.Standard.Caching;
+using TypiconOnline.AppServices.Caching;
 using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Books.Apostol;
 using TypiconOnline.Domain.Books.Easter;
@@ -57,7 +57,6 @@ namespace TypiconOnline.WebApi
             //scheduleservice
             services.AddScoped<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
             services.AddScoped<IModifiedYearFactory, ModifiedYearFactory>();
-            services.AddScoped<IRulesExtractor, RulesExtractor>();
             services.AddScoped<IModifiedRuleService, ModifiedRuleService>();
             services.AddScoped<IScheduleDayNameComposer, ScheduleDayNameComposer>();
             services.AddScoped<IScheduleService, ScheduleService>();

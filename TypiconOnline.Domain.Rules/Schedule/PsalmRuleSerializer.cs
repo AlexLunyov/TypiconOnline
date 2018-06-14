@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Domain.Rules.ViewModels.Factories;
+using TypiconOnline.Domain.ViewModels.Factories;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -17,8 +13,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.PsalmRuleNode };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req) 
-            => new PsalmRule(req.Descriptor.GetElementName(), SerializerRoot.BookStorage.Psalter, new PsalmRuleVMFactory(SerializerRoot));
+        protected override IRuleElement CreateObject(CreateObjectRequest req) 
+            => new PsalmRule(req.Descriptor.GetElementName(), SerializerRoot.QueryProcessor, new PsalmRuleVMFactory(SerializerRoot));
 
         protected override void FillObject(FillObjectRequest req)
         {
@@ -42,7 +38,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

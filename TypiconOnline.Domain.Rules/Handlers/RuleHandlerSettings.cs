@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TypiconOnline.Domain.Books.Oktoikh;
+using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
-using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.Typicon.Modifications;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {
@@ -32,10 +28,6 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// </summary>
         public int TypiconId { get; set; }
         /// <summary>
-        /// Правило для обработки
-        /// </summary>
-        public TypiconRule TypiconRule { get; set; }
-        /// <summary>
         /// Десериализированная последовательность элементов
         /// </summary>
         public RootContainer RuleContainer { get; set; }
@@ -45,9 +37,6 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// Дата - параметр для интерпретации элементов правил
         /// </summary>
         public DateTime Date { get; set; }
-        //public HandlingMode Mode { get; set; }
-        //public string ShortName { get; set; }
-        //public bool UseFullName { get; set; }
         /// <summary>
         /// Язык для обработки
         /// </summary>

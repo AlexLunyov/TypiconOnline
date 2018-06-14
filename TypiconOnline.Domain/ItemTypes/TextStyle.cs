@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
-using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Books.Elements;
 
 namespace TypiconOnline.Domain.ItemTypes
 {
@@ -14,13 +10,13 @@ namespace TypiconOnline.Domain.ItemTypes
     [Serializable]
     public class TextStyle
     {
-        [XmlElement(RuleConstants.StyleRedNodeName)]
+        [XmlElement(ElementConstants.StyleRedNodeName)]
         public bool IsRed { get; set; } = false;
-        [XmlElement(RuleConstants.StyleBoldNodeName)]
+        [XmlElement(ElementConstants.StyleBoldNodeName)]
         public bool IsBold { get; set; } = false;
-        [XmlElement(RuleConstants.StyleItalicNodeName)]
+        [XmlElement(ElementConstants.StyleItalicNodeName)]
         public bool IsItalic { get; set; } = false;
-        [XmlElement(RuleConstants.StyleHeaderNodeName)]
+        [XmlElement(ElementConstants.StyleHeaderNodeName)]
         public HeaderCaption Header { get; set; } = HeaderCaption.NotDefined;
     }
 

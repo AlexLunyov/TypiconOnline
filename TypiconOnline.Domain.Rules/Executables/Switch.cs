@@ -12,6 +12,7 @@ using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Expressions;
+using TypiconOnline.Domain.Rules.Interfaces;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.Domain;
@@ -36,29 +37,29 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         #region Methods
 
-        protected override void InnerInterpret(IRuleHandler settings)
+        protected override void InnerInterpret(IRuleHandler handler)
         {
-            Expression.Interpret(settings);
+            Expression.Interpret(handler);
 
             foreach (Case caseElement in CaseElements)
             {
-                caseElement.Interpret(settings);
+                caseElement.Interpret(handler);
 
                 foreach (RuleExpression caseValue in caseElement.ValuesElements)
                 {
-                    caseValue.Interpret(settings);
+                    caseValue.Interpret(handler);
 
                     if (Expression.ValueCalculated.Equals(caseValue.ValueCalculated))
                     {
                         //и значения совпадают
-                        caseElement.ActionElement.Interpret(settings);
+                        caseElement.ActionElement.Interpret(handler);
                         return;
                     }
                 }
             }
 
             //если мы здесь, значит совпадений не было
-            Default?.Interpret(settings);
+            Default?.Interpret(handler);
         }
 
         protected override void Validate()

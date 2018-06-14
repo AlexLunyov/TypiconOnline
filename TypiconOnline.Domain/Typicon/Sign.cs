@@ -1,7 +1,6 @@
 ﻿using System;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.Rules.Executables;
 
 namespace TypiconOnline.Domain.Typicon
 {

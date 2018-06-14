@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using TypiconOnline.Domain.Rules.Handlers;
-
-namespace TypiconOnline.Domain.Rules.Expressions
+﻿namespace TypiconOnline.Domain.Rules.Expressions
 {
     /// <summary>
     /// Базовый класс для логинческих опреаций: И ИЛИ

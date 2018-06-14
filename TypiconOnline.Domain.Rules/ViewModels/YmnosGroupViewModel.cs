@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Days;
-using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.Rules.Interfaces;
+using TypiconOnline.Domain.Rules.ViewModels;
 
-namespace TypiconOnline.Domain.Rules.ViewModels
+namespace TypiconOnline.Domain.ViewModels
 {
     public class YmnosGroupViewModel : ContainerViewModel
     {

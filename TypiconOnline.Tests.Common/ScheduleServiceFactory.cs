@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.AppServices.Implementations;
+﻿using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
-using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Tests.Common
 {

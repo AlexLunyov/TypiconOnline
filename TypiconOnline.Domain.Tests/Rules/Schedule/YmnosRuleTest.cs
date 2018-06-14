@@ -1,9 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Rules;
@@ -57,7 +54,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
                 var xmlModRule = xmlRule.Replace("[place]", place.ToString());
                 handler.Settings = CreateFakeSettings(xmlModRule, xmlText);
 
-                var rule = handler.Settings.RuleContainer.ChildElements[0] as KekragariaRule;
+                var rule = (handler.Settings.RuleContainer as ExecContainer).ChildElements[0] as KekragariaRule;
 
                 rule.Interpret(handler);
 

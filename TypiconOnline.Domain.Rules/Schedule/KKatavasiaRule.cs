@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using TypiconOnline.Domain.Books;
-using TypiconOnline.Domain.Books.Katavasia;
-using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules.Days;
-using TypiconOnline.Domain.Rules.Executables;
+﻿using JetBrains.Annotations;
+using TypiconOnline.Domain.Books.Elements;
+using TypiconOnline.Domain.Query.Books;
+using TypiconOnline.Domain.Query.Exceptions;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Interfaces;
+using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
     /// <summary>
     /// Приавло для использования катавасии в каноне
     /// </summary>
-    public class KKatavasiaRule : KanonasItemRuleBase, ICustomInterpreted, ICalcStructureElement
+    public class KKatavasiaRule : KanonasItemRuleBase
     {
-        IKatavasiaContext katavasiaContext;
+        IDataQueryProcessor queryProcessor;
 
-        public KKatavasiaRule(string name, IKatavasiaContext context) : base(name)
+        public KKatavasiaRule(string name, [NotNull] IDataQueryProcessor queryProcessor) : base(name)
         {
-            katavasiaContext = context ?? throw new ArgumentNullException("IKatavasiaContext");
+            this.queryProcessor = queryProcessor;
         }
 
         #region Properties
@@ -49,11 +44,18 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 base.Validate();
             }
             //находим в хранилище
-            else if (GetFromRepository() == null)
+            else
             {
-                AddBrokenConstraint(KKatavasiaRuleBusinessConstraint.InvalidName, ElementName);
+                try
+                {
+                    GetFromRepository();
+                }
+                catch (ResourceNotFoundException)
+                {
+                    AddBrokenConstraint(KKatavasiaRuleBusinessConstraint.InvalidName, ElementName);
+                }
             }
-
+            
             //двойное определение
             if (!string.IsNullOrEmpty(Name)
                 && (Source != null || Kanonas != null))
@@ -71,13 +73,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             if (_katavasia == null)
             {
-                GetKatavasiaResponse response = katavasiaContext.Get(
-                    new GetKatavasiaRequest() { Name = Name });
-
-                if (response.Exception == null && response.BookElement != null)
-                {
-                    _katavasia = response.BookElement;
-                }
+                _katavasia = queryProcessor.Process(new KatavasiaQuery(Name));
             }
 
             return _katavasia;

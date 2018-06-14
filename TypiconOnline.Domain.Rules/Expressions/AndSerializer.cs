@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.Rules.Executables;
-using TypiconOnline.Domain.Rules.Expressions;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Expressions
@@ -19,12 +11,12 @@ namespace TypiconOnline.Domain.Rules.Expressions
             ElementNames = new string[] { RuleConstants.AndNodeName };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req)
+        protected override IRuleElement CreateObject(CreateObjectRequest req)
         {
             return new And(req.Descriptor.GetElementName());
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }

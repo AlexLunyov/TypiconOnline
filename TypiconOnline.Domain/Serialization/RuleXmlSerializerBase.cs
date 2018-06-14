@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules;
 
 namespace TypiconOnline.Domain.Serialization
 {
@@ -21,7 +17,7 @@ namespace TypiconOnline.Domain.Serialization
 
         public virtual IRuleElement Deserialize(IDescriptor descriptor, IAsAdditionElement parent)
         {
-            RuleElement element = null;
+            IRuleElement element = null;
 
             if (descriptor is XmlDescriptor d)
             {
@@ -41,7 +37,7 @@ namespace TypiconOnline.Domain.Serialization
             return element;
         }
 
-        protected abstract RuleElement CreateObject(CreateObjectRequest req);
+        protected abstract IRuleElement CreateObject(CreateObjectRequest req);
         protected abstract void FillObject(FillObjectRequest req);
 
         public abstract string Serialize(IRuleElement element);

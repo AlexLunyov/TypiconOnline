@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Days;
-using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.Rules.Extensions;
+using TypiconOnline.Domain.Rules.Interfaces;
 
-namespace TypiconOnline.Domain.Rules.ViewModels.Factories
+namespace TypiconOnline.Domain.ViewModels.Factories
 {
     public static class YmnosGroupExtensions
     {
@@ -37,32 +34,27 @@ namespace TypiconOnline.Domain.Rules.ViewModels.Factories
         public static void AppendViewModel(this Prosomoion prosomoion, IRuleHandler handler,
             IRuleSerializerRoot serializer, ElementViewModel viewModel, int? ihos = null)
         {
-            TypiconEntity typ = handler.Settings.TypiconRule.Owner;
-            CommonRuleServiceRequest req = new CommonRuleServiceRequest() { RuleSerializer = serializer };
-
             string str = "";
 
+            int typiconId = handler.Settings.TypiconId;
             var language = handler.Settings.Language;
 
             if (ihos != null)
             {
                 //текст "Глас"
-                req.Key = CommonRuleConstants.IhosText;
                 string ihosString = language.IntConverter.ToString((int)ihos);
-                str += $"{typ.GetTextValue(req, language.Name)} {ihosString}. ";
+                str += $"{GetStringValue(typiconId, CommonRuleConstants.IhosText, language.Name, serializer)} {ihosString}. ";
             }
 
             //самоподобен?
             if (prosomoion?.Self == true)
             {
-                req.Key = CommonRuleConstants.SelfText;
-                str += typ.GetTextValue(req, language.Name);
+                str += GetStringValue(typiconId, CommonRuleConstants.SelfText, language.Name, serializer);
             }
             //если подобен
             else if (prosomoion?.IsEmpty == false)
             {
-                req.Key = CommonRuleConstants.ProsomoionText;
-                string p = typ.GetTextValue(req, language.Name);
+                string p = GetStringValue(typiconId, CommonRuleConstants.ProsomoionText, language.Name, serializer);
 
                 str += $"{p}: \"{ prosomoion.FirstOrDefault(language.Name).Text }\"";
             }
@@ -92,16 +84,17 @@ namespace TypiconOnline.Domain.Rules.ViewModels.Factories
 
         private static (string StihosText, string ChoirText) GetStringValues(IRuleHandler handler, IRuleSerializerRoot serializer)
         {
-            CommonRuleServiceRequest req = new CommonRuleServiceRequest() { RuleSerializer = serializer };
-
             //находим Стих и Хор для дальнешей вставки
-            req.Key = CommonRuleConstants.StihosRule;
-            string stihos = handler.Settings.TypiconRule.Owner.GetTextValue(req, handler.Settings.Language.Name);
+            string stihos = GetStringValue(handler.Settings.TypiconId, CommonRuleConstants.StihosRule, handler.Settings.Language.Name, serializer);
 
-            req.Key = CommonRuleConstants.ChoirRule;
-            string choir = handler.Settings.TypiconRule.Owner.GetTextValue(req, handler.Settings.Language.Name);
+            string choir = GetStringValue(handler.Settings.TypiconId, CommonRuleConstants.ChoirRule, handler.Settings.Language.Name, serializer);
 
             return (stihos, choir);
+        }
+
+        private static string GetStringValue(int typiconId, string key, string language, IRuleSerializerRoot serializer)
+        {
+            return serializer.GetCommonRuleStringValue(typiconId, key, language);
         }
     }
 }

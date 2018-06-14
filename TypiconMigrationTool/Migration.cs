@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Configuration;
-using System.Threading.Tasks;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
@@ -85,10 +82,14 @@ namespace TypiconMigrationTool
         {
             TypiconEntity typiconEntity = new TypiconEntity()
             {
-                Id = 1,
+                //Id = 1,
                 Name = "Типикон",
                 DefaultLanguage = DEFAULT_LANGUAGE
             };
+
+            _unitOfWork.Repository<TypiconEntity>().Add(typiconEntity);
+
+            Commit();
 
             string folderPath = Path.Combine(Properties.Settings.Default.FolderPath, typiconEntity.Name, "Sign"); 
 
@@ -128,8 +129,6 @@ namespace TypiconMigrationTool
 
                 i++;
             }
-
-            _unitOfWork.Repository<TypiconEntity>().Add(typiconEntity);
 
             Commit();
 

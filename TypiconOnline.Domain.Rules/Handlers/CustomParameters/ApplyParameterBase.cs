@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.Domain.Interfaces;
+﻿using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Handlers.CustomParameters
 {
-    public abstract class ApplyParameterBase<T> : IRuleApplyParameter where T: RuleElement
+    public abstract class ApplyParameterBase<T> : IRuleApplyParameter where T: IRuleElement
     {
         //protected Type _type;
         //public CustomParameterBase(Type type)
@@ -15,11 +10,11 @@ namespace TypiconOnline.Domain.Rules.Handlers.CustomParameters
         //    _type = type;
         //}
 
-        public void Apply(RuleElement element)
+        public void Apply(IRuleElement element)
         {
-            if (element is T)
+            if (element is T t)
             {
-                InnerApply(element as T);
+                InnerApply(t);
             }
         }
 

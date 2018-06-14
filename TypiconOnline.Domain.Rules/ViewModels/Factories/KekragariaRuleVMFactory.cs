@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Days;
+using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Rules.Schedule;
-using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.Rules.ViewModels.Messaging;
+using TypiconOnline.Domain.ViewModels.Messaging;
 
-namespace TypiconOnline.Domain.Rules.ViewModels.Factories
+namespace TypiconOnline.Domain.ViewModels.Factories
 {
     public class KekragariaRuleVMFactory : YmnosStructureVMFactory
     {
@@ -24,8 +21,10 @@ namespace TypiconOnline.Domain.Rules.ViewModels.Factories
 
         protected virtual void ConstructWithCommonRule(CreateViewModelRequest<YmnosStructureRule> req, string key)
         {
-            List<RuleElement> children = req.Handler.Settings.TypiconRule.Owner.GetChildren(
-                new CommonRuleServiceRequest() { Key = key, RuleSerializer = Serializer }).ToList();
+            var children = Serializer.GetCommonRuleChildren(req.Handler.Settings.TypiconId, key);
+
+            //List<RuleElement> children = req.Handler.Settings.TypiconRule.Owner.GetChildren(
+            //    new CommonRuleServiceRequest() { Key = key, RuleSerializer = Serializer }).ToList();
 
             if (req.Element.Structure.Groups.Count > 0)
             {

@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.Domain;
-using TypiconOnline.Domain.Books;
-using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Domain.Typicon.Psalter;
 using TypiconOnline.Infrastructure.Common.Domain;

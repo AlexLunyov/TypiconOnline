@@ -36,9 +36,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+    <Reference Include="System.ValueTuple, Version=4.5.0, Culture=neutral, PublicKeyToken=30ab651fcb4354552bd4891619a0bdd81e0ebdbf, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -176,10 +175,6 @@
     <ProjectReference Include="..\Infrastructure.Common\TypiconOnline.Infrastructure.Common.csproj">
       <Project>{1f2f3f15-a8cf-4ab7-8603-fb0309eaf8c7}</Project>
       <Name>TypiconOnline.Infrastructure.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TypiconOnline.Domain.Query\TypiconOnline.Domain.Query.csproj">
-      <Project>{6D661407-AED3-4215-88F2-C78FDC47BFC4}</Project>
-      <Name>TypiconOnline.Domain.Query</Name>
     </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.Domain\TypiconOnline.Domain.csproj">
       <Project>{823205b3-c0db-428d-9038-a03382d881d5}</Project>

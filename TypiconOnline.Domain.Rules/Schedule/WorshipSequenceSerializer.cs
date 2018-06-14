@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Serialization;
@@ -21,7 +17,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.LeitourgiaNode };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req) => new WorshipSequence(SerializerRoot, req.Descriptor.GetElementName());
+        protected override IRuleElement CreateObject(CreateObjectRequest req) => new WorshipSequence(SerializerRoot, req.Descriptor.GetElementName());
 
         protected override void FillObject(FillObjectRequest req)
         {

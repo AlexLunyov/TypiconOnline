@@ -2,11 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.Domain.Books;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules;
 using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Serialization
@@ -17,10 +13,8 @@ namespace TypiconOnline.Domain.Serialization
 
         public RuleSerializerRoot([NotNull] IDataQueryProcessor queryProcessor)
         {
-            QueryProcessor = queryProcessor;
+            QueryProcessor = queryProcessor ?? throw new ArgumentNullException("queryProcessor in RuleSerializerRoot");
         }
-
-        public BookStorage BookStorage { get; }
 
         public IDataQueryProcessor QueryProcessor { get; }
 
@@ -36,7 +30,7 @@ namespace TypiconOnline.Domain.Serialization
             {
                 return factories[key] as RuleSerializerContainerBase<T>;
             }
-            RuleSerializerContainerBase<T> factory = new RuleXmlSerializerContainer<T>(this);
+            var factory = new RuleXmlSerializerContainer<T>(this);
             factories.Add(key, factory);
             return factory;        
         }

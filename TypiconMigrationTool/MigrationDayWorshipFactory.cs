@@ -1,10 +1,6 @@
 ﻿using ScheduleHandling;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.Domain.Days;

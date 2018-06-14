@@ -15,6 +15,7 @@ using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Rules.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Expressions
 {

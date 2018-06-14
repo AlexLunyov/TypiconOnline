@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Schedule.Extensions;
 using TypiconOnline.Domain.Rules.Extensions;
+using TypiconOnline.Domain.Rules.Interfaces;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Schedule

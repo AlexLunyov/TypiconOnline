@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.Infrastructure.Common.Domain;
-using System.Text.RegularExpressions;
-using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Books.Elements;
 
 namespace TypiconOnline.Domain.ItemTypes
 {
@@ -111,7 +105,7 @@ namespace TypiconOnline.Domain.ItemTypes
         /// <returns></returns>
         private bool IsExpressionValid(string expression, out DateTime date)
         {
-            string format = RuleConstants.ItemDateParsing + "yyyy";
+            string format = ElementConstants.ItemDateParsing + "yyyy";
 
             //добавляем фейковый год, который гарантированно високосный
             expression = expression + "2016";

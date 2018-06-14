@@ -27,7 +27,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 
             builder.HasOne(e => e.Template).
                 WithMany()
-                .OnDelete(DeleteBehavior.SetNull)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasForeignKey(c => c.TemplateId)
                 .IsRequired(false)
                 ;

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.Domain.Books;
-using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Serialization;
+﻿using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Interfaces

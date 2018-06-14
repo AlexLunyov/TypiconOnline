@@ -1,5 +1,4 @@
 ﻿using System;
-using TypiconOnline.Domain.Rules.Days;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Books.Oktoikh

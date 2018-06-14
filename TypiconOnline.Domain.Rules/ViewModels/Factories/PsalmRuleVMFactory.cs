@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules.Days;
-using TypiconOnline.Domain.Rules.Schedule;
-using TypiconOnline.Domain.Rules.ViewModels.Messaging;
-using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.ViewModels.Messaging;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Rules.Extensions;
+using TypiconOnline.Domain.Rules.Schedule;
 
-namespace TypiconOnline.Domain.Rules.ViewModels.Factories
+namespace TypiconOnline.Domain.ViewModels.Factories
 {
     public class PsalmRuleVMFactory : ViewModelFactoryBase<PsalmRule>
     {
@@ -31,9 +28,7 @@ namespace TypiconOnline.Domain.Rules.ViewModels.Factories
 
         private void AppendHeader(CreateViewModelRequest<PsalmRule> req)
         {
-            TextHolder header = req.Handler.Settings.TypiconRule.Owner.GetChildren(
-                new CommonRuleServiceRequest() { Key = CommonRuleConstants.Psalm, RuleSerializer = Serializer })
-                .FirstOrDefault() as TextHolder;
+            TextHolder header = Serializer.GetCommonRuleFirstChild<TextHolder>(req.Handler.Settings.TypiconId, CommonRuleConstants.Psalm);
 
             var viewHeader = ViewModelItemFactory.Create(header, req.Handler, Serializer);
 

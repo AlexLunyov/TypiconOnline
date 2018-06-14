@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Executables;
-using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Interfaces;
+using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.Domain.Rules.ViewModels
 {
@@ -27,7 +22,7 @@ namespace TypiconOnline.Domain.Rules.ViewModels
         /// <param name="handler">обработчик</param>
         protected virtual void FillChildElements(IEnumerable<RuleElement> container, IRuleHandler handler)
         {
-            foreach (RuleElement element in container)
+            foreach (var element in container)
             {
                 if ((element is IViewModelElement v)
                     && (element is ICustomInterpreted c) && handler.IsTypeAuthorized(c))

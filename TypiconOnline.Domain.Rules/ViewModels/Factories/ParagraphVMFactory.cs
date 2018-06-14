@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.Rules.Days;
 
-namespace TypiconOnline.Domain.Rules.ViewModels.Factories
+namespace TypiconOnline.Domain.ViewModels.Factories
 {
     public class ParagraphVMFactory
     {

@@ -1,12 +1,6 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Domain.Rules.Days;
 
 namespace TypiconOnline.Domain.Tests.Rules.Days
 {

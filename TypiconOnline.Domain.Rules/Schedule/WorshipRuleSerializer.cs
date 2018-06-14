@@ -16,12 +16,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.WorshipRuleNodeName };
         }
 
-        public override string Serialize(RuleElement element)
+        public override string Serialize(IRuleElement element)
         {
             throw new NotImplementedException();
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req)
+        protected override IRuleElement CreateObject(CreateObjectRequest req)
         {
             return new WorshipRule(req.Descriptor.GetElementName(), req.Parent);
         }

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Days;
+using TypiconOnline.Domain.Rules.Extensions;
+using TypiconOnline.Domain.Rules.Interfaces;
 using TypiconOnline.Domain.Rules.Schedule;
-using TypiconOnline.Domain.Typicon;
 
-namespace TypiconOnline.Domain.Rules.ViewModels.Factories
+namespace TypiconOnline.Domain.ViewModels.Factories
 {
     public class ViewModelItemFactory
     {
@@ -146,8 +144,8 @@ namespace TypiconOnline.Domain.Rules.ViewModels.Factories
 
             if (index >= 0)
             {
-                result = handler.Settings.TypiconRule.Owner.GetIndexedString(
-                    new CommonRuleServiceRequest() { Key = CommonRuleConstants.ViewModelKind, RuleSerializer = ruleSerializer }, index, handler.Settings.Language.Name);
+                result = ruleSerializer.GetCommonRuleIndexedString(handler.Settings.TypiconId, CommonRuleConstants.ViewModelKind, 
+                    handler.Settings.Language.Name, index);
             }
 
             return result;

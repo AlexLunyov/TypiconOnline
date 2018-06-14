@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Executables;
-using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
@@ -42,10 +36,10 @@ namespace TypiconOnline.Domain.Typicon
         /// Возвращает объектную версию описания Правила
         /// </summary>
         /// <param name="serializerRoot">Сериализатор</param>
-        /// <returns>Правило должно иметь корневой элемент RootContainer</returns>
-        public RootContainer GetRule(IRuleSerializerRoot serializerRoot)
+        /// <returns></returns>
+        public IRuleElement GetRule(IRuleSerializerRoot serializerRoot)
         {
-            return GetRule<RootContainer>(serializerRoot);
+            return GetRule<IRuleElement>(serializerRoot);
         }
 
         /// <summary>

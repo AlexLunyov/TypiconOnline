@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules.Extensions;
+﻿using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Executables
@@ -16,7 +10,7 @@ namespace TypiconOnline.Domain.Rules.Executables
             ElementNames = new string[] { RuleConstants.ExecContainerNodeName };
         }
 
-        protected override RuleElement CreateObject(CreateObjectRequest req)
+        protected override IRuleElement CreateObject(CreateObjectRequest req)
         {
             return new RootContainer(req.Descriptor.GetElementName());
         }

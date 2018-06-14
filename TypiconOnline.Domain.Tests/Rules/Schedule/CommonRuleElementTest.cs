@@ -1,18 +1,12 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
-using TypiconOnline.AppServices.Messaging.Typicon;
-using TypiconOnline.Domain.Books;
+using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.ViewModels;
-
 using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Rules.Schedule

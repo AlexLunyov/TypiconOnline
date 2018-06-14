@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TypiconOnline.Domain.Rules.ViewModels
+﻿namespace TypiconOnline.Domain.ViewModels
 {
     /// <summary>
     /// Константы для выходных форм последовательностей богослужения

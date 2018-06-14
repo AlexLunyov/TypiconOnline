@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules.ViewModels;
-using TypiconOnline.Domain.Rules.ViewModels.Messaging;
+using TypiconOnline.Domain.Rules.Interfaces;
+using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.ViewModels.Messaging;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
