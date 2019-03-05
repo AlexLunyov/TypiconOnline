@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override IRuleElement CreateObject(CreateObjectRequest req)
         {
-            return new KKatavasiaRule(req.Descriptor.GetElementName(), SerializerRoot.QueryProcessor);
+            return new KKatavasiaRule(req.Descriptor.GetElementName(), SerializerRoot.QueryProcessor, SerializerRoot.TypiconSerializer);
         }
 
         protected override void FillObject(FillObjectRequest req)

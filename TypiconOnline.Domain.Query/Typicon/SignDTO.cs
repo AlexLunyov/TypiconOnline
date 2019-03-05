@@ -2,11 +2,11 @@
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class SignDTO
+    public class SignDto: ITemplateHaving
     {
         public int Id { get; set; }
-        public SignDTO Template { get; set; }
-        public int Number { get; set; }
+        public SignDto Template { get; set; }
+        public int? Number { get; set; }
         public int Priority { get; set; }
         public bool IsTemplate { get; set; }
         public bool IsAddition { get; set; }

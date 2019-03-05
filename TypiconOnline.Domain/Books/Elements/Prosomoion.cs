@@ -28,33 +28,5 @@ namespace TypiconOnline.Domain.Books.Elements
         {
             return base.Equals(item) && Self.Equals(item.Self);
         }
-
-        #region IXmlSerializable
-
-        //public override void ReadXml(XmlReader reader)
-        //{
-        //    if (reader.MoveToAttribute(ElementConstants.ProsomoionSelfAttr))
-        //    {
-        //        bool.TryParse(reader.Value, out bool result);
-
-        //        Self = result;
-
-        //        reader.MoveToElement();
-        //    }
-
-        //    base.ReadXml(reader);
-        //}
-
-        //public override void WriteXml(XmlWriter writer)
-        //{
-        //    if (Self)
-        //    {
-        //        writer.WriteAttributeString(ElementConstants.ProsomoionSelfAttr, Self.ToString());
-        //    }
-
-        //    base.WriteXml(writer);
-        //}
-
-        #endregion
     }
 }

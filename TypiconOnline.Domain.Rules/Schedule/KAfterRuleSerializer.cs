@@ -28,7 +28,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
 
             //IAsAdditionElement
-            (req.Element as KAfterRule).FillElement(req.Descriptor.Element);
+            (req.Element as KAfterRule).FillIAsAdditionElement(req.Descriptor.Element);
         }
 
         public override string Serialize(IRuleElement element)

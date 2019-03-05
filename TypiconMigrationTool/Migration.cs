@@ -17,6 +17,7 @@ using TypiconOnline.AppServices.Migration;
 using TypiconOnline.AppServices.Implementations.Books;
 using TypiconOnline.AppServices.Migration.Psalter;
 using TypiconOnline.Domain.Books.Psalter;
+using TypiconOnline.Domain.Serialization;
 
 namespace TypiconMigrationTool
 {
@@ -105,7 +106,7 @@ namespace TypiconMigrationTool
                 {
                     //Id = signMigrator.NewId,
                     Priority = signMigrator.Priority,
-                    OwnerId = typiconEntity.Id,
+                    TypiconEntityId = typiconEntity.Id,
                     //Owner = typiconEntity,
                     IsTemplate = row.IsTemplate,
                     RuleDefinition = fileReader.Read(row.Name),
@@ -211,7 +212,7 @@ namespace TypiconMigrationTool
 
             var service = new PsalterService(_unitOfWork);
 
-            var manager = new PsalmsMigrationManager(service);
+            var manager = new PsalmsMigrationManager(service, new TypiconSerializer());
 
             manager.MigratePsalms(new PsalterRuReader(folder, DEFAULT_LANGUAGE));
             Commit();
@@ -335,7 +336,7 @@ namespace TypiconMigrationTool
                         //Name = menologyDay.Name,
                         Date = menologyDay.Date,
                         DateB = menologyDay.DateB,
-                        OwnerId = typiconEntity.Id,
+                        TypiconEntityId = typiconEntity.Id,
                         //Owner = typiconEntity,
                         //IsAddition = true,
                         Template = typiconEntity.Signs.First(c => c.SignName.FirstOrDefault(DEFAULT_LANGUAGE).Text == mineinikRow.ServiceSignsRow.Name),
@@ -411,7 +412,7 @@ namespace TypiconMigrationTool
                 {
                     //Name = day.Name,
                     DaysFromEaster = day.DaysFromEaster,
-                    OwnerId = typiconEntity.Id,
+                    TypiconEntityId = typiconEntity.Id,
                     //Owner = typiconEntity,
                     //IsAddition = true,
                     Template = typiconEntity.Signs.First(c => c.SignName.FirstOrDefault(DEFAULT_LANGUAGE).Text == row.ServiceSignsRow.Name),
@@ -449,7 +450,7 @@ namespace TypiconMigrationTool
                 {
                     Name = file.name,
                     RuleDefinition = file.content,
-                    OwnerId = typiconEntity.Id,
+                    TypiconEntityId = typiconEntity.Id,
                     //Owner = typiconEntity
                 };
                 typiconEntity.CommonRules.Add(commonRule);

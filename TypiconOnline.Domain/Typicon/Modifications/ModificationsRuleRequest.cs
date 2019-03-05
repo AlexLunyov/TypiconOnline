@@ -6,7 +6,7 @@ namespace TypiconOnline.Domain.Typicon.Modifications
 {
     public class ModificationsRuleRequest: ServiceRequestBase
     {
-        public DayRule Caller { get; set; }
+        public int DayRuleId { get; set; }
         public DateTime Date { get; set; }
         public int Priority { get; set; }
         public bool IsLastName { get; set; }

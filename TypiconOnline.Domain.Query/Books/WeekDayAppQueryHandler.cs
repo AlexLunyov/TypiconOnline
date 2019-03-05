@@ -1,20 +1,21 @@
 ﻿using JetBrains.Annotations;
+using System.Linq;
 using TypiconOnline.Domain.Books.WeekDayApp;
 using TypiconOnline.Infrastructure.Common.Query;
-using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Books
 {
     /// <summary>
-    /// Возвращает День Октоиха по заданной дате
+    /// Возвращает Приложение на каждый день недели
     /// </summary>
-    public class WeekDayAppQueryHandler : UnitOfWorkHandlerBase, IDataQueryHandler<WeekDayAppQuery, WeekDayApp>
+    public class WeekDayAppQueryHandler : DbContextHandlerBase, IDataQueryHandler<WeekDayAppQuery, WeekDayApp>
     {
-        public WeekDayAppQueryHandler(IUnitOfWork unitOfWork) : base(unitOfWork) { }
+        public WeekDayAppQueryHandler(TypiconDBContext dbContext) : base(dbContext) { }
 
         public WeekDayApp Handle([NotNull] WeekDayAppQuery query)
         {
-            return UnitOfWork.Repository<WeekDayApp>().Get(c => c.DayOfWeek == query.DayOfWeek);
+            return DbContext.Set<WeekDayApp>().FirstOrDefault(c => c.DayOfWeek == query.DayOfWeek);
         }
     }
 }

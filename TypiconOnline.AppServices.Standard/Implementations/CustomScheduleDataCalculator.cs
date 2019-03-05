@@ -19,8 +19,9 @@ namespace TypiconOnline.AppServices.Implementations
     {
         public CustomScheduleDataCalculator(IRuleSerializerRoot ruleSerializer
             , IModifiedRuleService modifiedRuleService
+            , ITypiconFacade typiconFacade
             , IRuleHandlerSettingsFactory settingsFactory) 
-            : base(ruleSerializer, modifiedRuleService, settingsFactory) { }
+            : base(ruleSerializer, modifiedRuleService, typiconFacade, settingsFactory) { }
 
         public string CustomRule { get; set; }
 

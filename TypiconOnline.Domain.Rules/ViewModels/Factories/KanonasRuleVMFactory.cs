@@ -14,8 +14,8 @@ namespace TypiconOnline.Domain.ViewModels.Factories
     public class KanonasRuleVMFactory : ViewModelFactoryBase<KanonasRule>
     {
         IReadOnlyList<TextHolder> headers;
-        Dictionary<int, ViewModelItem> kanonasHeaders;
-        ViewModelItem katavasiaHeader;
+        Dictionary<int, ElementViewModel> kanonasHeaders;
+        ElementViewModel katavasiaHeader;
         OdiViewModelFactory odiView;
 
         public KanonasRuleVMFactory(IRuleSerializerRoot serializer) : base(serializer) { }
@@ -46,7 +46,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         private void Clear(CreateViewModelRequest<KanonasRule> req)
         {
             headers = null;
-            kanonasHeaders = new Dictionary<int, ViewModelItem>();
+            kanonasHeaders = new Dictionary<int, ElementViewModel>();
             odiView = new OdiViewModelFactory(req.Handler, Serializer, req.AppendModelAction);
         }
 
@@ -54,7 +54,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             TextHolder header = GetHeaders(req)[0];
 
-            req.AppendModelAction(new ElementViewModel() { ViewModelItemFactory.Create(header, req.Handler, Serializer) });
+            req.AppendModelAction(new ElementViewModelCollection() { ViewModelItemFactory.Create(header, req.Handler, Serializer) });
         }
 
         private void AppendOdi(CreateViewModelRequest<KanonasRule> req, KOdiRule defaultOdiRule, int odiNumber)
@@ -121,7 +121,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             int hash = kanonas.GetHashCode();
 
-            ViewModelItem view = null;
+            ElementViewModel view = null;
             
             if (!kanonasHeaders.ContainsKey(hash))
             {
@@ -156,7 +156,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 view = kanonasHeaders[hash];
             }
 
-            req.AppendModelAction(new ElementViewModel() { view });
+            req.AppendModelAction(new ElementViewModelCollection() { view });
         }
 
         private void AppendKatavasiaHeader(CreateViewModelRequest<KanonasRule> req, int ihos)
@@ -174,7 +174,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 //katavasiaHeader = ViewModelItemFactory.Create(TextHolderKind.Text, new List<string> { str });
             }
 
-            req.AppendModelAction(new ElementViewModel() { katavasiaHeader });
+            req.AppendModelAction(new ElementViewModelCollection() { katavasiaHeader });
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             TextHolder odi8TextHolder = GetHeaders(req)[5];
             var viewModel = ViewModelItemFactory.Create(odi8TextHolder, req.Handler, Serializer);
 
-            req.AppendModelAction(new ElementViewModel() { viewModel });
+            req.AppendModelAction(new ElementViewModelCollection() { viewModel });
         }
 
         private void AppenOdiHeader(CreateViewModelRequest<KanonasRule> req, int i)
@@ -196,7 +196,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             viewModel.Paragraphs[0].
                 Replace("[odinumber]", req.Handler.Settings.Language.IntConverter.ToString(i));
 
-            req.AppendModelAction(new ElementViewModel() { viewModel });
+            req.AppendModelAction(new ElementViewModelCollection() { viewModel });
         }
 
         private void AppendAfterRule(CreateViewModelRequest<KanonasRule> req, int odiNumber)

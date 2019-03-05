@@ -23,7 +23,7 @@ namespace TypiconOnline.Domain.Books.TheotokionApp
                                                     && c.DayOfWeek == request.DayOfWeek);
 
                 YmnosGroup group = new YmnosGroup() { Ihos = theotokion.Ihos };
-                group.Ymnis.Add(theotokion.GetElement());
+                group.Ymnis.Add(theotokion.GetElement(request.Serializer));
 
                 response.BookElement = group;
             }

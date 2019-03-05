@@ -1,5 +1,4 @@
-﻿using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Infrastructure.Common.Query;
+﻿using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Interfaces
 {
@@ -9,7 +8,11 @@ namespace TypiconOnline.Domain.Interfaces
         /// Единая точка для обработки запросов
         /// </summary>
         IDataQueryProcessor QueryProcessor { get; }
-        RuleSerializerContainerBase<T> Container<T>() where T : IRuleElement;
-        RuleSerializerContainerBase<T> Container<T, U>() where T : IRuleElement;
+        /// <summary>
+        /// Сериализатор для богослужебных текстов
+        /// </summary>
+        ITypiconSerializer TypiconSerializer { get; }
+        IRuleSerializerContainer<T> Container<T>() where T : IRuleElement;
+        IRuleSerializerContainer<T> Container<T, U>() where T : IRuleElement;
     }
 }

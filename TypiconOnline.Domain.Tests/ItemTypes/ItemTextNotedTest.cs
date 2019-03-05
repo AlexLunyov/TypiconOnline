@@ -20,14 +20,14 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 	                                <note bold=""true""><item language=""cs-cs"">Трижды.</item></note>
                                 </ItemTextNoted>";
 
-            ItemTextNoted element = new ItemTextNoted(xmlString, "ItemTextNoted");
+            var element = new TypiconSerializer().Deserialize<ItemTextNoted>(xmlString);
 
             Assert.IsNotNull(element.Note);
             Assert.AreEqual(1, element.Note.Items.Count());
             Assert.IsTrue(element.Note.IsBold);
 
             //Assert.AreEqual("Господи помилуй. Трижды.", element.ToString());
-            Assert.Pass(element.StringExpression);
+            Assert.Pass(element.ToString());
         }
 
         [Test]

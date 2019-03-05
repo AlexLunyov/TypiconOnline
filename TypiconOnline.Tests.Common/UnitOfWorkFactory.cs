@@ -10,15 +10,11 @@ namespace TypiconOnline.Tests.Common
     {
         public static IUnitOfWork Create()
         {
-            //SQLite connection
-            var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
-            var connectionString = $"FileName={TestContext.CurrentContext.TestDirectory}\\Data\\SQLiteDB.db";
-            optionsBuilder.UseSqlite(connectionString);
+            return Create(TypiconDbContextFactory.Create());
+        }
 
-            optionsBuilder.EnableSensitiveDataLogging();
-
-            var dbContext = new CachedDbContext(optionsBuilder.Options);
-
+        public static IUnitOfWork Create(TypiconDBContext dbContext)
+        {
             return new UnitOfWork(dbContext, new RepositoryFactory());
         }
     }

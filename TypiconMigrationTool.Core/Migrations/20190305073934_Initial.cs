@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace TypiconMigrationTool.Core.Migrations
 {
-    public partial class db : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +16,7 @@ namespace TypiconMigrationTool.Core.Migrations
                     IncludedItem = table.Column<int>(nullable: true),
                     IsCelebrating = table.Column<bool>(nullable: true),
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 },
                 constraints: table =>
                 {
@@ -39,7 +40,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 {
                     Expression = table.Column<string>(nullable: true),
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 },
                 constraints: table =>
                 {
@@ -47,11 +48,27 @@ namespace TypiconMigrationTool.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ItemText",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    Discriminator = table.Column<string>(nullable: false),
+                    IsBold = table.Column<bool>(nullable: true),
+                    IsItalic = table.Column<bool>(nullable: true),
+                    IsRed = table.Column<bool>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemText", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Katavasia",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Definition = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true)
                 },
@@ -65,7 +82,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Definition = table.Column<string>(nullable: true),
                     Ihos = table.Column<int>(nullable: false),
                     DayOfWeek = table.Column<int>(nullable: false)
@@ -80,7 +97,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Definition = table.Column<string>(nullable: true),
                     Number = table.Column<int>(nullable: false)
                 },
@@ -94,7 +111,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Definition = table.Column<string>(nullable: true),
                     Place = table.Column<int>(nullable: false),
                     Ihos = table.Column<int>(nullable: false),
@@ -110,7 +127,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Name = table.Column<string>(maxLength: 200, nullable: true),
                     TemplateId = table.Column<int>(nullable: true),
                     DefaultLanguage = table.Column<string>(nullable: true)
@@ -131,7 +148,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Definition = table.Column<string>(nullable: true),
                     DayOfWeek = table.Column<int>(nullable: false)
                 },
@@ -145,7 +162,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Discriminator = table.Column<string>(nullable: false),
                     DateId = table.Column<int>(nullable: true),
                     DateBId = table.Column<int>(nullable: true),
@@ -169,12 +186,33 @@ namespace TypiconMigrationTool.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ItemTextUnit",
+                columns: table => new
+                {
+                    Language = table.Column<string>(nullable: true),
+                    Text = table.Column<string>(nullable: true),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    ItemTextId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemTextUnit", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ItemTextUnit_ItemText_ItemTextId",
+                        column: x => x.ItemTextId,
+                        principalTable: "ItemText",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CommonRule",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    OwnerId = table.Column<int>(nullable: false),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    TypiconEntityId = table.Column<int>(nullable: false),
                     RuleDefinition = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true)
                 },
@@ -182,8 +220,8 @@ namespace TypiconMigrationTool.Core.Migrations
                 {
                     table.PrimaryKey("PK_CommonRule", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CommonRule_TypiconEntity_OwnerId",
-                        column: x => x.OwnerId,
+                        name: "FK_CommonRule_TypiconEntity_TypiconEntityId",
+                        column: x => x.TypiconEntityId,
                         principalTable: "TypiconEntity",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -194,14 +232,20 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     TypiconEntityId = table.Column<int>(nullable: true),
                     Number = table.Column<int>(nullable: false),
-                    NumberName_StringExpression = table.Column<string>(nullable: true)
+                    NumberNameId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Kathisma", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Kathisma_ItemText_NumberNameId",
+                        column: x => x.NumberNameId,
+                        principalTable: "ItemText",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Kathisma_TypiconEntity_TypiconEntityId",
                         column: x => x.TypiconEntityId,
@@ -215,7 +259,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     TypiconEntityId = table.Column<int>(nullable: false),
                     Year = table.Column<int>(nullable: false)
                 },
@@ -235,31 +279,73 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    OwnerId = table.Column<int>(nullable: false),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    TypiconEntityId = table.Column<int>(nullable: false),
                     RuleDefinition = table.Column<string>(nullable: true),
                     TemplateId = table.Column<int>(nullable: true),
                     IsAddition = table.Column<bool>(nullable: false),
                     Number = table.Column<int>(nullable: true),
                     Priority = table.Column<int>(nullable: false),
                     IsTemplate = table.Column<bool>(nullable: false),
-                    SignName_StringExpression = table.Column<string>(nullable: true)
+                    SignNameId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sign", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sign_TypiconEntity_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "TypiconEntity",
+                        name: "FK_Sign_ItemText_SignNameId",
+                        column: x => x.SignNameId,
+                        principalTable: "ItemText",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Sign_Sign_TemplateId",
                         column: x => x.TemplateId,
                         principalTable: "Sign",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Sign_TypiconEntity_TypiconEntityId",
+                        column: x => x.TypiconEntityId,
+                        principalTable: "TypiconEntity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DayWorship",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    Definition = table.Column<string>(nullable: true),
+                    WorshipNameId = table.Column<int>(nullable: false),
+                    WorshipShortNameId = table.Column<int>(nullable: false),
+                    UseFullName = table.Column<bool>(nullable: false),
+                    IsCelebrating = table.Column<bool>(nullable: false),
+                    ParentId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DayWorship", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DayWorship_Day_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Day",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DayWorship_ItemText_WorshipNameId",
+                        column: x => x.WorshipNameId,
+                        principalTable: "ItemText",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DayWorship_ItemText_WorshipShortNameId",
+                        column: x => x.WorshipShortNameId,
+                        principalTable: "ItemText",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -267,7 +353,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     KathismaId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -286,27 +372,19 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    OwnerId = table.Column<int>(nullable: false),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    TypiconEntityId = table.Column<int>(nullable: false),
                     RuleDefinition = table.Column<string>(nullable: true),
-                    IsAddition = table.Column<bool>(nullable: false),
                     TemplateId = table.Column<int>(nullable: false),
+                    IsAddition = table.Column<bool>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
                     DateId = table.Column<int>(nullable: true),
                     DateBId = table.Column<int>(nullable: true),
-                    TypiconEntityId = table.Column<int>(nullable: true),
-                    DaysFromEaster = table.Column<int>(nullable: true),
-                    TriodionRule_TypiconEntityId = table.Column<int>(nullable: true)
+                    DaysFromEaster = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DayRule", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DayRule_TypiconEntity_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "TypiconEntity",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_DayRule_Sign_TemplateId",
                         column: x => x.TemplateId,
@@ -330,13 +408,13 @@ namespace TypiconMigrationTool.Core.Migrations
                         column: x => x.TypiconEntityId,
                         principalTable: "TypiconEntity",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DayRule_TypiconEntity_TriodionRule_TypiconEntityId",
-                        column: x => x.TriodionRule_TypiconEntityId,
+                        name: "FK_DayRule_TypiconEntity_TypiconEntityId1",
+                        column: x => x.TypiconEntityId,
                         principalTable: "TypiconEntity",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -344,7 +422,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     PsalmId = table.Column<int>(nullable: true),
                     StartStihos = table.Column<int>(nullable: true),
                     EndStihos = table.Column<int>(nullable: true),
@@ -368,25 +446,55 @@ namespace TypiconMigrationTool.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DayRuleWorship",
+                columns: table => new
+                {
+                    DayRuleId = table.Column<int>(nullable: false),
+                    DayWorshipId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DayRuleWorship", x => new { x.DayRuleId, x.DayWorshipId });
+                    table.ForeignKey(
+                        name: "FK_DayRuleWorship_DayRule_DayRuleId",
+                        column: x => x.DayRuleId,
+                        principalTable: "DayRule",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DayRuleWorship_DayWorship_DayWorshipId",
+                        column: x => x.DayWorshipId,
+                        principalTable: "DayWorship",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ModifiedRule",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     ModifiedYearId = table.Column<int>(nullable: false),
-                    RuleEntityId = table.Column<int>(nullable: true),
+                    DayRuleId = table.Column<int>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     Priority = table.Column<int>(nullable: false),
                     IsLastName = table.Column<bool>(nullable: false),
                     IsAddition = table.Column<bool>(nullable: false),
                     UseFullName = table.Column<bool>(nullable: false),
                     SignNumber = table.Column<int>(nullable: true),
-                    ShortName_StringExpression = table.Column<string>(nullable: true),
+                    ShortNameId = table.Column<int>(nullable: true),
                     FilterId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ModifiedRule", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ModifiedRule_DayRule_DayRuleId",
+                        column: x => x.DayRuleId,
+                        principalTable: "DayRule",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ModifiedRule_DayWorshipsFilter_FilterId",
                         column: x => x.FilterId,
@@ -400,86 +508,17 @@ namespace TypiconMigrationTool.Core.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ModifiedRule_DayRule_RuleEntityId",
-                        column: x => x.RuleEntityId,
-                        principalTable: "DayRule",
+                        name: "FK_ModifiedRule_ItemText_ShortNameId",
+                        column: x => x.ShortNameId,
+                        principalTable: "ItemText",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DayWorship",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Definition = table.Column<string>(nullable: true),
-                    WorshipName_StringExpression = table.Column<string>(nullable: true),
-                    WorshipShortName_StringExpression = table.Column<string>(nullable: true),
-                    UseFullName = table.Column<bool>(nullable: false),
-                    IsCelebrating = table.Column<bool>(nullable: false),
-                    ParentId = table.Column<int>(nullable: false),
-                    DayRuleId = table.Column<int>(nullable: true),
-                    ModifiedRuleId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DayWorship", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DayWorship_DayRule_DayRuleId",
-                        column: x => x.DayRuleId,
-                        principalTable: "DayRule",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_DayWorship_ModifiedRule_ModifiedRuleId",
-                        column: x => x.ModifiedRuleId,
-                        principalTable: "ModifiedRule",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_DayWorship_Day_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "Day",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DayRuleWorship",
-                columns: table => new
-                {
-                    DayRuleId = table.Column<int>(nullable: false),
-                    DayRuleId1 = table.Column<int>(nullable: true),
-                    DayWorshipId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DayRuleWorship", x => new { x.DayRuleId, x.DayWorshipId });
-                    table.ForeignKey(
-                        name: "FK_DayRuleWorship_DayRule_DayRuleId",
-                        column: x => x.DayRuleId,
-                        principalTable: "DayRule",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DayRuleWorship_DayRule_DayRuleId1",
-                        column: x => x.DayRuleId1,
-                        principalTable: "DayRule",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_DayRuleWorship_DayWorship_DayWorshipId",
-                        column: x => x.DayWorshipId,
-                        principalTable: "DayWorship",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommonRule_OwnerId",
+                name: "IX_CommonRule_TypiconEntityId",
                 table: "CommonRule",
-                column: "OwnerId");
+                column: "TypiconEntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Day_DateBId",
@@ -490,11 +529,6 @@ namespace TypiconMigrationTool.Core.Migrations
                 name: "IX_Day_DateId",
                 table: "Day",
                 column: "DateId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DayRule_OwnerId",
-                table: "DayRule",
-                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DayRule_TemplateId",
@@ -517,14 +551,9 @@ namespace TypiconMigrationTool.Core.Migrations
                 column: "TypiconEntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DayRule_TriodionRule_TypiconEntityId",
+                name: "IX_DayRule_TypiconEntityId1",
                 table: "DayRule",
-                column: "TriodionRule_TypiconEntityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DayRuleWorship_DayRuleId1",
-                table: "DayRuleWorship",
-                column: "DayRuleId1");
+                column: "TypiconEntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DayRuleWorship_DayWorshipId",
@@ -532,24 +561,39 @@ namespace TypiconMigrationTool.Core.Migrations
                 column: "DayWorshipId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DayWorship_DayRuleId",
-                table: "DayWorship",
-                column: "DayRuleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DayWorship_ModifiedRuleId",
-                table: "DayWorship",
-                column: "ModifiedRuleId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_DayWorship_ParentId",
                 table: "DayWorship",
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DayWorship_WorshipNameId",
+                table: "DayWorship",
+                column: "WorshipNameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DayWorship_WorshipShortNameId",
+                table: "DayWorship",
+                column: "WorshipShortNameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemTextUnit_ItemTextId",
+                table: "ItemTextUnit",
+                column: "ItemTextId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Kathisma_NumberNameId",
+                table: "Kathisma",
+                column: "NumberNameId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Kathisma_TypiconEntityId",
                 table: "Kathisma",
                 column: "TypiconEntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ModifiedRule_DayRuleId",
+                table: "ModifiedRule",
+                column: "DayRuleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ModifiedRule_FilterId",
@@ -562,9 +606,9 @@ namespace TypiconMigrationTool.Core.Migrations
                 column: "ModifiedYearId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ModifiedRule_RuleEntityId",
+                name: "IX_ModifiedRule_ShortNameId",
                 table: "ModifiedRule",
-                column: "RuleEntityId");
+                column: "ShortNameId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ModifiedYear_TypiconEntityId",
@@ -582,14 +626,19 @@ namespace TypiconMigrationTool.Core.Migrations
                 column: "SlavaElementId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sign_OwnerId",
+                name: "IX_Sign_SignNameId",
                 table: "Sign",
-                column: "OwnerId");
+                column: "SignNameId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sign_TemplateId",
                 table: "Sign",
                 column: "TemplateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sign_TypiconEntityId",
+                table: "Sign",
+                column: "TypiconEntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SlavaElement_KathismaId",
@@ -614,7 +663,13 @@ namespace TypiconMigrationTool.Core.Migrations
                 name: "EasterItem");
 
             migrationBuilder.DropTable(
+                name: "ItemTextUnit");
+
+            migrationBuilder.DropTable(
                 name: "Katavasia");
+
+            migrationBuilder.DropTable(
+                name: "ModifiedRule");
 
             migrationBuilder.DropTable(
                 name: "OktoikhDay");
@@ -632,19 +687,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 name: "DayWorship");
 
             migrationBuilder.DropTable(
-                name: "Psalm");
-
-            migrationBuilder.DropTable(
-                name: "SlavaElement");
-
-            migrationBuilder.DropTable(
-                name: "ModifiedRule");
-
-            migrationBuilder.DropTable(
-                name: "Day");
-
-            migrationBuilder.DropTable(
-                name: "Kathisma");
+                name: "DayRule");
 
             migrationBuilder.DropTable(
                 name: "DayWorshipsFilter");
@@ -653,13 +696,25 @@ namespace TypiconMigrationTool.Core.Migrations
                 name: "ModifiedYear");
 
             migrationBuilder.DropTable(
-                name: "DayRule");
+                name: "Psalm");
+
+            migrationBuilder.DropTable(
+                name: "SlavaElement");
+
+            migrationBuilder.DropTable(
+                name: "Day");
 
             migrationBuilder.DropTable(
                 name: "Sign");
 
             migrationBuilder.DropTable(
+                name: "Kathisma");
+
+            migrationBuilder.DropTable(
                 name: "ItemDate");
+
+            migrationBuilder.DropTable(
+                name: "ItemText");
 
             migrationBuilder.DropTable(
                 name: "TypiconEntity");

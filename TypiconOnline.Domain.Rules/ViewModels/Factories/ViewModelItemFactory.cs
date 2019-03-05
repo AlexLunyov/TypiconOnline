@@ -11,99 +11,99 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 {
     public class ViewModelItemFactory
     {
-        public static ViewModelItem Create(TextHolderKind kind, List<ParagraphViewModel> p)
+        public static ElementViewModel Create(TextHolderKind kind, List<ParagraphViewModel> p)
         {
             return Create(kind, string.Empty, p);
         }
 
-        public static ViewModelItem Create(TextHolderKind kind, string kindString, List<ParagraphViewModel> p)
+        public static ElementViewModel Create(TextHolderKind kind, string kindString, List<ParagraphViewModel> p)
         {
-            return new ViewModelItem()
+            return new ElementViewModel()
             {
                 Kind = Cast(kind),
-                KindStringValue = kindString,
+                KindValue = kindString,
                 Paragraphs = p
             };
         }
 
-        public static ViewModelItem Create(ViewModelItemKind kind, List<ParagraphViewModel> p, IRuleHandler handler, IRuleSerializerRoot serializer)
+        public static ElementViewModel Create(ElementViewModelKind kind, List<ParagraphViewModel> p, IRuleHandler handler, IRuleSerializerRoot serializer)
         {
-            return new ViewModelItem()
+            return new ElementViewModel()
             {
                 Kind = kind,
-                KindStringValue = GetKindStringValue(kind, handler, serializer),
+                KindValue = GetKindStringValue(kind, handler, serializer),
                 Paragraphs = p
             };
         }
 
-        public static ViewModelItem Create(TextHolder textHolder, IRuleHandler handler, IRuleSerializerRoot serializer)
+        public static ElementViewModel Create(TextHolder textHolder, IRuleHandler handler, IRuleSerializerRoot serializer)
         {
             var kind = Cast(textHolder.Kind);
-            return new ViewModelItem()
+            return new ElementViewModel()
             {
                 Kind = kind,
-                KindStringValue = GetKindStringValue(kind, handler, serializer),
+                KindValue = GetKindStringValue(kind, handler, serializer),
                 Paragraphs = ParagraphVMFactory.CreateList(textHolder.Paragraphs, handler.Settings.Language.Name)
             };
         }
 
-        public static ViewModelItem Create(Ymnos ymnos, IRuleHandler handler, IRuleSerializerRoot serializer)
+        public static ElementViewModel Create(Ymnos ymnos, IRuleHandler handler, IRuleSerializerRoot serializer)
         {
             var kind = Cast(ymnos.Kind);
-            return new ViewModelItem()
+            return new ElementViewModel()
             {
                 Kind = Cast(ymnos.Kind),
-                KindStringValue = GetKindStringValue(kind, handler, serializer),
+                KindValue = GetKindStringValue(kind, handler, serializer),
                 Paragraphs = new List<ParagraphViewModel>() { ParagraphVMFactory.Create(ymnos.Text, handler.Settings.Language.Name) }
             };
         }
 
-        private static ViewModelItemKind Cast(YmnosKind kind)
+        private static ElementViewModelKind Cast(YmnosKind kind)
         {
-            ViewModelItemKind result = ViewModelItemKind.Text;
+            ElementViewModelKind result = ElementViewModelKind.Text;
             switch (kind)
             {
                 case YmnosKind.Irmos:
-                    result = ViewModelItemKind.Irmos;
+                    result = ElementViewModelKind.Irmos;
                     break;
                 case YmnosKind.Theotokion:
-                    result = ViewModelItemKind.Theotokion;
+                    result = ElementViewModelKind.Theotokion;
                     break;
                 case YmnosKind.Katavasia:
                     //ничего не делаем
                     break;
                 default:
-                    result = ViewModelItemKind.Troparion;
+                    result = ElementViewModelKind.Troparion;
                     break;
             }
             return result;
         }
 
-        private static ViewModelItemKind Cast(TextHolderKind kind)
+        private static ElementViewModelKind Cast(TextHolderKind kind)
         {
-            ViewModelItemKind result = ViewModelItemKind.Text;
+            ElementViewModelKind result = ElementViewModelKind.Text;
             switch (kind)
             {
                 case TextHolderKind.Choir:
-                    result = ViewModelItemKind.Choir;
+                    result = ElementViewModelKind.Choir;
                     break;
                 case TextHolderKind.Deacon:
-                    result = ViewModelItemKind.Deacon;
+                    result = ElementViewModelKind.Deacon;
                     break;
                 case TextHolderKind.Lector:
-                    result = ViewModelItemKind.Lector;
+                    result = ElementViewModelKind.Lector;
                     break;
                 case TextHolderKind.Priest:
-                    result = ViewModelItemKind.Priest;
+                    result = ElementViewModelKind.Priest;
                     break;
                 case TextHolderKind.Stihos:
-                    result = ViewModelItemKind.Stihos;
+                    result = ElementViewModelKind.Stihos;
                     break;
             }
             return result;
         }
 
-        protected static string GetKindStringValue(ViewModelItemKind kind, IRuleHandler handler, IRuleSerializerRoot ruleSerializer)
+        protected static string GetKindStringValue(ElementViewModelKind kind, IRuleHandler handler, IRuleSerializerRoot ruleSerializer)
         {
             string result = "";
 
@@ -111,31 +111,31 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
             switch (kind)
             {
-                case ViewModelItemKind.Choir:
+                case ElementViewModelKind.Choir:
                     index = 0;
                     break;
-                case ViewModelItemKind.Deacon:
+                case ElementViewModelKind.Deacon:
                     index = 1;
                     break;
-                case ViewModelItemKind.Lector:
+                case ElementViewModelKind.Lector:
                     index = 2;
                     break;
-                case ViewModelItemKind.Priest:
+                case ElementViewModelKind.Priest:
                     index = 3;
                     break;
-                case ViewModelItemKind.Stihos:
+                case ElementViewModelKind.Stihos:
                     index = 4;
                     break;
-                case ViewModelItemKind.Irmos:
+                case ElementViewModelKind.Irmos:
                     index = 5;
                     break;
-                case ViewModelItemKind.Troparion:
+                case ElementViewModelKind.Troparion:
                     index = 6;
                     break;
-                case ViewModelItemKind.Chorus:
+                case ElementViewModelKind.Chorus:
                     index = 7;
                     break;
-                case ViewModelItemKind.Theotokion:
+                case ElementViewModelKind.Theotokion:
                     index = 8;
                     break;
                     //default:

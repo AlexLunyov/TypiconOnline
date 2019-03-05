@@ -3,6 +3,7 @@ using TypiconOnline.Domain.Books.Elements;
 
 namespace TypiconOnline.Domain.ItemTypes
 {
+    //TODO: удалить! Заменить в местах использования на DayOfWeek
     public class ItemDayOfWeek : ItemEnumType<DayOfWeek>
     {
         //private DayOfWeek _dayOfWeek;

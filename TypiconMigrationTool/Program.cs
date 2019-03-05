@@ -44,6 +44,12 @@ namespace TypiconMigrationTool
                             Migrate(sqlite);
                         }
                         break;
+                    case '3':
+                        {
+                            var sqlite = GetPostgreSQLUnitOfWork();
+                            Migrate(sqlite);
+                        }
+                        break;
                     case '4':
                         ef = GetMSSqlUnitOfWork();
                         TestBlagoveshenie(ef);
@@ -73,6 +79,14 @@ namespace TypiconMigrationTool
 
                     return new UnitOfWork(new TypiconDBContext(optionsBuilder.Options), new RepositoryFactory());
                 };
+
+                IUnitOfWork GetPostgreSQLUnitOfWork()
+                {
+                    var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
+                    optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=typicondb;Username=postgres;Password=z2LDCiiEQFDBlkl3eZyb");
+
+                    return new UnitOfWork(new TypiconDBContext(optionsBuilder.Options), new RepositoryFactory());
+                };
             }
 
             
@@ -87,6 +101,8 @@ namespace TypiconMigrationTool
 
             //unitOfWork.Commit();
         }
+
+        
 
         private static void TestEsperinos()
         {

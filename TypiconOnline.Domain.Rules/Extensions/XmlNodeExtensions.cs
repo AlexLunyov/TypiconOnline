@@ -1,5 +1,6 @@
 ﻿using System.Xml;
 using TypiconOnline.Domain.Books.Elements;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.Rules.Extensions
@@ -26,11 +27,11 @@ namespace TypiconOnline.Domain.Rules.Extensions
             return default(ItemTextUnit);
         }
 
-        public static ItemTextStyled GetItemTextStyled(this XmlNode elem, string key)
+        public static ItemTextStyled GetItemTextStyled(this XmlNode elem, ITypiconSerializer serializer, string key)
         {
             var node = elem.SelectSingleNode(key);
 
-            return (node != null) ? new ItemTextStyled(node.OuterXml, key) : default(ItemTextStyled);
+            return (node != null) ? serializer.Deserialize<ItemTextStyled>(node.OuterXml, key) : default(ItemTextStyled);
         }
     }
 }

@@ -23,10 +23,10 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
             builder.HasMany(e => e.ModifiedYears).
                 WithOne(m => m.TypiconEntity).HasForeignKey(c => c.TypiconEntityId);
 
-            builder.HasMany(c => c.CommonRules).WithOne(d => d.Owner).HasForeignKey(c => c.OwnerId);
-            builder.HasMany(c => c.Signs).WithOne(d => d.Owner).HasForeignKey(c => c.OwnerId);
-            builder.HasMany(c => c.MenologyRules).WithOne(d => d.Owner).HasForeignKey(c => c.OwnerId);
-            builder.HasMany(c => c.TriodionRules).WithOne(d => d.Owner).HasForeignKey(c => c.OwnerId);
+            builder.HasMany(c => c.CommonRules).WithOne(d => d.TypiconEntity).HasForeignKey(c => c.TypiconEntityId);
+            builder.HasMany(c => c.Signs).WithOne(d => d.TypiconEntity).HasForeignKey(c => c.TypiconEntityId);
+            //builder.HasMany(c => c.MenologyRules).WithOne(d => d.TypiconEntity).HasForeignKey(c => c.TypiconEntityId);
+            //builder.HasMany(c => c.TriodionRules).WithOne(d => d.TypiconEntity).HasForeignKey(c => c.TypiconEntityId);
             builder.HasMany(c => c.Kathismas).WithOne(d => d.TypiconEntity);
 
             //builder.HasOne(e => e.Settings).

@@ -26,24 +26,27 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void FillObject(FillObjectRequest req)
         {
+            var obj = req.Element as TextHolder;
+
             if (Enum.TryParse(req.Descriptor.Element.Name, true, out TextHolderKind kind))
             {
-                (req.Element as TextHolder).Kind = kind;
+                obj.Kind = kind;
             }
 
-            XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.TextHolderMarkAttr];
+            var attr = req.Descriptor.Element.Attributes?[RuleConstants.TextHolderMarkAttr];
             if (Enum.TryParse(attr?.Value, true, out TextHolderMark mark))
             {
-                (req.Element as TextHolder).Mark = mark;
+                obj.Mark = mark;
             }
 
             foreach (XmlNode childNode in req.Descriptor.Element.ChildNodes)
             {
                 if (childNode.Name == RuleConstants.TextHolderPapragraphNode)
                 {
-                    ItemTextNoted item = new ItemTextNoted(childNode.OuterXml, RuleConstants.TextHolderPapragraphNode);
+                    var item = SerializerRoot.TypiconSerializer.Deserialize<ItemTextNoted>(childNode.OuterXml, RuleConstants.TextHolderPapragraphNode);
+                    //new ItemTextNoted(childNode.OuterXml, RuleConstants.TextHolderPapragraphNode);
 
-                    (req.Element as TextHolder).Paragraphs.Add(item);
+                    obj.Paragraphs.Add(item);
                 }
             }
         }

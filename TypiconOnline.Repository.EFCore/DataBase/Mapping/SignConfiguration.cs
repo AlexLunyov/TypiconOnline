@@ -21,9 +21,10 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 
             builder.Property(c => c.Priority).IsRequired();
 
-            
+            //builder.OwnsOne(c => c.SignName, k => k.Ignore(d => d.Items));
 
-            builder.OwnsOne(c => c.SignName, k => k.Ignore(d => d.Items));
+            //builder.Property<int>("SignNameId");
+            builder.HasOne(e => e.SignName).WithMany();//.HasForeignKey("Id");
 
             builder.HasOne(e => e.Template).
                 WithMany()

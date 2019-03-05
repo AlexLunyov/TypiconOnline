@@ -6,6 +6,7 @@ using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.WeekDayApp;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Psalter;
 using TypiconOnline.Repository.EFCore.DataBase.Mapping;
@@ -14,14 +15,15 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 {
     public class TypiconDBContext : DbContext
     {
-        public TypiconDBContext() : base()
+        public TypiconDBContext(DbContextOptions<TypiconDBContext> options) : base(options)
         {
             Database.EnsureCreated();
         }
 
-        public TypiconDBContext(DbContextOptions<TypiconDBContext> options) : base(options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            Database.EnsureCreated();
+            //Включаем ленивую загрузку всех связанных свойств
+            optionsBuilder.UseLazyLoadingProxies();
         }
 
         #region Modeling
@@ -35,6 +37,50 @@ namespace TypiconOnline.Repository.EFCore.DataBase
             //modelBuilder.ApplyConfiguration(new TypiconRuleConfiguration());
 
             modelBuilder.ApplyConfiguration(new SignConfiguration());
+
+            //Sign
+
+            //modelBuilder
+            //    .Entity<Sign>()
+            //    .HasBaseType((Type)null);
+            //modelBuilder
+            //    .Entity<Sign>()
+            //    .HasKey(c => c.Id);
+            //modelBuilder
+            //    .Entity<Sign>()
+            //    .HasKey(c => c.Id);
+            //modelBuilder
+            //    .Entity<Sign>()
+            //    .Property(c => c.Priority)
+            //    .IsRequired();
+            //modelBuilder
+            //    .Entity<Sign>()
+            //    .HasOne(e => e.SignName)
+            //    .WithMany();
+            //modelBuilder
+            //    .Entity<Sign>()
+            //    .HasOne(e => e.Template)
+            //    .WithMany()
+            //    .OnDelete(DeleteBehavior.Restrict)
+            //    .HasForeignKey(c => c.TemplateId)
+            //    .IsRequired(false);
+
+            ////ItemText
+            //modelBuilder.Entity<ItemText>()
+            //    .Property<int>("Id");
+
+            //modelBuilder.Entity<ItemText>()
+            //    .HasKey("Id");
+
+            //modelBuilder.Entity<ItemText>()
+            //    .HasMany(c => c.Items);
+
+            //modelBuilder.Entity<ItemTextUnit>()
+            //    .Property<int>("Id");
+
+            //modelBuilder.Entity<ItemTextUnit>()
+            //    .HasKey("Id");
+
 
             modelBuilder.ApplyConfiguration(new ModifiedYearConfiguration());
             
@@ -59,9 +105,9 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 
             modelBuilder.ApplyConfiguration(new ItemDateConfiguration());
 
-            //modelBuilder.ApplyConfiguration(new ItemTextConfiguration());
-            //modelBuilder.ApplyConfiguration(new ItemFakeTextConfiguration());
-            //modelBuilder.ApplyConfiguration(new ItemTextStyledConfiguration()); 
+            modelBuilder.ApplyConfiguration(new ItemTextConfiguration());
+            modelBuilder.ApplyConfiguration(new ItemTextUnitConfiguration());
+            //modelBuilder.ApplyConfiguration(new ItemTextStyledConfiguration());
 
             modelBuilder.Entity<OktoikhDay>();
             modelBuilder.Entity<TheotokionApp>();

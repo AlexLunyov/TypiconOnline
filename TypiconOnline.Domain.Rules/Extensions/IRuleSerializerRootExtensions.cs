@@ -42,8 +42,9 @@ namespace TypiconOnline.Domain.Rules.Extensions
         {
             if (serializer == null) throw new ArgumentNullException(nameof(serializer));
 
-            var container = serializer.QueryProcessor.Process(new CommonRuleChildElementQuery<RootContainer>(typiconId, key,
-                serializer));
+            var commonRule = serializer.QueryProcessor.Process(new CommonRuleQuery(typiconId, key));
+
+            var container = commonRule?.GetRule<RootContainer>(serializer);
 
             return (container != null) ? container.ChildElements : new List<RuleElement>();
         }

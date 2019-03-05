@@ -1,25 +1,27 @@
 ﻿using JetBrains.Annotations;
+using System.Linq;
 using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Books.Katavasia;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Query.Exceptions;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Books
 {
-    public class KatavasiaQueryHandler : UnitOfWorkHandlerBase, IDataQueryHandler<KatavasiaQuery, Kanonas>
+    public class KatavasiaQueryHandler : DbContextHandlerBase, IDataQueryHandler<KatavasiaQuery, Kanonas>
     {
         readonly ITypiconSerializer typiconSerializer;
 
-        public KatavasiaQueryHandler(IUnitOfWork unitOfWork, [NotNull] ITypiconSerializer typiconSerializer) : base(unitOfWork)
+        public KatavasiaQueryHandler(TypiconDBContext dbContext, [NotNull] ITypiconSerializer typiconSerializer) : base(dbContext)
         {
             this.typiconSerializer = typiconSerializer;
         }
 
         public Kanonas Handle([NotNull] KatavasiaQuery query)
         {
-            var katavasia = UnitOfWork.Repository<Katavasia>().Get(c => c.Name == query.Name);
+            var katavasia = DbContext.Set<Katavasia>().FirstOrDefault(c => c.Name == query.Name);
 
             if (katavasia == null)
             {

@@ -3,6 +3,7 @@ using System;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Books
 {
@@ -11,8 +12,8 @@ namespace TypiconOnline.Domain.Query.Books
     /// </summary>
     public class SundayNameQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<SundayNameQuery, ItemTextUnit>
     {
-        public SundayNameQueryHandler(IUnitOfWork unitOfWork, IDataQueryProcessor queryProcessor)
-            : base(unitOfWork, queryProcessor) { }
+        public SundayNameQueryHandler(TypiconDBContext dbContext, IDataQueryProcessor queryProcessor)
+            : base(dbContext, queryProcessor) { }
 
         /// <summary>
         /// Возвращает День Октоиха по заданной дате

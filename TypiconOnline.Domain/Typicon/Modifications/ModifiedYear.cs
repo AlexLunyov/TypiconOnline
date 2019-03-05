@@ -36,7 +36,7 @@ namespace TypiconOnline.Domain.Typicon.Modifications
             {
                 //Parent = modifiedYear,
                 Date = request.Date,
-                RuleEntity = request.Caller,
+                DayRuleId = request.DayRuleId,
                 Priority = request.Priority,
                 IsLastName = request.IsLastName,
                 IsAddition = request.AsAddition,

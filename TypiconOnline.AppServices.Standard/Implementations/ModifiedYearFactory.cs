@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,15 +21,20 @@ namespace TypiconOnline.AppServices.Implementations
 {
     public class ModifiedYearFactory : IModifiedYearFactory
     {
-        IUnitOfWork unitOfWork;
-        IRuleSerializerRoot serializer;
-        IRuleHandlerSettingsFactory settingsFactory;
+        private readonly IUnitOfWork unitOfWork;
+        //private readonly IRuleSerializerRoot serializer;
+        private readonly IRuleHandlerSettingsFactory settingsFactory;
+        private readonly ITypiconFacade typiconFacade;
 
-        public ModifiedYearFactory(IUnitOfWork unitOfWork, IRuleSerializerRoot serializer, IRuleHandlerSettingsFactory settingsFactory)
+        public ModifiedYearFactory([NotNull] IUnitOfWork unitOfWork
+            //, [NotNull] IRuleSerializerRoot serializer
+            , [NotNull] IRuleHandlerSettingsFactory settingsFactory
+            , [NotNull] ITypiconFacade typiconFacade)
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork in ModifiedYearFactory");
-            this.serializer = serializer ?? throw new ArgumentNullException("serializer in ModifiedYearFactory");
+            //this.serializer = serializer ?? throw new ArgumentNullException("serializer in ModifiedYearFactory");
             this.settingsFactory = settingsFactory ?? throw new ArgumentNullException("settingsFactory in ModifiedYearFactory");
+            this.typiconFacade = typiconFacade ?? throw new ArgumentNullException("typiconFacade in ModifiedYearFactory");
         }
 
         public ModifiedYear Create(int typiconId, int year)
@@ -51,10 +57,10 @@ namespace TypiconOnline.AppServices.Implementations
 
         private void Fill(ModifiedYear modifiedYear)
         {
-            var handler = new ModificationsRuleHandler(serializer.QueryProcessor, modifiedYear);
+            var handler = new ModificationsRuleHandler(typiconFacade, modifiedYear);
 
             //MenologyRules
-            var menologyRules = serializer.QueryProcessor.Process(new AllMenologyRulesQuery(modifiedYear.TypiconEntityId));
+            var menologyRules = typiconFacade.GetAllMenologyRules(modifiedYear.TypiconEntityId);
 
             DateTime firstJanuary = new DateTime(modifiedYear.Year, 1, 1);
 
@@ -64,10 +70,9 @@ namespace TypiconOnline.AppServices.Implementations
             DateTime endDate = firstJanuary.AddYears(1);
             while (indexDate != endDate)
             {
-                //Menology
-
                 //находим правило для конкретного дня Минеи
-                MenologyRule menologyRule = menologyRules.GetMenologyRule(indexDate);
+                var menologyRule = menologyRules.GetMenologyRule(indexDate);
+                //var menologyRule = serializer.QueryProcessor.Process(new MenologyRuleQuery(modifiedYear.TypiconEntityId, indexDate));
 
                 InterpretRule(menologyRule, indexDate, handler);
 
@@ -76,7 +81,11 @@ namespace TypiconOnline.AppServices.Implementations
 
             //теперь обрабатываем переходящие минейные праздники
             //у них не должны быть определены даты. так их и найдем
-            var rules = menologyRules.Where(c => (c.Date.IsEmpty && c.DateB.IsEmpty));
+            var rules = menologyRules.Where(c => c.Date.IsEmpty && c.DateB.IsEmpty);
+            //var rules = serializer.QueryProcessor
+            //    .Process(new AllMenologyRulesQuery(c => c.TypiconEntityId == modifiedYear.TypiconEntityId
+            //                                            && c.Date.IsEmpty 
+            //                                            && c.DateB.IsEmpty));
 
             foreach (var a in rules)
             {
@@ -90,9 +99,9 @@ namespace TypiconOnline.AppServices.Implementations
 
             //найти текущую Пасху
             //Для каждого правила выполнять interpret(), где date = текущая Пасха. AddDays(Day.DaysFromEaster)
-            DateTime easter = serializer.QueryProcessor.Process(new CurrentEasterQuery(modifiedYear.Year));
+            DateTime easter = typiconFacade.GetCurrentEaster(modifiedYear.Year);
 
-            var triodionRules = serializer.QueryProcessor.Process(new AllTriodionRulesQuery(modifiedYear.TypiconEntityId));
+            var triodionRules = typiconFacade.GetAllTriodionRules(modifiedYear.TypiconEntityId);
 
             foreach (var triodionRule in triodionRules)
             {
@@ -105,7 +114,7 @@ namespace TypiconOnline.AppServices.Implementations
                 {
                     h.ProcessingDayRule = rule;
 
-                    h.Settings = settingsFactory.Create(new GetRuleSettingsRequest()
+                    h.Settings = settingsFactory.Create(new CreateRuleSettingsRequest()
                     {
                         TypiconId = modifiedYear.TypiconEntityId,
                         Rule = rule,

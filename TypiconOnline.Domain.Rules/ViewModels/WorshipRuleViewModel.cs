@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.ViewModels
         [XmlElement(ViewModelConstants.WorshipRuleAdditionalNameAttrName)]
         public ItemTextUnit AdditionalName { get; set; }
         [XmlArray(ViewModelConstants.WorshipRuleChildNodeName)]
-        [XmlArrayItem(ElementName = ViewModelConstants.ViewModelItemNodeName, Type = typeof(ViewModelItem))]
-        public List<ViewModelItem> ChildElements { get; set; } = new List<ViewModelItem>();
+        [XmlArrayItem(ElementName = ViewModelConstants.ElementViewModelNodeName, Type = typeof(ElementViewModel))]
+        public List<ElementViewModel> ChildElements { get; set; } = new List<ElementViewModel>();
     }
 }

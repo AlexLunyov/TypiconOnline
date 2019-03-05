@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Typicon\DayRuleFromTriodionQuery.cs" />
+    <Compile Remove="Typicon\DayRuleFromTriodionQueryHandler.cs" />
+    <Compile Remove="Typicon\SignQuery.cs" />
+    <Compile Remove="Typicon\SignQueryHandler.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
     <PackageReference Include="Mapster" Version="3.1.8" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
@@ -14,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure.Common\TypiconOnline.Infrastructure.Common.csproj" />
     <ProjectReference Include="..\TypiconOnline.Domain\TypiconOnline.Domain.csproj" />
+    <ProjectReference Include="..\TypiconOnline.Repository.EFCore\TypiconOnline.Repository.EFCore.csproj" />
   </ItemGroup>
 
 </Project>

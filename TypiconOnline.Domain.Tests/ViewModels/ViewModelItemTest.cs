@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.Tests.ViewModels
         [Test]
         public void ViewModelItem_ToJSON()
         {
-            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(ElementViewModel));
+            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(ElementViewModelCollection));
 
             string json = string.Empty;
 
@@ -28,14 +28,14 @@ namespace TypiconOnline.Domain.Tests.ViewModels
             Assert.Pass(json);
         }
 
-        private ElementViewModel GetModel()
+        private ElementViewModelCollection GetModel()
         {
-            return new ElementViewModel()
+            return new ElementViewModelCollection()
             {
-                new ViewModelItem()
+                new ElementViewModel()
                 {
-                    Kind = ViewModelItemKind.Choir,
-                    KindStringValue = "Хор",
+                    Kind = ElementViewModelKind.Choir,
+                    KindValue = "Хор",
                     Paragraphs = new List<ParagraphViewModel>()
                     {
                         ParagraphVMFactory.Create("Строка 1", "cs-ru"),
@@ -43,10 +43,10 @@ namespace TypiconOnline.Domain.Tests.ViewModels
                         ParagraphVMFactory.Create("Строка 3", "cs-ru"),
                     }
                 },
-                new ViewModelItem()
+                new ElementViewModel()
                 {
-                    Kind = ViewModelItemKind.Choir,
-                    KindStringValue = "Хор",
+                    Kind = ElementViewModelKind.Choir,
+                    KindValue = "Хор",
                     Paragraphs = new List<ParagraphViewModel>()
                     {
                         ParagraphVMFactory.Create("Строка 4", "cs-ru"),
@@ -54,19 +54,19 @@ namespace TypiconOnline.Domain.Tests.ViewModels
                         ParagraphVMFactory.Create("Строка 6", "cs-ru"),
                     }
                 },
-                new ViewModelItem()
+                new ElementViewModel()
                 {
-                    Kind = ViewModelItemKind.Priest,
-                    KindStringValue = "Священник",
+                    Kind = ElementViewModelKind.Priest,
+                    KindValue = "Священник",
                     Paragraphs = new List<ParagraphViewModel>()
                     {
                         ParagraphVMFactory.Create("Строка 7", "cs-ru")
                     }
                 },
-                new ViewModelItem()
+                new ElementViewModel()
                 {
-                    Kind = ViewModelItemKind.Choir,
-                    KindStringValue = "Хор",
+                    Kind = ElementViewModelKind.Choir,
+                    KindValue = "Хор",
                     Paragraphs = new List<ParagraphViewModel>()
                     {
                         ParagraphVMFactory.Create("Строка 8", "cs-ru")

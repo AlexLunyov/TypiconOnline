@@ -4,6 +4,7 @@ using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 
@@ -32,6 +33,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// </summary>
         public RootContainer RuleContainer { get; set; }
         public List<DayWorship> DayWorships { get; set; } = new List<DayWorship>();
+        
+        //TODO: заменить на DayContainer
         public OktoikhDay OktoikhDay { get; set; }
         /// <summary>
         /// Дата - параметр для интерпретации элементов правил
@@ -60,7 +63,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
         public bool CheckCustomParameters(RuleElement element)
         {
-            return (CheckParameters != null) ? CheckParameters.TrueForAll(c => c.Check(element)) : true;
+            return CheckParameters?.TrueForAll(c => c.Check(element)) ?? true;
         }
     }
 }

@@ -3,18 +3,21 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Books;
 using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Books.Psalter;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.AppServices.Migration.Psalter
 {
     public class PsalmsMigrationManager
     {
-        public IPsalterService Service { get; private set; }
-
-        public PsalmsMigrationManager(IPsalterService service)
+        public PsalmsMigrationManager(IPsalterService service, ITypiconSerializer serializer)
         {
-            Service = service ?? throw new ArgumentNullException("IPsalterService in PsalmsMigrationManager");
+            Service = service ?? throw new ArgumentNullException(nameof(service));
+            Serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
         }
+
+        protected IPsalterService Service { get; }
+        protected ITypiconSerializer Serializer { get; }
 
         public void MigratePsalms(IPsalterReader reader)
         {
@@ -40,10 +43,10 @@ namespace TypiconOnline.AppServices.Migration.Psalter
                         currentPsalm = GetPsalm(reader.Element as Psalm);
                         break;
                     case PsalterElementKind.PsalmAnnotation:
-                        currentPsalm.GetElement().Annotation.Merge(reader.Element as BookStihos);
+                        currentPsalm.GetElement(Serializer).Annotation.Merge(reader.Element as BookStihos);
                         break;
                     case PsalterElementKind.PsalmText:
-                        currentPsalm.GetElement().Text.Merge(reader.Element as BookStihos);
+                        currentPsalm.GetElement(Serializer).Text.Merge(reader.Element as BookStihos);
                         break;
                     case PsalterElementKind.Slava:
                         //не нужна- ничего не делаем
@@ -78,7 +81,7 @@ namespace TypiconOnline.AppServices.Migration.Psalter
 
         private string GetDefinition(Psalm psalm)
         {
-            return new TypiconSerializer().Serialize(psalm.GetElement() ?? new BookReading()); 
+            return Serializer.Serialize(psalm.GetElement(Serializer) ?? new BookReading()); 
         }
 
         /// <summary>
@@ -89,7 +92,7 @@ namespace TypiconOnline.AppServices.Migration.Psalter
         private Psalm GetPsalm(Psalm psalm)
         {
             var response = Service.Get(new GetPsalmRequest() { Number = psalm.Number });
-            Psalm result = response.Psalm ?? psalm;
+            var result = response.Psalm ?? psalm;
 
             result.Definition = GetDefinition(result);
 

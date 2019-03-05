@@ -19,55 +19,57 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         protected override void FillObject(FillObjectRequest req)
         {
-            (req.Element as ModifyDay).ShortName = req.Descriptor.Element.GetItemTextStyled(RuleConstants.ShortNameNodeName);
+            var obj = req.Element as ModifyDay;
+
+            obj.ShortName = req.Descriptor.Element.GetItemTextStyled(SerializerRoot.TypiconSerializer, RuleConstants.ShortNameNodeName);
 
             var attr = req.Descriptor.Element.Attributes[RuleConstants.IsLastNameAttrName];
-            (req.Element as ModifyDay).IsLastName = bool.TryParse(attr?.Value, out bool value) ? value : false;
+            obj.IsLastName = bool.TryParse(attr?.Value, out bool value) ? value : false;
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.AsAdditionAttrName];
-            (req.Element as ModifyDay).AsAddition = bool.TryParse(attr?.Value, out value) ? value : false;
+            obj.AsAddition = bool.TryParse(attr?.Value, out value) ? value : false;
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.UseFullNameAttrName];
-            (req.Element as ModifyDay).UseFullName = bool.TryParse(attr?.Value, out value) ? value : true;
+            obj.UseFullName = bool.TryParse(attr?.Value, out value) ? value : true;
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.DayMoveAttrName];
             if (int.TryParse(attr?.Value, out int intValue))
             {
-                (req.Element as ModifyDay).DayMoveCount = intValue;
+                obj.DayMoveCount = intValue;
             }
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.PriorityAttrName];
             if (int.TryParse(attr?.Value, out intValue))
             {
-                (req.Element as ModifyDay).Priority = intValue;
+                obj.Priority = intValue;
             }
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.SignNumberAttrName];
             if (int.TryParse(attr?.Value, out intValue))
             {
-                (req.Element as ModifyDay).SignNumber = intValue;
+                obj.SignNumber = intValue;
             }
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.ModifyDayIdAttrName];
-            (req.Element as ModifyDay).Id = attr?.Value;
+            obj.Id = attr?.Value;
 
             //filter
             DeserializeFilter(req.Descriptor.Element, req.Element as ModifyDay);
 
             //IAsAdditionElement
             attr = req.Descriptor.Element.Attributes[RuleConstants.ModifyDayAsadditionModeAttrName];
-            (req.Element as ModifyDay).AsAdditionMode = (Enum.TryParse(attr?.Value, true, out AsAdditionMode mode)) ? mode : AsAdditionMode.None;
+            obj.AsAdditionMode = (Enum.TryParse(attr?.Value, true, out AsAdditionMode mode)) ? mode : AsAdditionMode.None;
 
             foreach (XmlNode childNode in req.Descriptor.Element.ChildNodes)
             {
                 if (childNode.Name == RuleConstants.ModifyReplacedDayNodeName)
                 {
-                    (req.Element as ModifyDay).ModifyReplacedDay = SerializerRoot.Container<ModifyReplacedDay>()
+                    obj.ModifyReplacedDay = SerializerRoot.Container<ModifyReplacedDay>()
                         .Deserialize(new XmlDescriptor() { Element = childNode }, req.Parent);
                 }
                 else
                 {
-                    (req.Element as ModifyDay).ChildDateExp = SerializerRoot.Container<DateExpression>()
+                    obj.ChildDateExp = SerializerRoot.Container<DateExpression>()
                         .Deserialize(new XmlDescriptor() { Element = childNode }, req.Parent);
                 }
             }

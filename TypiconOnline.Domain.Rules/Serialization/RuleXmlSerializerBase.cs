@@ -6,9 +6,9 @@ namespace TypiconOnline.Domain.Serialization
 {
     public abstract class RuleXmlSerializerBase : IRuleSerializer
     {
-        public RuleXmlSerializerBase(IRuleSerializerRoot root)
+        protected RuleXmlSerializerBase(IRuleSerializerRoot serializerRoot)
         {
-            SerializerRoot = root ?? throw new ArgumentNullException("RuleSerializerRoot");
+            SerializerRoot = serializerRoot ?? throw new ArgumentNullException(nameof(serializerRoot));
         }
 
         protected IRuleSerializerRoot SerializerRoot { get; }

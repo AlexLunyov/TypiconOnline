@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
+using Mapster;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Days;
@@ -20,15 +22,19 @@ namespace TypiconOnline.AppServices.Implementations
     {
         public ScheduleDataCalculator(IRuleSerializerRoot ruleSerializer
             , IModifiedRuleService modifiedRuleService
+            , ITypiconFacade typiconFacade
             , IRuleHandlerSettingsFactory settingsFactory)
         {
-            RuleSerializer = ruleSerializer ?? throw new ArgumentNullException("ruleSerializer");
-            ModifiedRuleService = modifiedRuleService ?? throw new ArgumentNullException("modifiedRuleService");
-            SettingsFactory = settingsFactory ?? throw new ArgumentNullException("settingsFactory");
+            RuleSerializer = ruleSerializer ?? throw new ArgumentNullException(nameof(ruleSerializer));
+            ModifiedRuleService = modifiedRuleService ?? throw new ArgumentNullException(nameof(modifiedRuleService));
+            TypiconFacade = typiconFacade ?? throw new ArgumentNullException(nameof(typiconFacade));
+            SettingsFactory = settingsFactory ?? throw new ArgumentNullException(nameof(settingsFactory));
         }
 
         protected IModifiedRuleService ModifiedRuleService { get; }
         protected IRuleSerializerRoot RuleSerializer { get; }
+
+        protected ITypiconFacade TypiconFacade { get; }
         protected IRuleHandlerSettingsFactory SettingsFactory { get; }
 
         /// <summary>
@@ -38,7 +44,7 @@ namespace TypiconOnline.AppServices.Implementations
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public virtual ScheduleDataCalculatorResponse Calculate(ScheduleDataCalculatorRequest req)
+        public virtual ScheduleDataCalculatorResponse Calculate([NotNull] ScheduleDataCalculatorRequest req)
         {
             if (req == null)
             {
@@ -47,13 +53,16 @@ namespace TypiconOnline.AppServices.Implementations
 
             //заполняем Правила и день Октоиха
             //находим MenologyRule - не может быть null
-            var menologyRule = RuleSerializer.QueryProcessor.Process(new MenologyRuleQuery(req.TypiconId, req.Date)) ?? throw new NullReferenceException("MenologyRule");
+            var menologyRule = TypiconFacade.GetMenologyRule(req.TypiconId, req.Date) ?? throw new NullReferenceException("MenologyRule");
+            //var menologyRule = RuleSerializer.QueryProcessor.Process(new MenologyRuleQuery(req.TypiconId, req.Date)) ?? throw new NullReferenceException("MenologyRule");
 
             //находим TriodionRule
-            var triodionRule = RuleSerializer.QueryProcessor.Process(new TriodionRuleQuery(req.TypiconId, req.Date));
+            var triodionRule = TypiconFacade.GetTriodionRule(req.TypiconId, req.Date);
+            //var triodionRule = RuleSerializer.QueryProcessor.Process(new DayRuleFromTriodionQuery(req.TypiconId, req.Date));
 
             //находим ModifiedRule с максимальным приоритетом
-            var modifiedRule = ModifiedRuleService.GetModifiedRuleHighestPriority(req.TypiconId, req.Date);
+            var modifiedRule = TypiconFacade.GetModifiedRuleHighestPriority(req.TypiconId, req.Date);
+            //var modifiedRule = ModifiedRuleService.GetModifiedRuleHighestPriority(req.TypiconId, req.Date);
 
             //находим день Октоиха - не может быть null
             var oktoikhDay = RuleSerializer.QueryProcessor.Process(new OktoikhDayQuery(req.Date)) ?? throw new NullReferenceException("OktoikhDay");
@@ -72,10 +81,12 @@ namespace TypiconOnline.AppServices.Implementations
                 if (modifiedRule.IsAddition)
                 {
                     //создаем первый объект, который в дальнейшем станет ссылкой Addition у выбранного правила
-                    settings = SettingsFactory.Create(new GetRuleSettingsRequest(req)
+                    var dayRule = modifiedRule.DayRule;//.Adapt<DayRuleDto>();
+
+                    settings = SettingsFactory.Create(new CreateRuleSettingsRequest(req)
                     {
-                        Rule = modifiedRule.RuleEntity,
-                        DayWorships = modifiedRule.RuleEntity.DayWorships,
+                        Rule = dayRule,
+                        DayWorships = dayRule.DayWorships,
                         OktoikhDay = oktoikhDay
                     });
 
@@ -94,7 +105,7 @@ namespace TypiconOnline.AppServices.Implementations
                 settings.DayWorships.AddRange(Worships);
             }
 
-            RuleHandlerSettings outputSettings = SettingsFactory.Create(new GetRuleSettingsRequest(req)
+            RuleHandlerSettings outputSettings = SettingsFactory.Create(new CreateRuleSettingsRequest(req)
             {
                 Rule = Rule,
                 DayWorships = Worships,
@@ -114,7 +125,7 @@ namespace TypiconOnline.AppServices.Implementations
         /// <param name="menologyRule"></param>
         /// <param name="triodionRule"></param>
         /// <returns>Правило для обработки, список текстов богослужений</returns>
-        private (DayRule, IEnumerable<DayWorship>) CalculatePriorities(ModifiedRule modifiedRule, MenologyRule menologyRule, TriodionRule triodionRule)
+        private (DayRule, IEnumerable<DayWorship>) CalculatePriorities(ModifiedRule modifiedRule, DayRule menologyRule, DayRule triodionRule)
         {
             //Приоритет Минеи
             IDayRule menologyToCompare = SetValues(menologyRule, out int menologyPriority, typeof(MenologyRule));
@@ -123,11 +134,12 @@ namespace TypiconOnline.AppServices.Implementations
 
             IDayRule SetValues(DayRule dr, out int p, Type t)
             {
-                IDayRule r = null;
+                DayRule r = null;
                 p = int.MaxValue;
-                if (modifiedRule?.RuleEntity.GetType().Equals(t) == true)
+
+                if (modifiedRule?.DayRule.GetType().Equals(t) == true)
                 {
-                    r = modifiedRule;
+                    r = modifiedRule.DayRule;
                     p = modifiedRule.Priority;
                 }
                 else if (dr != null)
@@ -171,7 +183,7 @@ namespace TypiconOnline.AppServices.Implementations
             }
 
             //формируем список текстов
-            List<DayWorship> dayWorships = new List<DayWorship>();
+            var dayWorships = new List<DayWorship>();
             rulesList.ForEach(c => dayWorships.AddRange(c.DayWorships));
 
             //находим главное правило
@@ -179,7 +191,7 @@ namespace TypiconOnline.AppServices.Implementations
             //если это измененное правило, то возвращаем правило, на которое оно указывает
             if (rule is ModifiedRule)
             {
-                rule = (rule as ModifiedRule).RuleEntity;
+                rule = (rule as ModifiedRule).DayRule;
             }
 
             return (rule as DayRule, dayWorships);

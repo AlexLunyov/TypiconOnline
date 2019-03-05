@@ -33,6 +33,7 @@ using TypiconOnline.WinServices.Messaging;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Books.WeekDayApp;
 using TypiconOnline.Domain.Common;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.WinForms
 {
@@ -42,6 +43,7 @@ namespace TypiconOnline.WinForms
 
         //private ScheduleHandling.ScheduleHandler _sh = null;
         private IUnitOfWork _unitOfWork;
+        private TypiconDBContext _dbContext;
         private IScheduleService _scheduleService;
         BookStorage _bookStorage;
         TypiconEntity _typiconEntity;
@@ -65,12 +67,11 @@ namespace TypiconOnline.WinForms
             var container = SimpleInjectorFactory.Create();
 
             _unitOfWork = container.GetInstance<IUnitOfWork>();
+            _dbContext = container.GetInstance<TypiconDBContext>();
 
             _typiconEntityService = container.GetInstance<ITypiconEntityService>();
 
-            GetTypiconEntityResponse response = _typiconEntityService.GetTypiconEntity(TYPICON_ID);// _unitOfWork.Repository<TypiconEntity>().Get(c => c.Name == "Типикон");
-
-            _typiconEntity = response.TypiconEntity;
+            _typiconEntity = _dbContext.Set<TypiconEntity>().First(c => c.Id == TYPICON_ID);
 
             _scheduleService = container.GetInstance<IScheduleService>();
 

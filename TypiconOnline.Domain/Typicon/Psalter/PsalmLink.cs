@@ -7,7 +7,7 @@ namespace TypiconOnline.Domain.Typicon.Psalter
 {
     public class PsalmLink : EntityBase<int>, IPsalterElement
     {
-        public Psalm Psalm { get; set; }
+        public virtual Psalm Psalm { get; set; }
         public int? StartStihos { get; set; }
         public int? EndStihos { get; set; }
 

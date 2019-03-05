@@ -18,11 +18,11 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         enum ChorusKind { Slava, Blagoslovim, Inyne, Common }
 
         IRuleHandler handler;
-        Action<ElementViewModel> appendModelAction;
+        Action<ElementViewModelCollection> appendModelAction;
         IReadOnlyList<TextHolder> choruses;
         IRuleSerializerRoot serializer;
 
-        public OdiViewModelFactory(IRuleHandler handler, IRuleSerializerRoot serializer, Action<ElementViewModel> appendModelAction)
+        public OdiViewModelFactory(IRuleHandler handler, IRuleSerializerRoot serializer, Action<ElementViewModelCollection> appendModelAction)
         {
             this.handler = handler ?? throw new ArgumentNullException("IRuleHandler in OdiViewModelHandler");
             this.appendModelAction = appendModelAction ?? throw new ArgumentNullException("Action<ElementViewModel> in OdiViewModelHandler");
@@ -96,10 +96,10 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 || troparion.Kind == YmnosKind.Irmos)
             {
                 //добавляем припев
-                var view = ViewModelItemFactory.Create((kind == ChorusKind.Common) ? ViewModelItemKind.Chorus : ViewModelItemKind.Text,
+                var view = ViewModelItemFactory.Create((kind == ChorusKind.Common) ? ElementViewModelKind.Chorus : ElementViewModelKind.Text,
                     new List<ParagraphViewModel>() { ParagraphVMFactory.Create(text, handler.Settings.Language.Name) }, handler, serializer);
 
-                appendModelAction(new ElementViewModel() { view });
+                appendModelAction(new ElementViewModelCollection() { view });
             }
         }
 
@@ -171,7 +171,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             var view = ViewModelItemFactory.Create(troparion, handler, serializer);
 
-            appendModelAction(new ElementViewModel() { view });
+            appendModelAction(new ElementViewModelCollection() { view });
         }
     }
 }

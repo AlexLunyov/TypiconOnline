@@ -9,6 +9,7 @@ namespace TypiconOnline.Domain.Interfaces
     {
         bool IsAddition { get; set; }
         Sign Template { get; set; }
+        string RuleDefinition { get; set; }
         T GetRule<T>(IRuleSerializerRoot serializerRoot) where T : IRuleElement;
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.Query;
 

@@ -4,36 +4,37 @@ using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class SignQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<SignQuery, SignDTO>
+    public class SignQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<SignQuery, Sign>
     {
-        public SignQueryHandler(IUnitOfWork unitOfWork, IDataQueryProcessor queryProcessor)
-            : base(unitOfWork, queryProcessor) { }
+        public SignQueryHandler(TypiconDBContext dbContext, IDataQueryProcessor queryProcessor)
+            : base(dbContext, queryProcessor) { }
 
-        private readonly IncludeOptions Includes = new IncludeOptions()
-        {
-            Includes = new string[]
-            {
-                "SignName"
-            }
-        };
+        //private readonly IncludeOptions Includes = new IncludeOptions()
+        //{
+        //    Includes = new string[]
+        //    {
+        //        "SignName.Items"
+        //    }
+        //};
 
-        public SignDTO Handle([NotNull] SignQuery query)
+        public Sign Handle([NotNull] SignQuery query)
         {
             return GetSignRecursivly(query.SignId);
         }
 
-        private SignDTO GetSignRecursivly(int signId)
+        private SignDto GetSignRecursivly(int signId)
         {
-            SignDTO result = null;
+            SignDto result = null;
 
-            var sign = UnitOfWork.Repository<Sign>().Get(c => c.Id == signId, Includes);
+            var sign = DbContext.Repository<Sign>().Get(c => c.Id == signId, Includes);
 
             if (sign != null)
             {
-                result = new SignDTO()
+                result = new SignDto()
                 {
                     Id = sign.Id,
                     SignName = new ItemText(sign.SignName),
@@ -43,15 +44,15 @@ namespace TypiconOnline.Domain.Query.Typicon
                     IsAddition = sign.IsAddition
                 };
 
-                if (sign.TemplateId != null)
+                if (sign.TemplateId.HasValue)
                 {
-                    result.Template = GetSignRecursivly((int)sign.TemplateId);
+                    result.Template = GetSignRecursivly(sign.TemplateId.Value);
                 }                                    
 
                 //number
-                if (sign.Number != null)
+                if (sign.Number.HasValue)
                 {
-                    result.Number = (int)sign.Number;
+                    result.Number = sign.Number.Value;
                 }
                 else if (result.Template != null)
                 {

@@ -1,57 +1,71 @@
 ﻿using JetBrains.Annotations;
+using Mapster;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class MenologyRuleQueryHandler : UnitOfWorkHandlerBase, IDataQueryHandler<MenologyRuleQuery, MenologyRule>
+    /// <summary>
+    /// Возвращает dto-объект DayRuleDto по запросу Правила минеи.
+    /// Используется в AppServices
+    /// </summary>
+    public class MenologyRuleQueryHandler : QueryStrategyHandlerBase
+        , IDataQueryHandler<MenologyRuleQuery, MenologyRule>
     {
-        public MenologyRuleQueryHandler(IUnitOfWork unitOfWork) : base(unitOfWork) { }
-
-        private readonly IncludeOptions Includes = new IncludeOptions()
+        public MenologyRuleQueryHandler(TypiconDBContext dbContext, [NotNull] IDataQueryProcessor queryProcessor) 
+            : base(dbContext, queryProcessor)
         {
-            Includes = new string[]
-            {
-                    "Date",
-                    "DateB",
-                    "Template.Template.Template",
-                    "DayRuleWorships.DayWorship.WorshipName",
-                    "DayRuleWorships.DayWorship.WorshipShortName",
-            }
-        };
+        }
+
+        //private readonly IncludeOptions _includes = new IncludeOptions()
+        //{
+        //    Includes = new string[]
+        //    {
+        //            "Date",
+        //            "DateB",
+        //            //"Template.Template.Template",
+        //            "DayRuleWorships.DayWorship.WorshipName.Items",
+        //            "DayRuleWorships.DayWorship.WorshipShortName.Items",
+        //    }
+        //};
 
         public MenologyRule Handle([NotNull] MenologyRuleQuery query)
         {
-            Expression<Func<MenologyRule, bool>> expression;
+            var menologyRule = DbContext.Set<MenologyRule>().FirstOrDefault(GetExpression(query));
 
-            string dateString = GetItemDateString(query.Date);
-
-            if (DateTime.IsLeapYear(query.Date.Year))
-            {
-                expression = c => c.OwnerId == query.TypiconId && c.DateB.Expression == dateString;
-            }
-            else
-            {
-                expression = c => c.OwnerId == query.TypiconId && c.Date.Expression == dateString;
-            }
-
-            return UnitOfWork.Repository<MenologyRule>().Get(expression, Includes);
+            return menologyRule;
         }
 
 
         /// <summary>
-        /// Возвращает конкретную дату в году, когда совершается данная служба
+        /// Возвращает выражение для поиска MenologyRule
         /// </summary>
-        /// <param name="year">Конкретный год</param>
+        /// <param name="query"></param>
         /// <returns>Если поля Date или DateB пустые, вовращает пустое (минимальное) значение</returns>
-        private string GetItemDateString(DateTime date)
+        private Expression<Func<MenologyRule, bool>> GetExpression(MenologyRuleQuery query)
         {
-            return new ItemDate(date.Month, date.Day).ToString();
+            Expression<Func<MenologyRule, bool>> expression;
+
+            var dateString = new ItemDate(query.Date.Month, query.Date.Day).ToString();
+
+            if (DateTime.IsLeapYear(query.Date.Year))
+            {
+                expression = c => c.TypiconEntityId == query.TypiconId && c.DateB.Expression == dateString;
+            }
+            else
+            {
+                expression = c => c.TypiconEntityId == query.TypiconId && c.Date.Expression == dateString;
+            }
+
+            return expression;
         }
     }
 }

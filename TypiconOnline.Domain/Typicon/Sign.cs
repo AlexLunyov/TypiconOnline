@@ -25,7 +25,7 @@ namespace TypiconOnline.Domain.Typicon
         /// <summary>
         /// Наименование знака службы на нескольких языках
         /// </summary>
-        public ItemText SignName { get; set; } = new ItemText();
+        public virtual ItemText SignName { get; set; }// = new ItemText();
 
         public string GetNameByLanguage(string language)
         {

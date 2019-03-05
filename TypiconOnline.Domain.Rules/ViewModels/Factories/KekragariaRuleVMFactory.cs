@@ -70,7 +70,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
             void AppendItem(TextHolder textHolder)
             {
-                req.AppendModelAction(new ElementViewModel()
+                req.AppendModelAction(new ElementViewModelCollection()
                     { ViewModelItemFactory.Create(textHolder, req.Handler, Serializer) });
             }
         }

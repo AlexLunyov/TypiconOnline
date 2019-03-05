@@ -21,11 +21,7 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
                                 </text>";
 
-            //XmlDocument xmlDoc = new XmlDocument();
-
-            //xmlDoc.LoadXml(xmlString);
-
-            ItemText element = new ItemText(xmlString, "text");// (xmlDoc.FirstChild);
+            var element = new TypiconSerializer().Deserialize<ItemText>(xmlString, "text");
 
             Assert.IsFalse(element.IsEmpty);
             Assert.AreEqual(4, element.Items.Count());
@@ -46,13 +42,10 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
                                 </ItemText>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var element = new TypiconSerializer().Deserialize<ItemText>(xmlString, "ItemText");
 
-            xmlDoc.LoadXml(xmlString);
-
-            ItemText element = new ItemText(xmlString, "ItemText");// (xmlDoc.FirstChild);
-
-            Assert.Pass(element.StringExpression);
+            Assert.AreEqual(4, element.Items.Count);
+            Assert.IsFalse(element.IsValid);
         }
 
         [Test]
@@ -124,11 +117,7 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
                                 </text>";
 
-            //XmlDocument xmlDoc = new XmlDocument();
-
-            //xmlDoc.LoadXml(xmlString);
-
-            ItemText element = new ItemText(xmlString, "text");
+            var element = new TypiconSerializer().Deserialize<ItemText>(xmlString, "text");
 
             Assert.IsFalse(element.IsEmpty);
         }

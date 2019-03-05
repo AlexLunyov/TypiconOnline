@@ -12,17 +12,11 @@ using TypiconOnline.Tests.Common;
 namespace TypiconOnline.Domain.Tests.Rules.Schedule
 {
     [TestFixture]
-    public class IsTwoSaintsTest
+    public class IsTwoSaintsTest : TypiconHavingTestBase
     {
         [Test]
         public void IsTwoSaints_Test()
         {
-            var unitOfWork = UnitOfWorkFactory.Create();
-
-            var serializer = TestRuleSerializer.Create(unitOfWork);
-
-            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
-
             ServiceSequenceHandler handler = new ServiceSequenceHandler()
             {
                 Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru"), Date = DateTime.Today }
@@ -36,12 +30,12 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
 
             //Минея - попразднество, 1 святой
-            MenologyRule rule = typiconEntity.GetMenologyRule(new DateTime(2017, 09, 28));
+            MenologyRule rule = TypiconEntity.GetMenologyRule(new DateTime(2017, 09, 28));
             rule.RuleDefinition = xml;
 
             handler.Settings.DayWorships = rule.DayWorships;
 
-            rule.GetRule<ExecContainer>(serializer).Interpret(handler);
+            rule.GetRule<ExecContainer>(Serializer).Interpret(handler);
 
             var model = handler.GetResult();
 
@@ -50,17 +44,17 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             Assert.AreEqual(1, model.FirstOrDefault()?.ChildElements.Count);
 
             //Триодь, Минея - 1 святой
-            rule = typiconEntity.GetMenologyRule(new DateTime(2017, 3, 16));
+            rule = TypiconEntity.GetMenologyRule(new DateTime(2017, 3, 16));
             rule.RuleDefinition = xml;
 
-            TriodionRule triodRule = typiconEntity.GetTriodionRule(-20);
+            TriodionRule triodRule = TypiconEntity.GetTriodionRule(-20);
 
             rule.DayWorships.AddRange(triodRule.DayWorships);
 
             handler.Settings.DayWorships = rule.DayWorships;
 
             handler.ClearResult();
-            rule.GetRule<ExecContainer>(serializer).Interpret(handler);
+            rule.GetRule<ExecContainer>(Serializer).Interpret(handler);
 
             model = handler.GetResult();
 
@@ -69,13 +63,13 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             Assert.AreEqual(1, model.FirstOrDefault()?.ChildElements.Count);
 
             //а теперь находим правило НЕ праздничное, 2 святых
-            rule = typiconEntity.GetMenologyRule(new DateTime(2017, 5, 31));
+            rule = TypiconEntity.GetMenologyRule(new DateTime(2017, 5, 31));
             rule.RuleDefinition = xml;
 
             handler.Settings.DayWorships = rule.DayWorships;
 
             handler.ClearResult();
-            rule.GetRule<ExecContainer>(serializer).Interpret(handler);
+            rule.GetRule<ExecContainer>(Serializer).Interpret(handler);
 
             model = handler.GetResult();
 

@@ -14,9 +14,9 @@ namespace TypiconOnline.Domain.Typicon
         /// <summary>
         /// Id Устава (TypiconEntity)
         /// </summary>
-        public virtual int OwnerId { get; set; }
+        public virtual int TypiconEntityId { get; set; }
 
-        public virtual TypiconEntity Owner { get; set; }
+        public virtual TypiconEntity TypiconEntity { get; set; }
 
         protected string _ruleDefinition;
         public virtual string RuleDefinition

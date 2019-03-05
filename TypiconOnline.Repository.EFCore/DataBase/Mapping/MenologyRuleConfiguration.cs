@@ -13,11 +13,10 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<MenologyRule> builder)
         {
-            //builder.HasOne(e => e.Template).
-            //    WithMany()
-            //    .OnDelete(DeleteBehavior.SetNull)
-            //    .HasForeignKey(c => c.TemplateId)
-            //    ;
+            builder.HasOne(c => c.TypiconEntity)
+                .WithMany()
+                .HasForeignKey(c => c.TypiconEntityId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

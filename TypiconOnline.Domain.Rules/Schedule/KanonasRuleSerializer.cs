@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 (req.Element as KanonasRule).IsOrthros = isOrthros;
             }
 
-            (req.Element as IAsAdditionElement).FillElement(req.Descriptor.Element);
+            (req.Element as IAsAdditionElement).FillIAsAdditionElement(req.Descriptor.Element);
         }
     }
 }

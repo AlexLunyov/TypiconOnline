@@ -11,19 +11,21 @@ namespace TypiconOnline.Domain.Serialization
     {
         protected Dictionary<string, object> factories = new Dictionary<string, object>();
 
-        public RuleSerializerRoot([NotNull] IDataQueryProcessor queryProcessor)
+        public RuleSerializerRoot([NotNull] IDataQueryProcessor queryProcessor, ITypiconSerializer typiconSerializer)
         {
-            QueryProcessor = queryProcessor ?? throw new ArgumentNullException("queryProcessor in RuleSerializerRoot");
+            QueryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
+            TypiconSerializer = typiconSerializer ?? throw new ArgumentNullException(nameof(typiconSerializer));
         }
 
         public IDataQueryProcessor QueryProcessor { get; }
+        public ITypiconSerializer TypiconSerializer { get; }
 
         /// <summary>
         /// Контейнер фабрик для элемента Правила или его наследников
         /// </summary>
         /// <typeparam name="T">Елемент правила. Также учитываются все его наследники</typeparam>
         /// <returns></returns>
-        public RuleSerializerContainerBase<T> Container<T>() where T : IRuleElement
+        public IRuleSerializerContainer<T> Container<T>() where T : IRuleElement
         {
             string key = typeof(T).Name;
             if (factories.Keys.Contains(key) == true)
@@ -37,18 +39,18 @@ namespace TypiconOnline.Domain.Serialization
         /// <summary>
         /// Контейнер фабрик для элемента Правила или его наследников
         /// </summary>
-        /// <typeparam name="T">Елемент правила. Также учитываются все его наследники</typeparam>
-        /// <typeparam name="U">Второе условие</typeparam>
+        /// <typeparam name="T1">Елемент правила. Также учитываются все его наследники</typeparam>
+        /// <typeparam name="T2">Второе условие</typeparam>
         /// <returns></returns>
-        public RuleSerializerContainerBase<T> Container<T, U>() where T : IRuleElement
+        public IRuleSerializerContainer<T1> Container<T1, T2>() where T1 : IRuleElement
         {
-            string key = typeof(T).Name + typeof(U).Name;
+            string key = typeof(T1).Name + typeof(T2).Name;
 
             if (factories.Keys.Contains(key) == true)
             {
-                return factories[key] as RuleSerializerContainerBase<T>;
+                return factories[key] as RuleSerializerContainerBase<T1>;
             }
-            RuleSerializerContainerBase<T> factory = new RuleXmlSerializerContainer<T, U>(this);
+            RuleSerializerContainerBase<T1> factory = new RuleXmlSerializerContainer<T1, T2>(this);
             factories.Add(key, factory);
             return factory;
         }

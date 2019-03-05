@@ -9,11 +9,11 @@ namespace TypiconOnline.Domain.ItemTypes
     {
         public ItemTextStyled() : base() { }
 
-        public ItemTextStyled(ITypiconSerializer serializer) : base(serializer) { }
+        //public ItemTextStyled(ITypiconSerializer serializer) : base(serializer) { }
 
-        public ItemTextStyled(string exp) : base(exp) { }
+        //public ItemTextStyled(string exp) : base(exp) { }
 
-        public ItemTextStyled(string exp, string rootName) : base(exp, rootName) { }
+        //public ItemTextStyled(string exp, string rootName) : base(exp, rootName) { }
 
         public ItemTextStyled(ItemText source) : base(source) { }
 
@@ -24,9 +24,9 @@ namespace TypiconOnline.Domain.ItemTypes
         [XmlAttribute("red")]
         public bool IsRed { get; set; }
 
-        protected override ItemText Deserialize(string exp) => Serializer.Deserialize<ItemTextStyled>(exp, RootName);
+        //protected override ItemText Deserialize(string exp) => Serializer.Deserialize<ItemTextStyled>(exp, RootName);
 
-        protected override string Serialize() => Serializer.Serialize(this);//, RootName);
+        //protected override string Serialize() => Serializer.Serialize(this);//, RootName);
 
         protected override void Build(ItemText source)
         {

@@ -1,27 +1,36 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using System.Linq;
+using JetBrains.Annotations;
 using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Books.TheotokionApp;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Books
 {
     /// <summary>
     /// Возвращает День Октоиха по заданной дате
     /// </summary>
-    public class TheotokionAppQueryHandler : UnitOfWorkHandlerBase, IDataQueryHandler<TheotokionAppQuery, YmnosGroup>
+    public class TheotokionAppQueryHandler : DbContextHandlerBase, IDataQueryHandler<TheotokionAppQuery, YmnosGroup>
     {
-        public TheotokionAppQueryHandler(IUnitOfWork unitOfWork) : base(unitOfWork) { }
+        readonly ITypiconSerializer serializer;
+
+        public TheotokionAppQueryHandler(TypiconDBContext dbContext, ITypiconSerializer serializer) : base(dbContext)
+        {
+            this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+        }
 
         public YmnosGroup Handle([NotNull] TheotokionAppQuery query)
         {
-            TheotokionApp theotokion = UnitOfWork.Repository<TheotokionApp>()
-                                            .Get(c => c.Ihos == query.Ihos
+            TheotokionApp theotokion = DbContext.Set<TheotokionApp>()
+                                            .FirstOrDefault(c => c.Ihos == query.Ihos
                                                     && c.Place == query.Place
                                                     && c.DayOfWeek == query.DayOfWeek);
 
             YmnosGroup group = new YmnosGroup() { Ihos = theotokion.Ihos };
-            group.Ymnis.Add(theotokion.GetElement());
+            group.Ymnis.Add(theotokion.GetElement(serializer));
 
             return group;
         }

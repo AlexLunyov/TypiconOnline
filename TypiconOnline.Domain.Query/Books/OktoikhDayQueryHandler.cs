@@ -1,8 +1,10 @@
 ﻿using JetBrains.Annotations;
 using System;
+using System.Linq;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Books
 {
@@ -11,14 +13,14 @@ namespace TypiconOnline.Domain.Query.Books
     /// </summary>
     public class OktoikhDayQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<OktoikhDayQuery, OktoikhDay>
     {
-        public OktoikhDayQueryHandler(IUnitOfWork unitOfWork, IDataQueryProcessor queryProcessor) 
-            : base(unitOfWork, queryProcessor) { }
+        public OktoikhDayQueryHandler(TypiconDBContext dbContext, IDataQueryProcessor queryProcessor) 
+            : base(dbContext, queryProcessor) { }
 
         public OktoikhDay Handle([NotNull] OktoikhDayQuery query)
         {
             int ihos = CalculateIhosNumber(query.Date);
 
-            return UnitOfWork.Repository<OktoikhDay>().Get(c => c.Ihos == ihos && c.DayOfWeek == query.Date.DayOfWeek);
+            return DbContext.Set<OktoikhDay>().FirstOrDefault(c => c.Ihos == ihos && c.DayOfWeek == query.Date.DayOfWeek);
         }
 
         /// <summary>

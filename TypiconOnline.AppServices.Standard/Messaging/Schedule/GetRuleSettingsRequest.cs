@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
@@ -17,11 +18,11 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
     /// <summary>
     /// Используется для создания настроек для IRuleHandler
     /// </summary>
-    public class GetRuleSettingsRequest : ScheduleDataCalculatorRequest
+    public class CreateRuleSettingsRequest : ScheduleDataCalculatorRequest
     {
-        public GetRuleSettingsRequest() { }
+        public CreateRuleSettingsRequest() { }
 
-        public GetRuleSettingsRequest(ScheduleDataCalculatorRequest request)
+        public CreateRuleSettingsRequest(ScheduleDataCalculatorRequest request)
         {
             
             TypiconId = request.TypiconId;

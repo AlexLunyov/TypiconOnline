@@ -22,9 +22,13 @@ namespace TypiconOnline.Repository.EFCore.Tests.Common
         {
             var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
 
+            //MS SQL
             //string path = $"Data Source=31.31.196.160;Initial Catalog=u0351320_Typicon;Integrated Security=False;User Id=u0351320_defaultuser;Password=DDOR0YUMg519DbT2ebzN;MultipleActiveResultSets=True";
-            string path = $"Data Source=(LocalDB)\\MSSQLLocalDB;Database=TypiconDB;Integrated Security=True;Connect Timeout=30";
-            optionsBuilder.UseSqlServer(path);
+            //string path = $"Data Source=(LocalDB)\\MSSQLLocalDB;Database=TypiconDB;Integrated Security=True;Connect Timeout=30";
+            //optionsBuilder.UseSqlServer(path);
+
+            //PostgreSQL
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=typicondb;Username=postgres;Password=z2LDCiiEQFDBlkl3eZyb");
 
             var dbContext = new FakeDbContext(optionsBuilder.Options);
 

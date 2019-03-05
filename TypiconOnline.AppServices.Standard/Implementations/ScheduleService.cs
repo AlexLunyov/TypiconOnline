@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
-using TypiconOnline.Domain.Books;
-using TypiconOnline.Domain.Books.Oktoikh;
-using TypiconOnline.Domain.Days;
-using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.AppServices.Implementations
@@ -80,10 +72,10 @@ namespace TypiconOnline.AppServices.Implementations
             if (scheduleDay == null)
             {
                 //Sign sign = (settings.Rule is Sign s) ? s : GetTemplateSign(settings.Rule.Template);
-                Sign sign = response.Rule.Template.GetPredefinedTemplate();
+                var sign = GetPredefinedTemplate(response.Rule.Template);
 
                 //Если settings.SignNumber определен в ModifiedRule, то назначаем его
-                int signNumber = settings.SignNumber ?? (int)sign.Number;
+                int signNumber = settings.SignNumber ?? sign.Number.Value;
 
                 scheduleDay = new ScheduleDay
                 {
@@ -101,6 +93,21 @@ namespace TypiconOnline.AppServices.Implementations
             //}
 
             return scheduleDay;
+        }
+
+        private Sign GetPredefinedTemplate(Sign sign)
+        {
+            if (sign.Number.HasValue)
+            {
+                return sign;
+            }
+
+            if (sign.Template != null)
+            {
+                return GetPredefinedTemplate(sign.Template);
+            }
+
+            return default(Sign);
         }
 
         public GetScheduleWeekResponse GetScheduleWeek(GetScheduleWeekRequest request)

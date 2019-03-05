@@ -4,97 +4,48 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.ItemTypes
 {
     [Serializable]
     public class ItemText : ItemType, IEquatable<ItemText>
     {
-        private List<ItemTextUnit> items = new List<ItemTextUnit>();
-
-        const string DEFAULT_ROOTNAME = "ItemText";
-
-        public ItemText() : this(new TypiconSerializer()) { }
-
-        public ItemText(ITypiconSerializer serializer)
-        {
-            Serializer = serializer ?? throw new ArgumentNullException("serializer in ItemText");
-        }
-
-        public ItemText(string exp) : this()
-        {
-            RootName = DEFAULT_ROOTNAME;
-            StringExpression = exp;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="exp">xml-выражение</param>
-        /// <param name="rootName">корневой элемент</param>
-        public ItemText(string exp, string rootName) : this()
-        {
-            RootName = rootName;
-
-            StringExpression = exp;
-        }
+        public ItemText() { }
 
         public ItemText(ItemText source) : this()
         {
             if (source == null) throw new ArgumentNullException("source in ItemText");
 
-            RootName = source.RootName;
-
             Build(source);
         }
 
-        protected ITypiconSerializer Serializer { get; }
-
-        protected string RootName { get; } //= RuleConstants.ItemTextDefaultNode;
+        private List<ItemTextUnit> _items;
 
         [XmlElement("item")]
-        public ItemTextUnit[] Items
+        public virtual List<ItemTextUnit> Items
         {
             get
             {
-                return items.ToArray();
-            }
-            set
-            {
-                if (value != null)
+                if (_items == null)
                 {
-                    items = value.ToList();
+                    _items = new List<ItemTextUnit>();
                 }
+                return _items;
             }
-        }
 
-        public virtual bool IsEmpty => items.Count == 0;
-
-        public IEnumerable<string> Languages => items.Select(c => c.Language);
-
-        [XmlIgnore]
-        public string StringExpression
-        {
-            get
-            {
-                return Serialize();
-            }
             set
             {
-                var obj = Deserialize(value);
-
-                Build(obj);
+                _items = value;
             }
         }
 
-        protected virtual ItemText Deserialize(string exp) => Serializer.Deserialize<ItemText>(exp, RootName);
+        public virtual bool IsEmpty => Items.Count == 0;
 
-        protected virtual string Serialize() => Serializer.Serialize(this, RootName);
+        public IEnumerable<string> Languages => Items.Select(c => c.Language);
 
         protected override void Validate()
         {
-            foreach (var item in items)
+            foreach (var item in Items)
             {
                 if (!IsKeyValid(item.Language))
                 {
@@ -119,13 +70,13 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public void AddOrUpdate(ItemTextUnit item)
         {
-            if (items.FirstOrDefault(c => c.Language == item.Language) is ItemTextUnit found)
+            if (Items.FirstOrDefault(c => c.Language == item.Language) is ItemTextUnit found)
             {
                 found.Text = item.Text;
             }
             else
             {
-                items.Add(item);
+                Items.Add(item);
             }
         }
 
@@ -138,36 +89,37 @@ namespace TypiconOnline.Domain.ItemTypes
         {
             ItemTextUnit result = null;
 
-            if (items.FirstOrDefault(c => c.Language == language) is ItemTextUnit found)
+            if (Items.FirstOrDefault(c => c.Language == language) is ItemTextUnit found)
             {
                 result = found;
             }
-            else if (items.Count > 0)
+            else if (Items.Count > 0)
             {
-                result = items.First();
+                result = Items.First();
             }
 
-            return result;
+            //Возвращаем новый объект, чтобы избежать ошибки при сериализации
+            return (result != null ) ? new ItemTextUnit(result.Language, result.Text) : default(ItemTextUnit);
         }
 
         protected virtual void Build(ItemText source)
         {
-            source.items.ForEach(c => AddOrUpdate(c));
+            source.Items.ForEach(AddOrUpdate);
         }
 
         /// <summary>
-        /// Заменяет во всех элементах одно строковое значение на другое
+        /// Применяет метод string.Replace ко всем строковым значениям элемента
         /// </summary>
         /// <param name="oldValue"></param>
         /// <param name="newValue"></param>
         public void Replace(string oldValue, string newValue)
         {
-            items.ForEach(c => c.Text = c.Text.Replace(oldValue, newValue));
+            Items.ForEach(c => c.Text = c.Text.Replace(oldValue, newValue));
         }
 
         public override string ToString()
         {
-            return (items.Count > 0) ? items.First().Text : base.ToString();
+            return (Items.Count > 0) ? Items.First().Text : base.ToString();
         }
 
         /// <summary>
@@ -179,13 +131,13 @@ namespace TypiconOnline.Domain.ItemTypes
         {
             bool result = false;
 
-            if (other?.items.Count == items.Count)
+            if (other?.Items.Count == Items.Count)
             {
                 result = true;
-                for (int i = 0; i < items.Count; i++)
+                for (int i = 0; i < Items.Count; i++)
                 {
-                    if (items[i].Language != other.items[i].Language
-                        || items[i].Text != other.items[i].Text)
+                    if (Items[i].Language != other.Items[i].Language
+                        || Items[i].Text != other.Items[i].Text)
                     {
                         result = false;
                         break;

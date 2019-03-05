@@ -1,20 +1,42 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using System.Linq;
+using JetBrains.Annotations;
 using TypiconOnline.Domain.Books.Psalter;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Books
 {
     /// <summary>
-    /// Возвращает День Октоиха по заданной дате
+    /// Возвращает Псалм
     /// </summary>
-    public class PsalmQueryHandler : UnitOfWorkHandlerBase, IDataQueryHandler<PsalmQuery, Psalm>
+    public class PsalmQueryHandler : DbContextHandlerBase, IDataQueryHandler<PsalmQuery, PsalmDto>
     {
-        public PsalmQueryHandler(IUnitOfWork unitOfWork) : base(unitOfWork) { }
+        readonly ITypiconSerializer serializer;
 
-        public Psalm Handle([NotNull] PsalmQuery query)
+        public PsalmQueryHandler(TypiconDBContext dbContext, ITypiconSerializer serializer) : base(dbContext)
         {
-            return UnitOfWork.Repository<Psalm>().Get(c => c.Number == query.Number);
+            this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+;        }
+
+        public PsalmDto Handle([NotNull] PsalmQuery query)
+        {
+            var psalm = DbContext.Set<Psalm>().FirstOrDefault(c => c.Number == query.Number);
+
+            PsalmDto result = null;
+
+            if (psalm != null)
+            {
+                result = new PsalmDto()
+                {
+                    Number = psalm.Number,
+                    Reading = psalm.GetElement(serializer)
+                };
+            }
+
+            return result;
         }
     }
 }

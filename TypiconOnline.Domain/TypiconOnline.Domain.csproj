@@ -134,13 +134,12 @@
     <Compile Include="Interfaces\IPsalterElement.cs" />
     <Compile Include="Books\Psalter\PsalterContext.cs" />
     <Compile Include="Interfaces\IRuleElement.cs" />
+    <Compile Include="Interfaces\IRuleSerializerContainer.cs" />
     <Compile Include="Interfaces\ITemplateHavingEntity.cs" />
     <Compile Include="Interfaces\ITypiconSerializer.cs" />
     <Compile Include="ItemTypes\ItemTextHeader.cs" />
     <Compile Include="ItemTypes\ItemTextUnit.cs" />
     <Compile Include="ItemTypes\TextStyle.cs" />
-    <Compile Include="Serialization\CreateObjectRequest.cs" />
-    <Compile Include="Serialization\FillObjectRequest.cs" />
     <Compile Include="Typicon\Modifications\DayWorshipsFilter.cs" />
     <Compile Include="Typicon\Modifications\ModificationsRuleRequest.cs" />
     <Compile Include="Typicon\Psalter\PsalmLink.cs" />
@@ -183,19 +182,10 @@
     <Compile Include="ItemTypes\ItemTimeBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemTime.cs" />
     <Compile Include="ItemTypes\XmlSerializableDictionary.cs" />
-    <Compile Include="Serialization\RuleSerializerContainerBase.cs" />
-    <Compile Include="Serialization\RuleSerializerRoot.cs" />
-    <Compile Include="Serialization\RuleXmlSerializerBase.cs" />
-    <Compile Include="Serialization\RuleXmlSerializerContainer T.cs" />
-    <Compile Include="Serialization\RuleXmlSerializerContainer T, U.cs" />
-    <Compile Include="Serialization\XmlDescriptor.cs" />
     <Compile Include="Typicon\RuleEntity.cs" />
     <Compile Include="Days\DayWorship.cs" />
     <Compile Include="Days\MenologyDay.cs" />
     <Compile Include="Days\MenologyDayBusinessConstraint.cs" />
-    <Compile Include="Serialization\TypiconSerializer.cs" />
-    <Compile Include="Serialization\XElementCreator.cs" />
-    <Compile Include="Serialization\XmlNodeCreator.cs" />
     <Compile Include="Typicon\CommonRule.cs" />
     <Compile Include="Typicon\DayRule.cs" />
     <Compile Include="Typicon\Factories\TypiconEntityFactory.cs" />
@@ -203,6 +193,7 @@
     <Compile Include="Typicon\Modifications\ModifiedYear.cs" />
     <Compile Include="Typicon\Priority.cs" />
     <Compile Include="Typicon\Psalter\Kathisma.cs" />
+    <Compile Include="Typicon\Typicon.cs" />
     <Compile Include="Typicon\TypiconRule.cs" />
     <Compile Include="Books\Easter\EasterItem.cs" />
     <Compile Include="Books\Oktoikh\OktoikhDay.cs" />
@@ -213,8 +204,6 @@
     <Compile Include="Days\TriodionDay.cs" />
     <Compile Include="Days\TriodionDayBusinessConstraint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ItemTypes\ItemBoolean.cs" />
-    <Compile Include="ItemTypes\ItemBooleanBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemDayOfWeekBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemDayOfWeek.cs" />
     <Compile Include="ItemTypes\ItemIntBusinessConstraint.cs" />
@@ -223,6 +212,8 @@
     <Compile Include="ItemTypes\ItemDateBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemType.cs" />
     <Compile Include="Typicon\TypiconEntity.cs" />
+    <Compile Include="Typicon\TypiconVersion.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure.Common\TypiconOnline.Infrastructure.Common.csproj">
@@ -233,8 +224,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Books\Menology\" />
-    <Folder Include="Query\" />
-    <Folder Include="Rules\" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\TypiconOnline.Modeling\TypiconOnlineLayers.layerdiagram">

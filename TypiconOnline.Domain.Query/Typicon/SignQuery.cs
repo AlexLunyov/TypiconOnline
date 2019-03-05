@@ -1,8 +1,9 @@
-﻿using TypiconOnline.Infrastructure.Common.Query;
+﻿using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class SignQuery : IDataQuery<SignDTO>
+    public class SignQuery : IDataQuery<Sign>
     {
         public SignQuery(int signId)
         {

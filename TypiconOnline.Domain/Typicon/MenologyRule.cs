@@ -7,21 +7,13 @@ namespace TypiconOnline.Domain.Typicon
     {
         public MenologyRule()
         {
-            Date = new ItemDate();
-            DateB = new ItemDate();
+            //Date = new ItemDate();
+            //DateB = new ItemDate();
         }
 
-        public virtual ItemDate Date
-        {
-            get;
-            set;
-        }
+        public virtual ItemDate Date { get; set; }
 
-        public virtual ItemDate DateB
-        {
-            get;
-            set;
-        }
+        public virtual ItemDate DateB { get; set; }
 
         protected override void Validate()
         {

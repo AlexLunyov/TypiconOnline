@@ -12,7 +12,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
             ElementNames = new string[] { RuleConstants.KanonasItemNode };
         }
 
-        protected override IRuleElement CreateObject(CreateObjectRequest req) => new KKanonasItemRule(req.Descriptor.GetElementName());
+        protected override IRuleElement CreateObject(CreateObjectRequest req) 
+            => new KKanonasItemRule(req.Descriptor.GetElementName(), SerializerRoot.TypiconSerializer);
 
         protected override void FillObject(FillObjectRequest req)
         {

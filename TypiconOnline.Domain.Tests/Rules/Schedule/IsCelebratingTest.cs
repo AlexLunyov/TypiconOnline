@@ -12,18 +12,11 @@ using TypiconOnline.Tests.Common;
 namespace TypiconOnline.Domain.Tests.Rules.Schedule
 {
     [TestFixture]
-    public class IsCelebratingTest
+    public class IsCelebratingTest : TypiconHavingTestBase
     {
         [Test]
         public void IsCelebrating_Test()
         {
-            //находим первый попавшийся MenologyRule
-            var unitOfWork = UnitOfWorkFactory.Create();
-
-            var serializer = TestRuleSerializer.Create(unitOfWork);
-
-            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
-
             ServiceSequenceHandler handler = new ServiceSequenceHandler()
             {
                 Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru"), Date = DateTime.Today }
@@ -37,12 +30,12 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
 
             //находим Праздничное правило 
-            MenologyRule rule = typiconEntity.GetMenologyRule(new DateTime(2017, 09, 28));
+            MenologyRule rule = TypiconEntity.GetMenologyRule(new DateTime(2017, 09, 28));
             rule.RuleDefinition = xml;
 
             handler.Settings.DayWorships = rule.DayWorships;
 
-            rule.GetRule<ExecContainer>(serializer).Interpret(handler);
+            rule.GetRule<ExecContainer>(Serializer).Interpret(handler);
 
             var model = handler.GetResult();            
 
@@ -51,13 +44,13 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             Assert.AreEqual(3, model.FirstOrDefault()?.ChildElements.Count);
 
             //а теперь находим правило НЕ праздничное
-            rule = typiconEntity.GetMenologyRule(new DateTime(2017, 10, 15));
+            rule = TypiconEntity.GetMenologyRule(new DateTime(2017, 10, 15));
             rule.RuleDefinition = xml;
 
             handler.Settings.DayWorships = rule.DayWorships;
 
             handler.ClearResult();
-            rule.GetRule<ExecContainer>(serializer).Interpret(handler);
+            rule.GetRule<ExecContainer>(Serializer).Interpret(handler);
 
             model = handler.GetResult();
 

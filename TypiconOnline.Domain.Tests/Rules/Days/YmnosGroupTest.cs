@@ -26,23 +26,23 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         [Test]
         public void YmnosGroupTest_Equals()
         {
-            YmnosGroup element1 = new YmnosGroup()
+            var element1 = new YmnosGroup()
             {
-                Annotation = new ItemText(@"<ItemText>
-					                            <item language=""cs-ru"">Феофа́ново</item>
-				                            </ItemText>"),
                 Ihos = 1,
-                Prosomoion = new Prosomoion()
+                Prosomoion = new Prosomoion(),
+                Annotation = new ItemText()
             };
 
-            YmnosGroup element2 = new YmnosGroup()
+            element1.Annotation.AddOrUpdate("cs-ru", "Феофа́ново");
+
+            var element2 = new YmnosGroup()
             {
-                Annotation = new ItemText(@"<ItemText>
-					                            <item language=""cs-ru"">Феофа́ново</item>
-				                            </ItemText>"),
                 Ihos = 2,
-                Prosomoion = new Prosomoion()
+                Prosomoion = new Prosomoion(),
+                Annotation = new ItemText()
             };
+
+            element2.Annotation.AddOrUpdate("cs-ru", "Феофа́ново");
 
             Assert.IsFalse(element1.Equals(element2));
         }
@@ -74,23 +74,19 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         [Test]
         public void YmnosGroupTest_Equals3()
         {
-            YmnosGroup element1 = new YmnosGroup()
+            var element1 = new YmnosGroup()
             {
-                Annotation = new ItemText(@"<ItemText>
-                                 <item language=""cs-ru"">Феофа́ново</item>
-                                </ItemText>"),
                 Ihos = 1,
-                //Prosomoion = new Prosomoion()
+                Annotation = new ItemText()
             };
+            element1.Annotation.AddOrUpdate("cs-ru", "Феофа́ново");
 
-            YmnosGroup element2 = new YmnosGroup()
+            var element2 = new YmnosGroup()
             {
-                Annotation = new ItemText(@"<ItemText>
-                                 <item language=""cs-cs"">Феофа́ново</item>
-                                </ItemText>"),
                 Ihos = 1,
-                //Prosomoion = new Prosomoion()
+                Annotation = new ItemText()
             };
+            element2.Annotation.AddOrUpdate("cs-cs", "Феофа́ново");
 
             Assert.IsFalse(element1.Equals(element2));
         }

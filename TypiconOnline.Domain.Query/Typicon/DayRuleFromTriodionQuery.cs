@@ -4,9 +4,9 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class TriodionRuleQuery : IDataQuery<TriodionRule>
+    public class DayRuleFromTriodionQuery : IDataQuery<DayRuleDto>
     {
-        public TriodionRuleQuery(int typiconId, DateTime date)
+        public DayRuleFromTriodionQuery(int typiconId, DateTime date)
         {
             TypiconId = typiconId;
             Date = date;

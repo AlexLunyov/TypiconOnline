@@ -4,6 +4,7 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 
@@ -11,22 +12,22 @@ namespace TypiconOnline.AppServices.Implementations
 {
     public class RuleHandlerSettingsFactory : IRuleHandlerSettingsFactory
     {
-        IRuleSerializerRoot ruleSerializer;
+        readonly IRuleSerializerRoot ruleSerializer;
 
         public RuleHandlerSettingsFactory(IRuleSerializerRoot ruleSerializer)
         {
-            this.ruleSerializer = ruleSerializer ?? throw new ArgumentNullException("ruleSerializer");
+            this.ruleSerializer = ruleSerializer ?? throw new ArgumentNullException(nameof(ruleSerializer));
         }
         /// <summary>
         /// Создает настройки для IRuleHandler
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public virtual RuleHandlerSettings Create(GetRuleSettingsRequest req)
+        public virtual RuleHandlerSettings Create(CreateRuleSettingsRequest req)
         {
             if (req == null)
             {
-                throw new ArgumentNullException("GetRuleSettingsRequest in Create");
+                throw new ArgumentNullException(nameof(req));
             }
 
             RuleHandlerSettings settings = null;
@@ -57,7 +58,8 @@ namespace TypiconOnline.AppServices.Implementations
         private (ITemplateHavingEntity existingRule, RootContainer container) GetFirstExistingRule(ITemplateHavingEntity rule, IRuleSerializerRoot serializer)
         {
             ITemplateHavingEntity r = null;
-            var cont = rule.GetRule<RootContainer>(serializer);
+            
+            var cont = serializer.Container<RootContainer>().Deserialize(rule.RuleDefinition);
 
             if (cont != null)
             {
@@ -71,7 +73,7 @@ namespace TypiconOnline.AppServices.Implementations
             return (r, cont);
         }
 
-        private RuleHandlerSettings InnerCreate(GetRuleSettingsRequest req, RootContainer container)
+        private RuleHandlerSettings InnerCreate(CreateRuleSettingsRequest req, RootContainer container)
         {
             return new RuleHandlerSettings()
             {

@@ -24,7 +24,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 return;
             }
 
-            ElementViewModel viewModel = new ElementViewModel();
+            ElementViewModelCollection viewModel = new ElementViewModelCollection();
 
             //здесь вставляется индивидуальная обработка наследников
             AppendCustomForm(req/*, viewModel*/);

@@ -23,13 +23,14 @@ namespace TypiconOnline.AppServices.Implementations
     /// </summary>
     public class ModificationsRuleHandler : RuleHandlerBase
     {
-        IDataQueryProcessor queryProcessor;
-        readonly ModifiedYear modifiedYear;
+        private readonly ITypiconFacade _facade;
+        private readonly ModifiedYear _modifiedYear;
 
-        public ModificationsRuleHandler([NotNull] IDataQueryProcessor queryProcessor, ModifiedYear modifiedYear) 
+        public ModificationsRuleHandler([NotNull] ITypiconFacade facade, ModifiedYear modifiedYear) 
         {
-            this.queryProcessor = queryProcessor;
-            this.modifiedYear = modifiedYear ?? throw new ArgumentNullException("modifiedYear in ModificationsRuleHandler");
+            _facade = facade ?? throw new ArgumentNullException(nameof(facade));
+            _modifiedYear = modifiedYear ?? throw new ArgumentNullException(nameof(modifiedYear));
+
 
             AuthorizedTypes = new List<Type>()
             {
@@ -47,7 +48,7 @@ namespace TypiconOnline.AppServices.Implementations
         {
             bool result = false;
 
-            DayRule dayRule = GetDayRule(element);
+            var dayRule = GetDayRule(element);
 
             if (dayRule != null)
             {
@@ -60,7 +61,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                 var request = CreateRequest(dayRule, element as ModifyDay, (int)priority);
 
-                modifiedYear.AddModifiedRule(request);
+                _modifiedYear.AddModifiedRule(request);
 
                 result = true;
             }
@@ -68,11 +69,11 @@ namespace TypiconOnline.AppServices.Implementations
             return result;
         }
 
-        private ModificationsRuleRequest CreateRequest(DayRule caller, ModifyDay md, int priority)
+        private ModificationsRuleRequest CreateRequest(DayRule dayRule, ModifyDay md, int priority)
         {
             return new ModificationsRuleRequest()
             {
-                Caller = caller,
+                DayRuleId = dayRule.Id,
                 Date = md.MoveDateCalculated,
                 Priority = priority,
                 ShortName = md.ShortName,
@@ -92,15 +93,15 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 if (modifyReplacedDay.Kind == KindOfReplacedDay.Menology)
                 {
-                    result = queryProcessor.Process(new MenologyRuleQuery(modifiedYear.TypiconEntityId, modifyReplacedDay.DateToReplaceCalculated));
+                    result = _facade.GetMenologyRule(_modifiedYear.TypiconEntityId, modifyReplacedDay.DateToReplaceCalculated);
                 }
                 else
                 {
-                    result = queryProcessor.Process(new TriodionRuleQuery(modifiedYear.TypiconEntityId, modifyReplacedDay.DateToReplaceCalculated));
+                    result = _facade.GetTriodionRule(_modifiedYear.TypiconEntityId, modifyReplacedDay.DateToReplaceCalculated);
                 }
             }
             else if ((element is ModifyDay modifyDay)
-                && (modifyDay.MoveDateCalculated.Year == modifiedYear.Year))
+                && (modifyDay.MoveDateCalculated.Year == _modifiedYear.Year))
             {
                 result = ProcessingDayRule;
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
@@ -12,8 +13,8 @@ namespace TypiconOnline.Domain.Query.Typicon
     public class CommonRuleChildElementQueryHandler<T> : QueryStrategyHandlerBase, IDataQueryHandler<CommonRuleChildElementQuery<T>, T> 
         where T: class, IRuleElement
     {
-        public CommonRuleChildElementQueryHandler(IUnitOfWork unitOfWork, IDataQueryProcessor queryProcessor)
-            : base(unitOfWork, queryProcessor) { }
+        public CommonRuleChildElementQueryHandler(TypiconDBContext dbContext, IDataQueryProcessor queryProcessor)
+            : base(dbContext, queryProcessor) { }
 
         public T Handle([NotNull] CommonRuleChildElementQuery<T> query)
         {

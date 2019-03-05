@@ -41,7 +41,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override bool IsAuthorized(IRuleHandler handler) => handler.IsAuthorized<YmnosStructureRule>();
 
-        public virtual void CreateViewModel(IRuleHandler handler, Action<ElementViewModel> append)
+        public virtual void CreateViewModel(IRuleHandler handler, Action<ElementViewModelCollection> append)
         {
             ViewModelFactory.Create(new CreateViewModelRequest<YmnosStructureRule>()
             {

@@ -23,20 +23,32 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 
             builder.HasKey(c => c.Id);
 
-            builder.OwnsOne(c => c.WorshipName, k =>
-            {
-                k.Ignore(d => d.Items);
-                k.Ignore(d => d.IsBold);
-                k.Ignore(d => d.IsRed);
-                k.Ignore(d => d.IsItalic);
-            });
-            builder.OwnsOne(c => c.WorshipShortName, k =>
-            {
-                k.Ignore(d => d.Items);
-                k.Ignore(d => d.IsBold);
-                k.Ignore(d => d.IsRed);
-                k.Ignore(d => d.IsItalic);
-            });
+            builder.Property<int>("WorshipNameId");
+            builder.HasOne(e => e.WorshipName)
+                .WithMany()
+                .HasForeignKey("WorshipNameId")
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property<int>("WorshipShortNameId");
+            builder.HasOne(e => e.WorshipShortName)
+                .WithMany()
+                .HasForeignKey("WorshipShortNameId")
+                .OnDelete(DeleteBehavior.Cascade);
+
+            //builder.OwnsOne(c => c.WorshipName, k =>
+            //{
+            //    k.Ignore(d => d.Items);
+            //    k.Ignore(d => d.IsBold);
+            //    k.Ignore(d => d.IsRed);
+            //    k.Ignore(d => d.IsItalic);
+            //});
+            //builder.OwnsOne(c => c.WorshipShortName, k =>
+            //{
+            //    k.Ignore(d => d.Items);
+            //    k.Ignore(d => d.IsBold);
+            //    k.Ignore(d => d.IsRed);
+            //    k.Ignore(d => d.IsItalic);
+            //});
 
             builder.HasOne(e => e.Parent).
                 WithMany();

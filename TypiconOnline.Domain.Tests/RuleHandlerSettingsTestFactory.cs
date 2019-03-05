@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using TypiconOnline.Domain.Query.Books;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Executables;
@@ -33,7 +34,7 @@ namespace TypiconOnline.Domain.Tests
                 TypiconId = typiconId,
                 Date = date,
                 Addition = addition,
-                DayWorships = menologyRule.DayWorships,
+                DayWorships = menologyRule.DayWorships.ToList(),
                 OktoikhDay = oktoikhDay,
                 RuleContainer = ruleContainer
             };

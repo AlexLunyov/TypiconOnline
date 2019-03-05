@@ -1,5 +1,6 @@
 ﻿using System;
 using TypiconOnline.Domain.Books.Elements;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Books.TheotokionApp
@@ -12,5 +13,6 @@ namespace TypiconOnline.Domain.Books.TheotokionApp
         public TheotokionAppPlace Place { get; set; }
         public int Ihos { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
+        public ITypiconSerializer Serializer { get; set; }
     }
 }

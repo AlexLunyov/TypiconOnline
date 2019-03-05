@@ -11,11 +11,11 @@ namespace TypiconOnline.Domain.Books.Psalter
 
         public virtual int Number { get; set; }
 
-        public override BookReading GetElement()
+        public override BookReading GetElement(ITypiconSerializer serializer)
         {
             if (reading == null)
             {
-                reading = base.GetElement() ?? new BookReading();
+                reading = base.GetElement(serializer) ?? new BookReading();
             }
 
             return reading;

@@ -8,10 +8,10 @@ namespace TypiconOnline.Domain.Typicon.Psalter
 {
     public class Kathisma : EntityBase<int>, IPsalterElement
     {
-        public TypiconEntity TypiconEntity { get; set; }
+        public virtual TypiconEntity TypiconEntity { get; set; }
         public int Number { get; set; }
-        public ItemText NumberName { get; set; }
-        public List<SlavaElement> SlavaElements { get; set; } = new List<SlavaElement>();
+        public virtual ItemText NumberName { get; set; }
+        public virtual List<SlavaElement> SlavaElements { get; set; } = new List<SlavaElement>();
 
         protected override void Validate()
         {

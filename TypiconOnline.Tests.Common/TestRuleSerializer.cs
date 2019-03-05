@@ -1,6 +1,6 @@
 ﻿using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Tests.Common
 {
@@ -13,11 +13,11 @@ namespace TypiconOnline.Tests.Common
             return serializer.Container<T>().Deserialize(description);
         }
 
-        public static IRuleSerializerRoot Create() => Create(UnitOfWorkFactory.Create());
+        public static IRuleSerializerRoot Create() => Create(TypiconDbContextFactory.Create());
 
-        public static IRuleSerializerRoot Create(IUnitOfWork unitOfWork)
+        public static IRuleSerializerRoot Create(TypiconDBContext dbContext)
         {
-            return new RuleSerializerRoot(DataQueryProcessorFactory.Create(unitOfWork));
+            return new RuleSerializerRoot(DataQueryProcessorFactory.Create(dbContext), new TypiconSerializer());
         }
     }
 }

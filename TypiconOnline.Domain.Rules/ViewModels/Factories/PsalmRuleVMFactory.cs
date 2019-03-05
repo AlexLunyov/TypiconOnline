@@ -35,7 +35,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             //вставляем номер Псалма
             viewHeader.Paragraphs[0].Replace(NUMBER, req.Handler.Settings.Language.IntConverter.ToString(req.Element.Number));
 
-            req.AppendModelAction(new ElementViewModel() { viewHeader });
+            req.AppendModelAction(new ElementViewModelCollection() { viewHeader });
         }
 
         private void AppendText(CreateViewModelRequest<PsalmRule> req, BookReading psalmReading)
@@ -43,7 +43,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             //List<string> paragraphs = psalmReading.Text.Select(c => c[req.Handler.Settings.Language.Name]).ToList();
             var paragraphs = ParagraphVMFactory.CreateList(psalmReading.Text, req.Handler.Settings.Language.Name);
 
-            req.AppendModelAction(new ElementViewModel() { ViewModelItemFactory.Create(TextHolderKind.Lector, paragraphs) });
+            req.AppendModelAction(new ElementViewModelCollection() { ViewModelItemFactory.Create(TextHolderKind.Lector, paragraphs) });
         }
     }
 }

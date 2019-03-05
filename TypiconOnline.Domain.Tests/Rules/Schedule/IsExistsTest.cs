@@ -12,17 +12,11 @@ using TypiconOnline.Tests.Common;
 namespace TypiconOnline.Domain.Tests.Rules.Schedule
 {
     [TestFixture]
-    public class IsExistsTest
+    public class IsExistsTest : TypiconHavingTestBase
     {
         [Test]
         public void IsExists_Test()
         {
-            var unitOfWork = UnitOfWorkFactory.Create();
-
-            var serializer = TestRuleSerializer.Create(unitOfWork);
-
-            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
-
             ServiceSequenceHandler handler = new ServiceSequenceHandler()
             {
                 Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru") }
@@ -35,13 +29,13 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             //Дата --01-16 exists - false
             DateTime date = new DateTime(2017, 01, 16);
 
-            MenologyRule rule = typiconEntity.GetMenologyRule(date);
+            MenologyRule rule = TypiconEntity.GetMenologyRule(date);
             rule.RuleDefinition = xml;
 
             handler.Settings.DayWorships = rule.DayWorships;
             handler.Settings.Date = date;
 
-            rule.GetRule<ExecContainer>(serializer).Interpret(handler);
+            rule.GetRule<ExecContainer>(Serializer).Interpret(handler);
 
             var model = handler.GetResult();
 
@@ -52,13 +46,13 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             //Дата --02-09 exists - true
             date = new DateTime(2017, 02, 09);
 
-            rule = typiconEntity.GetMenologyRule(date);
+            rule = TypiconEntity.GetMenologyRule(date);
             rule.RuleDefinition = xml;
 
             handler.Settings.DayWorships = rule.DayWorships;
             handler.Settings.Date = date;
 
-            rule.GetRule<ExecContainer>(serializer).Interpret(handler);
+            rule.GetRule<ExecContainer>(Serializer).Interpret(handler);
 
             model = handler.GetResult();
 

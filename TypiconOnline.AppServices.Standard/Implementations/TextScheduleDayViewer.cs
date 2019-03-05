@@ -35,9 +35,9 @@ namespace TypiconOnline.AppServices.Implementations
         {
             foreach (var item in element.ChildElements)
             {
-                if (!string.IsNullOrEmpty(item.KindStringValue))
+                if (!string.IsNullOrEmpty(item.KindValue))
                 {
-                    _resultStringBuilder.Append($"{item.KindStringValue} ");
+                    _resultStringBuilder.Append($"{item.KindValue} ");
                 }
 
                 item.Paragraphs.ForEach(c => _resultStringBuilder.AppendLine($"{c.Text.Text} {c.Note?.Text.Text}"));

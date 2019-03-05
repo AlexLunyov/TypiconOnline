@@ -11,9 +11,9 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 {
     public static class YmnosGroupExtensions
     {
-        public static ElementViewModel GetViewModel(this YmnosGroup group, IRuleHandler handler, IRuleSerializerRoot serializer)
+        public static ElementViewModelCollection GetViewModel(this YmnosGroup group, IRuleHandler handler, IRuleSerializerRoot serializer)
         {
-            ElementViewModel viewModel = new ElementViewModel();
+            ElementViewModelCollection viewModel = new ElementViewModelCollection();
 
             group.Annotation.AppendViewModel(handler, viewModel);
             group.Prosomoion.AppendViewModel(handler, serializer, viewModel, group.Ihos);
@@ -22,7 +22,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             return viewModel;
         }
 
-        public static void AppendViewModel(this ItemText text, IRuleHandler handler, ElementViewModel viewModel)
+        public static void AppendViewModel(this ItemText text, IRuleHandler handler, ElementViewModelCollection viewModel)
         {
             if (text?.IsEmpty == false)
             {
@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         }
 
         public static void AppendViewModel(this Prosomoion prosomoion, IRuleHandler handler,
-            IRuleSerializerRoot serializer, ElementViewModel viewModel, int? ihos = null)
+            IRuleSerializerRoot serializer, ElementViewModelCollection viewModel, int? ihos = null)
         {
             string str = "";
 
@@ -64,7 +64,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         }
 
         private static void AppendYmnis(List<Ymnos> ymnis, IRuleHandler handler,
-            IRuleSerializerRoot serializer, ElementViewModel viewModel)
+            IRuleSerializerRoot serializer, ElementViewModelCollection viewModel)
         {
             var text = GetStringValues(handler, serializer);
 

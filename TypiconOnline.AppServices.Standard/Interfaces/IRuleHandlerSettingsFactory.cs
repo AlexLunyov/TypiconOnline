@@ -10,6 +10,6 @@ namespace TypiconOnline.AppServices.Interfaces
 {
     public interface IRuleHandlerSettingsFactory
     {
-        RuleHandlerSettings Create(GetRuleSettingsRequest request);
+        RuleHandlerSettings Create(CreateRuleSettingsRequest request);
     }
 }

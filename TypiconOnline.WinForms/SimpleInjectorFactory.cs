@@ -37,7 +37,7 @@ namespace TypiconOnline.WinForms
         {
             container.Register<IRepositoryFactory, RepositoryFactory>(Lifestyle.Singleton);
             container.Register<IUnitOfWork, UnitOfWork>(Lifestyle.Singleton);
-            container.Register<TypiconDBContext, CachedDbContext>(Lifestyle.Singleton);
+            container.Register<TypiconDBContext, TypiconDBContext>(Lifestyle.Singleton);
 
             container.Register(CreateDbContextOptions, Lifestyle.Singleton);
         }
@@ -52,12 +52,14 @@ namespace TypiconOnline.WinForms
             container.Register<ITypiconEntityService, TypiconEntityService>();
             container.Register<IScheduleService, ScheduleService>();
             container.Register<IScheduleDayNameComposer, ScheduleDayNameComposer>();
+            container.Register<ITypiconSerializer, TypiconSerializer>();
             container.Register<IRuleSerializerRoot, RuleSerializerRoot>();
             container.Register<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
             container.Register<IScheduleDataCalculator, ScheduleDataCalculator>();
             container.Register<IModifiedRuleService, ModifiedRuleService>(); 
             container.Register<IModifiedYearFactory, ModifiedYearFactory>(); 
             container.Register<IDocxTemplateService, DocxTemplateService>();
+            container.Register<ITypiconFacade, TypiconFromEntityFacade>();
         }
 
         private static DbContextOptions<TypiconDBContext> CreateDbContextOptions()

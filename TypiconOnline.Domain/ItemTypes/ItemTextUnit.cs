@@ -16,6 +16,12 @@ namespace TypiconOnline.Domain.ItemTypes
             Language = source.Language;
         }
 
+        public ItemTextUnit(string language, string text)
+        {
+            Language = language;
+            Text = text;
+        }
+
         [XmlAttribute("language")]
         public string Language { get; set; }
         [XmlText()]

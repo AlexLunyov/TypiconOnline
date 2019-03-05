@@ -9,7 +9,7 @@ namespace TypiconOnline.Domain.Typicon.Psalter
     {
         //нужен ли???
         public int Index { get; }
-        public List<PsalmLink> PsalmLinks { get; set; } = new List<PsalmLink>();
+        public virtual List<PsalmLink> PsalmLinks { get; set; } = new List<PsalmLink>();
 
         protected override void Validate()
         {

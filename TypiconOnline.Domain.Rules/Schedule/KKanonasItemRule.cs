@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TypiconOnline.Domain.Books.Elements;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Interfaces;
 
@@ -12,7 +13,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KKanonasItemRule : KanonasItemRuleBase
     {
-        public KKanonasItemRule(string name) : base(name) { }
+        public KKanonasItemRule(string name, ITypiconSerializer serializer) : base(name, serializer) { }
 
         #region Properties
 

@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
                                 </ItemTextStyled>";
 
-            ItemTextStyled element = new ItemTextStyled(xmlString, "ItemTextStyled");
+            var element = new TypiconSerializer().Deserialize<ItemTextStyled>(xmlString);
 
             Assert.IsTrue(element.IsBold);
             Assert.IsTrue(element.IsRed);
@@ -37,18 +37,15 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
                                 </ItemTextStyled>";
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var serializer = new TypiconSerializer();
 
-            xmlDoc.LoadXml(xmlString);
+            var element = serializer.Deserialize<ItemTextStyled>(xmlString);
 
-            ItemTextStyled element = new ItemTextStyled(xmlString)
-            {
-                IsBold = false
-            };
+            element.IsBold = false;
 
-            string newXmlString = element.StringExpression;
+            var newXmlString = serializer.Serialize(element);
 
-            Assert.IsNotEmpty(newXmlString);
+            Assert.IsTrue(newXmlString.Contains(@"bold=""false"""));
         }
 
         //[Test]

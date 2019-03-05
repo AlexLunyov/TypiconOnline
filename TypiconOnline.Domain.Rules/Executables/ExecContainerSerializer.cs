@@ -9,7 +9,7 @@ namespace TypiconOnline.Domain.Rules.Executables
     {
         public ExecContainerSerializer(IRuleSerializerRoot root) : base(root)
         {
-            ElementNames = new string[] {
+            ElementNames = new [] {
                 //RuleConstants.ExecContainerNodeName,
                 RuleConstants.ActionNodeName,
                 RuleConstants.DefaultNodeName,

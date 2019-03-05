@@ -18,8 +18,8 @@ namespace TypiconOnline.AppServices.Implementations
 {
     public class ModifiedRuleService : IModifiedRuleService
     {
-        IUnitOfWork unitOfWork;
-        IModifiedYearFactory modifiedYearFactory;
+        readonly IUnitOfWork unitOfWork;
+        readonly IModifiedYearFactory modifiedYearFactory;
 
         public ModifiedRuleService(IUnitOfWork unitOfWork, IModifiedYearFactory modifiedYearFactory)
         {
@@ -34,7 +34,7 @@ namespace TypiconOnline.AppServices.Implementations
         /// <returns></returns>
         public IEnumerable<ModifiedRule> GetModifiedRules(int typiconId, DateTime date)
         {
-            ModifiedYear modifiedYear = unitOfWork.Repository<ModifiedYear>().Get(m => m.TypiconEntityId == typiconId && m.Year == date.Year);
+            var modifiedYear = unitOfWork.Repository<ModifiedYear>().Get(m => m.TypiconEntityId == typiconId && m.Year == date.Year);
 
             if (modifiedYear == null)
             {

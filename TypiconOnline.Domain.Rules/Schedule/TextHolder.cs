@@ -74,7 +74,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public void CreateViewModel(IRuleHandler handler, Action<ElementViewModel> append)
+        public void CreateViewModel(IRuleHandler handler, Action<ElementViewModelCollection> append)
         {
             ViewModelFactory.Create(new CreateViewModelRequest<TextHolder>()
             {

@@ -169,7 +169,7 @@ namespace TypiconOnline.Repository.EFCore
                             .ThenInclude(k => k.Parent)
                 .Include(c => c.ModifiedYears)
                     .ThenInclude(k => k.ModifiedRules)
-                        .ThenInclude(c => c.RuleEntity)
+                        .ThenInclude(c => c.DayRule)
                  .Include(c => c.ModifiedYears)
                     .ThenInclude(k => k.ModifiedRules)
                         .ThenInclude(c => c.Filter)

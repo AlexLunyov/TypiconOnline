@@ -38,10 +38,10 @@
         /*
          * Константы для элементов класса ViewModelItem
         */
-        public const string ViewModelItemNodeName = "item";
+        public const string ElementViewModelNodeName = "item";
         public const string ViewModelKindTextAttrName = "kindtext"; 
         public const string ViewModelKindAttrName = "kind"; 
-        public const string ViewModelItemChildNodeName = "paragraphs";
+        public const string ElementViewModelChildNodeName = "paragraphs";
 
         /*
          * Константы для элементов класса ParagraphViewModel 

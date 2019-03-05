@@ -1,4 +1,6 @@
-﻿using TypiconOnline.Domain.Books.Elements;
+﻿using System;
+using TypiconOnline.Domain.Books.Elements;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Interfaces;
@@ -10,7 +12,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public abstract class KanonasItemRuleBase : RuleExecutable, ICustomInterpreted, ICalcStructureElement//<Kontakion>
     {
-        public KanonasItemRuleBase(string name) : base(name) { }
+        protected KanonasItemRuleBase(string name, ITypiconSerializer serializer) : base(name)
+        {
+            Serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+        }
 
         #region Properties
 
@@ -23,6 +28,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// Место в тексте богослужения для выбора канона
         /// </summary>
         public KanonasKind? Kanonas { get; set; }
+
+        protected ITypiconSerializer Serializer { get; }
 
         #endregion
 
@@ -105,7 +112,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             Kanonas GetOrthrosKanonas(DayStructureBase day, int index)
             {
-                return (day.GetElement().Orthros?.Kanones?.Count > index) ? day.GetElement().Orthros.Kanones[index] : null;
+                var element = day.GetElement(Serializer);
+
+                return (element.Orthros?.Kanones?.Count > index) ? element.Orthros.Kanones[index] : default(Kanonas);
             }
         }        
     }

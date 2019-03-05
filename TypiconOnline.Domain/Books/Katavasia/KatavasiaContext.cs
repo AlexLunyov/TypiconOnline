@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Books.Katavasia
                 Katavasia katavasia = _unitOfWork.Repository<Katavasia>()
                                             .Get(c => c.Name == request.Name);
 
-                response.BookElement = katavasia.GetElement();
+                response.BookElement = katavasia.GetElement(request.Serializer);
             }
             catch (Exception ex)
             {

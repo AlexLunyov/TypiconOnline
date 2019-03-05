@@ -1,14 +1,15 @@
 ﻿using JetBrains.Annotations;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query
 {
-    public class QueryStrategyHandlerBase : UnitOfWorkHandlerBase
+    public abstract class QueryStrategyHandlerBase : DbContextHandlerBase
     {
         protected IDataQueryProcessor QueryProcessor { get; }
 
-        public QueryStrategyHandlerBase(IUnitOfWork unitOfWork, [NotNull] IDataQueryProcessor queryProcessor) : base(unitOfWork)
+        protected QueryStrategyHandlerBase(TypiconDBContext dbContext, [NotNull] IDataQueryProcessor queryProcessor) : base(dbContext)
         {
             QueryProcessor = queryProcessor;
         }

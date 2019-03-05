@@ -19,8 +19,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class PsalmRule : RuleExecutable, ICustomInterpreted, IViewModelElement, ICalcStructureElement
     {
-        
-
         public PsalmRule(string name, [NotNull] IDataQueryProcessor queryProcessor, [NotNull] IElementViewModelFactory<PsalmRule> viewModelFactory) : base(name)
         {
             QueryProcessor = queryProcessor ?? throw new ArgumentNullException("queryProcessor in PsalmRule");
@@ -79,7 +77,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public void CreateViewModel(IRuleHandler handler, Action<ElementViewModel> append)
+        public void CreateViewModel(IRuleHandler handler, Action<ElementViewModelCollection> append)
         {
             ViewModelFactory.Create(new CreateViewModelRequest<PsalmRule>()
             {
@@ -95,27 +93,27 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
             BookReading psalmReading = null;
 
-            if (psalm != null)
+            if (psalm?.Reading != null)
             {
-                psalmReading = GetPsalm(psalm);
+                psalmReading = GetPsalm(psalm.Reading);
             }
+
             return psalmReading;
         }
 
-        private BookReading GetPsalm(Psalm psalm)
+        private BookReading GetPsalm(BookReading psalm)
         {
-            BookReading resultReading = null;
+            BookReading resultReading;
+
             if (StartStihos != null || EndStihos != null)
             {
-                var reading = psalm.GetElement();
-
                 resultReading = new BookReading();
 
-                int end = (EndStihos != null && EndStihos < reading.Text.Count) ? (int)EndStihos : reading.Text.Count;
+                int end = (EndStihos != null && EndStihos < psalm.Text.Count) ? (int)EndStihos : psalm.Text.Count;
 
                 for (int start = StartStihos ?? 1; start <= end; start++)
                 {
-                    var stihos = reading.Text.FirstOrDefault(c => c.StihosNumber == start);
+                    var stihos = psalm.Text.FirstOrDefault(c => c.StihosNumber == start);
                     if (stihos != null)
                     {
                         resultReading.Text.Add(stihos);
@@ -124,7 +122,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
             else
             {
-                resultReading = psalm.GetElement();
+                resultReading = psalm;
             }
 
             return resultReading;

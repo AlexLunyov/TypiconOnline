@@ -16,9 +16,9 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 return;
             }
 
-            ViewModelItem item = ViewModelItemFactory.Create(req.Element, req.Handler, Serializer);
+            ElementViewModel item = ViewModelItemFactory.Create(req.Element, req.Handler, Serializer);
 
-            req.AppendModelAction(new ElementViewModel() { item });
+            req.AppendModelAction(new ElementViewModelCollection() { item });
         }
 
 

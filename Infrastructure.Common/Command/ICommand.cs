@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TypiconOnline.Domain.Rules
+namespace TypiconOnline.Infrastructure.Common.Command
 {
-    public interface IContainerElement
+    public interface ICommand
     {
     }
 }

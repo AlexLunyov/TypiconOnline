@@ -27,7 +27,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 (req.Element as KOdiRule).Number = intValue;
             }
 
-            (req.Element as KOdiRule).FillElement(req.Descriptor.Element);
+            (req.Element as KOdiRule).FillIAsAdditionElement(req.Descriptor.Element);
         }
 
         public override string Serialize(IRuleElement element)

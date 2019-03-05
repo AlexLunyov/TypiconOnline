@@ -22,17 +22,17 @@ namespace TypiconOnline.Domain.Serialization
              */
             var typesInThisAssembly = GetTypes();
 
-            foreach (Type type in typesInThisAssembly)
+            foreach (var type in typesInThisAssembly)
             {
                 //IRuleFactory<T> factory1 = Activator.CreateInstance(type, _unitOfWork);
 
-                var factory = Activator.CreateInstance(type, _serializerRoot) as IRuleSerializer;
+                var factory = Activator.CreateInstance(type, SerializerRoot) as IRuleSerializer;
 
                 if (factory.ElementNames != null)
                 {
                     foreach (string name in factory.ElementNames)
                     {
-                        _factories.Add(name, factory);
+                        Factories.Add(name, factory);
                     }
                 }
             }

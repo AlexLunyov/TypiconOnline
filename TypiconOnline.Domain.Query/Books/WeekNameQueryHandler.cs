@@ -3,6 +3,7 @@ using System;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Books
 {
@@ -11,8 +12,8 @@ namespace TypiconOnline.Domain.Query.Books
     /// </summary>
     public class WeekNameQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<WeekNameQuery, ItemTextUnit>
     {
-        public WeekNameQueryHandler(IUnitOfWork unitOfWork, IDataQueryProcessor queryProcessor)
-            : base(unitOfWork, queryProcessor) { }
+        public WeekNameQueryHandler(TypiconDBContext dbContext, IDataQueryProcessor queryProcessor)
+            : base(dbContext, queryProcessor) { }
 
         /// <summary>
         /// Возвращает наименование седмицы (вставляется в шапку шаблона седмицы)

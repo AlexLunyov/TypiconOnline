@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Linq;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Tests.ItemTypes
 {
@@ -17,11 +18,7 @@ namespace TypiconOnline.Domain.Tests.ItemTypes
 	                                <item language=""el-el"">Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδραν λοιμῶν οὐκ ἐκάθισεν,</item>
                                 </ItemTextHeader>";
 
-            //XmlDocument xmlDoc = new XmlDocument();
-
-            //xmlDoc.LoadXml(xmlString);
-
-            var element = new ItemTextHeader(xmlString, "ItemTextHeader");// (xmlDoc.FirstChild);
+            var element = new TypiconSerializer().Deserialize<ItemTextHeader>(xmlString);
 
             Assert.IsFalse(element.IsEmpty);
             Assert.AreEqual(4, element.Items.Count());

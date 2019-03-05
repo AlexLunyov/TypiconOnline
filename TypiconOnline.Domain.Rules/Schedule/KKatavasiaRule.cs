@@ -1,5 +1,7 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 using TypiconOnline.Domain.Books.Elements;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Query.Books;
 using TypiconOnline.Domain.Query.Exceptions;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -15,9 +17,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         IDataQueryProcessor queryProcessor;
 
-        public KKatavasiaRule(string name, [NotNull] IDataQueryProcessor queryProcessor) : base(name)
+        public KKatavasiaRule(string name, [NotNull] IDataQueryProcessor queryProcessor, ITypiconSerializer serializer) 
+            : base(name, serializer)
         {
-            this.queryProcessor = queryProcessor;
+            this.queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
         }
 
         #region Properties

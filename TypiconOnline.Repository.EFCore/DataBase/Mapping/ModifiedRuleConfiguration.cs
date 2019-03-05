@@ -15,18 +15,21 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
         {
             builder.HasKey(c => c.Id);
 
-            builder.OwnsOne(c => c.ShortName, 
-                k =>
-                {
-                    k.Ignore(d => d.Items);
-                    k.Ignore(d => d.IsBold);
-                    k.Ignore(d => d.IsRed);
-                    k.Ignore(d => d.IsItalic);
-                }).HasKey("Id");
+            builder.HasOne(e => e.ShortName).WithMany();
+
+            //builder.OwnsOne(c => c.ShortName, 
+            //    k =>
+            //    {
+            //        k.Ignore(d => d.Items);
+            //        k.Ignore(d => d.IsBold);
+            //        k.Ignore(d => d.IsRed);
+            //        k.Ignore(d => d.IsItalic);
+            //    }).HasKey("Id");
 
             //builder.WithOne().OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(c => c.RuleEntity);//.WithMany().OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(c => c.DayRule).WithMany();//.OnDelete(DeleteBehavior.Cascade);
+            builder.Ignore(c => c.DayWorships);
         }
     }
 }
