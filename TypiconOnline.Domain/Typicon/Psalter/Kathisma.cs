@@ -8,7 +8,7 @@ namespace TypiconOnline.Domain.Typicon.Psalter
 {
     public class Kathisma : EntityBase<int>, IPsalterElement
     {
-        public virtual TypiconEntity TypiconEntity { get; set; }
+        public virtual TypiconVersion TypiconVersion { get; set; }
         public int Number { get; set; }
         public virtual ItemText NumberName { get; set; }
         public virtual List<SlavaElement> SlavaElements { get; set; } = new List<SlavaElement>();

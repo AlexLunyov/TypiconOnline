@@ -49,7 +49,7 @@ namespace TypiconOnline.WinForms
 
         private static void InitServices(Container container)
         {
-            container.Register<ITypiconEntityService, TypiconEntityService>();
+            container.Register<ITypiconVersionService, TypiconVersionService>();
             container.Register<IScheduleService, ScheduleService>();
             container.Register<IScheduleDayNameComposer, ScheduleDayNameComposer>();
             container.Register<ITypiconSerializer, TypiconSerializer>();

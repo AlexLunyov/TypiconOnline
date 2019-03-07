@@ -2,7 +2,7 @@
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class TypiconQuery: IDataQuery<TypiconEntityDTO>
+    public class TypiconQuery: IDataQuery<TypiconVersionDTO>
     {
         public TypiconQuery(int typiconId)
         {

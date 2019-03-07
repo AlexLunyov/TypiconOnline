@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             //находим первый попавшийся MenologyRule
             var unitOfWork = UnitOfWorkFactory.Create();
 
-            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
+            var typiconEntity = unitOfWork.Repository<TypiconVersion>().Get(c => c.Id == 1);
 
             MenologyRule rule = typiconEntity.MenologyRules[0];
             ServiceSequenceHandler handler = new ServiceSequenceHandler

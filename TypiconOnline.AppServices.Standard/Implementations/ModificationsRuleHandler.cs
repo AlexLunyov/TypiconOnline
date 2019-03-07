@@ -93,11 +93,11 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 if (modifyReplacedDay.Kind == KindOfReplacedDay.Menology)
                 {
-                    result = _facade.GetMenologyRule(_modifiedYear.TypiconEntityId, modifyReplacedDay.DateToReplaceCalculated);
+                    result = _facade.GetMenologyRule(_modifiedYear.TypiconVersionId, modifyReplacedDay.DateToReplaceCalculated);
                 }
                 else
                 {
-                    result = _facade.GetTriodionRule(_modifiedYear.TypiconEntityId, modifyReplacedDay.DateToReplaceCalculated);
+                    result = _facade.GetTriodionRule(_modifiedYear.TypiconVersionId, modifyReplacedDay.DateToReplaceCalculated);
                 }
             }
             else if ((element is ModifyDay modifyDay)

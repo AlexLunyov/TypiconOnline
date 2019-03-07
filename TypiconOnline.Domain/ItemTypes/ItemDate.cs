@@ -9,7 +9,7 @@ namespace TypiconOnline.Domain.ItemTypes
         private int _month = 0;
         private int _day = 0;
 
-        private string _stringExpression = "";
+        private string _expression = string.Empty;
 
         public ItemDate() { }
         public ItemDate(int monthes, int days)
@@ -17,7 +17,7 @@ namespace TypiconOnline.Domain.ItemTypes
             _month = monthes;
             _day = days;
 
-            _stringExpression = "--" + monthes.ToString("00") + "-" + _day.ToString("00");
+            _expression = GetExpression(_month, _day);
         }
 
         public ItemDate(string exp)
@@ -31,6 +31,12 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 return _month;
             }
+            set
+            {
+                string exp = GetExpression(value, _day);
+
+                Expression = exp;
+            }
         }
 
         public int Day
@@ -39,50 +45,54 @@ namespace TypiconOnline.Domain.ItemTypes
             {
                 return _day;
             }
+            set
+            {
+                string exp = GetExpression(_month, value);
+
+                Expression = exp;
+            }
         }
 
         public string Expression
         {
             get
             {
-                return _stringExpression;
+                return _expression;
             }
             set
             {
-                _stringExpression = value;
+                _expression = value;
 
-                DateTime date = new DateTime();
-                if (IsExpressionValid(_stringExpression, out date))
+                var date = new DateTime();
+                if (IsExpressionValid(_expression, out date))
                 {
                     _month = date.Month;
                     _day = date.Day;
                 }
+                //else
+                //{
+                //    //в случае неверного заполнения, задаем отрицательные значения месяцу и дню
+                //    _month = 99;
+                //    _day = 99;
+                //}
             }
         }
+
+        public override string ToString() => GetExpression(_month, _day);
 
         /// <summary>
         /// Возврашает строку в формате "--MM-dd"
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
+        private string GetExpression(int month, int day)
         {
-            string result = "--" + _month.ToString("00") + "-"+_day.ToString("00");
-            return result;
+            return $"--{month.ToString("00")}-{day.ToString("00")}";
         }
 
-        public bool IsEmpty
-        {
-            get
-            {
-                return (_stringExpression == "");
-            }
-            //set
-            //{
-            //    _stringExpression = "";
-            //    _month = 0;
-            //    _day = 0;
-            //}
-        }
+        /// <summary>
+        /// Считаем пустой и валидной дату с нулевыми значениями
+        /// </summary>
+        public bool IsEmpty => Month == 0 && Day == 0 && string.IsNullOrEmpty(Expression);
 
         protected override void Validate()
         {

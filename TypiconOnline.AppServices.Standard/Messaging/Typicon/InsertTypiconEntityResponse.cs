@@ -2,7 +2,7 @@
 
 namespace TypiconOnline.AppServices.Messaging.Typicon
 {
-    public class InsertTypiconEntityResponse : ServiceResponseBase
+    public class InsertTypiconVersionResponse : ServiceResponseBase
     {
     }
 }

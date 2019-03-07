@@ -9,10 +9,10 @@ using TypiconOnline.Domain.Typicon.Modifications;
 namespace TypiconOnline.Domain.Tests.Typicon
 {
     [TestFixture]
-    public class TypiconEntityTest
+    public class TypiconVersionTest
     {
         [Test]
-        public void Typicon_TypiconEntity_Creature()
+        public void Typicon_TypiconVersion_Creature()
         {
             DayWorship dayService = new DayWorship();
             dayService.WorshipName.AddOrUpdate("cs-ru", "Благовещение");
@@ -21,13 +21,16 @@ namespace TypiconOnline.Domain.Tests.Typicon
                 Id = 1,
                 DayWorships = new List<DayWorship>() { dayService },
                 Date = new ItemDate("--04-07"),
-                DateB = new ItemDate("--04-07")
+                LeapDate = new ItemDate("--04-07")
             };
 
-            TypiconEntity typiconEntity = new TypiconEntity()
+            TypiconVersion typiconEntity = new TypiconVersion()
             {
                 Id = 1,
-                Name = "Типикон",
+                Name = new ItemText()
+                {
+                    Items = new List<ItemTextUnit>() { new ItemTextUnit("cs-ru", "Типикон") }
+                },
                 Signs = new List<Sign>() { new Sign() { Id = 1 } }
             };
 
@@ -67,9 +70,9 @@ namespace TypiconOnline.Domain.Tests.Typicon
         }
 
         [Test]
-        public void Typicon_TypiconEntity_ModifiedYear()
+        public void Typicon_TypiconVersion_ModifiedYear()
         {
-            TypiconEntity typicon = new TypiconEntity();
+            TypiconVersion typicon = new TypiconVersion();
 
             ModifiedYear year = typicon.ModifiedYears.FirstOrDefault(c => c.Year == 2017);
 

@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             //Дата --01-16 exists - false
             DateTime date = new DateTime(2017, 01, 16);
 
-            MenologyRule rule = TypiconEntity.GetMenologyRule(date);
+            MenologyRule rule = TypiconVersion.GetMenologyRule(date);
             rule.RuleDefinition = xml;
 
             handler.Settings.DayWorships = rule.DayWorships;
@@ -46,7 +46,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             //Дата --02-09 exists - true
             date = new DateTime(2017, 02, 09);
 
-            rule = TypiconEntity.GetMenologyRule(date);
+            rule = TypiconVersion.GetMenologyRule(date);
             rule.RuleDefinition = xml;
 
             handler.Settings.DayWorships = rule.DayWorships;

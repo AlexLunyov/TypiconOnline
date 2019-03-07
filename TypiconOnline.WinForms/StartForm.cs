@@ -46,8 +46,8 @@ namespace TypiconOnline.WinForms
         private TypiconDBContext _dbContext;
         private IScheduleService _scheduleService;
         BookStorage _bookStorage;
-        TypiconEntity _typiconEntity;
-        ITypiconEntityService _typiconEntityService;
+        TypiconVersion _typiconEntity;
+        ITypiconVersionService _typiconEntityService;
         IDocxTemplateService _docxTemplateService;
 
         CustomParamsCollection<IRuleApplyParameter> CustomParameters { get; set; } = new CustomParamsCollection<IRuleApplyParameter>();
@@ -69,9 +69,9 @@ namespace TypiconOnline.WinForms
             _unitOfWork = container.GetInstance<IUnitOfWork>();
             _dbContext = container.GetInstance<TypiconDBContext>();
 
-            _typiconEntityService = container.GetInstance<ITypiconEntityService>();
+            _typiconEntityService = container.GetInstance<ITypiconVersionService>();
 
-            _typiconEntity = _dbContext.Set<TypiconEntity>().First(c => c.Id == TYPICON_ID);
+            _typiconEntity = _dbContext.Set<TypiconVersion>().First(c => c.Id == TYPICON_ID);
 
             _scheduleService = container.GetInstance<IScheduleService>();
 
@@ -560,7 +560,7 @@ namespace TypiconOnline.WinForms
             foreach (EasterItem easterItem in _bookStorage.Easters.GetAll())
             {
                 DateTime innerDate = (DateTime.IsLeapYear(easterItem.Date.Year)) 
-                    ? new DateTime(easterItem.Date.Year, menologyRule.DateB.Month, menologyRule.DateB.Day) 
+                    ? new DateTime(easterItem.Date.Year, menologyRule.LeapDate.Month, menologyRule.LeapDate.Day) 
                     : new DateTime(easterItem.Date.Year, menologyRule.Date.Month, menologyRule.Date.Day);
                 int daysFromEaster = easterItem.Date.Subtract(innerDate).Days;
 

@@ -13,13 +13,13 @@ namespace TypiconOnline.Domain.Query.Typicon
     /// <summary>
     /// Возвращает Id и Name Устава
     /// </summary>
-    public class TypiconQueryHandler : DbContextHandlerBase, IDataQueryHandler<TypiconQuery, TypiconEntityDTO>
+    public class TypiconQueryHandler : DbContextHandlerBase, IDataQueryHandler<TypiconQuery, TypiconVersionDTO>
     {
         public TypiconQueryHandler(TypiconDBContext dbContext) : base(dbContext) { }
 
-        public TypiconEntityDTO Handle([NotNull] TypiconQuery query)
+        public TypiconVersionDTO Handle([NotNull] TypiconQuery query)
         {
-            return DbContext.Set<TypiconEntity>().FirstOrDefault(c => c.Id == query.TypiconId).Adapt<TypiconEntityDTO>();
+            return DbContext.Set<TypiconVersion>().FirstOrDefault(c => c.Id == query.TypiconId).Adapt<TypiconVersionDTO>();
         }
 
 

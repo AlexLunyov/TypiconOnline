@@ -34,7 +34,7 @@ namespace TypiconOnline.AppServices.Implementations
         /// <returns></returns>
         public IEnumerable<ModifiedRule> GetModifiedRules(int typiconId, DateTime date)
         {
-            var modifiedYear = unitOfWork.Repository<ModifiedYear>().Get(m => m.TypiconEntityId == typiconId && m.Year == date.Year);
+            var modifiedYear = unitOfWork.Repository<ModifiedYear>().Get(m => m.TypiconVersionId == typiconId && m.Year == date.Year);
 
             if (modifiedYear == null)
             {

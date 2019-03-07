@@ -18,11 +18,12 @@ namespace TypiconOnline.AppServices.Jobs
             _configRepo = configRepo ?? throw new ArgumentNullException(nameof(configRepo));
         }
 
-        public void Execute(RecalculateCompiledSchedulesJob command)
+        public void Execute(RecalculateCompiledSchedulesJob job)
         {
-            ClearModifiedYears(command.TypiconId);
 
-            DoTheJob(command.TypiconId);
+            ClearModifiedYears(job.TypiconId);
+
+            DoTheJob(job.TypiconId);
 
 
         }

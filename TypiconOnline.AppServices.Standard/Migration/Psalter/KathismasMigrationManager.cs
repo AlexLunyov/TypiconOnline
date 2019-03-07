@@ -25,10 +25,10 @@ namespace TypiconOnline.AppServices.Migration.Psalter
         /// <param name="typiconEntity"></param>
         /// <param name="migrateOnlyKathismaName">Только лишь обновляет/добавляет имена у кафизм для заданного языка</param>
         /// <exception cref="ResourceNotFoundException">В случае отсутствия Псалмов в БД</exception>
-        public void MigrateKathismas(IPsalterReader reader, TypiconEntity typiconEntity, bool migrateOnlyKathismaName = false)
+        public void MigrateKathismas(IPsalterReader reader, TypiconVersion typiconEntity, bool migrateOnlyKathismaName = false)
         {
             if (reader == null) throw new ArgumentNullException("IPsalterReader in MigrateKathismas");
-            if (typiconEntity == null) throw new ArgumentNullException("TypiconEntity in MigrateKathismas");
+            if (typiconEntity == null) throw new ArgumentNullException("TypiconVersion in MigrateKathismas");
 
             //Удаляем все кафизмы, если установлен флаг
             //if (clearBeforeMigration)
@@ -153,9 +153,9 @@ namespace TypiconOnline.AppServices.Migration.Psalter
             psalmLink.EndStihos = null;
         }
 
-        private void DeleteAllKathismas(TypiconEntity typiconEntity)
+        private void DeleteAllKathismas(TypiconVersion typiconEntity)
         {
-            typiconEntity.Kathismas.ForEach(c => c.TypiconEntity = null);
+            typiconEntity.Kathismas.ForEach(c => c.TypiconVersion = null);
             typiconEntity.Kathismas?.Clear();
         }
     }

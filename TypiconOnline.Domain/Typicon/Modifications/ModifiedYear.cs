@@ -12,9 +12,9 @@ namespace TypiconOnline.Domain.Typicon.Modifications
     {
         public ModifiedYear() { }
 
-        public int TypiconEntityId { get; set; }
+        public int TypiconVersionId { get; set; }
 
-        public virtual TypiconEntity TypiconEntity { get; set; }
+        public virtual TypiconVersion TypiconVersion { get; set; }
 
         public int Year { get; set; }
 

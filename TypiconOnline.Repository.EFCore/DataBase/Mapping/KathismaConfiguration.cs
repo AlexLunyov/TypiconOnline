@@ -21,7 +21,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 
             builder.HasMany(c => c.SlavaElements);
 
-            builder.HasOne(c => c.TypiconEntity).WithMany(d => d.Kathismas);
+            builder.HasOne(c => c.TypiconVersion).WithMany(d => d.Kathismas);
 
             //builder.Ignore(c => c.IsTemplate);
         }

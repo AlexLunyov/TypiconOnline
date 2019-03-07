@@ -14,13 +14,13 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<ModifiedYear> builder)
         {
-            builder.HasKey(u => new { u.Id });//, u.TypiconEntityId });
+            builder.HasKey(u => new { u.Id });//, u.TypiconVersionId });
 
             builder.Property(c => c.Year).IsRequired();
 
-            builder.HasOne(c => c.TypiconEntity)
+            builder.HasOne(c => c.TypiconVersion)
                 .WithMany(c => c.ModifiedYears)
-                .HasForeignKey(x => x.TypiconEntityId);
+                .HasForeignKey(x => x.TypiconVersionId);
 
             builder.HasMany(c => c.ModifiedRules)
                 .WithOne(c => c.Parent)

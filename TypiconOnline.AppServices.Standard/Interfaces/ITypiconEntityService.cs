@@ -7,15 +7,15 @@ using TypiconOnline.AppServices.Messaging.Typicon;
 
 namespace TypiconOnline.AppServices.Interfaces
 {
-    public interface ITypiconEntityService
+    public interface ITypiconVersionService
     {
         void ClearModifiedYears(int id);
         void ReloadRules(int id, string folderPath);
-        GetTypiconEntityResponse GetTypiconEntity(int id);
+        GetTypiconVersionResponse GetTypiconVersion(int id);
         GetTypiconEntitiesResponse GetAllTypiconEntities();
-        InsertTypiconEntityResponse InsertTypiconEntity(InsertTypiconEntityRequest insertTypiconEntityRequest);
-        UpdateTypiconEntityResponse UpdateTypiconEntity(UpdateTypiconEntityRequest updateTypiconEntityRequest);
-        DeleteTypiconEntityResponse DeleteTypiconEntity(DeleteTypiconEntityRequest deleteTypiconEntityRequest);
+        InsertTypiconVersionResponse InsertTypiconVersion(InsertTypiconVersionRequest insertTypiconVersionRequest);
+        UpdateTypiconVersionResponse UpdateTypiconVersion(UpdateTypiconVersionRequest updateTypiconVersionRequest);
+        DeleteTypiconVersionResponse DeleteTypiconVersion(DeleteTypiconVersionRequest deleteTypiconVersionRequest);
 
 
     }

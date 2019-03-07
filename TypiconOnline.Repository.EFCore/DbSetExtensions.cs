@@ -59,8 +59,8 @@ namespace TypiconOnline.Repository.EFCore
             Type type = typeof(TDomain);
             switch (true)
             {
-                case bool _ when type == typeof(TypiconEntity):
-                    request = GetTypiconEntityIncludes(dbSet);
+                case bool _ when type == typeof(TypiconVersion):
+                    request = GetTypiconVersionIncludes(dbSet);
                     break;
                 case bool _ when type == typeof(DayWorship):
                     request = GetDayWorshipIncludes(dbSet);
@@ -94,7 +94,7 @@ namespace TypiconOnline.Repository.EFCore
         {
             return request
                 .Include(c => c.Date)
-                .Include(c => c.DateB)
+                .Include(c => c.LeapDate)
                 .Include(c => c.DayWorships);
         }
 
@@ -102,7 +102,7 @@ namespace TypiconOnline.Repository.EFCore
         {
             return (dbSet as DbSet<MenologyDay>)
                 .Include(c => c.Date)
-                .Include(c => c.DateB)
+                .Include(c => c.LeapDate)
                 .Include(c => c.DayWorships)
                     .ThenInclude(c => c.WorshipName)
                 .Include(c => c.DayWorships)
@@ -126,10 +126,9 @@ namespace TypiconOnline.Repository.EFCore
                 as IQueryable<TDomain>;
         }
 
-        private static IQueryable<TDomain> GetTypiconEntityIncludes<TDomain>(DbSet<TDomain> dbSet) where TDomain : class
+        private static IQueryable<TDomain> GetTypiconVersionIncludes<TDomain>(DbSet<TDomain> dbSet) where TDomain : class
         {
-            return (dbSet as DbSet<TypiconEntity>)
-                .Include(c => c.Template)
+            return (dbSet as DbSet<TypiconVersion>)
                 .Include(c => c.Signs)
                     .ThenInclude(c => c.SignName)
                 .Include(c => c.Signs)
@@ -138,7 +137,7 @@ namespace TypiconOnline.Repository.EFCore
                 .Include(c => c.MenologyRules)
                     .ThenInclude(c => c.Date)
                 .Include(c => c.MenologyRules)
-                    .ThenInclude(c => c.DateB)
+                    .ThenInclude(c => c.LeapDate)
                 .Include(c => c.MenologyRules)
                     .ThenInclude(c => c.Template)
                 .Include(c => c.MenologyRules)

@@ -27,7 +27,7 @@ namespace TypiconOnline.Domain.Query.Typicon
 
         public IEnumerable<TriodionRule> Handle([NotNull] AllTriodionRulesQuery query)
         {
-            return DbContext.Set<TriodionRule>().Where(c => c.TypiconEntityId == query.TypiconId);
+            return DbContext.Set<TriodionRule>().Where(c => c.TypiconVersionId == query.TypiconId);
         }
     }
 }

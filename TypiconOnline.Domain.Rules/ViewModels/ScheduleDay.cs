@@ -7,7 +7,7 @@ using System.Linq;
 namespace TypiconOnline.Domain.ViewModels
 {
     /// <summary>
-    /// 
+    /// Выходная форма Дня с коллекцией Последовательностей богослужений
     /// </summary>
     [Serializable]
     [XmlRoot(ViewModelConstants.ScheduleDayNode)]

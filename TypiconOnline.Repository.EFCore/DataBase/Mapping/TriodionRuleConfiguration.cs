@@ -13,10 +13,10 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<TriodionRule> builder)
         {
-            builder.HasOne(c => c.TypiconEntity)
-                .WithMany()
-                .HasForeignKey(c => c.TypiconEntityId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder.HasOne(c => c.TypiconVersion)
+            //    .WithMany()
+            //    .HasForeignKey(c => c.TypiconVersionId)
+            //    .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

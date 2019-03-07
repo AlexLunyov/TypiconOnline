@@ -22,7 +22,7 @@ namespace TypiconOnline.Repository.EFCore.Tests
             var context = new TypiconDBContext(optionsBuilder.Options);
 
             var years = context.Set<ModifiedYear>()
-                .Where(c => c.TypiconEntityId == 1)
+                .Where(c => c.TypiconVersionId == 1)
                 .Include(c => c.ModifiedRules)
                 .AsNoTracking();
 

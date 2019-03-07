@@ -24,6 +24,6 @@ namespace TypiconOnline.AppServices.Interfaces
         /// <param name="date">Дата для поиска</param>
         /// <returns></returns>
         ModifiedRule GetModifiedRuleHighestPriority(int typiconId, DateTime date);
-        //void ClearModifiedYears(TypiconEntity typicon);
+        //void ClearModifiedYears(TypiconVersion typicon);
     }
 }

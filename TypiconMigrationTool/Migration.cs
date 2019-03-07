@@ -24,6 +24,7 @@ namespace TypiconMigrationTool
     public class Migration
     {
         const string DEFAULT_LANGUAGE = "cs-ru";
+        const string TYPICON_NAME = "Типикон";
 
         IUnitOfWork _unitOfWork;
         ScheduleHandler _sh;
@@ -36,9 +37,6 @@ namespace TypiconMigrationTool
 
         public void Execute()
         {
-            //Console.WriteLine("ClearEF()");
-            //ClearEF();
-
             Console.WriteLine("Migrate()");
             Migrate();
 
@@ -56,43 +54,35 @@ namespace TypiconMigrationTool
             Commit();
         }               
 
-        private void ClearEF()
-        {
-            IEnumerable<TypiconEntity> typiconEntitySet = _unitOfWork.Repository<TypiconEntity>().GetAll();
-            foreach (TypiconEntity element in typiconEntitySet)
-            {
-                _unitOfWork.Repository<TypiconEntity>().Remove(element);
-            }
-
-            //IEnumerable<MenologyDay> menologyDaySet = _unitOfWork.Repository<MenologyDay>().GetAll();
-            //foreach (MenologyDay element in menologyDaySet)
-            //{
-            //    _unitOfWork.Repository<MenologyDay>().Delete(element);
-            //}
-
-            //IEnumerable<TriodionDay> triodionDaySet = _unitOfWork.Repository<TriodionDay>().GetAll();
-            //foreach (TriodionDay element in triodionDaySet)
-            //{
-            //    _unitOfWork.Repository<TriodionDay>().Delete(element);
-            //}
-
-            _unitOfWork.SaveChanges();
-        }
-
         private void Migrate()
         {
-            TypiconEntity typiconEntity = new TypiconEntity()
-            {
-                //Id = 1,
-                Name = "Типикон",
-                DefaultLanguage = DEFAULT_LANGUAGE
-            };
+            var user = new User("Administrator", "admin", "admin");
 
-            _unitOfWork.Repository<TypiconEntity>().Add(typiconEntity);
-
+            _unitOfWork.Repository<User>().Add(user);
             Commit();
 
-            string folderPath = Path.Combine(Properties.Settings.Default.FolderPath, typiconEntity.Name, "Sign"); 
+            var typicon = new Typicon()
+            {
+                Owner = user
+            };
+
+            _unitOfWork.Repository<Typicon>().Add(typicon);
+            Commit();
+
+            var typiconEntity = new TypiconVersion()
+            {
+                Name = new ItemText()
+                {
+                    Items = new List<ItemTextUnit>() { new ItemTextUnit("cs-ru", "Типикон") }
+                },
+                DefaultLanguage = DEFAULT_LANGUAGE,
+                TypiconId = typicon.Id
+            };
+
+            typicon.Versions.Add(typiconEntity);
+            Commit();
+
+            string folderPath = Path.Combine(Properties.Settings.Default.FolderPath, TYPICON_NAME, "Sign"); 
 
             FileReader fileReader = new FileReader(folderPath);
 
@@ -106,7 +96,7 @@ namespace TypiconMigrationTool
                 {
                     //Id = signMigrator.NewId,
                     Priority = signMigrator.Priority,
-                    TypiconEntityId = typiconEntity.Id,
+                    TypiconVersionId = typiconEntity.Id,
                     //Owner = typiconEntity,
                     IsTemplate = row.IsTemplate,
                     RuleDefinition = fileReader.Read(row.Name),
@@ -134,7 +124,11 @@ namespace TypiconMigrationTool
             Commit();
 
             MigrateMenologyDaysAndRules(typiconEntity);
+            Commit();
+
             MigrateTriodionDaysAndRules(typiconEntity);
+            Commit();
+
             MigrateCommonRules(typiconEntity);
 
             Commit();
@@ -220,9 +214,9 @@ namespace TypiconMigrationTool
             Commit();
         }
 
-        private void MigrateKathismas(TypiconEntity typiconEntity)
+        private void MigrateKathismas(TypiconVersion typiconEntity)
         {
-            Console.WriteLine("MigrateKathismas(TypiconEntity typiconEntity)");
+            Console.WriteLine("MigrateKathismas(TypiconVersion typiconEntity)");
             string folder = Path.Combine(Properties.Settings.Default.FolderPath, @"Books\Psalter");
 
             var context = new PsalterContext(_unitOfWork);
@@ -264,7 +258,7 @@ namespace TypiconMigrationTool
             }
         }
 
-        private void MigrateMenologyDaysAndRules(TypiconEntity typiconEntity)
+        private void MigrateMenologyDaysAndRules(TypiconVersion typiconEntity)
         {
             Console.WriteLine("MigrateMenologyDaysAndRules()");
 
@@ -278,7 +272,7 @@ namespace TypiconMigrationTool
 
             //folder.AddFolder(childFolder);
 
-            string folderRulePath = Path.Combine(Properties.Settings.Default.FolderPath, typiconEntity.Name, "Menology");
+            string folderRulePath = Path.Combine(Properties.Settings.Default.FolderPath, TYPICON_NAME, "Menology");
 
             FileReader fileRuleReader = new FileReader(folderRulePath);
 
@@ -300,7 +294,7 @@ namespace TypiconMigrationTool
                  * смотрим, не один и тот же MenologyDay, что и предыдущая строка из Access
                 */
                 //if (menologyDay == null || !menologyDay.DateB.Expression.Equals(d.Expression))
-                menologyDay = _unitOfWork.Repository<MenologyDay>().Get(c => c.DateB.Expression.Equals(d.Expression));
+                menologyDay = _unitOfWork.Repository<MenologyDay>().Get(c => c.LeapDate.Expression.Equals(d.Expression));
                 if (menologyDay == null)
                 {
                     //нет - создаем новый день
@@ -310,7 +304,7 @@ namespace TypiconMigrationTool
                         //DayName = XmlHelper.CreateItemTextCollection(
                         //    new CreateItemTextRequest() { Text = mineinikRow.Name, Name = "Name" }),
                         Date = (mineinikRow.IsDateNull()) ? new ItemDate() : new ItemDate(mineinikRow.Date.Month, mineinikRow.Date.Day),
-                        DateB = (mineinikRow.IsDateBNull()) ? new ItemDate() : new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day),
+                        LeapDate = (mineinikRow.IsDateBNull()) ? new ItemDate() : new ItemDate(mineinikRow.DateB.Month, mineinikRow.DateB.Day),
                     };
 
                     _unitOfWork.Repository<MenologyDay>().Add(menologyDay);
@@ -335,8 +329,8 @@ namespace TypiconMigrationTool
                     {
                         //Name = menologyDay.Name,
                         Date = menologyDay.Date,
-                        DateB = menologyDay.DateB,
-                        TypiconEntityId = typiconEntity.Id,
+                        LeapDate = menologyDay.LeapDate,
+                        TypiconVersionId = typiconEntity.Id,
                         //Owner = typiconEntity,
                         //IsAddition = true,
                         Template = typiconEntity.Signs.First(c => c.SignName.FirstOrDefault(DEFAULT_LANGUAGE).Text == mineinikRow.ServiceSignsRow.Name),
@@ -348,7 +342,7 @@ namespace TypiconMigrationTool
 
                     //берем xml-правило из файла
                     menologyRule.RuleDefinition = (!mineinikRow.IsDateBNull())
-                                                    ? fileRuleReader.Read(menologyDay.DateB.Expression)
+                                                    ? fileRuleReader.Read(menologyDay.LeapDate.Expression)
                                                     : fileRuleReader.Read(menologyRule.GetNameByLanguage(DEFAULT_LANGUAGE));
                 }
                 else
@@ -361,7 +355,7 @@ namespace TypiconMigrationTool
             Console.WriteLine(timer.GetStringValue());
         }
 
-        private void MigrateTriodionDaysAndRules(TypiconEntity typiconEntity)
+        private void MigrateTriodionDaysAndRules(TypiconVersion typiconEntity)
         {
             Console.WriteLine("MigrateTriodionDaysAndRules()");
 
@@ -404,7 +398,7 @@ namespace TypiconMigrationTool
 
                 _unitOfWork.Repository<TriodionDay>().Add(day);
 
-                string folderPath = Path.Combine(Properties.Settings.Default.FolderPath, typiconEntity.Name, "Triodion");
+                string folderPath = Path.Combine(Properties.Settings.Default.FolderPath, TYPICON_NAME, "Triodion");
 
                 FileReader fileReader = new FileReader(folderPath);
 
@@ -412,7 +406,7 @@ namespace TypiconMigrationTool
                 {
                     //Name = day.Name,
                     DaysFromEaster = day.DaysFromEaster,
-                    TypiconEntityId = typiconEntity.Id,
+                    TypiconVersionId = typiconEntity.Id,
                     //Owner = typiconEntity,
                     //IsAddition = true,
                     Template = typiconEntity.Signs.First(c => c.SignName.FirstOrDefault(DEFAULT_LANGUAGE).Text == row.ServiceSignsRow.Name),
@@ -431,14 +425,14 @@ namespace TypiconMigrationTool
             //_unitOfWork.Commit();
         }
 
-        private void MigrateCommonRules(TypiconEntity typiconEntity)
+        private void MigrateCommonRules(TypiconVersion typiconEntity)
         {
             Console.WriteLine("MigrateCommonRules()");
 
             Timer timer = new Timer();
             timer.Start();
 
-            string folderPath = Path.Combine(Properties.Settings.Default.FolderPath, typiconEntity.Name, "Common");
+            string folderPath = Path.Combine(Properties.Settings.Default.FolderPath, TYPICON_NAME, "Common");
 
             FileReader fileReader = new FileReader(folderPath);
 
@@ -450,7 +444,7 @@ namespace TypiconMigrationTool
                 {
                     Name = file.name,
                     RuleDefinition = file.content,
-                    TypiconEntityId = typiconEntity.Id,
+                    TypiconVersionId = typiconEntity.Id,
                     //Owner = typiconEntity
                 };
                 typiconEntity.CommonRules.Add(commonRule);

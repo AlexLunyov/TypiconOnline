@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
 
             //находим Праздничное правило 
-            MenologyRule rule = TypiconEntity.GetMenologyRule(new DateTime(2017, 09, 28));
+            MenologyRule rule = TypiconVersion.GetMenologyRule(new DateTime(2017, 09, 28));
             rule.RuleDefinition = xml;
 
             handler.Settings.DayWorships = rule.DayWorships;
@@ -44,7 +44,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             Assert.AreEqual(3, model.FirstOrDefault()?.ChildElements.Count);
 
             //а теперь находим правило НЕ праздничное
-            rule = TypiconEntity.GetMenologyRule(new DateTime(2017, 10, 15));
+            rule = TypiconVersion.GetMenologyRule(new DateTime(2017, 10, 15));
             rule.RuleDefinition = xml;
 
             handler.Settings.DayWorships = rule.DayWorships;

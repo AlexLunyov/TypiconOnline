@@ -25,7 +25,7 @@ namespace TypiconOnline.Domain.Query.Typicon
 
         public IEnumerable<Sign> Handle([NotNull] AllSignsQuery query)
         {
-            return DbContext.Set<Sign>().Where(c => c.TypiconEntityId == query.TypiconId);
+            return DbContext.Set<Sign>().Where(c => c.TypiconVersionId == query.TypiconId);
         }
 
 

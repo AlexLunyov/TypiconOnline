@@ -10,6 +10,9 @@ using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.AppServices.Implementations
 {
+    /// <summary>
+    /// Служба для вычисления Выходных форм 
+    /// </summary>
     public class ScheduleService : IScheduleService
     {
         IScheduleDataCalculator dataCalculator;

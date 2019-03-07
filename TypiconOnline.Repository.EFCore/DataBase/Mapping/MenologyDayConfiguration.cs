@@ -13,8 +13,10 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<MenologyDay> builder)
         {
-            //builder.OwnsOne(c => c.Date).Property(d => d.Expression).IsRequired(false);
-            //builder.OwnsOne(c => c.DateB).Property(d => d.Expression).IsRequired(false);
+            builder.OwnsOne(c => c.Date)
+                .Ignore(c => c.Expression);
+            builder.OwnsOne(c => c.LeapDate)
+                .Ignore(c => c.Expression);
 
             //builder.Property(c => c.Date.Expression).
             //    HasColumnName("Date").

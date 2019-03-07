@@ -26,12 +26,12 @@ namespace TypiconOnline.AppServices.Implementations
 
         public IEnumerable<MenologyRule> GetAllMenologyRules(int typiconId)
         {
-            return GetTypiconEntity(typiconId)?.MenologyRules;
+            return GetTypiconVersion(typiconId)?.MenologyRules;
         }
 
         public IEnumerable<TriodionRule> GetAllTriodionRules(int typiconId)
         {
-            return GetTypiconEntity(typiconId)?.TriodionRules;
+            return GetTypiconVersion(typiconId)?.TriodionRules;
         }
 
         public DateTime GetCurrentEaster(int year)
@@ -43,12 +43,12 @@ namespace TypiconOnline.AppServices.Implementations
 
         public MenologyRule GetMenologyRule(int typiconId, DateTime date)
         {
-            return GetTypiconEntity(typiconId)?.GetMenologyRule(date);
+            return GetTypiconVersion(typiconId)?.GetMenologyRule(date);
         }
 
         public ModifiedRule GetModifiedRuleHighestPriority(int typiconId, DateTime date)
         {
-            var found = _context.Set<ModifiedRule>().Where(c => c.Parent.TypiconEntityId == typiconId
+            var found = _context.Set<ModifiedRule>().Where(c => c.Parent.TypiconVersionId == typiconId
                 && c.Date.Date == date.Date).ToList();
             return (found != null) ? found.Min() : default(ModifiedRule);
         }
@@ -59,40 +59,39 @@ namespace TypiconOnline.AppServices.Implementations
 
             int daysFromEaster = date.Date.Subtract(currentEaster.Date.Date).Days;
 
-            return GetTypiconEntity(typiconId)?.GetTriodionRule(daysFromEaster);
+            return GetTypiconVersion(typiconId)?.GetTriodionRule(daysFromEaster);
         }
 
 
-        TypiconEntity _typiconEntity;
+        TypiconVersion _typiconEntity;
 
-        private TypiconEntity GetTypiconEntity(int typiconId)
+        private TypiconVersion GetTypiconVersion(int typiconId)
         {
             if (_typiconEntity == null || _typiconEntity.Id != typiconId)
             {
                 //подгружаем знаки служб
                 _context.Set<Sign>()
-                    .Where(c => c.TypiconEntityId == typiconId)
+                    .Where(c => c.TypiconVersionId == typiconId)
                     .Include(c => c.SignName)
                     .Load();
 
-                var request = GetTypiconEntityIncludes(_context.Set<TypiconEntity>());
+                var request = GetTypiconVersionIncludes(_context.Set<TypiconVersion>());
 
                 _typiconEntity = request.Where(c => c.Id == typiconId).FirstOrDefault();
             }
             return _typiconEntity;
         }
 
-        private IQueryable<TypiconEntity> GetTypiconEntityIncludes(DbSet<TypiconEntity> dbSet)
+        private IQueryable<TypiconVersion> GetTypiconVersionIncludes(DbSet<TypiconVersion> dbSet)
         {
             return dbSet
-                .Include(c => c.Template)
                 //.Include(c => c.Signs)
                 //    .ThenInclude(c => c.Template)
                 .Include(c => c.CommonRules)
                 .Include(c => c.MenologyRules)
                     .ThenInclude(c => c.Date)
                 .Include(c => c.MenologyRules)
-                    .ThenInclude(c => c.DateB)
+                    .ThenInclude(c => c.LeapDate)
                 .Include(c => c.MenologyRules)
                     //.ThenInclude(c => c.Template)
                 .Include(c => c.MenologyRules)

@@ -16,19 +16,33 @@ namespace TypiconOnline.Domain.Typicon
         /// Ссылка на Устав-шаблон.
         /// </summary>
         public virtual Typicon Template { get; set; }
+
+        public int OwnerId { get; set; }
         /// <summary>
         /// Владелец (создатель) Устава
         /// </summary>
         public virtual User Owner { get; set; }
+
+        /// <summary>
+        /// Список на промежуточную таблицу для Редакторов Устава
+        /// </summary>
+        public virtual IEnumerable<UserTypicon> EditableUserTypicons { get; set; } = new List<UserTypicon>();
+        
         /// <summary>
         /// Редакторы Устава
         /// </summary>
-        public virtual IEnumerable<User> Editors { get; set; }
+        public IEnumerable<User> Editors
+        {
+            get
+            {
+                return (from eut in EditableUserTypicons select eut.User).ToList();
+            }
+        }
 
         /// <summary>
         /// Версии Устава
         /// </summary>
-        public virtual IEnumerable<TypiconVersion> Versions { get; set; }// => _versions.ToList();
+        public virtual List<TypiconVersion> Versions { get; set; } = new List<TypiconVersion>();
 
         protected override void Validate()
         {

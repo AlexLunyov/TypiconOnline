@@ -32,54 +32,12 @@ namespace TypiconOnline.Repository.EFCore.DataBase
         {
             // настройка полей с помощью Fluent API TypiconSettings
 
-            modelBuilder.ApplyConfiguration(new TypiconEntityConfiguration());
-
-            //modelBuilder.ApplyConfiguration(new TypiconRuleConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration()); 
+            modelBuilder.ApplyConfiguration(new TypiconConfiguration());
+            modelBuilder.ApplyConfiguration(new TypiconVersionConfiguration());
+            modelBuilder.ApplyConfiguration(new UserTypiconConfiguration()); 
 
             modelBuilder.ApplyConfiguration(new SignConfiguration());
-
-            //Sign
-
-            //modelBuilder
-            //    .Entity<Sign>()
-            //    .HasBaseType((Type)null);
-            //modelBuilder
-            //    .Entity<Sign>()
-            //    .HasKey(c => c.Id);
-            //modelBuilder
-            //    .Entity<Sign>()
-            //    .HasKey(c => c.Id);
-            //modelBuilder
-            //    .Entity<Sign>()
-            //    .Property(c => c.Priority)
-            //    .IsRequired();
-            //modelBuilder
-            //    .Entity<Sign>()
-            //    .HasOne(e => e.SignName)
-            //    .WithMany();
-            //modelBuilder
-            //    .Entity<Sign>()
-            //    .HasOne(e => e.Template)
-            //    .WithMany()
-            //    .OnDelete(DeleteBehavior.Restrict)
-            //    .HasForeignKey(c => c.TemplateId)
-            //    .IsRequired(false);
-
-            ////ItemText
-            //modelBuilder.Entity<ItemText>()
-            //    .Property<int>("Id");
-
-            //modelBuilder.Entity<ItemText>()
-            //    .HasKey("Id");
-
-            //modelBuilder.Entity<ItemText>()
-            //    .HasMany(c => c.Items);
-
-            //modelBuilder.Entity<ItemTextUnit>()
-            //    .Property<int>("Id");
-
-            //modelBuilder.Entity<ItemTextUnit>()
-            //    .HasKey("Id");
 
 
             modelBuilder.ApplyConfiguration(new ModifiedYearConfiguration());
@@ -93,7 +51,8 @@ namespace TypiconOnline.Repository.EFCore.DataBase
             modelBuilder.ApplyConfiguration(new DayWorshipConfiguration());
             modelBuilder.ApplyConfiguration(new DayRuleWorshipConfiguration());
 
-            //modelBuilder.ApplyConfiguration(new MenologyRuleConfiguration());
+            modelBuilder.ApplyConfiguration(new MenologyRuleConfiguration());
+            modelBuilder.Entity<TriodionRule>();
             //modelBuilder.ApplyConfiguration(new TriodionRuleConfiguration());
 
             modelBuilder.ApplyConfiguration(new MenologyDayConfiguration());
@@ -103,7 +62,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 
             modelBuilder.ApplyConfiguration(new EasterItemConfiguration());
 
-            modelBuilder.ApplyConfiguration(new ItemDateConfiguration());
+            //modelBuilder.ApplyConfiguration(new ItemDateConfiguration());
 
             modelBuilder.ApplyConfiguration(new ItemTextConfiguration());
             modelBuilder.ApplyConfiguration(new ItemTextUnitConfiguration());

@@ -28,7 +28,7 @@ namespace TypiconOnline.Domain.Query.Typicon
 
         public IEnumerable<MenologyRule> Handle([NotNull] AllMenologyRulesQuery query)
         {
-            return DbContext.Set<MenologyRule>().Where(c => c.TypiconEntityId == query.TypiconId);
+            return DbContext.Set<MenologyRule>().Where(c => c.TypiconVersionId == query.TypiconId);
         }
     }
 }

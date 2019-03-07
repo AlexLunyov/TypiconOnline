@@ -12,11 +12,11 @@ namespace TypiconOnline.Domain.Typicon
         IRuleElement _rule;
 
         /// <summary>
-        /// Id Устава (TypiconEntity)
+        /// Id Устава (TypiconVersion)
         /// </summary>
-        public virtual int TypiconEntityId { get; set; }
+        public virtual int TypiconVersionId { get; set; }
 
-        public virtual TypiconEntity TypiconEntity { get; set; }
+        public virtual TypiconVersion TypiconVersion { get; set; }
 
         protected string _ruleDefinition;
         public virtual string RuleDefinition

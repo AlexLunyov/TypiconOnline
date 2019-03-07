@@ -49,7 +49,7 @@ namespace TypiconOnline.AppServices.Jobs
             var handler = new ModificationsRuleHandler(_facade, modifiedYear);
 
             //MenologyRules
-            var menologyRules = _facade.GetAllMenologyRules(modifiedYear.TypiconEntityId);
+            var menologyRules = _facade.GetAllMenologyRules(modifiedYear.TypiconVersionId);
 
             DateTime firstJanuary = new DateTime(modifiedYear.Year, 1, 1);
 
@@ -70,7 +70,7 @@ namespace TypiconOnline.AppServices.Jobs
             //теперь обрабатываем переходящие минейные праздники
             //у них не должны быть определены даты. так их и найдем
 
-            var rules = menologyRules.Where(c => (c.Date.IsEmpty && c.DateB.IsEmpty));
+            var rules = menologyRules.Where(c => (c.Date.IsEmpty && c.LeapDate.IsEmpty));
 
             foreach (var a in rules)
             {
@@ -86,7 +86,7 @@ namespace TypiconOnline.AppServices.Jobs
             //Для каждого правила выполнять interpret(), где date = текущая Пасха. AddDays(Day.DaysFromEaster)
             DateTime easter = _facade.GetCurrentEaster(modifiedYear.Year);
 
-            var triodionRules = _facade.GetAllTriodionRules(modifiedYear.TypiconEntityId);
+            var triodionRules = _facade.GetAllTriodionRules(modifiedYear.TypiconVersionId);
 
             foreach (var triodionRule in triodionRules)
             {
@@ -101,7 +101,7 @@ namespace TypiconOnline.AppServices.Jobs
 
                     h.Settings = _settingsFactory.Create(new CreateRuleSettingsRequest()
                     {
-                        TypiconId = modifiedYear.TypiconEntityId,
+                        TypiconId = modifiedYear.TypiconVersionId,
                         Rule = rule,
                         Date = dateToInterpret
                     });
@@ -114,7 +114,7 @@ namespace TypiconOnline.AppServices.Jobs
 
         private ModifiedYear InnerCreate(int typiconId, int year)
         {
-            return new ModifiedYear() { Year = year, TypiconEntityId = typiconId };
+            return new ModifiedYear() { Year = year, TypiconVersionId = typiconId };
         }
     }
 }

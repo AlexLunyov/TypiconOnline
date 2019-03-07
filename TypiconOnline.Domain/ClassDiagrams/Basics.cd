@@ -49,11 +49,11 @@
     <Position X="21" Y="5" Width="1.75" />
     <TypeIdentifier />
   </Class>
-  <Class Name="TypiconOnline.Domain.Typicon.TypiconEntity">
+  <Class Name="TypiconOnline.Domain.Typicon.TypiconVersion">
     <Position X="16" Y="8.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAQAGCAIAAABAAAAAQAAFAAAAAAgAAgAAIBAAA=</HashCode>
-      <FileName>Typicon\TypiconEntity.cs</FileName>
+      <FileName>Typicon\TypiconVersion.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

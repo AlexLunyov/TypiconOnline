@@ -5,17 +5,14 @@ namespace TypiconOnline.Domain.Days
 {
     public class MenologyDay : Day
     {
-        public virtual ItemDate Date
-        {
-            get;
-            set;
-        }
-
-        public virtual ItemDate DateB
-        {
-            get;
-            set;
-        }
+        /// <summary>
+        /// Дата
+        /// </summary>
+        public virtual ItemDate Date { get; set; } = new ItemDate();
+        /// <summary>
+        /// Дата для високосного года
+        /// </summary>
+        public virtual ItemDate LeapDate { get; set; } = new ItemDate();
 
         /// <summary>
         /// Возвращает конкретную дату в году, когда совершается данная служба
@@ -28,7 +25,7 @@ namespace TypiconOnline.Domain.Days
             {
                 if (DateTime.IsLeapYear(year))
                 {
-                    return (!DateB.IsEmpty) ? new DateTime(year, DateB.Month, DateB.Day) : DateTime.MinValue;
+                    return (!LeapDate.IsEmpty) ? new DateTime(year, LeapDate.Month, LeapDate.Day) : DateTime.MinValue;
                 }
                 else
                 {
@@ -48,7 +45,7 @@ namespace TypiconOnline.Domain.Days
                 AppendAllBrokenConstraints(Date, "Date");
             }
 
-            if (!DateB.IsValid)
+            if (!LeapDate.IsValid)
             {
                 AppendAllBrokenConstraints(Date, "DateB");
             }

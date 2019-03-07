@@ -42,15 +42,15 @@ namespace TypiconOnline.Domain.Tests
             }
         }
 
-        private static TypiconEntity _typicon;
+        private static TypiconVersion _typicon;
 
-        protected static TypiconEntity TypiconEntity
+        protected static TypiconVersion TypiconVersion
         {
             get
             {
                 if (_typicon == null)
                 {
-                    _typicon = DbContext.Set<TypiconEntity>().FirstOrDefault(c => c.Id == 1);
+                    _typicon = DbContext.Set<TypiconVersion>().FirstOrDefault(c => c.Id == 1);
                 }
 
                 return _typicon;

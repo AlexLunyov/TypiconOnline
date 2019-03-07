@@ -9,13 +9,13 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class AllTypiconsQueryHandler : DbContextHandlerBase, IDataQueryHandler<AllTypiconsQuery, IEnumerable<TypiconEntityDTO>>
+    public class AllTypiconsQueryHandler : DbContextHandlerBase, IDataQueryHandler<AllTypiconsQuery, IEnumerable<TypiconVersionDTO>>
     {
         public AllTypiconsQueryHandler(TypiconDBContext dbContext) : base(dbContext) { }
 
-        public IEnumerable<TypiconEntityDTO> Handle([NotNull] AllTypiconsQuery query)
+        public IEnumerable<TypiconVersionDTO> Handle([NotNull] AllTypiconsQuery query)
         {
-            return DbContext.Set<TypiconEntity>().ProjectToType<TypiconEntityDTO>().AsEnumerable();
+            return DbContext.Set<TypiconVersion>().ProjectToType<TypiconVersionDTO>().AsEnumerable();
         }
     }
 }

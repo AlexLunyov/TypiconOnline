@@ -54,15 +54,17 @@ namespace TypiconOnline.Domain.Query.Typicon
         {
             Expression<Func<MenologyRule, bool>> expression;
 
-            var dateString = new ItemDate(query.Date.Month, query.Date.Day).ToString();
-
             if (DateTime.IsLeapYear(query.Date.Year))
             {
-                expression = c => c.TypiconEntityId == query.TypiconId && c.DateB.Expression == dateString;
+                expression = c => c.TypiconVersionId == query.TypiconId 
+                               && c.LeapDate.Day == query.Date.Day
+                               && c.LeapDate.Month == query.Date.Month;
             }
             else
             {
-                expression = c => c.TypiconEntityId == query.TypiconId && c.Date.Expression == dateString;
+                expression = c => c.TypiconVersionId == query.TypiconId 
+                               && c.Date.Day == query.Date.Day
+                               && c.Date.Month == query.Date.Month;
             }
 
             return expression;

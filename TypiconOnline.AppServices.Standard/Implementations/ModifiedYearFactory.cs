@@ -39,7 +39,7 @@ namespace TypiconOnline.AppServices.Implementations
 
         public ModifiedYear Create(int typiconId, int year)
         {
-            //ModifiedYear modifiedYear = unitOfWork.Repository<ModifiedYear>().Get(m => m.TypiconEntityId == typiconId && m.Year == year);
+            //ModifiedYear modifiedYear = unitOfWork.Repository<ModifiedYear>().Get(m => m.TypiconVersionId == typiconId && m.Year == year);
 
             //if (modifiedYear == null)
             //{
@@ -60,7 +60,7 @@ namespace TypiconOnline.AppServices.Implementations
             var handler = new ModificationsRuleHandler(typiconFacade, modifiedYear);
 
             //MenologyRules
-            var menologyRules = typiconFacade.GetAllMenologyRules(modifiedYear.TypiconEntityId);
+            var menologyRules = typiconFacade.GetAllMenologyRules(modifiedYear.TypiconVersionId);
 
             DateTime firstJanuary = new DateTime(modifiedYear.Year, 1, 1);
 
@@ -72,7 +72,7 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 //находим правило для конкретного дня Минеи
                 var menologyRule = menologyRules.GetMenologyRule(indexDate);
-                //var menologyRule = serializer.QueryProcessor.Process(new MenologyRuleQuery(modifiedYear.TypiconEntityId, indexDate));
+                //var menologyRule = serializer.QueryProcessor.Process(new MenologyRuleQuery(modifiedYear.TypiconVersionId, indexDate));
 
                 InterpretRule(menologyRule, indexDate, handler);
 
@@ -81,9 +81,9 @@ namespace TypiconOnline.AppServices.Implementations
 
             //теперь обрабатываем переходящие минейные праздники
             //у них не должны быть определены даты. так их и найдем
-            var rules = menologyRules.Where(c => c.Date.IsEmpty && c.DateB.IsEmpty);
+            var rules = menologyRules.Where(c => c.Date.IsEmpty && c.LeapDate.IsEmpty);
             //var rules = serializer.QueryProcessor
-            //    .Process(new AllMenologyRulesQuery(c => c.TypiconEntityId == modifiedYear.TypiconEntityId
+            //    .Process(new AllMenologyRulesQuery(c => c.TypiconVersionId == modifiedYear.TypiconVersionId
             //                                            && c.Date.IsEmpty 
             //                                            && c.DateB.IsEmpty));
 
@@ -101,7 +101,7 @@ namespace TypiconOnline.AppServices.Implementations
             //Для каждого правила выполнять interpret(), где date = текущая Пасха. AddDays(Day.DaysFromEaster)
             DateTime easter = typiconFacade.GetCurrentEaster(modifiedYear.Year);
 
-            var triodionRules = typiconFacade.GetAllTriodionRules(modifiedYear.TypiconEntityId);
+            var triodionRules = typiconFacade.GetAllTriodionRules(modifiedYear.TypiconVersionId);
 
             foreach (var triodionRule in triodionRules)
             {
@@ -116,7 +116,7 @@ namespace TypiconOnline.AppServices.Implementations
 
                     h.Settings = settingsFactory.Create(new CreateRuleSettingsRequest()
                     {
-                        TypiconId = modifiedYear.TypiconEntityId,
+                        TypiconId = modifiedYear.TypiconVersionId,
                         Rule = rule,
                         Date = dateToInterpret
                     });
@@ -129,7 +129,7 @@ namespace TypiconOnline.AppServices.Implementations
 
         private ModifiedYear InnerCreate(int typiconId, int year)
         {
-            return new ModifiedYear() { Year = year, TypiconEntityId = typiconId };
+            return new ModifiedYear() { Year = year, TypiconVersionId = typiconId };
         }
     }
 }

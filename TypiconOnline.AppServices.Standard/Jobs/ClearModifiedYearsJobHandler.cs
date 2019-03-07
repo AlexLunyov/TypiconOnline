@@ -27,7 +27,7 @@ namespace TypiconOnline.AppServices.Jobs
 
         public void Execute(ClearModifiedYearsJob command)
         {
-            var years = _unitOfWork.Repository<ModifiedYear>().GetAll(c => c.TypiconEntityId == command.TypiconId, _includes);
+            var years = _unitOfWork.Repository<ModifiedYear>().GetAll(c => c.TypiconVersionId == command.TypiconId, _includes);
 
             if (years != null)
             {

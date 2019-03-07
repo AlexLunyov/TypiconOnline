@@ -12,14 +12,14 @@ namespace TypiconOnline.Domain.Tests
     public class RuleHandlerSettingsTestFactory
     {
         //IUnitOfWork unitOfWork;
-        TypiconEntity typiconEntity;
+        TypiconVersion typiconEntity;
 
 
         public RuleHandlerSettingsTestFactory()
         {
             var unitOfWork = UnitOfWorkFactory.Create();
 
-            typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
+            typiconEntity = unitOfWork.Repository<TypiconVersion>().Get(c => c.Id == 1);
         }
 
         public RuleHandlerSettings CreateSettings(int typiconId, DateTime date, string ruleDefinition, RuleHandlerSettings addition = null)

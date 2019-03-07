@@ -20,7 +20,7 @@ namespace TypiconOnline.AppServices.Tests.Implementation
             var rule = facade.GetMenologyRule(1, new DateTime(2018, 1, 1));
 
             Assert.IsNotNull(rule.Template);
-            Assert.IsNotNull(rule.TypiconEntity);
+            Assert.IsNotNull(rule.TypiconVersion);
         }
     }
 }

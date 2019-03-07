@@ -7,8 +7,8 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.AppServices.Messaging.Typicon
 {
-    public class GetTypiconEntityResponse : ServiceResponseBase
+    public class GetTypiconVersionResponse : ServiceResponseBase
     {
-        public Domain.Typicon.TypiconEntity TypiconEntity { get; set; }
+        public Domain.Typicon.TypiconVersion TypiconVersion { get; set; }
     }
 }

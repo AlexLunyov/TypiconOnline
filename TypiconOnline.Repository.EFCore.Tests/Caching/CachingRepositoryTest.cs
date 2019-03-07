@@ -81,7 +81,7 @@ namespace TypiconOnline.Repository.EFCore.Tests.Caching
         {
             var uof = CachingUOFFactory.Create();
 
-            var item = uof.Repository<MenologyDay>().Get(c => (c.Id == 200));
+            var item = uof.Repository<MenologyDay>().Get(c => (c.Id == 100));
 
             string exp = item.Date.Expression;
 

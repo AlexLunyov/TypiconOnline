@@ -15,7 +15,7 @@ namespace TypiconOnline.AppServices.Migration.Psalter
         /// <param name="typiconEntity"></param>
         /// <param name="kathisma"></param>
         /// <returns></returns>
-        public static Kathisma AppendOrUpdateKathisma(this TypiconEntity typiconEntity, Kathisma kathisma)
+        public static Kathisma AppendOrUpdateKathisma(this TypiconVersion typiconEntity, Kathisma kathisma)
         {
             var found = typiconEntity.Kathismas.FirstOrDefault(c => c.Number == kathisma.Number);
 

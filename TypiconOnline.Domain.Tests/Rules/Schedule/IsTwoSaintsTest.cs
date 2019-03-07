@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
 
             //Минея - попразднество, 1 святой
-            MenologyRule rule = TypiconEntity.GetMenologyRule(new DateTime(2017, 09, 28));
+            MenologyRule rule = TypiconVersion.GetMenologyRule(new DateTime(2017, 09, 28));
             rule.RuleDefinition = xml;
 
             handler.Settings.DayWorships = rule.DayWorships;
@@ -44,10 +44,10 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             Assert.AreEqual(1, model.FirstOrDefault()?.ChildElements.Count);
 
             //Триодь, Минея - 1 святой
-            rule = TypiconEntity.GetMenologyRule(new DateTime(2017, 3, 16));
+            rule = TypiconVersion.GetMenologyRule(new DateTime(2017, 3, 16));
             rule.RuleDefinition = xml;
 
-            TriodionRule triodRule = TypiconEntity.GetTriodionRule(-20);
+            TriodionRule triodRule = TypiconVersion.GetTriodionRule(-20);
 
             rule.DayWorships.AddRange(triodRule.DayWorships);
 
@@ -63,7 +63,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             Assert.AreEqual(1, model.FirstOrDefault()?.ChildElements.Count);
 
             //а теперь находим правило НЕ праздничное, 2 святых
-            rule = TypiconEntity.GetMenologyRule(new DateTime(2017, 5, 31));
+            rule = TypiconVersion.GetMenologyRule(new DateTime(2017, 5, 31));
             rule.RuleDefinition = xml;
 
             handler.Settings.DayWorships = rule.DayWorships;

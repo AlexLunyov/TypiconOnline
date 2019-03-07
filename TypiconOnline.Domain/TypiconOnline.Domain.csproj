@@ -110,6 +110,7 @@
     <Compile Include="Common\IntConverters\IntCsConverter.cs" />
     <Compile Include="Common\LanguageSettings.cs" />
     <Compile Include="Common\LanguageSettingsFactory.cs" />
+    <Compile Include="UserTypicon.cs" />
     <Compile Include="DayStructureBase.cs" />
     <Compile Include="Interfaces\IAsAdditionElement.cs" />
     <Compile Include="Interfaces\IBookElement.cs" />
@@ -188,7 +189,6 @@
     <Compile Include="Days\MenologyDayBusinessConstraint.cs" />
     <Compile Include="Typicon\CommonRule.cs" />
     <Compile Include="Typicon\DayRule.cs" />
-    <Compile Include="Typicon\Factories\TypiconEntityFactory.cs" />
     <Compile Include="Typicon\Modifications\ModifiedRule.cs" />
     <Compile Include="Typicon\Modifications\ModifiedYear.cs" />
     <Compile Include="Typicon\Priority.cs" />
@@ -211,7 +211,6 @@
     <Compile Include="ItemTypes\ItemDate.cs" />
     <Compile Include="ItemTypes\ItemDateBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemType.cs" />
-    <Compile Include="Typicon\TypiconEntity.cs" />
     <Compile Include="Typicon\TypiconVersion.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>

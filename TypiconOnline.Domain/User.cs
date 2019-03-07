@@ -12,9 +12,18 @@ namespace TypiconOnline.Domain
     /// </summary>
     public class User : EntityBase<int>, IAggregateRoot
     {
-        public string Name { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
+        private User() { }
+
+        public User(string name, string login, string password)
+        {
+            Name = name;
+            Login = login;
+            Password = password;
+        }
+
+        public string Name { get; private set; }
+        public string Login { get; private set; }
+        public string Password { get; private set; }
 
         /// <summary>
         /// Является ли Пользователь администратором системы
@@ -28,12 +37,23 @@ namespace TypiconOnline.Domain
         /// <summary>
         /// Уставы, созданные пользователем
         /// </summary>
-        public IEnumerable<Typicon.Typicon> OwnedTypicons { get; set; }
+        public virtual IEnumerable<Typicon.Typicon> OwnedTypicons { get; set; } = new List<Typicon.Typicon>();
+
+        /// <summary>
+        /// Список на промежуточную таблицу для редактируемых Уставов
+        /// </summary>
+        public virtual IEnumerable<UserTypicon> EditableUserTypicons { get; set; } = new List<UserTypicon>();
 
         /// <summary>
         /// Уставы, к которым имеется доступ в качестве Редактора
         /// </summary>
-        public IEnumerable<Typicon.Typicon> EditableTypicons { get; set; }
+        public IEnumerable<Typicon.Typicon> EditableTypicons
+        {
+            get
+            {
+                return (from eut in EditableUserTypicons select eut.Typicon).ToList();
+            }
+        }
 
         protected override void Validate()
         {

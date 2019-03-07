@@ -3,8 +3,8 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.AppServices.Messaging.Typicon
 {
-    public class InsertTypiconEntityRequest: ServiceRequestBase
+    public class InsertTypiconVersionRequest: ServiceRequestBase
     {
-        public TypiconEntity TypiconEntity { get; set; }
+        public TypiconVersion TypiconVersion { get; set; }
     }
 }

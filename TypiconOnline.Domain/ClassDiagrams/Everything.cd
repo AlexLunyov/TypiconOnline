@@ -1301,11 +1301,11 @@
       <FileName>Typicon\TriodionRule.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypiconOnline.Domain.Typicon.TypiconEntity" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="TypiconOnline.Domain.Typicon.TypiconVersion" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="71.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAQAGCAIAAAhAAAAAQAAFAAAAAAgAAgAAIAAAA=</HashCode>
-      <FileName>Typicon\TypiconEntity.cs</FileName>
+      <FileName>Typicon\TypiconVersion.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
@@ -1330,11 +1330,11 @@
       <FileName>Typicon\TypiconSettings.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypiconOnline.Domain.Typicon.Factories.TypiconEntityFactory" Collapsed="true">
+  <Class Name="TypiconOnline.Domain.Typicon.Factories.TypiconVersionFactory" Collapsed="true">
     <Position X="73" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>Typicon\Factories\TypiconEntityFactory.cs</FileName>
+      <FileName>Typicon\Factories\TypiconVersionFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypiconOnline.Domain.Typicon.Modifications.ModifiedRule" Collapsed="true" BaseTypeListCollapsed="true">

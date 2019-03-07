@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             var unitOfWork = UnitOfWorkFactory.Create();
 
-            var typiconEntity = unitOfWork.Repository<TypiconEntity>().Get(c => c.Id == 1);
+            var typiconEntity = unitOfWork.Repository<TypiconVersion>().Get(c => c.Id == 1);
 
             ServiceSequenceHandler handler = new ServiceSequenceHandler()
             {

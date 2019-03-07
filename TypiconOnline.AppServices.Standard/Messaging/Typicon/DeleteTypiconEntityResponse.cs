@@ -2,7 +2,7 @@
 
 namespace TypiconOnline.AppServices.Messaging.Typicon
 {
-    public class DeleteTypiconEntityResponse: ServiceResponseBase
+    public class DeleteTypiconVersionResponse: ServiceResponseBase
     {
     }
 }

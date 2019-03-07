@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TypiconMigrationTool.Core;
 
 namespace TypiconMigrationTool.Core.Migrations
@@ -15,9 +14,8 @@ namespace TypiconMigrationTool.Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("TypiconOnline.Domain.Books.Easter.EasterItem", b =>
                 {
@@ -141,8 +139,7 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<bool>("IsCelebrating");
 
-                    b.Property<int?>("ParentId")
-                        .IsRequired();
+                    b.Property<int>("ParentId");
 
                     b.Property<bool>("UseFullName");
 
@@ -159,18 +156,6 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.HasIndex("WorshipShortNameId");
 
                     b.ToTable("DayWorship");
-                });
-
-            modelBuilder.Entity("TypiconOnline.Domain.ItemTypes.ItemDate", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Expression");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ItemDate");
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.ItemTypes.ItemText", b =>
@@ -215,11 +200,11 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<string>("RuleDefinition");
 
-                    b.Property<int>("TypiconEntityId");
+                    b.Property<int>("TypiconVersionId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TypiconEntityId");
+                    b.HasIndex("TypiconVersionId");
 
                     b.ToTable("CommonRule");
                 });
@@ -238,7 +223,7 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<int>("TemplateId");
 
-                    b.Property<int>("TypiconEntityId");
+                    b.Property<int>("TypiconVersionId");
 
                     b.HasKey("Id");
 
@@ -308,13 +293,13 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("TypiconEntityId");
+                    b.Property<int>("TypiconVersionId");
 
                     b.Property<int>("Year");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TypiconEntityId");
+                    b.HasIndex("TypiconVersionId");
 
                     b.ToTable("ModifiedYear");
                 });
@@ -328,13 +313,13 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<int?>("NumberNameId");
 
-                    b.Property<int?>("TypiconEntityId");
+                    b.Property<int?>("TypiconVersionId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NumberNameId");
 
-                    b.HasIndex("TypiconEntityId");
+                    b.HasIndex("TypiconVersionId");
 
                     b.ToTable("Kathisma");
                 });
@@ -394,7 +379,7 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<int?>("TemplateId");
 
-                    b.Property<int>("TypiconEntityId");
+                    b.Property<int>("TypiconVersionId");
 
                     b.HasKey("Id");
 
@@ -402,41 +387,94 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.HasIndex("TemplateId");
 
-                    b.HasIndex("TypiconEntityId");
+                    b.HasIndex("TypiconVersionId");
 
                     b.ToTable("Sign");
                 });
 
-            modelBuilder.Entity("TypiconOnline.Domain.Typicon.TypiconEntity", b =>
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Typicon", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("DefaultLanguage");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(200);
+                    b.Property<int>("OwnerId");
 
                     b.Property<int?>("TemplateId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OwnerId");
+
                     b.HasIndex("TemplateId");
 
-                    b.ToTable("TypiconEntity");
+                    b.ToTable("Typicon");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.TypiconVersion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("BDate");
+
+                    b.Property<DateTime>("CDate");
+
+                    b.Property<string>("DefaultLanguage");
+
+                    b.Property<DateTime?>("EDate");
+
+                    b.Property<bool>("IsModified");
+
+                    b.Property<int>("NameId");
+
+                    b.Property<int>("TypiconId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NameId");
+
+                    b.HasIndex("TypiconId");
+
+                    b.ToTable("TypiconVersion");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsAdministrator");
+
+                    b.Property<bool>("IsTextEditor");
+
+                    b.Property<string>("Login");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Password");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.UserTypicon", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("TypiconId");
+
+                    b.HasKey("UserId", "TypiconId");
+
+                    b.HasIndex("TypiconId");
+
+                    b.ToTable("UserTypicon");
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Days.MenologyDay", b =>
                 {
                     b.HasBaseType("TypiconOnline.Domain.Days.Day");
 
-                    b.Property<int?>("DateBId");
-
-                    b.Property<int?>("DateId");
-
-                    b.HasIndex("DateBId");
-
-                    b.HasIndex("DateId");
 
                     b.ToTable("MenologyDay");
 
@@ -473,15 +511,8 @@ namespace TypiconMigrationTool.Core.Migrations
                 {
                     b.HasBaseType("TypiconOnline.Domain.Typicon.DayRule");
 
-                    b.Property<int?>("DateBId");
 
-                    b.Property<int?>("DateId");
-
-                    b.HasIndex("DateBId");
-
-                    b.HasIndex("DateId");
-
-                    b.HasIndex("TypiconEntityId");
+                    b.HasIndex("TypiconVersionId");
 
                     b.ToTable("MenologyRule");
 
@@ -494,8 +525,8 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<int>("DaysFromEaster");
 
-                    b.HasIndex("TypiconEntityId")
-                        .HasName("IX_DayRule_TypiconEntityId1");
+                    b.HasIndex("TypiconVersionId")
+                        .HasName("IX_DayRule_TypiconVersionId1");
 
                     b.ToTable("TriodionRule");
 
@@ -542,9 +573,9 @@ namespace TypiconMigrationTool.Core.Migrations
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.CommonRule", b =>
                 {
-                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconEntity", "TypiconEntity")
+                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
                         .WithMany("CommonRules")
-                        .HasForeignKey("TypiconEntityId")
+                        .HasForeignKey("TypiconVersionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -579,9 +610,9 @@ namespace TypiconMigrationTool.Core.Migrations
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Modifications.ModifiedYear", b =>
                 {
-                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconEntity", "TypiconEntity")
+                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
                         .WithMany("ModifiedYears")
-                        .HasForeignKey("TypiconEntityId")
+                        .HasForeignKey("TypiconVersionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -591,9 +622,9 @@ namespace TypiconMigrationTool.Core.Migrations
                         .WithMany()
                         .HasForeignKey("NumberNameId");
 
-                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconEntity", "TypiconEntity")
+                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
                         .WithMany("Kathismas")
-                        .HasForeignKey("TypiconEntityId");
+                        .HasForeignKey("TypiconVersionId");
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Psalter.PsalmLink", b =>
@@ -625,52 +656,131 @@ namespace TypiconMigrationTool.Core.Migrations
                         .HasForeignKey("TemplateId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconEntity", "TypiconEntity")
+                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
                         .WithMany("Signs")
-                        .HasForeignKey("TypiconEntityId")
+                        .HasForeignKey("TypiconVersionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TypiconOnline.Domain.Typicon.TypiconEntity", b =>
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Typicon", b =>
                 {
-                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconEntity", "Template")
+                    b.HasOne("TypiconOnline.Domain.User", "Owner")
+                        .WithMany("OwnedTypicons")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TypiconOnline.Domain.Typicon.Typicon", "Template")
                         .WithMany()
                         .HasForeignKey("TemplateId");
                 });
 
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.TypiconVersion", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.ItemTypes.ItemText", "Name")
+                        .WithMany()
+                        .HasForeignKey("NameId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TypiconOnline.Domain.Typicon.Typicon", "Typicon")
+                        .WithMany("Versions")
+                        .HasForeignKey("TypiconId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.UserTypicon", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.Typicon", "Typicon")
+                        .WithMany("EditableUserTypicons")
+                        .HasForeignKey("TypiconId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TypiconOnline.Domain.User", "User")
+                        .WithMany("EditableUserTypicons")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("TypiconOnline.Domain.Days.MenologyDay", b =>
                 {
-                    b.HasOne("TypiconOnline.Domain.ItemTypes.ItemDate", "DateB")
-                        .WithMany()
-                        .HasForeignKey("DateBId");
+                    b.OwnsOne("TypiconOnline.Domain.ItemTypes.ItemDate", "Date", b1 =>
+                        {
+                            b1.Property<int>("MenologyDayId");
 
-                    b.HasOne("TypiconOnline.Domain.ItemTypes.ItemDate", "Date")
-                        .WithMany()
-                        .HasForeignKey("DateId");
+                            b1.Property<int>("Day");
+
+                            b1.Property<int>("Month");
+
+                            b1.ToTable("Day");
+
+                            b1.HasOne("TypiconOnline.Domain.Days.MenologyDay")
+                                .WithOne("Date")
+                                .HasForeignKey("TypiconOnline.Domain.ItemTypes.ItemDate", "MenologyDayId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+
+                    b.OwnsOne("TypiconOnline.Domain.ItemTypes.ItemDate", "LeapDate", b1 =>
+                        {
+                            b1.Property<int>("MenologyDayId");
+
+                            b1.Property<int>("Day");
+
+                            b1.Property<int>("Month");
+
+                            b1.ToTable("Day");
+
+                            b1.HasOne("TypiconOnline.Domain.Days.MenologyDay")
+                                .WithOne("LeapDate")
+                                .HasForeignKey("TypiconOnline.Domain.ItemTypes.ItemDate", "MenologyDayId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.MenologyRule", b =>
                 {
-                    b.HasOne("TypiconOnline.Domain.ItemTypes.ItemDate", "DateB")
-                        .WithMany()
-                        .HasForeignKey("DateBId");
-
-                    b.HasOne("TypiconOnline.Domain.ItemTypes.ItemDate", "Date")
-                        .WithMany()
-                        .HasForeignKey("DateId");
-
-                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconEntity", "TypiconEntity")
+                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
                         .WithMany("MenologyRules")
-                        .HasForeignKey("TypiconEntityId")
+                        .HasForeignKey("TypiconVersionId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsOne("TypiconOnline.Domain.ItemTypes.ItemDate", "Date", b1 =>
+                        {
+                            b1.Property<int>("MenologyRuleId");
+
+                            b1.Property<int>("Day");
+
+                            b1.Property<int>("Month");
+
+                            b1.ToTable("DayRule");
+
+                            b1.HasOne("TypiconOnline.Domain.Typicon.MenologyRule")
+                                .WithOne("Date")
+                                .HasForeignKey("TypiconOnline.Domain.ItemTypes.ItemDate", "MenologyRuleId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+
+                    b.OwnsOne("TypiconOnline.Domain.ItemTypes.ItemDate", "LeapDate", b1 =>
+                        {
+                            b1.Property<int>("MenologyRuleId");
+
+                            b1.Property<int>("Day");
+
+                            b1.Property<int>("Month");
+
+                            b1.ToTable("DayRule");
+
+                            b1.HasOne("TypiconOnline.Domain.Typicon.MenologyRule")
+                                .WithOne("LeapDate")
+                                .HasForeignKey("TypiconOnline.Domain.ItemTypes.ItemDate", "MenologyRuleId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.TriodionRule", b =>
                 {
-                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconEntity", "TypiconEntity")
+                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
                         .WithMany("TriodionRules")
-                        .HasForeignKey("TypiconEntityId")
-                        .HasConstraintName("FK_DayRule_TypiconEntity_TypiconEntityId1")
+                        .HasForeignKey("TypiconVersionId")
+                        .HasConstraintName("FK_DayRule_TypiconVersion_TypiconVersionId1")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

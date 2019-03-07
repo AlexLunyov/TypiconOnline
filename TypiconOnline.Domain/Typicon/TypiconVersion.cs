@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Domain.Typicon.Psalter;
@@ -10,9 +11,26 @@ namespace TypiconOnline.Domain.Typicon
     /// <summary>
     /// Версия Устава
     /// </summary>
-    public class TypiconVersion : EntityBase<int>
+    public class TypiconVersion : EntityBase<int>, IAggregateRoot
     {
+        public TypiconVersion()
+        {
+            CDate = DateTime.Now;
+            Signs = new List<Sign>();
+            ModifiedYears = new List<ModifiedYear>();
+            CommonRules = new List<CommonRule>();
+            MenologyRules = new List<MenologyRule>();
+            TriodionRules = new List<TriodionRule>();
+            Kathismas = new List<Kathisma>();
+        }
+
         #region Properties
+
+        public int TypiconId { get; set; }
+        /// <summary>
+        /// Ссылка на сущность Устава
+        /// </summary>
+        public virtual Typicon Typicon { get; set; }
 
         public virtual ItemText Name { get; set; }
         /// <summary>
@@ -23,17 +41,17 @@ namespace TypiconOnline.Domain.Typicon
         /// <summary>
         /// Список знаков служб
         /// </summary>
-        public virtual IEnumerable<Sign> Signs { get; set; }
+        public virtual List<Sign> Signs { get; set; }
         /// <summary>
         /// Года с вычисленными переходящими праздниками
         /// </summary>
-        public virtual IEnumerable<ModifiedYear> ModifiedYears { get; set; }
+        public virtual List<ModifiedYear> ModifiedYears { get; set; }
 
-        public virtual IEnumerable<CommonRule> CommonRules { get; set; }
-        public virtual IEnumerable<MenologyRule> MenologyRules { get; set; }
-        public virtual IEnumerable<TriodionRule> TriodionRules { get; set; }
+        public virtual List<CommonRule> CommonRules { get; set; }
+        public virtual List<MenologyRule> MenologyRules { get; set; }
+        public virtual List<TriodionRule> TriodionRules { get; set; }
 
-        public virtual IEnumerable<Kathisma> Kathismas { get; set; }
+        public virtual List<Kathisma> Kathismas { get; set; }
 
         /// <summary>
         /// Признак того, что любое из дочерних свойств было изменено.
@@ -62,5 +80,18 @@ namespace TypiconOnline.Domain.Typicon
         {
             throw new System.NotImplementedException();
         }
+
+        #region GetRule methods
+
+        public MenologyRule GetMenologyRule(DateTime date)
+        {
+            return MenologyRules.FirstOrDefault(c => c.GetCurrentDate(date.Year).Date == date.Date);
+        }
+
+        public TriodionRule GetTriodionRule(int daysFromEaster)
+        {
+            return TriodionRules.FirstOrDefault(c => c.DaysFromEaster == daysFromEaster);
+        }
+        #endregion
     }
 }

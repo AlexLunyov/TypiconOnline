@@ -17,14 +17,14 @@ namespace TypiconOnline.AppServices.Tests.Implementation
     public class ModifiedRuleServiceTest
     {
         /// <summary>
-        /// Создаем TypiconEntity
+        /// Создаем TypiconVersion
         /// Добавляем один Sign с определением правил для ModifyDay
         /// Добавляем MenologyRule с определением правила как AsAddition=true
         /// </summary>
         [Test]
         public void ModifiedRuleService_Test()
         {
-            //var typicon = new TypiconEntity();
+            //var typicon = new TypiconVersion();
 
             //var sign = new Sign
             //{
@@ -56,7 +56,7 @@ namespace TypiconOnline.AppServices.Tests.Implementation
         private IUnitOfWork GetUnitOfWork()
         {
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            mockUnitOfWork.Setup(c => c.Repository<TypiconEntity>().Update(It.IsAny<TypiconEntity>()));
+            mockUnitOfWork.Setup(c => c.Repository<TypiconVersion>().Update(It.IsAny<TypiconVersion>()));
             mockUnitOfWork.Setup(c => c.SaveChanges());
 
             return mockUnitOfWork.Object;

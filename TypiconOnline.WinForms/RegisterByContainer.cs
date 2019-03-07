@@ -33,8 +33,8 @@ namespace TypiconOnline.WinForms
                     x.Scan(scan =>
                     {
                         scan.TheCallingAssembly();
-                        scan.AssemblyContainingType<ITypiconEntityService>();
-                        scan.AssemblyContainingType<TypiconEntity>();
+                        scan.AssemblyContainingType<ITypiconVersionService>();
+                        scan.AssemblyContainingType<TypiconVersion>();
                         scan.AssemblyContainingType<IAggregateRoot>();
                         scan.AssemblyContainingType<UnitOfWork>();
                         scan.AssemblyContainingType<DocxScheduleWeekViewer>(); 
@@ -69,7 +69,7 @@ namespace TypiconOnline.WinForms
                         .Singleton(); 
                     
                     //x.For<IUnitOfWork>().Use<EFUnitOfWork>().Singleton();
-                    x.For<ITypiconEntityService>().Use<TypiconEntityService>();
+                    x.For<ITypiconVersionService>().Use<TypiconVersionService>();
                     x.For<IEvangelionContext>().Use<EvangelionContext>();
                     x.For<IApostolContext>().Use<ApostolContext>();
                     x.For<IOldTestamentContext>().Use<OldTestamentContext>();

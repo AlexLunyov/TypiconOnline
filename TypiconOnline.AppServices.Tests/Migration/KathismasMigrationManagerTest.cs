@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Migration.Psalter;
+using TypiconOnline.Domain;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Tests.Common;
 
@@ -19,7 +20,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
         {
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PsalterMigration\1");
 
-            var typicon = new TypiconEntity();
+            var typicon = new TypiconVersion();
 
             var manager = new KathismasMigrationManager(BookStorageFactory.Create().Psalter);
             manager.MigrateKathismas(new PsalterRuReader(folderPath, "cs-ru"), typicon);
@@ -32,7 +33,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
         {
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PsalterMigration");
 
-            var typicon = new TypiconEntity();
+            var typicon = new TypiconVersion();
 
             var manager = new KathismasMigrationManager(BookStorageFactory.Create().Psalter);
             manager.MigrateKathismas(new PsalterRuReader(folderPath, "cs-ru"), typicon);
@@ -48,7 +49,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
         {
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PsalterMigration\2");
 
-            var typicon = new TypiconEntity();
+            var typicon = new TypiconVersion();
 
             var manager = new KathismasMigrationManager(BookStorageFactory.Create().Psalter);
             manager.MigrateKathismas(new PsalterRuReader(folderPath, "cs-ru"), typicon);
@@ -74,54 +75,24 @@ namespace TypiconOnline.AppServices.Tests.Migration
         {
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PsalterMigration\1");
 
-            var typicon = new TypiconEntity();
+            var typicon = GetTypiconVersion();
 
             var unitOfWork = UnitOfWorkFactory.Create();
 
             var manager = new KathismasMigrationManager(BookStorageFactory.Create(unitOfWork).Psalter);
             manager.MigrateKathismas(new PsalterRuReader(folderPath, "cs-ru"), typicon);
 
-            unitOfWork.Repository<TypiconEntity>().Add(typicon);
+            unitOfWork.Repository<User>().Add(typicon.Typicon.Owner);
 
             unitOfWork.SaveChanges();
 
             Assert.AreEqual(1, typicon.Kathismas.Count);
         }
 
-        /// <summary>
-        /// Проверяет, все ли ссылки на Псалмы имеют нулевые стартовые и конечные стихи
-        /// </summary>
-        //[Test]
-        //public void KathismasMigration_CS_RU_PsalmLinksNullStihos()
-        //{
-        //    var typicon = new TypiconEntity();
-
-        //    string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PsalterMigration\1");
-
-        //    var manager = new KathismasMigrationManager(EFCoreBookStorageFactory.Create().Psalter);
-
-        //    manager.MigrateKathismas(new PsalterRuReader(folderPath, "cs-ru"), typicon, true);
-
-        //    //вычисляем количество Ссылок на Псалмы в кафизме
-        //    bool isClear = true;
-        //    typicon.Kathismas.ForEach(c =>
-        //    {
-        //        c.SlavaElements.ForEach(d =>
-        //        {
-        //            d.PsalmLinks.ForEach(e =>
-        //            {
-        //                isClear &= e.StartStihos == null && e.EndStihos == null;
-        //            });
-        //        });
-        //    });
-
-        //    Assert.IsTrue(isClear);
-        //}
-
         [Test]
         public void KathismasMigration_CS_RU_CheckFirstPsalmLinks()
         {
-            var typicon = new TypiconEntity();
+            var typicon = new TypiconVersion();
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PsalterMigration\1");
 
@@ -145,7 +116,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
         [Test]
         public void KathismasMigration_CS_RU_DoubleMigration()
         {
-            var typicon = new TypiconEntity();
+            var typicon = new TypiconVersion();
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PsalterMigration\1");
 
@@ -169,6 +140,26 @@ namespace TypiconOnline.AppServices.Tests.Migration
 
             //Проверяем наличие двух языков у наименования Номера кафизм
             Assert.AreEqual(2, typicon.Kathismas[0].NumberName.Languages.Count());
+        }
+
+        private TypiconVersion GetTypiconVersion()
+        {
+            var user = new User("name", "admin", "admin")
+            {
+                //Id = 2,
+            };
+
+            var typicon = new Typicon()
+            {
+                Owner = user,
+                OwnerId = user.Id
+            };
+
+            return new TypiconVersion()
+            {
+                Typicon = typicon,
+                //TypiconId = 2
+            };
         }
     }
 }

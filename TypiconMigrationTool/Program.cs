@@ -11,6 +11,7 @@ using TypiconOnline.Repository.EFCore;
 using TypiconOnline.Repository.EFCore.DataBase;
 using Microsoft.EntityFrameworkCore;
 using TypiconOnline.Domain.Books.Elements;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace TypiconMigrationTool
 {
@@ -27,8 +28,7 @@ namespace TypiconMigrationTool
 
             while (true)
             {
-                Console.WriteLine("Что желаете? '1' - миграция БД, '4' - тест для Благовещения, '5' - XmlSerialization");
-                Console.WriteLine("'6' - test Esperinos");
+                Console.WriteLine("Что желаете? '1' - миграция БД MS SQL, '2' - миграция БД SQLite, '3' - миграция БД PostgreSQL, '4' - миграция БД MySQL");
 
                 ConsoleKeyInfo info = Console.ReadKey();
 
@@ -51,14 +51,10 @@ namespace TypiconMigrationTool
                         }
                         break;
                     case '4':
-                        ef = GetMSSqlUnitOfWork();
-                        TestBlagoveshenie(ef);
-                        break;
-                    case '5':
-                        TestXmlSrialization();
-                        break;
-                    case '6':
-                        TestEsperinos();
+                        {
+                            var mySql = GetMySQLUnitOfWork();
+                            Migrate(mySql);
+                        }
                         break;
                 }
 
@@ -84,6 +80,20 @@ namespace TypiconMigrationTool
                 {
                     var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
                     optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=typicondb;Username=postgres;Password=z2LDCiiEQFDBlkl3eZyb");
+
+                    return new UnitOfWork(new TypiconDBContext(optionsBuilder.Options), new RepositoryFactory());
+                };
+
+                IUnitOfWork GetMySQLUnitOfWork()
+                {
+                    var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
+
+                    optionsBuilder.UseMySql("server=localhost;UserId=root;Password=z2LDCiiEQFDBlkl3eZyb;database=typicondb;",
+                    mySqlOptions =>
+                    {
+                        mySqlOptions.ServerVersion(new Version(8, 0, 15), ServerType.MySql);
+                    });
+                    //optionsBuilder.UseMySQL("server=localhost;UserId=root;Password=z2LDCiiEQFDBlkl3eZyb;database=typicondb;");
 
                     return new UnitOfWork(new TypiconDBContext(optionsBuilder.Options), new RepositoryFactory());
                 };

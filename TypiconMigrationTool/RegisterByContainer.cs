@@ -34,8 +34,8 @@ namespace TypiconMigrationTool
                 x.Scan(scan =>
                 {
                     scan.TheCallingAssembly();
-                    scan.AssemblyContainingType<ITypiconEntityService>();
-                    scan.AssemblyContainingType<TypiconEntity>();
+                    scan.AssemblyContainingType<ITypiconVersionService>();
+                    scan.AssemblyContainingType<TypiconVersion>();
                     scan.AssemblyContainingType<IAggregateRoot>();
                     scan.AssemblyContainingType<EFUnitOfWork>();
                     scan.AssemblyContainingType<UnitOfWork>();
@@ -43,7 +43,7 @@ namespace TypiconMigrationTool
                 });
                 x.For<IUnitOfWork>().Use<EFUnitOfWork>().SelectConstructor(() => new EFUnitOfWork()).Singleton();
                 //x.For<IUnitOfWork>().Use<EFUnitOfWork>();
-                x.For<ITypiconEntityService>().Use<TypiconEntityService>();
+                x.For<ITypiconVersionService>().Use<TypiconVersionService>();
                 x.For<IEvangelionContext>().Use<EvangelionContext>();
                 x.For<IApostolContext>().Use<ApostolContext>();
                 x.For<IOldTestamentContext>().Use<OldTestamentContext>();

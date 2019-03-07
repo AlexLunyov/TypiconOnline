@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Query.Typicon
 
         public CommonRule Handle([NotNull] CommonRuleQuery query)
         {
-            return DbContext.Set<CommonRule>().FirstOrDefault(c => c.TypiconEntityId == query.TypiconId && c.Name == query.Name);
+            return DbContext.Set<CommonRule>().FirstOrDefault(c => c.TypiconVersionId == query.TypiconId && c.Name == query.Name);
         }
     }
 }

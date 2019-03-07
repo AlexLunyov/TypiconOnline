@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Typicon
 
         public virtual ItemDate Date { get; set; }
 
-        public virtual ItemDate DateB { get; set; }
+        public virtual ItemDate LeapDate { get; set; }
 
         protected override void Validate()
         {
@@ -24,7 +24,7 @@ namespace TypiconOnline.Domain.Typicon
                 AppendAllBrokenConstraints(Date, "Date");
             }
 
-            if (!DateB.IsValid)
+            if (!LeapDate.IsValid)
             {
                 AppendAllBrokenConstraints(Date, "DateB");
             }
@@ -41,7 +41,7 @@ namespace TypiconOnline.Domain.Typicon
             {
                 if (DateTime.IsLeapYear(year))
                 {
-                    return (!DateB.IsEmpty) ? new DateTime(year, DateB.Month, DateB.Day) : DateTime.MinValue;
+                    return (!LeapDate.IsEmpty) ? new DateTime(year, LeapDate.Month, LeapDate.Day) : DateTime.MinValue;
                 }
                 else
                 {
