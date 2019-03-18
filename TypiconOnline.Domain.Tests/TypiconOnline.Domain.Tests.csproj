@@ -163,6 +163,7 @@
     <Compile Include="Common\IsAdditionTestHandler.cs" />
     <Compile Include="Days\EsperinosTest.cs" />
     <Compile Include="DbContextOptionsBuilder.cs" />
+    <Compile Include="ErrorHandling\ResultTest.cs" />
     <Compile Include="Experiments\Experiment.cs" />
     <Compile Include="ItemTypes\ItemTextNotedTest.cs" />
     <Compile Include="ItemTypes\ItemTextHeaderTest.cs" />

@@ -88,8 +88,8 @@
     <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector, Version=4.3.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleInjector.4.3.0\lib\net45\SimpleInjector.dll</HintPath>
+    <Reference Include="SimpleInjector, Version=4.4.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.4.3\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
     <Reference Include="SQLitePCLRaw.batteries_green, Version=1.1.11.121, Culture=neutral, PublicKeyToken=a84b7dcfb1391f7f, processorArchitecture=MSIL">
       <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.11\lib\net45\SQLitePCLRaw.batteries_green.dll</HintPath>
@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BookStorageFactory.cs" />
+    <Compile Include="CommandProcessorFactory.cs" />
     <Compile Include="DataQueryProcessorFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryProcessorFactory.cs" />
@@ -158,6 +159,10 @@
     <ProjectReference Include="..\TypiconOnline.AppServices.Standard\TypiconOnline.AppServices.csproj">
       <Project>{e5888f71-c704-408d-b928-e16c5528607a}</Project>
       <Name>TypiconOnline.AppServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TypiconOnline.Domain.Command\TypiconOnline.Domain.Command.csproj">
+      <Project>{86305c57-d3e7-44d1-8ba1-65d6196cb2d5}</Project>
+      <Name>TypiconOnline.Domain.Command</Name>
     </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.Domain.Query\TypiconOnline.Domain.Query.csproj">
       <Project>{c3d5231e-740b-4168-abbd-58e8f739be13}</Project>

@@ -25,7 +25,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Factories
         {
             var unitOfWork = TestRuleSerializer.Create();
 
-            var factoryContainer = unitOfWork.Container<RuleElement>();
+            var factoryContainer = unitOfWork.Container<RuleElementBase>();
 
             Assert.IsNotNull(factoryContainer);
             Assert.Pass(factoryContainer.ToString());
@@ -45,7 +45,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Factories
         [Test]
         public void RuleSerializerRoot_TypeTesting()
         {
-            Assert.IsTrue(typeof(ExecContainer).IsSubclassOf((typeof(RuleElement))));
+            Assert.IsTrue(typeof(ExecContainer).IsSubclassOf((typeof(RuleElementBase))));
         }
 
         [Test]

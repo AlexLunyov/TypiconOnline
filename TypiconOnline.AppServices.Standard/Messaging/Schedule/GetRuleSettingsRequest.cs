@@ -25,7 +25,7 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
         public CreateRuleSettingsRequest(ScheduleDataCalculatorRequest request)
         {
             
-            TypiconId = request.TypiconId;
+            TypiconVersionId = request.TypiconVersionId;
             Date = request.Date;
             Language = request.Language;
             ApplyParameters = request.ApplyParameters;

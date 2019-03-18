@@ -44,6 +44,8 @@
     <Compile Include="Command\ICommandProcessor.cs" />
     <Compile Include="Domain\IncludeElement.cs" />
     <Compile Include="Domain\IncludeOptions.cs" />
+    <Compile Include="ErrorHandling\Result.cs" />
+    <Compile Include="ErrorHandling\ResultExtensions.cs" />
     <Compile Include="Interfaces\ICacheStorage.cs" />
     <Compile Include="Domain\BusinessConstraint.cs" />
     <Compile Include="Domain\IAggregateRoot.cs" />

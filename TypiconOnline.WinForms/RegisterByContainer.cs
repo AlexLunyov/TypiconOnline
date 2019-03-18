@@ -33,7 +33,7 @@ namespace TypiconOnline.WinForms
                     x.Scan(scan =>
                     {
                         scan.TheCallingAssembly();
-                        scan.AssemblyContainingType<ITypiconVersionService>();
+                        scan.AssemblyContainingType<IModifiedYearFactory>();
                         scan.AssemblyContainingType<TypiconVersion>();
                         scan.AssemblyContainingType<IAggregateRoot>();
                         scan.AssemblyContainingType<UnitOfWork>();
@@ -69,7 +69,6 @@ namespace TypiconOnline.WinForms
                         .Singleton(); 
                     
                     //x.For<IUnitOfWork>().Use<EFUnitOfWork>().Singleton();
-                    x.For<ITypiconVersionService>().Use<TypiconVersionService>();
                     x.For<IEvangelionContext>().Use<EvangelionContext>();
                     x.For<IApostolContext>().Use<ApostolContext>();
                     x.For<IOldTestamentContext>().Use<OldTestamentContext>();

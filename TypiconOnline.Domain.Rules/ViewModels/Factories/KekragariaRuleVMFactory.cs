@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
         protected virtual void ConstructWithCommonRule(CreateViewModelRequest<YmnosStructureRule> req, string key)
         {
-            var children = Serializer.GetCommonRuleChildren(req.Handler.Settings.TypiconId, key);
+            var children = Serializer.GetCommonRuleChildren(req.Handler.Settings.TypiconVersionId, key);
 
             //List<RuleElement> children = req.Handler.Settings.TypiconRule.Owner.GetChildren(
             //    new CommonRuleServiceRequest() { Key = key, RuleSerializer = Serializer }).ToList();

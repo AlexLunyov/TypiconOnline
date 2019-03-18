@@ -33,7 +33,7 @@ namespace TypiconOnline.AppServices.Implementations
             var settingsRequest = new ScheduleDataCalculatorRequest()
             {
                 Date = request.Date,
-                TypiconId = request.TypiconId,
+                TypiconVersionId = request.TypiconId,
                 Language = request.Language,
                 ApplyParameters = request.ApplyParameters,
                 CheckParameters = request.CheckParameters

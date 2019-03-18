@@ -211,7 +211,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             if (headers == null)
             {
-                headers = Serializer.GetCommonRuleChildren<TextHolder>(req.Handler.Settings.TypiconId, CommonRuleConstants.KanonasRule);
+                headers = Serializer.GetCommonRuleChildren<TextHolder>(req.Handler.Settings.TypiconVersionId, CommonRuleConstants.KanonasRule);
             }
             return headers;
         }

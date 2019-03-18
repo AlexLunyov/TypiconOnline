@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TypiconMigrationTool.Core;
 
 namespace TypiconMigrationTool.Core.Migrations
@@ -14,8 +15,9 @@ namespace TypiconMigrationTool.Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("TypiconOnline.Domain.Books.Easter.EasterItem", b =>
                 {
@@ -145,7 +147,7 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<int>("WorshipNameId");
 
-                    b.Property<int>("WorshipShortNameId");
+                    b.Property<int?>("WorshipShortNameId");
 
                     b.HasKey("Id");
 
@@ -293,6 +295,8 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("IsCalculated");
+
                     b.Property<int>("TypiconVersionId");
 
                     b.Property<int>("Year");
@@ -302,6 +306,37 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.HasIndex("TypiconVersionId");
 
                     b.ToTable("ModifiedYear");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.OutputForm", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Definition");
+
+                    b.Property<int>("TypiconId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypiconId");
+
+                    b.ToTable("OutputForm");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.OutputFormDayWorship", b =>
+                {
+                    b.Property<int>("OutputFormId");
+
+                    b.Property<int>("DayWorshipId");
+
+                    b.HasKey("OutputFormId", "DayWorshipId");
+
+                    b.HasIndex("DayWorshipId");
+
+                    b.ToTable("OutputFormDayWorship");
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Psalter.Kathisma", b =>
@@ -613,6 +648,27 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
                         .WithMany("ModifiedYears")
                         .HasForeignKey("TypiconVersionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.OutputForm", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.Typicon", "Typicon")
+                        .WithMany()
+                        .HasForeignKey("TypiconId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.OutputFormDayWorship", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Days.DayWorship", "DayWorship")
+                        .WithMany()
+                        .HasForeignKey("DayWorshipId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TypiconOnline.Domain.Typicon.OutputForm", "OutputForm")
+                        .WithMany("OutputFormDayWorships")
+                        .HasForeignKey("OutputFormId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

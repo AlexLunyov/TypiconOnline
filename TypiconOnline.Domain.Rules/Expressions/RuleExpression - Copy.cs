@@ -23,7 +23,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
     }*/
 
-    public abstract class RuleExpression<TExpr, TOutput> : RuleElement
+    public abstract class RuleExpression<TExpr, TOutput> : RuleElementBase
     {
         protected TExpr _valueExpression;
 

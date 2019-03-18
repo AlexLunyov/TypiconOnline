@@ -15,6 +15,8 @@ using TypiconOnline.Infrastructure.Common.Query;
 using JetBrains.Annotations;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Interfaces;
+using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.AppServices.Implementations.Extensions;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -23,14 +25,15 @@ namespace TypiconOnline.AppServices.Implementations
     /// </summary>
     public class ModificationsRuleHandler : RuleHandlerBase
     {
-        private readonly ITypiconFacade _facade;
+        private readonly TypiconDBContext _dbContext;
+        private readonly int _typiconVersionId;
         private readonly ModifiedYear _modifiedYear;
 
-        public ModificationsRuleHandler([NotNull] ITypiconFacade facade, ModifiedYear modifiedYear) 
+        public ModificationsRuleHandler(TypiconDBContext dbContext, int typiconVersionId, ModifiedYear modifiedYear) 
         {
-            _facade = facade ?? throw new ArgumentNullException(nameof(facade));
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _typiconVersionId = typiconVersionId;
             _modifiedYear = modifiedYear ?? throw new ArgumentNullException(nameof(modifiedYear));
-
 
             AuthorizedTypes = new List<Type>()
             {
@@ -93,11 +96,11 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 if (modifyReplacedDay.Kind == KindOfReplacedDay.Menology)
                 {
-                    result = _facade.GetMenologyRule(_modifiedYear.TypiconVersionId, modifyReplacedDay.DateToReplaceCalculated);
+                    result = _dbContext.GetMenologyRule(_typiconVersionId, modifyReplacedDay.DateToReplaceCalculated);
                 }
                 else
                 {
-                    result = _facade.GetTriodionRule(_modifiedYear.TypiconVersionId, modifyReplacedDay.DateToReplaceCalculated);
+                    result = _dbContext.GetTriodionRule(_typiconVersionId, modifyReplacedDay.DateToReplaceCalculated);
                 }
             }
             else if ((element is ModifyDay modifyDay)

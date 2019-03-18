@@ -28,7 +28,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
             this.appendModelAction = appendModelAction ?? throw new ArgumentNullException("Action<ElementViewModel> in OdiViewModelHandler");
             this.serializer = serializer ?? throw new ArgumentNullException("IRuleSerializerRoot in OdiViewModelHandler");
 
-            choruses = serializer.GetCommonRuleChildren<TextHolder>(handler.Settings.TypiconId, CommonRuleConstants.KanonasChorusRule);
+            choruses = serializer.GetCommonRuleChildren<TextHolder>(handler.Settings.TypiconVersionId, CommonRuleConstants.KanonasChorusRule);
         }
 
         /// <summary>

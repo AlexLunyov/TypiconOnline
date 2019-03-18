@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
+using TypiconOnline.Domain.Command;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Serialization;
@@ -45,21 +46,19 @@ namespace TypiconOnline.WinForms
         private static void InitQueries(Container container)
         {
             container.RegisterTypiconQueryClasses();
+            container.RegisterTypiconCommandClasses();
         }
 
         private static void InitServices(Container container)
         {
-            container.Register<ITypiconVersionService, TypiconVersionService>();
-            container.Register<IScheduleService, ScheduleService>();
+            container.Register<IScheduleService, ScheduleOutputFormService>();
             container.Register<IScheduleDayNameComposer, ScheduleDayNameComposer>();
             container.Register<ITypiconSerializer, TypiconSerializer>();
             container.Register<IRuleSerializerRoot, RuleSerializerRoot>();
             container.Register<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
             container.Register<IScheduleDataCalculator, ScheduleDataCalculator>();
-            container.Register<IModifiedRuleService, ModifiedRuleService>(); 
             container.Register<IModifiedYearFactory, ModifiedYearFactory>(); 
             container.Register<IDocxTemplateService, DocxTemplateService>();
-            container.Register<ITypiconFacade, TypiconFromEntityFacade>();
         }
 
         private static DbContextOptions<TypiconDBContext> CreateDbContextOptions()

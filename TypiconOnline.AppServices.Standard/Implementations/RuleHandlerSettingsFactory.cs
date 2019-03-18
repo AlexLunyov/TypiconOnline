@@ -55,11 +55,11 @@ namespace TypiconOnline.AppServices.Implementations
         /// <param name="rule"></param>
         /// <param name="serializer"></param>
         /// <returns></returns>
-        private (ITemplateHavingEntity existingRule, RootContainer container) GetFirstExistingRule(ITemplateHavingEntity rule, IRuleSerializerRoot serializer)
+        private (ITemplateHavingEntity, RootContainer) GetFirstExistingRule(ITemplateHavingEntity rule, IRuleSerializerRoot serializer)
         {
             ITemplateHavingEntity r = null;
-            
-            var cont = serializer.Container<RootContainer>().Deserialize(rule.RuleDefinition);
+
+            var cont = rule.GetRule<RootContainer>(serializer);
 
             if (cont != null)
             {
@@ -78,7 +78,7 @@ namespace TypiconOnline.AppServices.Implementations
             return new RuleHandlerSettings()
             {
                 Addition = req.AdditionalSettings,
-                TypiconId = req.TypiconId,
+                TypiconVersionId = req.TypiconVersionId,
                 Date = req.Date,
                 RuleContainer = container,
                 DayWorships = req.DayWorships?.ToList(),

@@ -429,9 +429,21 @@ namespace TypiconOnline.Domain.Rules
     /// </summary>
     public enum HandlingMode
     {
+        /// <summary>
+        /// Все подряд
+        /// </summary>
         All = 0,
+        /// <summary>
+        /// DayBefore будет исключен
+        /// </summary>
         ThisDay = 1,
+        /// <summary>
+        /// ThisDay будет исключен
+        /// </summary>
         DayBefore = 2,
+        /// <summary>
+        /// ThisDay + DayBefore следующего дня
+        /// </summary>
         AstronomicDay = 3
     }
 }

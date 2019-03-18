@@ -17,7 +17,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         //public RuleElement ParentElement { get; set; }
 
-        public virtual List<RuleElement> ChildElements { get; set; } = new List<RuleElement>();
+        public virtual List<RuleElementBase> ChildElements { get; set; } = new List<RuleElementBase>();
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace TypiconOnline.Domain.Rules.Executables
             //Добавляем IAsAdditionElement append реализацию
             AppendHandling(handler);
 
-            foreach (RuleElement el in ChildElements)
+            foreach (RuleElementBase el in ChildElements)
             {
                 el.Interpret(handler);
             }
@@ -72,7 +72,7 @@ namespace TypiconOnline.Domain.Rules.Executables
             //чтобы создать список источников канонов на обработку
             var childrenHandler = new CollectorRuleHandler<T>() { Settings = settings };
 
-            foreach (RuleElement elem in ChildElements)
+            foreach (RuleElementBase elem in ChildElements)
             {
                 elem.Interpret(childrenHandler);
             }
@@ -97,7 +97,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 
                 if (found.Count > 0)
                 {
-                    ChildElements.AddRange(found.Cast<RuleElement>());
+                    ChildElements.AddRange(found.Cast<RuleElementBase>());
                 }
             }
         }

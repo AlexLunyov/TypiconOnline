@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Typicon\DayRuleFromTriodionQuery.cs" />
-    <Compile Remove="Typicon\DayRuleFromTriodionQueryHandler.cs" />
+    <Compile Remove="Typicon\MenologyRuleDto.cs" />
     <Compile Remove="Typicon\SignQuery.cs" />
     <Compile Remove="Typicon\SignQueryHandler.cs" />
   </ItemGroup>
@@ -15,7 +14,7 @@
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
     <PackageReference Include="Mapster" Version="3.1.8" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-    <PackageReference Include="SimpleInjector" Version="4.3.0" />
+    <PackageReference Include="SimpleInjector" Version="4.4.3" />
   </ItemGroup>
 
   <ItemGroup>

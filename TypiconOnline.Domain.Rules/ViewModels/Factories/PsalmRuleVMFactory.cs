@@ -28,7 +28,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
 
         private void AppendHeader(CreateViewModelRequest<PsalmRule> req)
         {
-            TextHolder header = Serializer.GetCommonRuleFirstChild<TextHolder>(req.Handler.Settings.TypiconId, CommonRuleConstants.Psalm);
+            TextHolder header = Serializer.GetCommonRuleFirstChild<TextHolder>(req.Handler.Settings.TypiconVersionId, CommonRuleConstants.Psalm);
 
             var viewHeader = ViewModelItemFactory.Create(header, req.Handler, Serializer);
 

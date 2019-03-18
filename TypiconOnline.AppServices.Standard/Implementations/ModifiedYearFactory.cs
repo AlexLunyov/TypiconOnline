@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Implementations.Extensions;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
+using TypiconOnline.Domain.Books.Easter;
+using TypiconOnline.Domain.Command.Typicon;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Query.Books;
@@ -15,77 +18,61 @@ using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
+using TypiconOnline.Infrastructure.Common.Command;
+using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.AppServices.Implementations
 {
     public class ModifiedYearFactory : IModifiedYearFactory
     {
-        private readonly IUnitOfWork unitOfWork;
-        //private readonly IRuleSerializerRoot serializer;
-        private readonly IRuleHandlerSettingsFactory settingsFactory;
-        private readonly ITypiconFacade typiconFacade;
+        private readonly TypiconDBContext _dbContext;
+        protected readonly IRuleHandlerSettingsFactory _settingsFactory;
 
-        public ModifiedYearFactory([NotNull] IUnitOfWork unitOfWork
-            //, [NotNull] IRuleSerializerRoot serializer
-            , [NotNull] IRuleHandlerSettingsFactory settingsFactory
-            , [NotNull] ITypiconFacade typiconFacade)
+        public ModifiedYearFactory(TypiconDBContext dbContext
+            , [NotNull] IRuleHandlerSettingsFactory settingsFactory)
         {
-            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork in ModifiedYearFactory");
-            //this.serializer = serializer ?? throw new ArgumentNullException("serializer in ModifiedYearFactory");
-            this.settingsFactory = settingsFactory ?? throw new ArgumentNullException("settingsFactory in ModifiedYearFactory");
-            this.typiconFacade = typiconFacade ?? throw new ArgumentNullException("typiconFacade in ModifiedYearFactory");
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _settingsFactory = settingsFactory ?? throw new ArgumentNullException(nameof(settingsFactory));
         }
 
-        public ModifiedYear Create(int typiconId, int year)
+
+        public ModifiedYear Create(int typiconVersionId, int year)
         {
-            //ModifiedYear modifiedYear = unitOfWork.Repository<ModifiedYear>().Get(m => m.TypiconVersionId == typiconId && m.Year == year);
+            var modifiedYear = new ModifiedYear() { Year = year, TypiconVersionId = typiconVersionId };
 
-            //if (modifiedYear == null)
-            //{
-                var modifiedYear = InnerCreate(typiconId, year);
+            Fill(typiconVersionId, modifiedYear);
 
-                Fill(modifiedYear);
-
-                //фиксируем изменения
-                unitOfWork.Repository<ModifiedYear>().Update(modifiedYear);
-                unitOfWork.SaveChanges();
-            //}
+            //фиксируем изменения
+            _dbContext.UpdateModifiedYearAsync(modifiedYear);
 
             return modifiedYear;
         }
 
-        private void Fill(ModifiedYear modifiedYear)
+        private void Fill(int typiconVersionId, ModifiedYear modifiedYear)
         {
-            var handler = new ModificationsRuleHandler(typiconFacade, modifiedYear);
+            var handler = new ModificationsRuleHandler(_dbContext, typiconVersionId, modifiedYear);
 
             //MenologyRules
-            var menologyRules = typiconFacade.GetAllMenologyRules(modifiedYear.TypiconVersionId);
-
-            DateTime firstJanuary = new DateTime(modifiedYear.Year, 1, 1);
-
-            DateTime indexDate = firstJanuary;
 
             //формируем список дней для изменения до 1 января будущего года
-            DateTime endDate = firstJanuary.AddYears(1);
-            while (indexDate != endDate)
+
+            var menologyRules = _dbContext.GetAllMenologyRules(modifiedYear.TypiconVersionId);
+
+            EachDayPerYear.Perform(modifiedYear.Year, date =>
             {
                 //находим правило для конкретного дня Минеи
-                var menologyRule = menologyRules.GetMenologyRule(indexDate);
-                //var menologyRule = serializer.QueryProcessor.Process(new MenologyRuleQuery(modifiedYear.TypiconVersionId, indexDate));
+                var menologyRule = menologyRules.GetMenologyRule(date);
 
-                InterpretRule(menologyRule, indexDate, handler);
-
-                indexDate = indexDate.AddDays(1);
-            }
+                InterpretRule(menologyRule, date, handler);
+            });
 
             //теперь обрабатываем переходящие минейные праздники
             //у них не должны быть определены даты. так их и найдем
-            var rules = menologyRules.Where(c => c.Date.IsEmpty && c.LeapDate.IsEmpty);
-            //var rules = serializer.QueryProcessor
-            //    .Process(new AllMenologyRulesQuery(c => c.TypiconVersionId == modifiedYear.TypiconVersionId
-            //                                            && c.Date.IsEmpty 
-            //                                            && c.DateB.IsEmpty));
+            var rules = menologyRules.GetAllMovableRules();
+
+            DateTime firstJanuary = new DateTime(modifiedYear.Year, 1, 1);
 
             foreach (var a in rules)
             {
@@ -99,9 +86,9 @@ namespace TypiconOnline.AppServices.Implementations
 
             //найти текущую Пасху
             //Для каждого правила выполнять interpret(), где date = текущая Пасха. AddDays(Day.DaysFromEaster)
-            DateTime easter = typiconFacade.GetCurrentEaster(modifiedYear.Year);
+            DateTime easter = _dbContext.GetCurrentEaster(modifiedYear.Year);
 
-            var triodionRules = typiconFacade.GetAllTriodionRules(modifiedYear.TypiconVersionId);
+            var triodionRules = _dbContext.GetAllTriodionRules(modifiedYear.TypiconVersionId);
 
             foreach (var triodionRule in triodionRules)
             {
@@ -114,9 +101,9 @@ namespace TypiconOnline.AppServices.Implementations
                 {
                     h.ProcessingDayRule = rule;
 
-                    h.Settings = settingsFactory.Create(new CreateRuleSettingsRequest()
+                    h.Settings = _settingsFactory.Create(new CreateRuleSettingsRequest()
                     {
-                        TypiconId = modifiedYear.TypiconVersionId,
+                        TypiconVersionId = modifiedYear.TypiconVersionId,
                         Rule = rule,
                         Date = dateToInterpret
                     });
@@ -125,11 +112,6 @@ namespace TypiconOnline.AppServices.Implementations
                     h.Settings?.RuleContainer.Interpret(h);
                 }
             }
-        }
-
-        private ModifiedYear InnerCreate(int typiconId, int year)
-        {
-            return new ModifiedYear() { Year = year, TypiconVersionId = typiconId };
         }
     }
 }

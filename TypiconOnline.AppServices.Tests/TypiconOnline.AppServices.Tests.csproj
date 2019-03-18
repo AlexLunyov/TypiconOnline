@@ -170,8 +170,13 @@
     <Compile Include="Common\SignMigratorTest.cs" />
     <Compile Include="Implementation\HtmlScheduleDayViewerTest.cs" />
     <Compile Include="Implementation\ModifiedRuleServiceTest.cs" />
+    <Compile Include="Implementation\OutputFormFactoryTest.cs" />
+    <Compile Include="Implementation\OutputFormsTest.cs" />
+    <Compile Include="Implementation\ScheduleOutputFormServiceTest.cs" />
     <Compile Include="Implementation\ScheduleServiceTest.cs" />
-    <Compile Include="Implementation\TypiconFromEntityFacadeTest.cs" />
+    <Compile Include="Jobs\CalculateModifiedYearJobHandlerTest.cs" />
+    <Compile Include="Jobs\CalculateOutputFormYearJobTest.cs" />
+    <Compile Include="Jobs\JobQueueTest.cs" />
     <Compile Include="Migration\FakePsalterService.cs" />
     <Compile Include="Migration\KathismasMigrationManagerTest.cs" />
     <Compile Include="Migration\PsalmsMigrationManagerTest.cs" />
@@ -192,7 +197,7 @@
     </Content>
     <None Include="app.config" />
     <Content Include="Data\SQLiteDB.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -208,6 +213,14 @@
     <ProjectReference Include="..\TypiconOnline.AppServices.Standard\TypiconOnline.AppServices.csproj">
       <Project>{e5888f71-c704-408d-b928-e16c5528607a}</Project>
       <Name>TypiconOnline.AppServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TypiconOnline.Domain.Command\TypiconOnline.Domain.Command.csproj">
+      <Project>{86305C57-D3E7-44D1-8BA1-65D6196CB2D5}</Project>
+      <Name>TypiconOnline.Domain.Command</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TypiconOnline.Domain.Query\TypiconOnline.Domain.Query.csproj">
+      <Project>{C3D5231E-740B-4168-ABBD-58E8F739BE13}</Project>
+      <Name>TypiconOnline.Domain.Query</Name>
     </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.Domain.Rules\TypiconOnline.Domain.Rules.csproj">
       <Project>{654CE95D-6B5B-41E1-BEA3-DCEE24F4C98A}</Project>

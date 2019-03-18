@@ -20,6 +20,12 @@ namespace TypiconOnline.Domain.ItemTypes
             _expression = GetExpression(_month, _day);
         }
 
+        public ItemDate(ItemDate date)
+        {
+            _month = date.Month;
+            _day = date.Day;
+        }
+
         public ItemDate(string exp)
         {
             Expression = exp;

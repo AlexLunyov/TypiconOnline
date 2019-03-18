@@ -27,7 +27,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             //if (handler.IsAuthorized<CommonRuleElement>())
             //{
                 //находим правило
-                CommonRule commonRule = SerializerRoot.QueryProcessor.Process(new CommonRuleQuery(handler.Settings.TypiconId, CommonRuleName));
+                CommonRule commonRule = SerializerRoot.QueryProcessor.Process(new CommonRuleQuery(handler.Settings.TypiconVersionId, CommonRuleName));
 
                 var container = commonRule?.GetRule<ExecContainer>(SerializerRoot);
 

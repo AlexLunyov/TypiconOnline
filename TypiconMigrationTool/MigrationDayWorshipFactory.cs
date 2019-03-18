@@ -40,7 +40,10 @@ namespace TypiconMigrationTool
         {
             if (_row == null) throw new ArgumentNullException("ScheduleDBDataSet.MineinikRow");
 
-            DayWorship dayService = new DayWorship();
+            DayWorship dayService = new DayWorship()
+            {
+                //WorshipName = new ItemTextStyled()
+            };
 
             //наполняем содержимое текста службы
             dayService.WorshipName.AddOrUpdate("cs-ru", _row.Name);
@@ -49,7 +52,7 @@ namespace TypiconMigrationTool
 
             if (!_row.IsShortNameNull() && !string.IsNullOrEmpty(_row.ShortName))
             {
-                //dayService.ServiceShortName = new ItemText();
+                //dayService.WorshipShortName = new ItemTextStyled();
                 dayService.WorshipShortName.AddOrUpdate("cs-ru", _row.ShortName);
             }
 

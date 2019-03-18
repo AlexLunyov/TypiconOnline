@@ -15,16 +15,13 @@ namespace TypiconOnline.Tests.Common
 
             var settingsFactory = new RuleHandlerSettingsFactory(serializerRoot);
 
-            var uof = UnitOfWorkFactory.Create(dbContext);
+            var commandProcessor = CommandProcessorFactory.Create(dbContext);
+            var queryProcessor = DataQueryProcessorFactory.Create(dbContext);
 
-            var typiconFacade = new TypiconFromEntityFacade(dbContext);
 
-            var modifiedYearFactory = new ModifiedYearFactory(uof, settingsFactory, typiconFacade);
+            var modifiedYearFactory = new ModifiedYearFactory(dbContext, settingsFactory);
 
-            return new ScheduleService(new ScheduleDataCalculator(serializerRoot
-                    , new ModifiedRuleService(uof, modifiedYearFactory)
-                    , typiconFacade
-                    , settingsFactory)
+            return new ScheduleService(new ScheduleDataCalculator(queryProcessor, settingsFactory)
                 , new ScheduleDayNameComposer(serializerRoot.QueryProcessor));
         }
     }

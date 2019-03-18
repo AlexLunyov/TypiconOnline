@@ -15,20 +15,9 @@ namespace TypiconOnline.Domain.Query.Typicon
         public AllMenologyRulesQueryHandler(TypiconDBContext dbContext, [NotNull] IDataQueryProcessor queryProcessor)
             : base(dbContext, queryProcessor) { }
 
-        //private readonly IncludeOptions Includes = new IncludeOptions()
-        //{
-        //    Includes = new string[]
-        //    {
-        //        "Date",
-        //        "DateB",
-        //        "DayRuleWorships.DayWorship.WorshipName.Items",
-        //        "DayRuleWorships.DayWorship.WorshipShortName.Items"
-        //    }
-        //};
-
         public IEnumerable<MenologyRule> Handle([NotNull] AllMenologyRulesQuery query)
         {
-            return DbContext.Set<MenologyRule>().Where(c => c.TypiconVersionId == query.TypiconId);
+            return DbContext.Set<MenologyRule>().Where(c => c.TypiconVersionId == query.TypiconId).ToList();
         }
     }
 }

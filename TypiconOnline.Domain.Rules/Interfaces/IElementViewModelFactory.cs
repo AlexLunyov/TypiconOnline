@@ -2,7 +2,7 @@
 
 namespace TypiconOnline.Domain.Rules.Interfaces
 {
-    public interface IElementViewModelFactory<T> where T : RuleElement, IViewModelElement
+    public interface IElementViewModelFactory<T> where T : RuleElementBase, IViewModelElement
     {
         void Create(CreateViewModelRequest<T> req);
     }

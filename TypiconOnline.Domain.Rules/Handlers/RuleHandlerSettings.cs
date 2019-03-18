@@ -25,9 +25,9 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// </summary>
         public RuleHandlerSettings Addition { get; set; }
         /// <summary>
-        /// Id Устава
+        /// Id версии Устава
         /// </summary>
-        public int TypiconId { get; set; }
+        public int TypiconVersionId { get; set; }
         /// <summary>
         /// Десериализированная последовательность элементов
         /// </summary>
@@ -56,12 +56,12 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// <summary>
         /// Применяет кастомные праметры к элементу, если таковые найдутся - соответствующие его типу
         /// </summary>
-        public void ApplyCustomParameters(RuleElement element)
+        public void ApplyCustomParameters(IRuleElement element)
         {
             ApplyParameters?.ForEach(c => c.Apply(element));
         }
 
-        public bool CheckCustomParameters(RuleElement element)
+        public bool CheckCustomParameters(IRuleElement element)
         {
             return CheckParameters?.TrueForAll(c => c.Check(element)) ?? true;
         }

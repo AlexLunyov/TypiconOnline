@@ -2,7 +2,7 @@
 
 namespace TypiconOnline.Domain.Rules.Expressions
 { 
-    public abstract class RuleExpression : RuleElement
+    public abstract class RuleExpression : RuleElementBase
     {
         public RuleExpression(string name) : base(name) { }
 

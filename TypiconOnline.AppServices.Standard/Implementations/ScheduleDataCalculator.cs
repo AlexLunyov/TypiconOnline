@@ -20,21 +20,14 @@ namespace TypiconOnline.AppServices.Implementations
 {
     public class ScheduleDataCalculator : IScheduleDataCalculator
     {
-        public ScheduleDataCalculator(IRuleSerializerRoot ruleSerializer
-            , IModifiedRuleService modifiedRuleService
-            , ITypiconFacade typiconFacade
-            , IRuleHandlerSettingsFactory settingsFactory)
+        public ScheduleDataCalculator(IDataQueryProcessor queryProcessor, IRuleHandlerSettingsFactory settingsFactory)
         {
-            RuleSerializer = ruleSerializer ?? throw new ArgumentNullException(nameof(ruleSerializer));
-            ModifiedRuleService = modifiedRuleService ?? throw new ArgumentNullException(nameof(modifiedRuleService));
-            TypiconFacade = typiconFacade ?? throw new ArgumentNullException(nameof(typiconFacade));
+            QueryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
             SettingsFactory = settingsFactory ?? throw new ArgumentNullException(nameof(settingsFactory));
         }
 
-        protected IModifiedRuleService ModifiedRuleService { get; }
-        protected IRuleSerializerRoot RuleSerializer { get; }
-
-        protected ITypiconFacade TypiconFacade { get; }
+        
+        protected IDataQueryProcessor QueryProcessor { get; }
         protected IRuleHandlerSettingsFactory SettingsFactory { get; }
 
         /// <summary>
@@ -53,19 +46,19 @@ namespace TypiconOnline.AppServices.Implementations
 
             //заполняем Правила и день Октоиха
             //находим MenologyRule - не может быть null
-            var menologyRule = TypiconFacade.GetMenologyRule(req.TypiconId, req.Date) ?? throw new NullReferenceException("MenologyRule");
-            //var menologyRule = RuleSerializer.QueryProcessor.Process(new MenologyRuleQuery(req.TypiconId, req.Date)) ?? throw new NullReferenceException("MenologyRule");
+            //var menologyRule = TypiconFacade.GetMenologyRule(req.TypiconVersionId, req.Date) ?? throw new NullReferenceException("MenologyRule");
+            var menologyRule = QueryProcessor.Process(new MenologyRuleQuery(req.TypiconVersionId, req.Date)) ?? throw new NullReferenceException("MenologyRule");
 
             //находим TriodionRule
-            var triodionRule = TypiconFacade.GetTriodionRule(req.TypiconId, req.Date);
-            //var triodionRule = RuleSerializer.QueryProcessor.Process(new DayRuleFromTriodionQuery(req.TypiconId, req.Date));
+            //var triodionRule = TypiconFacade.GetTriodionRule(req.TypiconVersionId, req.Date);
+            var triodionRule = QueryProcessor.Process(new TriodionRuleQuery(req.TypiconVersionId, req.Date));
 
             //находим ModifiedRule с максимальным приоритетом
-            var modifiedRule = TypiconFacade.GetModifiedRuleHighestPriority(req.TypiconId, req.Date);
+            var modifiedRule = QueryProcessor.Process(new ModifiedRuleHighestPriorityQuery(req.TypiconVersionId, req.Date));
             //var modifiedRule = ModifiedRuleService.GetModifiedRuleHighestPriority(req.TypiconId, req.Date);
 
             //находим день Октоиха - не может быть null
-            var oktoikhDay = RuleSerializer.QueryProcessor.Process(new OktoikhDayQuery(req.Date)) ?? throw new NullReferenceException("OktoikhDay");
+            var oktoikhDay = QueryProcessor.Process(new OktoikhDayQuery(req.Date)) ?? throw new NullReferenceException("OktoikhDay");
 
             //создаем выходной объект
             RuleHandlerSettings settings = null;

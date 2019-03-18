@@ -38,7 +38,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
                 viewModel.AddRange(group.GetViewModel(req.Handler, Serializer));
             }
 
-            SetStringCommonRules(ymnosStructure, req.Handler.Settings.TypiconId);
+            SetStringCommonRules(ymnosStructure, req.Handler.Settings.TypiconVersionId);
 
             //Doxastichon
             if (ymnosStructure.Doxastichon != null)

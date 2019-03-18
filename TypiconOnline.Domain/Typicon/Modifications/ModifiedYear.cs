@@ -18,6 +18,13 @@ namespace TypiconOnline.Domain.Typicon.Modifications
 
         public int Year { get; set; }
 
+        /// <summary>
+        /// Свойство указывает, были ли вычислены переходящие правила ModifiedRule
+        /// для этого года.
+        /// </summary>
+        /// <remarks>Используется для исключения паралелльного вычисления асинхронным методом.</remarks>
+        public bool IsCalculated { get; set; }
+
         private List<ModifiedRule> modifiedRules = new List<ModifiedRule>();
 
         public virtual IEnumerable<ModifiedRule> ModifiedRules { get => modifiedRules; set => modifiedRules = value.ToList(); }

@@ -42,7 +42,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// <returns></returns>
         public override bool Execute(ICustomInterpreted element)
         {
-            if (element is RuleElement && element is T r)
+            if (element is RuleElementBase && element is T r)
             {
                 executingResult.Add(r);
 

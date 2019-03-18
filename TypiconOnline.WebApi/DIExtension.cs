@@ -33,6 +33,15 @@ using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Repository.EFCore.Caching;
 using TypiconOnline.AppServices.Configuration;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.AppServices.Jobs;
+using TypiconOnline.WebApi.HostedService;
+using SimpleInjector;
+using TypiconOnline.Domain.Query;
+using TypiconOnline.Domain.Command;
+using TypiconOnline.Infrastructure.Common.Command;
+using TypiconOnline.WebApi.DIExtensions;
+using TypiconOnline.Infrastructure.Common.Query;
+using SimpleInjector.Lifestyles;
 
 namespace TypiconOnline.WebApi
 {
@@ -41,35 +50,69 @@ namespace TypiconOnline.WebApi
     /// </summary>
     public static class DIExtension
     {
-        public static void AddTypiconOnlineService(this IServiceCollection services, IConfiguration configuration)
+        public static void AddTypiconOnlineService(this IServiceCollection services, IConfiguration configuration, Container container)
         {
-            //typiconservices
-            services.AddScoped<ITypiconEntityService, TypiconEntityService>();
-            services.AddScoped<IEvangelionContext, EvangelionContext>();
-            services.AddScoped<IApostolContext, ApostolContext>();
-            services.AddScoped<IOldTestamentContext, OldTestamentContext>();
-            services.AddScoped<IPsalterContext, PsalterContext>();
-            services.AddScoped<IOktoikhContext, OktoikhContext>();
-            services.AddScoped<ITheotokionAppContext, TheotokionAppContext>();
-            services.AddScoped<IEasterContext, EasterContext>();
-            services.AddScoped<IKatavasiaContext, KatavasiaContext>();
+            ////typiconservices
+            //services.AddScoped<IEvangelionContext, EvangelionContext>();
+            //services.AddScoped<IApostolContext, ApostolContext>();
+            //services.AddScoped<IOldTestamentContext, OldTestamentContext>();
+            //services.AddScoped<IPsalterContext, PsalterContext>();
+            //services.AddScoped<IOktoikhContext, OktoikhContext>();
+            //services.AddScoped<ITheotokionAppContext, TheotokionAppContext>();
+            //services.AddScoped<IEasterContext, EasterContext>();
+            //services.AddScoped<IKatavasiaContext, KatavasiaContext>();
+
+            //services.AddScoped<IScheduleService, ScheduleService>();
+
+            //OutputForms
+            container.Register<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
+            container.Register<IModifiedYearFactory, ModifiedYearFactory>();
+            container.Register<IScheduleDayNameComposer, ScheduleDayNameComposer>();
+            container.Register<IRuleSerializerRoot, RuleSerializerRoot>();
+            container.Register<ITypiconSerializer, TypiconSerializer>(); 
+            container.Register<IOutputForms, OutputForms>();
+            container.Register<IOutputFormFactory, OutputFormFactory>();
+            container.Register<IScheduleDataCalculator, ScheduleDataCalculator>();
+            container.Register<IScheduleDayViewer<string>, TextScheduleDayViewer>();
             
-            //scheduleservice
-            services.AddScoped<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
-            services.AddScoped<IModifiedYearFactory, ModifiedYearFactory>();
-            services.AddScoped<IModifiedRuleService, ModifiedRuleService>();
-            services.AddScoped<IScheduleDayNameComposer, ScheduleDayNameComposer>();
-            services.AddScoped<IScheduleService, ScheduleService>();
-            services.AddScoped<IRuleSerializerRoot, RuleSerializerRoot>();
-            services.AddScoped<BookStorage>();
 
-            //unitofwork
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            //Configuration
+            container.Register<IConfigurationRepository>(() => new ConfigurationRepository(configuration));
 
-            //caching
-            //services.AddTypiconCaching(configuration);
+            //Queue
+            container.RegisterSingleton<IQueue, JobQueue>();
+            container.Register<JobHostedService>();
+            services.AddHostedServiceFromContainer<JobHostedService>(container);
 
-            services.EFCache(configuration);
+            //query command jobs
+            //container.RegisterTypiconQueryClasses();
+            //container.RegisterTypiconCommandClasses();
+
+
+            //container.Register(typeof(IDataQuery<>), typeof(QueryProcessor).Assembly);
+            container.Register(typeof(IDataQueryHandler<,>), typeof(QueryProcessor).Assembly);
+            container.Register<IDataQueryProcessor, DataQueryProcessor>();
+
+            //container.Register(typeof(IQuery<>), typeof(QueryProcessor).Assembly);
+            container.Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly);
+            container.Register<IQueryProcessor, QueryProcessor>();
+
+
+            container.Register(typeof(ICommandHandler<>), typeof(CommandProcessor).Assembly, typeof(OutputForms).Assembly);
+            container.Register<ICommandProcessor, CommandProcessor>();
+
+            services.AddDbContext<TypiconDBContext>(optionsBuilder =>
+            {
+                //SqlServer
+                //var connectionString = configuration.GetConnectionString("MSSql");
+                //optionsBuilder.UseSqlServer(connectionString);
+
+                //SQLite
+                var connectionString = configuration.GetConnectionString("DBTypicon");
+                optionsBuilder.UseSqlite(connectionString);
+            });
+
+            
         }
 
         private static void AddTypiconCaching(this IServiceCollection services, IConfiguration configuration)

@@ -5,7 +5,7 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query
 {
-    public abstract class QueryStrategyHandlerBase : DbContextHandlerBase
+    public abstract class QueryStrategyHandlerBase : DbContextQueryBase
     {
         protected IDataQueryProcessor QueryProcessor { get; }
 

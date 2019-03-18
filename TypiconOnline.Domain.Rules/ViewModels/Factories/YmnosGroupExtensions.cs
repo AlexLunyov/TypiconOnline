@@ -36,7 +36,7 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         {
             string str = "";
 
-            int typiconId = handler.Settings.TypiconId;
+            int typiconId = handler.Settings.TypiconVersionId;
             var language = handler.Settings.Language;
 
             if (ihos != null)
@@ -85,9 +85,9 @@ namespace TypiconOnline.Domain.ViewModels.Factories
         private static (string StihosText, string ChoirText) GetStringValues(IRuleHandler handler, IRuleSerializerRoot serializer)
         {
             //находим Стих и Хор для дальнешей вставки
-            string stihos = GetStringValue(handler.Settings.TypiconId, CommonRuleConstants.StihosRule, handler.Settings.Language.Name, serializer);
+            string stihos = GetStringValue(handler.Settings.TypiconVersionId, CommonRuleConstants.StihosRule, handler.Settings.Language.Name, serializer);
 
-            string choir = GetStringValue(handler.Settings.TypiconId, CommonRuleConstants.ChoirRule, handler.Settings.Language.Name, serializer);
+            string choir = GetStringValue(handler.Settings.TypiconVersionId, CommonRuleConstants.ChoirRule, handler.Settings.Language.Name, serializer);
 
             return (stihos, choir);
         }

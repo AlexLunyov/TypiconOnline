@@ -14,21 +14,6 @@ namespace TypiconOnline.Domain.Rules.Handlers
     {
         public ServiceSequenceHandler()
         {
-            //AuthorizedTypes = new List<Type>()
-            //{
-            //    typeof(WorshipRule),
-            //    //typeof(Notice),
-            //    typeof(TextHolder),
-            //    typeof(YmnosStructureRule),
-            //    typeof(WorshipSequence),
-            //    typeof(EktenisRule),
-            //    typeof(CommonRuleElement),
-            //    typeof(KekragariaRule),
-            //    typeof(ApostichaRule),
-            //    typeof(AinoiRule),
-            //    typeof(TroparionRule),
-            //    typeof(KanonasRule)
-            //};
             AuthorizedTypes = null;
 
             ResctrictedTypes = new List<Type>()

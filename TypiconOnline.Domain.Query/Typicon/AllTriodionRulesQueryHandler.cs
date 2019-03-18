@@ -15,16 +15,6 @@ namespace TypiconOnline.Domain.Query.Typicon
         public AllTriodionRulesQueryHandler(TypiconDBContext dbContext, [NotNull] IDataQueryProcessor queryProcessor)
             : base(dbContext, queryProcessor) { }
 
-        //private readonly IncludeOptions Includes = new IncludeOptions()
-        //{
-        //    Includes = new string[]
-        //    {
-        //            "Template.Template.Template",
-        //            "DayRuleWorships.DayWorship.WorshipName.Items",
-        //            "DayRuleWorships.DayWorship.WorshipShortName.Items",
-        //    }
-        //};
-
         public IEnumerable<TriodionRule> Handle([NotNull] AllTriodionRulesQuery query)
         {
             return DbContext.Set<TriodionRule>().Where(c => c.TypiconVersionId == query.TypiconId);

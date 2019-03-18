@@ -25,18 +25,6 @@ namespace TypiconOnline.Domain.Query.Typicon
         {
         }
 
-        //private readonly IncludeOptions _includes = new IncludeOptions()
-        //{
-        //    Includes = new string[]
-        //    {
-        //            "Date",
-        //            "DateB",
-        //            //"Template.Template.Template",
-        //            "DayRuleWorships.DayWorship.WorshipName.Items",
-        //            "DayRuleWorships.DayWorship.WorshipShortName.Items",
-        //    }
-        //};
-
         public MenologyRule Handle([NotNull] MenologyRuleQuery query)
         {
             var menologyRule = DbContext.Set<MenologyRule>().FirstOrDefault(GetExpression(query));

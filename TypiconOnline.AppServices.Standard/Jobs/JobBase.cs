@@ -9,6 +9,11 @@ namespace TypiconOnline.AppServices.Jobs
     /// </summary>
     public abstract class JobBase: IJob
     {
+        public JobBase()
+        {
+            CDate = DateTime.Now;
+        }
+
         /// <summary>
         /// Дата создания задания
         /// </summary>

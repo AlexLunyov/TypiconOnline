@@ -6,7 +6,7 @@ using TypiconOnline.Domain.ViewModels.Messaging;
 
 namespace TypiconOnline.Domain.ViewModels.Factories
 {
-    public abstract class ViewModelFactoryBase<T> : IElementViewModelFactory<T> where T : RuleElement, IViewModelElement
+    public abstract class ViewModelFactoryBase<T> : IElementViewModelFactory<T> where T : RuleElementBase, IViewModelElement
     {
         public IRuleSerializerRoot Serializer { get; }
 

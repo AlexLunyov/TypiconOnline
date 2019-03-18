@@ -23,7 +23,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
             {
                 AddBrokenConstraint(IsExistsBusinessConstraint.YmnosRuleReqiured);
             }
-            else if (ChildElement is RuleElement r && !r.IsValid)
+            else if (ChildElement is RuleElementBase r && !r.IsValid)
             {
                 AppendAllBrokenConstraints(r);
             }

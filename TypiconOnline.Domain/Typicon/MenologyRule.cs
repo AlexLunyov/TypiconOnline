@@ -5,15 +5,40 @@ namespace TypiconOnline.Domain.Typicon
 {
     public class MenologyRule : DayRule
     {
+        private ItemDate _date;
+        private ItemDate _leapDate; 
+
         public MenologyRule()
         {
             //Date = new ItemDate();
             //DateB = new ItemDate();
         }
 
-        public virtual ItemDate Date { get; set; }
+        public virtual ItemDate Date //{ get; set; }
+        {
+            get
+            {
+                if (_date == null)
+                {
+                    _date = new ItemDate();
+                }
+                return _date;
+            }
+            set => _date = value;
+        }
 
-        public virtual ItemDate LeapDate { get; set; }
+        public virtual ItemDate LeapDate //{ get; set; }
+        {
+            get
+            {
+                if (_leapDate == null)
+                {
+                    _leapDate = new ItemDate();
+                }
+                return _leapDate;
+            }
+            set => _leapDate = value;
+        }
 
         protected override void Validate()
         {

@@ -4,25 +4,22 @@ using EFSecondLevelCache.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Ninject;
-using Ninject.Activation;
-using Ninject.Infrastructure.Disposal;
-using TypiconOnline.WebApi.DIExtensions;
+using SimpleInjector;
+using SimpleInjector.Integration.AspNetCore.Mvc;
+using SimpleInjector.Lifestyles;
 
 
 namespace TypiconOnline.WebApi
 {
     public class Startup
     {
-        //private readonly AsyncLocal<Scope> scopeProvider = new AsyncLocal<Scope>();
-        //private IKernel Kernel;
-
-        //private object Resolve(Type type) => Kernel.Get(type);
-        //private Scope RequestScope(IContext context) => scopeProvider.Value;
+        private Container container = new Container();
 
         public Startup(IHostingEnvironment env)
         {
@@ -42,17 +39,16 @@ namespace TypiconOnline.WebApi
         {
             services.AddMvc();
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddTypiconOnlineService(Configuration);
+            IntegrateSimpleInjector(services);
 
-            //services.AddRequestScopingMiddleware(() => scopeProvider.Value = new Scope());
-            //services.AddCustomControllerActivation(Resolve);
-            //services.AddCustomViewComponentActivation(Resolve);
+            services.AddTypiconOnlineService(Configuration, container);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            InitializeContainer(app);
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -65,33 +61,32 @@ namespace TypiconOnline.WebApi
             //EFSecondLevel
             app.UseEFSecondLevelCache();
 
-            //Kernel = RegisterApplicationComponents(app, loggerFactory);
-
             app.UseMvc();
         }
 
-        //private IKernel RegisterApplicationComponents(IApplicationBuilder app, ILoggerFactory loggerFactory)
-        //{
-        //    Kernel = new StandardKernel();
+        private void IntegrateSimpleInjector(IServiceCollection services)
+        {
+            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
-        //    // Register application services
-        //    //config.Bind(app.GetControllerTypes()).ToSelf().InScope(RequestScope);
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-        //    //my own
-        //    Kernel.BindTypiconServices(Configuration);
+            services.AddSingleton<IControllerActivator>(
+                new SimpleInjectorControllerActivator(container));
+            services.AddSingleton<IViewComponentActivator>(
+                new SimpleInjectorViewComponentActivator(container));
 
-        //    // Cross-wire required framework services
-        //    Kernel.BindToMethod(app.GetRequestService<IViewBufferScope>);
-        //    Kernel.Bind<ILoggerFactory>().ToConstant(loggerFactory);
+            services.EnableSimpleInjectorCrossWiring(container);
+            services.UseSimpleInjectorAspNetRequestScoping(container);
+        }
 
-        //    return Kernel;
-        //}
+        private void InitializeContainer(IApplicationBuilder app)
+        {
+            // Add application presentation components:
+            container.RegisterMvcControllers(app);
+            container.RegisterMvcViewComponents(app);
 
-        //private sealed class Scope : DisposableObject { }
-    }
-
-    public static class BindingHelpers
-    {
-        public static void BindToMethod<T>(this IKernel config, Func<T> method) => config.Bind<T>().ToMethod(c => method());
+            // Allow Simple Injector to resolve services from ASP.NET Core.
+            container.AutoCrossWireAspNetComponents(app);
+        }
     }
 }

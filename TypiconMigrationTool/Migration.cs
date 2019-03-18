@@ -76,7 +76,10 @@ namespace TypiconMigrationTool
                     Items = new List<ItemTextUnit>() { new ItemTextUnit("cs-ru", "Типикон") }
                 },
                 DefaultLanguage = DEFAULT_LANGUAGE,
-                TypiconId = typicon.Id
+                TypiconId = typicon.Id,
+
+                //Делаем сразу опубликованную версию
+                BDate = DateTime.Now
             };
 
             typicon.Versions.Add(typiconEntity);
@@ -294,7 +297,7 @@ namespace TypiconMigrationTool
                  * смотрим, не один и тот же MenologyDay, что и предыдущая строка из Access
                 */
                 //if (menologyDay == null || !menologyDay.DateB.Expression.Equals(d.Expression))
-                menologyDay = _unitOfWork.Repository<MenologyDay>().Get(c => c.LeapDate.Expression.Equals(d.Expression));
+                menologyDay = _unitOfWork.Repository<MenologyDay>().Get(c => c.LeapDate.Day == d.Day && c.LeapDate.Month == d.Month);
                 if (menologyDay == null)
                 {
                     //нет - создаем новый день
@@ -328,8 +331,8 @@ namespace TypiconMigrationTool
                     menologyRule = new MenologyRule()
                     {
                         //Name = menologyDay.Name,
-                        Date = menologyDay.Date,
-                        LeapDate = menologyDay.LeapDate,
+                        Date = new ItemDate(menologyDay.Date),
+                        LeapDate = new ItemDate(menologyDay.LeapDate),
                         TypiconVersionId = typiconEntity.Id,
                         //Owner = typiconEntity,
                         //IsAddition = true,

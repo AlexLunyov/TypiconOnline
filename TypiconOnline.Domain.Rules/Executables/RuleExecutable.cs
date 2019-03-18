@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Executables
     /// Абстрактный класс для "исполняемых" элементов, 
     /// т.е. которым преполагается назначение какого-либо функционала.
     /// </summary>
-    public abstract class RuleExecutable : RuleElement
+    public abstract class RuleExecutable : RuleElementBase
     {
         public RuleExecutable() { }
         public RuleExecutable(string name) : base(name) { }

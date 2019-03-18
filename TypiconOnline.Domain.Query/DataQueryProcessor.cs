@@ -1,4 +1,5 @@
 ﻿using SimpleInjector;
+using SimpleInjector.Lifestyles;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,13 +8,21 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query
 {
-    public sealed class DataQueryProcessor : IDataQueryProcessor
+    public class DataQueryProcessor : IDataQueryProcessor, IDisposable
     {
         private readonly Container container;
+        private readonly Scope scope;
 
         public DataQueryProcessor(Container container)
         {
             this.container = container;
+
+            scope = AsyncScopedLifestyle.BeginScope(container);
+        }
+
+        public void Dispose()
+        {
+            scope.Dispose();
         }
 
         [DebuggerStepThrough]

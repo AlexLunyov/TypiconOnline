@@ -18,12 +18,15 @@ namespace TypiconOnline.AppServices.Implementations
     public class CustomScheduleDataCalculator : ScheduleDataCalculator
     {
         public CustomScheduleDataCalculator(IRuleSerializerRoot ruleSerializer
-            , IModifiedRuleService modifiedRuleService
-            , ITypiconFacade typiconFacade
             , IRuleHandlerSettingsFactory settingsFactory) 
-            : base(ruleSerializer, modifiedRuleService, typiconFacade, settingsFactory) { }
+            : base(ruleSerializer.QueryProcessor, settingsFactory)
+        {
+            RuleSerializer = ruleSerializer ?? throw new ArgumentNullException(nameof(ruleSerializer));
+        }
 
         public string CustomRule { get; set; }
+
+        protected IRuleSerializerRoot RuleSerializer { get; }
 
         /// <summary>
         /// Переопределяет правило для исполнения

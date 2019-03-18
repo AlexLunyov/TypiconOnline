@@ -70,8 +70,6 @@
             this.tabAdminPage = new System.Windows.Forms.TabPage();
             this.btnLoadDaysXml = new System.Windows.Forms.Button();
             this.btnSaveDaysXml = new System.Windows.Forms.Button();
-            this.btnReloadRules = new System.Windows.Forms.Button();
-            this.btnClearModifiedYears = new System.Windows.Forms.Button();
             this.tabPageTesting = new System.Windows.Forms.TabPage();
             this.btnTest40mart = new System.Windows.Forms.Button();
             this.textBoxTesting = new System.Windows.Forms.TextBox();
@@ -84,10 +82,10 @@
             this.btnSequenceCustomParams = new System.Windows.Forms.Button();
             this.btnGetSequence = new System.Windows.Forms.Button();
             this.monthCalendarSequence = new System.Windows.Forms.MonthCalendar();
-            this.folderBrowserDialogSettings = new System.Windows.Forms.FolderBrowserDialog();
-            this.templateFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabPageCustomRuleMain = new System.Windows.Forms.TabPage();
             this.btnCustomRule = new System.Windows.Forms.Button();
+            this.folderBrowserDialogSettings = new System.Windows.Forms.FolderBrowserDialog();
+            this.templateFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControlMain.SuspendLayout();
             this.tabPageMain.SuspendLayout();
             this.panelTest.SuspendLayout();
@@ -116,20 +114,18 @@
             this.tabControlMain.Controls.Add(this.tabPageCustomRuleMain);
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
-            this.tabControlMain.Margin = new System.Windows.Forms.Padding(4);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(1077, 571);
+            this.tabControlMain.Size = new System.Drawing.Size(808, 464);
             this.tabControlMain.TabIndex = 0;
             // 
             // tabPageMain
             // 
             this.tabPageMain.Controls.Add(this.panelTest);
-            this.tabPageMain.Location = new System.Drawing.Point(4, 25);
-            this.tabPageMain.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPageMain.Location = new System.Drawing.Point(4, 22);
             this.tabPageMain.Name = "tabPageMain";
-            this.tabPageMain.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPageMain.Size = new System.Drawing.Size(1069, 542);
+            this.tabPageMain.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageMain.Size = new System.Drawing.Size(800, 438);
             this.tabPageMain.TabIndex = 0;
             this.tabPageMain.Text = "Главная";
             this.tabPageMain.UseVisualStyleBackColor = true;
@@ -139,19 +135,20 @@
             this.panelTest.Controls.Add(this.groupBox5);
             this.panelTest.Controls.Add(this.groupBox4);
             this.panelTest.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelTest.Location = new System.Drawing.Point(4, 4);
-            this.panelTest.Margin = new System.Windows.Forms.Padding(4);
+            this.panelTest.Location = new System.Drawing.Point(3, 3);
             this.panelTest.Name = "panelTest";
-            this.panelTest.Size = new System.Drawing.Size(1061, 534);
+            this.panelTest.Size = new System.Drawing.Size(794, 432);
             this.panelTest.TabIndex = 1;
             // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.textBoxResult);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox5.Location = new System.Drawing.Point(402, 0);
+            this.groupBox5.Location = new System.Drawing.Point(302, 0);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(659, 534);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox5.Size = new System.Drawing.Size(492, 432);
             this.groupBox5.TabIndex = 21;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Результат";
@@ -159,12 +156,13 @@
             // textBoxResult
             // 
             this.textBoxResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxResult.Location = new System.Drawing.Point(3, 18);
+            this.textBoxResult.Location = new System.Drawing.Point(2, 15);
+            this.textBoxResult.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxResult.Multiline = true;
             this.textBoxResult.Name = "textBoxResult";
             this.textBoxResult.ReadOnly = true;
             this.textBoxResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxResult.Size = new System.Drawing.Size(653, 513);
+            this.textBoxResult.Size = new System.Drawing.Size(488, 415);
             this.textBoxResult.TabIndex = 0;
             // 
             // groupBox4
@@ -177,10 +175,8 @@
             this.groupBox4.Controls.Add(this.radioButtonCustom);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox4.Size = new System.Drawing.Size(402, 534);
+            this.groupBox4.Size = new System.Drawing.Size(302, 432);
             this.groupBox4.TabIndex = 20;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Сформировать расписание";
@@ -194,11 +190,9 @@
             this.groupBox3.Controls.Add(this.checkBoxWordpress);
             this.groupBox3.Controls.Add(this.checkBoxTxt);
             this.groupBox3.Controls.Add(this.checkBoxDocx);
-            this.groupBox3.Location = new System.Drawing.Point(8, 266);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox3.Location = new System.Drawing.Point(6, 216);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox3.Size = new System.Drawing.Size(386, 224);
+            this.groupBox3.Size = new System.Drawing.Size(290, 182);
             this.groupBox3.TabIndex = 19;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Сохранить результаты";
@@ -207,10 +201,9 @@
             // 
             this.checkBoxIsBigDocxOpen.AutoSize = true;
             this.checkBoxIsBigDocxOpen.Enabled = false;
-            this.checkBoxIsBigDocxOpen.Location = new System.Drawing.Point(29, 104);
-            this.checkBoxIsBigDocxOpen.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxIsBigDocxOpen.Location = new System.Drawing.Point(22, 84);
             this.checkBoxIsBigDocxOpen.Name = "checkBoxIsBigDocxOpen";
-            this.checkBoxIsBigDocxOpen.Size = new System.Drawing.Size(219, 21);
+            this.checkBoxIsBigDocxOpen.Size = new System.Drawing.Size(185, 18);
             this.checkBoxIsBigDocxOpen.TabIndex = 6;
             this.checkBoxIsBigDocxOpen.Text = "Открыть после формирования";
             this.checkBoxIsBigDocxOpen.UseCompatibleTextRendering = true;
@@ -219,10 +212,9 @@
             // checkBoxBigDocx
             // 
             this.checkBoxBigDocx.AutoSize = true;
-            this.checkBoxBigDocx.Location = new System.Drawing.Point(9, 79);
-            this.checkBoxBigDocx.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxBigDocx.Location = new System.Drawing.Point(7, 64);
             this.checkBoxBigDocx.Name = "checkBoxBigDocx";
-            this.checkBoxBigDocx.Size = new System.Drawing.Size(338, 21);
+            this.checkBoxBigDocx.Size = new System.Drawing.Size(286, 18);
             this.checkBoxBigDocx.TabIndex = 5;
             this.checkBoxBigDocx.Text = "Шаблон документа Word (КРУПНЫМ ШРИФТОМ)";
             this.checkBoxBigDocx.UseCompatibleTextRendering = true;
@@ -233,10 +225,9 @@
             // 
             this.checkBoxException.AutoSize = true;
             this.checkBoxException.ForeColor = System.Drawing.Color.Red;
-            this.checkBoxException.Location = new System.Drawing.Point(9, 191);
-            this.checkBoxException.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxException.Location = new System.Drawing.Point(7, 155);
             this.checkBoxException.Name = "checkBoxException";
-            this.checkBoxException.Size = new System.Drawing.Size(322, 21);
+            this.checkBoxException.Size = new System.Drawing.Size(273, 18);
             this.checkBoxException.TabIndex = 4;
             this.checkBoxException.Text = "Исключение, если неверно заполнено правило";
             this.checkBoxException.UseCompatibleTextRendering = true;
@@ -246,10 +237,9 @@
             // 
             this.checkBoxIsDocxOpen.AutoSize = true;
             this.checkBoxIsDocxOpen.Enabled = false;
-            this.checkBoxIsDocxOpen.Location = new System.Drawing.Point(29, 50);
-            this.checkBoxIsDocxOpen.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxIsDocxOpen.Location = new System.Drawing.Point(22, 41);
             this.checkBoxIsDocxOpen.Name = "checkBoxIsDocxOpen";
-            this.checkBoxIsDocxOpen.Size = new System.Drawing.Size(219, 21);
+            this.checkBoxIsDocxOpen.Size = new System.Drawing.Size(185, 18);
             this.checkBoxIsDocxOpen.TabIndex = 3;
             this.checkBoxIsDocxOpen.Text = "Открыть после формирования";
             this.checkBoxIsDocxOpen.UseCompatibleTextRendering = true;
@@ -259,10 +249,9 @@
             // 
             this.checkBoxWordpress.AutoSize = true;
             this.checkBoxWordpress.Enabled = false;
-            this.checkBoxWordpress.Location = new System.Drawing.Point(29, 162);
-            this.checkBoxWordpress.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxWordpress.Location = new System.Drawing.Point(22, 132);
             this.checkBoxWordpress.Name = "checkBoxWordpress";
-            this.checkBoxWordpress.Size = new System.Drawing.Size(224, 21);
+            this.checkBoxWordpress.Size = new System.Drawing.Size(190, 18);
             this.checkBoxWordpress.TabIndex = 2;
             this.checkBoxWordpress.Text = "Выложить расписание на сайте";
             this.checkBoxWordpress.UseCompatibleTextRendering = true;
@@ -271,10 +260,9 @@
             // checkBoxTxt
             // 
             this.checkBoxTxt.AutoSize = true;
-            this.checkBoxTxt.Location = new System.Drawing.Point(9, 133);
-            this.checkBoxTxt.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxTxt.Location = new System.Drawing.Point(7, 108);
             this.checkBoxTxt.Name = "checkBoxTxt";
-            this.checkBoxTxt.Size = new System.Drawing.Size(138, 21);
+            this.checkBoxTxt.Size = new System.Drawing.Size(117, 18);
             this.checkBoxTxt.TabIndex = 1;
             this.checkBoxTxt.Text = "Текстовая версия";
             this.checkBoxTxt.UseCompatibleTextRendering = true;
@@ -284,10 +272,9 @@
             // checkBoxDocx
             // 
             this.checkBoxDocx.AutoSize = true;
-            this.checkBoxDocx.Location = new System.Drawing.Point(9, 25);
-            this.checkBoxDocx.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxDocx.Location = new System.Drawing.Point(7, 20);
             this.checkBoxDocx.Name = "checkBoxDocx";
-            this.checkBoxDocx.Size = new System.Drawing.Size(182, 21);
+            this.checkBoxDocx.Size = new System.Drawing.Size(154, 18);
             this.checkBoxDocx.TabIndex = 0;
             this.checkBoxDocx.Text = "Шаблон документа Word";
             this.checkBoxDocx.UseCompatibleTextRendering = true;
@@ -296,10 +283,9 @@
             // 
             // buttonExecute
             // 
-            this.buttonExecute.Location = new System.Drawing.Point(58, 498);
-            this.buttonExecute.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonExecute.Location = new System.Drawing.Point(44, 405);
             this.buttonExecute.Name = "buttonExecute";
-            this.buttonExecute.Size = new System.Drawing.Size(219, 28);
+            this.buttonExecute.Size = new System.Drawing.Size(164, 23);
             this.buttonExecute.TabIndex = 9;
             this.buttonExecute.Text = "Выполнить";
             this.buttonExecute.UseVisualStyleBackColor = true;
@@ -309,16 +295,14 @@
             // 
             this.panelCustom.Controls.Add(this.monthCalendarXML);
             this.panelCustom.Enabled = false;
-            this.panelCustom.Location = new System.Drawing.Point(132, 55);
-            this.panelCustom.Margin = new System.Windows.Forms.Padding(4);
+            this.panelCustom.Location = new System.Drawing.Point(99, 45);
             this.panelCustom.Name = "panelCustom";
-            this.panelCustom.Size = new System.Drawing.Size(262, 203);
+            this.panelCustom.Size = new System.Drawing.Size(196, 165);
             this.panelCustom.TabIndex = 18;
             // 
             // monthCalendarXML
             // 
             this.monthCalendarXML.Location = new System.Drawing.Point(0, 0);
-            this.monthCalendarXML.Margin = new System.Windows.Forms.Padding(12, 11, 12, 11);
             this.monthCalendarXML.Name = "monthCalendarXML";
             this.monthCalendarXML.TabIndex = 7;
             this.monthCalendarXML.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendarXML_DateSelected);
@@ -327,10 +311,9 @@
             // 
             this.radioButtonNext.AutoSize = true;
             this.radioButtonNext.Checked = true;
-            this.radioButtonNext.Location = new System.Drawing.Point(16, 31);
-            this.radioButtonNext.Margin = new System.Windows.Forms.Padding(4);
+            this.radioButtonNext.Location = new System.Drawing.Point(12, 25);
             this.radioButtonNext.Name = "radioButtonNext";
-            this.radioButtonNext.Size = new System.Drawing.Size(106, 21);
+            this.radioButtonNext.Size = new System.Drawing.Size(84, 17);
             this.radioButtonNext.TabIndex = 15;
             this.radioButtonNext.TabStop = true;
             this.radioButtonNext.Text = "Следующее";
@@ -340,20 +323,18 @@
             // labelNextScheduleWeek
             // 
             this.labelNextScheduleWeek.AutoSize = true;
-            this.labelNextScheduleWeek.Location = new System.Drawing.Point(128, 31);
-            this.labelNextScheduleWeek.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelNextScheduleWeek.Location = new System.Drawing.Point(96, 25);
             this.labelNextScheduleWeek.Name = "labelNextScheduleWeek";
-            this.labelNextScheduleWeek.Size = new System.Drawing.Size(93, 17);
+            this.labelNextScheduleWeek.Size = new System.Drawing.Size(72, 13);
             this.labelNextScheduleWeek.TabIndex = 17;
             this.labelNextScheduleWeek.Text = "[Нет данных]";
             // 
             // radioButtonCustom
             // 
             this.radioButtonCustom.AutoSize = true;
-            this.radioButtonCustom.Location = new System.Drawing.Point(16, 55);
-            this.radioButtonCustom.Margin = new System.Windows.Forms.Padding(4);
+            this.radioButtonCustom.Location = new System.Drawing.Point(12, 45);
             this.radioButtonCustom.Name = "radioButtonCustom";
-            this.radioButtonCustom.Size = new System.Drawing.Size(104, 21);
+            this.radioButtonCustom.Size = new System.Drawing.Size(81, 17);
             this.radioButtonCustom.TabIndex = 16;
             this.radioButtonCustom.Text = "Выборочно";
             this.radioButtonCustom.UseVisualStyleBackColor = true;
@@ -364,21 +345,19 @@
             this.tabPagesSettings.Controls.Add(this.buttonSaveSettings);
             this.tabPagesSettings.Controls.Add(this.groupBox2);
             this.tabPagesSettings.Controls.Add(this.groupBox1);
-            this.tabPagesSettings.Location = new System.Drawing.Point(4, 25);
-            this.tabPagesSettings.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPagesSettings.Location = new System.Drawing.Point(4, 22);
             this.tabPagesSettings.Name = "tabPagesSettings";
-            this.tabPagesSettings.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPagesSettings.Size = new System.Drawing.Size(1069, 542);
+            this.tabPagesSettings.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPagesSettings.Size = new System.Drawing.Size(800, 438);
             this.tabPagesSettings.TabIndex = 1;
             this.tabPagesSettings.Text = "Настройки";
             this.tabPagesSettings.UseVisualStyleBackColor = true;
             // 
             // buttonSaveSettings
             // 
-            this.buttonSaveSettings.Location = new System.Drawing.Point(103, 394);
-            this.buttonSaveSettings.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSaveSettings.Location = new System.Drawing.Point(77, 320);
             this.buttonSaveSettings.Name = "buttonSaveSettings";
-            this.buttonSaveSettings.Size = new System.Drawing.Size(152, 28);
+            this.buttonSaveSettings.Size = new System.Drawing.Size(114, 23);
             this.buttonSaveSettings.TabIndex = 2;
             this.buttonSaveSettings.Text = "Сохранить";
             this.buttonSaveSettings.UseVisualStyleBackColor = true;
@@ -393,11 +372,9 @@
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.textBoxBaseUrl);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox2.Location = new System.Drawing.Point(4, 164);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Location = new System.Drawing.Point(3, 133);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(1061, 208);
+            this.groupBox2.Size = new System.Drawing.Size(794, 169);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Wordpress";
@@ -405,62 +382,56 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 143);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(9, 116);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(57, 17);
+            this.label4.Size = new System.Drawing.Size(45, 13);
             this.label4.TabIndex = 5;
             this.label4.Text = "Пароль";
             // 
             // textBoxPassword
             // 
             this.textBoxPassword.Enabled = false;
-            this.textBoxPassword.Location = new System.Drawing.Point(12, 167);
-            this.textBoxPassword.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxPassword.Location = new System.Drawing.Point(9, 136);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.PasswordChar = '•';
             this.textBoxPassword.ReadOnly = true;
-            this.textBoxPassword.Size = new System.Drawing.Size(335, 22);
+            this.textBoxPassword.Size = new System.Drawing.Size(252, 20);
             this.textBoxPassword.TabIndex = 4;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 85);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(9, 69);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(131, 17);
+            this.label3.Size = new System.Drawing.Size(103, 13);
             this.label3.TabIndex = 3;
             this.label3.Text = "Имя пользователя";
             // 
             // textBoxUserName
             // 
             this.textBoxUserName.Enabled = false;
-            this.textBoxUserName.Location = new System.Drawing.Point(12, 110);
-            this.textBoxUserName.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxUserName.Location = new System.Drawing.Point(9, 89);
             this.textBoxUserName.Name = "textBoxUserName";
             this.textBoxUserName.ReadOnly = true;
-            this.textBoxUserName.Size = new System.Drawing.Size(335, 22);
+            this.textBoxUserName.Size = new System.Drawing.Size(252, 20);
             this.textBoxUserName.TabIndex = 2;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 27);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(9, 22);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 17);
+            this.label2.Size = new System.Drawing.Size(70, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Адрес сайта";
             // 
             // textBoxBaseUrl
             // 
             this.textBoxBaseUrl.Enabled = false;
-            this.textBoxBaseUrl.Location = new System.Drawing.Point(12, 52);
-            this.textBoxBaseUrl.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxBaseUrl.Location = new System.Drawing.Point(9, 42);
             this.textBoxBaseUrl.Name = "textBoxBaseUrl";
             this.textBoxBaseUrl.ReadOnly = true;
-            this.textBoxBaseUrl.Size = new System.Drawing.Size(335, 22);
+            this.textBoxBaseUrl.Size = new System.Drawing.Size(252, 20);
             this.textBoxBaseUrl.TabIndex = 0;
             // 
             // groupBox1
@@ -475,21 +446,18 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.textBoxFilePath);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(4, 4);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(1061, 160);
+            this.groupBox1.Size = new System.Drawing.Size(794, 130);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Файлы";
             // 
             // buttonRulePathSettings
             // 
-            this.buttonRulePathSettings.Location = new System.Drawing.Point(671, 48);
-            this.buttonRulePathSettings.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonRulePathSettings.Location = new System.Drawing.Point(503, 39);
             this.buttonRulePathSettings.Name = "buttonRulePathSettings";
-            this.buttonRulePathSettings.Size = new System.Drawing.Size(35, 28);
+            this.buttonRulePathSettings.Size = new System.Drawing.Size(26, 23);
             this.buttonRulePathSettings.TabIndex = 8;
             this.buttonRulePathSettings.Text = "...";
             this.buttonRulePathSettings.UseVisualStyleBackColor = true;
@@ -498,28 +466,25 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(371, 24);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(278, 20);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(120, 17);
+            this.label6.Size = new System.Drawing.Size(95, 13);
             this.label6.TabIndex = 7;
             this.label6.Text = "Путь к Правилам";
             // 
             // textBoxRulePath
             // 
-            this.textBoxRulePath.Location = new System.Drawing.Point(371, 49);
-            this.textBoxRulePath.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxRulePath.Location = new System.Drawing.Point(278, 40);
             this.textBoxRulePath.Name = "textBoxRulePath";
             this.textBoxRulePath.ReadOnly = true;
-            this.textBoxRulePath.Size = new System.Drawing.Size(291, 22);
+            this.textBoxRulePath.Size = new System.Drawing.Size(219, 20);
             this.textBoxRulePath.TabIndex = 6;
             // 
             // buttonTemplatePath
             // 
-            this.buttonTemplatePath.Location = new System.Drawing.Point(308, 106);
-            this.buttonTemplatePath.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonTemplatePath.Location = new System.Drawing.Point(231, 86);
             this.buttonTemplatePath.Name = "buttonTemplatePath";
-            this.buttonTemplatePath.Size = new System.Drawing.Size(35, 28);
+            this.buttonTemplatePath.Size = new System.Drawing.Size(26, 23);
             this.buttonTemplatePath.TabIndex = 5;
             this.buttonTemplatePath.Text = "...";
             this.buttonTemplatePath.UseVisualStyleBackColor = true;
@@ -528,28 +493,25 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 82);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(6, 67);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(145, 17);
+            this.label5.Size = new System.Drawing.Size(112, 13);
             this.label5.TabIndex = 4;
             this.label5.Text = "Путь к docx шаблону";
             // 
             // textBoxTemplatePath
             // 
-            this.textBoxTemplatePath.Location = new System.Drawing.Point(8, 107);
-            this.textBoxTemplatePath.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxTemplatePath.Location = new System.Drawing.Point(6, 87);
             this.textBoxTemplatePath.Name = "textBoxTemplatePath";
             this.textBoxTemplatePath.ReadOnly = true;
-            this.textBoxTemplatePath.Size = new System.Drawing.Size(291, 22);
+            this.textBoxTemplatePath.Size = new System.Drawing.Size(219, 20);
             this.textBoxTemplatePath.TabIndex = 3;
             // 
             // buttonPathSettings
             // 
-            this.buttonPathSettings.Location = new System.Drawing.Point(308, 46);
-            this.buttonPathSettings.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonPathSettings.Location = new System.Drawing.Point(231, 37);
             this.buttonPathSettings.Name = "buttonPathSettings";
-            this.buttonPathSettings.Size = new System.Drawing.Size(35, 28);
+            this.buttonPathSettings.Size = new System.Drawing.Size(26, 23);
             this.buttonPathSettings.TabIndex = 2;
             this.buttonPathSettings.Text = "...";
             this.buttonPathSettings.UseVisualStyleBackColor = true;
@@ -558,20 +520,18 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 22);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(6, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(176, 17);
+            this.label1.Size = new System.Drawing.Size(140, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Путь к выходным папкам ";
             // 
             // textBoxFilePath
             // 
-            this.textBoxFilePath.Location = new System.Drawing.Point(8, 47);
-            this.textBoxFilePath.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxFilePath.Location = new System.Drawing.Point(6, 38);
             this.textBoxFilePath.Name = "textBoxFilePath";
             this.textBoxFilePath.ReadOnly = true;
-            this.textBoxFilePath.Size = new System.Drawing.Size(291, 22);
+            this.textBoxFilePath.Size = new System.Drawing.Size(219, 20);
             this.textBoxFilePath.TabIndex = 0;
             this.textBoxFilePath.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -579,12 +539,11 @@
             // 
             this.tabAdminPage.Controls.Add(this.btnLoadDaysXml);
             this.tabAdminPage.Controls.Add(this.btnSaveDaysXml);
-            this.tabAdminPage.Controls.Add(this.btnReloadRules);
-            this.tabAdminPage.Controls.Add(this.btnClearModifiedYears);
-            this.tabAdminPage.Location = new System.Drawing.Point(4, 25);
+            this.tabAdminPage.Location = new System.Drawing.Point(4, 22);
+            this.tabAdminPage.Margin = new System.Windows.Forms.Padding(2);
             this.tabAdminPage.Name = "tabAdminPage";
-            this.tabAdminPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAdminPage.Size = new System.Drawing.Size(1069, 542);
+            this.tabAdminPage.Padding = new System.Windows.Forms.Padding(2);
+            this.tabAdminPage.Size = new System.Drawing.Size(800, 438);
             this.tabAdminPage.TabIndex = 2;
             this.tabAdminPage.Text = "Администрирование";
             this.tabAdminPage.UseVisualStyleBackColor = true;
@@ -592,9 +551,10 @@
             // 
             // btnLoadDaysXml
             // 
-            this.btnLoadDaysXml.Location = new System.Drawing.Point(18, 154);
+            this.btnLoadDaysXml.Location = new System.Drawing.Point(7, 40);
+            this.btnLoadDaysXml.Margin = new System.Windows.Forms.Padding(2);
             this.btnLoadDaysXml.Name = "btnLoadDaysXml";
-            this.btnLoadDaysXml.Size = new System.Drawing.Size(195, 28);
+            this.btnLoadDaysXml.Size = new System.Drawing.Size(146, 23);
             this.btnLoadDaysXml.TabIndex = 3;
             this.btnLoadDaysXml.Text = "Load days\' names as xml";
             this.btnLoadDaysXml.UseVisualStyleBackColor = true;
@@ -602,52 +562,35 @@
             // 
             // btnSaveDaysXml
             // 
-            this.btnSaveDaysXml.Location = new System.Drawing.Point(18, 109);
+            this.btnSaveDaysXml.Location = new System.Drawing.Point(7, 4);
+            this.btnSaveDaysXml.Margin = new System.Windows.Forms.Padding(2);
             this.btnSaveDaysXml.Name = "btnSaveDaysXml";
-            this.btnSaveDaysXml.Size = new System.Drawing.Size(195, 28);
+            this.btnSaveDaysXml.Size = new System.Drawing.Size(146, 23);
             this.btnSaveDaysXml.TabIndex = 2;
             this.btnSaveDaysXml.Text = "Save days\' names as xml";
             this.btnSaveDaysXml.UseVisualStyleBackColor = true;
             this.btnSaveDaysXml.Click += new System.EventHandler(this.btnSaveDaysXml_Click);
-            // 
-            // btnReloadRules
-            // 
-            this.btnReloadRules.Location = new System.Drawing.Point(18, 62);
-            this.btnReloadRules.Name = "btnReloadRules";
-            this.btnReloadRules.Size = new System.Drawing.Size(195, 28);
-            this.btnReloadRules.TabIndex = 1;
-            this.btnReloadRules.Text = "Reload Rules";
-            this.btnReloadRules.UseVisualStyleBackColor = true;
-            this.btnReloadRules.Click += new System.EventHandler(this.btnReloadRules_Click);
-            // 
-            // btnClearModifiedYears
-            // 
-            this.btnClearModifiedYears.Location = new System.Drawing.Point(18, 16);
-            this.btnClearModifiedYears.Name = "btnClearModifiedYears";
-            this.btnClearModifiedYears.Size = new System.Drawing.Size(195, 28);
-            this.btnClearModifiedYears.TabIndex = 0;
-            this.btnClearModifiedYears.Text = "Clear ModifiedYears";
-            this.btnClearModifiedYears.UseVisualStyleBackColor = true;
-            this.btnClearModifiedYears.Click += new System.EventHandler(this.btnClearModifiedYears_Click);
             // 
             // tabPageTesting
             // 
             this.tabPageTesting.Controls.Add(this.btnTest40mart);
             this.tabPageTesting.Controls.Add(this.textBoxTesting);
             this.tabPageTesting.Controls.Add(this.dateTimePickerTesting);
-            this.tabPageTesting.Location = new System.Drawing.Point(4, 25);
+            this.tabPageTesting.Location = new System.Drawing.Point(4, 22);
+            this.tabPageTesting.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageTesting.Name = "tabPageTesting";
-            this.tabPageTesting.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTesting.Size = new System.Drawing.Size(1069, 542);
+            this.tabPageTesting.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPageTesting.Size = new System.Drawing.Size(800, 438);
             this.tabPageTesting.TabIndex = 3;
             this.tabPageTesting.Text = "Тестирование";
             this.tabPageTesting.UseVisualStyleBackColor = true;
             // 
             // btnTest40mart
             // 
-            this.btnTest40mart.Location = new System.Drawing.Point(31, 56);
+            this.btnTest40mart.Location = new System.Drawing.Point(23, 46);
+            this.btnTest40mart.Margin = new System.Windows.Forms.Padding(2);
             this.btnTest40mart.Name = "btnTest40mart";
-            this.btnTest40mart.Size = new System.Drawing.Size(200, 23);
+            this.btnTest40mart.Size = new System.Drawing.Size(150, 19);
             this.btnTest40mart.TabIndex = 2;
             this.btnTest40mart.Text = "все Пасхи";
             this.btnTest40mart.UseVisualStyleBackColor = true;
@@ -656,19 +599,21 @@
             // textBoxTesting
             // 
             this.textBoxTesting.Dock = System.Windows.Forms.DockStyle.Right;
-            this.textBoxTesting.Location = new System.Drawing.Point(379, 3);
+            this.textBoxTesting.Location = new System.Drawing.Point(282, 2);
+            this.textBoxTesting.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxTesting.Multiline = true;
             this.textBoxTesting.Name = "textBoxTesting";
             this.textBoxTesting.ReadOnly = true;
             this.textBoxTesting.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxTesting.Size = new System.Drawing.Size(687, 536);
+            this.textBoxTesting.Size = new System.Drawing.Size(516, 434);
             this.textBoxTesting.TabIndex = 1;
             // 
             // dateTimePickerTesting
             // 
-            this.dateTimePickerTesting.Location = new System.Drawing.Point(31, 19);
+            this.dateTimePickerTesting.Location = new System.Drawing.Point(23, 15);
+            this.dateTimePickerTesting.Margin = new System.Windows.Forms.Padding(2);
             this.dateTimePickerTesting.Name = "dateTimePickerTesting";
-            this.dateTimePickerTesting.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePickerTesting.Size = new System.Drawing.Size(151, 20);
             this.dateTimePickerTesting.TabIndex = 0;
             this.dateTimePickerTesting.ValueChanged += new System.EventHandler(this.dateTimePickerTesting_ValueChanged);
             // 
@@ -677,19 +622,21 @@
             this.tabPageSequence.Controls.Add(this.label7);
             this.tabPageSequence.Controls.Add(this.groupBox7);
             this.tabPageSequence.Controls.Add(this.groupBox6);
-            this.tabPageSequence.Location = new System.Drawing.Point(4, 25);
+            this.tabPageSequence.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSequence.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageSequence.Name = "tabPageSequence";
-            this.tabPageSequence.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSequence.Size = new System.Drawing.Size(1069, 542);
+            this.tabPageSequence.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPageSequence.Size = new System.Drawing.Size(800, 438);
             this.tabPageSequence.TabIndex = 4;
             this.tabPageSequence.Text = "Последование";
             this.tabPageSequence.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
-            this.label7.Location = new System.Drawing.Point(9, 233);
+            this.label7.Location = new System.Drawing.Point(7, 189);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(195, 49);
+            this.label7.Size = new System.Drawing.Size(146, 40);
             this.label7.TabIndex = 10;
             this.label7.Text = "Тест на 28 сентября 2017 года";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -698,9 +645,11 @@
             // 
             this.groupBox7.Controls.Add(this.txtSequence);
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox7.Location = new System.Drawing.Point(237, 3);
+            this.groupBox7.Location = new System.Drawing.Point(178, 2);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(829, 536);
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox7.Size = new System.Drawing.Size(620, 434);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Текст";
@@ -708,12 +657,13 @@
             // txtSequence
             // 
             this.txtSequence.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtSequence.Location = new System.Drawing.Point(3, 18);
+            this.txtSequence.Location = new System.Drawing.Point(2, 15);
+            this.txtSequence.Margin = new System.Windows.Forms.Padding(2);
             this.txtSequence.Multiline = true;
             this.txtSequence.Name = "txtSequence";
             this.txtSequence.ReadOnly = true;
             this.txtSequence.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSequence.Size = new System.Drawing.Size(823, 515);
+            this.txtSequence.Size = new System.Drawing.Size(616, 417);
             this.txtSequence.TabIndex = 1;
             // 
             // groupBox6
@@ -722,18 +672,21 @@
             this.groupBox6.Controls.Add(this.btnGetSequence);
             this.groupBox6.Controls.Add(this.monthCalendarSequence);
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Left;
-            this.groupBox6.Location = new System.Drawing.Point(3, 3);
+            this.groupBox6.Location = new System.Drawing.Point(2, 2);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(234, 536);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox6.Size = new System.Drawing.Size(176, 434);
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Календарь";
             // 
             // btnSequenceCustomParams
             // 
-            this.btnSequenceCustomParams.Location = new System.Drawing.Point(9, 282);
+            this.btnSequenceCustomParams.Location = new System.Drawing.Point(7, 229);
+            this.btnSequenceCustomParams.Margin = new System.Windows.Forms.Padding(2);
             this.btnSequenceCustomParams.Name = "btnSequenceCustomParams";
-            this.btnSequenceCustomParams.Size = new System.Drawing.Size(157, 29);
+            this.btnSequenceCustomParams.Size = new System.Drawing.Size(118, 24);
             this.btnSequenceCustomParams.TabIndex = 10;
             this.btnSequenceCustomParams.Text = "Настройки...";
             this.btnSequenceCustomParams.UseVisualStyleBackColor = true;
@@ -741,9 +694,10 @@
             // 
             // btnGetSequence
             // 
-            this.btnGetSequence.Location = new System.Drawing.Point(9, 324);
+            this.btnGetSequence.Location = new System.Drawing.Point(7, 263);
+            this.btnGetSequence.Margin = new System.Windows.Forms.Padding(2);
             this.btnGetSequence.Name = "btnGetSequence";
-            this.btnGetSequence.Size = new System.Drawing.Size(192, 29);
+            this.btnGetSequence.Size = new System.Drawing.Size(144, 24);
             this.btnGetSequence.TabIndex = 9;
             this.btnGetSequence.Text = "Сформировать";
             this.btnGetSequence.UseVisualStyleBackColor = true;
@@ -751,8 +705,7 @@
             // 
             // monthCalendarSequence
             // 
-            this.monthCalendarSequence.Location = new System.Drawing.Point(9, 29);
-            this.monthCalendarSequence.Margin = new System.Windows.Forms.Padding(12, 11, 12, 11);
+            this.monthCalendarSequence.Location = new System.Drawing.Point(7, 24);
             this.monthCalendarSequence.MaxSelectionCount = 1;
             this.monthCalendarSequence.Name = "monthCalendarSequence";
             this.monthCalendarSequence.ShowToday = false;
@@ -760,39 +713,40 @@
             this.monthCalendarSequence.TabIndex = 8;
             this.monthCalendarSequence.TodayDate = new System.DateTime(2017, 9, 28, 0, 0, 0, 0);
             // 
-            // templateFileDialog
-            // 
-            this.templateFileDialog.Filter = "Docx файлы | *.docx";
-            // 
             // tabPageCustomRuleMain
             // 
             this.tabPageCustomRuleMain.Controls.Add(this.btnCustomRule);
-            this.tabPageCustomRuleMain.Location = new System.Drawing.Point(4, 25);
+            this.tabPageCustomRuleMain.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCustomRuleMain.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageCustomRuleMain.Name = "tabPageCustomRuleMain";
-            this.tabPageCustomRuleMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCustomRuleMain.Size = new System.Drawing.Size(1069, 542);
+            this.tabPageCustomRuleMain.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPageCustomRuleMain.Size = new System.Drawing.Size(800, 438);
             this.tabPageCustomRuleMain.TabIndex = 5;
             this.tabPageCustomRuleMain.Text = "Правило";
             this.tabPageCustomRuleMain.UseVisualStyleBackColor = true;
             // 
             // btnCustomRule
             // 
-            this.btnCustomRule.Location = new System.Drawing.Point(8, 6);
+            this.btnCustomRule.Location = new System.Drawing.Point(6, 5);
+            this.btnCustomRule.Margin = new System.Windows.Forms.Padding(2);
             this.btnCustomRule.Name = "btnCustomRule";
-            this.btnCustomRule.Size = new System.Drawing.Size(246, 64);
+            this.btnCustomRule.Size = new System.Drawing.Size(184, 52);
             this.btnCustomRule.TabIndex = 0;
             this.btnCustomRule.Text = "Открыть форму";
             this.btnCustomRule.UseVisualStyleBackColor = true;
             this.btnCustomRule.Click += new System.EventHandler(this.btnCustomRule_Click);
             // 
+            // templateFileDialog
+            // 
+            this.templateFileDialog.Filter = "Docx файлы | *.docx";
+            // 
             // StartForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1077, 571);
+            this.ClientSize = new System.Drawing.Size(808, 464);
             this.Controls.Add(this.tabControlMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "StartForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Расписание богослужений";
@@ -844,27 +798,11 @@
         private System.Windows.Forms.TextBox textBoxUserName;
         private System.Windows.Forms.Button buttonSaveSettings;
         private System.Windows.Forms.Panel panelTest;
-        private System.Windows.Forms.RadioButton radioButtonCustom;
-        private System.Windows.Forms.RadioButton radioButtonNext;
-        private System.Windows.Forms.Button buttonExecute;
-        private System.Windows.Forms.MonthCalendar monthCalendarXML;
-        private System.Windows.Forms.Panel panelCustom;
-        private System.Windows.Forms.Label labelNextScheduleWeek;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.CheckBox checkBoxWordpress;
-        private System.Windows.Forms.CheckBox checkBoxTxt;
-        private System.Windows.Forms.CheckBox checkBoxDocx;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.CheckBox checkBoxIsDocxOpen;
         private System.Windows.Forms.Button buttonTemplatePath;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBoxTemplatePath;
         private System.Windows.Forms.OpenFileDialog templateFileDialog;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.TextBox textBoxResult;
         private System.Windows.Forms.TabPage tabAdminPage;
-        private System.Windows.Forms.Button btnClearModifiedYears;
-        private System.Windows.Forms.Button btnReloadRules;
         private System.Windows.Forms.Button buttonRulePathSettings;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBoxRulePath;
@@ -881,11 +819,25 @@
         private System.Windows.Forms.Button btnGetSequence;
         private System.Windows.Forms.MonthCalendar monthCalendarSequence;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.CheckBox checkBoxException;
         private System.Windows.Forms.Button btnSequenceCustomParams;
-        private System.Windows.Forms.CheckBox checkBoxIsBigDocxOpen;
-        private System.Windows.Forms.CheckBox checkBoxBigDocx;
         private System.Windows.Forms.TabPage tabPageCustomRuleMain;
         private System.Windows.Forms.Button btnCustomRule;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TextBox textBoxResult;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox checkBoxIsBigDocxOpen;
+        private System.Windows.Forms.CheckBox checkBoxBigDocx;
+        private System.Windows.Forms.CheckBox checkBoxException;
+        private System.Windows.Forms.CheckBox checkBoxIsDocxOpen;
+        private System.Windows.Forms.CheckBox checkBoxWordpress;
+        private System.Windows.Forms.CheckBox checkBoxTxt;
+        private System.Windows.Forms.CheckBox checkBoxDocx;
+        private System.Windows.Forms.Button buttonExecute;
+        private System.Windows.Forms.Panel panelCustom;
+        private System.Windows.Forms.MonthCalendar monthCalendarXML;
+        private System.Windows.Forms.RadioButton radioButtonNext;
+        private System.Windows.Forms.Label labelNextScheduleWeek;
+        private System.Windows.Forms.RadioButton radioButtonCustom;
     }
 }

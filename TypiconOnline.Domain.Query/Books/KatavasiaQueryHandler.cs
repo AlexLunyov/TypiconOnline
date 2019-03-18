@@ -10,7 +10,7 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Books
 {
-    public class KatavasiaQueryHandler : DbContextHandlerBase, IDataQueryHandler<KatavasiaQuery, Kanonas>
+    public class KatavasiaQueryHandler : DbContextQueryBase, IDataQueryHandler<KatavasiaQuery, Kanonas>
     {
         readonly ITypiconSerializer typiconSerializer;
 

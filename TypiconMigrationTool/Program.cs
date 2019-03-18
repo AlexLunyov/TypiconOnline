@@ -63,6 +63,7 @@ namespace TypiconMigrationTool
                     var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
                     var connectionString = ConfigurationManager.ConnectionStrings["DBTypicon"].ConnectionString;
                     optionsBuilder.UseSqlServer(connectionString);
+                    optionsBuilder.EnableSensitiveDataLogging();
 
                     return new UnitOfWork(new TypiconDBContext(optionsBuilder.Options), new RepositoryFactory());
                 };
@@ -73,6 +74,8 @@ namespace TypiconMigrationTool
                     var connectionString = @"FileName=data\SQLiteDB.db";
                     optionsBuilder.UseSqlite(connectionString);
 
+                    optionsBuilder.EnableSensitiveDataLogging();
+
                     return new UnitOfWork(new TypiconDBContext(optionsBuilder.Options), new RepositoryFactory());
                 };
 
@@ -80,6 +83,7 @@ namespace TypiconMigrationTool
                 {
                     var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
                     optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=typicondb;Username=postgres;Password=z2LDCiiEQFDBlkl3eZyb");
+                    optionsBuilder.EnableSensitiveDataLogging();
 
                     return new UnitOfWork(new TypiconDBContext(optionsBuilder.Options), new RepositoryFactory());
                 };
@@ -94,6 +98,7 @@ namespace TypiconMigrationTool
                         mySqlOptions.ServerVersion(new Version(8, 0, 15), ServerType.MySql);
                     });
                     //optionsBuilder.UseMySQL("server=localhost;UserId=root;Password=z2LDCiiEQFDBlkl3eZyb;database=typicondb;");
+                    optionsBuilder.EnableSensitiveDataLogging();
 
                     return new UnitOfWork(new TypiconDBContext(optionsBuilder.Options), new RepositoryFactory());
                 };

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using TypiconOnline.Domain;
 using TypiconOnline.Domain.Books.Katavasia;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Books.Psalter;
@@ -15,6 +16,12 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 {
     public class TypiconDBContext : DbContext
     {
+        //public DbSet<User> Users { get; set; }
+        //public DbSet<Typicon> Typicons { get; set; }
+        //public DbSet<TypiconVersion> TypiconVersions { get; set; }
+        //public DbSet<MenologyRule> MenologyRules { get; set; }
+        //public DbSet<TriodionRule> TriodionRules { get; set; }
+
         public TypiconDBContext(DbContextOptions<TypiconDBContext> options) : base(options)
         {
             Database.EnsureCreated();
@@ -54,6 +61,9 @@ namespace TypiconOnline.Repository.EFCore.DataBase
             modelBuilder.ApplyConfiguration(new MenologyRuleConfiguration());
             modelBuilder.Entity<TriodionRule>();
             //modelBuilder.ApplyConfiguration(new TriodionRuleConfiguration());
+
+            modelBuilder.ApplyConfiguration(new OutputFormConfiguration()); 
+            modelBuilder.ApplyConfiguration(new OutputFormDayWorshipConfiguration()); 
 
             modelBuilder.ApplyConfiguration(new MenologyDayConfiguration());
             modelBuilder.ApplyConfiguration(new TriodionDayConfiguration());

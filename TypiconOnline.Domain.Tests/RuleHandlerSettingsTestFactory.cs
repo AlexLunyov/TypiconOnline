@@ -31,7 +31,7 @@ namespace TypiconOnline.Domain.Tests
 
             return new RuleHandlerSettings
             {
-                TypiconId = typiconId,
+                TypiconVersionId = typiconId,
                 Date = date,
                 Addition = addition,
                 DayWorships = menologyRule.DayWorships.ToList(),

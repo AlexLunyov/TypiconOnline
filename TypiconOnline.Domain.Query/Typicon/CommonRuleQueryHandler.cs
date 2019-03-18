@@ -7,7 +7,7 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class CommonRuleQueryHandler : DbContextHandlerBase, IDataQueryHandler<CommonRuleQuery, CommonRule>
+    public class CommonRuleQueryHandler : DbContextQueryBase, IDataQueryHandler<CommonRuleQuery, CommonRule>
     {
         public CommonRuleQueryHandler(TypiconDBContext dbContext) : base(dbContext) { }
 

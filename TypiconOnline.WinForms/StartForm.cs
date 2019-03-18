@@ -47,7 +47,6 @@ namespace TypiconOnline.WinForms
         private IScheduleService _scheduleService;
         BookStorage _bookStorage;
         TypiconVersion _typiconEntity;
-        ITypiconVersionService _typiconEntityService;
         IDocxTemplateService _docxTemplateService;
 
         CustomParamsCollection<IRuleApplyParameter> CustomParameters { get; set; } = new CustomParamsCollection<IRuleApplyParameter>();
@@ -68,8 +67,6 @@ namespace TypiconOnline.WinForms
 
             _unitOfWork = container.GetInstance<IUnitOfWork>();
             _dbContext = container.GetInstance<TypiconDBContext>();
-
-            _typiconEntityService = container.GetInstance<ITypiconVersionService>();
 
             _typiconEntity = _dbContext.Set<TypiconVersion>().First(c => c.Id == TYPICON_ID);
 
@@ -264,17 +261,10 @@ namespace TypiconOnline.WinForms
                 GetScheduleWeekRequest weekRequest = new GetScheduleWeekRequest()
                 {
                     Date = SelectedDate,
-                    TypiconId = _typiconEntity.Id,
-                    Handler = new ScheduleHandler(),
-                    Language = "cs-ru",
-                    ThrowExceptionIfInvalid = checkBoxException.Checked,
-                    ApplyParameters = CustomParameters,
-                    CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
+                    TypiconId = TYPICON_ID
                 };
 
                 GetScheduleWeekResponse weekResponse = _scheduleService.GetScheduleWeek(weekRequest);
-
-                _unitOfWork.SaveChanges();
 
                 //string messageString = "";
 
@@ -488,22 +478,10 @@ namespace TypiconOnline.WinForms
             //}
         }
 
-        private void btnClearModifiedYears_Click(object sender, EventArgs e)
-        {
-            _typiconEntityService.ClearModifiedYears(1);
-
-            btnClearModifiedYears.Enabled = false;
-        }
-
         private void tabAdminPage_Enter(object sender, EventArgs e)
         {
-            btnClearModifiedYears.Enabled = (_typiconEntity.ModifiedYears.Count > 0);
         }
 
-        private void btnReloadRules_Click(object sender, EventArgs e)
-        {
-            _typiconEntityService.ReloadRules(1, Properties.Settings.Default.RulesFolder);
-        }
 
         private void buttonRulePathSettings_Click(object sender, EventArgs e)
         {

@@ -18,6 +18,10 @@ namespace TypiconOnline.AppServices.Implementations
 
             _resultStringBuilder.Clear();
 
+            _resultStringBuilder.AppendLine(day.Date.ToShortDateString());
+            _resultStringBuilder.AppendLine(day.Name.Text);
+            _resultStringBuilder.AppendLine($"Знак службы: {day.SignName.Text}");
+
             foreach (WorshipRuleViewModel element in day.Worships)
             {
                 Render(element);
@@ -33,6 +37,8 @@ namespace TypiconOnline.AppServices.Implementations
 
         private void Render(WorshipRuleViewModel element)
         {
+            _resultStringBuilder.AppendLine($"{element.Time} {element.Name}");
+
             foreach (var item in element.ChildElements)
             {
                 if (!string.IsNullOrEmpty(item.KindValue))

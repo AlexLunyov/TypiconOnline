@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure.Common\TypiconOnline.Infrastructure.Common.csproj" />
+    <ProjectReference Include="..\TypiconOnline.Domain.Command\TypiconOnline.Domain.Command.csproj" />
     <ProjectReference Include="..\TypiconOnline.Domain.Rules\TypiconOnline.Domain.Rules.csproj" />
     <ProjectReference Include="..\TypiconOnline.Domain\TypiconOnline.Domain.csproj" />
     <ProjectReference Include="..\TypiconOnline.Repository.EFCore\TypiconOnline.Repository.EFCore.csproj" />

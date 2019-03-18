@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 
@@ -28,6 +29,11 @@ namespace TypiconOnline.AppServices.Jobs
 
         }
 
+        public Task ExecuteAsync(RecalculateCompiledSchedulesJob command)
+        {
+            throw new NotImplementedException();
+        }
+
         private void DoTheJob(int typiconId)
         {
             throw new NotImplementedException();
@@ -37,5 +43,7 @@ namespace TypiconOnline.AppServices.Jobs
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }

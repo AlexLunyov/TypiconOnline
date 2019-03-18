@@ -38,7 +38,7 @@ namespace TypiconOnline.Domain.Rules.Extensions
         /// Возвращает коллекцию RuleElement запрашиваемого общего правила.
         /// </summary>
         /// <returns></returns>
-        public static IReadOnlyList<RuleElement> GetCommonRuleChildren(this IRuleSerializerRoot serializer, int typiconId, string key)
+        public static IReadOnlyList<RuleElementBase> GetCommonRuleChildren(this IRuleSerializerRoot serializer, int typiconId, string key)
         {
             if (serializer == null) throw new ArgumentNullException(nameof(serializer));
 
@@ -46,7 +46,7 @@ namespace TypiconOnline.Domain.Rules.Extensions
 
             var container = commonRule?.GetRule<RootContainer>(serializer);
 
-            return (container != null) ? container.ChildElements : new List<RuleElement>();
+            return (container != null) ? container.ChildElements : new List<RuleElementBase>();
         }
 
         public static IReadOnlyList<T> GetCommonRuleChildren<T>(this IRuleSerializerRoot serializer, int typiconId,

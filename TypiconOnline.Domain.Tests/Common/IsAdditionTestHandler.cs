@@ -7,9 +7,9 @@ using TypiconOnline.Domain.Rules.Interfaces;
 
 namespace TypiconOnline.Domain.Tests.Common
 {
-    public class IsAdditionTestHandler : RuleHandlerBase<IReadOnlyList<RuleElement>>
+    public class IsAdditionTestHandler : RuleHandlerBase<IReadOnlyList<RuleElementBase>>
     {
-        List<RuleElement> container = new List<RuleElement>();
+        List<RuleElementBase> container = new List<RuleElementBase>();
 
         public IsAdditionTestHandler()
         {
@@ -29,11 +29,11 @@ namespace TypiconOnline.Domain.Tests.Common
 
         public override bool Execute(ICustomInterpreted element)
         {
-            container.Add(element as RuleElement);
+            container.Add(element as RuleElementBase);
 
             return true;
         }
 
-        public override IReadOnlyList<RuleElement> GetResult() => container;
+        public override IReadOnlyList<RuleElementBase> GetResult() => container;
     }
 }

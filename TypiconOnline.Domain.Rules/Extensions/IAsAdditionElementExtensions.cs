@@ -66,7 +66,7 @@ namespace TypiconOnline.Domain.Rules.Extensions
             var currentsettings = handler.Settings;
 
             handler.Settings = currentsettings.Addition;
-            (found as RuleElement).Interpret(handler);
+            (found as RuleElementBase).Interpret(handler);
 
             handler.Settings = currentsettings;
         }

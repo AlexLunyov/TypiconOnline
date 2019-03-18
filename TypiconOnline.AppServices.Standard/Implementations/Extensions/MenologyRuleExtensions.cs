@@ -13,5 +13,10 @@ namespace TypiconOnline.AppServices.Implementations.Extensions
         {
             return menologyRules.FirstOrDefault(c => c.GetCurrentDate(date.Year).Date == date.Date);
         }
+
+        public static IEnumerable<MenologyRule> GetAllMovableRules(this IEnumerable<MenologyRule> menologyRules)
+        {
+            return menologyRules.Where(c => c.Date.IsEmpty && c.LeapDate.IsEmpty);
+        }
     }
 }

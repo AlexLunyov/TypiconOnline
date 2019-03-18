@@ -6,8 +6,6 @@ namespace TypiconOnline.Domain.Typicon
 {
     public class Sign : RuleEntity, ITemplateHavingEntity
     {
-        private ItemText _signName;
-
         public Sign() { }
 
         public virtual int? TemplateId { get; set; }
@@ -24,21 +22,22 @@ namespace TypiconOnline.Domain.Typicon
 
         public bool IsTemplate { get; set; }
 
+        private ItemText _signName;
         /// <summary>
         /// Наименование знака службы на нескольких языках
         /// </summary>
-        public virtual ItemText SignName { get; set; } = new ItemText();
-        //{
-        //    get
-        //    {
-        //        if (_signName == null)
-        //        {
-        //            _signName = new ItemText();
-        //        }
-        //        return _signName;
-        //    }
-        //    set => _signName = value;
-        //}
+        public virtual ItemText SignName //{ get; set; }// = new ItemText();
+        {
+            get
+            {
+                if (_signName == null)
+                {
+                    _signName = new ItemText();
+                }
+                return _signName;
+            }
+            set => _signName = value;
+        }
 
         public string GetNameByLanguage(string language)
         {

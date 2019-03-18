@@ -5,14 +5,42 @@ namespace TypiconOnline.Domain.Days
 {
     public class MenologyDay : Day
     {
+        //public virtual ItemDate Date { get; set; } = new ItemDate();
+
+        //public virtual ItemDate LeapDate { get; set; } = new ItemDate();
+
+        private ItemDate _date;
+        private ItemDate _leapDate;
         /// <summary>
         /// Дата
         /// </summary>
-        public virtual ItemDate Date { get; set; } = new ItemDate();
+        public virtual ItemDate Date //{ get; set; }
+        {
+            get
+            {
+                if (_date == null)
+                {
+                    _date = new ItemDate();
+                }
+                return _date;
+            }
+            set => _date = value;
+        }
         /// <summary>
         /// Дата для високосного года
         /// </summary>
-        public virtual ItemDate LeapDate { get; set; } = new ItemDate();
+        public virtual ItemDate LeapDate //{ get; set; }
+        {
+            get
+            {
+                if (_leapDate == null)
+                {
+                    _leapDate = new ItemDate();
+                }
+                return _leapDate;
+            }
+            set => _leapDate = value;
+        }
 
         /// <summary>
         /// Возвращает конкретную дату в году, когда совершается данная служба
