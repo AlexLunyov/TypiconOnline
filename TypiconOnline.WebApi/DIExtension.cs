@@ -1,38 +1,21 @@
 ﻿using CacheManager.Core;
 using EFSecondLevelCache.Core;
 using EFSecondLevelCache.Core.Contracts;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Caching;
-using TypiconOnline.Domain.Books;
-using TypiconOnline.Domain.Books.Apostol;
-using TypiconOnline.Domain.Books.Easter;
-using TypiconOnline.Domain.Books.Evangelion;
-using TypiconOnline.Domain.Books.Katavasia;
-using TypiconOnline.Domain.Books.Oktoikh;
-using TypiconOnline.Domain.Books.OldTestament;
-using TypiconOnline.Domain.Books.Psalter;
-using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.Interfaces;
-using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Repository.EFCore;
 using TypiconOnline.Repository.Caching;
 using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Repository.EFCore.Caching;
 using TypiconOnline.AppServices.Configuration;
-using TypiconOnline.Domain.Typicon;
 using TypiconOnline.AppServices.Jobs;
 using TypiconOnline.WebApi.HostedService;
 using SimpleInjector;
@@ -41,7 +24,6 @@ using TypiconOnline.Domain.Command;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.WebApi.DIExtensions;
 using TypiconOnline.Infrastructure.Common.Query;
-using SimpleInjector.Lifestyles;
 
 namespace TypiconOnline.WebApi
 {
@@ -74,7 +56,8 @@ namespace TypiconOnline.WebApi
             container.Register<IOutputFormFactory, OutputFormFactory>();
             container.Register<IScheduleDataCalculator, ScheduleDataCalculator>();
             container.Register<IScheduleDayViewer<string>, TextScheduleDayViewer>();
-            
+            container.Register<IScheduleWeekViewer<string>, TextScheduleWeekViewer>();
+
 
             //Configuration
             container.Register<IConfigurationRepository>(() => new ConfigurationRepository(configuration));

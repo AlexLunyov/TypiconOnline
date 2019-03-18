@@ -15,30 +15,32 @@ namespace TypiconOnline.WebApi.Controllers
     {
         private readonly IOutputForms _outputForms;
         private readonly IScheduleDayViewer<string> _dayViewer;
+        private readonly IScheduleWeekViewer<string> _weekViewer;
 
-        public OutputFormsController(IOutputForms outputForms, IScheduleDayViewer<string> dayViewer)
+        public OutputFormsController(IOutputForms outputForms, IScheduleDayViewer<string> dayViewer, IScheduleWeekViewer<string> weekViewer)
         {
             _outputForms = outputForms ?? throw new ArgumentNullException(nameof(outputForms));
             _dayViewer = dayViewer ?? throw new ArgumentNullException(nameof(dayViewer));
+            _weekViewer = weekViewer ?? throw new ArgumentNullException(nameof(weekViewer));
         }
 
         // GET api/<controller>/
-        [HttpGet("")]
+        [Route("")]
+        [Route("Index")]
         public string Index()
         {
             return Get(1, new DateTime(2019, 1, 1));
         }
 
-        // GET api/<controller>/get?typiconId=1&date=01-01-2019
-        [HttpGet("{id}")]
+        // GET api/<controller>/get/1/01-01-2019
+        [Route("Get/{typiconId}/{date}")]
         public string Get(int typiconId, DateTime date)
         {
             var result = _outputForms.Get(typiconId, date);
 
             if (result.Success)
             {
-                string str = _dayViewer.Execute(result.Value);
-                return str;
+                return _dayViewer.Execute(result.Value);
             }
             else
             {
@@ -46,5 +48,27 @@ namespace TypiconOnline.WebApi.Controllers
             }
         }
 
+        // GET api/<controller>/getweek
+        [Route("GetWeek")]
+        public string GetWeek()
+        {
+            return GetWeek(1, DateTime.Now);
+        }
+
+        // GET api/<controller>/getweek/1/01-01-2019
+        [Route("GetWeek/{typiconId}/{date}")]
+        public string GetWeek(int typiconId, DateTime date)
+        {
+            var result = _outputForms.GetWeek(typiconId, date);
+
+            if (result.Success)
+            {
+                return _weekViewer.Execute(result.Value);
+            }
+            else
+            {
+                return result.Error;
+            }
+        }
     }
 }

@@ -64,15 +64,13 @@ namespace TypiconOnline.WebApi.Controllers
             var weekResponse = _scheduleService.GetScheduleWeek(weekRequest);
 
             var htmlViewer = new HtmlScheduleWeekViewer();
-            htmlViewer.Execute(weekResponse.Week);
-
-            string resultString = htmlViewer.ResultString;
+            string resultString = htmlViewer.Execute(weekResponse.Week);
 
             weekRequest.Date = date.AddDays(7);
 
             weekResponse = _scheduleService.GetScheduleWeek(weekRequest);
-            htmlViewer.Execute(weekResponse.Week);
-            resultString += htmlViewer.ResultString;
+            
+            resultString += htmlViewer.Execute(weekResponse.Week);
 
             ViewBag.Schedule = new HtmlString(resultString);
 

@@ -11,4 +11,9 @@ namespace TypiconOnline.AppServices.Interfaces
     {
         void Execute(ScheduleWeek week);
     }
+
+    public interface IScheduleWeekViewer<T> where T : class
+    {
+        T Execute(ScheduleWeek week);
+    }
 }

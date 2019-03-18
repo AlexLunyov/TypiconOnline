@@ -346,7 +346,8 @@ namespace TypiconOnline.WinForms
                 if (checkBoxTxt.Checked)
                 {
                     HtmlScheduleWeekViewer htmlViewer = new HtmlScheduleWeekViewer();
-                    htmlViewer.Execute(weekResponse.Week);
+
+                    string htmlString = htmlViewer.Execute(weekResponse.Week);
 
                     //textBoxResult.Clear();
                     //textBoxResult.AppendText(htmlViewer.ResultString);
@@ -362,7 +363,7 @@ namespace TypiconOnline.WinForms
                                 {
                                     DateTime datePub = _selectedDate.AddDays(-8).AddHours(17).AddMinutes(30);
 
-                                    PostToWordPress(weekResponse.Week.Name.Text, htmlViewer.ResultString, datePub);
+                                    PostToWordPress(weekResponse.Week.Name.Text, htmlString, datePub);
 
                                     MessageBox.Show($"Запись размещена на сайте. Дата публикации - {datePub.ToString("hh:mm dd MMMM yyyy года.")}", "Информация",
                                         MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -13,21 +13,11 @@ namespace TypiconOnline.AppServices.Implementations
     /// <summary>
     /// Вместо [sign] помещаем span на место знаков служб
     /// </summary>
-    public class HtmlInnerScheduleWeekViewer : IScheduleWeekViewer
+    public class HtmlInnerScheduleWeekViewer : IScheduleWeekViewer<string>
     {
-        private string _resultString;
-
-        public string ResultString
+        public string Execute(ScheduleWeek week)
         {
-            get
-            {
-                return _resultString;
-            }
-        }
-
-        public void Execute(ScheduleWeek week)
-        {
-            _resultString = "";
+            string _resultString = "";
 
             _resultString += "<div class=\"schedule\">";
 
@@ -103,6 +93,8 @@ namespace TypiconOnline.AppServices.Implementations
             }
 
             _resultString += "</div>";
+
+            return _resultString;
         }
     }
 }

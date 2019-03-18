@@ -9,21 +9,11 @@ using TypiconOnline.Domain.ViewModels;
 
 namespace TypiconOnline.AppServices.Implementations
 {
-    public class HtmlScheduleWeekViewer : IScheduleWeekViewer
+    public class HtmlScheduleWeekViewer : IScheduleWeekViewer<string>
     {
-        private string _resultString;
-
-        public string ResultString
+        public string Execute(ScheduleWeek week)
         {
-            get
-            {
-                return _resultString;
-            }
-        }
-
-        public void Execute(ScheduleWeek week)
-        {
-            _resultString = "";
+            string _resultString = "";
 
             _resultString += "<div class=\"schedule\">";
 
@@ -71,6 +61,8 @@ namespace TypiconOnline.AppServices.Implementations
             }
 
             _resultString += "</div>";
+
+            return _resultString;
         }
     }
 }

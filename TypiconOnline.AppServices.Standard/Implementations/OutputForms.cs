@@ -37,7 +37,6 @@ namespace TypiconOnline.AppServices.Implementations
             _queue = queue ?? throw new ArgumentNullException(nameof(queue));
         }
 
-        //public Result<ScheduleDay> Get(int typiconId, DateTime date)
         public Result<ScheduleDay> Get(int typiconId, DateTime date, HandlingMode handlingMode = HandlingMode.AstronomicDay)
         {
             var scheduleDay = _dbContext.GetScheduleDay(typiconId, date, _serializer);
@@ -70,6 +69,44 @@ namespace TypiconOnline.AppServices.Implementations
             _dbContext.UpdateOutputForm(created.OutputForm);
 
             return Result.Ok(created.Day);
+        }
+
+        public Result<ScheduleWeek> GetWeek(int typiconId, DateTime date)
+        {
+            date = GetMonday(date);
+
+            var week = new ScheduleWeek()
+            {
+                Name = _nameComposer.GetWeekName(date, "cs-ru")
+            };
+
+            int i = 0;
+
+            while (i < 7)
+            {
+                var dayResult = Get(typiconId, date);
+
+                if (dayResult.Failure)
+                {
+                    return Result.Fail<ScheduleWeek>(dayResult.Error);
+                }
+
+                week.Days.Add(dayResult.Value);
+                date = date.AddDays(1);
+                i++;
+            }
+
+            return Result.Ok(week);
+        }
+
+        private DateTime GetMonday(DateTime date)
+        {
+            while (date.DayOfWeek != DayOfWeek.Monday)
+            {
+                date = date.AddDays(-1);
+            }
+
+            return date;
         }
 
         /// <summary>
@@ -110,12 +147,5 @@ namespace TypiconOnline.AppServices.Implementations
                 }
             }
         }
-
-        //public async Task<Result<ScheduleWeek>> GetWeek(int typiconId, DateTime date)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
     }
 }

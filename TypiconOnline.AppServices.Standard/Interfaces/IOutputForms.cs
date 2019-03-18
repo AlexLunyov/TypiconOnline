@@ -13,6 +13,6 @@ namespace TypiconOnline.AppServices.Interfaces
     {
         //Task<Result<ScheduleDay>> GetVersion(int typiconVersionId, DateTime date, UserInfo userInfo);
         Result<ScheduleDay> Get(int typiconId, DateTime date, HandlingMode handlingMode = HandlingMode.AstronomicDay);
-        //Task<Result<ScheduleWeek>> GetWeek(int typiconId, DateTime date);
+        Result<ScheduleWeek> GetWeek(int typiconId, DateTime date);
     }
 }

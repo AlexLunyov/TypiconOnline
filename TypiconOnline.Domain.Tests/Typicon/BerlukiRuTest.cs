@@ -39,13 +39,12 @@ namespace TypiconOnline.Domain.Tests.Typicon
             HtmlScheduleWeekViewer htmlViewer = new HtmlScheduleWeekViewer();
             htmlViewer.Execute(weekResponse.Week);
 
-            string resultString = htmlViewer.ResultString;
+            string resultString = htmlViewer.Execute(weekResponse.Week);
 
             weekRequest.Date = date.AddDays(7);
 
             weekResponse = scheduleService.GetScheduleWeek(weekRequest);
-            htmlViewer.Execute(weekResponse.Week);
-            resultString += htmlViewer.ResultString;
+            resultString += htmlViewer.Execute(weekResponse.Week);
 
             Assert.Pass(resultString);
         }
