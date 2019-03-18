@@ -51,12 +51,28 @@ namespace TypiconOnline.AppServices.Implementations.Extensions
             return dbContext.Set<ModifiedYear>().Any(c => c.TypiconVersionId == typiconVersionId && c.Year == year);
         }
 
-        public static bool IsCalcModifiedYearExists(this TypiconDBContext dbContext, int typiconVersionId, int year)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <param name="typiconVersionId"></param>
+        /// <param name="year"></param>
+        /// <returns>0 = не существует,
+        /// 1 = существутет, но еще не вычислен,
+        /// 2 = существует и вычислен</returns>
+        public static int IsCalcModifiedYearExists(this TypiconDBContext dbContext, int typiconVersionId, int year)
         {
-            return dbContext.Set<ModifiedYear>()
-                .Any(c => c.TypiconVersionId == typiconVersionId 
-                    && c.Year == year
-                    && c.IsCalculated);
+            var found = dbContext.Set<ModifiedYear>()
+                .FirstOrDefault(c => c.TypiconVersionId == typiconVersionId && c.Year == year);
+
+            int result = 0;
+
+            if (found != null)
+            {
+                result = (found.IsCalculated) ? 2 : 1;
+            }
+
+            return result;
         }
 
         public static IEnumerable<MenologyRule> GetAllMenologyRules(this TypiconDBContext dbContext, int typiconVersionId)

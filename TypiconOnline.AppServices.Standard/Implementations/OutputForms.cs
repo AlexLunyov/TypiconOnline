@@ -97,14 +97,17 @@ namespace TypiconOnline.AppServices.Implementations
 
             bool IsJobSent(int id, int year)
             {
-                if (!_dbContext.IsCalcModifiedYearExists(typiconVersionId, date.Year))
+                switch (_dbContext.IsCalcModifiedYearExists(id, year))
                 {
-                    //заявка на вычисление ModifiedYear
-                    _queue.Send(new CalculateModifiedYearJob(typiconVersionId, date.Year));
-                    return true;
+                    case 0:
+                        //заявка на вычисление ModifiedYear
+                        _queue.Send(new CalculateModifiedYearJob(id, year));
+                        return true;
+                    case 1:
+                        return true;
+                    default:
+                        return false;
                 }
-
-                return false;
             }
         }
 
