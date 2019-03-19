@@ -37,7 +37,7 @@ namespace TypiconOnline.AppServices.Implementations
 
         private void Render(WorshipRuleViewModel element)
         {
-            _resultStringBuilder.AppendLine($"{element.Time} {element.Name}");
+            _resultStringBuilder.AppendLine($"{element.Time} {element.Name} {element.AdditionalName}");
 
             foreach (var item in element.ChildElements)
             {

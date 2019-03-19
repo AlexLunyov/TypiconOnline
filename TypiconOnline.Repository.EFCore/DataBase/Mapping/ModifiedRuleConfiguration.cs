@@ -17,6 +17,8 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 
             builder.HasOne(e => e.ShortName).WithMany();
 
+            //builder.OwnsOne(c => c.Filter);
+
             //builder.OwnsOne(c => c.ShortName, 
             //    k =>
             //    {

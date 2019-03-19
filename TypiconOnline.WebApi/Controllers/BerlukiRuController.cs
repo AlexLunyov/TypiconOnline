@@ -16,6 +16,7 @@ using System.Text;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Domain.Typicon;
 using Microsoft.AspNetCore.Html;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
 namespace TypiconOnline.WebApi.Controllers
 {
@@ -24,13 +25,13 @@ namespace TypiconOnline.WebApi.Controllers
     {
         const int TYPICON_ID = 1;
 
-        IScheduleService _scheduleService;
-        IUnitOfWork unitOfWork;
+        private readonly IOutputForms _outputForms;
+        private readonly IScheduleWeekViewer<string> _weekViewer = new HtmlScheduleWeekViewer();
 
-        public BerlukiRuController(IUnitOfWork unitOfWork, IScheduleService scheduleService)
+        public BerlukiRuController(IOutputForms outputForms)//, IScheduleWeekViewer<string> weekViewer)
         {
-            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException("unitOfWork in BerlukiRuController");
-            _scheduleService = scheduleService ?? throw new ArgumentNullException("ScheduleService in BerlukiRuController");
+            _outputForms = outputForms ?? throw new ArgumentNullException(nameof(outputForms));
+            //_weekViewer = weekViewer ?? throw new ArgumentNullException(nameof(weekViewer));
         }
 
         // GET berlukiru
@@ -40,7 +41,7 @@ namespace TypiconOnline.WebApi.Controllers
             return GetHtmlString(DateTime.Now);
         }
 
-        [HttpGet("{date}")]
+        [Route("Get/{date}")]
         public ActionResult Get(DateTime date)
         {
             return GetHtmlString(date);
@@ -53,26 +54,25 @@ namespace TypiconOnline.WebApi.Controllers
                 date = date.AddDays(1);
             }
 
-            var weekRequest = new GetScheduleWeekRequest()
-            {
-                Date = date,
-                TypiconId = TYPICON_ID,
-                Handler = new ScheduleHandler(),
-                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
-            };
+            var week = _outputForms.GetWeek(TYPICON_ID, date);
+            var nextWeek = _outputForms.GetWeek(TYPICON_ID, date.AddDays(7));
 
-            var weekResponse = _scheduleService.GetScheduleWeek(weekRequest);
+            Result.Combine(week, nextWeek)
+                .OnSuccess(() =>
+                {
+                    string resultString = _weekViewer.Execute(week.Value) + _weekViewer.Execute(nextWeek.Value);
 
-            var htmlViewer = new HtmlScheduleWeekViewer();
-            string resultString = htmlViewer.Execute(weekResponse.Week);
+                    ViewBag.Schedule = new HtmlString(resultString);
+                })
+                .OnFailure(() =>
+                {
+                    string msg = string.Empty;
 
-            weekRequest.Date = date.AddDays(7);
+                    week.OnFailure(() => msg += week.Error);
+                    nextWeek.OnFailure(() => msg += nextWeek.Error);
 
-            weekResponse = _scheduleService.GetScheduleWeek(weekRequest);
-            
-            resultString += htmlViewer.Execute(weekResponse.Week);
-
-            ViewBag.Schedule = new HtmlString(resultString);
+                    ViewBag.Schedule = msg;
+                });
 
             return View();
         }

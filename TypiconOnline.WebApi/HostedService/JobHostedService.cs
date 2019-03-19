@@ -9,12 +9,15 @@ using TypiconOnline.Infrastructure.Common.Command;
 
 namespace TypiconOnline.WebApi.HostedService
 {
+    /// <summary>
+    /// Сервис, синхронно обрабатывающий задания
+    /// </summary>
     public class JobHostedService : BackgroundService
     {
         /// <summary>
         /// Максимум заданий, обрабатываемых одновременно
         /// </summary>
-        private const int MAX_TASKS = 6;
+        //private const int MAX_TASKS = 6;
 
         private readonly IQueue _queue;
         private readonly ICommandProcessor _processor;
@@ -29,9 +32,10 @@ namespace TypiconOnline.WebApi.HostedService
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                foreach (var job in _queue.Extract<IJob>(MAX_TASKS))
+                foreach (var job in _queue.ExtractAll<IJob>())
                 {
-                    Task.Factory.StartNew(() => _processor.ExecuteAsync(job));
+                    _processor.Execute(job);
+                    //Task.Factory.StartNew(() => _processor.ExecuteAsync(job));
                 }
 
                 Thread.Sleep(1000);

@@ -26,36 +26,32 @@ namespace TypiconOnline.Domain.Typicon.Modifications
 
         public virtual int? SignNumber { get; set; }
 
-        ItemTextStyled shortName = new ItemTextStyled();
+        ItemTextStyled _shortName;
         public virtual ItemTextStyled ShortName
         {
             get
             {
-                return shortName;
-            }
-            set
-            {
-                if (value != null)
+                if (_shortName == null)
                 {
-                    shortName = value;
+                    _shortName = new ItemTextStyled();
                 }
+                return _shortName;
             }
+            set => _shortName = value;
         }
 
-        DayWorshipsFilter filter = new DayWorshipsFilter();
+        DayWorshipsFilter _filter;
         public virtual DayWorshipsFilter Filter
         {
             get
             {
-                return filter;
-            }
-            set
-            {
-                if (value != null)
+                if (_filter == null)
                 {
-                    filter = value;
+                    _filter = new DayWorshipsFilter();
                 }
+                return _filter;
             }
+            set => _filter = value;
         }
 
         /// <summary>

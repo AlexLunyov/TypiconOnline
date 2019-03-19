@@ -260,12 +260,6 @@
     <Compile Include="StartForm.Designer.cs">
       <DependentUpon>StartForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ScheduleControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ScheduleControl.Designer.cs">
-      <DependentUpon>ScheduleControl.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="FormCustomParams.resx">
       <DependentUpon>FormCustomParams.cs</DependentUpon>
     </EmbeddedResource>
@@ -292,9 +286,6 @@
     <Content Include="data\SQLiteDB.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Controls\ScheduleControl.resx">
-      <DependentUpon>ScheduleControl.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="data\BigTemplate.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

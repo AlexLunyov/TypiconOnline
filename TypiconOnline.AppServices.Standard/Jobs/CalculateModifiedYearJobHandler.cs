@@ -43,24 +43,26 @@ namespace TypiconOnline.AppServices.Jobs
             var modifiedYear = InnerCreate(command.TypiconVersionId, command.Year);
 
             //фиксируем изменения
-            _dbContext.UpdateModifiedYear(modifiedYear.Result);
+            _dbContext.UpdateModifiedYear(modifiedYear);
         }
 
-        public virtual async Task ExecuteAsync(CalculateModifiedYearJob command)
+        public virtual Task ExecuteAsync(CalculateModifiedYearJob command)
         {
             if (_dbContext.IsModifiedYearExists(command.TypiconVersionId, command.Year))
             {
                 //Значит год уже был сформирован или формируется в настоящий момент асинхронно
-                return;
+                return Task.CompletedTask;
             }
 
-            var modifiedYear = await InnerCreate(command.TypiconVersionId, command.Year);
+            var modifiedYear = InnerCreate(command.TypiconVersionId, command.Year);
 
             //фиксируем изменения
-            await _dbContext.UpdateModifiedYearAsync(modifiedYear);
+            _dbContext.UpdateModifiedYearAsync(modifiedYear);
+
+            return Task.CompletedTask;
         }
 
-        protected virtual async Task<ModifiedYear> InnerCreate(int typiconVersionId, int year)
+        protected virtual ModifiedYear InnerCreate(int typiconVersionId, int year)
         {
             var modifiedYear = new ModifiedYear()
             {
@@ -71,7 +73,7 @@ namespace TypiconOnline.AppServices.Jobs
 
             _dbContext.UpdateModifiedYear(modifiedYear);
 
-            await Fill(typiconVersionId, modifiedYear);
+            Fill(typiconVersionId, modifiedYear);
 
             modifiedYear.IsCalculated = true;
 

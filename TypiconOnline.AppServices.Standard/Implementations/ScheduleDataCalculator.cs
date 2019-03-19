@@ -118,7 +118,7 @@ namespace TypiconOnline.AppServices.Implementations
         /// <param name="menologyRule"></param>
         /// <param name="triodionRule"></param>
         /// <returns>Правило для обработки, список текстов богослужений</returns>
-        private (DayRule, IEnumerable<DayWorship>) CalculatePriorities(ModifiedRule modifiedRule, DayRule menologyRule, DayRule triodionRule)
+        private (DayRule, IEnumerable<DayWorship>) CalculatePriorities(ModifiedRule modifiedRule, MenologyRule menologyRule, TriodionRule triodionRule)
         {
             //Приоритет Минеи
             IDayRule menologyToCompare = SetValues(menologyRule, out int menologyPriority, typeof(MenologyRule));
@@ -127,12 +127,14 @@ namespace TypiconOnline.AppServices.Implementations
 
             IDayRule SetValues(DayRule dr, out int p, Type t)
             {
-                DayRule r = null;
+                IDayRule r = null;
                 p = int.MaxValue;
 
-                if (modifiedRule?.DayRule.GetType().Equals(t) == true)
+                if (modifiedRule?.DayRule.GetType().Equals(t) == true
+                    //для Proxies
+                    || modifiedRule?.DayRule.GetType().IsSubclassOf(t) == true)
                 {
-                    r = modifiedRule.DayRule;
+                    r = modifiedRule;//.DayRule;
                     p = modifiedRule.Priority;
                 }
                 else if (dr != null)

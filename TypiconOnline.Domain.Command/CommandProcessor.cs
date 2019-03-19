@@ -12,29 +12,35 @@ namespace TypiconOnline.Domain.Command
     public sealed class CommandProcessor : ICommandProcessor, IDisposable
     {
         private readonly Container container;
-        private readonly Scope scope;
+        //private readonly Scope scope;
 
         public CommandProcessor(Container container)
         {
             this.container = container;
 
-            scope = AsyncScopedLifestyle.BeginScope(container);
+            //scope = AsyncScopedLifestyle.BeginScope(container);
         }
 
-        [DebuggerStepThrough]
+        //[DebuggerStepThrough]
         public void Execute<TCommand>(TCommand command) where TCommand : ICommand
         {
-            dynamic handler = GetHandler(command);
+            using (AsyncScopedLifestyle.BeginScope(container))
+            {
+                dynamic handler = GetHandler(command);
 
-            handler.Execute((dynamic)command);
+                handler.Execute((dynamic)command);
+            }
         }
 
-        [DebuggerStepThrough]
+        //[DebuggerStepThrough]
         public Task ExecuteAsync<TCommand>(TCommand command) where TCommand : ICommand
         {
-            dynamic handler = GetHandler(command);
+            using (AsyncScopedLifestyle.BeginScope(container))
+            {
+                dynamic handler = GetHandler(command);
 
-            return handler.ExecuteAsync((dynamic)command);
+                return handler.ExecuteAsync((dynamic)command);
+            }
         }
 
         private dynamic GetHandler<TCommand>(TCommand command) where TCommand : ICommand
@@ -47,7 +53,7 @@ namespace TypiconOnline.Domain.Command
 
         public void Dispose()
         {
-            scope.Dispose();
+            //scope.Dispose();
         }
     }
 }
