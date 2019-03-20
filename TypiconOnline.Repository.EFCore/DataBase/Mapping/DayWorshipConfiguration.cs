@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 {
@@ -15,18 +16,31 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
         {
             builder.HasKey(c => c.Id);
 
-            builder.Property<int>("WorshipNameId");
-            builder.HasOne(e => e.WorshipName)
-                .WithMany()
-                .HasForeignKey("WorshipNameId")
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.OwnsOne(c => c.WorshipName, d =>
+            {
+                d.OwnsMany(c => c.Items, a =>
+                {
+                    a.Property<int>("NameId");
+                    a.HasForeignKey("NameId");
+                    a.Property<int>("Id");
+                    a.HasKey("Id");
+                    a.ToTable("DayWorshipNameItems");
+                });
+                //.ToTable("DayWorshipName");
+            });
 
-            builder.Property<int?>("WorshipShortNameId");
-            builder.HasOne(e => e.WorshipShortName)
-                .WithMany()
-                .HasForeignKey("WorshipShortNameId")
-                //.IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.OwnsOne(c => c.WorshipShortName, d =>
+            {
+                d.OwnsMany(c => c.Items, a =>
+                {
+                    a.Property<int>("NameId");
+                    a.HasForeignKey("NameId");
+                    a.Property<int>("Id");
+                    a.HasKey("Id");
+                    a.ToTable("DayWorshipShortNameItems");
+                })
+                .ToTable("DayWorshipShortName");
+            });
 
             builder.HasOne(e => e.Parent).
                 WithMany();

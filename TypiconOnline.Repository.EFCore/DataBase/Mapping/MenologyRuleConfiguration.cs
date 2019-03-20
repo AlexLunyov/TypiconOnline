@@ -13,6 +13,10 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<MenologyRule> builder)
         {
+            //builder.HasBaseType((Type)null);
+
+            //builder.HasKey(c => c.Id);
+
             builder.OwnsOne(c => c.Date)
                 .Ignore(c => c.Expression);
             builder.OwnsOne(c => c.LeapDate)

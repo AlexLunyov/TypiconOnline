@@ -13,10 +13,9 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<TriodionRule> builder)
         {
-            //builder.HasOne(c => c.TypiconVersion)
-            //    .WithMany()
-            //    .HasForeignKey(c => c.TypiconVersionId)
-            //    .OnDelete(DeleteBehavior.Restrict);
+            builder.HasBaseType((Type)null);
+
+            builder.HasKey(c => c.Id);
         }
     }
 }

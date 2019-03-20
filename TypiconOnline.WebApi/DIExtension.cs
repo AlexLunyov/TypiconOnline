@@ -24,6 +24,7 @@ using TypiconOnline.Domain.Command;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.WebApi.DIExtensions;
 using TypiconOnline.Infrastructure.Common.Query;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace TypiconOnline.WebApi
 {
@@ -64,8 +65,14 @@ namespace TypiconOnline.WebApi
 
             //Queue
             container.RegisterSingleton<IQueue, JobQueue>();
-            container.Register<JobHostedService>();
-            services.AddHostedServiceFromContainer<JobHostedService>(container);
+
+            //For SQLite
+            //container.Register<JobHostedService>();
+            //services.AddHostedServiceFromContainer<JobHostedService>(container);
+
+            //For MySql
+            container.Register<JobAsyncHostedService>();
+            services.AddHostedServiceFromContainer<JobAsyncHostedService>(container);
 
             //query command jobs
             //container.RegisterTypiconQueryClasses();
@@ -91,86 +98,15 @@ namespace TypiconOnline.WebApi
                 //optionsBuilder.UseSqlServer(connectionString);
 
                 //SQLite
-                var connectionString = configuration.GetConnectionString("DBTypicon");
-                optionsBuilder.UseSqlite(connectionString);
-            });
-
-            
-        }
-
-        private static void AddTypiconCaching(this IServiceCollection services, IConfiguration configuration)
-        {
-            //DbContext
-            services.AddScoped<TypiconDBContext>(serviceProvider =>
-            {
-                var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
-                //SqlServer
-                var connectionString = configuration.GetConnectionString("MSSql");
-                optionsBuilder.UseSqlServer(connectionString);
-                //SQLite
                 //var connectionString = configuration.GetConnectionString("DBTypicon");
                 //optionsBuilder.UseSqlite(connectionString);
 
-                return new CachedDbContext(optionsBuilder.Options);
-            });
-
-            //MemoryCache
-            services.AddMemoryCache();
-            services.AddSingleton(typeof(ICacheStorage), typeof(MemoryCacheStorage));
-
-            //Configuration
-            services.AddScoped<IConfigurationRepository>(serviceProvider => new ConfigurationRepository(configuration));
-
-            services.AddScoped<IRepositoryFactory>(serviceProvider =>
-            {
-                var dbContext = serviceProvider.GetService<TypiconDBContext>();
-                var innerRepository = new RepositoryFactory();
-
-                return new CachingRepositoryFactory(innerRepository,
-                    serviceProvider.GetRequiredService<ICacheStorage>(),
-                    serviceProvider.GetRequiredService<IConfigurationRepository>());
-            });
-        }
-
-        private static void EFCache(this IServiceCollection services, IConfiguration configuration)
-        {
-            //caching
-            services.AddEFSecondLevelCache();
-
-            services.AddSingleton(typeof(ICacheManager<>), typeof(BaseCacheManager<>));
-            services.AddSingleton(typeof(ICacheManagerConfiguration),
-                new CacheManager.Core.ConfigurationBuilder()
-                    .WithJsonSerializer()
-                    .WithMicrosoftMemoryCacheHandle()
-                    .WithExpiration(ExpirationMode.Sliding, TimeSpan.FromMinutes(configuration.GetValue<int>("ShortCacheDuration")))
-                    .DisablePerformanceCounters()
-                    .DisableStatistics()
-                    .Build());
-
-            //DbContext
-            services.AddScoped<TypiconDBContext>(serviceProvider =>
-            {
-                var cacheServiceProvider = serviceProvider.GetService<IEFCacheServiceProvider>();
-
-                var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
-                //SqlServer
-                var connectionString = configuration.GetConnectionString("MSSql");
-                optionsBuilder.UseSqlServer(connectionString);
-                //SQLite
-                //var connectionString = configuration.GetConnectionString("DBTypicon");
-                //optionsBuilder.UseSqlite(connectionString);
-
-                return new EFCacheDBContext(optionsBuilder.Options, cacheServiceProvider);
-            });
-
-
-
-            services.AddScoped<IRepositoryFactory>(serviceProvider =>
-            {
-                var dbContext = serviceProvider.GetService<TypiconDBContext>();
-                var innerRepository = new RepositoryFactory();
-
-                return new EFCacheRepositoryFactory(innerRepository, serviceProvider);
+                //MySQL
+                optionsBuilder.UseMySql("server=localhost;UserId=root;Password=z2LDCiiEQFDBlkl3eZyb;database=typicondb;",
+                        mySqlOptions =>
+                        {
+                            mySqlOptions.ServerVersion(new Version(8, 0, 15), ServerType.MySql);
+                        });
             });
         }
     }

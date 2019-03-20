@@ -112,6 +112,7 @@
     <Compile Include="Common\LanguageSettingsFactory.cs" />
     <Compile Include="Typicon\OutputForm.cs" />
     <Compile Include="Typicon\OutputFormDayWorship.cs" />
+    <Compile Include="Typicon\RuleEntityToModify.cs" />
     <Compile Include="UserTypicon.cs" />
     <Compile Include="DayStructureBase.cs" />
     <Compile Include="Interfaces\IAsAdditionElement.cs" />

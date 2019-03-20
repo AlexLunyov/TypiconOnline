@@ -31,7 +31,7 @@ namespace TypiconMigrationTool.Core
         {
             var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
             //Sqlite
-            optionsBuilder.UseSqlite(@"FileName=data\SQLiteDB.db");
+            //optionsBuilder.UseSqlite(@"FileName=data\SQLiteDB.db");
 
             //MSSql
             //var connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={Directory.GetCurrentDirectory()}\Data\TypiconDB.mdf;Database=TypiconDB;Integrated Security=True;Trusted_Connection=True";
@@ -41,11 +41,11 @@ namespace TypiconMigrationTool.Core
             //optionsBuilder.UseNpgsql($@"Host=localhost;Port=5432;Database=typicondb;Username=postgres;Password=z2LDCiiEQFDBlkl3eZyb");
 
             //MySQL
-            //optionsBuilder.UseMySql("server=localhost;UserId=root;Password=z2LDCiiEQFDBlkl3eZyb;database=typicondb;", 
-            //        mySqlOptions =>
-            //        {
-            //            mySqlOptions.ServerVersion(new Version(8, 0, 15), ServerType.MySql);
-            //        });
+            optionsBuilder.UseMySql("server=localhost;UserId=root;Password=z2LDCiiEQFDBlkl3eZyb;database=typicondb;",
+                    mySqlOptions =>
+                    {
+                        mySqlOptions.ServerVersion(new Version(8, 0, 15), ServerType.MySql);
+                    });
 
             return optionsBuilder.Options;
         }

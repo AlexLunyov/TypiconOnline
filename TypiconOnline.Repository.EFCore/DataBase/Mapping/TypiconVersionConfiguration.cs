@@ -15,17 +15,33 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
         {
             builder.HasKey(c => c.Id);
 
-            builder.Property<int>("NameId");
-            builder.HasOne(e => e.Name)
-                .WithMany()
-                .HasForeignKey("NameId")
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.OwnsOne(c => c.Name, d =>
+            {
+                d.OwnsMany(c => c.Items, a =>
+                {
+                    a.Property<int>("NameId");
+                    a.HasForeignKey("NameId");
+                    a.Property<int>("Id");
+                    a.HasKey("Id");
+                    a.ToTable("TypiconVersionNameItems");
+                })
+                .Ignore("Discriminator");
+                //.ToTable("TypiconVersionName");
+            });
 
             builder.HasMany(e => e.ModifiedYears)
                 .WithOne(m => m.TypiconVersion)
                 .HasForeignKey(c => c.TypiconVersionId);
 
             builder.HasMany(c => c.CommonRules)
+                .WithOne(d => d.TypiconVersion)
+                .HasForeignKey(c => c.TypiconVersionId);
+
+            builder.HasMany(c => c.MenologyRules)
+                .WithOne(d => d.TypiconVersion)
+                .HasForeignKey(c => c.TypiconVersionId);
+
+            builder.HasMany(c => c.TriodionRules)
                 .WithOne(d => d.TypiconVersion)
                 .HasForeignKey(c => c.TypiconVersionId);
 

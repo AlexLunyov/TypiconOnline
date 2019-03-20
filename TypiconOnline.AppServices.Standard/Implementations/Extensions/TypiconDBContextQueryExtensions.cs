@@ -77,7 +77,7 @@ namespace TypiconOnline.AppServices.Implementations.Extensions
 
         public static IEnumerable<MenologyRule> GetAllMenologyRules(this TypiconDBContext dbContext, int typiconVersionId)
         {
-            return dbContext.Set<MenologyRule>().Where(c => c.TypiconVersionId == typiconVersionId);
+            return dbContext.Set<MenologyRule>().Where(c => c.TypiconVersionId == typiconVersionId).ToList();
         }
 
         public static MenologyRule GetMenologyRule(this TypiconDBContext dbContext, int typiconVersionId, DateTime date)

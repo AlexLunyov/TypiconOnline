@@ -54,25 +54,24 @@ namespace TypiconOnline.WebApi.Controllers
                 date = date.AddDays(1);
             }
 
+            string resultString = "";
+
             var week = _outputForms.GetWeek(TYPICON_ID, date);
-            var nextWeek = _outputForms.GetWeek(TYPICON_ID, date.AddDays(7));
 
-            Result.Combine(week, nextWeek)
-                .OnSuccess(() =>
+            week.OnSuccess(() =>
+            {
+                resultString = _weekViewer.Execute(week.Value);
+
+                var nextWeek = _outputForms.GetWeek(TYPICON_ID, date.AddDays(7));
+                nextWeek.OnSuccess(() =>
                 {
-                    string resultString = _weekViewer.Execute(week.Value) + _weekViewer.Execute(nextWeek.Value);
-
-                    ViewBag.Schedule = new HtmlString(resultString);
+                    resultString += _weekViewer.Execute(nextWeek.Value);
                 })
-                .OnFailure(() =>
-                {
-                    string msg = string.Empty;
+                .OnFailure(() => resultString = nextWeek.Error);
+            })
+            .OnFailure(() => resultString = week.Error);
 
-                    week.OnFailure(() => msg += week.Error);
-                    nextWeek.OnFailure(() => msg += nextWeek.Error);
-
-                    ViewBag.Schedule = msg;
-                });
+            ViewBag.Schedule = new HtmlString(resultString);
 
             return View();
         }

@@ -17,14 +17,18 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 
             builder.HasKey(c => c.Id);
 
-            //builder.Property(c => c.Number).IsRequired();
-
-            builder.Property(c => c.Priority).IsRequired();
-
-            //builder.OwnsOne(c => c.SignName, k => k.Ignore(d => d.Items));
-
-            //builder.Property<int>("SignNameId");
-            builder.HasOne(e => e.SignName).WithMany();//.HasForeignKey("Id");
+            builder.OwnsOne(c => c.SignName, name =>
+            {
+                name.OwnsMany(c => c.Items, items =>
+                {
+                    items.Property<int>("NameId");
+                    items.HasForeignKey("NameId");
+                    items.Property<int>("Id");
+                    items.HasKey("Id");
+                    items.ToTable("SignNameItems");
+                });
+                //.ToTable("SignName");
+            });
 
             builder.HasOne(e => e.Template).
                 WithMany()

@@ -11,5 +11,7 @@ namespace TypiconOnline.Domain.Interfaces
         Sign Template { get; set; }
         string RuleDefinition { get; set; }
         T GetRule<T>(IRuleSerializerRoot serializerRoot) where T : IRuleElement;
+        string RuleToModifyDefinition { get; set; }
+        T GetRuleToModify<T>(IRuleSerializerRoot serializerRoot) where T : IRuleElement;
     }
 }

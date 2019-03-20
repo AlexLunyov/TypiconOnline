@@ -74,8 +74,8 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 
             //modelBuilder.ApplyConfiguration(new ItemDateConfiguration());
 
-            modelBuilder.ApplyConfiguration(new ItemTextConfiguration());
-            modelBuilder.ApplyConfiguration(new ItemTextUnitConfiguration());
+            //modelBuilder.ApplyConfiguration(new ItemTextConfiguration());
+            //modelBuilder.ApplyConfiguration(new ItemTextUnitConfiguration());
             //modelBuilder.ApplyConfiguration(new ItemTextStyledConfiguration());
 
             modelBuilder.Entity<OktoikhDay>();

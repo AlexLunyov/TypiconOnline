@@ -4,7 +4,7 @@ using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.Typicon
 {
-    public class Sign : RuleEntity, ITemplateHavingEntity
+    public class Sign : RuleEntityToModify, ITemplateHavingEntity
     {
         public Sign() { }
 

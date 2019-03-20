@@ -35,29 +35,24 @@ namespace TypiconOnline.Domain.Typicon
         /// <summary>
         /// Возвращает объектную версию описания Правила
         /// </summary>
-        /// <param name="serializerRoot">Сериализатор</param>
-        /// <returns></returns>
-        public IRuleElement GetRule(IRuleSerializerRoot serializerRoot)
-        {
-            return GetRule<IRuleElement>(serializerRoot);
-        }
-
-        /// <summary>
-        /// Возвращает объектную версию описания Правила
-        /// </summary>
         /// <typeparam name="T">Коренной элемент</typeparam>
         /// <param name="serializerRoot">Сериализатор</param>
         /// <returns></returns>
         public virtual T GetRule<T>(IRuleSerializerRoot serializerRoot) where T: IRuleElement
         {
-            if (serializerRoot == null) throw new ArgumentNullException("IRuleSerializerRoot");
+            return InnerGetRule<T>(ref _rule, serializerRoot, RuleDefinition);
+        }
 
-            if (_rule == null)
+        protected virtual T InnerGetRule<T>(ref IRuleElement rule, IRuleSerializerRoot serializerRoot, string definition) where T : IRuleElement
+        {
+            if (serializerRoot == null) throw new ArgumentNullException(nameof(serializerRoot));
+
+            if (rule == null)
             {
-                _rule = serializerRoot.Container<T>().Deserialize(RuleDefinition);
+                rule = serializerRoot.Container<T>().Deserialize(definition);
             }
 
-            return (T) _rule;
+            return (T) rule;
         }
 
         protected override void Validate()
