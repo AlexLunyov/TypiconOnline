@@ -62,6 +62,51 @@ namespace TypiconOnline.AppServices.Implementations
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="names">Строки, которые необходимо раположить через символ "."</param>
+        /// <returns></returns>
+        public string Read(params string[] names)
+        {
+            string name = GetFileName(names);
+
+            return Read(name);
+        }
+
+        private string GetFileName(string[] names)
+        {
+            string result = "";
+
+            for (int i = 0; i < names.Count(); i++)
+            {
+                var n = names[i];
+
+                if (string.IsNullOrEmpty(n))
+                {
+                    continue;
+                }
+
+                if (n.EndsWith("."))
+                {
+                    n = n.Substring(0, n.Length - 1);
+                }
+                if (n.StartsWith("."))
+                {
+                    n = n.Substring(1, n.Length - 1);
+                }
+
+                result += n;
+
+                if (i < names.Count() - 1)
+                {
+                    result += ".";
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Читает все файлы ".xml" из определенной директории
         /// </summary>
         /// <returns>name - имя файла, content - содержимое в строковом формате</returns>

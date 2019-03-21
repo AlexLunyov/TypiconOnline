@@ -32,7 +32,7 @@ namespace TypiconOnline.AppServices.Implementations
 
             RuleHandlerSettings settings = null;
 
-            (ITemplateHavingEntity existingRule, RootContainer container) = GetFirstExistingRule(req.Rule, ruleSerializer);
+            (ITemplateHavingEntity existingRule, RootContainer container) = GetFirstExistingRule(req.Rule, ruleSerializer, req.RuleMode);
 
             if (existingRule != null)
             {
@@ -55,11 +55,13 @@ namespace TypiconOnline.AppServices.Implementations
         /// <param name="rule"></param>
         /// <param name="serializer"></param>
         /// <returns></returns>
-        private (ITemplateHavingEntity, RootContainer) GetFirstExistingRule(ITemplateHavingEntity rule, IRuleSerializerRoot serializer)
+        private (ITemplateHavingEntity, RootContainer) GetFirstExistingRule(ITemplateHavingEntity rule, IRuleSerializerRoot serializer, RuleMode ruleMode)
         {
             ITemplateHavingEntity r = null;
 
-            var cont = rule.GetRule<RootContainer>(serializer);
+            var cont = (ruleMode == RuleMode.Rule) 
+                        ? rule.GetRule<RootContainer>(serializer)
+                        : rule.GetModRule<RootContainer>(serializer);
 
             if (cont != null)
             {
@@ -67,7 +69,7 @@ namespace TypiconOnline.AppServices.Implementations
             }
             else if (rule.Template != null)
             {
-                return GetFirstExistingRule(rule.Template, serializer);
+                return GetFirstExistingRule(rule.Template, serializer, ruleMode);
             }
 
             return (r, cont);

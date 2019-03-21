@@ -135,7 +135,8 @@ namespace TypiconOnline.AppServices.Jobs
                     {
                         TypiconVersionId = modifiedYear.TypiconVersionId,
                         Rule = rule,
-                        Date = dateToInterpret
+                        Date = dateToInterpret,
+                        RuleMode = RuleMode.ModRule
                     });
 
                     //выполняем его

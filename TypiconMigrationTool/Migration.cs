@@ -103,6 +103,7 @@ namespace TypiconMigrationTool
                     //Owner = typiconEntity,
                     IsTemplate = row.IsTemplate,
                     RuleDefinition = fileReader.Read(row.Name),
+                    ModRuleDefinition = fileReader.Read(row.Name, "mod")
                 };
                 sign.SignName.AddOrUpdate(DEFAULT_LANGUAGE, row.Name);
 
@@ -343,10 +344,13 @@ namespace TypiconMigrationTool
 
                     typiconEntity.MenologyRules.Add(menologyRule);
 
+                    string n = (!mineinikRow.IsDateBNull())
+                                                    ? menologyDay.LeapDate.Expression
+                                                    : menologyRule.GetNameByLanguage(DEFAULT_LANGUAGE);
+
                     //берем xml-правило из файла
-                    menologyRule.RuleDefinition = (!mineinikRow.IsDateBNull())
-                                                    ? fileRuleReader.Read(menologyDay.LeapDate.Expression)
-                                                    : fileRuleReader.Read(menologyRule.GetNameByLanguage(DEFAULT_LANGUAGE));
+                    menologyRule.RuleDefinition = fileRuleReader.Read(n);
+                    menologyRule.ModRuleDefinition = fileRuleReader.Read(n, "mod");
                 }
                 else
                 {
@@ -414,7 +418,8 @@ namespace TypiconMigrationTool
                     //IsAddition = true,
                     Template = typiconEntity.Signs.First(c => c.SignName.FirstOrDefault(DEFAULT_LANGUAGE).Text == row.ServiceSignsRow.Name),
                     RuleDefinition = fileReader.Read(row.DayFromEaster.ToString()),
-                    
+                    ModRuleDefinition = fileReader.Read(row.DayFromEaster.ToString(), "mod")
+
                 };
                 rule.DayRuleWorships = new List<DayRuleWorship>() { new DayRuleWorship() { DayRule = rule, DayWorship = dayWorship } };
 

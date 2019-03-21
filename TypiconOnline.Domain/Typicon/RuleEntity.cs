@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Typicon
 
         public virtual TypiconVersion TypiconVersion { get; set; }
 
-        protected string _ruleDefinition;
+        private string _ruleDefinition;
         public virtual string RuleDefinition
         {
             get

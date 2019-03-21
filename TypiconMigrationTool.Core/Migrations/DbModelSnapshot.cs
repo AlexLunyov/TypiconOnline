@@ -178,9 +178,9 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<bool>("IsAddition");
 
-                    b.Property<string>("RuleDefinition");
+                    b.Property<string>("ModRuleDefinition");
 
-                    b.Property<string>("RuleToModifyDefinition");
+                    b.Property<string>("RuleDefinition");
 
                     b.Property<int>("TemplateId");
 
@@ -355,13 +355,13 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<bool>("IsTemplate");
 
+                    b.Property<string>("ModRuleDefinition");
+
                     b.Property<int?>("Number");
 
                     b.Property<int>("Priority");
 
                     b.Property<string>("RuleDefinition");
-
-                    b.Property<string>("RuleToModifyDefinition");
 
                     b.Property<int?>("TemplateId");
 

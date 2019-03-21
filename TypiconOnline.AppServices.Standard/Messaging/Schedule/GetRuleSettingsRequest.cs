@@ -37,5 +37,15 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
         public OktoikhDay OktoikhDay { get; set; }
         public RuleHandlerSettings AdditionalSettings { get; set; }
         public int? SignNumber { get; set; }
+        /// <summary>
+        /// Опция определяет, какое определение Правила используется: RuleDefinition или ModRuleDefinition
+        /// </summary>
+        public RuleMode RuleMode { get; set; } = RuleMode.Rule;
+    }
+
+    public enum RuleMode
+    {
+        Rule = 0,
+        ModRule = 1
     }
 }

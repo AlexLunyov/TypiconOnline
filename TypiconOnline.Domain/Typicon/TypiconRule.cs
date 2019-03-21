@@ -2,7 +2,7 @@
 
 namespace TypiconOnline.Domain.Typicon
 {
-    public abstract class TypiconRule : RuleEntityToModify, ITemplateHavingEntity
+    public abstract class TypiconRule : ModRuleEntity, ITemplateHavingEntity
     {
         public virtual int TemplateId { get; set; }
         public virtual Sign Template { get; set; }
@@ -35,13 +35,13 @@ namespace TypiconOnline.Domain.Typicon
         /// <typeparam name="T"></typeparam>
         /// <param name="serializerRoot"></param>
         /// <returns></returns>
-        public override T GetRuleToModify<T>(IRuleSerializerRoot serializerRoot)
+        public override T GetModRule<T>(IRuleSerializerRoot serializerRoot)
         {
-            T baseRule = base.GetRuleToModify<T>(serializerRoot);
+            T baseRule = base.GetModRule<T>(serializerRoot);
 
-            if ((baseRule == null) && string.IsNullOrEmpty(RuleToModifyDefinition))
+            if ((baseRule == null) && string.IsNullOrEmpty(ModRuleDefinition))
             {
-                return (Template != null) ? Template.GetRuleToModify<T>(serializerRoot) : default(T);
+                return (Template != null) ? Template.GetModRule<T>(serializerRoot) : default(T);
             }
 
             return baseRule;
