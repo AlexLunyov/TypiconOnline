@@ -110,10 +110,12 @@
     <Compile Include="Common\IntConverters\IntCsConverter.cs" />
     <Compile Include="Common\LanguageSettings.cs" />
     <Compile Include="Common\LanguageSettingsFactory.cs" />
+    <Compile Include="Identity\Role.cs" />
+    <Compile Include="Identity\UserRole.cs" />
     <Compile Include="Typicon\OutputForm.cs" />
     <Compile Include="Typicon\OutputFormDayWorship.cs" />
     <Compile Include="Typicon\ModRuleEntity.cs" />
-    <Compile Include="UserTypicon.cs" />
+    <Compile Include="Identity\UserTypicon.cs" />
     <Compile Include="DayStructureBase.cs" />
     <Compile Include="Interfaces\IAsAdditionElement.cs" />
     <Compile Include="Interfaces\IBookElement.cs" />
@@ -196,7 +198,7 @@
     <Compile Include="Typicon\Modifications\ModifiedYear.cs" />
     <Compile Include="Typicon\Priority.cs" />
     <Compile Include="Typicon\Psalter\Kathisma.cs" />
-    <Compile Include="Typicon\Typicon.cs" />
+    <Compile Include="Typicon\TypiconEntity.cs" />
     <Compile Include="Typicon\TypiconRule.cs" />
     <Compile Include="Books\Easter\EasterItem.cs" />
     <Compile Include="Books\Oktoikh\OktoikhDay.cs" />
@@ -215,7 +217,7 @@
     <Compile Include="ItemTypes\ItemDateBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemType.cs" />
     <Compile Include="Typicon\TypiconVersion.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Identity\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure.Common\TypiconOnline.Infrastructure.Common.csproj">

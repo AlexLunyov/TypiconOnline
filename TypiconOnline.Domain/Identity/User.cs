@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.Domain;
 
-namespace TypiconOnline.Domain
+namespace TypiconOnline.Domain.Identity
 {
     /// <summary>
     /// Пользователь системы
@@ -14,16 +15,17 @@ namespace TypiconOnline.Domain
     {
         private User() { }
 
-        public User(string name, string login, string password)
+        public User(string userName, string login, string passwordHash)
         {
-            Name = name;
+            UserName = userName;
             Login = login;
-            Password = password;
+            PasswordHash = passwordHash;
         }
 
-        public string Name { get; private set; }
-        public string Login { get; private set; }
-        public string Password { get; private set; }
+        public string UserName { get; set; }
+        public string Login { get; set; }
+        public string PasswordHash { get; set; }
+        public string Email { get; set; }
 
         /// <summary>
         /// Является ли Пользователь администратором системы
@@ -34,10 +36,12 @@ namespace TypiconOnline.Domain
         /// </summary>
         public bool IsTextEditor { get; set; }
 
+        public virtual ICollection<UserRole> UserRoles { get; set; }
+
         /// <summary>
         /// Уставы, созданные пользователем
         /// </summary>
-        public virtual IEnumerable<Typicon.Typicon> OwnedTypicons { get; set; } = new List<Typicon.Typicon>();
+        public virtual IEnumerable<TypiconEntity> OwnedTypicons { get; set; } = new List<TypiconEntity>();
 
         /// <summary>
         /// Список на промежуточную таблицу для редактируемых Уставов
@@ -47,7 +51,7 @@ namespace TypiconOnline.Domain
         /// <summary>
         /// Уставы, к которым имеется доступ в качестве Редактора
         /// </summary>
-        public IEnumerable<Typicon.Typicon> EditableTypicons
+        public IEnumerable<TypiconEntity> EditableTypicons
         {
             get
             {

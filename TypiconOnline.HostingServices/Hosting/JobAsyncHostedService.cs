@@ -7,30 +7,27 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Jobs;
 using TypiconOnline.Infrastructure.Common.Command;
 
-namespace TypiconOnline.WebApi.HostedService
+namespace TypiconOnline.WebServices.Hosting
 {
     /// <summary>
     /// Сервис, синхронно обрабатывающий задания
     /// </summary>
-    public class JobHostedService : BackgroundService
+    public class JobAsyncHostedService : JobHostedService
     {
-        public JobHostedService(IQueue queue, ICommandProcessor processor)
-        {
-            Queue = queue ?? throw new ArgumentNullException(nameof(queue));
-            Processor = processor ?? throw new ArgumentNullException(nameof(processor));
-        }
+        /// <summary>
+        /// Максимум заданий, обрабатываемых одновременно
+        /// </summary>
+        private const int MAX_TASKS = 6;
 
-        protected IQueue Queue { get; }
-        protected ICommandProcessor Processor { get; }
+        public JobAsyncHostedService(IQueue queue, ICommandProcessor processor) : base(queue, processor) { }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                foreach (var job in Queue.ExtractAll<IJob>())
+                foreach (var job in Queue.Extract<IJob>(MAX_TASKS))
                 {
-                    Processor.Execute(job);
-                    //Task.Factory.StartNew(() => _processor.ExecuteAsync(job));
+                    Task.Factory.StartNew(() => Processor.Execute(job));
                 }
 
                 Thread.Sleep(1000);

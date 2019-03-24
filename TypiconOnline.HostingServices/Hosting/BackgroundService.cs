@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace TypiconOnline.WebApi.HostedService
+namespace TypiconOnline.WebServices.Hosting
 {
     // Copyright (c) .NET Foundation. Licensed under the Apache License, Version 2.0. 
     /// <summary>

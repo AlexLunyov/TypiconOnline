@@ -7,7 +7,7 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Jobs;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Tests.Common;
-using TypiconOnline.WebApi.HostedService;
+using TypiconOnline.WebServices.Hosting;
 using Xunit;
 
 namespace TypiconOnline.WebApi.Tests

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Identity;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
@@ -10,12 +11,12 @@ namespace TypiconOnline.Domain.Typicon
     /// <summary>
     /// Агрегат Устава, поддерживающий версионность
     /// </summary>
-    public class Typicon : EntityBase<int>
+    public class TypiconEntity : EntityBase<int>
     {
         /// <summary>
         /// Ссылка на Устав-шаблон.
         /// </summary>
-        public virtual Typicon Template { get; set; }
+        public virtual TypiconEntity Template { get; set; }
 
         public int OwnerId { get; set; }
         /// <summary>

@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 {
-    class TypiconConfiguration : IEntityTypeConfiguration<Typicon>
+    class TypiconConfiguration : IEntityTypeConfiguration<TypiconEntity>
     {
-        public void Configure(EntityTypeBuilder<Typicon> builder)
+        public void Configure(EntityTypeBuilder<TypiconEntity> builder)
         {
             builder.HasKey(c => c.Id);
 

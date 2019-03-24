@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TypiconOnline.WebApi.DIExtensions
+namespace TypiconOnline.WebServices.Hosting
 {
     public static class HostedServiceExtensions
     {

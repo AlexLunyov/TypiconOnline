@@ -18,6 +18,7 @@ using TypiconOnline.AppServices.Implementations.Books;
 using TypiconOnline.AppServices.Migration.Psalter;
 using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Domain.Identity;
 
 namespace TypiconMigrationTool
 {
@@ -61,12 +62,12 @@ namespace TypiconMigrationTool
             _unitOfWork.Repository<User>().Add(user);
             Commit();
 
-            var typicon = new Typicon()
+            var typicon = new TypiconEntity()
             {
                 Owner = user
             };
 
-            _unitOfWork.Repository<Typicon>().Add(typicon);
+            _unitOfWork.Repository<TypiconEntity>().Add(typicon);
             Commit();
 
             var typiconEntity = new TypiconVersion()

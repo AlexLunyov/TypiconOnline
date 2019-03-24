@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.Typicon
         /// <summary>
         /// Ссылка на сущность Устава
         /// </summary>
-        public virtual Typicon Typicon { get; set; }
+        public virtual TypiconEntity Typicon { get; set; }
 
         public virtual ItemText Name { get; set; }
         /// <summary>

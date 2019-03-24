@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Migration.Psalter;
 using TypiconOnline.Domain;
+using TypiconOnline.Domain.Identity;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Tests.Common;
 
@@ -149,7 +150,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
                 //Id = 2,
             };
 
-            var typicon = new Typicon()
+            var typicon = new TypiconEntity()
             {
                 Owner = user,
                 OwnerId = user.Id

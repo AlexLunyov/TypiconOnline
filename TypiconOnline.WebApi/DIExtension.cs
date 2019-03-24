@@ -17,7 +17,6 @@ using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Repository.EFCore.Caching;
 using TypiconOnline.AppServices.Configuration;
 using TypiconOnline.AppServices.Jobs;
-using TypiconOnline.WebApi.HostedService;
 using SimpleInjector;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Command;
@@ -25,6 +24,7 @@ using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.WebApi.DIExtensions;
 using TypiconOnline.Infrastructure.Common.Query;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using TypiconOnline.WebServices.Hosting;
 
 namespace TypiconOnline.WebApi
 {

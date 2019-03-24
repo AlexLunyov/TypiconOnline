@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain;
+using TypiconOnline.Domain.Identity;
 
 namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 {

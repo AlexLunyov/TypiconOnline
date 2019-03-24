@@ -37,6 +37,11 @@ namespace TypiconOnline.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("ru-RU");
+            });
+
             services.AddMvc();
 
             IntegrateSimpleInjector(services);

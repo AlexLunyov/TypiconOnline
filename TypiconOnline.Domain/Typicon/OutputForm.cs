@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.Typicon
         }
 
         public int TypiconId { get; set; }
-        public virtual Typicon Typicon { get; set; }
+        public virtual TypiconEntity Typicon { get; set; }
 
         public DateTime Date { get; set; }
 

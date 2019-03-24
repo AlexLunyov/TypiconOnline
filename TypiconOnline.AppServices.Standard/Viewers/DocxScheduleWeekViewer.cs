@@ -12,14 +12,19 @@ using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.Domain.ViewModels;
 
-namespace TypiconOnline.WinServices
+namespace TypiconOnline.AppServices.Viewers
 {
-    public class DocxScheduleWeekViewer : IScheduleWeekViewer
+    public class DocxScheduleWeekViewer : IScheduleWeekViewer, IDisposable
     {
-        string _fileName;
+        //string _fileName;
         int _daysPerPage;
 
         Stream _stream;
+
+        /// <summary>
+        /// Флаг для сохранения файла в процессе обработки ScheduleWeek
+        /// </summary>
+        private readonly bool _isFromFileName = false;
 
         public DocxScheduleWeekViewer(string fileName, int daysPerPage)
         {
@@ -34,6 +39,7 @@ namespace TypiconOnline.WinServices
             }
 
             _daysPerPage = daysPerPage;
+            _isFromFileName = true;
 
             _stream = File.Open(fileName, FileMode.Open);
         }
@@ -47,7 +53,9 @@ namespace TypiconOnline.WinServices
         public void Execute(ScheduleWeek week)
         {
             if (week == null)
-                throw new ArgumentNullException("week");
+            {
+                throw new ArgumentNullException(nameof(week));
+            }
 
             using (WordprocessingDocument doc = WordprocessingDocument.Open(_stream, true))
             {
@@ -116,7 +124,11 @@ namespace TypiconOnline.WinServices
                     doc.MainDocumentPart.Document.Body.AppendChild(t);
                 }
 
-                doc.MainDocumentPart.Document.Save();
+                if (_isFromFileName)
+                {
+                    //если место было указано из файла, сохраняем его
+                    doc.MainDocumentPart.Document.Save();
+                }
             }
         }
 
@@ -305,6 +317,11 @@ namespace TypiconOnline.WinServices
             t.Space = SpaceProcessingModeValues.Preserve;
 
             p.Append(r);
+        }
+
+        public void Dispose()
+        {
+            _stream.Dispose();
         }
     }
 }
