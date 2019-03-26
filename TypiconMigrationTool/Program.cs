@@ -98,7 +98,6 @@ namespace TypiconMigrationTool
                     {
                         mySqlOptions.ServerVersion(new Version(8, 0, 15), ServerType.MySql);
                     });
-                    //optionsBuilder.UseMySQL("server=localhost;UserId=root;Password=z2LDCiiEQFDBlkl3eZyb;database=typicondb;");
                     optionsBuilder.EnableSensitiveDataLogging();
 
                     return new UnitOfWork(new TypiconDBContext(optionsBuilder.Options), new RepositoryFactory());
