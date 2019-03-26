@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
                 exp1 = exp2;
             }
 
-            ValueCalculated = expValue;
+            ValueCalculated = (bool) expValue;
         }
 
         /// <summary>

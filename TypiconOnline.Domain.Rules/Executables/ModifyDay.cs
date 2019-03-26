@@ -148,14 +148,6 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         #endregion
 
-        public ItemDate MoveDateExpression
-        {
-            get
-            {
-                return ChildDateExp?.ValueExpression as ItemDate;
-            }
-        }
-
         /// <summary>
         /// Возвращает true, если все свойства имеют значения по умолчанию
         /// </summary>

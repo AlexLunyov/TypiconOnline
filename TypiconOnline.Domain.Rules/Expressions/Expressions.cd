@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.And" Collapsed="true">
+    <Position X="9.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Expressions\And.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.AndSerializer" Collapsed="true">
+    <Position X="6.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\AndSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.BooleanExpression" Collapsed="true">
+    <Position X="15.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\BooleanExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.Case" Collapsed="true">
+    <Position X="2.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAgCBAAAAAAAAAAAAAAAAAACAAgAAAAAAAAA=</HashCode>
+      <FileName>Expressions\Case.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.CaseBusinessConstraint" Collapsed="true">
+    <Position X="39" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAQAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\CaseBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.CaseSerializer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="40.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\CaseSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.ComparisonExpression" Collapsed="true">
+    <Position X="17.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\ComparisonExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.ComparisonExpressionBusinessConstraint" Collapsed="true">
+    <Position X="42.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\ComparisonExpressionBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.Date" Collapsed="true">
+    <Position X="29.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Expressions\Date.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.DateByDaysFromEasterBusinessConstraint" Collapsed="true">
+    <Position X="46" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\DateBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.DateByDaysFromEaster" Collapsed="true">
+    <Position X="32" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAACAAAAAAACAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\DateByDaysFromEaster.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.DateBusinessConstraint" Collapsed="true">
+    <Position X="44.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Expressions\DateByDaysFromEasterBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.DateByDaysFromEasterSerializer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="39" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\DateByDaysFromEasterSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.DateExpression" Collapsed="true">
+    <Position X="32" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\DateExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.DateSerializer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="40.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\DateSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.DaysFromEaster" Collapsed="true">
+    <Position X="27.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAACAAAAAAACAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\DaysFromEaster.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.DaysFromEasterBusinessConstraint" Collapsed="true">
+    <Position X="42.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Expressions\DaysFromEasterBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.DaysFromEasterSerializer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="44.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\DaysFromEasterSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.Equals" Collapsed="true">
+    <Position X="7.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Expressions\Equals.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.EqualsSerializer" Collapsed="true">
+    <Position X="10.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\EqualsSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.GetClosestDay" Collapsed="true">
+    <Position X="34.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAIAAAAAAEAAAAAAI=</HashCode>
+      <FileName>Expressions\GetClosestDay.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.GetClosestDayBusinessConstraint" Collapsed="true">
+    <Position X="46" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIggAACAAAACAAAQAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Expressions\GetClosestDayBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.GetClosestDaySerializer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="39" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\GetClosestDaySerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.GetDayOfWeek" Collapsed="true">
+    <Position X="36.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAI=</HashCode>
+      <FileName>Expressions\GetDayOfWeek.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.GetDayOfWeekBusinessConstraint" Collapsed="true">
+    <Position X="40.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAQAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\GetDayOfWeekBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.GetDayOfWeekSerializer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="42.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\GetDayOfWeekSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.Int" Collapsed="true">
+    <Position X="27.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAACAAAAAAAQAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Expressions\Int.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.IntBusinessConstraint" Collapsed="true">
+    <Position X="44.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Expressions\IntBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.IntExpression" Collapsed="true">
+    <Position X="27.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\IntExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.IntSerializer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="46" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\IntSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.IsCelebrating" Collapsed="true">
+    <Position X="25.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\IsCelebrating.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.IsCelebratingSerializer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="39" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\IsCelebratingSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.IsExists" Collapsed="true">
+    <Position X="5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Expressions\IsExists.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.IsExistsBusinessConstraint" Collapsed="true">
+    <Position X="40.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Expressions\IsExistsBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.IsExistsSerializer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="42.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\IsExistsSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.IsTwoSaints" Collapsed="true">
+    <Position X="23" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\IsTwoSaints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.IsTwoSaintsSerializer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="44.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\IsTwoSaintsSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.Less" Collapsed="true">
+    <Position X="14" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Expressions\Less.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.LessEquals" Collapsed="true">
+    <Position X="18.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Expressions\LessEquals.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.LessEqualsSerializer" Collapsed="true">
+    <Position X="13" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\LessEqualsSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.LessSerializer" Collapsed="true">
+    <Position X="1.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\LessSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.LogicalExpression" Collapsed="true">
+    <Position X="14" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAACAAAAAAAAAAAAAAAAAAAAEAAAAgAAAAAA=</HashCode>
+      <FileName>Expressions\LogicalExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.LogicalExpressionBusinessConstraint" Collapsed="true">
+    <Position X="46" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAABAAAAAAAAAQAgQAAAAA=</HashCode>
+      <FileName>Expressions\LogicalExpressionBusinessConstraint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.LogicalExpressionSerializer" Collapsed="true">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\LogicalExpressionSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.LogicalOperation" Collapsed="true">
+    <Position X="10.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\LogicalOperation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.More" Collapsed="true">
+    <Position X="16.25" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Expressions\More.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.MoreEquals" Collapsed="true">
+    <Position X="20.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Expressions\MoreEquals.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.MoreEqualsSerializer" Collapsed="true">
+    <Position X="15.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\MoreEqualsSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.MoreSerializer" Collapsed="true">
+    <Position X="4" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\MoreSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.Or" Collapsed="true">
+    <Position X="11.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Expressions\Or.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.OrSerializer" Collapsed="true">
+    <Position X="8.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\OrSerializer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.RuleExpression" Collapsed="true">
+    <Position X="19.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\RuleExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.RuleComparableExpression" Collapsed="true">
+    <Position X="20.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\RuleExpression.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TypiconOnline.Domain.Rules.Expressions.RuleExpression&lt;T&gt;" Collapsed="true">
+    <Position X="20.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAQAgACAAgAAAAAAAICAAAAABAAAByA=</HashCode>
+      <FileName>Expressions\RuleExpression.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

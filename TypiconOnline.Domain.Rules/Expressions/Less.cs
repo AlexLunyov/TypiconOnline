@@ -38,7 +38,9 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override bool Operate(RuleExpression exp1, RuleExpression exp2, bool? previousValue)
         {
-            bool result = (int)exp1.ValueCalculated < (int)exp2.ValueCalculated;
+            int compared = ((RuleComparableExpression)exp1).CompareTo((RuleComparableExpression)exp2);
+
+            bool result = (compared > 0);
 
             return (previousValue != null) ? (result && (bool)previousValue) : result;
         }

@@ -209,8 +209,6 @@
     <Compile Include="Days\TriodionDay.cs" />
     <Compile Include="Days\TriodionDayBusinessConstraint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ItemTypes\ItemDayOfWeekBusinessConstraint.cs" />
-    <Compile Include="ItemTypes\ItemDayOfWeek.cs" />
     <Compile Include="ItemTypes\ItemIntBusinessConstraint.cs" />
     <Compile Include="ItemTypes\ItemInt.cs" />
     <Compile Include="ItemTypes\ItemDate.cs" />

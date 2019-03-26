@@ -19,7 +19,14 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override void FillObject(FillObjectRequest req)
         {
-            (req.Element as Int).ValueExpression = new ItemInt(req.Descriptor.Element.InnerText);
+            if (int.TryParse(req.Descriptor.Element.InnerText, out int value))
+            {
+                (req.Element as Int).ValueExpression = value;
+            }
+            else
+            {
+                //Ошибка
+            }
         }
 
         public override string Serialize(IRuleElement element)

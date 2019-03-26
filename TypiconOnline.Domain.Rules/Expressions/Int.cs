@@ -21,17 +21,17 @@ namespace TypiconOnline.Domain.Rules.Expressions
     {
         public Int(string name) : base(name) { }
 
-        public override object ValueExpression
+        private int _valueExpression;
+
+        public virtual int ValueExpression
         {
             get
             {
-                return base.ValueExpression;
+                return ValueCalculated;
             }
             set
             {
-                base.ValueExpression = value;
-
-                ValueCalculated = (value as ItemInt)?.Value;
+                ValueCalculated = value;
             }
         }
 
@@ -40,38 +40,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
             //ничего
         }
 
-
-        //public override Type OutputType
-        //{
-        //    get
-        //    {
-        //        return typeof(int);
-        //    }
-        //}
-
-        //public override int OutputValue
-        //{
-        //    get
-        //    {
-        //        return _value;
-        //    }
-        //}
-
-        protected override void Validate()
-        {
-            if ((ValueExpression as ItemInt)?.IsValid == false)
-            {
-                foreach (BusinessConstraint brokenRule in ((ItemInt)ValueExpression).GetBrokenConstraints())
-                {
-                    AddBrokenConstraint(brokenRule, ElementName);
-                }
-            }
-        }
-
-        //public virtual bool Equals(RuleExpression IRuleOutputElement)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
+        protected override void Validate() { }
     }
 }
 

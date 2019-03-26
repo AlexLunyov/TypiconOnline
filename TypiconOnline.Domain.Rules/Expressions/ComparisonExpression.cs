@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
     /// <summary>
     /// Базовый класс для логических выражений сравнения.
-    /// Ограничения на дочерние элементы: должны быть целочисленными
+    /// Ограничения на дочерние элементы: должны быть <see cref="RuleComparableExpression"/>
     /// </summary>
     public abstract class ComparisonExpression : LogicalExpression
     {
@@ -44,7 +44,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
             {
                 //Проверяем, элемент с каким выходным типом значения
                 //Должен быть только целочисленным
-                if ((exp != null) && !(exp is IntExpression))
+                if ((exp != null) && !(exp is RuleComparableExpression))
                 {
                     AddBrokenConstraint(ComparisonExpressionBusinessConstraint.TypeMismatch, ElementName);
                 }

@@ -2,10 +2,8 @@
 
 namespace TypiconOnline.Domain.Rules.Expressions
 {
-    public abstract class IntExpression : RuleExpression
+    public abstract class IntExpression : RuleExpression<int>
     {
         public IntExpression(string name) : base(name) { }
-
-        public override Type ExpressionType => typeof(int);
     }
 }

@@ -43,18 +43,16 @@ namespace TypiconOnline.Domain.Rules.Executables
 
             foreach (Case caseElement in CaseElements)
             {
+                //вычисляем case со всеми вложенными значениями
                 caseElement.Interpret(handler);
 
-                foreach (RuleExpression caseValue in caseElement.ValuesElements)
-                {
-                    caseValue.Interpret(handler);
+                //проверяем на совпадение с Expression
 
-                    if (Expression.ValueCalculated.Equals(caseValue.ValueCalculated))
-                    {
-                        //и значения совпадают
-                        caseElement.ActionElement.Interpret(handler);
-                        return;
-                    }
+                if (caseElement.ValueCalculatedEquals(Expression))
+                {
+                    //значения совпадают
+                    caseElement.ActionElement.Interpret(handler);
+                    return;
                 }
             }
 
@@ -85,7 +83,7 @@ namespace TypiconOnline.Domain.Rules.Executables
                     AppendAllBrokenConstraints(caseElement, $"{ElementName}.{RuleConstants.CaseNodeName}");
                 }
 
-                if (Expression?.ExpressionType != caseElement.ExpressionType)
+                if (!caseElement.ExpressionTypeEquals(Expression))
                 {
                     AddBrokenConstraint(SwitchBusinessConstraint.ConditionsTypeMismatch, ElementName);
                 }

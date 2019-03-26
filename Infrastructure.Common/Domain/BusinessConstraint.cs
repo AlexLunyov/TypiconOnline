@@ -23,5 +23,7 @@ namespace TypiconOnline.Infrastructure.Common.Domain
         public string ConstraintPath { get; set; }
 
         public string ConstraintFullDescription => $"{ConstraintPath}: {ConstraintDescription}";
+
+        public override string ToString() => ConstraintFullDescription;
     }
 }

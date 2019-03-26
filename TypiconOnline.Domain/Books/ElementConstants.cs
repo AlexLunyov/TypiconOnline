@@ -227,6 +227,4 @@ namespace TypiconOnline.Domain.Books.Elements
         [XmlEnum(Name = "stavros")]
         Stavros
     }
-
-    public enum DefinitionsDayOfWeek { понедельник = 1, вторник = 2, среда = 3, четверг = 4, пятница = 5, суббота = 6, воскресенье = 7 };
 }

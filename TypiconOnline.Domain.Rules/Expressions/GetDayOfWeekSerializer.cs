@@ -2,6 +2,7 @@
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules.Serialization;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Expressions
@@ -21,9 +22,9 @@ namespace TypiconOnline.Domain.Rules.Expressions
         protected override void FillObject(FillObjectRequest req)
         {
             XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.GetDayOfWeekAttrName];
-            if (attr != null)
+            if (attr != null && DayOfWeekParser.TryParse(attr.Value, out DayOfWeek? dayOfWeek))
             {
-                (req.Element as GetDayOfWeek).DayOfWeek = new ItemDayOfWeek(attr.Value);
+                (req.Element as GetDayOfWeek).DayOfWeek = dayOfWeek;
             }
 
             if (req.Descriptor.Element.HasChildNodes)

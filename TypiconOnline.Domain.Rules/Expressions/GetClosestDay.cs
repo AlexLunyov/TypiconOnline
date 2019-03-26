@@ -22,14 +22,14 @@ namespace TypiconOnline.Domain.Rules.Expressions
     //
     // EXAMPLE
     //
-    // <getclosestday dayofweek="saturday" weekcount="-2"><date>--11-08</date></getclosestday>
+    // <getclosestday dayofweek="суббота" weekcount="-2"><date>--11-08</date></getclosestday>
     //
 
     public class GetClosestDay : DateExpression
     {
         public GetClosestDay(string name) : base(name) { }
 
-        public virtual ItemDayOfWeek DayOfWeek { get; set; }
+        public virtual DayOfWeek? DayOfWeek { get; set; }
 
         public virtual int WeekCount { get; set; }
 
@@ -44,18 +44,24 @@ namespace TypiconOnline.Domain.Rules.Expressions
                 int i = (WeekCount > 0) ? 1 : -1;
 
                 ValueCalculated = ChildDateExp.ValueCalculated;
-                while (((DateTime)ValueCalculated).DayOfWeek != DayOfWeek.Value)
+                while (ValueCalculated.DayOfWeek != DayOfWeek)
                 {
-                    ValueCalculated = ((DateTime)ValueCalculated).AddDays(i);
+                    ValueCalculated = ValueCalculated.AddDays(i);
                 }
 
                 if (ValueCalculated != ChildDateExp.ValueCalculated)
+                {
                     i = (WeekCount > 0) ? (WeekCount - 1) : (WeekCount + 1);
+                }
                 else
+                {
                     i = WeekCount;
+                }
 
                 if (i != 0)
-                    ValueCalculated = ((DateTime)ValueCalculated).AddDays(i * 7);
+                {
+                    ValueCalculated = ValueCalculated.AddDays(i * 7);
+                }
             }
             else
             {
@@ -63,24 +69,24 @@ namespace TypiconOnline.Domain.Rules.Expressions
                 int forward = 0;
                 int backward = 0;
 
-                DateTime exp = (DateTime)ChildDateExp.ValueCalculated;
+                DateTime exp = ChildDateExp.ValueCalculated;
 
-                while (exp.DayOfWeek != DayOfWeek.Value)
+                while (exp.DayOfWeek != DayOfWeek)
                 {
                     exp = exp.AddDays(1);
                     forward++;
                 }
 
-                exp = (DateTime)ChildDateExp.ValueCalculated;
+                exp = ChildDateExp.ValueCalculated;
 
-                while (exp.DayOfWeek != DayOfWeek.Value)
+                while (exp.DayOfWeek != DayOfWeek)
                 {
                     exp = exp.AddDays(-1);
                     backward++;
                 }
 
-                ValueCalculated = (forward < backward) ? ((DateTime)ChildDateExp.ValueCalculated).AddDays(forward) :
-                                                            ((DateTime)ChildDateExp.ValueCalculated).AddDays(backward * -1);
+                ValueCalculated = (forward < backward) ? ChildDateExp.ValueCalculated.AddDays(forward) :
+                                                            ChildDateExp.ValueCalculated.AddDays(backward * -1);
             }
         }
 
@@ -90,13 +96,13 @@ namespace TypiconOnline.Domain.Rules.Expressions
             {
                 AddBrokenConstraint(GetClosestDayBusinessConstraint.DayOfWeekRequired, ElementName);
             }
-            else
-            {
-                if (!DayOfWeek.IsValid)
-                {
-                    AddBrokenConstraint(GetClosestDayBusinessConstraint.DayOfWeekWrongDefinition, ElementName);
-                }
-            }
+            //else
+            //{
+            //    if (!DayOfWeek.IsValid)
+            //    {
+            //        AddBrokenConstraint(GetClosestDayBusinessConstraint.DayOfWeekWrongDefinition, ElementName);
+            //    }
+            //}
 
             if (ChildDateExp == null)
             {

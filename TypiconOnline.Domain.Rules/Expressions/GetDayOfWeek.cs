@@ -7,37 +7,31 @@ namespace TypiconOnline.Domain.Rules.Expressions
     /// <summary>
     /// Элемент содержит описание дня недели
     /// Возвращает день недели у абстрактной даты
-    /// 
-    /// Примеры
-    /// <dayofweek>воскресенье</dayofweek>
-    /// 
-    /// <getdayofweek><date>--01-04</date></getdayofweek>
-    /// <getdayofweek><getclosestday dayofweek="saturday" weekcount="-2"><date>--11-08</date></getclosestday></getdayofweek>
-    /// <getdayofweek name="суббота"/>
     /// </summary>
-    public class GetDayOfWeek : RuleExpression
+    /// <example>
+    ///     <dayofweek>воскресенье</dayofweek>
+    /// 
+    ///     <getdayofweek><date>--01-04</date></getdayofweek>
+    ///     
+    ///     <getdayofweek><getclosestday dayofweek="saturday" weekcount="-2"><date>--11-08</date></getclosestday></getdayofweek>
+    /// 
+    ///     <getdayofweek name="суббота"/>
+    /// </example>
+    public class GetDayOfWeek : RuleExpression<DayOfWeek>
     {
         public GetDayOfWeek(string name) : base(name) { }
 
-        public ItemDayOfWeek DayOfWeek { get; set; }
+        public DayOfWeek? DayOfWeek { get; set; }
 
         public DateExpression ChildDateExp { get; set; }
-
-        public override Type ExpressionType
-        {
-            get
-            {
-                return typeof(DayOfWeek);
-            }
-        }
-
+        
         protected override void InnerInterpret(IRuleHandler handler)
         {
             if (ChildDateExp != null)
             {
                 ChildDateExp.Interpret(handler);
 
-                ValueCalculated = ((DateTime)ChildDateExp.ValueCalculated).DayOfWeek;
+                ValueCalculated = ChildDateExp.ValueCalculated.DayOfWeek;
             }
             else
             {
@@ -57,10 +51,10 @@ namespace TypiconOnline.Domain.Rules.Expressions
                 AddBrokenConstraint(GetDayOfWeekBusinessConstraint.TermsTooMuch, ElementName);
             }
 
-            if ((DayOfWeek != null) && (!DayOfWeek.IsValid))
-            {
-                AddBrokenConstraint(GetDayOfWeekBusinessConstraint.DayOfWeekWrongDefinition, ElementName);
-            }
+            //if ((DayOfWeek != null) && (!DayOfWeek.IsValid))
+            //{
+            //    AddBrokenConstraint(GetDayOfWeekBusinessConstraint.DayOfWeekWrongDefinition, ElementName);
+            //}
 
             //добавляем ломаные правила к родителю
             if (ChildDateExp?.IsValid == false)

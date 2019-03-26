@@ -2,6 +2,7 @@
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules.Serialization;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Expressions
@@ -23,7 +24,14 @@ namespace TypiconOnline.Domain.Rules.Expressions
             XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.DayOfWeekAttrName];
             if (attr != null)
             {
-                (req.Element as GetClosestDay).DayOfWeek = new ItemDayOfWeek(attr.Value);
+                if (DayOfWeekParser.TryParse(attr.Value, out DayOfWeek? dayOfWeek))
+                {
+                    (req.Element as GetClosestDay).DayOfWeek = dayOfWeek.Value;
+                }
+                else
+                {
+                    //error
+                }
             }
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.WeekCountAttrName];

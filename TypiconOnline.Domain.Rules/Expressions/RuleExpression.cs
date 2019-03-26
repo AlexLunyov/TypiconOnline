@@ -1,57 +1,90 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TypiconOnline.Domain.Rules.Expressions
-{ 
+{
     public abstract class RuleExpression : RuleElementBase
     {
         public RuleExpression(string name) : base(name) { }
 
-        /// <summary>
-        /// Значение, введенное в определении Правила
-        /// </summary>
-        public virtual object ValueExpression { get; set; }
-        /// <summary>
-        /// Значение, вычисленное исходя из дочерних элементов или <see cref="ValueExpression"/>
-        /// </summary>
-        public virtual object ValueCalculated { get; protected set; }
-        public virtual Type ExpressionType { get; }
+        public abstract bool ExpressionTypeEquals(RuleExpression entity);
 
-        public virtual bool ValueExpressionEquals(RuleExpression entity)
-        {
-            return (entity != null)
-               //&& entity is RuleExpression
-               && ValueExpression.Equals(entity.ValueExpression);
-               //&& this == (RuleExpression<ExpType>)entity;
-        }
-
-        //public virtual bool ValueCalculatedEquals(RuleExpression exp)
-        //{
-        //    return (exp?.ValueCalculatedEquals(this) == true);
-        //}
-
-        /// <summary>
-        /// Метод сравнивает типы выражений объектов
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public bool ExpressionTypeEquals(RuleExpression obj)
-        {
-            return (obj != null)
-                && ExpressionType.Equals(obj.ExpressionType);
-        }
-
-        //public bool OutputValueEquals(RuleExpression obj)
-        //{
-        //    if (obj == null)
-        //        return false;
-
-        //    if (OutputType.Equals(obj.OutputType))
-        //    {
-        //        return OutputValue.Equals(obj.OutputValue);
-        //    }
-
-        //    return false;
-        //}
+        public abstract bool ValueCalculatedEquals(RuleExpression entity);
     }
+
+    public abstract class RuleComparableExpression : RuleExpression, IComparable<RuleComparableExpression>
+    {
+        public RuleComparableExpression(string name) : base(name) { }
+
+        public abstract int CompareTo(RuleComparableExpression other);
+    }
+
+    public abstract class RuleExpression<T> : RuleComparableExpression, IEquatable<RuleExpression<T>> where T: IComparable
+    {
+        public RuleExpression(string name) : base(name) { }
+
+        /// <summary>
+        /// Вычисленное значение
+        /// </summary>
+        public virtual T ValueCalculated { get; protected set; }
+
+        public override int CompareTo(RuleComparableExpression other)
+        {
+            if (other is RuleExpression<T> exp)
+            {
+                return exp.ValueCalculated.CompareTo(ValueCalculated);
+            }
+            else
+            {
+                //проверить - вроде как не правильно это
+                //выводить 0, если типы даже не сравниваются...
+                throw new InvalidCastException("Неверное сравнение типов вычисляемых значений");
+            }
+        }
+
+        public override bool ExpressionTypeEquals(RuleExpression entity)
+        {
+            return (entity != null) && (entity is RuleExpression<T>);
+        }
+
+        public override bool ValueCalculatedEquals(RuleExpression entity)
+        {
+            return Equals(entity);
+        }
+
+        //public virtual TExpr ExpressionType { get; }
+
+        #region Equals
+
+        public override bool Equals(object entity)
+        {
+            return entity != null
+               && entity is RuleExpression<T> exp
+               && Equals(exp);
+        }
+
+        public bool Equals(RuleExpression<T> other)
+        {
+            return other != null && EqualityComparer<T>.Default.Equals(ValueCalculated, other.ValueCalculated);
+        }
+
+        public override int GetHashCode()
+        {
+            return -1617952366 + EqualityComparer<T>.Default.GetHashCode(ValueCalculated);
+        }
+
+        public static bool operator ==(RuleExpression<T> expression1, RuleExpression<T> expression2)
+        {
+            return EqualityComparer<RuleExpression<T>>.Default.Equals(expression1, expression2);
+        }
+
+        public static bool operator !=(RuleExpression<T> expression1, RuleExpression<T> expression2)
+        {
+            return !(expression1 == expression2);
+        }
+
+        #endregion
+    }
+    
 }
 

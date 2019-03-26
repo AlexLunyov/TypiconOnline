@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using TypiconOnline.Domain.Rules.Expressions;
+using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Tests.Common;
 
@@ -13,12 +14,10 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         {
             string xmlString = "<int>--13-06</int>";
 
-            var unitOfWork = TestRuleSerializer.Create();
+            var element = TestRuleSerializer.Deserialize<Int>(xmlString);
+            element.Interpret(BypassHandler.Instance);
 
-            var element = unitOfWork.Container<Int>()
-                .Deserialize(new XmlDescriptor() { Description = xmlString }, null);
-
-            Assert.IsFalse(element.IsValid);
+            Assert.AreEqual(0, element.ValueCalculated);
         }
 
         [Test]

@@ -37,7 +37,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override bool Operate(RuleExpression exp1, RuleExpression exp2, bool? previousValue)
         {
-            bool result = exp1.ValueCalculated.Equals(exp2.ValueCalculated);
+            bool result = exp1.ValueCalculatedEquals(exp2);
 
             return (previousValue != null) ? (result && (bool)previousValue) : result;
         }

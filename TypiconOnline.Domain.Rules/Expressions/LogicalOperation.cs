@@ -1,7 +1,7 @@
 ﻿namespace TypiconOnline.Domain.Rules.Expressions
 {
     /// <summary>
-    /// Базовый класс для логинческих опреаций: И ИЛИ
+    /// Базовый класс для логических операций: И ИЛИ
     /// </summary>
     public abstract class LogicalOperation : LogicalExpression
     {

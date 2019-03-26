@@ -17,8 +17,9 @@
 
         protected override bool Operate(RuleExpression exp1, RuleExpression exp2, bool? previousValue)
         {
-            return (previousValue != null) ? ((bool)exp1.ValueCalculated && (bool)exp2.ValueCalculated && (bool)previousValue)
-                : ((bool)exp1.ValueCalculated && (bool)exp2.ValueCalculated);
+            bool exp = ((BooleanExpression)exp1).ValueCalculated && ((BooleanExpression)exp2).ValueCalculated;
+
+            return (previousValue != null) ? (exp && (bool)previousValue) : exp;
         }
     }
 }

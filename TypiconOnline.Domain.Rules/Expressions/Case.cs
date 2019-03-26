@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Interfaces;
 
@@ -16,38 +17,31 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         public ExecContainer ActionElement { get; set; }
 
-        public override Type ExpressionType
+        public override bool ExpressionTypeEquals(RuleExpression entity)
         {
-            get
+            if (IsValid)
             {
-                if (ValuesElements.Count > 0)
+                return ValuesElements.First().ExpressionTypeEquals(entity);
+            }
+            return false;
+        }
+
+        public override bool ValueCalculatedEquals(RuleExpression entity)
+        {
+            foreach (RuleExpression valueElement in ValuesElements)
+            {
+                if (valueElement.ValueCalculatedEquals(entity))
                 {
-                    return ValuesElements[0].ExpressionType;
-                }
-                else
-                {
-                    return null;
+                    return true;
                 }
             }
+            return false;
         }
 
         #endregion
 
         #region Methods
 
-        public override bool ValueExpressionEquals(RuleExpression entity)
-        {
-            if (entity != null)
-            {
-                foreach (RuleExpression valueElement in ValuesElements)
-                {
-                    if (valueElement.ValueExpressionEquals(entity))
-                        return true;
-                }
-            }
-
-            return false;
-        }
 
         protected override void InnerInterpret(IRuleHandler settings)
         {
@@ -70,7 +64,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
                 //проверяем, одного ли типа элементы
                 if (prevValueElement != null)
                 {
-                    if (prevValueElement.ExpressionType != valueElement.ExpressionType)
+                    if (!prevValueElement.ExpressionTypeEquals(valueElement))
                     {
                         AddBrokenConstraint(CaseBusinessConstraint.ValuesTypeMismatch, ElementName);
                     }

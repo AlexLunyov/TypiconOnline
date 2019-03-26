@@ -40,8 +40,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
             //DateTime easterDate = handler.GetCurrentEaster(date.Year);
 
-            ValueCalculated = ((DateTime)ChildExpression.ValueCalculated).Subtract(easterDate).Days;
-            ValueExpression = new ItemInt((int)ValueCalculated);
+            ValueExpression = ChildExpression.ValueCalculated.Subtract(easterDate).Days;
         }
 
         protected override void Validate()

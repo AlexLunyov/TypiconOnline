@@ -94,6 +94,18 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
         }
 
         [Test]
+        public void GetClosestDay_SeekFirstSunday1()
+        {
+            string xmlString = @"<getclosestday dayofweek=""воскресенье"" weekcount=""1""><date>--09-01</date></getclosestday>";
+
+            var element = TestRuleSerializer.Deserialize<GetClosestDay>(xmlString);
+
+            element.Interpret(BypassHandler.GetInstance(new DateTime(2019, 04, 28)));
+
+            Assert.AreEqual(element.ValueCalculated, new DateTime(2019, 9, 1));
+        }
+
+        [Test]
         public void GetClosestDay_SeekClosestSunday()
         {
             string xmlString = @"<getclosestday dayofweek=""воскресенье"" weekcount=""0""><date>--10-24</date></getclosestday>";

@@ -39,23 +39,24 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
             Assert.IsTrue((bool)element.ValueCalculated);
         }
 
-        [Test]
-        public void Rules_Expressions_More_False()
+        [TestCase(false, @"<more>
+                            <int>2</int>
+                            <int>1</int>
+                            <int>-11</int>
+                            <daysfromeaster><date>--04-15</date></daysfromeaster>
+                           </more>")]
+        [TestCase(true, @"<more>
+                            <date>--04-06</date>
+                            <date>--04-05</date>
+                            <date>--01-01</date>
+                          </more>")]
+        public void Rules_Expressions_More(bool expected, string xmlString)
         {
-            //BookStorage.Instance = BookStorageFactory.Create();
-
-            string xmlString = @"<more>
-                                    <int>2</int>
-                                    <int>1</int>
-                                    <int>-11</int>
-                                    <daysfromeaster><date>--04-15</date></daysfromeaster>
-                                 </more>";
-
             var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
 
             element.Interpret(BypassHandler.GetInstance(new DateTime(2017, 4, 15)));
 
-            Assert.IsFalse((bool)element.ValueCalculated);
+            Assert.AreEqual(expected, element.ValueCalculated);
         }
 
         [Test]
@@ -71,7 +72,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             element.Interpret(BypassHandler.Instance);
 
-            Assert.IsTrue((bool)element.ValueCalculated);
+            Assert.IsTrue(element.ValueCalculated);
         }
 
         [Test]
@@ -87,7 +88,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             element.Interpret(BypassHandler.Instance);
 
-            Assert.IsTrue((bool)element.ValueCalculated);
+            Assert.IsTrue(element.ValueCalculated);
         }
 
         [Test]
@@ -102,7 +103,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
             var element = TestRuleSerializer.Deserialize<BooleanExpression>(xmlString);
             element.Interpret(BypassHandler.Instance);
 
-            Assert.IsTrue((bool)element.ValueCalculated);
+            Assert.IsTrue(element.ValueCalculated);
         }
     }
 }
