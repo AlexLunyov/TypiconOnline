@@ -22,7 +22,8 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 
             builder.HasOne(c => c.Typicon)
                 .WithMany(c => c.EditableUserTypicons)
-                .HasForeignKey(c => c.TypiconId);
+                .HasForeignKey(c => c.TypiconId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -16,7 +16,9 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
             builder.HasKey(c => c.Id);
 
             builder.HasOne(e => e.Template)
-                .WithMany().IsRequired(false);
+                .WithMany()
+                .HasForeignKey(c => c.TemplateId)
+                .IsRequired(false);
 
             builder.HasOne(e => e.Owner)
                 .WithMany(c => c.OwnedTypicons)

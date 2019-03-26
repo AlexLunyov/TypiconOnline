@@ -16,7 +16,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
             //builder.HasOne(c => c.TypiconVersion)
             //    .WithMany()
             //    .HasForeignKey(c => c.TypiconVersionId)
-            //    .OnDelete(DeleteBehavior.Restrict);
+            //    .OnDelete(DeleteBehavior.Cascade);
 
             //builder.HasMany(c => c.DayRuleWorships).
             //    WithOne().HasForeignKey(c => c.DayRuleId);
@@ -25,7 +25,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 
             builder.HasOne(e => e.Template)
                 .WithMany()
-                .OnDelete(DeleteBehavior.Restrict)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(c => c.TemplateId)
                 .IsRequired(true)
                 ;

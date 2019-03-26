@@ -13,6 +13,7 @@ namespace TypiconOnline.Domain.Typicon
     /// </summary>
     public class TypiconEntity : EntityBase<int>
     {
+        public int? TemplateId { get; set; }
         /// <summary>
         /// Ссылка на Устав-шаблон.
         /// </summary>

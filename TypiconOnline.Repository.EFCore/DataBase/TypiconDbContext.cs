@@ -40,6 +40,9 @@ namespace TypiconOnline.Repository.EFCore.DataBase
             // настройка полей с помощью Fluent API TypiconSettings
 
             modelBuilder.ApplyConfiguration(new UserConfiguration()); 
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
+
             modelBuilder.ApplyConfiguration(new TypiconConfiguration());
             modelBuilder.ApplyConfiguration(new TypiconVersionConfiguration());
             modelBuilder.ApplyConfiguration(new UserTypiconConfiguration()); 

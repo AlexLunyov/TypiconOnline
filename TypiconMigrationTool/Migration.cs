@@ -57,9 +57,32 @@ namespace TypiconMigrationTool
 
         private void Migrate()
         {
-            var user = new User("Administrator", "admin", "admin");
+            var roleAdmin = new Role() { Name = "Администратор", SystemName = "admin" };
+
+            var user = new User("Administrator", "admin", "admin")
+            {
+                Email = "ftroem@gmail.com",
+                PasswordHash = "AQAAAAEAACcQAAAAEEwD6/XhQXbEE/VEA/X4MonyJRZ7oJ1uX7FiqBC9q9SLHI0DkW1lLIiDIB4FDZ1/Bw=="
+            };
+
+            var roleEditor = new Role() { Name = "Уставщик", SystemName = "editor" };
+            _unitOfWork.Repository<Role>().Add(roleEditor);
+
+            var roleTypesetter = new Role() { Name = "Наборщик", SystemName = "typesetter" };
+            _unitOfWork.Repository<Role>().Add(roleTypesetter);
+
+            user.UserRoles = new List<UserRole>()
+            {
+                new UserRole() { Role = roleAdmin, User = user },
+                new UserRole() { Role = roleEditor, User = user },
+                new UserRole() { Role = roleTypesetter, User = user }
+            };
 
             _unitOfWork.Repository<User>().Add(user);
+
+            var roleGuest = new Role() { Name = "Гость", SystemName = "guest" };
+            _unitOfWork.Repository<Role>().Add(roleGuest);
+
             Commit();
 
             var typicon = new TypiconEntity()

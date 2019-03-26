@@ -10,6 +10,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class ComparisonExpressionBusinessConstraint
     {
-        public static readonly BusinessConstraint TypeMismatch = new BusinessConstraint("Дочерние элементы должны быть целочисленного типа.");
+        public static readonly BusinessConstraint TypeMismatch = new BusinessConstraint("Дочерние элементы должны быть целочисленного типа или датой.");
     }
 }

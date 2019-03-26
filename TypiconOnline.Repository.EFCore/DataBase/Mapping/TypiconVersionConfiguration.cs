@@ -37,13 +37,13 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
                 .WithOne(d => d.TypiconVersion)
                 .HasForeignKey(c => c.TypiconVersionId);
 
-            builder.HasMany(c => c.MenologyRules)
-                .WithOne(d => d.TypiconVersion)
-                .HasForeignKey(c => c.TypiconVersionId);
+            //builder.HasMany(c => c.MenologyRules)
+            //    .WithOne(d => d.TypiconVersion)
+            //    .HasForeignKey(c => c.TypiconVersionId);
 
-            builder.HasMany(c => c.TriodionRules)
-                .WithOne(d => d.TypiconVersion)
-                .HasForeignKey(c => c.TypiconVersionId);
+            //builder.HasMany(c => c.TriodionRules)
+            //    .WithOne(d => d.TypiconVersion)
+            //    .HasForeignKey(c => c.TypiconVersionId);
 
             builder.HasMany(c => c.Signs)
                 .WithOne(d => d.TypiconVersion)

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rule>
+  <if>
+    <expression>
+        <less>
+          <date/>
+          <date>--02-09</date>
+        </less>
+    </expression>
+    <then>
+      <choir>
+        <p>
+          <item language="cs-ru">choir1</item>
+        </p>
+      </choir>
+    </then>
+  </if>
+</rule>

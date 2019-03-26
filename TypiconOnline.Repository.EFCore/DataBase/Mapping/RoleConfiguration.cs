@@ -4,13 +4,13 @@ using TypiconOnline.Domain.Identity;
 
 namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 {
-    class UserConfiguration : IEntityTypeConfiguration<User>
+    class RoleConfiguration : IEntityTypeConfiguration<Role>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.HasKey(c => c.Id);
+            
 
-            //builder.HasMany(c => c.UserRoles);
         }
     }
 }

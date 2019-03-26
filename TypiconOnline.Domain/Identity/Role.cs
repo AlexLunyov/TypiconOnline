@@ -6,6 +6,7 @@ namespace TypiconOnline.Domain.Identity
     public class Role : EntityBase<int>
     {
         public string Name { get; set; }
+        public string SystemName { get; set; }
 
         public virtual ICollection<UserRole> UserRoles { get; set; }
 

@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Identity
     /// </summary>
     public class User : EntityBase<int>, IAggregateRoot
     {
-        private User() { }
+        public User() { }
 
         public User(string userName, string login, string passwordHash)
         {
@@ -26,6 +26,8 @@ namespace TypiconOnline.Domain.Identity
         public string Login { get; set; }
         public string PasswordHash { get; set; }
         public string Email { get; set; }
+        public bool EmailConfirmed { get; set; }
+        public bool TwoFactorEnabled { get; set; }
 
         /// <summary>
         /// Является ли Пользователь администратором системы

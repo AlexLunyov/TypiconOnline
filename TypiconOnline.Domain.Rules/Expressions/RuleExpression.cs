@@ -6,8 +6,13 @@ namespace TypiconOnline.Domain.Rules.Expressions
     {
         public RuleExpression(string name) : base(name) { }
 
+        /// <summary>
+        /// Значение, введенное в определении Правила
+        /// </summary>
         public virtual object ValueExpression { get; set; }
-
+        /// <summary>
+        /// Значение, вычисленное исходя из дочерних элементов или <see cref="ValueExpression"/>
+        /// </summary>
         public virtual object ValueCalculated { get; protected set; }
         public virtual Type ExpressionType { get; }
 
