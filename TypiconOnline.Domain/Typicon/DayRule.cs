@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
@@ -14,11 +15,14 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         public virtual ICollection<DayRuleWorship> DayRuleWorships { get; set; } = new List<DayRuleWorship>();
 
-        public List<DayWorship> DayWorships
+        public IReadOnlyList<DayWorship> DayWorships
         {
             get
             {
-                return (from drw in DayRuleWorships select drw.DayWorship).ToList();
+                var list = DayRuleWorships.ToArray();
+                Array.Sort(list);
+
+                return (from drw in list select drw.DayWorship).ToList();
             }
         }
 
@@ -28,7 +32,7 @@ namespace TypiconOnline.Domain.Typicon
         public override string GetNameByLanguage(string language)
         {
             string result = "";
-            if (DayWorships.Count > 0)
+            if (DayWorships.Count() > 0)
             {
                 foreach (DayWorship serv in DayWorships)
                 {

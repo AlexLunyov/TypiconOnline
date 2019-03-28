@@ -364,7 +364,7 @@ namespace TypiconMigrationTool
                         Template = typiconEntity.Signs.First(c => c.SignName.FirstOrDefault(DEFAULT_LANGUAGE).Text == mineinikRow.ServiceSignsRow.Name),
                     };
 
-                    menologyRule.DayRuleWorships.Add( new DayRuleWorship() { DayRule = menologyRule, DayWorship = dayWorship } );
+                    menologyRule.DayRuleWorships.Add( new DayRuleWorship() { DayRule = menologyRule, DayWorship = dayWorship, Order = 1 } );
 
                     typiconEntity.MenologyRules.Add(menologyRule);
 
@@ -378,7 +378,8 @@ namespace TypiconMigrationTool
                 }
                 else
                 {
-                    menologyRule.DayRuleWorships.Add(new DayRuleWorship() { DayRule = menologyRule, DayWorship = dayWorship });
+                    int lastOrder = menologyRule.DayRuleWorships.Max(c => c.Order);
+                    menologyRule.DayRuleWorships.Add(new DayRuleWorship() { DayRule = menologyRule, DayWorship = dayWorship, Order = lastOrder + 1 });
                 }
             }
 
@@ -445,7 +446,7 @@ namespace TypiconMigrationTool
                     ModRuleDefinition = fileReader.Read(row.DayFromEaster.ToString(), "mod")
 
                 };
-                rule.DayRuleWorships = new List<DayRuleWorship>() { new DayRuleWorship() { DayRule = rule, DayWorship = dayWorship } };
+                rule.DayRuleWorships = new List<DayRuleWorship>() { new DayRuleWorship() { DayRule = rule, DayWorship = dayWorship, Order = 1 } };
 
                 //folder.AddRule(rule);
                 typiconEntity.TriodionRules.Add(rule);

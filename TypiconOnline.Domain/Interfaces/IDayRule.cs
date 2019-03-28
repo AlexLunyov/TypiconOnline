@@ -8,7 +8,7 @@ namespace TypiconOnline.Domain.Interfaces
     /// </summary>
     public interface IDayRule
     {
-        List<DayWorship> DayWorships { get; }
+        IReadOnlyList<DayWorship> DayWorships { get; }
         //bool IsAddition { get; set; }
         //Sign Template { get; }
         //string RuleDefinition { get; }

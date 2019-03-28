@@ -9,7 +9,7 @@ using TypiconMigrationTool.Core;
 namespace TypiconMigrationTool.Core.Migrations
 {
     [DbContext(typeof(Db))]
-    [Migration("20190325203408_mysql")]
+    [Migration("20190328114209_mysql")]
     partial class mysql
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,6 +109,8 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.Property<int>("DayRuleId");
 
                     b.Property<int>("DayWorshipId");
+
+                    b.Property<int>("Order");
 
                     b.HasKey("DayRuleId", "DayWorshipId");
 

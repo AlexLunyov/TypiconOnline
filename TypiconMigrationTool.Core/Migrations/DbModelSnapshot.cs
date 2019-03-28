@@ -108,6 +108,8 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<int>("DayWorshipId");
 
+                    b.Property<int>("Order");
+
                     b.HasKey("DayRuleId", "DayWorshipId");
 
                     b.HasIndex("DayWorshipId");

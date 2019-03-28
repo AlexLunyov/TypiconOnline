@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
@@ -57,7 +58,7 @@ namespace TypiconOnline.Domain.Typicon.Modifications
         /// <summary>
         /// Список служб, отфильтрованный согласно настройкам ModifiedRule
         /// </summary>
-        public List<DayWorship> DayWorships
+        public IReadOnlyList<DayWorship> DayWorships
         {
             get
             {
@@ -69,15 +70,15 @@ namespace TypiconOnline.Domain.Typicon.Modifications
 
         //public string RuleDefinition => RuleEntity?.RuleDefinition;
 
-        private List<DayWorship> ApplyFilter(List<DayWorship> dayWorships)
+        private List<DayWorship> ApplyFilter(IReadOnlyList<DayWorship> dayWorships)
         {
-            List<DayWorship> result = new List<DayWorship>();
+            var result = new List<DayWorship>();
 
             if (Filter?.IsValid == true)
             {
-                for (int i = 0; i < dayWorships.Count; i++)
+                for (int i = 0; i < dayWorships.Count(); i++)
                 {
-                    var item = dayWorships[i];
+                    var item = dayWorships.ElementAt(i);
 
                     //смотрим включенную службу - если определена - добавляем
                     //если не определена - смотрим исключенную

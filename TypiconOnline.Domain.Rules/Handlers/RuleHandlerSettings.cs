@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// Десериализированная последовательность элементов
         /// </summary>
         public RootContainer RuleContainer { get; set; }
-        public List<DayWorship> DayWorships { get; set; } = new List<DayWorship>();
+        public IReadOnlyList<DayWorship> DayWorships { get; set; } = new List<DayWorship>();
         
         //TODO: заменить на DayContainer
         public OktoikhDay OktoikhDay { get; set; }

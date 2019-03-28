@@ -8,6 +8,8 @@ using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Tests.Common;
+using TypiconOnline.Domain.Days;
+using System.Collections.Generic;
 
 namespace TypiconOnline.Domain.Tests.Rules.Schedule
 {
@@ -49,9 +51,10 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             TriodionRule triodRule = TypiconVersion.GetTriodionRule(-20);
 
-            rule.DayWorships.AddRange(triodRule.DayWorships);
+            var w = new List<DayWorship>(rule.DayWorships);
+            w.AddRange(triodRule.DayWorships);
 
-            handler.Settings.DayWorships = rule.DayWorships;
+            handler.Settings.DayWorships = w;
 
             handler.ClearResult();
             rule.GetRule<ExecContainer>(Serializer).Interpret(handler);

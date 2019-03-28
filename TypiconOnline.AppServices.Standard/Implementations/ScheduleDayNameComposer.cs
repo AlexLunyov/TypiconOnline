@@ -26,7 +26,7 @@ namespace TypiconOnline.AppServices.Implementations
             this.queryProcessor = queryProcessor;
         }
 
-        public ItemTextUnit Compose(DateTime date, int seniorRulePriority, ICollection<DayWorship> dayWorships, LanguageSettings language)
+        public ItemTextUnit Compose(DateTime date, int seniorRulePriority, IReadOnlyList<DayWorship> dayWorships, LanguageSettings language)
         {
             var result = new ItemTextUnit() { Language = language.Name };
 
@@ -83,7 +83,7 @@ namespace TypiconOnline.AppServices.Implementations
 
         public ItemTextUnit GetWeekName(DateTime date, string language) => queryProcessor.Process(new WeekNameQuery(date, language, false));
 
-        private string GetShortName(ICollection<DayWorship> dayServices, string language)
+        private string GetShortName(IReadOnlyList<DayWorship> dayServices, string language)
         {
             string result = "";
 

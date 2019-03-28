@@ -1,10 +1,7 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JetBrains.Annotations;
-using Mapster;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Days;
@@ -46,16 +43,13 @@ namespace TypiconOnline.AppServices.Implementations
 
             //заполняем Правила и день Октоиха
             //находим MenologyRule - не может быть null
-            //var menologyRule = TypiconFacade.GetMenologyRule(req.TypiconVersionId, req.Date) ?? throw new NullReferenceException("MenologyRule");
             var menologyRule = QueryProcessor.Process(new MenologyRuleQuery(req.TypiconVersionId, req.Date)) ?? throw new NullReferenceException("MenologyRule");
 
             //находим TriodionRule
-            //var triodionRule = TypiconFacade.GetTriodionRule(req.TypiconVersionId, req.Date);
             var triodionRule = QueryProcessor.Process(new TriodionRuleQuery(req.TypiconVersionId, req.Date));
 
             //находим ModifiedRule с максимальным приоритетом
             var modifiedRule = QueryProcessor.Process(new ModifiedRuleHighestPriorityQuery(req.TypiconVersionId, req.Date));
-            //var modifiedRule = ModifiedRuleService.GetModifiedRuleHighestPriority(req.TypiconId, req.Date);
 
             //находим день Октоиха - не может быть null
             var oktoikhDay = QueryProcessor.Process(new OktoikhDayQuery(req.Date)) ?? throw new NullReferenceException("OktoikhDay");
@@ -74,7 +68,7 @@ namespace TypiconOnline.AppServices.Implementations
                 if (modifiedRule.IsAddition)
                 {
                     //создаем первый объект, который в дальнейшем станет ссылкой Addition у выбранного правила
-                    var dayRule = modifiedRule.DayRule;//.Adapt<DayRuleDto>();
+                    var dayRule = modifiedRule.DayRule;
 
                     settings = SettingsFactory.Create(new CreateRuleSettingsRequest(req)
                     {
@@ -95,7 +89,10 @@ namespace TypiconOnline.AppServices.Implementations
             if (settings != null)
             {
                 //созданы - значит был определен элемент для добавления
-                settings.DayWorships.AddRange(Worships);
+                var w = new List<DayWorship>(settings.DayWorships);
+                w.AddRange(Worships);
+
+                settings.DayWorships = w;
             }
 
             RuleHandlerSettings outputSettings = SettingsFactory.Create(new CreateRuleSettingsRequest(req)
@@ -184,9 +181,9 @@ namespace TypiconOnline.AppServices.Implementations
             //находим главное правило
             var rule = rulesList.First();
             //если это измененное правило, то возвращаем правило, на которое оно указывает
-            if (rule is ModifiedRule)
+            if (rule is ModifiedRule mr)
             {
-                rule = (rule as ModifiedRule).DayRule;
+                rule = mr.DayRule;
             }
 
             return (rule as DayRule, dayWorships);

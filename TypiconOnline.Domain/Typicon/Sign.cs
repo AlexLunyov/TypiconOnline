@@ -19,7 +19,8 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         public int? Number { get; set; }
         public int Priority { get; set; }
-
+        
+        //Зачем необходимо это поле? УДАЛИТЬ
         public bool IsTemplate { get; set; }
 
         private ItemText _signName;

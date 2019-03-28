@@ -640,7 +640,8 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     DayRuleId = table.Column<int>(nullable: false),
-                    DayWorshipId = table.Column<int>(nullable: false)
+                    DayWorshipId = table.Column<int>(nullable: false),
+                    Order = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
