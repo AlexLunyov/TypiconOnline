@@ -33,7 +33,8 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
         }
 
         public ITemplateHavingEntity Rule { get; set; }
-        public IEnumerable<DayWorship> DayWorships { get; set; }
+        public IEnumerable<DayWorship> Menologies { get; set; }
+        public IEnumerable<DayWorship> Triodions { get; set; }
         public OktoikhDay OktoikhDay { get; set; }
         public RuleHandlerSettings AdditionalSettings { get; set; }
         public int? SignNumber { get; set; }

@@ -19,10 +19,9 @@ namespace TypiconOnline.Domain.Typicon
         {
             get
             {
-                var list = DayRuleWorships.ToArray();
-                Array.Sort(list);
-
-                return (from drw in list select drw.DayWorship).ToList();
+                (DayRuleWorships as List<DayRuleWorship>).Sort();
+                
+                return (from drw in DayRuleWorships select drw.DayWorship).ToList();
             }
         }
 
@@ -32,7 +31,7 @@ namespace TypiconOnline.Domain.Typicon
         public override string GetNameByLanguage(string language)
         {
             string result = "";
-            if (DayWorships.Count() > 0)
+            if (DayWorships.Count > 0)
             {
                 foreach (DayWorship serv in DayWorships)
                 {

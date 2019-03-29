@@ -83,7 +83,7 @@ namespace TypiconOnline.AppServices.Implementations
                 scheduleDay = new ScheduleDay
                 {
                     //задаем имя дню
-                    Name = nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.DayWorships, settings.Language),
+                    Name = nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.AllWorships, settings.Language),
                     Date = request.Date,
                     SignNumber = signNumber,
                     SignName = sign.SignName.FirstOrDefault(settings.Language.Name),

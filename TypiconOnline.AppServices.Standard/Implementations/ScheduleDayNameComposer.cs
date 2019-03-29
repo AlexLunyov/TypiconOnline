@@ -44,7 +44,7 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 for (int i = 1; i < dayWorships.Count; i++)
                 {
-                    resultString += dayWorships.ElementAt(i).WorshipName.FirstOrDefault(language.Name).Text + " ";
+                    resultString += dayWorships[i].WorshipName.FirstOrDefault(language.Name).Text + " ";
                 }
             }
 
@@ -83,13 +83,13 @@ namespace TypiconOnline.AppServices.Implementations
 
         public ItemTextUnit GetWeekName(DateTime date, string language) => queryProcessor.Process(new WeekNameQuery(date, language, false));
 
-        private string GetShortName(IReadOnlyList<DayWorship> dayServices, string language)
+        private string GetShortName(IReadOnlyList<DayWorship> dayWorships, string language)
         {
             string result = "";
 
-            for (int i = 0; i < dayServices.Count; i++)
+            for (int i = 0; i < dayWorships.Count; i++)
             {
-                string s = dayServices.ElementAt(i).WorshipShortName.FirstOrDefault(language)?.Text;
+                string s = dayWorships[i].WorshipShortName.FirstOrDefault(language)?.Text;
 
                 if (!string.IsNullOrEmpty(s))
                 {

@@ -28,12 +28,11 @@ namespace TypiconOnline.Domain.Rules.Extensions
                 //если находим, исполняем/исключаем его вместо настоящего элемента
                 if (found != null)
                 {
-                    //если rewrite, то исполняем элемент
-                    
                     switch (found.AsAdditionMode)
                     {
                         case AsAdditionMode.Rewrite:
                             {
+                                //если rewrite, то исполняем элемент
                                 Rewrite(found, handler);
                             }
                             break;

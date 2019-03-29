@@ -51,7 +51,7 @@ namespace TypiconOnline.Domain.Typicon
 
             if (!LeapDate.IsValid)
             {
-                AppendAllBrokenConstraints(Date, "DateB");
+                AppendAllBrokenConstraints(Date, "LeapDate");
             }
         }
 

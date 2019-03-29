@@ -1,4 +1,5 @@
-﻿using TypiconOnline.Domain.Days;
+﻿using System.Linq;
+using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Rules.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Expressions
@@ -14,16 +15,7 @@ namespace TypiconOnline.Domain.Rules.Expressions
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-           ValueCalculated = false;
-
-            foreach (DayWorship day in handler?.Settings?.DayWorships)
-            {
-                if (day.IsCelebrating)
-                {
-                    ValueCalculated = true;
-                    break;
-                }
-            }
+            ValueCalculated = handler?.Settings?.AllWorships.Any(c => c.IsCelebrating) ?? false;
         }
 
         protected override void Validate()

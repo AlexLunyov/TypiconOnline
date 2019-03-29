@@ -11,7 +11,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void KKatavasiaRule_Source_Kanonas()
         {
-            string xmlString = @"<k_katavasia source=""item1"" kanonas=""orthros1""/>";
+            string xmlString = @"<k_katavasia source=""menology1"" kanonas=""orthros1""/>";
 
             var element = TestRuleSerializer.Deserialize<KKatavasiaRule>(xmlString);
 
@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void KKatavasiaRule_Invalid_Source()
         {
-            string xmlString = @"<k_katavasia source=""item1""/>";
+            string xmlString = @"<k_katavasia source=""menology1""/>";
 
             var element = TestRuleSerializer.Deserialize<KKatavasiaRule>(xmlString);
 

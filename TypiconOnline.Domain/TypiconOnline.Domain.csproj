@@ -112,6 +112,7 @@
     <Compile Include="Common\LanguageSettingsFactory.cs" />
     <Compile Include="Identity\Role.cs" />
     <Compile Include="Identity\UserRole.cs" />
+    <Compile Include="Typicon\ExplicitAddRule.cs" />
     <Compile Include="Typicon\OutputForm.cs" />
     <Compile Include="Typicon\OutputFormDayWorship.cs" />
     <Compile Include="Typicon\ModRuleEntity.cs" />

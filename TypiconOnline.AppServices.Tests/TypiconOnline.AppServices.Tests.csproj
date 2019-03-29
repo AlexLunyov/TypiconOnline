@@ -182,11 +182,11 @@
   <ItemGroup>
     <Compile Include="Common\IntCsTest.cs" />
     <Compile Include="Common\SignMigratorTest.cs" />
+    <Compile Include="Common\TypeEqualsOrSubclassOfTest.cs" />
     <Compile Include="Implementation\HtmlScheduleDayViewerTest.cs" />
     <Compile Include="Implementation\ModifiedRuleServiceTest.cs" />
     <Compile Include="Implementation\OutputFormFactoryTest.cs" />
     <Compile Include="Implementation\OutputFormsTest.cs" />
-    <Compile Include="Implementation\ScheduleOutputFormServiceTest.cs" />
     <Compile Include="Implementation\ScheduleServiceTest.cs" />
     <Compile Include="Jobs\CalculateModifiedYearJobHandlerTest.cs" />
     <Compile Include="Jobs\CalculateOutputFormYearJobTest.cs" />

@@ -65,6 +65,8 @@ namespace TypiconOnline.Repository.EFCore.DataBase
             modelBuilder.Entity<TriodionRule>();
             //modelBuilder.ApplyConfiguration(new TriodionRuleConfiguration());
 
+            modelBuilder.ApplyConfiguration(new ExplicitAddRuleConfiguration());
+
             modelBuilder.ApplyConfiguration(new OutputFormConfiguration()); 
             modelBuilder.ApplyConfiguration(new OutputFormDayWorshipConfiguration()); 
 

@@ -9,9 +9,9 @@
         </equals>
       </expression>
       <then>
-        <ymnosrule kind="ymnos" source="item1" place="kekragaria" count="3"/>
+        <ymnosrule kind="ymnos" source="menology1" place="kekragaria" count="3"/>
         <theotokionapprule place="app3">
-          <ymnosrule kind="ymnos" source="item1" place="kekragaria"/>
+          <ymnosrule kind="ymnos" source="menology1" place="kekragaria"/>
         </theotokionapprule>
       </then>
     </if>

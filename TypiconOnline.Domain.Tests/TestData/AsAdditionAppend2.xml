@@ -10,15 +10,15 @@
       </expression>
       <then>
         <k_odi asaddition="append">
-          <k_kanonas source="item1" kanonas="orthros1" count="4"/>
+          <k_kanonas source="menology1" kanonas="orthros1" count="4"/>
         </k_odi>
         <k_odi number="8" asaddition="append">
-          <k_kanonas source="item1" kanonas="orthros1" count="4"/>
+          <k_kanonas source="menology1" kanonas="orthros1" count="4"/>
         </k_odi>
       </then>
       <else>
         <k_odi number="9" asaddition="append">
-          <k_kanonas source="item1" kanonas="orthros1" count="4"/>
+          <k_kanonas source="menology1" kanonas="orthros1" count="4"/>
         </k_odi>
       </else>
     </if>

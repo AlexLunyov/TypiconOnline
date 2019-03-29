@@ -15,9 +15,9 @@
               <iscelebrating/>
             </expression>
             <then>
-              <k_kanonas source="item1" kanonas="orthros1" count="6" irmoscount="2"/>
-              <k_kanonas source="item2" kanonas="orthros1" count="4"/>
-              <k_kanonas source="item3" kanonas="orthros1" count="4"/>
+              <k_kanonas source="menology1" kanonas="orthros1" count="6" irmoscount="2"/>
+              <k_kanonas source="menology2" kanonas="orthros1" count="4"/>
+              <k_kanonas source="menology3" kanonas="orthros1" count="4"/>
             </then>
             <else>
               <if>
@@ -41,13 +41,13 @@
                 <then>
                   <k_kanonas source="oktoikh" kanonas="orthros1" count="4" irmoscount="1" martyrion="false"/>
                   <k_kanonas source="oktoikh" kanonas="orthros2" count="4"/>
-                  <k_kanonas source="item1" kanonas="orthros1" count="3"/>
-                  <k_kanonas source="item2" kanonas="orthros1" count="3"/>
+                  <k_kanonas source="menology1" kanonas="orthros1" count="3"/>
+                  <k_kanonas source="menology2" kanonas="orthros1" count="3"/>
                 </then>
                 <else>
                   <k_kanonas source="oktoikh" kanonas="orthros1" count="6" irmoscount="1"/>
-                  <k_kanonas source="item1" kanonas="orthros1" count="4"/>
-                  <k_kanonas source="item2" kanonas="orthros1" count="4"/>
+                  <k_kanonas source="menology1" kanonas="orthros1" count="4"/>
+                  <k_kanonas source="menology2" kanonas="orthros1" count="4"/>
                   <k_katavasia name="отверзу_уста_моя"/>
                 </else>
               </if>
@@ -57,7 +57,7 @@
         <else>
           <k_kanonas source="oktoikh" kanonas="orthros1" count="4" irmoscount="1" martyrion="false"/>
           <k_kanonas source="oktoikh" kanonas="orthros2" count="4"/>
-          <k_kanonas source="item1" kanonas="orthros1" count="3"/>
+          <k_kanonas source="menology1" kanonas="orthros1" count="3"/>
         </else>
       </if>
     </k_odi>
@@ -75,11 +75,11 @@
               <iscelebrating/>
             </expression>
             <then>
-              <k_sedalen source="item2" kanonas="orthros1" place="kontakion"/>
-              <k_sedalen source="item3" kanonas="orthros1" place="kontakion"/>
-              <k_sedalen source="item2" kanonas="orthros1" place="sedalen"/>
-              <k_sedalen source="item3" kanonas="orthros1" place="sedalen"/>
-              <k_sedalentheotokion source="item1" kanonas="orthros1" place="sedalen"/>
+              <k_sedalen source="menology2" kanonas="orthros1" place="kontakion"/>
+              <k_sedalen source="menology3" kanonas="orthros1" place="kontakion"/>
+              <k_sedalen source="menology2" kanonas="orthros1" place="sedalen"/>
+              <k_sedalen source="menology3" kanonas="orthros1" place="sedalen"/>
+              <k_sedalentheotokion source="menology1" kanonas="orthros1" place="sedalen"/>
             </then>
             <else>
               <if>
@@ -87,17 +87,17 @@
                 <expression>
                   <and>
                     <exists>
-                      <kontakion source="item1" kanonas="orthros1"/>
+                      <kontakion source="menology1" kanonas="orthros1"/>
                     </exists>
                     <exists>
-                      <kontakion source="item2" kanonas="orthros1"/>
+                      <kontakion source="menology2" kanonas="orthros1"/>
                     </exists>
                   </and>
                 </expression>
                 <then>
-                  <k_sedalen source="item1" kanonas="orthros1" place="kontakion"/>
-                  <k_sedalen source="item1" kanonas="orthros1" place="sedalen"/>
-                  <k_sedalen source="item2" kanonas="orthros1" place="sedalen"/>
+                  <k_sedalen source="menology1" kanonas="orthros1" place="kontakion"/>
+                  <k_sedalen source="menology1" kanonas="orthros1" place="sedalen"/>
+                  <k_sedalen source="menology2" kanonas="orthros1" place="sedalen"/>
                   <if>
                     <expression>
                       <!-- среда или пятница-->
@@ -117,10 +117,10 @@
                       </or>
                     </expression>
                     <then>
-                      <k_sedalentheotokion source="item2" place="sedalen_stavrostheotokion" kanonas="orthros1"/>
+                      <k_sedalentheotokion source="menology2" place="sedalen_stavrostheotokion" kanonas="orthros1"/>
                     </then>
                     <else>
-                      <k_sedalentheotokion source="item2" place="sedalen_theotokion" kanonas="orthros1"/>
+                      <k_sedalentheotokion source="menology2" place="sedalen_theotokion" kanonas="orthros1"/>
                     </else>
                   </if>
                 </then>

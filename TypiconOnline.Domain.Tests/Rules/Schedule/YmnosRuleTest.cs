@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void YmnosRule_Creature()
         {
-            string xmlString = @"<ymnosrule source=""item1"" place=""kekragaria"" count=""3"" startfrom=""2""/>";
+            string xmlString = @"<ymnosrule source=""menology1"" place=""kekragaria"" count=""3"" startfrom=""2""/>";
 
             var element = TestRuleSerializer.Deserialize<YmnosRule>(xmlString);
 
@@ -85,7 +85,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             {
                 Date = DateTime.Today,
                 //TypiconRule = menologyRule,
-                DayWorships = dayWorships,
+                Menologies = dayWorships,
                 RuleContainer = ruleContainer
             };
         }

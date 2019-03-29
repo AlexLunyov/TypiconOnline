@@ -72,14 +72,17 @@ namespace TypiconOnline.Domain.Rules.Schedule
             DayStructureBase dayWorship = null;
             switch (Source)
             {
-                case KanonasSource.Item1:
-                    dayWorship = (settings.DayWorships.Count > 0) ? settings.DayWorships[0] : null;
+                case KanonasSource.Menology1:
+                    dayWorship = (settings.Menologies.Count > 0) ? settings.Menologies[0] : null;
                     break;
-                case KanonasSource.Item2:
-                    dayWorship = (settings.DayWorships.Count > 1) ? settings.DayWorships[1] : null;
+                case KanonasSource.Menology2:
+                    dayWorship = (settings.Menologies.Count > 1) ? settings.Menologies[1] : null;
                     break;
-                case KanonasSource.Item3:
-                    dayWorship = (settings.DayWorships.Count > 2) ? settings.DayWorships[2] : null;
+                case KanonasSource.Menology3:
+                    dayWorship = (settings.Menologies.Count > 2) ? settings.Menologies[2] : null;
+                    break;
+                case KanonasSource.Triodion1:
+                    dayWorship = (settings.Triodions.Count > 0) ? settings.Triodions[0] : null;
                     break;
                 case KanonasSource.Oktoikh:
                     dayWorship = settings.OktoikhDay;

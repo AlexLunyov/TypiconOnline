@@ -2,7 +2,7 @@
 <rule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///E:/Programming/Documentation/TypiconOnline.Documentation/XML/Rules/RulesSchema.xsd">
   <kanonasrule>
     <k_odi number="1">
-      <k_kanonas source="item1" kanonas="orthros1" count="4"/>
+      <k_kanonas source="menology1" kanonas="orthros1" count="4"/>
     </k_odi>
   </kanonasrule>
 </rule>

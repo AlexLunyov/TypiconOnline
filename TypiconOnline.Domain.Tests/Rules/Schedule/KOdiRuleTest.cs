@@ -12,7 +12,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             string xmlString = @"<kanonasrule>
                                     <k_odi number=""5"">
-			                            <k_kanonas source=""item2"" kanonas=""orthros1"" irmoscount=""1"" count=""5""/>
+			                            <k_kanonas source=""menology2"" kanonas=""orthros1"" irmoscount=""1"" count=""5""/>
 		                            </k_odi>
                                  </kanonasrule>";
 

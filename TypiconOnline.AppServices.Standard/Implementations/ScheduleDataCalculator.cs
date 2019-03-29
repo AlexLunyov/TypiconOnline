@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
+using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Query.Books;
@@ -51,14 +53,42 @@ namespace TypiconOnline.AppServices.Implementations
             //находим ModifiedRule с максимальным приоритетом
             var modifiedRule = QueryProcessor.Process(new ModifiedRuleHighestPriorityQuery(req.TypiconVersionId, req.Date));
 
+            //находим ModifiedRule с максимальным приоритетом
+            var explicitAddRule = QueryProcessor.Process(new ExplicitAddRuleQuery(req.TypiconVersionId, req.Date));
+
             //находим день Октоиха - не может быть null
             var oktoikhDay = QueryProcessor.Process(new OktoikhDayQuery(req.Date)) ?? throw new NullReferenceException("OktoikhDay");
 
-            //создаем выходной объект
-            RuleHandlerSettings settings = null;
+            //Создаем настройки из ExplicitAddRule
+            RuleHandlerSettings settings = CreateFromExplicit(req, explicitAddRule);
 
             //Номер Знака службы, указанный в ModifiedRule, который будет использовать в отображении Расписания
             int? signNumber = null;
+
+            settings = CreateFromModifiedAsAddition(req, ref modifiedRule, out signNumber, settings);
+
+            settings = CreateFromTransparent(req, (modifiedRule == null), triodionRule, settings);
+            //получаем главное Правило
+            var (majorRule, outputSettings) = CreateFromMajor(req, modifiedRule, menologyRule, triodionRule, oktoikhDay, settings, signNumber);
+
+            FillAllSettingsByWorships(outputSettings);
+
+            return new ScheduleDataCalculatorResponse() { Rule = majorRule, Settings = outputSettings };
+        }
+
+        private RuleHandlerSettings CreateFromExplicit(ScheduleDataCalculatorRequest req, ExplicitAddRule explicitAddRule)
+        {
+            return (explicitAddRule != null)
+                ? SettingsFactory.CreateExplicit(new CreateExplicitRuleSettingsRequest(req)
+                {
+                    Rule = explicitAddRule
+                })
+                : default(RuleHandlerSettings);
+        }
+
+        private RuleHandlerSettings CreateFromModifiedAsAddition(ScheduleDataCalculatorRequest req, ref ModifiedRule modifiedRule, out int? signNumber, RuleHandlerSettings settings)
+        {
+            signNumber = null;
 
             if (modifiedRule != null)
             {
@@ -70,42 +100,90 @@ namespace TypiconOnline.AppServices.Implementations
                     //создаем первый объект, который в дальнейшем станет ссылкой Addition у выбранного правила
                     var dayRule = modifiedRule.DayRule;
 
-                    settings = SettingsFactory.Create(new CreateRuleSettingsRequest(req)
+                    settings = SettingsFactory.CreateRecursive(new CreateRuleSettingsRequest(req)
                     {
                         Rule = dayRule,
-                        DayWorships = dayRule.DayWorships,
-                        OktoikhDay = oktoikhDay
+                        //DayWorships = dayRule.DayWorships,
+                        AdditionalSettings = settings
                     });
+
+                    //добавляем DayWorships
+                    if (TypeEqualsOrSubclassOf<MenologyRule>.Is(modifiedRule.DayRule))
+                    {
+                        settings.Menologies.AddRange(modifiedRule.DayWorships);
+                    }
+                    else
+                    {
+                        settings.Triodions.AddRange(modifiedRule.DayWorships);
+                    }
 
                     //обнуляем его, чтобы больше не участвовал в формировании
                     modifiedRule = null;
                 }
             }
 
-            //получаем главное Правило и коллекцию богослужебных текстов
-            (DayRule Rule, IEnumerable<DayWorship> Worships) = CalculatePriorities(modifiedRule, menologyRule, triodionRule);
+            return settings;
+        }
 
-            //смотрим, не созданы ли уже настройки
-            if (settings != null)
+        /// <summary>
+        /// Создает настройки из TriodionRule, если оно отмечено как IsTransparent
+        /// </summary>
+        /// <param name="req"></param>
+        /// <param name="modifiedRule"></param>
+        /// <param name="triodionRule"></param>
+        /// <param name="settings"></param>
+        /// <returns></returns>
+        private RuleHandlerSettings CreateFromTransparent(ScheduleDataCalculatorRequest req, bool modifiedRuleIsNull, TriodionRule triodionRule, RuleHandlerSettings settings)
+        {
+            //формируем, если нет ModifiedRule
+            if (modifiedRuleIsNull && triodionRule?.IsTransparent == true)
             {
-                //созданы - значит был определен элемент для добавления
-                var w = new List<DayWorship>(settings.DayWorships);
-                w.AddRange(Worships);
-
-                settings.DayWorships = w;
+                settings = SettingsFactory.CreateRecursive(new CreateRuleSettingsRequest(req)
+                {
+                    Rule = triodionRule,
+                    Triodions = triodionRule.DayWorships,
+                    AdditionalSettings = settings
+                });
             }
 
-            RuleHandlerSettings outputSettings = SettingsFactory.Create(new CreateRuleSettingsRequest(req)
+            return settings;
+        }
+
+        /// <summary>
+        /// Из трех правил выбирает главное и составляет коллекцию богослужебных текстов.
+        /// Считаем, что ModifiedRule не является ДОПОЛНЕНИЕМ 
+        /// </summary>
+        /// <returns>Правило для обработки, настройки для обработчика правил</returns>
+        private (DayRule MajorRule, RuleHandlerSettings Settings) CreateFromMajor(ScheduleDataCalculatorRequest req, ModifiedRule modifiedRule, MenologyRule menologyRule, TriodionRule triodionRule
+            , OktoikhDay oktoikhDay, RuleHandlerSettings settings, int? signNumber)
+        {
+            (DayRule MajorRule, IEnumerable<DayWorship> Menologies, IEnumerable<DayWorship> Triodions) r;
+
+            if (modifiedRule != null || triodionRule?.IsTransparent == false)
             {
-                Rule = Rule,
-                DayWorships = Worships,
+                r = CalculatePriorities(modifiedRule, menologyRule, triodionRule);
+            }
+            else
+            {
+                //если мы здесь, то осталась только Минея
+                r.MajorRule = menologyRule;
+                r.Menologies = menologyRule.DayWorships;
+                r.Triodions = new List<DayWorship>();
+            }
+
+            settings = SettingsFactory.CreateRecursive(new CreateRuleSettingsRequest(req)
+            {
+                Rule = r.MajorRule,
+                Menologies = r.Menologies,
+                Triodions = r.Triodions,
                 OktoikhDay = oktoikhDay,
                 AdditionalSettings = settings,
                 SignNumber = signNumber
             });
 
-            return new ScheduleDataCalculatorResponse() { Rule = Rule, Settings = outputSettings };
+            return (r.MajorRule, settings);
         }
+
 
         /// <summary>
         /// Из трех правил выбирает главное и составляет коллекцию богослужебных текстов.
@@ -115,21 +193,19 @@ namespace TypiconOnline.AppServices.Implementations
         /// <param name="menologyRule"></param>
         /// <param name="triodionRule"></param>
         /// <returns>Правило для обработки, список текстов богослужений</returns>
-        private (DayRule, IEnumerable<DayWorship>) CalculatePriorities(ModifiedRule modifiedRule, MenologyRule menologyRule, TriodionRule triodionRule)
+        private (DayRule MajorRule, IEnumerable<DayWorship> Menologies, IEnumerable<DayWorship> Triodions) CalculatePriorities(ModifiedRule modifiedRule, MenologyRule menologyRule, TriodionRule triodionRule)
         {
             //Приоритет Минеи
-            IDayRule menologyToCompare = SetValues(menologyRule, out int menologyPriority, typeof(MenologyRule));
+            IDayRule menologyToCompare = SetValues(menologyRule, out int menologyPriority, TypeEqualsOrSubclassOf<MenologyRule>.Is(modifiedRule?.DayRule));
             //Приоритет Триоди
-            IDayRule triodionToCompare = SetValues(triodionRule, out int triodionPriority, typeof(TriodionRule));
+            IDayRule triodionToCompare = SetValues(triodionRule, out int triodionPriority, TypeEqualsOrSubclassOf<TriodionRule>.Is(modifiedRule?.DayRule));
 
-            IDayRule SetValues(DayRule dr, out int p, Type t)
+            IDayRule SetValues(DayRule dr, out int p, bool typeEqualsOrSubclassOf)
             {
                 IDayRule r = null;
                 p = int.MaxValue;
 
-                if (modifiedRule?.DayRule.GetType().Equals(t) == true
-                    //для Proxies
-                    || modifiedRule?.DayRule.GetType().IsSubclassOf(t) == true)
+                if (typeEqualsOrSubclassOf)
                 {
                     r = modifiedRule;//.DayRule;
                     p = modifiedRule.Priority;
@@ -143,7 +219,9 @@ namespace TypiconOnline.AppServices.Implementations
                 return r;
             };
 
-            var rulesList = new List<IDayRule>();
+            IDayRule majorRule = null;
+            var menologies = new List<DayWorship>();
+            var triodions = new List<DayWorship>();
 
             int result = menologyPriority - triodionPriority;
             //сравниваем
@@ -152,41 +230,59 @@ namespace TypiconOnline.AppServices.Implementations
                 case 1:
                 case 0:
                     //senior Triodion, junior Menology
-                    rulesList.Add(triodionToCompare);
-                    rulesList.Add(menologyToCompare);
+                    majorRule = triodionToCompare;
+
+                    menologies.AddRange(menologyToCompare.DayWorships);
+                    triodions.AddRange(triodionToCompare.DayWorships);
                     break;
                 case -1:
                     //senior Menology, junior Triodion
-                    rulesList.Add(menologyToCompare);
-                    rulesList.Add(triodionToCompare);
+                    majorRule = menologyToCompare;
+
+                    menologies.AddRange(menologyToCompare.DayWorships);
+                    triodions.AddRange(triodionToCompare.DayWorships);
                     break;
                 default:
                     if (result < -1)
                     {
                         //только Минея
-                        rulesList.Add(menologyToCompare);
+                        majorRule = menologyToCompare;
+
+                        menologies.AddRange(menologyToCompare.DayWorships);
                     }
                     else
                     {
                         //только Триодь
-                        rulesList.Add(triodionToCompare);
+                        majorRule = triodionToCompare;
+
+                        triodions.AddRange(triodionToCompare.DayWorships);
                     }
                     break;
             }
 
-            //формируем список текстов
-            var dayWorships = new List<DayWorship>();
-            rulesList.ForEach(c => dayWorships.AddRange(c.DayWorships));
-
-            //находим главное правило
-            var rule = rulesList.First();
             //если это измененное правило, то возвращаем правило, на которое оно указывает
-            if (rule is ModifiedRule mr)
+            if (majorRule is ModifiedRule mr)
             {
-                rule = mr.DayRule;
+                majorRule = mr.DayRule;
             }
 
-            return (rule as DayRule, dayWorships);
+            return (majorRule as DayRule, menologies, triodions);
+        }
+
+        /// <summary>
+        /// Рекурсивно добавляет к настройкам коллекции Menologies, Triodions и OktoikhDay
+        /// </summary>
+        /// <param name="settings"></param>
+        private void FillAllSettingsByWorships(RuleHandlerSettings settings)
+        {
+            if (settings.Addition is RuleHandlerSettings addition)
+            {
+                addition.Menologies.AddRange(settings.Menologies);
+                addition.Triodions.AddRange(settings.Triodions);
+                addition.OktoikhDay = settings.OktoikhDay;
+
+                FillAllSettingsByWorships(addition);
+            }
         }
     }
 }

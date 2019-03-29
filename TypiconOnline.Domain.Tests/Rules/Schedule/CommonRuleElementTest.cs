@@ -18,9 +18,9 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         public void CommonRuleElement_SimplePassing()
         {
             //находим первый попавшийся MenologyRule
-            var unitOfWork = UnitOfWorkFactory.Create();
+            var dbContext = TypiconDbContextFactory.Create();
 
-            var typiconEntity = unitOfWork.Repository<TypiconVersion>().Get(c => c.Id == 1);
+            var typiconEntity = dbContext.Set<TypiconVersion>().First(c => c.Id == 1);
 
             MenologyRule rule = typiconEntity.MenologyRules[0];
             ServiceSequenceHandler handler = new ServiceSequenceHandler

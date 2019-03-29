@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             MenologyRule rule = TypiconVersion.GetMenologyRule(new DateTime(2017, 09, 28));
             rule.RuleDefinition = xml;
 
-            handler.Settings.DayWorships = rule.DayWorships;
+            handler.Settings.Menologies = rule.DayWorships.ToList();
 
             rule.GetRule<ExecContainer>(Serializer).Interpret(handler);
 
@@ -47,7 +47,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             rule = TypiconVersion.GetMenologyRule(new DateTime(2017, 10, 15));
             rule.RuleDefinition = xml;
 
-            handler.Settings.DayWorships = rule.DayWorships;
+            handler.Settings.Menologies = rule.DayWorships.ToList();
 
             handler.ClearResult();
             rule.GetRule<ExecContainer>(Serializer).Interpret(handler);

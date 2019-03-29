@@ -16,11 +16,11 @@
               <iscelebrating/>
             </expression>
             <then>
-              <kontakionrule kind="ymnos" source="item2" place="orthros1" showikos="true"/>
-              <kontakionrule kind="ymnos" source="item3" place="orthros1" showikos="true"/>
-              <ymnosrule kind="ymnos" source="item2" place="sedalen_kanonas" count="0"/>
-              <ymnosrule kind="ymnos" source="item3" place="sedalen_kanonas" count="0"/>
-              <ymnosrule kind="theotokion" source="item1" place="sedalen_kanonas_theotokion"/>
+              <kontakionrule kind="ymnos" source="menology2" place="orthros1" showikos="true"/>
+              <kontakionrule kind="ymnos" source="menology3" place="orthros1" showikos="true"/>
+              <ymnosrule kind="ymnos" source="menology2" place="sedalen_kanonas" count="0"/>
+              <ymnosrule kind="ymnos" source="menology3" place="sedalen_kanonas" count="0"/>
+              <ymnosrule kind="theotokion" source="menology1" place="sedalen_kanonas_theotokion"/>
             </then>
             <else>
               <if>
@@ -28,17 +28,17 @@
                 <expression>
                   <and>
                     <exists>
-                      <kontakionrule kind="ymnos" source="item1" place="orthros1"/>
+                      <kontakionrule kind="ymnos" source="menology1" place="orthros1"/>
                     </exists>
                     <exists>
-                      <kontakionrule kind="ymnos" source="item2" place="orthros1"/>
+                      <kontakionrule kind="ymnos" source="menology2" place="orthros1"/>
                     </exists>
                   </and>
                 </expression>
                 <then>
-                  <kontakionrule kind="ymnos" source="item1" place="orthros1" showikos="true"/>
-                  <ymnosrule kind="ymnos" source="item1" place="sedalen_kanonas" count="0"/>
-                  <ymnosrule kind="ymnos" source="item2" place="sedalen_kanonas" count="0"/>
+                  <kontakionrule kind="ymnos" source="menology1" place="orthros1" showikos="true"/>
+                  <ymnosrule kind="ymnos" source="menology1" place="sedalen_kanonas" count="0"/>
+                  <ymnosrule kind="ymnos" source="menology2" place="sedalen_kanonas" count="0"/>
                   <if>
                     <expression>
                       <!-- среда или пятница-->
@@ -58,10 +58,10 @@
                       </or>
                     </expression>
                     <then>
-                      <ymnosrule kind="theotokion" source="item2" place="sedalen_kanonas_stavrostheotokion"/>
+                      <ymnosrule kind="theotokion" source="menology2" place="sedalen_kanonas_stavrostheotokion"/>
                     </then>
                     <else>
-                      <ymnosrule kind="theotokion" source="item2" place="sedalen_kanonas_theotokion"/>
+                      <ymnosrule kind="theotokion" source="menology2" place="sedalen_kanonas_theotokion"/>
                     </else>
                   </if>
                 </then>
@@ -81,7 +81,7 @@
         <iscelebrating/>
       </expression>
       <then>
-        <kontakionrule source="item1" place="orthros1" showikos="true"/>
+        <kontakionrule source="menology1" place="orthros1" showikos="true"/>
       </then>
       <else>
         <if>
@@ -95,36 +95,36 @@
               <expression>
                 <and>
                   <exists>
-                    <kontakionrule source="item1" place="orthros1" showikos="true"/>
+                    <kontakionrule source="menology1" place="orthros1" showikos="true"/>
                   </exists>
                   <exists>
-                    <kontakionrule source="item2" place="orthros1" showikos="true"/>
+                    <kontakionrule source="menology2" place="orthros1" showikos="true"/>
                   </exists>
                 </and>
               </expression>
               <then>
-                <kontakionrule source="item2" place="orthros1" showikos="true"/>
+                <kontakionrule source="menology2" place="orthros1" showikos="true"/>
               </then>
               <else>
                 <!-- Кондак из Минеи у кого есть -->
                 <if>
                   <expression>
                     <exists>
-                      <kontakionrule source="item1" place="orthros1"/>
+                      <kontakionrule source="menology1" place="orthros1"/>
                     </exists>
                   </expression>
                   <then>
-                    <kontakionrule source="item1" place="orthros1" showikos="true"/>
+                    <kontakionrule source="menology1" place="orthros1" showikos="true"/>
                   </then>
                   <else>
                     <if>
                       <expression>
                         <exists>
-                          <kontakionrule source="item2" place="orthros1"/>
+                          <kontakionrule source="menology2" place="orthros1"/>
                         </exists>
                       </expression>
                       <then>
-                        <kontakionrule source="item2" place="orthros1" showikos="true"/>
+                        <kontakionrule source="menology2" place="orthros1" showikos="true"/>
                       </then>
                     </if>
                   </else>
@@ -134,7 +134,7 @@
           </then>
           <else>
             <!-- При одном святом-->
-            <kontakionrule source="item1" place="orthros1" showikos="true"/>
+            <kontakionrule source="menology1" place="orthros1" showikos="true"/>
           </else>
         </if>
       </else>
@@ -160,9 +160,9 @@
             <iscelebrating/>
           </expression>
           <then>
-            <k_kanonas source="item1" kanonas="orthros1" count="6" irmoscount="2"/>
-            <k_kanonas source="item2" kanonas="orthros1" count="4"/>
-            <k_kanonas source="item3" kanonas="orthros1" count="4"/>
+            <k_kanonas source="menology1" kanonas="orthros1" count="6" irmoscount="2"/>
+            <k_kanonas source="menology2" kanonas="orthros1" count="4"/>
+            <k_kanonas source="menology3" kanonas="orthros1" count="4"/>
           </then>
           <else>
             <if>
@@ -186,13 +186,13 @@
               <then>
                 <k_kanonas source="oktoikh" kanonas="orthros1" count="4" irmoscount="1" martyrion="false"/>
                 <k_kanonas source="oktoikh" kanonas="orthros2" count="4"/>
-                <k_kanonas source="item1" kanonas="orthros1" count="3"/>
-                <k_kanonas source="item2" kanonas="orthros1" count="3"/>
+                <k_kanonas source="menology1" kanonas="orthros1" count="3"/>
+                <k_kanonas source="menology2" kanonas="orthros1" count="3"/>
               </then>
               <else>
                 <k_kanonas source="oktoikh" kanonas="orthros1" count="6" irmoscount="1"/>
-                <k_kanonas source="item1" kanonas="orthros1" count="4"/>
-                <k_kanonas source="item2" kanonas="orthros1" count="4"/>
+                <k_kanonas source="menology1" kanonas="orthros1" count="4"/>
+                <k_kanonas source="menology2" kanonas="orthros1" count="4"/>
               </else>
             </if>
           </else>
@@ -205,13 +205,13 @@
             <iscelebrating/>
           </expression>
           <then>
-            <k_kanonas source="item1" kanonas="orthros1" count="8" irmoscount="2"/>
-            <k_kanonas source="item2" kanonas="orthros1" count="4"/>
+            <k_kanonas source="menology1" kanonas="orthros1" count="8" irmoscount="2"/>
+            <k_kanonas source="menology2" kanonas="orthros1" count="4"/>
           </then>
           <else>
             <k_kanonas source="oktoikh" kanonas="orthros1" count="6" irmoscount="1"/>
             <k_kanonas source="oktoikh" kanonas="orthros2" count="4"/>
-            <k_kanonas source="item1" kanonas="orthros1" count="4"/>
+            <k_kanonas source="menology1" kanonas="orthros1" count="4"/>
           </else>
         </if>
       </else>

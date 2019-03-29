@@ -258,12 +258,12 @@ namespace TypiconOnline.Domain.Rules
     /// <summary>
     /// Перечисление источников (богослужебных книг) для текстов богослужения
     /// </summary>
-    public enum YmnosSource { Oktoikh = 0, Item1 = 1, Item2 = 2, Item3 = 3, WeekDay = 4 }
+    public enum YmnosSource { Oktoikh = 0, Menology1 = 1, Menology2 = 2, Menology3 = 3, Triodion1 = 4, WeekDay = 5 }
 
     /// <summary>
     /// Перечисление источников (богослужебных книг) для канонов
     /// </summary>
-    public enum KanonasSource { Oktoikh = 0, Item1 = 1, Item2 = 2, Item3 = 3}
+    public enum KanonasSource { Oktoikh = 0, Menology1 = 1, Menology2 = 2, Menology3 = 3, Triodion1 = 4}
 
     /// <summary>
     /// Перечисление мест в богослужебных книгах для текстов богослужения

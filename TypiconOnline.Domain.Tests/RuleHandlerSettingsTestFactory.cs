@@ -11,17 +11,6 @@ namespace TypiconOnline.Domain.Tests
 {
     public class RuleHandlerSettingsTestFactory
     {
-        //IUnitOfWork unitOfWork;
-        TypiconVersion typiconEntity;
-
-
-        public RuleHandlerSettingsTestFactory()
-        {
-            var unitOfWork = UnitOfWorkFactory.Create();
-
-            typiconEntity = unitOfWork.Repository<TypiconVersion>().Get(c => c.Id == 1);
-        }
-
         public RuleHandlerSettings CreateSettings(int typiconId, DateTime date, string ruleDefinition, RuleHandlerSettings addition = null)
         {
             var menologyRule = DataQueryProcessorFactory.Instance.Process(new MenologyRuleQuery(1, date));
@@ -34,7 +23,7 @@ namespace TypiconOnline.Domain.Tests
                 TypiconVersionId = typiconId,
                 Date = date,
                 Addition = addition,
-                DayWorships = menologyRule.DayWorships.ToList(),
+                Menologies = menologyRule.DayWorships.ToList(),
                 OktoikhDay = oktoikhDay,
                 RuleContainer = ruleContainer
             };

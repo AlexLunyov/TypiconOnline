@@ -53,6 +53,8 @@ namespace TypiconOnline.Domain.Typicon
 
         public virtual List<Kathisma> Kathismas { get; set; }
 
+        public virtual List<ExplicitAddRule> ExplicitAddRules { get; set; }
+
         /// <summary>
         /// Признак того, что любое из дочерних свойств было изменено.
         /// Необходимо для индикации необходимости провести перевычисление ModifiedYears

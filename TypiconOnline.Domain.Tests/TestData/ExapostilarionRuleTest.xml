@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <exapostilarionrule>
-    <exap_item source="item1" place="exap1" kind="exap" count="2"/>
+    <exap_item source="menology1" place="exap1" kind="exap" count="2"/>
     <exap_item source="weekday" place="exap1" kind="exap"/>
     <exap_item source="weekday" place="theotokion" kind="theotokion"/>
   </exapostilarionrule>

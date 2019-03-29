@@ -32,14 +32,17 @@ namespace TypiconOnline.Domain.Rules.Schedule
             DayStructureBase dayContainer = null;
             switch (Source)
             {
-                case YmnosSource.Item1:
-                    dayContainer = (settings.DayWorships.Count > 0) ? settings.DayWorships[0] : null;
+                case YmnosSource.Menology1:
+                    dayContainer = (settings.Menologies.Count > 0) ? settings.Menologies[0] : null;
                     break;
-                case YmnosSource.Item2:
-                    dayContainer = (settings.DayWorships.Count > 1) ? settings.DayWorships[1] : null;
+                case YmnosSource.Menology2:
+                    dayContainer = (settings.Menologies.Count > 1) ? settings.Menologies[1] : null;
                     break;
-                case YmnosSource.Item3:
-                    dayContainer = (settings.DayWorships.Count > 2) ? settings.DayWorships[2] : null;
+                case YmnosSource.Menology3:
+                    dayContainer = (settings.Menologies.Count > 2) ? settings.Menologies[2] : null;
+                    break;
+                case YmnosSource.Triodion1:
+                    dayContainer = (settings.Triodions.Count > 0) ? settings.Triodions[0] : null;
                     break;
                 case YmnosSource.Oktoikh:
                     dayContainer = settings.OktoikhDay;

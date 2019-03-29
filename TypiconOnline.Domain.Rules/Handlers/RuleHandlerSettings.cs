@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using TypiconOnline.Domain.Books.Oktoikh;
 using TypiconOnline.Domain.Common;
@@ -32,8 +33,18 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// Десериализированная последовательность элементов
         /// </summary>
         public RootContainer RuleContainer { get; set; }
-        public IReadOnlyList<DayWorship> DayWorships { get; set; } = new List<DayWorship>();
-        
+
+        public List<DayWorship> Menologies { get; set; } = new List<DayWorship>();
+        public List<DayWorship> Triodions { get; set; } = new List<DayWorship>();
+
+        public IReadOnlyList<DayWorship> AllWorships
+        {
+            get
+            {
+                return Triodions.Concat(Menologies).ToList();
+            }
+        }
+
         //TODO: заменить на DayContainer
         public OktoikhDay OktoikhDay { get; set; }
         /// <summary>

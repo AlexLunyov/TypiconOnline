@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             MenologyRule rule = TypiconVersion.GetMenologyRule(date);
             rule.RuleDefinition = xml;
 
-            handler.Settings.DayWorships = rule.DayWorships;
+            handler.Settings.Menologies = rule.DayWorships.ToList();
             handler.Settings.Date = date;
 
             rule.GetRule<ExecContainer>(Serializer).Interpret(handler);
@@ -49,7 +49,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             rule = TypiconVersion.GetMenologyRule(date);
             rule.RuleDefinition = xml;
 
-            handler.Settings.DayWorships = rule.DayWorships;
+            handler.Settings.Menologies = rule.DayWorships.ToList();
             handler.Settings.Date = date;
 
             rule.GetRule<ExecContainer>(Serializer).Interpret(handler);

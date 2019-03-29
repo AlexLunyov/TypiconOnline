@@ -14,8 +14,7 @@ namespace TypiconMigrationTool.Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034");
 
             modelBuilder.Entity("TypiconOnline.Domain.Books.Easter.EasterItem", b =>
                 {
@@ -263,6 +262,24 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.ToTable("DayRule");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("DayRule");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.ExplicitAddRule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("RuleDefinition");
+
+                    b.Property<int>("TypiconVersionId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypiconVersionId");
+
+                    b.ToTable("ExplicitAddRule");
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Modifications.DayWorshipsFilter", b =>
@@ -527,6 +544,8 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<int>("DaysFromEaster");
 
+                    b.Property<bool>("IsTransparent");
+
                     b.HasIndex("TypiconVersionId")
                         .HasName("IX_DayRule_TypiconVersionId1");
 
@@ -673,6 +692,14 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.HasOne("TypiconOnline.Domain.Typicon.Sign", "Template")
                         .WithMany()
                         .HasForeignKey("TemplateId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.ExplicitAddRule", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
+                        .WithMany("ExplicitAddRules")
+                        .HasForeignKey("TypiconVersionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -131,7 +131,7 @@ namespace TypiconOnline.AppServices.Jobs
                 {
                     h.ProcessingDayRule = rule;
 
-                    h.Settings = _settingsFactory.Create(new CreateRuleSettingsRequest()
+                    h.Settings = _settingsFactory.CreateRecursive(new CreateRuleSettingsRequest()
                     {
                         TypiconVersionId = modifiedYear.TypiconVersionId,
                         Rule = rule,

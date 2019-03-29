@@ -109,7 +109,7 @@ namespace TypiconOnline.AppServices.Implementations
                 scheduleDay = new ScheduleDay
                 {
                     //задаем имя дню
-                    Name = _nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.DayWorships, settings.Language),
+                    Name = _nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.AllWorships, settings.Language),
                     Date = request.Date,
                     SignNumber = signNumber,
                     SignName = sign.SignName.FirstOrDefault(settings.Language.Name),
@@ -121,7 +121,7 @@ namespace TypiconOnline.AppServices.Implementations
             scheduleDay.Worships.AddRange(container);
             //}
 
-            return (scheduleDay, settings.DayWorships);
+            return (scheduleDay, settings.AllWorships);
         }
 
         private Sign GetPredefinedTemplate(Sign sign)

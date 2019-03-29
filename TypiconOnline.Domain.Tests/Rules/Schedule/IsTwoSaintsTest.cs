@@ -35,7 +35,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             MenologyRule rule = TypiconVersion.GetMenologyRule(new DateTime(2017, 09, 28));
             rule.RuleDefinition = xml;
 
-            handler.Settings.DayWorships = rule.DayWorships;
+            handler.Settings.Menologies = rule.DayWorships.ToList();
 
             rule.GetRule<ExecContainer>(Serializer).Interpret(handler);
 
@@ -51,10 +51,8 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             TriodionRule triodRule = TypiconVersion.GetTriodionRule(-20);
 
-            var w = new List<DayWorship>(rule.DayWorships);
-            w.AddRange(triodRule.DayWorships);
-
-            handler.Settings.DayWorships = w;
+            handler.Settings.Menologies = rule.DayWorships.ToList();
+            handler.Settings.Triodions = triodRule.DayWorships.ToList();
 
             handler.ClearResult();
             rule.GetRule<ExecContainer>(Serializer).Interpret(handler);
@@ -69,7 +67,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             rule = TypiconVersion.GetMenologyRule(new DateTime(2017, 5, 31));
             rule.RuleDefinition = xml;
 
-            handler.Settings.DayWorships = rule.DayWorships;
+            handler.Settings.Menologies = rule.DayWorships.ToList();
 
             handler.ClearResult();
             rule.GetRule<ExecContainer>(Serializer).Interpret(handler);
