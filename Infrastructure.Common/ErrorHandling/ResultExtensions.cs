@@ -70,6 +70,16 @@ namespace TypiconOnline.Infrastructure.Common.ErrorHandling
             return result;
         }
 
+        public static Result OnFailure(this Result result, Action<string> action)
+        {
+            if (result.Failure)
+            {
+                action(result.Error);
+            }
+
+            return result;
+        }
+
         public static Result OnBoth(this Result result, Action<Result> action)
         {
             action(result);

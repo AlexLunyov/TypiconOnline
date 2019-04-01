@@ -20,36 +20,40 @@ namespace TypiconOnline.Domain.Rules.Extensions
             bool result = false;
             if (handler.Settings.Addition?.RuleContainer is ExecContainer container)
             {
-                //ищем элемент для замены
-                var found = container.GetChildElements<IAsAdditionElement>(handler.Settings.Addition,
+                //ищем элемент(ы) для замены
+                var foundItems = container.GetChildElements<IAsAdditionElement>(handler.Settings.Addition,
                         c => c.AsAdditionName == element.AsAdditionName 
-                            && (c.AsAdditionMode == AsAdditionMode.Rewrite || c.AsAdditionMode == AsAdditionMode.Remove)).FirstOrDefault();
+                            && (c.AsAdditionMode == AsAdditionMode.Rewrite || c.AsAdditionMode == AsAdditionMode.Remove));
 
                 //если находим, исполняем/исключаем его вместо настоящего элемента
-                if (found != null)
+                foreach (var found in foundItems)
                 {
-                    switch (found.AsAdditionMode)
+                    if (found != null)
                     {
-                        case AsAdditionMode.Rewrite:
-                            {
-                                //если rewrite, то исполняем элемент
-                                Rewrite(found, handler);
-                            }
-                            break;
-                        case AsAdditionMode.Remove:
-                            {
-                                //если remove, то просто ничего не делаем
-                            }
-                            break;
-                        case AsAdditionMode.RewriteValues:
-                            {
-                                RewriteValues(found, handler);
-                            }
-                            break;
-                    }
+                        switch (found.AsAdditionMode)
+                        {
+                            case AsAdditionMode.Rewrite:
+                                {
+                                    //если rewrite, то исполняем элемент
+                                    Rewrite(found, handler);
+                                }
+                                break;
+                            case AsAdditionMode.Remove:
+                                {
+                                    //если remove, то просто ничего не делаем
+                                }
+                                break;
+                            case AsAdditionMode.RewriteValues:
+                                {
+                                    RewriteValues(found, handler);
+                                }
+                                break;
+                        }
 
-                    result = true;
+                        result = true;
+                    }
                 }
+                
             }
 
             return result;

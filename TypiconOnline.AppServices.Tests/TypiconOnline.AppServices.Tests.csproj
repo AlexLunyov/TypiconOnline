@@ -191,6 +191,7 @@
     <Compile Include="Jobs\CalculateModifiedYearJobHandlerTest.cs" />
     <Compile Include="Jobs\CalculateOutputFormYearJobTest.cs" />
     <Compile Include="Jobs\JobQueueTest.cs" />
+    <Compile Include="Jobs\ReloadRulesJobHandlerTest.cs" />
     <Compile Include="Migration\FakePsalterService.cs" />
     <Compile Include="Migration\KathismasMigrationManagerTest.cs" />
     <Compile Include="Migration\PsalmsMigrationManagerTest.cs" />

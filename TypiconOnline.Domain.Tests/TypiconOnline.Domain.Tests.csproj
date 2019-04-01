@@ -222,6 +222,7 @@
     <Compile Include="Rules\Schedule\KOdiRuleTest.cs" />
     <Compile Include="Rules\Schedule\NoticeTest.cs" />
     <Compile Include="Rules\Schedule\TextHolderTest.cs" />
+    <Compile Include="Rules\Schedule\WorshipRuleTest.cs" />
     <Compile Include="Rules\Schedule\YmnosCutomRuleTest.cs" />
     <Compile Include="Rules\Schedule\ExapostilarionRuleTest.cs" />
     <Compile Include="Rules\Schedule\YmnosStructureRuleTest.cs" />

@@ -13,6 +13,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class WorshipRule : RuleExecutable, ICustomInterpreted, IAsAdditionElement
     {
+        private ItemTextStyled _name = new ItemTextStyled();
+
         public WorshipRule(string name, IAsAdditionElement parent) : base(name)
         {
             Parent = parent;
@@ -24,9 +26,20 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// </summary>
         public string Id { get; set; }
         public ItemTime Time { get; set; }
-        public ItemTextStyled Name { get; set; }
+
+        public ItemTextStyled Name
+        {
+            get => _name;
+            set
+            {
+                if (value != null)
+                {
+                    _name = value;
+                }
+            }
+        }
         public bool IsDayBefore { get; set; } = false;
-        public ItemTextStyled AdditionalName { get; set; }
+        public ItemTextStyled AdditionalName { get; set; } = new ItemTextStyled();
         /// <summary>
         /// Последовательность богослужения
         /// </summary>
