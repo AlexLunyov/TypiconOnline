@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.Rules.Output;
 
 namespace TypiconOnline.AppServices.Interfaces
 {
     public interface IScheduleWeekViewer
     {
-        void Execute(ScheduleWeek week);
+        void Execute(LocalizedOutputWeek week);
     }
 
     public interface IScheduleWeekViewer<T> where T : class
     {
-        T Execute(ScheduleWeek week);
+        T Execute(LocalizedOutputWeek week);
     }
 }

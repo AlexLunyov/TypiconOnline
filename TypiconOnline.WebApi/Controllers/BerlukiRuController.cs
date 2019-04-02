@@ -38,16 +38,16 @@ namespace TypiconOnline.WebApi.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return GetHtmlString(DateTime.Now);
+            return Get(DateTime.Now);
         }
 
-        [Route("Get/{date}")]
-        public ActionResult Get(DateTime date)
+        [Route("Get/{date}/{language?}")]
+        public ActionResult Get(DateTime date, string language = "cs-ru")
         {
-            return GetHtmlString(date);
+            return GetHtmlString(date, language);
         }
 
-        private ActionResult GetHtmlString(DateTime date)
+        private ActionResult GetHtmlString(DateTime date, string language)
         {
             if ((date.DayOfWeek == DayOfWeek.Sunday) && (date.Hour > 17))
             {
@@ -56,13 +56,13 @@ namespace TypiconOnline.WebApi.Controllers
 
             string resultString = "";
 
-            var week = _outputForms.GetWeek(TYPICON_ID, date);
+            var week = _outputForms.GetWeek(TYPICON_ID, date, language);
 
             week.OnSuccess(() =>
             {
                 resultString = _weekViewer.Execute(week.Value);
 
-                var nextWeek = _outputForms.GetWeek(TYPICON_ID, date.AddDays(7));
+                var nextWeek = _outputForms.GetWeek(TYPICON_ID, date.AddDays(7), language);
                 nextWeek.OnSuccess(() =>
                 {
                     resultString += _weekViewer.Execute(nextWeek.Value);

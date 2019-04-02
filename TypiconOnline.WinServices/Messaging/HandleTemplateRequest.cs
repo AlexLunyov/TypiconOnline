@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.Rules.Output;
 
 namespace TypiconOnline.WinServices.Messaging
 {
@@ -14,6 +14,6 @@ namespace TypiconOnline.WinServices.Messaging
         public string ScheduleFileStart { get; set; }
         public int DaysPerTable { get; set; } = 7;
         public bool OpenFileAfterHandling { get; set; }
-        public ScheduleWeek ScheduleWeek { get; set; }
+        public OutputWeek ScheduleWeek { get; set; }
     }
 }

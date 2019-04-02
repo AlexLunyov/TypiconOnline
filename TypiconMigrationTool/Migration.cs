@@ -158,11 +158,44 @@ namespace TypiconMigrationTool
             Commit();
 
             MigrateCommonRules(typiconEntity);
+            Commit();
 
+            MigrateExplicitRules(typiconEntity);
             Commit();
 
             MigratePsalms();
             MigrateKathismas(typiconEntity);            
+        }
+
+        private void MigrateExplicitRules(TypiconVersion typiconEntity)
+        {
+            Console.WriteLine("MigrateExplicitRules()");
+
+            Timer timer = new Timer();
+            timer.Start();
+
+            string folderPath = Path.Combine(Properties.Settings.Default.FolderPath, TYPICON_NAME, "Explicit");
+
+            FileReader fileReader = new FileReader(folderPath);
+
+            IEnumerable<(string name, string content)> files = fileReader.ReadAllFromDirectory();
+
+            foreach ((string name, string content) in files)
+            {
+                if (DateTime.TryParse(name, out DateTime date))
+                {
+                    var explicitRule = new ExplicitAddRule()
+                    {
+                        Date = date,
+                        RuleDefinition = content,
+                        TypiconVersionId = typiconEntity.Id
+                    };
+                    typiconEntity.ExplicitAddRules.Add(explicitRule);
+                }
+            }
+
+            timer.Stop();
+            Console.WriteLine(timer.GetStringValue());
         }
 
         private void MigrateTheotokionIrmologion()

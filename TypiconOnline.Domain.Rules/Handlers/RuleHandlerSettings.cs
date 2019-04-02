@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
     {
         public RuleHandlerSettings()
         {
-            Language = LanguageSettingsFactory.Create("cs-ru");
+            //Language = LanguageSettingsFactory.Create("cs-ru");
         }
 
         /// <summary>
@@ -52,9 +52,10 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// </summary>
         public DateTime Date { get; set; }
         /// <summary>
-        /// Язык для обработки
+        /// Язык для обработки.
+        /// Удаляем, так как нужно получать выходные формы без привязки к языку
         /// </summary>
-        public LanguageSettings Language { get; set; }
+        //public LanguageSettings Language { get; set; }
         /// <summary>
         /// Номер Знака службы, который будет использовать для отображения в Расписании.
         /// Issue #6

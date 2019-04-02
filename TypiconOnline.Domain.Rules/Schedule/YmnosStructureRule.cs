@@ -2,8 +2,8 @@
 using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Interfaces;
-using TypiconOnline.Domain.ViewModels;
-using TypiconOnline.Domain.ViewModels.Messaging;
+using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.Domain.Rules.Output.Messaging;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -41,7 +41,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override bool IsAuthorized(IRuleHandler handler) => handler.IsAuthorized<YmnosStructureRule>();
 
-        public virtual void CreateViewModel(IRuleHandler handler, Action<ElementViewModelCollection> append)
+        public virtual void CreateViewModel(IRuleHandler handler, Action<OutputElementCollection> append)
         {
             ViewModelFactory.Create(new CreateViewModelRequest<YmnosStructureRule>()
             {

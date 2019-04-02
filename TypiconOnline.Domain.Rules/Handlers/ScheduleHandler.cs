@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Rules.Interfaces;
 
@@ -8,7 +8,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
 {
     public class ScheduleHandler : RuleHandlerBase
     {
-        List<WorshipRuleViewModel> collection = new List<WorshipRuleViewModel>();
+        List<OutputWorship> collection = new List<OutputWorship>();
 
         public ScheduleHandler()//(RuleHandlerSettings request) : base(request)
         {
@@ -44,7 +44,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         {
             if (element is WorshipRule w)
             {
-                collection.Add(new WorshipRuleViewModel(w, Settings.Language.Name));
+                collection.Add(new OutputWorship(w));
 
                 return true;
             }
@@ -52,6 +52,6 @@ namespace TypiconOnline.Domain.Rules.Handlers
             return false;
         }
 
-        public virtual ICollection<WorshipRuleViewModel> GetResult() => collection;
+        public virtual ICollection<OutputWorship> GetResult() => collection;
     }
 }

@@ -8,7 +8,7 @@ using TypiconOnline.Domain.Books.Easter;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
-using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Repository.EFCore.DataBase;
 
@@ -50,18 +50,18 @@ namespace TypiconOnline.AppServices.Implementations.Extensions
                 : Result.Fail<TypiconVersion>("Указанный Устав либо не существует, либо не существует его опубликованная версия.");
         }
 
-        public static Result<ScheduleDay> GetScheduleDay(this TypiconDBContext dbContext, int typiconId, DateTime date, ITypiconSerializer serializer)
+        public static Result<OutputDay> GetScheduleDay(this TypiconDBContext dbContext, int typiconId, DateTime date, ITypiconSerializer serializer)
         {
             var outputForm = dbContext.Set<OutputForm>().FirstOrDefault(c => c.TypiconId == typiconId && c.Date == date);
 
             if (outputForm != null)
             {
-                var day = serializer.Deserialize<ScheduleDay>(outputForm.Definition);
+                var day = serializer.Deserialize<OutputDay>(outputForm.Definition);
 
                 return Result.Ok(day);
             }
 
-            return Result.Fail<ScheduleDay>("Выходная форма не найдена");
+            return Result.Fail<OutputDay>("Выходная форма не найдена");
         }
 
         public static bool IsModifiedYearExists(this TypiconDBContext dbContext, int typiconVersionId, int year)

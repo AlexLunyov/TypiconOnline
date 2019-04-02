@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using System;
+using System.Collections.Generic;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
@@ -10,7 +11,7 @@ namespace TypiconOnline.Domain.Query.Books
     /// <summary>
     /// Возвращает наименование седмицы (вставляется в шапку шаблона седмицы)
     /// </summary>
-    public class WeekNameQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<WeekNameQuery, ItemTextUnit>
+    public class WeekNameQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<WeekNameQuery, ItemText>
     {
         public WeekNameQueryHandler(TypiconDBContext dbContext, IDataQueryProcessor queryProcessor)
             : base(dbContext, queryProcessor) { }
@@ -21,7 +22,7 @@ namespace TypiconOnline.Domain.Query.Books
         ///          Седмица 6-ая по Пасхе
         ///          Седмица 3-ая Великого поста
         /// </summary>
-        public ItemTextUnit Handle([NotNull] WeekNameQuery query)
+        public ItemText Handle([NotNull] WeekNameQuery query)
         {
             /* Есть три периода: Великий пост, попразднество Пасхи и все после нее.
              * Соответсвенно, имена будут зависить от удаления от дня Пасхи.
@@ -37,9 +38,20 @@ namespace TypiconOnline.Domain.Query.Books
             //Пасха в прошлом году
             DateTime dPastEaster = QueryProcessor.Process(new CurrentEasterQuery(query.Date.Year - 1));
 
-            string text = CalculateStringValue(query.Date, dEaster, dPastEaster, query.IsShortName);
+            var text = CalculateItemTextValue(query.Date, dEaster, dPastEaster, query.IsShortName);
 
-            return new ItemTextUnit() { Language = query.Language, Text = text };
+            return text;
+        }
+
+        private ItemText CalculateItemTextValue(DateTime date, DateTime dEaster, DateTime dPastEaster, bool isShortName)
+        {
+            return new ItemText()
+            {
+                Items = new List<ItemTextUnit>()
+                {
+                    new ItemTextUnit("cs-ru", CalculateStringValue(date, dEaster, dPastEaster, isShortName))
+                }
+            };
         }
 
         private string CalculateStringValue(DateTime date, DateTime dEaster, DateTime dPastEaster, bool isShortName)

@@ -10,7 +10,8 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.AppServices.Common;
-using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.AppServices.Viewers
 {
@@ -50,7 +51,7 @@ namespace TypiconOnline.AppServices.Viewers
             _daysPerPage = daysPerPage;
         }
 
-        public void Execute(ScheduleWeek week)
+        public void Execute(LocalizedOutputWeek week)
         {
             if (week == null)
             {
@@ -79,7 +80,7 @@ namespace TypiconOnline.AppServices.Viewers
 
                 bool firstTime = true;
 
-                foreach (ScheduleDay day in week.Days)
+                foreach (var day in week.Days)
                 {
                     //шапка
                     if (i == _daysPerPage)
@@ -151,7 +152,7 @@ namespace TypiconOnline.AppServices.Viewers
             return (Table) header;
         }
 
-        private Table GetDayTable(ScheduleDay day, List<Table> templateTables)
+        private Table GetDayTable(LocalizedOutputDay day, List<Table> templateTables)
         {
             Table dayTable = new Table();
 
@@ -178,14 +179,14 @@ namespace TypiconOnline.AppServices.Viewers
                 SetTextToCell(tdDate, sDate, false, false);
                 dayTable.AppendChild(tr);
 
-                foreach (WorshipRuleViewModel service in day.Worships)
+                foreach (var service in day.Worships)
                 {
                     tr = (TableRow)dayTemplateTable.ChildElements[4].Clone();
                     TableCell tdTime = (TableCell)tr.ChildElements[2];
                     TableCell tdSName = (TableCell)tr.ChildElements[3];
 
                     string sTime = service.Time.ToString();
-                    string sSName = service.Name.Text;
+                    string sSName = service.Name.Text.Text;
 
                     bool bIsTimeBold = false; //(serviceNode.Attributes["istimebold"] != null);
                     bool bIsTimeRed = false; //(serviceNode.Attributes["istimered"] != null);

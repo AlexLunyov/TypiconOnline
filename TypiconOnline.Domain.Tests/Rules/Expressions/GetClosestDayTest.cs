@@ -78,7 +78,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             element.Interpret(BypassHandler.GetInstance(new DateTime(2017, 04, 30)));
 
-            Assert.AreEqual(element.ValueCalculated, new DateTime(2017, 04, 02));
+            Assert.AreEqual(new DateTime(2017, 04, 02), element.ValueCalculated);
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Expressions
 
             element.Interpret(BypassHandler.GetInstance(new DateTime(2019, 04, 28)));
 
-            Assert.AreEqual(element.ValueCalculated, new DateTime(2019, 9, 1));
+            Assert.AreEqual(element.ValueCalculated, new DateTime(2019, 9, 8));
         }
 
         [Test]

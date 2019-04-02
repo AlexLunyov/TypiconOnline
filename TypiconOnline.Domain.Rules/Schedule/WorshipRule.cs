@@ -66,7 +66,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                 if (!string.IsNullOrEmpty(Id))
                 {
-                    result += $"?{RuleConstants.WorshipRuleIdAttrName}={Id}";
+                    result += $"?{RuleConstants.WorshipRuleIdAttrName}={Id}&isdaybefore={IsDayBefore}";
                 }
 
                 return result;

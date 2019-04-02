@@ -49,14 +49,14 @@ namespace TypiconOnline.Domain.Rules.Expressions
                     ValueCalculated = ValueCalculated.AddDays(i);
                 }
 
-                //if (ValueCalculated != ChildDateExp.ValueCalculated)
-                //{
+                if (ValueCalculated != ChildDateExp.ValueCalculated)
+                {
                     i = (WeekCount > 0) ? (WeekCount - 1) : (WeekCount + 1);
-                //}
-                //else
-                //{
-                //    i = WeekCount;
-                //}
+                }
+                else
+                {
+                    i = WeekCount;
+                }
 
                 if (i != 0)
                 {

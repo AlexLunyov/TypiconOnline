@@ -5,7 +5,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Books
 {
-    public class SundayNameQuery : IDataQuery<ItemTextUnit>
+    public class SundayNameQuery : IDataQuery<ItemText>
     {
         /// <summary>
         /// Возвращает строку с наименованием воскресного дня. 
@@ -15,14 +15,12 @@ namespace TypiconOnline.Domain.Query.Books
         /// <param name="language">Язык локализации</param>
         /// <param name="stringToPaste">Строка, которая будет вставлена после названия Недели, перед гласом</param>
         /// <returns>Возвращает строку с наименованием воскресного дня. </returns>
-        public SundayNameQuery(DateTime date, LanguageSettings language, string stringToPaste = null)
+        public SundayNameQuery(DateTime date, ItemText textToPaste = null)
         {
             Date = date;
-            Language = language;
-            StringToPaste = stringToPaste;
+            TextToPaste = textToPaste;
         }
         public DateTime Date { get; }
-        public LanguageSettings Language { get; }
-        public string StringToPaste { get; }
+        public ItemText TextToPaste { get; }
     }
 }

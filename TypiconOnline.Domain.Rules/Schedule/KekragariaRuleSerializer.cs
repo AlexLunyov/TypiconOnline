@@ -1,7 +1,7 @@
 ﻿using System.Xml;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Domain.ViewModels.Factories;
+using TypiconOnline.Domain.Rules.Output.Factories;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {

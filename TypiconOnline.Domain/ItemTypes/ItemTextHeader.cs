@@ -17,6 +17,11 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public ItemTextHeader(ItemText source) : base(source) { }
 
+        public ItemTextHeader(ItemTextHeader source) : base(source)
+        {
+            Header = source.Header;
+        }
+
         [XmlAttribute("header")]
         public HeaderCaption Header { get; set; } = HeaderCaption.NotDefined;
 

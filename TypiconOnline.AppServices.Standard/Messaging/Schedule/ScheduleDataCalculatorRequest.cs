@@ -13,7 +13,6 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
     {
         public int TypiconVersionId { get; set; }
         public DateTime Date { get; set; }
-        public string Language { get; set; }
         public CustomParamsCollection<IRuleApplyParameter> ApplyParameters { get; set; }
         public CustomParamsCollection<IRuleCheckParameter> CheckParameters { get; set; }
     }

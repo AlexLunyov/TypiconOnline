@@ -22,7 +22,7 @@ namespace TypiconOnline.Domain.Rules.Extensions
         {
             var textHolder = serializer.GetCommonRuleFirstChild<TextHolder>(typiconId, name);
 
-            return (textHolder?.Paragraphs.Count > 0) ? textHolder.Paragraphs[0] : new ItemText();
+            return (textHolder?.Paragraphs.Count > 0) ? new ItemText(textHolder.Paragraphs[0]) : new ItemText();
         }
 
         /// <summary>
@@ -77,6 +77,25 @@ namespace TypiconOnline.Domain.Rules.Extensions
             if (serializer.GetCommonRuleChildren(typiconId, name).ElementAtOrDefault(index) is TextHolder t && t.Paragraphs?.Count > 0)
             {
                 result = t.Paragraphs[0]?.FirstOrDefault(language).Text;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Возвращает ItemText из Правила, представляющего из себя коллекцию TextHolder, согласно индекса
+        /// </summary>
+        /// <param name="serializer"></param>
+        /// <param name="typiconId"></param>
+        /// <param name="name"></param>
+        /// <param name="language"></param>
+        /// <param name="index">Номер TextHolder-ы в коллекции Правил</param>
+        /// <returns></returns>
+        public static ItemText GetCommonRuleIndexedItemText(this IRuleSerializerRoot serializer, int typiconId, string name, int index)
+        {
+            ItemText result = null;
+            if (serializer.GetCommonRuleChildren(typiconId, name).ElementAtOrDefault(index) is TextHolder t && t.Paragraphs?.Count > 0)
+            {
+                result = new ItemText(t.Paragraphs[0]);
             }
             return result;
         }

@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using System;
+using System.Collections.Generic;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
@@ -10,15 +11,17 @@ namespace TypiconOnline.Domain.Query.Books
     /// <summary>
     /// Возвращает День Октоиха по заданной дате
     /// </summary>
-    public class SundayNameQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<SundayNameQuery, ItemTextUnit>
+    public class SundayNameQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<SundayNameQuery, ItemText>
     {
+        private const string STRING_TO_PASTE = "[Имя]";
+
         public SundayNameQueryHandler(TypiconDBContext dbContext, IDataQueryProcessor queryProcessor)
             : base(dbContext, queryProcessor) { }
 
         /// <summary>
         /// Возвращает День Октоиха по заданной дате
         /// </summary>
-        public ItemTextUnit Handle([NotNull] SundayNameQuery query)
+        public ItemText Handle([NotNull] SundayNameQuery query)
         {
             /* Есть три периода: Великий пост, попразднество Пасхи и все после нее.
              * Соответсвенно, имена будут зависить от удаления от дня Пасхи.
@@ -41,12 +44,25 @@ namespace TypiconOnline.Domain.Query.Books
             //Пасха в прошлом году
             DateTime dPastEaster = QueryProcessor.Process(new CurrentEasterQuery(date.Year - 1));
 
-            string text = CalculateStringValue(date, dEaster, dPastEaster, query.StringToPaste);
+            var text = CalculateItemTextValue(date, dEaster, dPastEaster, query.TextToPaste?.IsEmpty == false);
 
-            return new ItemTextUnit() { Language = query.Language.Name, Text = text };
+            text.ReplaceForEach(STRING_TO_PASTE, query.TextToPaste);
+
+            return text;
         }
 
-        private string CalculateStringValue(DateTime date, DateTime dEaster, DateTime dPastEaster, string stringToPaste)
+        private ItemText CalculateItemTextValue(DateTime date, DateTime dEaster, DateTime dPastEaster, bool existsPasting)
+        {
+            return new ItemText()
+            {
+                Items = new List<ItemTextUnit>()
+                {
+                    new ItemTextUnit("cs-ru", CalculateStringValue(date, dEaster, dPastEaster, existsPasting))
+                }
+            };
+        }
+
+        private string CalculateStringValue(DateTime date, DateTime dEaster, DateTime dPastEaster, bool existsPasting)
         {
             string result = "";
 
@@ -86,9 +102,9 @@ namespace TypiconOnline.Domain.Query.Books
 
                 result = "Неделя " + week.ToString() + "-ая по Пятидесятнице";
 
-                if (!string.IsNullOrEmpty(stringToPaste))
+                if (existsPasting)
                 {
-                    result += ", " + stringToPaste;
+                    result += ", " + STRING_TO_PASTE;
                 }
 
                 result += ". Глас " + glas.ToString() + "-й.";
@@ -100,9 +116,9 @@ namespace TypiconOnline.Domain.Query.Books
                 if ((day >= -70) && (day < -55))
                 {
                     //Подготовительные недели к Великому Посту
-                    if (!string.IsNullOrEmpty(stringToPaste))
+                    if (existsPasting)
                     {
-                        result = $"{stringToPaste} ";
+                        result = $"{STRING_TO_PASTE} ";
                     }
 
                     result += $"Глас {glas}-й.";
@@ -116,9 +132,9 @@ namespace TypiconOnline.Domain.Query.Books
                 {
                     // Великий пост
 
-                    if (!string.IsNullOrEmpty(stringToPaste))
+                    if (existsPasting)
                     {
-                        result = $"{stringToPaste} ";
+                        result = $"{STRING_TO_PASTE} ";
                     }
 
                     result += "Глас " + glas.ToString() + "-й.";

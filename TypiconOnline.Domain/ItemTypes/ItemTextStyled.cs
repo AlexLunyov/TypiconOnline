@@ -17,6 +17,13 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public ItemTextStyled(ItemText source) : base(source) { }
 
+        public ItemTextStyled(ItemTextStyled source) : base(source)
+        {
+            IsBold = source.IsBold;
+            IsItalic = source.IsItalic;
+            IsRed = source.IsRed;
+        }
+
         [XmlAttribute("bold")]
         public bool IsBold { get; set; }
         [XmlAttribute("italic")]

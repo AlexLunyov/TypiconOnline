@@ -7,8 +7,8 @@ using TypiconOnline.Domain.Query.Books;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Interfaces;
-using TypiconOnline.Domain.ViewModels;
-using TypiconOnline.Domain.ViewModels.Messaging;
+using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.Domain.Rules.Output.Messaging;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.Query;
 
@@ -77,7 +77,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public void CreateViewModel(IRuleHandler handler, Action<ElementViewModelCollection> append)
+        public void CreateViewModel(IRuleHandler handler, Action<OutputElementCollection> append)
         {
             ViewModelFactory.Create(new CreateViewModelRequest<PsalmRule>()
             {

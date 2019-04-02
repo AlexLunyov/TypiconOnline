@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules.Output;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -15,7 +16,7 @@ namespace TypiconOnline.AppServices.Implementations
     /// </summary>
     public class HtmlInnerScheduleWeekViewer : IScheduleWeekViewer<string>
     {
-        public string Execute(ScheduleWeek week)
+        public string Execute(LocalizedOutputWeek week)
         {
             string _resultString = "";
 
@@ -25,7 +26,7 @@ namespace TypiconOnline.AppServices.Implementations
             _resultString += "<h4 class=\"subtitle\">" + week.Name.Text.ToUpper() + "</h4>";
 
             //теперь начинаем наполнять дни
-            foreach (ScheduleDay day in week.Days)
+            foreach (var day in week.Days)
             {
                 _resultString += "<div style=\"margin - top:10px; \">";
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Interfaces;
 
@@ -43,14 +43,14 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// Возвращает результат обработки правила
         /// </summary>
         /// <returns></returns>
-        public override ICollection<WorshipRuleViewModel> GetResult()
+        public override ICollection<OutputWorship> GetResult()
         {
             //TODO: переопределение добавлено только для тестовых целей. Потом удалить
             var model = base.GetResult();
 
             if (model.Count == 0)
             {
-                model.Add(new WorshipRuleViewModel());
+                model.Add(new OutputWorship());
             }
 
             return model;

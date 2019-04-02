@@ -8,6 +8,7 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Tests.Common;
+using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.Tests.Typicon
 {
@@ -24,27 +25,18 @@ namespace TypiconOnline.Domain.Tests.Typicon
                 date = date.AddDays(1);
             }
 
-            GetScheduleWeekRequest weekRequest = new GetScheduleWeekRequest()
-            {
-                Date = date,
-                TypiconId = 1,
-                Handler = new ScheduleHandler(),
-                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
-            };
+            var outputForms = OutputFormsFactory.Create(TypiconDbContextFactory.Create());
 
-            ScheduleService scheduleService = ScheduleServiceFactory.Create();
-
-            GetScheduleWeekResponse weekResponse = scheduleService.GetScheduleWeek(weekRequest);
+            var week = outputForms.GetWeek(1, date, "cs-ru");
 
             HtmlScheduleWeekViewer htmlViewer = new HtmlScheduleWeekViewer();
-            htmlViewer.Execute(weekResponse.Week);
 
-            string resultString = htmlViewer.Execute(weekResponse.Week);
+            string resultString = htmlViewer.Execute(week.Value);
 
-            weekRequest.Date = date.AddDays(7);
+            date = date.AddDays(7);
 
-            weekResponse = scheduleService.GetScheduleWeek(weekRequest);
-            resultString += htmlViewer.Execute(weekResponse.Week);
+            week = outputForms.GetWeek(1, date, "cs-ru");
+            resultString += htmlViewer.Execute(week.Value);
 
             Assert.Pass(resultString);
         }
@@ -88,8 +80,8 @@ namespace TypiconOnline.Domain.Tests.Typicon
 
             GetScheduleWeekResponse weekResponse = scheduleService.GetScheduleWeek(weekRequest);
 
-            Assert.AreEqual(dayResponse1.Day.Name.Text, dayResponse2.Day.Name.Text);
-            Assert.AreEqual(dayResponse1.Day.Name.Text, weekResponse.Week.Days.Last().Name.Text);
+            Assert.AreEqual(dayResponse1.Day.Name.GetLocal(), dayResponse2.Day.Name.GetLocal());
+            Assert.AreEqual(dayResponse1.Day.Name.GetLocal(), weekResponse.Week.Days.Last().Name.GetLocal());
         }
     }
 }

@@ -33,10 +33,10 @@ namespace TypiconOnline.WebApi.Controllers
         }
 
         // GET api/<controller>/get/1/01-01-2019
-        [Route("Get/{typiconId}/{date}")]
-        public string Get(int typiconId, DateTime date)
+        [Route("Get/{typiconId}/{date?}/{language?}")]
+        public string Get(int typiconId, DateTime date, string language = "cs-ru")
         {
-            var result = _outputForms.Get(typiconId, date);
+            var result = _outputForms.Get(typiconId, date, language);
 
             if (result.Success)
             {
@@ -56,10 +56,10 @@ namespace TypiconOnline.WebApi.Controllers
         }
 
         // GET api/<controller>/getweek/1/01-01-2019
-        [Route("GetWeek/{typiconId}/{date}")]
-        public string GetWeek(int typiconId, DateTime date)
+        [Route("GetWeek/{typiconId}/{date}/{language?}")]
+        public string GetWeek(int typiconId, DateTime date, string language = "cs-ru")
         {
-            var result = _outputForms.GetWeek(typiconId, date);
+            var result = _outputForms.GetWeek(typiconId, date, language);
 
             if (result.Success)
             {

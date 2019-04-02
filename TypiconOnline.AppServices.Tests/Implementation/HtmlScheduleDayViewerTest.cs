@@ -22,14 +22,9 @@ namespace TypiconOnline.AppServices.Tests.Implementation
         [Test]
         public void HtmlScheduleDayViewer_Test()
         {
-            var service = ScheduleServiceFactory.Create();
+            var outputForms = OutputFormsFactory.Create(TypiconDbContextFactory.Create());
 
-            var scheduleDay = service.GetScheduleDay(new GetScheduleDayRequest()
-            {
-                Handler = new ServiceSequenceHandler(),
-                Date = new DateTime(2017, 11, 13),
-                TypiconId = 1
-            });
+            var scheduleDay = outputForms.Get(1, new DateTime(2017, 11, 13), "cs-ru");
 
             string path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData/scheduledayviewer.xslt");
 
@@ -37,7 +32,23 @@ namespace TypiconOnline.AppServices.Tests.Implementation
 
             var viewer = new HtmlScheduleDayViewer(new TypiconSerializer(), confCacheDuration);
 
-            Assert.IsNotNull(viewer.Execute(scheduleDay.Day));
+            Assert.IsNotNull(viewer.Execute(scheduleDay.Value));
+        }
+
+        [Test]
+        public void HtmlScheduleDayViewer_Serialize()
+        {
+            var outputForms = OutputFormsFactory.Create(TypiconDbContextFactory.Create());
+
+            var scheduleDay = outputForms.Get(1, new DateTime(2019, 05, 09), "cs-ru");
+
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData/scheduledayviewer.xslt");
+
+            var config = Mock.Of<IConfigurationRepository>(c => c.GetConfigurationValue("ScheduleDayViewer_XsltFile") == path);
+
+            var viewer = new HtmlScheduleDayViewer(new TypiconSerializer(), config);
+
+            Assert.IsNotNull(viewer.Execute(scheduleDay.Value[1]));
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 using TypiconOnline.Domain.Books.Elements;
 using TypiconOnline.Domain.Rules.Interfaces;
-using TypiconOnline.Domain.ViewModels;
-using TypiconOnline.Domain.ViewModels.Messaging;
+using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.Domain.Rules.Output.Messaging;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         public IElementViewModelFactory<ExapostilarionRule> ViewModelFactory { get; }
 
 
-        public void CreateViewModel(IRuleHandler handler, Action<ElementViewModelCollection> append)
+        public void CreateViewModel(IRuleHandler handler, Action<OutputElementCollection> append)
         {
             ViewModelFactory.Create(new CreateViewModelRequest<ExapostilarionRule>()
             {

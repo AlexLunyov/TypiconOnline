@@ -4,7 +4,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Books
 {
-    public class WeekNameQuery : IDataQuery<ItemTextUnit>
+    public class WeekNameQuery : IDataQuery<ItemText>
     {
         /// <summary>
         /// Возвращает наименование седмицы (вставляется в шапку шаблона седмицы)
@@ -15,15 +15,13 @@ namespace TypiconOnline.Domain.Query.Books
         /// <param name="date">Дата для проверки</param>
         /// <param name="isShortName">Если true, возвращает краткое название - для файлов.</param
         /// <returns></returns>
-        public WeekNameQuery(DateTime date, string language, bool isShortName)
+        public WeekNameQuery(DateTime date, bool isShortName)
         {
             Date = date;
-            Language = language;
             IsShortName = isShortName;
         }
 
         public DateTime Date { get; }
-        public string Language { get; }
         public bool IsShortName { get; }
     }
 }

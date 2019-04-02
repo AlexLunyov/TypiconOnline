@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         {
             ServiceSequenceHandler handler = new ServiceSequenceHandler()
             {
-                Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru"), Date = DateTime.Today }
+                Settings = new RuleHandlerSettings() { Date = DateTime.Today }
             };
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");

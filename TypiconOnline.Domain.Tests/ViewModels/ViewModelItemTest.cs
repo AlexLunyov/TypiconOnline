@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using TypiconOnline.Domain.ViewModels;
-using TypiconOnline.Domain.ViewModels.Factories;
+using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.Domain.Rules.Output.Factories;
 
 namespace TypiconOnline.Domain.Tests.ViewModels
 {
@@ -14,7 +15,7 @@ namespace TypiconOnline.Domain.Tests.ViewModels
         [Test]
         public void ViewModelItem_ToJSON()
         {
-            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(ElementViewModelCollection));
+            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(OutputElementCollection));
 
             string json = string.Empty;
 
@@ -28,48 +29,80 @@ namespace TypiconOnline.Domain.Tests.ViewModels
             Assert.Pass(json);
         }
 
-        private ElementViewModelCollection GetModel()
+        private OutputElementCollection GetModel()
         {
-            return new ElementViewModelCollection()
+            return new OutputElementCollection()
             {
-                new ElementViewModel()
+                new OutputSection()
                 {
                     Kind = ElementViewModelKind.Choir,
-                    KindValue = "Хор",
-                    Paragraphs = new List<ParagraphViewModel>()
+                    KindText = new ItemText() { Items = new List<ItemTextUnit>() { new ItemTextUnit() { Language = "cs-ru", Text = "Хор" } } },
+                    Paragraphs = new List<ItemTextNoted>()
                     {
-                        ParagraphVMFactory.Create("Строка 1", "cs-ru"),
-                        ParagraphVMFactory.Create("Строка 2", "cs-ru"),
-                        ParagraphVMFactory.Create("Строка 3", "cs-ru"),
+                        new ItemTextNoted() { Items = new List<ItemTextUnit>()
+                            {
+                                new ItemTextUnit() { Text = "Строка 1", Language = "cs-ru"}
+                            }
+                        },
+                        new ItemTextNoted() { Items = new List<ItemTextUnit>()
+                            {
+                                new ItemTextUnit() { Text = "Строка 2", Language = "cs-ru"}
+                            }
+                        },
+                        new ItemTextNoted() { Items = new List<ItemTextUnit>()
+                            {
+                                new ItemTextUnit() { Text = "Строка 3", Language = "cs-ru"}
+                            }
+                        }
                     }
                 },
-                new ElementViewModel()
+                new OutputSection()
                 {
                     Kind = ElementViewModelKind.Choir,
-                    KindValue = "Хор",
-                    Paragraphs = new List<ParagraphViewModel>()
+                    KindText = new ItemText() { Items = new List<ItemTextUnit>() { new ItemTextUnit() { Language = "cs-ru", Text = "Хор" } } },
+                    Paragraphs = new List<ItemTextNoted>()
                     {
-                        ParagraphVMFactory.Create("Строка 4", "cs-ru"),
-                        ParagraphVMFactory.Create("Строка 5", "cs-ru"),
-                        ParagraphVMFactory.Create("Строка 6", "cs-ru"),
+                        new ItemTextNoted() { Items = new List<ItemTextUnit>()
+                            {
+                                new ItemTextUnit() { Text = "Строка 4", Language = "cs-ru"}
+                            }
+                        },
+                        new ItemTextNoted() { Items = new List<ItemTextUnit>()
+                            {
+                                new ItemTextUnit() { Text = "Строка 5", Language = "cs-ru"}
+                            }
+                        },
+                        new ItemTextNoted() { Items = new List<ItemTextUnit>()
+                            {
+                                new ItemTextUnit() { Text = "Строка 6", Language = "cs-ru"}
+                            }
+                        }
                     }
                 },
-                new ElementViewModel()
+                new OutputSection()
                 {
                     Kind = ElementViewModelKind.Priest,
-                    KindValue = "Священник",
-                    Paragraphs = new List<ParagraphViewModel>()
+                    KindText = new ItemText() { Items = new List<ItemTextUnit>() { new ItemTextUnit() { Language = "cs-ru", Text = "Священник" } } },
+                    Paragraphs = new List<ItemTextNoted>()
                     {
-                        ParagraphVMFactory.Create("Строка 7", "cs-ru")
+                        new ItemTextNoted() { Items = new List<ItemTextUnit>()
+                            {
+                                new ItemTextUnit() { Text = "Строка 7", Language = "cs-ru"}
+                            }
+                        }
                     }
                 },
-                new ElementViewModel()
+                new OutputSection()
                 {
                     Kind = ElementViewModelKind.Choir,
-                    KindValue = "Хор",
-                    Paragraphs = new List<ParagraphViewModel>()
+                    KindText = new ItemText() { Items = new List<ItemTextUnit>() { new ItemTextUnit() { Language = "cs-ru", Text = "Хор" } } },
+                    Paragraphs = new List<ItemTextNoted>()
                     {
-                        ParagraphVMFactory.Create("Строка 8", "cs-ru")
+                        new ItemTextNoted() { Items = new List<ItemTextUnit>()
+                            {
+                                new ItemTextUnit() { Text = "Строка 8", Language = "cs-ru"}
+                            }
+                        }
                     }
                 }
             };

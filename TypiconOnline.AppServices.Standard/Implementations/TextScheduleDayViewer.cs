@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules.Output;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -12,7 +13,7 @@ namespace TypiconOnline.AppServices.Implementations
     {
         private StringBuilder _resultStringBuilder = new StringBuilder();
 
-        public string Execute(ScheduleDay day)
+        public string Execute(LocalizedOutputDay day)
         {
             if (day == null) throw new ArgumentNullException("ScheduleDay");
 
@@ -22,7 +23,7 @@ namespace TypiconOnline.AppServices.Implementations
             _resultStringBuilder.AppendLine(day.Name.Text);
             _resultStringBuilder.AppendLine($"Знак службы: {day.SignName.Text}");
 
-            foreach (WorshipRuleViewModel element in day.Worships)
+            foreach (var element in day.Worships)
             {
                 Render(element);
             }
@@ -30,23 +31,23 @@ namespace TypiconOnline.AppServices.Implementations
             return _resultStringBuilder.ToString();
         }
 
-        public string Execute(WorshipRuleViewModel viewModel)
+        public string Execute(LocalizedOutputWorship viewModel)
         {
             throw new NotImplementedException();
         }
 
-        private void Render(WorshipRuleViewModel element)
+        private void Render(LocalizedOutputWorship element)
         {
             _resultStringBuilder.AppendLine($"{element.Time} {element.Name} {element.AdditionalName}");
 
             foreach (var item in element.ChildElements)
             {
-                if (!string.IsNullOrEmpty(item.KindValue))
+                if (item.KindText != null)
                 {
-                    _resultStringBuilder.Append($"{item.KindValue} ");
+                    _resultStringBuilder.Append($"{item.KindText.Text} ");
                 }
 
-                item.Paragraphs.ForEach(c => _resultStringBuilder.AppendLine($"{c.Text.Text} {c.Note?.Text.Text}"));
+                item.Paragraphs.ForEach(c => _resultStringBuilder.AppendLine($"{c.Text} {c.Note?.Text}"));
             } 
         }
     }

@@ -17,10 +17,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         [Test]
         public void IsExists_Test()
         {
-            ServiceSequenceHandler handler = new ServiceSequenceHandler()
-            {
-                Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru") }
-            };
+            ServiceSequenceHandler handler = new ServiceSequenceHandler();
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
             FileReader reader = new FileReader(folderPath);

@@ -76,7 +76,7 @@ namespace TypiconOnline.Domain.ItemTypes
             }
             else
             {
-                Items.Add(item);
+                _items.Add(new ItemTextUnit(item.Language, item.Text));
             }
         }
 

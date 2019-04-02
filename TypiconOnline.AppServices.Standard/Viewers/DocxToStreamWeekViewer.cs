@@ -4,8 +4,9 @@ using System.IO;
 using System.Text;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Query.Books;
-using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
@@ -27,7 +28,7 @@ namespace TypiconOnline.AppServices.Viewers
             _configRepo = configRepo ?? throw new ArgumentNullException(nameof(configRepo));
         }
 
-        public Result<DocxToStreamWeekResponse> Execute(ScheduleWeek week)
+        public Result<DocxToStreamWeekResponse> Execute(LocalizedOutputWeek week)
         {
             if (week == null || week.Days.Count == 0)
             {
@@ -64,9 +65,9 @@ namespace TypiconOnline.AppServices.Viewers
 
         private string GetFileName(DateTime date)
         {
-            var weekName = _queryProcessor.Process(new WeekNameQuery(date, "cs-ru", true));
+            var weekName = _queryProcessor.Process(new WeekNameQuery(date, true));
 
-            return $"{FILE_START} {date.ToString("yyyy-MM-dd")} {date.AddDays(6).ToString("yyyy-MM-dd")} {weekName.Text}.docx";
+            return $"{FILE_START} {date.ToString("yyyy-MM-dd")} {date.AddDays(6).ToString("yyyy-MM-dd")} {weekName.FirstOrDefault("cs-ru")}.docx";
         }
     }
 }

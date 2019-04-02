@@ -11,7 +11,8 @@ using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Rules.Interfaces;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -22,7 +23,8 @@ namespace TypiconOnline.AppServices.Implementations
         private readonly ITypiconSerializer _typiconSerializer;
 
         //заменить в дальнейшем на ServiceSequenceHandler
-        private readonly ScheduleHandler _handler = new ScheduleHandler();//ServiceSequenceHandler();
+        //private readonly ScheduleHandler _handler = new ScheduleHandler();
+        private readonly ScheduleHandler _handler = new ServiceSequenceHandler();
 
         public OutputFormFactory(IScheduleDataCalculator dataCalculator
             , IScheduleDayNameComposer nameComposer
@@ -40,7 +42,7 @@ namespace TypiconOnline.AppServices.Implementations
         /// <param name="typiconVersionId">Версия Устава</param>
         /// <param name="date"></param>
         /// <returns></returns>
-        public (OutputForm, ScheduleDay) Create(OutputFormCreateRequest req)
+        public (OutputForm, OutputDay) Create(OutputFormCreateRequest req)
         {
             var scheduleInfo = CreateScheduleInfo(req.TypiconVersionId, req.Date, req.HandlingMode);
 
@@ -56,7 +58,7 @@ namespace TypiconOnline.AppServices.Implementations
 
         
 
-        private (ScheduleDay Day, IEnumerable<DayWorship> Dayworships) CreateScheduleInfo(int typiconVersionId, DateTime date, HandlingMode handlingMode)
+        private (OutputDay Day, IEnumerable<DayWorship> Dayworships) CreateScheduleInfo(int typiconVersionId, DateTime date, HandlingMode handlingMode)
         {
             //находим метод обработки дня
             HandlingMode mode = handlingMode;
@@ -85,7 +87,7 @@ namespace TypiconOnline.AppServices.Implementations
             return (scheduleInfo.Day, dayWorships);
         }
 
-        private (ScheduleDay Day, IEnumerable<DayWorship> Dayworships) GetOrFillScheduleInfo(ScheduleDataCalculatorRequest request, ScheduleDay scheduleDay = null)
+        private (OutputDay Day, IEnumerable<DayWorship> Dayworships) GetOrFillScheduleInfo(ScheduleDataCalculatorRequest request, OutputDay scheduleDay = null)
         {
             //Формируем данные для обработки
             var response = _dataCalculator.Calculate(request);
@@ -93,6 +95,8 @@ namespace TypiconOnline.AppServices.Implementations
             var settings = response.Settings;
 
             _handler.Settings = settings;
+
+            _handler.ClearResult();
 
             settings.RuleContainer.Interpret(_handler);
 
@@ -106,13 +110,13 @@ namespace TypiconOnline.AppServices.Implementations
                 //Если settings.SignNumber определен в ModifiedRule, то назначаем его
                 int signNumber = settings.SignNumber ?? sign.Number.Value;
 
-                scheduleDay = new ScheduleDay
+                scheduleDay = new OutputDay
                 {
                     //задаем имя дню
-                    Name = _nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.AllWorships, settings.Language),
+                    Name = _nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.AllWorships),
                     Date = request.Date,
                     SignNumber = signNumber,
-                    SignName = sign.SignName.FirstOrDefault(settings.Language.Name),
+                    SignName = new ItemText(sign.SignName),
                 };
             }
 

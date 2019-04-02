@@ -23,10 +23,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             var typiconEntity = dbContext.Set<TypiconVersion>().First(c => c.Id == 1);
 
-            ServiceSequenceHandler handler = new ServiceSequenceHandler()
-            {
-                Settings = new RuleHandlerSettings() { Language = LanguageSettingsFactory.Create("cs-ru") }
-            };
+            ServiceSequenceHandler handler = new ServiceSequenceHandler();
 
             string xml = TestDataXmlReader.GetXmlString("ExapostilarionRuleTest.xml");
 

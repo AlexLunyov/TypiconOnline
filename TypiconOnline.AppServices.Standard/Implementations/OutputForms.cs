@@ -10,7 +10,7 @@ using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Repository.EFCore.DataBase;
 
@@ -37,25 +37,27 @@ namespace TypiconOnline.AppServices.Implementations
             _queue = queue ?? throw new ArgumentNullException(nameof(queue));
         }
 
-        public Result<ScheduleDay> Get(int typiconId, DateTime date, HandlingMode handlingMode = HandlingMode.AstronomicDay)
+        public Result<LocalizedOutputDay> Get(int typiconId, DateTime date, string language, HandlingMode handlingMode = HandlingMode.AstronomicDay)
         {
+            date = date.Date;
+
             var scheduleDay = _dbContext.GetScheduleDay(typiconId, date, _serializer);
 
             if (scheduleDay.Success)
             {
-                return scheduleDay;
+                return Result.Ok(scheduleDay.Value.Localize(language));
             }
 
             var version = _dbContext.GetPublishedVersion(typiconId);
 
             if (version.Failure)
             {
-                return Result.Fail<ScheduleDay>(version.Error);
+                return Result.Fail<LocalizedOutputDay>(version.Error);
             }
 
             if (!CheckCalcModifiedYearExists(version.Value.Id, date, handlingMode))
             {
-                return Result.Fail<ScheduleDay>($"Инициировано формирование переходящих праздников. Повторите операцию позже.");
+                return Result.Fail<LocalizedOutputDay>($"Инициировано формирование переходящих праздников. Повторите операцию позже.");
             }
 
             var created = _outputFormFactory.Create(new OutputFormCreateRequest()
@@ -68,27 +70,27 @@ namespace TypiconOnline.AppServices.Implementations
 
             _dbContext.UpdateOutputForm(created.OutputForm);
 
-            return Result.Ok(created.Day);
+            return Result.Ok(created.Day.Localize(language));
         }
 
-        public Result<ScheduleWeek> GetWeek(int typiconId, DateTime date)
+        public Result<LocalizedOutputWeek> GetWeek(int typiconId, DateTime date, string language)
         {
             date = GetMonday(date);
 
-            var week = new ScheduleWeek()
+            var week = new LocalizedOutputWeek()
             {
-                Name = _nameComposer.GetWeekName(date, "cs-ru")
+                Name = _nameComposer.GetLocalizedWeekName(date, language)
             };
 
             int i = 0;
 
             while (i < 7)
             {
-                var dayResult = Get(typiconId, date);
+                var dayResult = Get(typiconId, date, language);
 
                 if (dayResult.Failure)
                 {
-                    return Result.Fail<ScheduleWeek>(dayResult.Error);
+                    return Result.Fail<LocalizedOutputWeek>(dayResult.Error);
                 }
 
                 week.Days.Add(dayResult.Value);

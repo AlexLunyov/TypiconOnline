@@ -102,7 +102,7 @@ namespace TypiconOnline.WebApi
                 //optionsBuilder.UseSqlite(connectionString);
 
                 //MySQL
-                optionsBuilder.UseMySql("server=localhost;UserId=root;Password=z2LDCiiEQFDBlkl3eZyb;database=typicondb;",
+                optionsBuilder.UseMySql(configuration.GetConnectionString("MySql"),
                         mySqlOptions =>
                         {
                             mySqlOptions.ServerVersion(new Version(8, 0, 15), ServerType.MySql);

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules.Output;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -15,13 +16,13 @@ namespace TypiconOnline.AppServices.Implementations
             _dayViewer = dayViewer ?? throw new ArgumentNullException(nameof(dayViewer));
         }
 
-        public string Execute(ScheduleWeek week)
+        public string Execute(LocalizedOutputWeek week)
         {
             var strBuilder = new StringBuilder();
 
             strBuilder.AppendLine(week.Name.Text);
 
-            foreach (ScheduleDay day in week.Days)
+            foreach (var day in week.Days)
             {
                 strBuilder.AppendLine("--------------------------");
                 strBuilder.Append(_dayViewer.Execute(day));

@@ -27,7 +27,6 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
             
             TypiconVersionId = request.TypiconVersionId;
             Date = request.Date;
-            Language = request.Language;
             ApplyParameters = request.ApplyParameters;
             CheckParameters = request.CheckParameters;
         }

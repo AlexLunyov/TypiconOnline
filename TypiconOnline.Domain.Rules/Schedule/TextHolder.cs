@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Interfaces;
-using TypiconOnline.Domain.ViewModels;
-using TypiconOnline.Domain.ViewModels.Messaging;
+using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.Domain.Rules.Output.Messaging;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -74,7 +74,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             }
         }
 
-        public void CreateViewModel(IRuleHandler handler, Action<ElementViewModelCollection> append)
+        public void CreateViewModel(IRuleHandler handler, Action<OutputElementCollection> append)
         {
             ViewModelFactory.Create(new CreateViewModelRequest<TextHolder>()
             {

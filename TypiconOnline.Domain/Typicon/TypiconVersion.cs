@@ -22,6 +22,7 @@ namespace TypiconOnline.Domain.Typicon
             MenologyRules = new List<MenologyRule>();
             TriodionRules = new List<TriodionRule>();
             Kathismas = new List<Kathisma>();
+            ExplicitAddRules = new List<ExplicitAddRule>();
         }
 
         #region Properties

@@ -8,7 +8,7 @@ using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Jobs;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Tests.Common;
@@ -21,15 +21,14 @@ namespace TypiconOnline.AppServices.Tests.Implementation
         const int TYPICON_ID = 1;
 
         [Test]
-        public async Task OutputForms_Get()
+        public void OutputForms_Get()
         {
             var dbContext = TypiconDbContextFactory.Create();
-
-            var outputForms = Build(dbContext);
+            var outputForms = OutputFormsFactory.Create(dbContext);
 
             DeleteAllOutputForms(dbContext, TYPICON_ID);
 
-            Result<ScheduleDay> task = outputForms.Get(TYPICON_ID, new DateTime(2020, 1, 1));
+            Result<LocalizedOutputDay> task = outputForms.Get(TYPICON_ID, new DateTime(2020, 1, 1), "cs-ru");
 
             Assert.IsTrue(task.Failure);
         }
@@ -41,29 +40,6 @@ namespace TypiconOnline.AppServices.Tests.Implementation
             dbContext.Set<OutputForm>().RemoveRange(forms);
 
             dbContext.SaveChanges();
-        }
-
-        private OutputForms Build(TypiconDBContext dbContext)
-        {
-            var serializerRoot = TestRuleSerializer.Create(dbContext);
-
-            var settingsFactory = new RuleHandlerSettingsFactory(serializerRoot);
-
-            var commandProcessor = CommandProcessorFactory.Create(dbContext);
-
-            var nameComposer = new ScheduleDayNameComposer(serializerRoot.QueryProcessor);
-
-            var modifiedYearFactory = new ModifiedYearFactory(dbContext, settingsFactory);
-
-            var outputFormFactory = new OutputFormFactory(new ScheduleDataCalculator(serializerRoot.QueryProcessor, settingsFactory)
-                , nameComposer
-                , serializerRoot.TypiconSerializer);
-
-            return new OutputForms(dbContext
-            , new ScheduleDayNameComposer(serializerRoot.QueryProcessor)
-            , serializerRoot.TypiconSerializer
-            , outputFormFactory
-            , new JobQueue());
         }
     }
 }

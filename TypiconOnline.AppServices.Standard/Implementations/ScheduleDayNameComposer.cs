@@ -26,75 +26,64 @@ namespace TypiconOnline.AppServices.Implementations
             this.queryProcessor = queryProcessor;
         }
 
-        public ItemTextUnit Compose(DateTime date, int seniorRulePriority, IReadOnlyList<DayWorship> dayWorships, LanguageSettings language)
+        public ItemText Compose(DateTime date, int seniorRulePriority, IReadOnlyList<DayWorship> dayWorships)
         {
-            var result = new ItemTextUnit() { Language = language.Name };
+            var result = new ItemText();
 
             if (dayWorships == null || dayWorships.Count == 0)
             {
                 return result;
             }
 
-            string resultString = "";
-
-            DayWorship seniorService = dayWorships.First();
-
             //собираем все имена текстов, кроме главного
             if (dayWorships.Count > 1)
             {
                 for (int i = 1; i < dayWorships.Count; i++)
                 {
-                    resultString += dayWorships[i].WorshipName.FirstOrDefault(language.Name).Text + " ";
+                    result.Merge(dayWorships[i].WorshipName);
                 }
             }
 
             //а теперь разбираемся с главным
-
-            string s = seniorService.WorshipName.FirstOrDefault(language.Name).Text;
+            DayWorship seniorService = dayWorships.First();
+            var s = seniorService.WorshipName;
 
             if (date.DayOfWeek != DayOfWeek.Sunday
                 || (date.DayOfWeek == DayOfWeek.Sunday
                     && (seniorService.UseFullName || seniorService.WorshipShortName.IsEmpty)))
             {
-                resultString = $"{s} {resultString}";
+                result = new ItemText(seniorService.WorshipName).Merge(result);
             }
 
             //Воскресный день
 
-            if (/*(settings.Rule is MenologyRule)
-                && */(date.DayOfWeek == DayOfWeek.Sunday)
-                && (seniorRulePriority > 1))
+            if ((date.DayOfWeek == DayOfWeek.Sunday) && (seniorRulePriority > 1))
             {
                 //Если Триоди нет и воскресенье, находим название Недели из Октоиха
                 //и добавляем название Недели в начало Name
 
                 //Если имеется короткое название, то добавляем только его
-                var shortName = GetShortName(dayWorships, language.Name);
+                var shortName = GetShortName(dayWorships);
 
-                var sundayName = queryProcessor.Process(new SundayNameQuery(date, language, shortName));
+                var sundayName = queryProcessor.Process(new SundayNameQuery(date, shortName));
 
-                resultString = sundayName.Text + " " + resultString;
+                result = sundayName.Merge(result);
             }
-
-            result.Text = resultString;
 
             return result;
         }
 
-        public ItemTextUnit GetWeekName(DateTime date, string language) => queryProcessor.Process(new WeekNameQuery(date, language, false));
+        public ItemTextUnit GetLocalizedWeekName(DateTime date, string language) => GetWeekName(date)?.FirstOrDefault(language);
 
-        private string GetShortName(IReadOnlyList<DayWorship> dayWorships, string language)
+        public ItemText GetWeekName(DateTime date) => queryProcessor.Process(new WeekNameQuery(date, false));
+
+        private ItemText GetShortName(IReadOnlyList<DayWorship> dayWorships)
         {
-            string result = "";
+            var result = new ItemText();
 
-            for (int i = 0; i < dayWorships.Count; i++)
+            foreach (var worship in dayWorships)
             {
-                string s = dayWorships[i].WorshipShortName.FirstOrDefault(language)?.Text;
-
-                if (!string.IsNullOrEmpty(s))
-                {
-                    result = (!string.IsNullOrEmpty(result)) ? $"{result}, {s}" : s;
-                }
+                result.Merge(", ", worship.WorshipShortName);
             }
 
             return result;

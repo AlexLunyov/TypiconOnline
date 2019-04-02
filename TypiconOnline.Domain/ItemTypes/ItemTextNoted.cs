@@ -17,6 +17,14 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public ItemTextNoted(ItemText source) : base(source) { }
 
+        public ItemTextNoted(ItemTextNoted source) : base(source)
+        {
+            if (source.Note != null)
+            {
+                Note = new ItemTextStyled(source.Note);
+            }
+        }
+
         [XmlElement("note")]
         public ItemTextStyled Note { get; set; }
 

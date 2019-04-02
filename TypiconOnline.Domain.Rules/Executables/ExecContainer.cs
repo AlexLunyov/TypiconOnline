@@ -32,6 +32,9 @@ namespace TypiconOnline.Domain.Rules.Executables
             {
                 el.Interpret(handler);
             }
+
+            //и сразу же их удаляем
+            RemoveAppended();
         }
 
         protected override void Validate()
@@ -100,6 +103,20 @@ namespace TypiconOnline.Domain.Rules.Executables
                     ChildElements.AddRange(found.Cast<RuleElementBase>());
                 }
             }
+        }
+
+        /// <summary>
+        /// Удаляем из коллекции дочерних элементов ранее добавленные IAsAdditionElements
+        /// </summary>
+        protected void RemoveAppended()
+        {
+            if (this is IAsAdditionElement additionElement)
+            {
+                ChildElements.RemoveAll(c => (c is IAsAdditionElement a) 
+                                            && a.AsAdditionMode == AsAdditionMode.Append 
+                                            && a.Parent?.AsAdditionName == additionElement.AsAdditionName);
+            }
+            
         }
 
         #endregion

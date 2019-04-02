@@ -102,7 +102,6 @@ namespace TypiconOnline.AppServices.Implementations
                 TypiconVersionId = req.TypiconVersionId,
                 Date = req.Date,
                 RuleContainer = container,
-                Language = LanguageSettingsFactory.Create(req.Language),
                 SignNumber = req.SignNumber,
                 ApplyParameters = req.ApplyParameters,
                 CheckParameters = req.CheckParameters,
@@ -129,7 +128,6 @@ namespace TypiconOnline.AppServices.Implementations
                 TypiconVersionId = req.TypiconVersionId,
                 Date = req.Date,
                 RuleContainer = container,
-                Language = LanguageSettingsFactory.Create(req.Language),
                 ApplyParameters = req.ApplyParameters,
                 CheckParameters = req.CheckParameters
             };

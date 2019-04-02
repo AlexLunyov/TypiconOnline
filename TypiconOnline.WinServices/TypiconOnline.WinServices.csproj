@@ -50,8 +50,6 @@
   <ItemGroup>
     <Compile Include="Books\EasterCacheStorage.cs" />
     <Compile Include="DocxScheduleWeekViewer.cs" />
-    <Compile Include="Implementations\DocxTemplateService.cs" />
-    <Compile Include="Interfaces\IDocxTemplateService.cs" />
     <Compile Include="Messaging\HandleTemplateRequest.cs" />
     <Compile Include="Messaging\HandleTemplateResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,7 +93,10 @@
     <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
     <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Implementations\" />
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /y /d $(TargetPath) $(SolutionDir)\lib</PostBuildEvent>

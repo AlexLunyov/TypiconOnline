@@ -1,4 +1,4 @@
-﻿using TypiconOnline.Domain.ViewModels.Messaging;
+﻿using TypiconOnline.Domain.Rules.Output.Messaging;
 
 namespace TypiconOnline.Domain.Rules.Interfaces
 {

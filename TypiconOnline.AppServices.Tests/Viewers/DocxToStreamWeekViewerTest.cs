@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Viewers;
 using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Tests.Common;
 
@@ -29,21 +29,21 @@ namespace TypiconOnline.AppServices.Tests.Viewers
 
             var viewer = new DocxToStreamWeekViewer(query, mock.Object);
 
-            var week = new ScheduleWeek()
+            var week = new LocalizedOutputWeek()
             {
                 Name = new ItemTextUnit("cs-ru", "Первая седмица Великого поста"),
-                Days = new List<ScheduleDay>()
+                Days = new List<LocalizedOutputDay>()
                 {
-                    new ScheduleDay()
+                    new LocalizedOutputDay()
                     {
                         Date = DateTime.Today,
                         Name = new ItemTextUnit("cs-ru", "Торжество Православия"),
-                        Worships = new List<WorshipRuleViewModel>()
+                        Worships = new List<LocalizedOutputWorship>()
                         {
-                            new WorshipRuleViewModel()
+                            new LocalizedOutputWorship()
                             {
                                 Time = "06.00",
-                                Name = new ItemTextUnit("cs-ru", "Полунощница")
+                                Name = new LocalizedParagraph() { Text = new ItemTextUnit("cs-ru", "Полунощница") }
                             }
                         }
                     }

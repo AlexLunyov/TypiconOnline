@@ -6,7 +6,8 @@ using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.ViewModels;
+using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -34,13 +35,12 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 Date = request.Date,
                 TypiconVersionId = request.TypiconId,
-                Language = request.Language,
                 ApplyParameters = request.ApplyParameters,
                 CheckParameters = request.CheckParameters
                     .SetModeParam((mode == HandlingMode.AstronomicDay) ? HandlingMode.ThisDay : mode)
             };
 
-            ScheduleDay scheduleDay = GetOrFillScheduleDay(settingsRequest, request.Handler);
+            OutputDay scheduleDay = GetOrFillScheduleDay(settingsRequest, request.Handler);
 
             if (mode == HandlingMode.AstronomicDay)
             {
@@ -59,7 +59,7 @@ namespace TypiconOnline.AppServices.Implementations
 
         
 
-        private ScheduleDay GetOrFillScheduleDay(ScheduleDataCalculatorRequest request, ScheduleHandler handler, ScheduleDay scheduleDay = null)
+        private OutputDay GetOrFillScheduleDay(ScheduleDataCalculatorRequest request, ScheduleHandler handler, OutputDay scheduleDay = null)
         {
             //Формируем данные для обработки
             var response = dataCalculator.Calculate(request);
@@ -80,13 +80,13 @@ namespace TypiconOnline.AppServices.Implementations
                 //Если settings.SignNumber определен в ModifiedRule, то назначаем его
                 int signNumber = settings.SignNumber ?? sign.Number.Value;
 
-                scheduleDay = new ScheduleDay
+                scheduleDay = new OutputDay
                 {
                     //задаем имя дню
-                    Name = nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.AllWorships, settings.Language),
+                    Name = nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.AllWorships),
                     Date = request.Date,
                     SignNumber = signNumber,
-                    SignName = sign.SignName.FirstOrDefault(settings.Language.Name),
+                    SignName = new ItemText(sign.SignName)
                 };
             }
 
@@ -115,9 +115,9 @@ namespace TypiconOnline.AppServices.Implementations
 
         public GetScheduleWeekResponse GetScheduleWeek(GetScheduleWeekRequest request)
         {
-            ScheduleWeek week = new ScheduleWeek() 
+            OutputWeek week = new OutputWeek() 
             {
-                Name = nameComposer.GetWeekName(request.Date, request.Language)
+                Name = nameComposer.GetWeekName(request.Date)
             };
 
             GetScheduleDayRequest dayRequest = new GetScheduleDayRequest()
