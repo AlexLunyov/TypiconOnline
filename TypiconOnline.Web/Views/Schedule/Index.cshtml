@@ -1,0 +1,84 @@
+﻿@using TypiconOnline.Domain.Rules.Output;
+@{
+    ViewData["Title"] = $"Устав {ViewBag.TypiconName}";
+}
+
+@section Scripts {
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/locales/bootstrap-datetimepicker.ru.js"></script>
+
+    <script type="text/javascript">
+
+        $('#datepicker').datetimepicker({
+            language: 'ru',
+            format: 'dd-mm-yyyy',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
+        });
+    </script>
+}
+    <section>
+        <div class="row col-sm-6"><breadcrumb></breadcrumb></div>
+        <div class="clearfix"></div>
+        <div class="row col-sm-12"><h1>Расписание</h1></div>
+        <div class="row">
+            <form method="post">
+                <div class="col-md-3">
+                    <div id="datepicker" class="input-group date form_date" data-date="" data-date-format="dd-mm-yyyy" data-link-field="dtp_input" data-link-format="dd-mm-yyyy">
+                        <input class="form-control" size="16" type="text" value="@ViewBag.Date" readonly>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                    <input type="hidden" id="dtp_input" value="@ViewBag.Date" name="date" />
+                </div>
+
+                <div class="col-md-3">
+                    <button asp-controller="schedule" asp-action="Index" asp-route-id="@ViewBag.Id" class="btn btn-default">Смотреть</button>  <button class="btn btn-primary" asp-controller="schedule" asp-action="Download" asp-route-id="@ViewBag.Id">Скачать </button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <section>
+        <div class="row col-sm-12">
+            @if (ViewBag.Week.Success)
+            {
+                <h2 class="@ViewBag.Week.Value.Name.Language">@ViewBag.Week.Value.Name.Text</h2>
+                @foreach (var day in ViewBag.Week.Value.Days)
+                {
+                    <h3>@day.Date.ToString("dd MMMM yyyy г.")</h3>
+                    <h3 class="@day.Name.Language">@day.Name.Text</h3>
+                    <h4 class="@day.SignName.Language">Знак службы: @day.SignName.Text</h4>
+                    <table>
+                        @{int i = 0;}
+                        @foreach (var worship in day.Worships)
+                        {
+                            <tr>
+                                <td>@worship.Time&nbsp;</td>
+                                <td>
+                                    <a asp-controller="schedule" asp-action="sequence" asp-route-id="@ViewBag.Id"
+                                       asp-route-date="@day.Date.ToString("yyyy-MM-dd")" asp-route-w="@i">
+                                        <span class="@worship.Name.Text.Language">@worship.Name.Text.Text</span>
+                                        @if (worship.AdditionalName != null)
+                                        {
+                                            <span class="@worship.AdditionalName.Language">@worship.AdditionalName.Text</span>
+                                        }
+                                    </a>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    </table>
+                }
+            }
+            else
+            {
+                <h3>@ViewBag.Week.Error</h3>
+            }
+        </div>
+    </section>
+    

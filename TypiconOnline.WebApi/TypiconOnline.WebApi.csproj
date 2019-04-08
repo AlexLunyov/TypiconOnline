@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TypiconOnline.AppServices.Standard\TypiconOnline.AppServices.csproj" />
+    <ProjectReference Include="..\TypiconOnline.AppServices\TypiconOnline.AppServices.csproj" />
     <ProjectReference Include="..\TypiconOnline.Repository.Caching\TypiconOnline.Repository.Caching.csproj" />
     <ProjectReference Include="..\TypiconOnline.Repository.EFCore\TypiconOnline.Repository.EFCore.csproj" />
     <ProjectReference Include="..\TypiconOnline.WebServices\TypiconOnline.WebServices.csproj" />

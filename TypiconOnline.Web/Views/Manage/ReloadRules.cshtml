@@ -1,0 +1,19 @@
+﻿@model ReloadRulesModel
+@{
+    ViewData["Title"] = "Обновить Правила";
+    ViewData.AddActivePage(ManageNavPages.ReloadRules);
+}
+
+<h4>@ViewData["Title"]</h4>
+@Html.Partial("_StatusMessage", Model.StatusMessage)
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <button asp-controller="manage" asp-action="reloadrules" asp-route-id="1">Обновить Правила для Устава</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

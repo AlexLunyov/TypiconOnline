@@ -64,7 +64,7 @@ namespace TypiconOnline.WebApi
             container.Register<IConfigurationRepository>(() => new ConfigurationRepository(configuration));
 
             //Queue
-            container.RegisterSingleton<IQueue, JobQueue>();
+            container.RegisterSingleton<IJobRepository, JobRepository>();
 
             //For SQLite
             //container.Register<JobHostedService>();

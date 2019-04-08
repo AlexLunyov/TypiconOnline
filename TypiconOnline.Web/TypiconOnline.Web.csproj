@@ -1,0 +1,83 @@
+<Project Sdk="Microsoft.NET.Sdk.Web" ToolsVersion="15.0">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <UserSecretsId>aspnet-TypiconOnline.Web-EA5844BE-0BB5-4A7B-A292-4C5A1D121B64</UserSecretsId>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Data\SQLiteDB.db" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\SQLiteDB.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Bootstrap.v3.Datetimepicker" Version="4.17.45" />
+    <PackageReference Include="Bootstrap.v3.Datetimepicker.CSS" Version="4.17.45" />
+    <PackageReference Include="BundlerMinifier.Core" Version="2.9.406" />
+    <PackageReference Include="CacheManager.Core" Version="1.2.0" />
+    <PackageReference Include="CacheManager.Microsoft.Extensions.Caching.Memory" Version="1.2.0" />
+    <PackageReference Include="CacheManager.Serialization.Json" Version="1.2.0" />
+    <PackageReference Include="Mapster" Version="3.3.2" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.3" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" PrivateAssets="All" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
+    <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc" Version="4.5.1" />
+    <PackageReference Include="SmartBreadcrumbs" Version="2.0.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.1" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure.Common\TypiconOnline.Infrastructure.Common.csproj" />
+    <ProjectReference Include="..\TypiconOnline.AppServices\TypiconOnline.AppServices.csproj" />
+    <ProjectReference Include="..\TypiconOnline.Domain.Query\TypiconOnline.Domain.Query.csproj" />
+    <ProjectReference Include="..\TypiconOnline.Domain.WebQuery\TypiconOnline.Domain.WebQuery.csproj" />
+    <ProjectReference Include="..\TypiconOnline.Domain\TypiconOnline.Domain.csproj" />
+    <ProjectReference Include="..\TypiconOnline.Repository.EFCore\TypiconOnline.Repository.EFCore.csproj" />
+    <ProjectReference Include="..\TypiconOnline.WebServices\TypiconOnline.WebServices.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="wwwroot\BigTemplate.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\scheduledayviewer.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\schedule\fonts\HirmCIEUcs8.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\schedule\fonts\HirmCUcs8.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\schedule\fonts\HirmIEUcs8.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\schedule\fonts\HirmSoCIEUcs8.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\schedule\fonts\HirmSoCUcs8.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\schedule\fonts\HirmSoIEUcs8.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\schedule\fonts\HirmSoUcs8.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\schedule\fonts\HirmUcs8.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

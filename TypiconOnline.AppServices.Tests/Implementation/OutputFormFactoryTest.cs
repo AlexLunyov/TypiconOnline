@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.Domain.Rules;
+using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.AppServices.Tests.Implementation
@@ -42,7 +43,8 @@ namespace TypiconOnline.AppServices.Tests.Implementation
 
             return new OutputFormFactory(new ScheduleDataCalculator(query, settingsFactory)
                 , new ScheduleDayNameComposer(query)
-                , serializerRoot.TypiconSerializer);
+                , serializerRoot.TypiconSerializer
+                , new ServiceSequenceHandler());
         }
     }
 }

@@ -307,8 +307,8 @@
       <Project>{1F2F3F15-A8CF-4AB7-8603-FB0309EAF8C7}</Project>
       <Name>TypiconOnline.Infrastructure.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TypiconOnline.AppServices.Standard\TypiconOnline.AppServices.csproj">
-      <Project>{e5888f71-c704-408d-b928-e16c5528607a}</Project>
+    <ProjectReference Include="..\TypiconOnline.AppServices\TypiconOnline.AppServices.csproj">
+      <Project>{3220cea5-8119-48fe-ac18-5eb8ec658de4}</Project>
       <Name>TypiconOnline.AppServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.Domain.Rules\TypiconOnline.Domain.Rules.csproj">
@@ -322,10 +322,6 @@
     <ProjectReference Include="..\TypiconOnline.Repository.EFCore\TypiconOnline.Repository.EFCore.csproj">
       <Project>{8ed6de06-a34b-4775-bcb2-1655c36649cc}</Project>
       <Name>TypiconOnline.Repository.EFCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TypiconOnline.WinServices\TypiconOnline.WinServices.csproj">
-      <Project>{611c72a4-9f5a-43b3-9418-1a478a943475}</Project>
-      <Name>TypiconOnline.WinServices</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

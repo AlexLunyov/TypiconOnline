@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Jobs;
+using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Tests.Common;
 
@@ -26,7 +27,8 @@ namespace TypiconOnline.Tests.Common
 
             var outputFormFactory = new OutputFormFactory(new ScheduleDataCalculator(serializerRoot.QueryProcessor, settingsFactory)
                 , nameComposer
-                , serializerRoot.TypiconSerializer);
+                , serializerRoot.TypiconSerializer
+                , new ServiceSequenceHandler());
 
             return new OutputForms(dbContext
             , new ScheduleDayNameComposer(serializerRoot.QueryProcessor)

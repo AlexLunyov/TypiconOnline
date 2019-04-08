@@ -1,0 +1,75 @@
+body {
+	font-family: Arial;
+	font-size: 14pt;
+}
+.bold {
+	font-weight: bold;
+}
+.red {
+	color: red;
+}
+.italic {
+	font-style: italic;
+}
+
+/* Slavic fonts */
+@font-face {
+    font-family: greek_font;
+    font-style: normal;
+    font-weight: normal;
+    src: url('/schedule/fonts/lsans.ttf');
+}
+
+@font-face {
+    font-family: greek_font;
+    font-style: italic;
+    font-weight: normal;
+    src: url('/schedule/fonts/lsansi.ttf');
+}
+
+@font-face {
+    font-family: greek_font;
+    font-style: normal;
+    font-weight: bold;
+    src: url('/schedule/fonts/lsansd.ttf');
+}
+
+@font-face {
+    font-family: greek_font;
+    font-style: italic;
+    font-weight: bold;
+    src: url('/schedule/fonts/lsansdi.ttf');
+}
+
+@font-face {
+    font-family: slavonic_font;
+    font-style: normal;
+    font-weight: normal;
+    src: url('/schedule/fonts/HirmUcs8.ttf');
+}
+
+@font-face {
+    font-family: slavonic_font_ie;
+    font-style: normal;
+    font-weight: normal;
+    src: url('/schedule/fonts/HirmIEUcs8.eot');
+}
+
+@font-face {
+    font-family: slavonic_font;
+    font-style: italic;
+    font-weight: normal;
+    src: url('/schedule/fonts/HirmSoUcs8.ttf');
+}
+
+@font-face {
+    font-family: slavonic_font_ie;
+    font-style: italic;
+    font-weight: normal;
+    src: url('/schedule/fonts/HirmSoIEUcs8.eot');
+}
+
+.cs-cs {
+	font-family: "Hirmos ieUcs", "slavonic_font", "slavonic_font_ie";
+	font-size: 18pt;
+}

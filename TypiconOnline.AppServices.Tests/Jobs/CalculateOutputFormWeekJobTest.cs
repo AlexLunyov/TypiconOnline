@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Jobs;
+using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Tests.Common;
 
@@ -76,7 +77,8 @@ namespace TypiconOnline.AppServices.Tests.Jobs
 
             var outputFormFactory = new OutputFormFactory(new ScheduleDataCalculator(query, settingsFactory)
                 , new ScheduleDayNameComposer(query)
-                , serializerRoot.TypiconSerializer);
+                , serializerRoot.TypiconSerializer
+                , new ServiceSequenceHandler());
 
             return new CalculateOutputFormWeekJobHandler(dbContext, outputFormFactory, jobRepo);
         }

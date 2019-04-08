@@ -1,0 +1,36 @@
+﻿@using System.Linq;
+@using TypiconOnline.Domain.Rules.Output;
+@{
+    ViewData["Title"] = $"Устав";
+}
+
+<div class="row">
+    <h2 class="@ViewBag.Week.Name.Language">@ViewBag.Week.Name.Text</h2>
+    @foreach (LocalizedOutputDay day in ViewBag.Week.Days)
+    {
+        <h3>@day.Date.ToString("dd MMMM yyyy г.")</h3>
+        <h3 class="@day.Name.Language">@day.Name.Text</h3>
+        <table>
+            @{int i = 0;}
+            @foreach (LocalizedOutputWorship worship in day.Worships)
+            {
+                <tr>
+                    <td>@worship.Time&nbsp;</td>
+                    <td>
+                        <a asp-controller="schedule" asp-action="sequence" asp-route-id="@ViewBag.Id"
+                           asp-route-date="@day.Date.ToString("yyyy-MM-dd")" asp-route-w="@i">
+                            <span class="@worship.Name.Text.Language">@worship.Name.Text.Text</span>
+                            @if (worship.AdditionalName != null)
+                            {
+                                <span class="@worship.AdditionalName.Language">@worship.AdditionalName.Text</span>
+                            }
+                        </a>
+                    </td>
+                </tr>
+                i++;
+            }
+
+        </table>
+
+    }
+</div>
