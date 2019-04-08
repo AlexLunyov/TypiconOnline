@@ -49,7 +49,6 @@ namespace TypiconOnline.WebApi
 
             //OutputForms
             container.Register<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
-            container.Register<IModifiedYearFactory, ModifiedYearFactory>();
             container.Register<IScheduleDayNameComposer, ScheduleDayNameComposer>();
             container.Register<IRuleSerializerRoot, RuleSerializerRoot>();
             container.Register<ITypiconSerializer, TypiconSerializer>(); 

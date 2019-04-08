@@ -34,7 +34,7 @@ namespace TypiconMigrationTool
                 x.Scan(scan =>
                 {
                     scan.TheCallingAssembly();
-                    scan.AssemblyContainingType<IModifiedYearFactory>();
+                    scan.AssemblyContainingType<IKatavasiaService>();
                     scan.AssemblyContainingType<TypiconVersion>();
                     scan.AssemblyContainingType<IAggregateRoot>();
                     scan.AssemblyContainingType<EFUnitOfWork>();

@@ -2,6 +2,7 @@
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Extensions;
+using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Interfaces;
 using TypiconOnline.Infrastructure.Common.Domain;
 
@@ -38,16 +39,15 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 }
             }
         }
-        public bool IsDayBefore { get; set; } = false;
         public ItemTextStyled AdditionalName { get; set; } = new ItemTextStyled();
         /// <summary>
         /// Последовательность богослужения
         /// </summary>
         public ExecContainer Sequence { get; set; }
         /// <summary>
-        /// Значение заполняется при обработке Правила с помощью CustomParmeter
+        /// Указание, в какое место добавлять службу
         /// </summary>
-        public HandlingMode ModeFromHandler { get; set; } = HandlingMode.All;
+        public WorshipMode Mode { get; set; } = WorshipMode.ThisDay;
 
         #region IRewritableElement implementation
 
@@ -66,7 +66,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
                 if (!string.IsNullOrEmpty(Id))
                 {
-                    result += $"?{RuleConstants.WorshipRuleIdAttrName}={Id}&isdaybefore={IsDayBefore}";
+                    result += $"?{RuleConstants.WorshipRuleIdAttrName}={Id}&mode={Mode}";
                 }
 
                 return result;
@@ -94,7 +94,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                     AdditionalName = s.AdditionalName;
                 }
 
-                IsDayBefore = s.IsDayBefore;
+                Mode = s.Mode;
 
                 if (s.Sequence != null)
                 {

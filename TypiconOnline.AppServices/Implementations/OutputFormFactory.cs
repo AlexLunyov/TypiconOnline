@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
-using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
@@ -13,6 +12,7 @@ using TypiconOnline.Domain.Rules.Interfaces;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.AppServices.Common;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -44,52 +44,103 @@ namespace TypiconOnline.AppServices.Implementations
         /// <param name="typiconVersionId">Версия Устава</param>
         /// <param name="date"></param>
         /// <returns></returns>
-        public (OutputForm, OutputDay) Create(OutputFormCreateRequest req)
+        public OutputForm Create(CreateOutputFormRequest req)
         {
-            var scheduleInfo = CreateScheduleInfo(req.TypiconVersionId, req.Date, req.HandlingMode);
+            OutputDayInfo dayInfo = null;
 
-            string definition = _typiconSerializer.Serialize(scheduleInfo.Day);
-
-            var result = new OutputForm(req.TypiconId, req.Date, definition);
-
-            //Добавить ссылки на службы
-            result.OutputFormDayWorships = GetOutputFormDayWorships(result, scheduleInfo.Dayworships);
-
-            return (result, scheduleInfo.Day);
+            return InnerCreate(req, ref dayInfo);
         }
 
-        
-
-        private (OutputDay Day, IEnumerable<DayWorship> Dayworships) CreateScheduleInfo(int typiconVersionId, DateTime date, HandlingMode handlingMode)
+        /// <summary>
+        /// Возвращает неделю
+        /// </summary>
+        /// <param name="typiconVersionId"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public IEnumerable<OutputForm> CreateWeek(CreateOutputFormWeekRequest req)
         {
-            //находим метод обработки дня
-            HandlingMode mode = handlingMode;
+            List<OutputForm> result = new List<OutputForm>();
 
-            //Формируем данные для обработки
-            var settingsRequest = new ScheduleDataCalculatorRequest()
+            var dayReq = new CreateOutputFormRequest()
             {
-                TypiconVersionId = typiconVersionId,
-                Date = date,
-                CheckParameters = GetMode((mode == HandlingMode.AstronomicDay) ? HandlingMode.ThisDay : mode)
+                TypiconId = req.TypiconId,
+                TypiconVersionId = req.TypiconVersionId,
+                HandlingMode = HandlingMode.AstronomicDay
             };
 
-            var scheduleInfo = GetOrFillScheduleInfo(settingsRequest);
+            OutputDayInfo dayInfo = null;
 
-            var dayWorships = new List<DayWorship>(scheduleInfo.Dayworships);
-
-            if (mode == HandlingMode.AstronomicDay)
+            EachDayPerWeek.Perform(req.Date, date =>
             {
-                //ищем службы следующего дня с маркером IsDayBefore == true
-                settingsRequest.Date = date.AddDays(1);
-                settingsRequest.CheckParameters = settingsRequest.CheckParameters.SetModeParam(HandlingMode.DayBefore);
+                dayReq.Date = date;
 
-                scheduleInfo = GetOrFillScheduleInfo(settingsRequest, scheduleInfo.Day);
-            }
+                var outputForm = InnerCreate(dayReq, ref dayInfo);
 
-            return (scheduleInfo.Day, dayWorships);
+                result.Add(outputForm);
+            });
+
+            return result;
         }
 
-        private (OutputDay Day, IEnumerable<DayWorship> Dayworships) GetOrFillScheduleInfo(ScheduleDataCalculatorRequest request, OutputDay scheduleDay = null)
+        private OutputForm InnerCreate(CreateOutputFormRequest req, ref OutputDayInfo dayInfo)
+        {
+            if (dayInfo == null)
+            {
+                //Формируем данные для обработки
+                dayInfo = GetOutputDayInfo(new ScheduleDataCalculatorRequest()
+                {
+                    TypiconVersionId = req.TypiconVersionId,
+                    Date = req.Date
+                });
+            }
+
+            if (req.HandlingMode == HandlingMode.DayBefore 
+                || req.HandlingMode == HandlingMode.All)
+            {
+                //добавляем DayBefore
+                dayInfo.Day.Worships.AddRange(dayInfo.ScheduleResults.DayBefore);
+            }
+
+            if (req.HandlingMode == HandlingMode.ThisDay 
+                || req.HandlingMode == HandlingMode.All
+                || req.HandlingMode == HandlingMode.AstronomicDay)
+            {
+                //добавляем ThisDay
+                dayInfo.Day.Worships.AddRange(dayInfo.ScheduleResults.ThisDay);
+            }
+
+            var localDayInfo = dayInfo;
+
+            //добавляем AstronomicDay
+            if (req.HandlingMode == HandlingMode.AstronomicDay)
+            {
+                //Формируем данные для обработки от следующего дня
+                dayInfo = GetOutputDayInfo(new ScheduleDataCalculatorRequest()
+                {
+                    TypiconVersionId = req.TypiconVersionId,
+                    Date = req.Date.AddDays(1)
+                });
+
+                //складываем значения
+                localDayInfo.Merge(dayInfo);
+            }
+
+            string definition = _typiconSerializer.Serialize(localDayInfo.Day);
+
+            var outputForm = new OutputForm(req.TypiconId, req.Date, definition);
+
+            //Добавить ссылки на службы
+            outputForm.OutputFormDayWorships = GetOutputFormDayWorships(outputForm, localDayInfo.DayWorships);
+
+            return outputForm;
+        }
+
+        /// <summary>
+        /// Вычисляет свойства для заполнения выходной формы
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        private OutputDayInfo GetOutputDayInfo(ScheduleDataCalculatorRequest request)
         {
             //Формируем данные для обработки
             var response = _dataCalculator.Calculate(request);
@@ -102,47 +153,23 @@ namespace TypiconOnline.AppServices.Implementations
 
             settings.RuleContainer.Interpret(_handler);
 
-            var container = _handler.GetResult();
+            var results = _handler.GetResults();
 
-            if (scheduleDay == null)
+            var sign = response.Rule.Template.GetPredefinedTemplate();
+
+            //Если settings.SignNumber определен в ModifiedRule, то назначаем его
+            int signNumber = settings.SignNumber ?? sign.Number.Value;
+
+            var scheduleDay = new OutputDay
             {
-                //Sign sign = (settings.Rule is Sign s) ? s : GetTemplateSign(settings.Rule.Template);
-                var sign = GetPredefinedTemplate(response.Rule.Template);
+                //задаем имя дню
+                Name = _nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.AllWorships),
+                Date = request.Date,
+                SignNumber = signNumber,
+                SignName = new ItemText(sign.SignName),
+            };
 
-                //Если settings.SignNumber определен в ModifiedRule, то назначаем его
-                int signNumber = settings.SignNumber ?? sign.Number.Value;
-
-                scheduleDay = new OutputDay
-                {
-                    //задаем имя дню
-                    Name = _nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.AllWorships),
-                    Date = request.Date,
-                    SignNumber = signNumber,
-                    SignName = new ItemText(sign.SignName),
-                };
-            }
-
-            //if (container != null)
-            //{
-            scheduleDay.Worships.AddRange(container);
-            //}
-
-            return (scheduleDay, settings.AllWorships);
-        }
-
-        private Sign GetPredefinedTemplate(Sign sign)
-        {
-            if (sign.Number.HasValue)
-            {
-                return sign;
-            }
-
-            if (sign.Template != null)
-            {
-                return GetPredefinedTemplate(sign.Template);
-            }
-
-            return default(Sign);
+            return new OutputDayInfo(scheduleDay, settings.AllWorships, results);
         }
 
         /// <summary>
@@ -170,13 +197,5 @@ namespace TypiconOnline.AppServices.Implementations
             return result;
         }
 
-        private CustomParamsCollection<IRuleCheckParameter> GetThisDay() =>
-            new CustomParamsCollection<IRuleCheckParameter>() { new WorshipRuleCheckModeParameter() { Mode = HandlingMode.ThisDay } };
-
-        private CustomParamsCollection<IRuleCheckParameter> GetDayBefore()
-            => new CustomParamsCollection<IRuleCheckParameter>() { new WorshipRuleCheckModeParameter() { Mode = HandlingMode.DayBefore } };
-
-        private CustomParamsCollection<IRuleCheckParameter> GetMode(HandlingMode mode)
-            => new CustomParamsCollection<IRuleCheckParameter>() { new WorshipRuleCheckModeParameter() { Mode = mode } };
     }
 }

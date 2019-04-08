@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 //добавляем элементы, реализующие интерфейс IViewModelElement к последней WorshipRuleViewModel
                 if (element is IViewModelElement viewElement)
                 {
-                    viewElement.CreateViewModel(this, model => GetResult().LastOrDefault()?.ChildElements.AddRange(model));
+                    viewElement.CreateViewModel(this, model => ActualWorshipChildElements?.AddRange(model));
                 }
             }
 
@@ -43,17 +43,17 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// Возвращает результат обработки правила
         /// </summary>
         /// <returns></returns>
-        public override ICollection<OutputWorship> GetResult()
-        {
-            //TODO: переопределение добавлено только для тестовых целей. Потом удалить
-            var model = base.GetResult();
+        //public override ICollection<OutputWorship> GetResult()
+        //{
+        //    //TODO: переопределение добавлено только для тестовых целей. Потом удалить
+        //    var model = base.GetResult();
 
-            if (model.Count == 0)
-            {
-                model.Add(new OutputWorship());
-            }
+        //    if (model.Count == 0)
+        //    {
+        //        model.Add(new OutputWorship());
+        //    }
 
-            return model;
-        }
+        //    return model;
+        //}
     }
 }

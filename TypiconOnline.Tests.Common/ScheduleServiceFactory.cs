@@ -18,9 +18,6 @@ namespace TypiconOnline.Tests.Common
             var commandProcessor = CommandProcessorFactory.Create(dbContext);
             var queryProcessor = DataQueryProcessorFactory.Create(dbContext);
 
-
-            var modifiedYearFactory = new ModifiedYearFactory(dbContext, settingsFactory);
-
             return new ScheduleService(new ScheduleDataCalculator(queryProcessor, settingsFactory)
                 , new ScheduleDayNameComposer(serializerRoot.QueryProcessor));
         }

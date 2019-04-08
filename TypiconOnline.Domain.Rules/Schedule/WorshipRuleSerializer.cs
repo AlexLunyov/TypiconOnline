@@ -4,6 +4,7 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Extensions;
+using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
@@ -42,10 +43,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
             obj.AdditionalName = req.Descriptor.Element
                 .GetItemTextStyled(SerializerRoot.TypiconSerializer, RuleConstants.WorshipRuleAdditionalNameNode);
 
-            attr = req.Descriptor.Element.Attributes[RuleConstants.WorshipRuleIsDayBeforeAttrName];
-            if (bool.TryParse(attr?.Value, out bool showPsalm))
+            attr = req.Descriptor.Element.Attributes[RuleConstants.WorshipRuleModeAttrName];
+            if (Enum.TryParse(attr?.Value, true, out WorshipMode source))
             {
-                obj.IsDayBefore = showPsalm;
+                obj.Mode = source;
             }
 
             //sequence

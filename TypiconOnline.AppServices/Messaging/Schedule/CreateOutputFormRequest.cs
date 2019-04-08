@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using TypiconOnline.Domain.Rules;
 
-namespace TypiconOnline.AppServices.Messaging.Typicon
+namespace TypiconOnline.AppServices.Messaging.Schedule
 {
-    public class OutputFormCreateRequest
+    public class CreateOutputFormRequest
     {
         public int TypiconId { get; set; }
         public int TypiconVersionId { get; set; }

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Implementations.Extensions;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.AppServices.Messaging.Typicon;
-using TypiconOnline.Domain.Command.Typicon;
-using TypiconOnline.Domain.Rules;
+using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Repository.EFCore.DataBase;
@@ -72,20 +67,17 @@ namespace TypiconOnline.AppServices.Jobs
 
         private Task DoTheJob(CalculateOutputFormWeekJob job)
         {
-            EachDayPerWeek.Perform(job.Date, date =>
+            var week = _outputFormFactory.CreateWeek(new CreateOutputFormWeekRequest()
             {
-                var (OutputForm, Day) = _outputFormFactory.Create(new OutputFormCreateRequest()
-                {
-                    TypiconId = job.TypiconId,
-                    TypiconVersionId = job.TypiconVersionId,
-                    Date = date,
-                    HandlingMode = HandlingMode.AstronomicDay
-                });
-
-                //_commandProcessor.ExecuteAsync(new UpdateOutputFormCommand(OutputForm));
-
-                _dbContext.UpdateOutputForm(OutputForm);
+                TypiconId = job.TypiconId,
+                TypiconVersionId = job.TypiconVersionId,
+                Date = job.Date
             });
+
+            foreach (var day in week)
+            {
+                _dbContext.UpdateOutputForm(day);
+            }
 
             return Task.CompletedTask;
         }

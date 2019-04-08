@@ -12,8 +12,8 @@ namespace TypiconOnline.Domain.Rules.Handlers.CustomParameters
         protected override bool InnerCheck(WorshipRule element)
         {
             return ((Mode == HandlingMode.All) 
-                    || ((Mode == HandlingMode.DayBefore) && (element.IsDayBefore))
-                    || ((Mode == HandlingMode.ThisDay) && (!element.IsDayBefore)));
+                    || ((Mode == HandlingMode.DayBefore) && (element.Mode == WorshipMode.DayBefore))
+                    || ((Mode == HandlingMode.ThisDay) && (element.Mode != WorshipMode.DayBefore)));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TypiconOnline.AppServices.Common;
 
 namespace TypiconOnline.AppServices.Jobs
 {
@@ -31,12 +32,7 @@ namespace TypiconOnline.AppServices.Jobs
             get { return _date; }
             private set
             {
-                _date = value.Date;
-
-                while (_date.DayOfWeek != DayOfWeek.Monday)
-                {
-                    _date = _date.AddDays(-1);
-                }
+                _date = EachDayPerWeek.GetMonday(value.Date);
             }
         }
 

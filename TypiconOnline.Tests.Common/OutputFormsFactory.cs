@@ -23,8 +23,6 @@ namespace TypiconOnline.Tests.Common
 
             var nameComposer = new ScheduleDayNameComposer(serializerRoot.QueryProcessor);
 
-            var modifiedYearFactory = new ModifiedYearFactory(dbContext, settingsFactory);
-
             var outputFormFactory = new OutputFormFactory(new ScheduleDataCalculator(serializerRoot.QueryProcessor, settingsFactory)
                 , nameComposer
                 , serializerRoot.TypiconSerializer

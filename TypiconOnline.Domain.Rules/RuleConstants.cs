@@ -56,7 +56,7 @@ namespace TypiconOnline.Domain.Rules
         public const string WorshipRuleIdAttrName = "id";
         public const string WorshipRuleTimeAttrName = "time";
         public const string WorshipRuleNameNode = "name";
-        public const string WorshipRuleIsDayBeforeAttrName = "isdaybefore";
+        public const string WorshipRuleModeAttrName = "mode";
         public const string WorshipRuleAdditionalNameNode = "additionalname";
         public const string WorshipRuleSequenceNode = "sequence";
 

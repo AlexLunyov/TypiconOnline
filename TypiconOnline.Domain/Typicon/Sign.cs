@@ -73,7 +73,17 @@ namespace TypiconOnline.Domain.Typicon
 
         public Sign GetPredefinedTemplate()
         {
-            return (Number != null) ? this : Template?.GetPredefinedTemplate();
+            if (Number.HasValue)
+            {
+                return this;
+            }
+
+            if (Template != null)
+            {
+                return Template.GetPredefinedTemplate();
+            }
+
+            return default(Sign);
         }
     }
 }

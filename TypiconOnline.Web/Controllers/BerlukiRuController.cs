@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.AppServices.Messaging.Typicon;
-using TypiconOnline.AppServices.Messaging.Schedule;
-using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
+using System;
 using TypiconOnline.AppServices.Implementations;
-using System.Text;
-using TypiconOnline.Infrastructure.Common.UnitOfWork;
-using TypiconOnline.Domain.Typicon;
-using Microsoft.AspNetCore.Html;
+using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
 namespace TypiconOnline.Web.Controllers

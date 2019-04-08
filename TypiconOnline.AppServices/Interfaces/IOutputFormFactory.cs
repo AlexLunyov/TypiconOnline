@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TypiconOnline.AppServices.Messaging.Typicon;
+﻿using System.Collections.Generic;
+using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.Rules.Output;
-using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
 namespace TypiconOnline.AppServices.Interfaces
 {
     public interface IOutputFormFactory
     {
-        (OutputForm OutputForm, OutputDay Day) Create(OutputFormCreateRequest req);
+        OutputForm Create(CreateOutputFormRequest req);
+
+        IEnumerable<OutputForm> CreateWeek(CreateOutputFormWeekRequest req);
     }
 }

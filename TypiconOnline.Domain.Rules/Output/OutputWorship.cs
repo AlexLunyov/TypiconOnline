@@ -19,7 +19,6 @@ namespace TypiconOnline.Domain.Rules.Output
         {
             Id = worship.Id;
             Time = worship.Time.Expression;
-            IsDayBefore = worship.IsDayBefore;
             Name = worship.Name;
             AdditionalName = worship.AdditionalName;
         }
@@ -30,8 +29,6 @@ namespace TypiconOnline.Domain.Rules.Output
         public string Time { get; set; }
         [XmlElement(OutputConstants.OutputWorshipNameAttrName)]
         public ItemTextStyled Name { get; set; }
-        [XmlIgnore]
-        public bool IsDayBefore { get; set; }
         [XmlElement(OutputConstants.OutputWorshipAdditionalNameAttrName)]
         public ItemText AdditionalName { get; set; }
         [XmlArray(OutputConstants.OutputWorshipChildNodeName)]

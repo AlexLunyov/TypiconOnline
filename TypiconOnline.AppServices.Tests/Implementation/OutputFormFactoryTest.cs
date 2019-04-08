@@ -1,11 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
-using TypiconOnline.AppServices.Messaging.Typicon;
+using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Tests.Common;
@@ -20,7 +16,7 @@ namespace TypiconOnline.AppServices.Tests.Implementation
         {
             var factory = Build();
 
-            var form = factory.Create(new OutputFormCreateRequest()
+            var form = factory.Create(new CreateOutputFormRequest()
             {
                 TypiconId = 1,
                 TypiconVersionId = 1,

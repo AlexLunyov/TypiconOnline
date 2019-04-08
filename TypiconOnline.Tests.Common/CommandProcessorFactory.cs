@@ -59,7 +59,6 @@ namespace TypiconOnline.Tests.Common
 
             container.Register(typeof(ICommandHandler<>), typeof(OutputForms).Assembly);
             container.Register<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
-            container.Register<IModifiedYearFactory, ModifiedYearFactory>();
             container.Register<IScheduleDayNameComposer, ScheduleDayNameComposer>();
             container.Register<IRuleSerializerRoot, RuleSerializerRoot>();
             container.Register<IOutputForms, OutputForms>();

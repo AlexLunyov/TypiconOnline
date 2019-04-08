@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations.Extensions;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Jobs;
-using TypiconOnline.AppServices.Messaging.Typicon;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Typicon;
