@@ -9,7 +9,6 @@ namespace TypiconOnline.Domain.Rules.Handlers
     /// </summary>
     public abstract class RuleHandlerBase : IRuleHandler
     {
-        //protected RenderContainer _executingResult;
         protected RuleHandlerSettings _settings = new RuleHandlerSettings();
 
         public RuleHandlerBase() { }
@@ -27,7 +26,6 @@ namespace TypiconOnline.Domain.Rules.Handlers
             set
             {
                 _settings = value;
-                //_executingResult = null;
             }
         }
 
@@ -62,13 +60,5 @@ namespace TypiconOnline.Domain.Rules.Handlers
         public abstract bool Execute(ICustomInterpreted element);
 
         public abstract void ClearResult();
-
-        //public abstract RuleContainer GetResult();
-        //public virtual RenderContainer GetResult()
-        //{
-        //    return _executingResult;
-        //}
-
-        //public abstract void Initialize(RuleHandlerSettings request);
     }
 }

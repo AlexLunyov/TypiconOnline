@@ -38,7 +38,7 @@ namespace TypiconMigrationTool.Core
             //optionsBuilder.UseSqlServer(connectionString);
 
             //PostgreSQL
-            //optionsBuilder.UseNpgsql($@"Host=localhost;Port=5432;Database=typicondb;Username=postgres;Password=z2LDCiiEQFDBlkl3eZyb");
+            optionsBuilder.UseNpgsql($@"Host=localhost;Port=5432;Database=typicondb;Username=postgres;Password=z2LDCiiEQFDBlkl3eZyb");
 
             //MySQL
             //optionsBuilder.UseMySql("server=localhost;UserId=root;Password=z2LDCiiEQFDBlkl3eZyb;database=typicondb;",

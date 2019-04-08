@@ -13,6 +13,7 @@ using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.AppServices.Common;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -21,20 +22,17 @@ namespace TypiconOnline.AppServices.Implementations
         private readonly TypiconDBContext _dbContext;
         private readonly IScheduleDayNameComposer _nameComposer;
         private readonly ITypiconSerializer _serializer;
-        private readonly IOutputFormFactory _outputFormFactory;
-        private readonly IQueue _queue;
+        private readonly IJobRepository _jobs;
 
         public OutputForms(TypiconDBContext dbContext
             , IScheduleDayNameComposer nameComposer
             , ITypiconSerializer serializer
-            , IOutputFormFactory outputFormFactory
-            , IQueue queue)
+            , IJobRepository jobs)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _nameComposer = nameComposer ?? throw new ArgumentNullException(nameof(nameComposer));
             _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
-            _outputFormFactory = outputFormFactory ?? throw new ArgumentNullException(nameof(outputFormFactory));
-            _queue = queue ?? throw new ArgumentNullException(nameof(queue));
+            _jobs = jobs ?? throw new ArgumentNullException(nameof(jobs));
         }
 
         public Result<LocalizedOutputDay> Get(int typiconId, DateTime date, string language, HandlingMode handlingMode = HandlingMode.AstronomicDay)
@@ -54,28 +52,18 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 return Result.Fail<LocalizedOutputDay>(version.Error);
             }
-
-            if (!CheckCalcModifiedYearExists(version.Value.Id, date, handlingMode))
+            else
             {
-                return Result.Fail<LocalizedOutputDay>($"Инициировано формирование переходящих праздников. Повторите операцию позже.");
+                //добавляем задание на формирование выходных форм
+                _jobs.Create(new CalculateOutputFormWeekJob(typiconId, version.Value.Id, date));
+
+                return Result.Fail<LocalizedOutputDay>($"Инициировано формирование расписания. Повторите операцию позже.");
             }
-
-            var created = _outputFormFactory.Create(new OutputFormCreateRequest()
-            {
-                TypiconId = version.Value.TypiconId,
-                TypiconVersionId = version.Value.Id,
-                Date = date,
-                HandlingMode = handlingMode
-            });
-
-            _dbContext.UpdateOutputForm(created.OutputForm);
-
-            return Result.Ok(created.Day.Localize(language));
         }
 
         public Result<LocalizedOutputWeek> GetWeek(int typiconId, DateTime date, string language)
         {
-            date = GetMonday(date);
+            date = EachDayPerWeek.GetMonday(date);
 
             var week = new LocalizedOutputWeek()
             {
@@ -99,55 +87,6 @@ namespace TypiconOnline.AppServices.Implementations
             }
 
             return Result.Ok(week);
-        }
-
-        private DateTime GetMonday(DateTime date)
-        {
-            while (date.DayOfWeek != DayOfWeek.Monday)
-            {
-                date = date.AddDays(-1);
-            }
-
-            return date;
-        }
-
-        /// <summary>
-        /// Проверяет, имеются ли ModifiedYear для даты
-        /// </summary>
-        /// <param name="typiconVersionId"></param>
-        /// <param name="date"></param>
-        /// <returns></returns>
-        private bool CheckCalcModifiedYearExists(int typiconVersionId, DateTime date, HandlingMode handlingMode)
-        {
-            bool jobSent = IsJobSent(typiconVersionId, date.Year);
-
-            //Нужно проверить еще и следующий день, если вычисляем с HandlingMode.AstronomicDay
-            if (handlingMode == HandlingMode.AstronomicDay)
-            {
-                int next = date.AddDays(1).Year;
-
-                if (date.Year != next)
-                {
-                    jobSent = IsJobSent(typiconVersionId, next) || jobSent;
-                }
-            }
-
-            return !jobSent;
-
-            bool IsJobSent(int id, int year)
-            {
-                switch (_dbContext.IsCalcModifiedYearExists(id, year))
-                {
-                    case 0:
-                        //заявка на вычисление ModifiedYear
-                        _queue.Send(new CalculateModifiedYearJob(id, year));
-                        return true;
-                    case 1:
-                        return true;
-                    default:
-                        return false;
-                }
-            }
         }
     }
 }

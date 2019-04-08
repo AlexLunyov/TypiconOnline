@@ -7,9 +7,9 @@ namespace TypiconOnline.AppServices.Jobs
     /// <summary>
     /// Базовый абстрактный класс для заданий
     /// </summary>
-    public abstract class JobBase: IJob
+    public class JobStateHolder
     {
-        public JobBase()
+        public JobStateHolder()
         {
             CDate = DateTime.Now;
         }
@@ -29,17 +29,18 @@ namespace TypiconOnline.AppServices.Jobs
         /// <summary>
         /// Статус состояния задания
         /// </summary>
-        public JobStatus Status { get; set; }
+        public JobStatus Status { get; set; } = JobStatus.Created;
         /// <summary>
         /// Сообщение о результате обработки задания
         /// </summary>
         public string StatusMessage { get; set; }
     }
 
-    //public enum ResultCode
-    //{
-    //    Success = 0,
-    //    Error = 1,
-    //    Warning = 2
-    //}
+    public enum JobStatus
+    {
+        Created = 0,
+        Started = 1,
+        Finished = 2,
+        Failed = 3
+    }
 }

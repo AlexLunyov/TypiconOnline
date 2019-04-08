@@ -66,7 +66,10 @@ namespace TypiconOnline.AppServices.Implementations.Extensions
 
         public static bool IsModifiedYearExists(this TypiconDBContext dbContext, int typiconVersionId, int year)
         {
-            return dbContext.Set<ModifiedYear>().Any(c => c.TypiconVersionId == typiconVersionId && c.Year == year);
+            lock (dbContext)
+            {
+                return dbContext.Set<ModifiedYear>().Any(c => c.TypiconVersionId == typiconVersionId && c.Year == year);
+            }
         }
 
         /// <summary>

@@ -24,40 +24,32 @@ namespace TypiconOnline.AppServices.Jobs
     {
         protected readonly TypiconDBContext _dbContext;
         protected readonly IRuleHandlerSettingsFactory _settingsFactory;
+        private readonly IJobRepository _jobs;
 
         public CalculateModifiedYearJobHandler(TypiconDBContext dbContext
-            , [NotNull] IRuleHandlerSettingsFactory settingsFactory)
+            , [NotNull] IRuleHandlerSettingsFactory settingsFactory, IJobRepository jobs)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _settingsFactory = settingsFactory ?? throw new ArgumentNullException(nameof(settingsFactory));
+            _jobs = jobs ?? throw new ArgumentNullException(nameof(jobs));
         }
 
-        public virtual void Execute([NotNull] CalculateModifiedYearJob command)
+        public virtual Task ExecuteAsync(CalculateModifiedYearJob job)
         {
-            if (_dbContext.IsModifiedYearExists(command.TypiconVersionId, command.Year))
-            {
-                //Значит год уже был сформирован или формируется в настоящий момент асинхронно
-                return;
-            }
+            //if (_dbContext.IsModifiedYearExists(job.TypiconVersionId, job.Year))
+            //{
+            //    //Значит год уже был сформирован или формируется в настоящий момент асинхронно
+            //    return;
+            //}
 
-            var modifiedYear = InnerCreate(command.TypiconVersionId, command.Year);
+            _jobs.Start(job);
+
+            var modifiedYear = InnerCreate(job.TypiconVersionId, job.Year);
 
             //фиксируем изменения
             _dbContext.UpdateModifiedYear(modifiedYear);
-        }
 
-        public virtual Task ExecuteAsync(CalculateModifiedYearJob command)
-        {
-            if (_dbContext.IsModifiedYearExists(command.TypiconVersionId, command.Year))
-            {
-                //Значит год уже был сформирован или формируется в настоящий момент асинхронно
-                return Task.CompletedTask;
-            }
-
-            var modifiedYear = InnerCreate(command.TypiconVersionId, command.Year);
-
-            //фиксируем изменения
-            _dbContext.UpdateModifiedYearAsync(modifiedYear);
+            _jobs.Finish(job);
 
             return Task.CompletedTask;
         }
@@ -71,7 +63,7 @@ namespace TypiconOnline.AppServices.Jobs
                 IsCalculated = false
             };
 
-            _dbContext.UpdateModifiedYear(modifiedYear);
+            //await _dbContext.UpdateModifiedYearAsync(modifiedYear);
 
             Fill(typiconVersionId, modifiedYear);
 
@@ -80,7 +72,7 @@ namespace TypiconOnline.AppServices.Jobs
             return modifiedYear;
         }
 
-        protected virtual Task Fill(int typiconVersionId, ModifiedYear modifiedYear)
+        protected virtual void Fill(int typiconVersionId, ModifiedYear modifiedYear)
         {
             var handler = new ModificationsRuleHandler(_dbContext, typiconVersionId, modifiedYear);
 
@@ -122,8 +114,6 @@ namespace TypiconOnline.AppServices.Jobs
             {
                 InterpretRule(triodionRule, easter.AddDays(triodionRule.DaysFromEaster), handler);
             }
-
-            return Task.CompletedTask;
 
             void InterpretRule(DayRule rule, DateTime dateToInterpret, ModificationsRuleHandler h)
             {

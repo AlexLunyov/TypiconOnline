@@ -14,22 +14,22 @@ namespace TypiconOnline.WebServices.Hosting
     /// </summary>
     public class JobHostedService : BackgroundService
     {
-        public JobHostedService(IQueue queue, ICommandProcessor processor)
+        public JobHostedService(IJobRepository jobs, ICommandProcessor processor)
         {
-            Queue = queue ?? throw new ArgumentNullException(nameof(queue));
+            Jobs = jobs ?? throw new ArgumentNullException(nameof(jobs));
             Processor = processor ?? throw new ArgumentNullException(nameof(processor));
         }
 
-        protected IQueue Queue { get; }
+        protected IJobRepository Jobs { get; }
         protected ICommandProcessor Processor { get; }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                foreach (var job in Queue.ExtractAll<IJob>())
+                foreach (var job in Jobs.GetAll())
                 {
-                    Processor.Execute(job);
+                    Processor.ExecuteAsync(job);
                     //Task.Factory.StartNew(() => _processor.ExecuteAsync(job));
                 }
 

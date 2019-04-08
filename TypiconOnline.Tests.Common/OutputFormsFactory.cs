@@ -31,8 +31,7 @@ namespace TypiconOnline.Tests.Common
             return new OutputForms(dbContext
             , new ScheduleDayNameComposer(serializerRoot.QueryProcessor)
             , serializerRoot.TypiconSerializer
-            , outputFormFactory
-            , new JobQueue());
+            , new JobRepository());
         }
     }
 }

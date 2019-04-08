@@ -1,17 +1,9 @@
-﻿using TypiconOnline.Infrastructure.Common.Command;
+﻿using System;
+using TypiconOnline.Infrastructure.Common.Command;
 
 namespace TypiconOnline.AppServices.Jobs
 {
-    public interface IJob : ICommand
+    public interface IJob : ICommand, IEquatable<IJob>
     {
-        JobStatus Status { get; set; }
-    }
-
-    public enum JobStatus
-    {
-        Created = 0,
-        InProcess = 1,
-        Finished = 2,
-        Failed = 3
     }
 }

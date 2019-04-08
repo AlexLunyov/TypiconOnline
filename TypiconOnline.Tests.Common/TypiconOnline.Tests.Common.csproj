@@ -173,6 +173,10 @@
       <Project>{654CE95D-6B5B-41E1-BEA3-DCEE24F4C98A}</Project>
       <Name>TypiconOnline.Domain.Rules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TypiconOnline.Domain.WebQuery\TypiconOnline.Domain.WebQuery.csproj">
+      <Project>{A7DC9C7A-3EE3-4365-9104-BABAC7B2E8C3}</Project>
+      <Name>TypiconOnline.Domain.WebQuery</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.Domain\TypiconOnline.Domain.csproj">
       <Project>{823205B3-C0DB-428D-9038-A03382D881D5}</Project>
       <Name>TypiconOnline.Domain</Name>

@@ -19,15 +19,15 @@ namespace TypiconOnline.WebServices.Hosting
         /// </summary>
         private const int MAX_TASKS = 6;
 
-        public JobAsyncHostedService(IQueue queue, ICommandProcessor processor) : base(queue, processor) { }
+        public JobAsyncHostedService(IJobRepository jobs, ICommandProcessor processor) : base(jobs, processor) { }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                foreach (var job in Queue.Extract<IJob>(MAX_TASKS))
+                foreach (var job in Jobs.Get(MAX_TASKS))
                 {
-                    Task.Factory.StartNew(() => Processor.Execute(job));
+                    Task.Factory.StartNew(() => Processor.ExecuteAsync(job));
                 }
 
                 Thread.Sleep(1000);

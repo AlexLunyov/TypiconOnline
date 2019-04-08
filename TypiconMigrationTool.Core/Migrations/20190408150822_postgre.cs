@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace TypiconMigrationTool.Core.Migrations
 {
-    public partial class sqlite : Migration
+    public partial class postgre : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +13,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Discriminator = table.Column<string>(nullable: false),
                     Date_Month = table.Column<int>(nullable: true),
                     Date_Day = table.Column<int>(nullable: true),
@@ -30,7 +31,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     ExcludedItem = table.Column<int>(nullable: true),
                     IncludedItem = table.Column<int>(nullable: true),
                     IsCelebrating = table.Column<bool>(nullable: true)
@@ -56,7 +57,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Definition = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true)
                 },
@@ -70,7 +71,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Definition = table.Column<string>(nullable: true),
                     Ihos = table.Column<int>(nullable: false),
                     DayOfWeek = table.Column<int>(nullable: false)
@@ -85,7 +86,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Definition = table.Column<string>(nullable: true),
                     Number = table.Column<int>(nullable: false)
                 },
@@ -99,7 +100,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Name = table.Column<string>(nullable: true),
                     SystemName = table.Column<string>(nullable: true)
                 },
@@ -113,7 +114,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Definition = table.Column<string>(nullable: true),
                     Place = table.Column<int>(nullable: false),
                     Ihos = table.Column<int>(nullable: false),
@@ -129,7 +130,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     UserName = table.Column<string>(nullable: true),
                     Login = table.Column<string>(nullable: true),
                     PasswordHash = table.Column<string>(nullable: true),
@@ -149,7 +150,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Definition = table.Column<string>(nullable: true),
                     DayOfWeek = table.Column<int>(nullable: false)
                 },
@@ -163,7 +164,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Definition = table.Column<string>(nullable: true),
                     WorshipName_IsBold = table.Column<bool>(nullable: false),
                     WorshipName_IsItalic = table.Column<bool>(nullable: false),
@@ -188,7 +189,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     TemplateId = table.Column<int>(nullable: true),
                     OwnerId = table.Column<int>(nullable: false)
                 },
@@ -239,7 +240,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Language = table.Column<string>(nullable: true),
                     Text = table.Column<string>(nullable: true),
                     NameId = table.Column<int>(nullable: false)
@@ -280,7 +281,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     TypiconId = table.Column<int>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     Definition = table.Column<string>(nullable: true)
@@ -301,7 +302,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     TypiconId = table.Column<int>(nullable: false),
                     DefaultLanguage = table.Column<string>(nullable: true),
                     IsModified = table.Column<bool>(nullable: false),
@@ -349,7 +350,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Language = table.Column<string>(nullable: true),
                     Text = table.Column<string>(nullable: true),
                     NameId = table.Column<int>(nullable: false)
@@ -394,7 +395,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     TypiconVersionId = table.Column<int>(nullable: false),
                     RuleDefinition = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true)
@@ -415,7 +416,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     TypiconVersionId = table.Column<int>(nullable: false),
                     RuleDefinition = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false)
@@ -436,7 +437,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     TypiconVersionId = table.Column<int>(nullable: true),
                     Number = table.Column<int>(nullable: false)
                 },
@@ -456,7 +457,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     TypiconVersionId = table.Column<int>(nullable: false),
                     Year = table.Column<int>(nullable: false),
                     IsCalculated = table.Column<bool>(nullable: false)
@@ -477,7 +478,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     TypiconVersionId = table.Column<int>(nullable: false),
                     RuleDefinition = table.Column<string>(nullable: true),
                     ModRuleDefinition = table.Column<string>(nullable: true),
@@ -509,7 +510,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Language = table.Column<string>(nullable: true),
                     Text = table.Column<string>(nullable: true),
                     NameId = table.Column<int>(nullable: false)
@@ -530,7 +531,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Language = table.Column<string>(nullable: true),
                     Text = table.Column<string>(nullable: true),
                     NameId = table.Column<int>(nullable: false)
@@ -551,7 +552,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     KathismaId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -570,7 +571,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     TypiconVersionId = table.Column<int>(nullable: false),
                     RuleDefinition = table.Column<string>(nullable: true),
                     ModRuleDefinition = table.Column<string>(nullable: true),
@@ -612,7 +613,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Language = table.Column<string>(nullable: true),
                     Text = table.Column<string>(nullable: true),
                     NameId = table.Column<int>(nullable: false)
@@ -633,7 +634,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     PsalmId = table.Column<int>(nullable: true),
                     StartStihos = table.Column<int>(nullable: true),
                     EndStihos = table.Column<int>(nullable: true),
@@ -686,7 +687,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     ModifiedYearId = table.Column<int>(nullable: false),
                     DayRuleId = table.Column<int>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
@@ -745,7 +746,7 @@ namespace TypiconMigrationTool.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Language = table.Column<string>(nullable: true),
                     Text = table.Column<string>(nullable: true),
                     NameId = table.Column<int>(nullable: false)

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Implementations.Extensions;
+using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
@@ -25,16 +26,18 @@ namespace TypiconOnline.AppServices.Jobs
 
         private readonly IConfigurationRepository _configRepo;
         private readonly TypiconDBContext _dbContext;
+        private readonly IJobRepository _jobs;
 
-        public ReloadRulesJobHandler([NotNull] IConfigurationRepository configRepo, TypiconDBContext dbContext)
+        public ReloadRulesJobHandler([NotNull] IConfigurationRepository configRepo, TypiconDBContext dbContext, IJobRepository jobs)
         {
             _configRepo = configRepo ?? throw new ArgumentNullException(nameof(configRepo));
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _jobs = jobs ?? throw new ArgumentNullException(nameof(jobs));
         }
 
-        public void Execute(ReloadRulesJob job)
+        public async Task ExecuteAsync(ReloadRulesJob job)
         {
-            _dbContext.StartJob(job);
+            _jobs.Start(job);
 
             var path = GetFolder();
 
@@ -46,26 +49,22 @@ namespace TypiconOnline.AppServices.Jobs
                 {
                     DoTheJob(path.Value, version.Value);
                 })
-                .OnSuccess(() =>
+                .OnSuccess(async () => 
                 {
                     ClearModifiedYears(version.Value);
 
-                    _dbContext.UpdateTypiconVersion(version.Value);
+                    await _dbContext.UpdateTypiconVersionAsync(version.Value);
 
-                    _dbContext.ClearOutputForms(version.Value.TypiconId);
+                    await _dbContext.ClearOutputFormsAsync(version.Value.TypiconId);
 
-                    _dbContext.FinishJob(job);
+                    _jobs.Finish(job, string.Empty);
                 })
                 .OnFailure(err =>
                 {
-                    _dbContext.FailJob(job, err);
+                    _jobs.Fail(job, err);
                 });
         }
 
-        public Task ExecuteAsync(ReloadRulesJob command)
-        {
-            throw new NotImplementedException();
-        }
 
         private Result<string> GetFolder()
         {

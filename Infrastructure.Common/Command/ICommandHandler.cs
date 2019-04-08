@@ -8,7 +8,7 @@ namespace TypiconOnline.Infrastructure.Common.Command
 {
     public interface ICommandHandler<TCommand> where TCommand : ICommand
     {
-        void Execute(TCommand command);
+        //void Execute(TCommand command);
         Task ExecuteAsync(TCommand command);
     }
 }

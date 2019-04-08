@@ -24,15 +24,17 @@ namespace TypiconOnline.AppServices.Implementations
 
         //заменить в дальнейшем на ServiceSequenceHandler
         //private readonly ScheduleHandler _handler = new ScheduleHandler();
-        private readonly ScheduleHandler _handler = new ServiceSequenceHandler();
+        private readonly ScheduleHandler _handler;// = new ServiceSequenceHandler();
 
         public OutputFormFactory(IScheduleDataCalculator dataCalculator
             , IScheduleDayNameComposer nameComposer
-            , ITypiconSerializer typiconSerializer)
+            , ITypiconSerializer typiconSerializer
+            , ScheduleHandler handler)
         {
             _dataCalculator = dataCalculator ?? throw new ArgumentNullException(nameof(dataCalculator));
             _nameComposer = nameComposer ?? throw new ArgumentNullException(nameof(nameComposer));
             _typiconSerializer = typiconSerializer ?? throw new ArgumentNullException(nameof(typiconSerializer));
+            _handler = handler ?? throw new ArgumentNullException(nameof(handler));
         }
 
         /// <summary>
@@ -158,7 +160,8 @@ namespace TypiconOnline.AppServices.Implementations
                 var ofdw = new OutputFormDayWorship()
                 {
                     OutputForm = outputForm,
-                    DayWorship = worship
+                    //DayWorship = worship,
+                    DayWorshipId = worship.Id
                 };
 
                 result.Add(ofdw);

@@ -16,17 +16,22 @@ namespace TypiconOnline.AppServices.Tests.Jobs
     {
         [TestCase(false, TypiconVersionStatus.Draft)]
         [TestCase(true, TypiconVersionStatus.Published)]
-        public void ReloadRulesJob_Draft(bool isTrue, TypiconVersionStatus status)
+        public void ReloadRulesJob_Test(bool isTrue, TypiconVersionStatus status)
         {
             var context = TypiconDbContextFactory.Create();
 
-            var handler = new ReloadRulesJobHandler(GetConfigRepo(), context);
+            var jobRepo = new JobRepository();
+
+            var handler = new ReloadRulesJobHandler(GetConfigRepo(), context, jobRepo);
 
             var job = new ReloadRulesJob(1, status);
 
-            handler.Execute(job);
+            jobRepo.Create(job);
 
-            Assert.AreEqual(isTrue, job.Status == JobStatus.Finished);
+            var task = handler.ExecuteAsync(job);
+            task.Wait();
+
+            Assert.AreEqual(0, jobRepo.GetAll().Count());
         }
 
         private IConfigurationRepository GetConfigRepo()
