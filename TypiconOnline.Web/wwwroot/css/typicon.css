@@ -13,3 +13,12 @@
     background: rgba(0, 0, 0, 0.15);
     border-radius: .25rem 0 0 .25rem;
 }
+/* Класс для кнопки "Наверх"*/
+.back-to-top {
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+}
+

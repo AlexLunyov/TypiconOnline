@@ -31,6 +31,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 TypeAdapterConfig<TypiconVersion, TypiconDTO>
                     .NewConfig()
                     .Map(dest => dest.Id, src => src.TypiconId)
+                    .Map(dest => dest.VersionId, src => src.Id)
                     .Map(dest => dest.Name, src => src.Name.FirstOrDefault(query.Language));
 
                 return Result.Ok(publishedVersion.Value.Adapt<TypiconDTO>());

@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <button asp-controller="schedule" asp-action="Index" asp-route-id="@ViewBag.Id" class="btn btn-default">Смотреть</button>  <button class="btn btn-primary" asp-controller="schedule" asp-action="Download" asp-route-id="@ViewBag.Id">Скачать </button>
+                    <button asp-controller="schedule" asp-action="Index" asp-route-id="@ViewBag.Id" class="btn btn-default">Смотреть</button>  <button class="btn btn-primary" asp-controller="schedule" asp-action="Download" asp-route-id="@ViewBag.Id"><span class="glyphicon glyphicon-save"></span> Скачать </button>
                 </div>
             </form>
         </div>
@@ -79,6 +79,6 @@
             {
                 <h3>@ViewBag.Week.Error</h3>
             }
-        </div>
+        </div>        
     </section>
     

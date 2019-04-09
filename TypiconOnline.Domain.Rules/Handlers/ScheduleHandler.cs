@@ -98,7 +98,15 @@ namespace TypiconOnline.Domain.Rules.Handlers
         {
             get
             {
-                return ActualWorshipCollection.LastOrDefault()?.ChildElements;
+                var found = ActualWorshipCollection.LastOrDefault();
+                
+                //если коллекция пуста, добавляем фейковую службу
+                if (found == null)
+                {
+                    found = new OutputWorship();
+                    ActualWorshipCollection.Add(found);
+                }
+                return found.ChildElements;
             }
         }
     }

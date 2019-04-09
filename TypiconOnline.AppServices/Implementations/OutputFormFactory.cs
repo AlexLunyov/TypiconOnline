@@ -18,9 +18,9 @@ namespace TypiconOnline.AppServices.Implementations
 {
     public class OutputFormFactory : IOutputFormFactory
     {
-        private readonly IScheduleDataCalculator _dataCalculator;
         private readonly IScheduleDayNameComposer _nameComposer;
         private readonly ITypiconSerializer _typiconSerializer;
+        private readonly IScheduleDataCalculator _dataCalculator;
 
         //заменить в дальнейшем на ServiceSequenceHandler
         //private readonly ScheduleHandler _handler = new ScheduleHandler();
@@ -44,11 +44,23 @@ namespace TypiconOnline.AppServices.Implementations
         /// <param name="typiconVersionId">Версия Устава</param>
         /// <param name="date"></param>
         /// <returns></returns>
-        public OutputForm Create(CreateOutputFormRequest req)
+        public CreateOutputFormResponse Create(CreateOutputFormRequest req)
         {
             OutputDayInfo dayInfo = null;
 
-            return InnerCreate(req, ref dayInfo);
+            return InnerCreate(req, ref dayInfo, _dataCalculator);
+        }
+
+        public CreateOutputFormResponse Create(IScheduleDataCalculator dataCalculator, CreateOutputFormRequest req)
+        {
+            if (dataCalculator == null)
+            {
+                throw new ArgumentNullException(nameof(dataCalculator));
+            }
+
+            OutputDayInfo dayInfo = null;
+
+            return InnerCreate(req, ref dayInfo, dataCalculator);
         }
 
         /// <summary>
@@ -74,20 +86,20 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 dayReq.Date = date;
 
-                var outputForm = InnerCreate(dayReq, ref dayInfo);
+                var output = InnerCreate(dayReq, ref dayInfo, _dataCalculator);
 
-                result.Add(outputForm);
+                result.Add(output.Form);
             });
 
             return result;
         }
 
-        private OutputForm InnerCreate(CreateOutputFormRequest req, ref OutputDayInfo dayInfo)
+        private CreateOutputFormResponse InnerCreate(CreateOutputFormRequest req, ref OutputDayInfo dayInfo, IScheduleDataCalculator dataCalculator)
         {
             if (dayInfo == null)
             {
                 //Формируем данные для обработки
-                dayInfo = GetOutputDayInfo(new ScheduleDataCalculatorRequest()
+                dayInfo = GetOutputDayInfo(dataCalculator, new ScheduleDataCalculatorRequest()
                 {
                     TypiconVersionId = req.TypiconVersionId,
                     Date = req.Date
@@ -115,7 +127,7 @@ namespace TypiconOnline.AppServices.Implementations
             if (req.HandlingMode == HandlingMode.AstronomicDay)
             {
                 //Формируем данные для обработки от следующего дня
-                dayInfo = GetOutputDayInfo(new ScheduleDataCalculatorRequest()
+                dayInfo = GetOutputDayInfo(dataCalculator, new ScheduleDataCalculatorRequest()
                 {
                     TypiconVersionId = req.TypiconVersionId,
                     Date = req.Date.AddDays(1)
@@ -132,7 +144,7 @@ namespace TypiconOnline.AppServices.Implementations
             //Добавить ссылки на службы
             outputForm.OutputFormDayWorships = GetOutputFormDayWorships(outputForm, localDayInfo.DayWorships);
 
-            return outputForm;
+            return new CreateOutputFormResponse(outputForm, localDayInfo.Day);
         }
 
         /// <summary>
@@ -140,10 +152,10 @@ namespace TypiconOnline.AppServices.Implementations
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        private OutputDayInfo GetOutputDayInfo(ScheduleDataCalculatorRequest request)
+        private OutputDayInfo GetOutputDayInfo(IScheduleDataCalculator dataCalculator, ScheduleDataCalculatorRequest request)
         {
             //Формируем данные для обработки
-            var response = _dataCalculator.Calculate(request);
+            var response = dataCalculator.Calculate(request);
 
             var settings = response.Settings;
 
@@ -197,5 +209,6 @@ namespace TypiconOnline.AppServices.Implementations
             return result;
         }
 
+        
     }
 }

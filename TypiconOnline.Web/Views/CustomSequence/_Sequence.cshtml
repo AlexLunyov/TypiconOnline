@@ -1,0 +1,72 @@
+﻿@model LocalizedOutputDay
+
+@if (Model != null)
+{
+    if (Model.Name != null)
+    {
+        <div class="row">
+            <h1 class="text-center @Model.Name.Language">@Model.Name.Text</h1>
+        </div>
+
+    }
+    if (Model.SignName != null)
+    {
+        <div class="row">
+            <h3 class="text-center @Model.SignName.Language">@Model.SignName.Text</h3>
+        </div>
+    }
+    foreach (var w in Model.Worships)
+    {
+        if (w.Name != null)
+        {
+            <div class="row">
+                <h2 class="text-center @w.Name.Text.Language">@w.Name.Text</h2>
+            </div>
+        }
+        foreach (var s in w.ChildElements)
+        {
+            <div class="row">
+                <div class="col-sm-2">
+                    @if (s.KindText != null)
+                    {
+                        <label class="text-truncate red @s.KindText.Language">@s.KindText.Text</label>
+                    }
+                </div>
+                @{
+                    bool first = true;
+                    foreach (var para in s.Paragraphs)
+                    {
+                        <div class="@(first ? "" : "col-sm-offset-2 ") col-sm-10 @GetStyle(para)">@para.Text.Text</div>
+                        first = false;
+                    }
+                }
+            </div>
+        }
+    }
+}
+
+@functions
+{
+public string GetStyle(LocalizedParagraph para)
+{
+    var str = para.Text.Language;
+    if (para.Style.Header != HeaderCaption.NotDefined)
+    {
+        str += " " + para.Style.Header.ToString();
+    }
+    if (para.Style.IsBold)
+    {
+        str += " font-weight-bold";
+    }
+    if (para.Style.IsRed)
+    {
+        str += " red";
+    }
+    if (para.Style.IsItalic)
+    {
+        str += " font-italic";
+    }
+
+    return str;
+}
+}

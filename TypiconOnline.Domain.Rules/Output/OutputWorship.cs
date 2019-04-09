@@ -41,7 +41,7 @@ namespace TypiconOnline.Domain.Rules.Output
             {
                 Id = Id,
                 Time = Time,
-                Name = Name.Localize(language),
+                Name = Name?.Localize(language),
                 AdditionalName = AdditionalName?.Localize(language),
                 ChildElements = ChildElements.Localize(language)
             };

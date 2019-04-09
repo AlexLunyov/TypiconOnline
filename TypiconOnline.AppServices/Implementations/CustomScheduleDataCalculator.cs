@@ -39,6 +39,9 @@ namespace TypiconOnline.AppServices.Implementations
 
             response.Settings.RuleContainer = RuleSerializer.Container<RootContainer>().Deserialize(CustomRule);
 
+            //обнуляем добавления?
+            response.Settings.Addition = null;
+
             return response;
         }
     }

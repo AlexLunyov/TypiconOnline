@@ -43,6 +43,7 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.AppServices.Viewers;
 using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Web.Controllers;
 
 namespace TypiconOnline.Web
 {
@@ -72,11 +73,17 @@ namespace TypiconOnline.Web
             container.Register<ITypiconSerializer, TypiconSerializer>();
             container.Register<IOutputForms, OutputForms>();
             container.Register<IOutputFormFactory, OutputFormFactory>();
-            container.Register<IScheduleDataCalculator, ScheduleDataCalculator>();
             container.Register<IScheduleDayViewer<string>, HtmlScheduleDayViewer>();
             container.Register<IScheduleWeekViewer<string>, TextScheduleWeekViewer>();
             container.Register<IScheduleWeekViewer<Result<DocxToStreamWeekResponse>>, DocxToStreamWeekViewer>();
             container.Register<ScheduleHandler, ServiceSequenceHandler>();
+
+            //Все остальные контроллеры
+            container.RegisterConditional<IScheduleDataCalculator, ScheduleDataCalculator>(
+                    c => c.Consumer.ImplementationType != typeof(CustomSequenceController));
+            //CustomSequence
+            container.RegisterConditional<IScheduleDataCalculator, CustomScheduleDataCalculator>(
+                    c => c.Consumer.ImplementationType == typeof(CustomSequenceController));
 
             //Configuration
             container.Register<IConfigurationRepository>(() => new ConfigurationRepository(configuration));

@@ -6,7 +6,9 @@ namespace TypiconOnline.AppServices.Interfaces
 {
     public interface IOutputFormFactory
     {
-        OutputForm Create(CreateOutputFormRequest req);
+        CreateOutputFormResponse Create(CreateOutputFormRequest req);
+
+        CreateOutputFormResponse Create(IScheduleDataCalculator dataCalculator, CreateOutputFormRequest req);
 
         IEnumerable<OutputForm> CreateWeek(CreateOutputFormWeekRequest req);
     }

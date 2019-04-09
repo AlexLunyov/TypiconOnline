@@ -1,0 +1,171 @@
+﻿@model CompleteSequenceViewModel
+
+
+@section Scripts {
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/locales/bootstrap-datetimepicker.ru.js"></script>
+
+    <script src="~/lib/codemirror/codemirror.js"></script>
+    <link rel="stylesheet" href="~/lib/codemirror/codemirror.css">
+    <link rel="stylesheet" href="~/lib/codemirror/show-hint.css">
+    <link rel="stylesheet" href="~/lib/codemirror/xq-light.css">
+    <script src="~/lib/codemirror/xml.js"></script>
+    <script src="~/lib/codemirror/show-hint.js"></script>
+    <script src="~/lib/codemirror/xml-hint.js"></script>
+
+    <script type="text/javascript">
+
+        $('#datepicker').datetimepicker({
+            language: 'ru',
+            format: 'dd-mm-yyyy',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
+        });
+
+        var dummy = {
+            attrs: {
+                color: ["red", "green", "blue", "purple", "white", "black", "yellow"],
+                size: ["large", "medium", "small"],
+                description: null
+            },
+            children: []
+        };
+
+        var tags = {
+            "!top": ["top"],
+            "!attrs": {
+                id: null,
+                class: ["A", "B", "C"]
+            },
+            top: {
+                attrs: {
+                    lang: ["en", "de", "fr", "nl"],
+                    freeform: null
+                },
+                children: ["animal", "plant"]
+            },
+            animal: {
+                attrs: {
+                    name: null,
+                    isduck: ["yes", "no"]
+                },
+                children: ["wings", "feet", "body", "head", "tail"]
+            },
+            plant: {
+                attrs: { name: null },
+                children: ["leaves", "stem", "flowers"]
+            },
+            wings: dummy, feet: dummy, body: dummy, head: dummy, tail: dummy,
+            leaves: dummy, stem: dummy, flowers: dummy
+        };
+
+        function completeAfter(cm, pred) {
+            var cur = cm.getCursor();
+            if (!pred || pred()) setTimeout(function () {
+                if (!cm.state.completionActive)
+                    cm.showHint({ completeSingle: false });
+            }, 100);
+            return CodeMirror.Pass;
+        }
+
+        function completeIfAfterLt(cm) {
+            return completeAfter(cm, function () {
+                var cur = cm.getCursor();
+                return cm.getRange(CodeMirror.Pos(cur.line, cur.ch - 1), cur) == "<";
+            });
+        }
+
+        function completeIfInTag(cm) {
+            return completeAfter(cm, function () {
+                var tok = cm.getTokenAt(cm.getCursor());
+                if (tok.type == "string" && (!/['"]/.test(tok.string.charAt(tok.string.length - 1)) || tok.string.length == 1)) return false;
+                var inner = CodeMirror.innerMode(cm.getMode(), tok.state).state;
+                return inner.tagName;
+            });
+        }
+
+        var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("customArea"), {
+            mode: "xml",
+            lineNumbers: true,
+            lineWrapping: true,
+            scrollbarStyle: "native",
+            extraKeys: {
+                "'<'": completeAfter,
+                "'/'": completeIfAfterLt,
+                "' '": completeIfInTag,
+                "'='": completeIfInTag,
+                "Ctrl-Space": "autocomplete"
+            },
+            value: "@Model.CustomSequence"
+        });
+    </script>
+
+    <style>
+        div.container.body-content {
+            width: 100% !important;
+        }
+    </style>
+}
+<section>
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <div class="row">
+                <div class="col-sm-12"><h2>Произвольная последовательность</h2></div>
+            </div>
+            <form method="post" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-xs-2 col-md-1 control-label pull-left">Устав:</label>
+                    <div class="col-xs-10 col-md-11">
+                        <select class="form-control" asp-for="Id" asp-items="@ViewBag.Typicons"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 col-md-1 control-label pull-left">Дата:</label>
+                    <div class="col-xs-10 col-md-11">
+                        <div id="datepicker" class="input-group date form_date" data-date="" data-date-format="dd-mm-yyyy" data-link-field="dtp_input" data-link-format="dd-mm-yyyy">
+                            <input class="form-control" size="16" type="text" value="@Model.Date.ToString("dd-MM-yyyy")" readonly>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                        <input type="hidden" id="dtp_input" value="@Model.Date.ToString("dd-MM-yyyy")" name="date" />
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 col-md-1 control-label pull-left">Язык:</label>
+                    <div class="col-xs-10 col-md-11">
+                        <select class="form-control" asp-for="Language">
+                            <option value="cs-ru">Ц-С гражданским шрифтом</option>
+                            <option value="cs-cs">Ц-С</option>
+                            <option value="ru-ru">Русский</option>
+                            <option value="el-el">Греческий</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <textarea id="customArea" class="form-control rounded-0" rows="30" asp-for="CustomSequence"></textarea>
+                    </div>
+                </div>
+                <div class="form-group"><div class="validation" asp-validation-summary="ModelOnly"></div></div>
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-primary" asp-controller="Customsequence" asp-action="Index">Формировать</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            @await Html.PartialAsync("_StatusMessage", Model.StatusMessage)
+            @await Html.PartialAsync("_Sequence", Model.Day)
+        </div>
+    </div>
+
+</section>
+

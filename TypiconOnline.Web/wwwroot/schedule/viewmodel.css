@@ -1,7 +1,4 @@
-body {
-	font-family: Arial;
-	font-size: 14pt;
-}
+
 .bold {
 	font-weight: bold;
 }
@@ -10,6 +7,12 @@ body {
 }
 .italic {
 	font-style: italic;
+}
+
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* Slavic fonts */
@@ -71,5 +74,5 @@ body {
 
 .cs-cs {
 	font-family: "Hirmos ieUcs", "slavonic_font", "slavonic_font_ie";
-	font-size: 18pt;
+	font-size: 1.5rem;
 }
