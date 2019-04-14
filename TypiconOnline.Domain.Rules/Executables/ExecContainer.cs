@@ -17,7 +17,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         //public RuleElement ParentElement { get; set; }
 
-        public virtual List<RuleElementBase> ChildElements { get; set; } = new List<RuleElementBase>();
+        public virtual List<RuleElementBase> ChildElements { get; } = new List<RuleElementBase>();
 
         #endregion
 

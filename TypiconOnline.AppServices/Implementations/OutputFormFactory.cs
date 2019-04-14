@@ -13,6 +13,8 @@ using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.AppServices.Common;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -144,7 +146,7 @@ namespace TypiconOnline.AppServices.Implementations
             //Добавить ссылки на службы
             outputForm.OutputFormDayWorships = GetOutputFormDayWorships(outputForm, localDayInfo.DayWorships);
 
-            return new CreateOutputFormResponse(outputForm, localDayInfo.Day);
+            return new CreateOutputFormResponse(outputForm, localDayInfo.Day, localDayInfo.BrokenConstraints);
         }
 
         /// <summary>
@@ -158,6 +160,8 @@ namespace TypiconOnline.AppServices.Implementations
             var response = dataCalculator.Calculate(request);
 
             var settings = response.Settings;
+
+            var brokenConstraints = GetBrokenConstraints(settings);
 
             _handler.Settings = settings;
 
@@ -181,7 +185,41 @@ namespace TypiconOnline.AppServices.Implementations
                 SignName = new ItemText(sign.SignName),
             };
 
-            return new OutputDayInfo(scheduleDay, settings.AllWorships, results);
+            return new OutputDayInfo(scheduleDay, settings.AllWorships, results, brokenConstraints);
+        }
+
+        private IEnumerable<BusinessConstraint> GetBrokenConstraints(RuleHandlerSettings settings)
+        {
+            var constraints = new List<BusinessConstraint>();
+
+            if (settings.RuleContainer != null)
+            {
+                constraints.AddRange(settings.RuleContainer.GetBrokenConstraints());
+            }
+
+            if (settings.Addition != null)
+            {
+                constraints.AddRange(GetBrokenConstraints(settings.Addition));
+            }
+
+            return constraints;
+        }
+
+        /// <summary>
+        /// Проверяет, валидны ли десериализованные правила
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <returns></returns>
+        private bool AreSettingsRuleContainersValid(RuleHandlerSettings settings)
+        {
+            bool result = settings.RuleContainer?.IsValid == true;
+
+            if (result && settings.Addition != null)
+            {
+                result &= AreSettingsRuleContainersValid(settings.Addition);
+            }
+
+            return result;
         }
 
         /// <summary>

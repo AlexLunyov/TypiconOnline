@@ -11,7 +11,7 @@ namespace TypiconOnline.Domain.Identity
     /// <summary>
     /// Пользователь системы
     /// </summary>
-    public class User : EntityBase<int>, IAggregateRoot
+    public class User : IHasId<int>, IAggregateRoot
     {
         public User() { }
 
@@ -21,6 +21,8 @@ namespace TypiconOnline.Domain.Identity
             Login = login;
             PasswordHash = passwordHash;
         }
+
+        public int Id { get; set; }
 
         public string UserName { get; set; }
         public string Login { get; set; }
@@ -59,11 +61,6 @@ namespace TypiconOnline.Domain.Identity
             {
                 return (from eut in EditableUserTypicons select eut.Typicon).ToList();
             }
-        }
-
-        protected override void Validate()
-        {
-            throw new NotImplementedException();
         }
     }
 }

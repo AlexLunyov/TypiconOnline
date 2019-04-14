@@ -28,41 +28,48 @@
             forceParse: 0
         });
 
-        var dummy = {
+        var getclosestdayType = {
             attrs: {
-                color: ["red", "green", "blue", "purple", "white", "black", "yellow"],
-                size: ["large", "medium", "small"],
-                description: null
+                dayofweek: ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье"],
+                weekcount: null
             },
-            children: []
+            children: ["date"]
         };
 
+        var valueType = {
+            children: ["daysfromeaster", "date", "int", "getclosestday", "getdayofweek"],
+            daysfromeaster: {
+                children: ["date"]
+            },
+            getclosestday: getclosestdayType,
+            getdayofweek: {
+                attrs: {
+                    name: null
+                },
+                children: ["date", "getclosestday"],
+                getclosestday: getclosestdayType
+            }
+        };
+
+        var switchType = {
+            attrs: {},
+            children: ["expression", "case", "default"],
+            expression: valueType,
+            case: {
+                children: ["values", "action"],
+                values: valueType,
+                action: executableType
+            }
+        };
+
+        var executableType = {
+            children: ["switch", "worship"],
+            switch: switchType
+        }
+
         var tags = {
-            "!top": ["top"],
-            "!attrs": {
-                id: null,
-                class: ["A", "B", "C"]
-            },
-            top: {
-                attrs: {
-                    lang: ["en", "de", "fr", "nl"],
-                    freeform: null
-                },
-                children: ["animal", "plant"]
-            },
-            animal: {
-                attrs: {
-                    name: null,
-                    isduck: ["yes", "no"]
-                },
-                children: ["wings", "feet", "body", "head", "tail"]
-            },
-            plant: {
-                attrs: { name: null },
-                children: ["leaves", "stem", "flowers"]
-            },
-            wings: dummy, feet: dummy, body: dummy, head: dummy, tail: dummy,
-            leaves: dummy, stem: dummy, flowers: dummy
+            "!top": ["rule"],
+            rule: executableType,
         };
 
         function completeAfter(cm, pred) {
@@ -102,6 +109,7 @@
                 "'='": completeIfInTag,
                 "Ctrl-Space": "autocomplete"
             },
+            hintOptions: { schemaInfo: tags },
             value: "@Model.CustomSequence"
         });
     </script>

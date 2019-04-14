@@ -1,4 +1,5 @@
 ﻿using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
 {
@@ -49,6 +50,14 @@ namespace TypiconOnline.Domain.Typicon
 
         public abstract string GetNameByLanguage(string language);
 
-        
+        protected override void Validate(IRuleSerializerRoot serializerRoot)
+        {
+            base.Validate(serializerRoot);
+
+            if (Template == null || TemplateId < 1)
+            {
+                AddBrokenConstraint(new BusinessConstraint("Шаблон для Правила должен быть определен", "TypiconRule"));
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using TypiconOnline.Domain.ItemTypes;
+﻿using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.Days
 {
@@ -56,8 +57,10 @@ namespace TypiconOnline.Domain.Days
         /// </summary>
         public virtual Day Parent { get; set; }
 
-        protected override void Validate()
+        protected override void Validate(ITypiconSerializer serializer)
         {
+            base.Validate(serializer);
+
             if (!WorshipName.IsValid)//(ServiceName?.IsValid == false)
             {
                 //TODO: Исправить

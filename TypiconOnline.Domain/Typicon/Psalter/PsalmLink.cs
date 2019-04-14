@@ -5,13 +5,14 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon.Psalter
 {
-    public class PsalmLink : EntityBase<int>, IPsalterElement
+    public class PsalmLink : ValueObjectBase<ITypiconSerializer>, IHasId<int>, IPsalterElement
     {
+        public int Id { get; set; }
         public virtual Psalm Psalm { get; set; }
         public int? StartStihos { get; set; }
         public int? EndStihos { get; set; }
 
-        protected override void Validate()
+        protected override void Validate(ITypiconSerializer serializer)
         {
             throw new NotImplementedException();
         }

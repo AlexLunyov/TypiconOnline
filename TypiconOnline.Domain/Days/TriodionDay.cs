@@ -10,22 +10,7 @@ namespace TypiconOnline.Domain.Days
 {
     public class TriodionDay : Day
     {
-        public virtual int DaysFromEaster
-        {
-            get;
-            set;
-        }
-
-        //public virtual int HasMinea
-        //{
-        //    get;
-        //    set;
-        //}
-
-        protected override void Validate()
-        {
-            base.Validate();
-        }
+        public virtual int DaysFromEaster { get; set; }
     }
 }
 

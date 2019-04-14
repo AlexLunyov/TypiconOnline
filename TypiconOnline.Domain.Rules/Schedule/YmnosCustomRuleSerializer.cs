@@ -44,7 +44,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 }
             }
 
-            YmnosGroup Deserialize(string xml, string rootElement) => new TypiconSerializer().Deserialize<YmnosGroup>(xml, rootElement);
+            YmnosGroup Deserialize(string xml, string rootElement) => SerializerRoot.TypiconSerializer.Deserialize<YmnosGroup>(xml, rootElement);
         }
 
         public override string Serialize(IRuleElement element)

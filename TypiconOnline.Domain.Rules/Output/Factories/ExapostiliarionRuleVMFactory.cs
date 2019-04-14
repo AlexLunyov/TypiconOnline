@@ -12,7 +12,14 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
 
         public override void Create(CreateViewModelRequest<ExapostilarionRule> req)
         {
-            //nothing yet
+            if (req.Element == null
+                || req.Element.Structure == null)
+            {
+                //TODO: просто ничего не делаем, хотя надо бы это обрабатывать
+                return;
+            }
+
+
         }
     }
 }

@@ -56,11 +56,11 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
         {
             var headers = Serializer.GetCommonRuleChildren<TextHolder>(req.Handler.Settings.TypiconVersionId, CommonRuleConstants.Kontakion);
 
-            var viewKontakion = ViewModelItemFactory.Create(headers[0], req.Handler.Settings.TypiconVersionId, Serializer);
+            var viewKontakion = OutputSectionFactory.Create(headers[0], req.Handler.Settings.TypiconVersionId, Serializer);
 
             viewKontakion.Paragraphs[0].ReplaceForEach(IHOS_STRING, kontakion.Ihos);
 
-            var viewIkos = ViewModelItemFactory.Create(headers[1], req.Handler.Settings.TypiconVersionId, Serializer);
+            var viewIkos = OutputSectionFactory.Create(headers[1], req.Handler.Settings.TypiconVersionId, Serializer);
 
             return (viewKontakion, viewIkos);
         }

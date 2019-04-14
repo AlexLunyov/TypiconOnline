@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 RuleConstants.TextHolderChoirNode,
                 RuleConstants.TextHolderDeaconNode,
                 RuleConstants.TextHolderPriestNode,
-                RuleConstants.TextHolderTextNode };
+                RuleConstants.TextHolderTextNode};
         }
 
         protected override IRuleElement CreateObject(CreateObjectRequest req)

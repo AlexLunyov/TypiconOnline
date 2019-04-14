@@ -1,4 +1,5 @@
 ﻿using System;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.Days
@@ -49,24 +50,19 @@ namespace TypiconOnline.Domain.Days
         /// <returns>Если поля Date или DateB пустые, вовращает пустое (минимальное) значение</returns>
         public DateTime GetCurrentDate(int year)
         {
-            if (IsValid) //&& /*!Date.IsEmpty && */!DateB.IsEmpty)
+            if (DateTime.IsLeapYear(year))
             {
-                if (DateTime.IsLeapYear(year))
-                {
-                    return (!LeapDate.IsEmpty) ? new DateTime(year, LeapDate.Month, LeapDate.Day) : DateTime.MinValue;
-                }
-                else
-                {
-                    return (!Date.IsEmpty) ? new DateTime(year, Date.Month, Date.Day) : DateTime.MinValue;
-                }
+                return (!LeapDate.IsEmpty) ? new DateTime(year, LeapDate.Month, LeapDate.Day) : DateTime.MinValue;
             }
-            
-            return DateTime.MinValue;
+            else
+            {
+                return (!Date.IsEmpty) ? new DateTime(year, Date.Month, Date.Day) : DateTime.MinValue;
+            }
         }
 
-        protected override void Validate()
+        protected override void Validate(ITypiconSerializer serializer)
         {
-            base.Validate();
+            base.Validate(serializer);
 
             if (!Date.IsValid)
             {

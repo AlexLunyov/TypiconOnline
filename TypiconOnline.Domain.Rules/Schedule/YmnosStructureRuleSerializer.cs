@@ -14,10 +14,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             base.FillObject(req);
 
-            if (Enum.TryParse(req.Descriptor.GetElementName(), true, out YmnosStructureKind kind))
-            {
-                (req.Element as YmnosStructureRule).Kind = kind;
-            }
+            //if (Enum.TryParse(req.Descriptor.GetElementName(), true, out YmnosStructureKind kind))
+            //{
+            //    (req.Element as YmnosStructureRule).Kind = kind;
+            //}
 
             XmlAttribute attr = req.Descriptor.Element.Attributes[RuleConstants.TotalCountAttribute];
 

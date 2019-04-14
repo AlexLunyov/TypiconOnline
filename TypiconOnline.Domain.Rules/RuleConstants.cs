@@ -172,7 +172,13 @@ namespace TypiconOnline.Domain.Rules
         public const string ApostichaRuleNode = "aposticha";
         public const string LitiRuleNode = "liti";
 
+        /*
+         * SedalenRule
+         */
         public const string SedalenRuleNode = "sedalen";
+        public const string SedalenRuleHeaderNode = "header";
+        public const string SedalenRuleDefinitionNode = "definition";
+
         public const string TroparionRuleNode = "troparion";
 
         public const string MikrosEsperinosNode = "mikrosesperinos";

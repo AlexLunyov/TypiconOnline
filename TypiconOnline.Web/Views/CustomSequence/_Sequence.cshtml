@@ -17,7 +17,7 @@
     }
     foreach (var w in Model.Worships)
     {
-        if (w.Name != null)
+        if (w.Name?.Text != null)
         {
             <div class="row">
                 <h2 class="text-center @w.Name.Text.Language">@w.Name.Text</h2>

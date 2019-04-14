@@ -71,7 +71,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
             void AppendItem(TextHolder textHolder)
             {
                 req.AppendModelAction(new OutputElementCollection()
-                    { ViewModelItemFactory.Create(textHolder, req.Handler.Settings.TypiconVersionId, Serializer) });
+                    { OutputSectionFactory.Create(textHolder, req.Handler.Settings.TypiconVersionId, Serializer) });
             }
         }
     }

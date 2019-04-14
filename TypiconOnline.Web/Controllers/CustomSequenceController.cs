@@ -9,6 +9,7 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.WebQuery.Typicon;
+using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Web.Models.CustomSequenceModels;
@@ -70,6 +71,8 @@ namespace TypiconOnline.Web.Controllers
                     });
 
                     outputModel.Day = output.Day.Localize(model.Language);
+
+                    outputModel.StatusMessage = GetMessage(output.BrokenConstraints);
                     //}
                     //catch (Exception ex)
                     //{
@@ -92,6 +95,11 @@ namespace TypiconOnline.Web.Controllers
             var typicons = _queryProcessor.Process(new AllTypiconsQuery());
 
             return typicons.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString() });
+        }
+
+        private string GetMessage(IEnumerable<BusinessConstraint> constraints)
+        {
+            return string.Join(Environment.NewLine, constraints.Select(c => c.ConstraintFullDescription));
         }
     }
 }

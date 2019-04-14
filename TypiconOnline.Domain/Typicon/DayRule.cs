@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
 {
@@ -41,6 +42,16 @@ namespace TypiconOnline.Domain.Typicon
                 result = result.Substring(0, result.Length - 1);
             }
             return result;
+        }
+
+        protected override void Validate(IRuleSerializerRoot serializerRoot)
+        {
+            base.Validate(serializerRoot);
+
+            if (DayRuleWorships.Count == 0)
+            {
+                AddBrokenConstraint(new BusinessConstraint("В коллекции Текстов служб должен быть определен хотя бы один элемент", "DayRule"));
+            }
         }
     }
 }

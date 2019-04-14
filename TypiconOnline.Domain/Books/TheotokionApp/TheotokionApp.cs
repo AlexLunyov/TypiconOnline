@@ -1,5 +1,6 @@
 ﻿using System;
 using TypiconOnline.Domain.Books.Elements;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Books.TheotokionApp
@@ -13,9 +14,9 @@ namespace TypiconOnline.Domain.Books.TheotokionApp
         public virtual int Ihos { get; set; }
         public virtual DayOfWeek DayOfWeek { get; set; }
 
-        protected override void Validate()
+        protected override void Validate(ITypiconSerializer serializer)
         {
-            base.Validate();
+            base.Validate(serializer);
 
             if (Ihos < 1 || Ihos > 8)
             {

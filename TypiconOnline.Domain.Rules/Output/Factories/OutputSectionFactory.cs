@@ -10,7 +10,7 @@ using TypiconOnline.Domain.Rules.Schedule;
 
 namespace TypiconOnline.Domain.Rules.Output.Factories
 {
-    public class ViewModelItemFactory
+    public class OutputSectionFactory
     {
         public static OutputSection Create(TextHolderKind kind, List<ItemTextNoted> p)
         {
@@ -44,7 +44,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
             {
                 Kind = kind,
                 KindText = GetKindItemTextValue(kind, typiconVersionId, serializer),
-                Paragraphs = textHolder.Paragraphs
+                Paragraphs = textHolder.Paragraphs.Clone()
             };
         }
 
@@ -56,6 +56,15 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
                 Kind = Cast(ymnos.Kind),
                 KindText = GetKindItemTextValue(kind, typiconVersionId, serializer),
                 Paragraphs = new List<ItemTextNoted>() { new ItemTextNoted(ymnos.Text) }
+            };
+        }
+
+        public static OutputSection Create(ItemTextHeader header)
+        {
+            return new OutputSection()
+            {
+                Kind = ElementViewModelKind.Text,
+                Paragraphs = new List<ItemTextNoted>() { new ItemTextNoted(header) }
             };
         }
 

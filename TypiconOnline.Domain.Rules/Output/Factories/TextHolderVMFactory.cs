@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
                 return;
             }
 
-            OutputSection item = ViewModelItemFactory.Create(req.Element, req.Handler.Settings.TypiconVersionId, Serializer);
+            OutputSection item = OutputSectionFactory.Create(req.Element, req.Handler.Settings.TypiconVersionId, Serializer);
 
             req.AppendModelAction(new OutputElementCollection() { item });
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Domain.Typicon.Psalter;
@@ -11,7 +12,7 @@ namespace TypiconOnline.Domain.Typicon
     /// <summary>
     /// Версия Устава
     /// </summary>
-    public class TypiconVersion : EntityBase<int>, IAggregateRoot
+    public class TypiconVersion : ValueObjectBase<IRuleSerializerRoot>, IHasId<int>
     {
         public TypiconVersion()
         {
@@ -26,7 +27,7 @@ namespace TypiconOnline.Domain.Typicon
         }
 
         #region Properties
-
+        public int Id { get; set; }
         public int TypiconId { get; set; }
         /// <summary>
         /// Ссылка на сущность Устава
@@ -79,7 +80,7 @@ namespace TypiconOnline.Domain.Typicon
 
         #endregion
 
-        protected override void Validate()
+        protected override void Validate(IRuleSerializerRoot ruleSerializer)
         {
             throw new System.NotImplementedException();
         }

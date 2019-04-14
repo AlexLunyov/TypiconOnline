@@ -5,8 +5,10 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain
 {
-    public abstract class BookElementBase<T> : EntityBase<int>, IBookElement<T> where T : DayElementBase
+    public abstract class BookElementBase<T> : ValueObjectBase<ITypiconSerializer>, IHasId<int>, IBookElement<T> where T : DayElementBase
     {
+        public int Id { get; set; }
+
         public virtual string Definition { get; set; }
 
         public virtual T GetElement(ITypiconSerializer serializer)
@@ -14,11 +16,23 @@ namespace TypiconOnline.Domain
             return serializer.Deserialize<T>(Definition);
         }
 
-        protected override void Validate()
+        protected override void Validate(ITypiconSerializer typiconSerializer)
         {
             if (string.IsNullOrEmpty(Definition))
             {
                 AddBrokenConstraint(BookElementBaseBusinessConstraint.EmptyStringDefinition);
+            }
+            else
+            {
+                var element = GetElement(typiconSerializer);
+                if (element == null)
+                {
+                    AddBrokenConstraint(new BusinessConstraint("Правило заполнено с неопределяемыми системой ошибками.", "Definition"));
+                }
+                else if (!element.IsValid)
+                {
+                    AppendAllBrokenConstraints(element.GetBrokenConstraints(), "Definition");
+                }
             }
         }
     }

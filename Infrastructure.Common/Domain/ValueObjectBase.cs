@@ -4,32 +4,23 @@ using System.Text;
 
 namespace TypiconOnline.Infrastructure.Common.Domain
 {
-    public abstract class ValueObjectBase
+    public abstract class ValueObjectBase: ValidatableObject
     {
-        private List<BusinessConstraint> _brokenConstraints = new List<BusinessConstraint>();
-
-        protected bool _isValidated = false;
-
         public ValueObjectBase()
         {
         }
 
         protected abstract void Validate();
 
-        public bool IsValid {
-            get
-            {
-                return (GetBrokenConstraints().Count == 0);
-            }
-        }
+        public bool IsValid => GetBrokenConstraints().Count == 0;
 
         public IReadOnlyCollection<BusinessConstraint> GetBrokenConstraints()
         {
-            if (!_isValidated)
+            if (!IsValidated)
             {
                 _brokenConstraints.Clear();
                 Validate();
-                _isValidated = true;
+                IsValidated = true;
             }
 
             return _brokenConstraints;
@@ -47,43 +38,6 @@ namespace TypiconOnline.Infrastructure.Common.Domain
 
                 throw new ValueObjectIsInvalidException(issues.ToString());
             }
-        }
-
-        protected void AddBrokenConstraint(BusinessConstraint businessConstraint, string constraintPath = null)
-        {
-            if (!string.IsNullOrEmpty(constraintPath))
-            {
-                businessConstraint.ConstraintPath = (string.IsNullOrEmpty(businessConstraint.ConstraintPath))
-                ? constraintPath : $"{constraintPath}.{businessConstraint.ConstraintPath}";
-            }
-
-            _brokenConstraints.Add(businessConstraint);
-        }
-
-        /// <summary>
-        /// Добавляет все ломаные правила элемента к себе в коллекцию
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="name"></param>
-        protected void AppendAllBrokenConstraints(ValueObjectBase element, string name)
-        {
-            foreach (BusinessConstraint brokenBR in element.GetBrokenConstraints())
-            {
-                AddBrokenConstraint(brokenBR, name);
-            }
-        }
-
-        protected void AppendAllBrokenConstraints(IReadOnlyCollection<BusinessConstraint> businessConstraints)
-        {
-            foreach (BusinessConstraint brokenBR in businessConstraints)
-            {
-                AddBrokenConstraint(brokenBR, string.Empty);
-            }
-        }
-
-        protected void AppendAllBrokenConstraints(ValueObjectBase element)
-        {
-            AppendAllBrokenConstraints(element.GetBrokenConstraints());
         }
     }
 }

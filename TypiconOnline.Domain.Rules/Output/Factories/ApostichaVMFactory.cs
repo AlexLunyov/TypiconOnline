@@ -22,7 +22,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
         {
             var header = Serializer.GetCommonRuleFirstChild<TextHolder>(req.Handler.Settings.TypiconVersionId, key);
 
-            req.AppendModelAction(new OutputElementCollection() { ViewModelItemFactory.Create(header, req.Handler.Settings.TypiconVersionId, Serializer) });
+            req.AppendModelAction(new OutputElementCollection() { OutputSectionFactory.Create(header, req.Handler.Settings.TypiconVersionId, Serializer) });
         }
     }
 }

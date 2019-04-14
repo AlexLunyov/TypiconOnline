@@ -1,4 +1,7 @@
-﻿using TypiconOnline.Domain.Rules.Interfaces;
+﻿using System.Collections.Generic;
+using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules.Executables;
+using TypiconOnline.Domain.Rules.Interfaces;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -9,5 +12,10 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         public SedalenRule(IElementViewModelFactory<YmnosStructureRule> viewModelFactory, string name) 
             : base(viewModelFactory, name) { }
+
+        /// <summary>
+        /// Заголовок. Если не указан, то в выходной форме будет применен Заголовок по умолчанию
+        /// </summary>
+        public ItemTextHeader Header { get; set; }
     }
 }

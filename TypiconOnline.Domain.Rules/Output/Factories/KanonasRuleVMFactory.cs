@@ -55,7 +55,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
         {
             TextHolder header = GetHeaders(req)[0];
 
-            req.AppendModelAction(new OutputElementCollection() { ViewModelItemFactory.Create(header, req.Handler.Settings.TypiconVersionId, Serializer) });
+            req.AppendModelAction(new OutputElementCollection() { OutputSectionFactory.Create(header, req.Handler.Settings.TypiconVersionId, Serializer) });
         }
 
         private void AppendOdi(CreateViewModelRequest<KanonasRule> req, KOdiRule defaultOdiRule, int odiNumber)
@@ -142,7 +142,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
                 kanonasP.ReplaceForEach("[kanonas]", name);
                 kanonasP.ReplaceForEach("[ihos]", kanonas.Ihos);
 
-                view = ViewModelItemFactory.Create(TextHolderKind.Text, new List<ItemTextNoted>() { kanonasP });
+                view = OutputSectionFactory.Create(TextHolderKind.Text, new List<ItemTextNoted>() { kanonasP });
 
 
                 //string kanonasString = holder.Paragraphs[0][req.Handler.Settings.Language.Name];
@@ -167,7 +167,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
                 var katavasiaP = new ItemTextNoted(GetHeaders(req)[4].Paragraphs[0]);
                 katavasiaP.ReplaceForEach("[ihos]", ihos);
 
-                katavasiaHeader = ViewModelItemFactory.Create(TextHolderKind.Text, new List<ItemTextNoted>() { katavasiaP });
+                katavasiaHeader = OutputSectionFactory.Create(TextHolderKind.Text, new List<ItemTextNoted>() { katavasiaP });
 
                 //string str = GetHeaders(req)[4].Paragraphs[0][req.Handler.Settings.Language.Name];
                 //str = str.Replace("[ihos]", req.Handler.Settings.Language.IntConverter.ToString(ihos));
@@ -184,7 +184,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
         private void AppendStihosOdi8(CreateViewModelRequest<KanonasRule> req)
         {
             TextHolder odi8TextHolder = GetHeaders(req)[5];
-            var viewModel = ViewModelItemFactory.Create(odi8TextHolder, req.Handler.Settings.TypiconVersionId, Serializer);
+            var viewModel = OutputSectionFactory.Create(odi8TextHolder, req.Handler.Settings.TypiconVersionId, Serializer);
 
             req.AppendModelAction(new OutputElementCollection() { viewModel });
         }
@@ -193,7 +193,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
         {
             TextHolder odiTextHolder = GetHeaders(req)[1];
 
-            var viewModel = ViewModelItemFactory.Create(odiTextHolder, req.Handler.Settings.TypiconVersionId, Serializer);
+            var viewModel = OutputSectionFactory.Create(odiTextHolder, req.Handler.Settings.TypiconVersionId, Serializer);
             viewModel.Paragraphs[0].ReplaceForEach("[odinumber]", i);
 
             req.AppendModelAction(new OutputElementCollection() { viewModel });

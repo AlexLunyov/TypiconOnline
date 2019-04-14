@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconOnline.Domain.Typicon
 {
@@ -16,5 +17,10 @@ namespace TypiconOnline.Domain.Typicon
         /// Конкретная дата
         /// </summary>
         public DateTime Date { get; set; }
+
+        protected override void Validate(IRuleSerializerRoot serializerRoot)
+        {
+            //
+        }
     }
 }

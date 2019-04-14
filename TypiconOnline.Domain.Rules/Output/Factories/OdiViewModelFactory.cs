@@ -96,7 +96,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
                 || troparion.Kind == YmnosKind.Irmos)
             {
                 //добавляем припев
-                var view = ViewModelItemFactory.Create((kind == ChorusKind.Common) ? ElementViewModelKind.Chorus : ElementViewModelKind.Text,
+                var view = OutputSectionFactory.Create((kind == ChorusKind.Common) ? ElementViewModelKind.Chorus : ElementViewModelKind.Text,
                     new List<ItemTextNoted>() { new ItemTextNoted(text) }, handler.Settings.TypiconVersionId, serializer);
 
                 appendModelAction(new OutputElementCollection() { view });
@@ -169,7 +169,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
 
         private void AppendTroparion(Ymnos troparion)
         {
-            var view = ViewModelItemFactory.Create(troparion, handler.Settings.TypiconVersionId, serializer);
+            var view = OutputSectionFactory.Create(troparion, handler.Settings.TypiconVersionId, serializer);
 
             appendModelAction(new OutputElementCollection() { view });
         }

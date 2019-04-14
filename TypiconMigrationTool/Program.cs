@@ -92,8 +92,9 @@ namespace TypiconMigrationTool
                 {
                     var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
 
-                    optionsBuilder.UseMySql("server=localhost;UserId=root;Password=z2LDCiiEQFDBlkl3eZyb;database=typicondb;",
-                    //optionsBuilder.UseMySql("server=31.31.196.160;UserId=u0351_mysqluser;Password=gl7fdQ45GZyqydXrr2BZ;database=u0351320_typicondb;",
+                    //optionsBuilder.UseMySql("server=localhost;UserId=root;Password=z2LDCiiEQFDBlkl3eZyb;database=typicondb;",
+                    optionsBuilder.UseMySql("server=31.31.196.160;UserId=u0351_mysqluser;Password=gl7fdQ45GZyqydXrr2BZ;database=u0351320_typicondb;",
+                    //optionsBuilder.UseMySql("server=31.31.196.160;UserId=u0351_buser;Password=gl7fdQ45GZyqydXrr2BZ;database=u0351320_berlukirudb;",
                     mySqlOptions =>
                     {
                         mySqlOptions.ServerVersion(new Version(8, 0, 15), ServerType.MySql);

@@ -39,7 +39,7 @@ namespace TypiconOnline.Domain.Serialization
 
         public string Serialize<T>(T value) where T : class
         {
-            return Serialize<T>(value, string.Empty);
+            return Serialize(value, string.Empty);
         }
 
         public string Serialize<T>(T value, string rootElement) where T : class

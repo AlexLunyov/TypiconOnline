@@ -8,9 +8,11 @@ namespace TypiconOnline.Domain.Typicon.Modifications
     /// <summary>
     /// Хранилище объектов ModifiedYear, объединенных по году
     /// </summary>
-    public class ModifiedYear : EntityBase<int>//, IAggregateRoot
+    public class ModifiedYear : IHasId<int>//, IAggregateRoot
     {
         public ModifiedYear() { }
+
+        public int Id { get; set; }
 
         public int TypiconVersionId { get; set; }
 
@@ -28,9 +30,6 @@ namespace TypiconOnline.Domain.Typicon.Modifications
         private List<ModifiedRule> modifiedRules = new List<ModifiedRule>();
 
         public virtual IEnumerable<ModifiedRule> ModifiedRules { get => modifiedRules; set => modifiedRules = value.ToList(); }
-
-
-        protected override void Validate() { }
 
         /// <summary>
         /// Добавляет измененное правило.

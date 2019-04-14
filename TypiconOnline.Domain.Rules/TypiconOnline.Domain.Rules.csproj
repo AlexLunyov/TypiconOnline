@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Output\Factories\ParagraphVMFactory.cs" />
     <Compile Remove="Schedule\KanonasCustomRule.cs" />
     <Compile Remove="Schedule\KanonasRuleBase.cs" />
     <Compile Remove="Schedule\KanonasRuleBaseSerializer.cs" />
     <Compile Remove="Output\ContainerViewModel.cs" />
-    <Compile Remove="Output\Factories\ParagraphVMFactory.cs" />
     <Compile Remove="Output\YmnosGroupViewModel.cs" />
     <Compile Remove="Output\YmnosStructureViewModel.cs" />
   </ItemGroup>

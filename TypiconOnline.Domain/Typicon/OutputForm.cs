@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
@@ -12,7 +13,7 @@ namespace TypiconOnline.Domain.Typicon
     /// <summary>
     /// Выходная форма для Последовательностей богослужений
     /// </summary>
-    public class OutputForm : EntityBase<int>
+    public class OutputForm : ValueObjectBase<ITypiconSerializer>, IHasId<int>
     {
         protected OutputForm() { }
 
@@ -27,6 +28,8 @@ namespace TypiconOnline.Domain.Typicon
             Date = date;
             Definition = definition;
         }
+
+        public int Id { get; set; }
 
         public int TypiconId { get; set; }
         public virtual TypiconEntity Typicon { get; set; }
@@ -46,7 +49,7 @@ namespace TypiconOnline.Domain.Typicon
             }
         }
 
-        protected override void Validate()
+        protected override void Validate(ITypiconSerializer serializer)
         {
             throw new NotImplementedException();
         }

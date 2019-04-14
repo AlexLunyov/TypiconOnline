@@ -22,7 +22,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <summary>
         /// Тип структуры (Господи воззвах, стихиры на стиховне и т.д.)
         /// </summary>
-        public YmnosStructureKind Kind { get; set; }
+        //public YmnosStructureKind Kind { get; set; }
 
         /// <summary>
         /// Общее количество песнопений (ограничение)

@@ -2,6 +2,7 @@
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Rules.Output.Messaging;
+using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.Rules.Output.Factories
 {
@@ -11,7 +12,14 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
 
         protected override void AppendCustomForm(CreateViewModelRequest<YmnosStructureRule> req)
         {
-            InnerAppendCustomForm(req, CommonRuleConstants.SedalenRule);
+            if ((req.Element as SedalenRule)?.Header is ItemTextHeader header)
+            {
+                req.AppendModelAction(new OutputElementCollection() { OutputSectionFactory.Create(header) });
+            }
+            else
+            {
+                InnerAppendCustomForm(req, CommonRuleConstants.SedalenRule);
+            }
         }
     }
 }

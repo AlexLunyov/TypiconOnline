@@ -5,6 +5,7 @@ using System.Text;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -12,7 +13,8 @@ namespace TypiconOnline.AppServices.Implementations
     {
         private readonly List<DayWorship> _dayWorships = new List<DayWorship>();
 
-        public OutputDayInfo(OutputDay day, IEnumerable<DayWorship> dayWorships, ScheduleResults scheduleResults)
+        public OutputDayInfo(OutputDay day, IEnumerable<DayWorship> dayWorships
+            , ScheduleResults scheduleResults, IEnumerable<BusinessConstraint> constraints)
         {
             Day = day ?? throw new ArgumentNullException(nameof(day));
             ScheduleResults = scheduleResults ?? throw new ArgumentNullException(nameof(scheduleResults));
@@ -21,12 +23,18 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 _dayWorships = dayWorships.ToList();
             }
+
+            if (constraints != null)
+            {
+                BrokenConstraints = constraints;
+            }
         }
 
         public OutputDay Day { get; }
         public ScheduleResults ScheduleResults { get; }
         public IEnumerable<DayWorship> DayWorships => _dayWorships;
-        
+        public IEnumerable<BusinessConstraint> BrokenConstraints { get; } = new List<BusinessConstraint>();
+
 
         public void Merge(OutputDayInfo dayInfo)
         {
@@ -48,6 +56,8 @@ namespace TypiconOnline.AppServices.Implementations
             Day.Worships.AddRange(dayInfo.ScheduleResults.DayBefore);
 
             _dayWorships.AddRange(dayInfo.DayWorships);
+
+            //TODO: BrokenConstaints??
         }
     }
 }

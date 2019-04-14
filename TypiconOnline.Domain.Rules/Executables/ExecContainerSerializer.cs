@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Executables
@@ -31,10 +32,12 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         protected override void FillObject(FillObjectRequest req)
         {
-            foreach (XmlNode childNode in req.Descriptor.Element.ChildNodes)
+            var node = req.Descriptor.Element;
+            if (node.HasChildNodes)
             {
-                var child = SerializerRoot.Container<RuleElementBase>().Deserialize(new XmlDescriptor() { Element = childNode }, req.Parent);
-                (req.Element as ExecContainer).ChildElements.Add(child);
+                var children = node.ChildNodes.DeserializeChildren(SerializerRoot, req.Parent);
+
+                (req.Element as ExecContainer).ChildElements.AddRange(children);
             }
         }
     }

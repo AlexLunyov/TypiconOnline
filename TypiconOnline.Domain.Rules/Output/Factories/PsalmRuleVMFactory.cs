@@ -31,7 +31,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
         {
             TextHolder header = Serializer.GetCommonRuleFirstChild<TextHolder>(req.Handler.Settings.TypiconVersionId, CommonRuleConstants.Psalm);
 
-            var viewHeader = ViewModelItemFactory.Create(header, req.Handler.Settings.TypiconVersionId, Serializer);
+            var viewHeader = OutputSectionFactory.Create(header, req.Handler.Settings.TypiconVersionId, Serializer);
 
             //вставляем номер Псалма
             viewHeader.Paragraphs[0].ReplaceForEach(NUMBER, req.Element.Number);
@@ -45,7 +45,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
             var paragraphs = new List<ItemTextNoted>();
             psalmReading.Text.ForEach(c => paragraphs.Add(new ItemTextNoted(c)));
 
-            req.AppendModelAction(new OutputElementCollection() { ViewModelItemFactory.Create(TextHolderKind.Lector, paragraphs) });
+            req.AppendModelAction(new OutputElementCollection() { OutputSectionFactory.Create(TextHolderKind.Lector, paragraphs) });
         }
     }
 }

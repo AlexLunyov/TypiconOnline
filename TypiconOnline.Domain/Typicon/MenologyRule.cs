@@ -1,5 +1,7 @@
 ﻿using System;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
 {
@@ -40,9 +42,9 @@ namespace TypiconOnline.Domain.Typicon
             set => _leapDate = value;
         }
 
-        protected override void Validate()
+        protected override void Validate(IRuleSerializerRoot serializerRoot)
         {
-            base.Validate();
+            base.Validate(serializerRoot);
 
             if (!Date.IsValid)
             {
@@ -53,6 +55,11 @@ namespace TypiconOnline.Domain.Typicon
             {
                 AppendAllBrokenConstraints(Date, "LeapDate");
             }
+
+            if (DayRuleWorships.Count > 3)
+            {
+                AddBrokenConstraint(new BusinessConstraint("В коллекции Текстов служб не должно быть более трех Текстов служб", "MenologyRule"));
+            }
         }
 
         /// <summary>
@@ -62,19 +69,14 @@ namespace TypiconOnline.Domain.Typicon
         /// <returns>Если поля Date или DateB пустые, вовращает пустое (минимальное) значение</returns>
         public DateTime GetCurrentDate(int year)
         {
-            if (IsValid) //&& /*!Date.IsEmpty && */!DateB.IsEmpty)
+            if (DateTime.IsLeapYear(year))
             {
-                if (DateTime.IsLeapYear(year))
-                {
-                    return (!LeapDate.IsEmpty) ? new DateTime(year, LeapDate.Month, LeapDate.Day) : DateTime.MinValue;
-                }
-                else
-                {
-                    return (!Date.IsEmpty) ? new DateTime(year, Date.Month, Date.Day) : DateTime.MinValue;
-                }
+                return (!LeapDate.IsEmpty) ? new DateTime(year, LeapDate.Month, LeapDate.Day) : DateTime.MinValue;
             }
-
-            return DateTime.MinValue;
+            else
+            {
+                return (!Date.IsEmpty) ? new DateTime(year, Date.Month, Date.Day) : DateTime.MinValue;
+            }
         }
     }
 }

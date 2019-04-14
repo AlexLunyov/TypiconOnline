@@ -8,8 +8,10 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon.Modifications
 {
-    public class ModifiedRule : EntityBase<int>/*, IAggregateRoot*/, IComparable<ModifiedRule>, IDayRule
+    public class ModifiedRule : IHasId<int>, IComparable<ModifiedRule>, IDayRule
     {
+        public int Id { get; set; }
+
         public virtual int ModifiedYearId { get; set; }
         public virtual ModifiedYear Parent { get; set; }
         public virtual int DayRuleId { get; set; }
@@ -115,11 +117,6 @@ namespace TypiconOnline.Domain.Typicon.Modifications
             };
 
             return result;
-        }
-
-        protected override void Validate()
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>

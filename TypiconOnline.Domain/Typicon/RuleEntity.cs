@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Infrastructure.Common.Domain;
 
@@ -7,9 +8,11 @@ namespace TypiconOnline.Domain.Typicon
     /// <summary>
     /// Базовый класс для всех главных элементов системы: правил компоновки богослужебных текстов
     /// </summary>
-    public abstract class RuleEntity : EntityBase<int>
+    public abstract class RuleEntity : ValueObjectBase<IRuleSerializerRoot>, IHasId<int>
     {
         IRuleElement _rule;
+
+        public int Id { get; set; }
 
         /// <summary>
         /// Id Устава (TypiconVersion)
@@ -29,6 +32,7 @@ namespace TypiconOnline.Domain.Typicon
             {
                 _ruleDefinition = value;
                 _rule = null;
+                //IsValidated = false;
             }
         }
 
@@ -43,6 +47,14 @@ namespace TypiconOnline.Domain.Typicon
             return InnerGetRule<T>(ref _rule, serializerRoot, RuleDefinition);
         }
 
+        /// <summary>
+        /// Данный функционал вынесен отдельно для того, чтобы можно было повторно использовать в ModRuleEntity
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="rule"></param>
+        /// <param name="serializerRoot"></param>
+        /// <param name="definition"></param>
+        /// <returns></returns>
         protected virtual T InnerGetRule<T>(ref IRuleElement rule, IRuleSerializerRoot serializerRoot, string definition) where T : IRuleElement
         {
             if (serializerRoot == null) throw new ArgumentNullException(nameof(serializerRoot));
@@ -55,21 +67,24 @@ namespace TypiconOnline.Domain.Typicon
             return (T) rule;
         }
 
-        protected override void Validate()
+        protected override void Validate(IRuleSerializerRoot serializerRoot)
         {
-            /*if (_rule == null)
+            if (string.IsNullOrEmpty(RuleDefinition))
             {
-                AddBrokenConstraint(RuleEntityBusinessConstraint.RuleRequired);
+                AddBrokenConstraint(new BusinessConstraint("Правило должно быть определено.", "RuleDefinition"));
             }
-            else */if (_rule?.IsValid == false)
+            else
             {
-                AppendAllBrokenConstraints(_rule.GetBrokenConstraints());
+                var element = GetRule<IRuleElement>(serializerRoot);
+                if (element == null)
+                {
+                    AddBrokenConstraint(new BusinessConstraint("Правило заполнено с неопределяемыми системой ошибками.", "RuleDefinition"));
+                }
+                else if (!element.IsValid)
+                {
+                    AppendAllBrokenConstraints(element.GetBrokenConstraints(), "RuleDefinition");
+                }
             }
         }
-    }
-
-    public class RuleEntityBusinessConstraint
-    {
-        public static readonly BusinessConstraint RuleRequired = new BusinessConstraint("Правило должно быть определено.");
     }
 }

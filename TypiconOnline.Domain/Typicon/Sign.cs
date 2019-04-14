@@ -45,9 +45,14 @@ namespace TypiconOnline.Domain.Typicon
             return SignName.FirstOrDefault(language).Text;
         }
 
-        protected override void Validate()
+        protected override void Validate(IRuleSerializerRoot serializerRoot)
         {
-            throw new NotImplementedException();
+            base.Validate(serializerRoot);
+
+            if (!SignName.IsValid)
+            {
+                AppendAllBrokenConstraints(SignName, "Sign");
+            }
         }
 
         /// <summary>

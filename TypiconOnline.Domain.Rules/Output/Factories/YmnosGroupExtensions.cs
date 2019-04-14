@@ -26,7 +26,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
         {
             if (text?.IsEmpty == false)
             {
-                viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text, 
+                viewModel.Add(OutputSectionFactory.Create(TextHolderKind.Text, 
                     new List<ItemTextNoted> { new ItemTextNoted(text) }));
             }
         }
@@ -67,7 +67,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
             //соединяем воедино
             ihosItemText.Merge(prosomoionItemText);
 
-            viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Text,
+            viewModel.Add(OutputSectionFactory.Create(TextHolderKind.Text,
                     new List<ItemTextNoted> { new ItemTextNoted(ihosItemText) }));
         }
 
@@ -81,11 +81,11 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
                 //добавляем стих и песнопение как отдельные объекты
                 foreach (ItemText stihos in ymnos.Stihoi)
                 {
-                    viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Stihos, StihosText, 
+                    viewModel.Add(OutputSectionFactory.Create(TextHolderKind.Stihos, StihosText, 
                         new List<ItemTextNoted> { new ItemTextNoted(stihos) }));
                 }
 
-                viewModel.Add(ViewModelItemFactory.Create(TextHolderKind.Choir, ChoirText,
+                viewModel.Add(OutputSectionFactory.Create(TextHolderKind.Choir, ChoirText,
                     new List<ItemTextNoted> { new ItemTextNoted(ymnos.Text) } ));
             }
         }
