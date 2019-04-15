@@ -10,16 +10,36 @@ namespace TypiconOnline.AppServices.Jobs
 {
     public class JobRepository : IJobRepository
     {
-        private Dictionary<IJob, JobStateHolder> jobs = new Dictionary<IJob, JobStateHolder>();
+        public JobRepository() { }
+
+        public JobRepository(params IJob[] jobs)
+        {
+            if (jobs == null)
+            {
+                return;
+            }
+
+            foreach (var job in jobs)
+            {
+                Create(job);
+            }
+        }
+
+        private Dictionary<IJob, JobStateHolder> Jobs { get; } = new Dictionary<IJob, JobStateHolder>();
 
         public Result Create(IJob job)
         {
-            lock (jobs)
+            return Create(job, DateTime.Now);
+        }
+
+        public Result Create(IJob job, DateTime date)
+        {
+            lock (Jobs)
             {
-                if (!jobs.ContainsKey(job))
+                if (!Jobs.ContainsKey(job))
                 {
-                    jobs.Add(job, new JobStateHolder());
-                
+                    Jobs.Add(job, new JobStateHolder(date));
+
                     return Result.Ok();
                 }
                 else
@@ -32,6 +52,11 @@ namespace TypiconOnline.AppServices.Jobs
         public Result Recreate(IJob job)
         {
             return Update(job, new JobStateHolder());
+        }
+
+        public Result Recreate(IJob job, int millisecondsDelay)
+        {
+            return Update(job, new JobStateHolder(DateTime.Now.AddMilliseconds(millisecondsDelay)));
         }
 
         public Result Start(IJob job)
@@ -55,12 +80,12 @@ namespace TypiconOnline.AppServices.Jobs
 
         private Result Update(IJob job, JobStateHolder jobState) 
         {
-            lock (jobs)
+            lock (Jobs)
             {
-                if (jobs.ContainsKey(job))
+                if (Jobs.ContainsKey(job))
                 {
                 
-                        jobs[job] = jobState;
+                        Jobs[job] = jobState;
                 
 
                     return Result.Ok();
@@ -74,22 +99,42 @@ namespace TypiconOnline.AppServices.Jobs
 
         private Result Remove<T>(T job) where T: IJob
         {
-            lock (jobs)
+            lock (Jobs)
             {
-                return jobs.Remove(job) ? Result.Ok() : Result.Fail("Указанная задача не найдена в очереди.");
+                return Jobs.Remove(job) ? Result.Ok() : Result.Fail("Указанная задача не найдена в очереди.");
             }
         }
-        public IEnumerable<IJob> GetAll()
+        public virtual IEnumerable<IJob> GetAll()
         {
-            return (from i in jobs
-                    where i.Value.Status == JobStatus.Created
-                    orderby i.Value.CDate
-                    select i.Key);
+            return InnerGetAll().Select(c => c.Key);
         }
 
-        public IEnumerable<IJob> Get(int count) 
+        /// <summary>
+        /// Возвращает задания, назначая им статус Reserved
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public IEnumerable<IJob> Reserve(int count) 
         {
-            return GetAll().Take(count);
+            //во избежание дублированныз запусков в асинхронном режиме
+            //"стартуем" все задание при обращении к этому методу
+            IEnumerable<KeyValuePair<IJob, JobStateHolder>> found = InnerGetAll().Take(count);
+
+            foreach (var i in found)
+            {
+                i.Value.Status = JobStatus.Reserved;
+            }
+
+            return found.Select(c => c.Key);
+        }
+
+        private IEnumerable<KeyValuePair<IJob, JobStateHolder>> InnerGetAll()
+        {
+            return (from i in Jobs
+                   where (i.Value.Status == JobStatus.Created
+                       && DateTime.Now >= i.Value.CDate)
+                   orderby i.Value.CDate
+                   select i).ToList();
         }
     }
 }

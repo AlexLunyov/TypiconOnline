@@ -14,6 +14,8 @@ namespace TypiconOnline.AppServices.Jobs
     /// </summary>
     public class CalculateOutputFormWeekJobHandler : ICommandHandler<CalculateOutputFormWeekJob>
     {
+        private const int DELAY = 5000; 
+
         private readonly TypiconDBContext _dbContext;
         private readonly IOutputFormFactory _outputFormFactory;
         private readonly IJobRepository _jobs;
@@ -48,7 +50,7 @@ namespace TypiconOnline.AppServices.Jobs
                 .OnFailure(() =>
                 {
                     //перезапускаем задачу
-                    _jobs.Recreate(job);
+                    _jobs.Recreate(job, DELAY);
                 });
 
             return Task.CompletedTask;

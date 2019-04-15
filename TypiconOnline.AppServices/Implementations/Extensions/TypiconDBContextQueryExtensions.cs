@@ -25,12 +25,16 @@ namespace TypiconOnline.AppServices.Implementations.Extensions
         {
             var version = dbContext.Set<TypiconVersion>()
                 .FirstOrDefault(c => c.TypiconId == typiconId
-                                    && c.BDate != null
-                                    && c.EDate == null);
+                                    && c.IsPublished);
 
             return (version != null) 
                 ? Result.Ok(version) 
                 : Result.Fail<TypiconVersion>("Указанный Устав либо не существует, либо не существует его опубликованная версия.");
+        }
+
+        public static IEnumerable<TypiconVersion> GetAllPublishedVersions(this TypiconDBContext dbContext)
+        {
+            return dbContext.Set<TypiconVersion>().Where(c => c.IsPublished);
         }
 
         /// <summary>
@@ -42,8 +46,8 @@ namespace TypiconOnline.AppServices.Implementations.Extensions
         {
             var version = dbContext.Set<TypiconVersion>()
                 .FirstOrDefault(c => (status == TypiconVersionStatus.Draft) 
-                                        ? c.TypiconId == typiconId && c.BDate == null && c.EDate == null
-                                        : c.TypiconId == typiconId && c.BDate != null && c.EDate == null);
+                                        ? c.TypiconId == typiconId && c.IsDraft
+                                        : c.TypiconId == typiconId && c.IsPublished);
 
             return (version != null)
                 ? Result.Ok(version)

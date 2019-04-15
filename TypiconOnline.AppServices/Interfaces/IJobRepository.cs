@@ -10,12 +10,14 @@ namespace TypiconOnline.AppServices.Interfaces
     public interface IJobRepository
     {
         Result Create(IJob job);
+        Result Create(IJob job, DateTime date);
         Result Recreate(IJob job);
+        Result Recreate(IJob job, int millisecondsDelay);
         Result Start(IJob job);
         Result Finish(IJob job);
         Result Finish(IJob job, string message);
         Result Fail(IJob job, string message);
         IEnumerable<IJob> GetAll();
-        IEnumerable<IJob> Get(int count);
+        IEnumerable<IJob> Reserve(int count);
     }
 }

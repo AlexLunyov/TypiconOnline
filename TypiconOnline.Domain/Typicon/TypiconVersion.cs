@@ -80,6 +80,12 @@ namespace TypiconOnline.Domain.Typicon
 
         #endregion
 
+        #region Lambdas
+
+        public bool IsPublished => BDate != null && EDate == null;
+        public bool IsDraft => BDate == null && EDate == null;
+        #endregion
+
         protected override void Validate(IRuleSerializerRoot ruleSerializer)
         {
             throw new System.NotImplementedException();

@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         public IEnumerable<TypiconDTO> Handle([NotNull] AllTypiconsQuery query)
         {
             var versions = DbContext.Set<TypiconVersion>()
-                .Where(c => c.BDate != null && c.EDate == null);
+                .Where(c => c.IsPublished);
 
             var result = new List<TypiconDTO>();
 
@@ -24,6 +24,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 var dto = new TypiconDTO()
                 {
                     Id = vrs.TypiconId,
+                    VersionId = vrs.Id,
                     Name = vrs.Name.FirstOrDefault(query.Language).Text
                 };
 

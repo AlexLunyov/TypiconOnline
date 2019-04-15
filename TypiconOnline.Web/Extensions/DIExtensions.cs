@@ -44,6 +44,7 @@ using TypiconOnline.AppServices.Viewers;
 using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Web.Controllers;
+using TypiconOnline.AppServices.Jobs.Scheduled;
 
 namespace TypiconOnline.Web
 {
@@ -78,18 +79,23 @@ namespace TypiconOnline.Web
             container.Register<IScheduleWeekViewer<Result<DocxToStreamWeekResponse>>, DocxToStreamWeekViewer>();
             container.Register<ScheduleHandler, ServiceSequenceHandler>();
 
-            //Все остальные контроллеры
-            container.RegisterConditional<IScheduleDataCalculator, ScheduleDataCalculator>(
-                    c => c.Consumer.ImplementationType != typeof(CustomSequenceController));
-            //CustomSequence
-            container.RegisterConditional<IScheduleDataCalculator, CustomScheduleDataCalculator>(
-                    c => c.Consumer.ImplementationType == typeof(CustomSequenceController));
+            //Все контроллеры
+            container.Register<IScheduleDataCalculator, ScheduleDataCalculator>();
+            //CustomSequence Controller
+            container.Register<CustomScheduleDataCalculator>();
 
             //Configuration
             container.Register<IConfigurationRepository>(() => new ConfigurationRepository(configuration));
 
-            //Queue
-            container.RegisterSingleton<IJobRepository, JobRepository>(); 
+            //JobRepository
+            container.RegisterSingleton<IJobRepository>(() 
+                => new JobRepository(
+                    //каждое воскресенье в 02.00 вычислять расписание на через следующую неделю
+                    new NextWeekOutputFormsJob(new EveryWeekJobScheduler(DayOfWeek.Sunday, 02, 0), 2)
+                    //каждое 1 декабря вычисляем переходящие праздники на следующий год
+                    , new NextModifiedYearJob(new EveryYearJobScheduler(12, 1, 3, 0), 1)));
+
+            container.RegisterDecorator<IJobRepository, LoggingJobRepository>(Lifestyle.Singleton);
 
             //For SQLite
             //container.Register<JobHostedService>();

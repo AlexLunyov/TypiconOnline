@@ -14,6 +14,11 @@ namespace TypiconOnline.AppServices.Jobs
             CDate = DateTime.Now;
         }
 
+        public JobStateHolder(DateTime date)
+        {
+            CDate = date;
+        }
+
         /// <summary>
         /// Дата создания задания
         /// </summary>
@@ -39,8 +44,9 @@ namespace TypiconOnline.AppServices.Jobs
     public enum JobStatus
     {
         Created = 0,
-        Started = 1,
-        Finished = 2,
-        Failed = 3
+        Reserved = 1,
+        Started = 2,
+        Finished = 3,
+        Failed = 4
     }
 }
