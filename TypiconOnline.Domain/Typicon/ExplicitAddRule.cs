@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
 {
@@ -20,7 +21,10 @@ namespace TypiconOnline.Domain.Typicon
 
         protected override void Validate(IRuleSerializerRoot serializerRoot)
         {
-            //
+            if (string.IsNullOrEmpty(RuleDefinition))
+            {
+                AddBrokenConstraint(new BusinessConstraint("Правило должно быть определено.", nameof(RuleDefinition)));
+            }
         }
     }
 }

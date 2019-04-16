@@ -18,7 +18,7 @@ namespace TypiconOnline.Infrastructure.Common.Domain
             ConstraintPath = principlePath;
         }
 
-        public string ConstraintDescription { get; }
+        public string ConstraintDescription { get; set; }
 
         public string ConstraintPath { get; set; }
 

@@ -47,14 +47,19 @@ namespace TypiconOnline.Domain.ItemTypes
         {
             foreach (var item in Items)
             {
-                if (!IsKeyValid(item.Language))
+                if (!IsLanguageValid(item.Language))
                 {
                     AddBrokenConstraint(ItemTextBusinessConstraint.LanguageMismatch, "ItemText");
                 }
             }
         }
 
-        protected bool IsKeyValid(string key)
+        /// <summary>
+        /// Возвращает, правило ли указано обозначение языка
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static bool IsLanguageValid(string key)
         {
             //Принимаем только элементы с именем xx-xx
             //TODO: добавить еще валидацию на предустановленные языки

@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TypiconOnline.AppServices\TypiconOnline.AppServices.csproj" />
+    <ProjectReference Include="..\TypiconOnline.Domain.Command\TypiconOnline.Domain.Command.csproj" />
     <ProjectReference Include="..\TypiconOnline.Repository.EFCore\TypiconOnline.Repository.EFCore.csproj" />
     <ProjectReference Include="..\TypiconOnline.WebServices\TypiconOnline.WebServices.csproj" />
   </ItemGroup>

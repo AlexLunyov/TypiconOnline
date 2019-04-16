@@ -1,21 +1,14 @@
 ﻿using JetBrains.Annotations;
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
+using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Implementations.Extensions;
 using TypiconOnline.AppServices.Interfaces;
+using TypiconOnline.AppServices.Messaging.Schedule;
+using TypiconOnline.Domain.Common;
+using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Infrastructure.Common.Command;
-using TypiconOnline.Domain.Typicon;
-using TypiconOnline.AppServices.Implementations;
-using TypiconOnline.AppServices.Messaging.Schedule;
-using System.Threading.Tasks;
-using TypiconOnline.Infrastructure.Common.Query;
-using TypiconOnline.Domain.Command.Typicon;
-using TypiconOnline.Domain.Query.Typicon;
-using TypiconOnline.Domain.Query.Books;
-using TypiconOnline.AppServices.Common;
 using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.AppServices.Jobs

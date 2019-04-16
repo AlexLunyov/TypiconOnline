@@ -16,7 +16,10 @@ namespace TypiconOnline.Domain.Typicon.Psalter
 
         protected override void Validate(ITypiconSerializer serializer)
         {
-            throw new NotImplementedException();
+            if (SlavaElements.Count == 0 || SlavaElements.Count > 3)
+            {
+                AddBrokenConstraint(new BusinessConstraint("Количество дочерних элементов может быть от 1 до 3", nameof(Kathisma)));
+            }
         }
     }
 }

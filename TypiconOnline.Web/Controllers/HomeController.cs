@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartBreadcrumbs.Attributes;
 using TypiconOnline.Domain.WebQuery.Typicon;
@@ -8,6 +9,7 @@ using TypiconOnline.Web.Models;
 
 namespace TypiconOnline.Web.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         IDataQueryProcessor queryProcessor;

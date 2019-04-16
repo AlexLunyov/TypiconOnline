@@ -54,6 +54,20 @@ namespace TypiconOnline.AppServices.Implementations.Extensions
                 : Result.Fail<TypiconVersion>("Указанный Устав либо не существует, либо не существует его опубликованная версия.");
         }
 
+        /// <summary>
+        /// Возвращает указанную версию Устава (опубликованную или черновик).
+        /// </summary>
+        /// <param name="typiconVersionId"></param>
+        /// <returns></returns>
+        public static Result<TypiconVersion> GetTypiconVersion(this TypiconDBContext dbContext, int typiconId)
+        {
+            var version = dbContext.Set<TypiconVersion>().FirstOrDefault(c => c.TypiconId == typiconId);
+
+            return (version != null)
+                ? Result.Ok(version)
+                : Result.Fail<TypiconVersion>("Указанный Устав либо не существует, либо не существует его опубликованная версия.");
+        }
+
         public static Result<OutputDay> GetScheduleDay(this TypiconDBContext dbContext, int typiconId, DateTime date, ITypiconSerializer serializer)
         {
             var outputForm = dbContext.Set<OutputForm>().FirstOrDefault(c => c.TypiconId == typiconId && c.Date == date);
@@ -135,6 +149,16 @@ namespace TypiconOnline.AppServices.Implementations.Extensions
                 throw new NullReferenceException($"День празднования Пасхи не определен для года {year}.");
 
             return easter.Date;
+        }
+
+        public static T GetRule<T>(this TypiconDBContext dbContext, int id) where T: RuleEntity, new()
+        {
+            return dbContext.Set<T>().FirstOrDefault(c => c.Id == id);
+        }
+
+        public static IEnumerable<TypiconVersionError> GetErrorsFromDb(this TypiconDBContext dbContext, int id)
+        {
+            return dbContext.Set<TypiconVersionError>().Where(c => c.TypiconVersionId == id);
         }
     }
 }

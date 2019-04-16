@@ -27,7 +27,7 @@ namespace TypiconOnline.AppServices.Tests.Jobs
             queue.Create(new CalculateModifiedYearJob(1, 2021));
             queue.Create(new CalculateModifiedYearJob(1, 2021));
 
-            var c = queue.Get(6);
+            var c = queue.Reserve(6);
 
             Assert.AreEqual(3, c.Count());
         }

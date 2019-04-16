@@ -18,12 +18,12 @@ namespace TypiconOnline.Infrastructure.Common.Domain
         {
             if (!IsValidated)
             {
-                _brokenConstraints.Clear();
+                BrokenConstraints.Clear();
                 Validate();
                 IsValidated = true;
             }
 
-            return _brokenConstraints;
+            return BrokenConstraints;
         }
 
         public void ThrowExceptionIfInvalid()
@@ -31,7 +31,7 @@ namespace TypiconOnline.Infrastructure.Common.Domain
             if (!IsValid)
             {
                 StringBuilder issues = new StringBuilder();
-                foreach (BusinessConstraint businessConstraint in _brokenConstraints)
+                foreach (BusinessConstraint businessConstraint in BrokenConstraints)
                 {
                     issues.AppendLine(businessConstraint.ConstraintFullDescription);
                 }

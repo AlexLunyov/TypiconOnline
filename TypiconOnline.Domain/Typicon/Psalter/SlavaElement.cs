@@ -14,7 +14,21 @@ namespace TypiconOnline.Domain.Typicon.Psalter
 
         protected override void Validate(ITypiconSerializer serializer)
         {
-            throw new NotImplementedException();
+            if (PsalmLinks.Count == 0)
+            {
+                AddBrokenConstraint(new BusinessConstraint("Слава должна иметь ссылки на Псалмы."), nameof(SlavaElement));
+            }
+            else
+            {
+                foreach (var pl in PsalmLinks)
+                {
+                    if (!pl.IsValid(serializer))
+                    {
+                        //добавляем ломаные правила к родителю
+                        AppendAllBrokenConstraints(pl, serializer);
+                    }
+                }
+            }
         }
     }
 }

@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using TypiconOnline.Infrastructure.Common.UnitOfWork;
-using TypiconOnline.Repository.EFCore.DataBase;
+﻿using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Repository.EFCore;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Tests.Common
 {

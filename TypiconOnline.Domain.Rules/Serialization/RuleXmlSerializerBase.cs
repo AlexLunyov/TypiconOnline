@@ -4,7 +4,7 @@ using TypiconOnline.Domain.Interfaces;
 
 namespace TypiconOnline.Domain.Serialization
 {
-    public abstract class RuleXmlSerializerBase : IRuleSerializer
+    public abstract class RuleXmlSerializerBase : IRuleSerializer, IRuleSerializer<IRuleElement>
     {
         protected RuleXmlSerializerBase(IRuleSerializerRoot serializerRoot)
         {

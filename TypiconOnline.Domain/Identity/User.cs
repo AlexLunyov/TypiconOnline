@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,34 +12,12 @@ namespace TypiconOnline.Domain.Identity
     /// <summary>
     /// Пользователь системы
     /// </summary>
-    public class User : IHasId<int>, IAggregateRoot
+    public class User : IdentityUser<int>
     {
-        public User() { }
-
-        public User(string userName, string login, string passwordHash)
-        {
-            UserName = userName;
-            Login = login;
-            PasswordHash = passwordHash;
-        }
-
-        public int Id { get; set; }
-
-        public string UserName { get; set; }
-        public string Login { get; set; }
-        public string PasswordHash { get; set; }
-        public string Email { get; set; }
-        public bool EmailConfirmed { get; set; }
-        public bool TwoFactorEnabled { get; set; }
-
         /// <summary>
-        /// Является ли Пользователь администратором системы
+        /// Полное "человеческое" имя для отображения
         /// </summary>
-        public bool IsAdministrator { get; set; }
-        /// <summary>
-        /// Имеет ли Пользователь доступ к редактированию богослужебных текстов
-        /// </summary>
-        public bool IsTextEditor { get; set; }
+        public string FullName { get; set; }
 
         public virtual ICollection<UserRole> UserRoles { get; set; }
 

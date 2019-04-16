@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain
         {
             if (string.IsNullOrEmpty(Definition))
             {
-                AddBrokenConstraint(BookElementBaseBusinessConstraint.EmptyStringDefinition);
+                AddBrokenConstraint(new BusinessConstraint("Отсутствует определение песнопения."));
             }
             else
             {
@@ -35,10 +35,5 @@ namespace TypiconOnline.Domain
                 }
             }
         }
-    }
-
-    public class BookElementBaseBusinessConstraint
-    {
-        public static readonly BusinessConstraint EmptyStringDefinition = new BusinessConstraint("Отсутствует определение песнопения.");
     }
 }

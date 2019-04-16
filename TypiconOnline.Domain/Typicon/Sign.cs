@@ -1,6 +1,7 @@
 ﻿using System;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
 {
@@ -48,6 +49,13 @@ namespace TypiconOnline.Domain.Typicon
         protected override void Validate(IRuleSerializerRoot serializerRoot)
         {
             base.Validate(serializerRoot);
+
+            //если нет Шаблона, то Правило обязательно должно быть определено
+            if ((!TemplateId.HasValue || TemplateId == 0 || Template == null)
+                && string.IsNullOrEmpty(RuleDefinition))
+            {
+                AddBrokenConstraint(new BusinessConstraint("Правило должно быть определено.", nameof(RuleDefinition)));
+            }
 
             if (!SignName.IsValid)
             {

@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TypiconMigrationTool.Core;
 
 namespace TypiconMigrationTool.Core.Migrations
@@ -15,9 +14,7 @@ namespace TypiconMigrationTool.Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034");
 
             modelBuilder.Entity("TypiconOnline.Domain.Books.Easter.EasterItem", b =>
                 {
@@ -199,8 +196,6 @@ namespace TypiconMigrationTool.Core.Migrations
                     b.Property<int>("UserId");
 
                     b.Property<int>("RoleId");
-
-                    b.Property<int>("Id");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -501,11 +496,35 @@ namespace TypiconMigrationTool.Core.Migrations
 
                     b.Property<int>("TypiconId");
 
+                    b.Property<int>("ValidationStatus");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TypiconId");
 
                     b.ToTable("TypiconVersion");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.TypiconVersionError", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConstraintDescription");
+
+                    b.Property<string>("ConstraintPath");
+
+                    b.Property<int?>("EntityId");
+
+                    b.Property<string>("EntityName");
+
+                    b.Property<int>("TypiconVersionId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypiconVersionId");
+
+                    b.ToTable("TypiconVersionError");
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Days.MenologyDay", b =>
@@ -946,6 +965,14 @@ namespace TypiconMigrationTool.Core.Migrations
                                         .OnDelete(DeleteBehavior.Cascade);
                                 });
                         });
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.TypiconVersionError", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
+                        .WithMany()
+                        .HasForeignKey("TypiconVersionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Days.MenologyDay", b =>

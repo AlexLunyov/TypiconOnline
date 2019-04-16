@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon.Modifications;
@@ -12,7 +13,7 @@ namespace TypiconOnline.Domain.Typicon
     /// <summary>
     /// Версия Устава
     /// </summary>
-    public class TypiconVersion : ValueObjectBase<IRuleSerializerRoot>, IHasId<int>
+    public class TypiconVersion : /*ValueObjectBase<IRuleSerializerRoot>,*/ IHasId<int>
     {
         public TypiconVersion()
         {
@@ -24,6 +25,9 @@ namespace TypiconOnline.Domain.Typicon
             TriodionRules = new List<TriodionRule>();
             Kathismas = new List<Kathisma>();
             ExplicitAddRules = new List<ExplicitAddRule>();
+
+            ValidationStatus = ValidationStatus.NotValidated;
+            Errors = new List<TypiconVersionError>();
         }
 
         #region Properties
@@ -41,20 +45,32 @@ namespace TypiconOnline.Domain.Typicon
         public virtual string DefaultLanguage { get; set; }
 
         /// <summary>
+        /// Года с вычисленными переходящими праздниками
+        /// </summary>
+        public virtual List<ModifiedYear> ModifiedYears { get; set; }
+        /// <summary>
         /// Список знаков служб
         /// </summary>
         public virtual List<Sign> Signs { get; set; }
         /// <summary>
-        /// Года с вычисленными переходящими праздниками
+        /// Общие Правила
         /// </summary>
-        public virtual List<ModifiedYear> ModifiedYears { get; set; }
-
         public virtual List<CommonRule> CommonRules { get; set; }
+        /// <summary>
+        /// Правила Минеи
+        /// </summary>
         public virtual List<MenologyRule> MenologyRules { get; set; }
+        /// <summary>
+        /// Правила Триоди
+        /// </summary>
         public virtual List<TriodionRule> TriodionRules { get; set; }
-
+        /// <summary>
+        /// Кафизмы
+        /// </summary>
         public virtual List<Kathisma> Kathismas { get; set; }
-
+        /// <summary>
+        /// Явно определяемые дополнительные Правила
+        /// </summary>
         public virtual List<ExplicitAddRule> ExplicitAddRules { get; set; }
 
         /// <summary>
@@ -78,6 +94,15 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         public DateTime? EDate { get; set; }
 
+        public ValidationStatus ValidationStatus { get; set; }
+
+        protected List<TypiconVersionError> Errors { get; set; }
+        /// <summary>
+        /// Признак того, был ли объект валидирован.
+        /// Необходимо обнулять его при каждом изменении внутренних свойств
+        /// </summary>
+        private bool IsValidated { get; set; } = false;
+
         #endregion
 
         #region Lambdas
@@ -86,10 +111,118 @@ namespace TypiconOnline.Domain.Typicon
         public bool IsDraft => BDate == null && EDate == null;
         #endregion
 
-        protected override void Validate(IRuleSerializerRoot ruleSerializer)
+        #region Validation
+
+        public IReadOnlyCollection<TypiconVersionError> GetBrokenConstraints(IRuleSerializerRoot ruleSerializer)
         {
-            throw new System.NotImplementedException();
+            if (!IsValidated)
+            {
+                Errors.Clear();
+                Validate(ruleSerializer);
+                IsValidated = true;
+            }
+
+            return Errors;
         }
+
+        protected void Validate(IRuleSerializerRoot ruleSerializer)
+        {
+            if (Typicon == null || TypiconId == 0)
+            {
+                AddError("Версия Устава должна иметь ссылку на Устав");
+            }
+
+            if (Name == null)
+            {
+                AddError("Имя Устава должно быть определено");
+            }
+            else if (!Name.IsValid)
+            {
+                var err = Name.GetBrokenConstraints();
+                if (err.Count > 0)
+                {
+                    AddError(err.GetSummary());
+                }
+            }
+
+            if (string.IsNullOrEmpty(DefaultLanguage)
+                || !ItemText.IsLanguageValid(DefaultLanguage))
+            {
+                AddError("Значения языка по умолчанию указано неверно");
+            }
+
+            //Signs
+            ValidateChildCollection(Signs.Cast<RuleEntity>(), ruleSerializer, ErrorConstants.Sign, ErrorConstants.Signs, "Должен быть определен хотя бы один Знак службы");
+            //CommonRules
+            ValidateChildCollection(CommonRules.Cast<RuleEntity>(), ruleSerializer, ErrorConstants.CommonRule);
+            //MenologyRules
+            ValidateMenologyRules(ruleSerializer);
+            //TriodionRules
+            ValidateChildCollection(TriodionRules.Cast<RuleEntity>(), ruleSerializer, ErrorConstants.TriodionRule);
+            //ExplicitAddRules
+            ValidateChildCollection(ExplicitAddRules.Cast<RuleEntity>(), ruleSerializer, ErrorConstants.ExplicitAddRule);
+            //Kathismas
+            ValidateKathismas(ruleSerializer.TypiconSerializer);
+        }
+
+        private void ValidateMenologyRules(IRuleSerializerRoot ruleSerializer)
+        {
+            //проверяем наличие Правил для каждого дня високосного года
+            EachDayPerYear.Perform(2016, date =>
+            {
+                if (GetMenologyRule(date) == null)
+                {
+                    AddError($"Отсутствует определение Правила Минеи для даты --{date.Month}-{date.Day}", ErrorConstants.MenologyRules);
+                }
+            });
+
+            ValidateChildCollection(MenologyRules.Cast<RuleEntity>(), ruleSerializer, ErrorConstants.MenologyRule);
+        }
+
+        private void ValidateKathismas(ITypiconSerializer serializer)
+        {
+            if (Kathismas.Count != 20)
+            {
+                AddError("Должно быть определено 20 кафизм", ErrorConstants.Kathismas);
+            }
+
+            foreach (var entity in Kathismas)
+            {
+                var err = entity.GetBrokenConstraints(serializer);
+                if (err.Count > 0)
+                {
+                    AddError(err.GetSummary(), ErrorConstants.Kathisma, entity.Id);
+                }
+            }
+        }
+
+        private void ValidateChildCollection(IEnumerable<RuleEntity> entities, IRuleSerializerRoot ruleSerializer, string entityName, string entitiesName = null, string requiredErrMessage = null)
+        {
+            if (!string.IsNullOrEmpty(requiredErrMessage))
+            {
+                //проверяем на обязательность хотя бы одного дочернего элемента
+                if (entities.Count() == 0)
+                {
+                    AddError(requiredErrMessage, entitiesName);
+                }
+            }
+
+            foreach (var entity in entities)
+            {
+                var err = entity.GetBrokenConstraints(ruleSerializer);
+                if (err.Count > 0)
+                {
+                    AddError(err.GetSummary(), entityName, entity.Id);
+                }
+            }
+        }
+
+        private void AddError(string principleDescription, string entityName = null, int? entityId = null)
+        {
+            Errors.Add(new TypiconVersionError(Id, principleDescription, entityName, entityId));
+        }
+
+        #endregion
 
         #region GetRule methods
 
@@ -103,5 +236,13 @@ namespace TypiconOnline.Domain.Typicon
             return TriodionRules.FirstOrDefault(c => c.DaysFromEaster == daysFromEaster);
         }
         #endregion
+    }
+
+    public enum ValidationStatus
+    {
+        NotValidated = 0,
+        InProcess = 1,
+        Invalid = 2,
+        Valid = 3
     }
 }

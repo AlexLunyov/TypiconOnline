@@ -26,7 +26,6 @@ using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Repository.EFCore;
 using TypiconOnline.Repository.EFCore.DataBase;
-using TypiconOnline.Repository.EFCore.Caching;
 using TypiconOnline.AppServices.Configuration;
 using TypiconOnline.Domain.Books.WeekDayApp;
 using TypiconOnline.Domain.Typicon;

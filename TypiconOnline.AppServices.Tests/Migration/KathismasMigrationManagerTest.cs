@@ -145,7 +145,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
 
         private TypiconVersion GetTypiconVersion()
         {
-            var user = new User("name", "admin", "admin")
+            var user = new User()
             {
                 //Id = 2,
             };

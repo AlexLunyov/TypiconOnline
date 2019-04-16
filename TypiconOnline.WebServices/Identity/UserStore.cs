@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +10,7 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.WebServices.Identity
 {
-    public class UserStore : IUserStore<User>, IUserPasswordStore<User>
+    public class UserStore : IUserStore<User>, IUserPasswordStore<User>//, IUserEmailStore<User>
     {
         private readonly TypiconDBContext db;
 
@@ -119,5 +120,54 @@ namespace TypiconOnline.WebServices.Identity
         {
             return Task.FromResult(!string.IsNullOrWhiteSpace(user.PasswordHash));
         }
+
+        //private void ThrowIfDisposed()
+        //{
+        //    if (_disposed)
+        //    {
+        //        throw new ObjectDisposedException(GetType().Name);
+        //    }
+        //}
+
+        #region IUserEmailStore
+
+        /// <summary>
+        /// Used to attach child entities to the User aggregate, i.e. Roles, Logins, and Claims
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        //protected virtual async Task<User> GetUserAggregateAsync(Expression<Func<User, bool>> filter)
+        //{
+        //    int id;
+        //    User user;
+        //    if (FindByIdFilterParser.TryMatchAndGetId(filter, out id))
+        //    {
+        //        user = await _userStore.GetByIdAsync(id).WithCurrentCulture();
+        //    }
+        //    else
+        //    {
+        //        user = await Users.FirstOrDefaultAsync(filter).WithCurrentCulture();
+        //    }
+        //    if (user != null)
+        //    {
+        //        await EnsureClaimsLoaded(user).WithCurrentCulture();
+        //        await EnsureLoginsLoaded(user).WithCurrentCulture();
+        //        await EnsureRolesLoaded(user).WithCurrentCulture();
+        //    }
+        //    return user;
+        //}
+
+        /// <summary>
+        ///     Find a user by email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        //public virtual Task<User> FindByEmailAsync(string email)
+        //{
+        //    ThrowIfDisposed();
+        //    return GetUserAggregateAsync(u => u.Email.ToUpper() == email.ToUpper());
+        //}
+
+        #endregion
     }
 }

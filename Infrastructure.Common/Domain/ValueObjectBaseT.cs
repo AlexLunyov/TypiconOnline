@@ -14,12 +14,12 @@ namespace TypiconOnline.Infrastructure.Common.Domain
         {
             if (!IsValidated)
             {
-                _brokenConstraints.Clear();
+                BrokenConstraints.Clear();
                 Validate(validatePar);
                 IsValidated = true;
             }
 
-            return _brokenConstraints;
+            return BrokenConstraints;
         }
 
         protected abstract void Validate(TValidatePar validatePar);

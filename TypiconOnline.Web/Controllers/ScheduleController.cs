@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using SmartBreadcrumbs.Attributes;
@@ -19,6 +20,7 @@ namespace TypiconOnline.Web.Controllers
     /// 
     /// </summary>
     [Route("[controller]/[action]")]
+    [AllowAnonymous]
     public class ScheduleController : Controller
     {
         private readonly IDataQueryProcessor queryProcessor;

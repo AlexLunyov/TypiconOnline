@@ -11,6 +11,6 @@ namespace TypiconOnline.Domain.Identity
         public int UserId { get; set; }
         public virtual User User { get; set; }
         public int TypiconId { get; set; }
-        public virtual Typicon.TypiconEntity Typicon { get; set; }
+        public virtual TypiconEntity Typicon { get; set; }
     }
 }

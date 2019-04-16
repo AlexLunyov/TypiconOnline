@@ -24,7 +24,7 @@ namespace TypiconOnline.Infrastructure.Common.Domain
         /// </summary>
         /// <param name="element"></param>
         /// <param name="name"></param>
-        public void AppendAllBrokenConstraints(ValueObjectBase element, string name)
+        public void AppendAllBrokenConstraints(ValueObjectBase element, string name = null)
         {
             foreach (BusinessConstraint brokenBR in element.GetBrokenConstraints())
             {
@@ -32,7 +32,7 @@ namespace TypiconOnline.Infrastructure.Common.Domain
             }
         }
 
-        public void AppendAllBrokenConstraints<T>(ValueObjectBase<T> element, T validator, string name)
+        public void AppendAllBrokenConstraints<T>(ValueObjectBase<T> element, T validator, string name = null)
         {
             foreach (BusinessConstraint brokenBR in element.GetBrokenConstraints(validator))
             {
@@ -46,16 +46,6 @@ namespace TypiconOnline.Infrastructure.Common.Domain
             {
                 AddBrokenConstraint(brokenBR, name);
             }
-        }
-
-        public void AppendAllBrokenConstraints(ValueObjectBase element)
-        {
-            AppendAllBrokenConstraints(element.GetBrokenConstraints());
-        }
-
-        public void AppendAllBrokenConstraints<T>(ValueObjectBase<T> element, T validator)
-        {
-            AppendAllBrokenConstraints(element.GetBrokenConstraints(validator));
         }
     }
 }

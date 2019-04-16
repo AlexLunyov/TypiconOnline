@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Html;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using TypiconOnline.AppServices.Implementations;
@@ -8,6 +9,7 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 namespace TypiconOnline.Web.Controllers
 {
     [Route("[controller]")]
+    [AllowAnonymous]
     public class BerlukiRuController : Controller
     {
         const int TYPICON_ID = 1;

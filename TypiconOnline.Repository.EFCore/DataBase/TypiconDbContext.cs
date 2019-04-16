@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using TypiconOnline.Domain;
 using TypiconOnline.Domain.Books.Katavasia;
@@ -7,6 +9,7 @@ using TypiconOnline.Domain.Books.Psalter;
 using TypiconOnline.Domain.Books.TheotokionApp;
 using TypiconOnline.Domain.Books.WeekDayApp;
 using TypiconOnline.Domain.Days;
+using TypiconOnline.Domain.Identity;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Psalter;
@@ -14,7 +17,7 @@ using TypiconOnline.Repository.EFCore.DataBase.Mapping;
 
 namespace TypiconOnline.Repository.EFCore.DataBase
 {
-    public class TypiconDBContext : DbContext
+    public class TypiconDBContext : IdentityDbContext<User, Role, int>
     {
         //public DbSet<User> Users { get; set; }
         //public DbSet<Typicon> Typicons { get; set; }
@@ -39,9 +42,11 @@ namespace TypiconOnline.Repository.EFCore.DataBase
         {
             // настройка полей с помощью Fluent API TypiconSettings
 
-            modelBuilder.ApplyConfiguration(new UserConfiguration()); 
-            modelBuilder.ApplyConfiguration(new RoleConfiguration());
-            modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
+            //modelBuilder.ApplyConfiguration(new UserConfiguration()); 
+            //modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            //modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
+
+            //modelBuilder.Entity<IdentityUserRole<int>>().HasKey(p => new { p.UserId, p.RoleId });
 
             modelBuilder.ApplyConfiguration(new TypiconConfiguration());
             modelBuilder.ApplyConfiguration(new TypiconVersionConfiguration());
@@ -69,6 +74,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 
             modelBuilder.ApplyConfiguration(new OutputFormConfiguration()); 
             modelBuilder.ApplyConfiguration(new OutputFormDayWorshipConfiguration()); 
+            modelBuilder.ApplyConfiguration(new TypiconVersionErrorConfiguration());
 
             modelBuilder.ApplyConfiguration(new MenologyDayConfiguration());
             modelBuilder.ApplyConfiguration(new TriodionDayConfiguration());

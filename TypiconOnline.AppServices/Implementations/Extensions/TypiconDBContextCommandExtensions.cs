@@ -73,10 +73,28 @@ namespace TypiconOnline.AppServices.Implementations.Extensions
 
         public static async Task ClearOutputFormsAsync(this TypiconDBContext dbContext, int typiconId)
         {
-            var outputForms = dbContext.Set<OutputForm>().Where(c => c.TypiconId == typiconId);
+            int numberOfRowDeleted = await dbContext.Database.ExecuteSqlCommandAsync("DELETE FROM OutputForm WHERE TypiconId={0}", typiconId);
+        }
 
-            dbContext.Set<OutputForm>().RemoveRange(outputForms);
+        public static async Task ClearRuleErrorsAsync(this TypiconDBContext dbContext, int entityId)
+        {
+            int numberOfRowDeleted = await dbContext.Database.ExecuteSqlCommandAsync("DELETE FROM TypiconVersionError WHERE EntityId={0}", entityId);
+        }
 
+        public static async Task ClearTypiconVersionErrorsAsync(this TypiconDBContext dbContext, int typiconVersionId)
+        {
+            int numberOfRowDeleted = await dbContext.Database.ExecuteSqlCommandAsync("DELETE FROM TypiconVersionError WHERE TypiconVersionId={0}", typiconVersionId);
+        }
+
+        public static async Task AddTypiconVersionErrorAsync(this TypiconDBContext dbContext, TypiconVersionError error)
+        {
+            await dbContext.Set<TypiconVersionError>().AddAsync(error);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public static async Task AddTypiconVersionErrorAsync(this TypiconDBContext dbContext, IEnumerable<TypiconVersionError> errors)
+        {
+            await dbContext.Set<TypiconVersionError>().AddRangeAsync(errors);
             await dbContext.SaveChangesAsync();
         }
     }

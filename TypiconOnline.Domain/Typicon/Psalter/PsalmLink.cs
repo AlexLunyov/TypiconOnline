@@ -14,7 +14,17 @@ namespace TypiconOnline.Domain.Typicon.Psalter
 
         protected override void Validate(ITypiconSerializer serializer)
         {
-            throw new NotImplementedException();
+            if (StartStihos.HasValue 
+                && EndStihos.HasValue
+                && StartStihos > EndStihos)
+            {
+                AddBrokenConstraint(new BusinessConstraint("Начальный стих не может иметь значения больше, чем конечный стих."), nameof(PsalmLink));
+            }
+
+            if (!Psalm.IsValid(serializer))
+            {
+                AppendAllBrokenConstraints(Psalm, serializer, nameof(PsalmLink));
+            }
         }
     }
 }

@@ -69,11 +69,7 @@ namespace TypiconOnline.Domain.Typicon
 
         protected override void Validate(IRuleSerializerRoot serializerRoot)
         {
-            if (string.IsNullOrEmpty(RuleDefinition))
-            {
-                AddBrokenConstraint(new BusinessConstraint("Правило должно быть определено.", "RuleDefinition"));
-            }
-            else
+            if (!string.IsNullOrEmpty(RuleDefinition))
             {
                 var element = GetRule<IRuleElement>(serializerRoot);
                 if (element == null)

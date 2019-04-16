@@ -155,20 +155,12 @@
       <Name>TypiconOnline.Infrastructure.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.Domain.Command\TypiconOnline.Domain.Command.csproj">
-      <Project>{86305C57-D3E7-44D1-8BA1-65D6196CB2D5}</Project>
+      <Project>{9fa2445f-3c50-4394-9523-ca783875399c}</Project>
       <Name>TypiconOnline.Domain.Command</Name>
     </ProjectReference>
     <ProjectReference Include="..\TypiconOnline.Domain.Query\TypiconOnline.Domain.Query.csproj">
-      <Project>{C3D5231E-740B-4168-ABBD-58E8F739BE13}</Project>
+      <Project>{cb69b6b3-b2b5-4146-8ce8-235766654979}</Project>
       <Name>TypiconOnline.Domain.Query</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TypiconOnline.Domain\TypiconOnline.Domain.csproj">
-      <Project>{823205B3-C0DB-428D-9038-A03382D881D5}</Project>
-      <Name>TypiconOnline.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TypiconOnline.Tests.Common\TypiconOnline.Tests.Common.csproj">
-      <Project>{534F5A7F-109D-419D-BAEB-4FD9B986B3AA}</Project>
-      <Name>TypiconOnline.Tests.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

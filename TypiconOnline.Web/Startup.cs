@@ -13,6 +13,10 @@ using SimpleInjector;
 using TypiconOnline.Domain.Identity;
 using TypiconOnline.WebServices.Identity;
 using SmartBreadcrumbs.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Web
 {
@@ -30,17 +34,13 @@ namespace TypiconOnline.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>()
-            //    .AddDefaultTokenProviders();
-
-            services.AddIdentity<User, UserRole>()
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<TypiconDBContext>()
                 .AddDefaultTokenProviders();
-            services.AddTransient<IUserStore<User>, UserStore>();
-            services.AddTransient<IRoleStore<UserRole>, RoleStore>();
+            
+            //services.AddTransient<IUserStore<User>, UserStore>();
+            //services.AddTransient<IRoleStore<UserRole>, RoleStore>();
+
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
@@ -57,7 +57,16 @@ namespace TypiconOnline.Web
 
             services.AddTypiconOnlineService(Configuration, container);
 
-            services.AddMvc();
+            services.AddMvc(config =>
+            {
+                // using Microsoft.AspNetCore.Mvc.Authorization;
+                // using Microsoft.AspNetCore.Authorization;
+                var policy = new AuthorizationPolicyBuilder()
+                                 .RequireAuthenticatedUser()
+                                 .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

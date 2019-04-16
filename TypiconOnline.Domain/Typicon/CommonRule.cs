@@ -18,6 +18,13 @@ namespace TypiconOnline.Domain.Typicon
 
         protected override void Validate(IRuleSerializerRoot serializerRoot)
         {
+            base.Validate(serializerRoot);
+
+            if (string.IsNullOrEmpty(RuleDefinition))
+            {
+                AddBrokenConstraint(new BusinessConstraint("Правило должно быть определено.", nameof(RuleDefinition)));
+            }
+
             if (string.IsNullOrEmpty(Name))
             {
                 AddBrokenConstraint(new BusinessConstraint("Общее Правило: Наименование обязательно для заполнения."));

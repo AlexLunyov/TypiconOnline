@@ -39,20 +39,16 @@ namespace TypiconOnline.Domain.Typicon
         {
             base.Validate(serializerRoot);
 
-            if (string.IsNullOrEmpty(RuleDefinition))
-            {
-                AddBrokenConstraint(new BusinessConstraint("Правило для переноса служб должно быть определено.", "ModRuleDefinition"));
-            }
-            else
+            if (!string.IsNullOrEmpty(ModRuleDefinition))
             {
                 var element = GetModRule<IRuleElement>(serializerRoot);
                 if (element == null)
                 {
-                    AddBrokenConstraint(new BusinessConstraint("Правило дял переноса служб заполнено с неопределяемыми системой ошибками.", "ModRuleDefinition"));
+                    AddBrokenConstraint(new BusinessConstraint("Правило дял переноса служб заполнено с неопределяемыми системой ошибками.", nameof(ModRuleDefinition)));
                 }
                 else if (!element.IsValid)
                 {
-                    AppendAllBrokenConstraints(element.GetBrokenConstraints(), "ModRuleDefinition");
+                    AppendAllBrokenConstraints(element.GetBrokenConstraints(), nameof(ModRuleDefinition));
                 }
             }
         }
