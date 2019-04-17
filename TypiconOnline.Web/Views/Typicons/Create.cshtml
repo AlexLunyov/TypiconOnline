@@ -1,0 +1,33 @@
+﻿@model TypiconOnline.Web.Models.TypiconViewModels.CreateTypiconModel
+@{
+    ViewData["Title"] = "Создание Устава";
+}
+<div class="row">
+    <div class="col-12">
+        <form asp-action="Create" method="post">
+            <h4>Создание Устава</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name">Наименование</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DefaultLanguage">Язык по умолчанию</label>
+                <input asp-for="DefaultLanguage" class="form-control" />
+                <span asp-validation-for="DefaultLanguage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TemplateId">Устав:</label>
+                <select class="form-control" asp-for="TemplateId" asp-items="@ViewBag.Typicons"></select>
+            </div>
+            <div class="form-group"><div class="validation" asp-validation-summary="ModelOnly"></div></div>
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-primary" type="submit">Создать</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

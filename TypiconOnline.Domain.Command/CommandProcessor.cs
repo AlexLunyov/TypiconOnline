@@ -9,38 +9,29 @@ using TypiconOnline.Infrastructure.Common.Command;
 
 namespace TypiconOnline.Domain.Command
 {
-    public sealed class CommandProcessor : ICommandProcessor, IDisposable
+    public class CommandProcessor : ICommandProcessor, IDisposable
     {
         private readonly Container container;
-        //private readonly Scope scope;
 
         public CommandProcessor(Container container)
         {
             this.container = container;
-
-            //scope = AsyncScopedLifestyle.BeginScope(container);
         }
 
         //[DebuggerStepThrough]
-        public void Execute<TCommand>(TCommand command) where TCommand : ICommand
+        public virtual void Execute<TCommand>(TCommand command) where TCommand : ICommand
         {
-            using (AsyncScopedLifestyle.BeginScope(container))
-            {
-                dynamic handler = GetHandler(command);
+            dynamic handler = GetHandler(command);
 
-                handler.Execute((dynamic)command);
-            }
+            handler.Execute((dynamic)command);
         }
 
         //[DebuggerStepThrough]
-        public Task ExecuteAsync<TCommand>(TCommand command) where TCommand : ICommand
+        public virtual async Task ExecuteAsync<TCommand>(TCommand command) where TCommand : ICommand
         {
-            using (AsyncScopedLifestyle.BeginScope(container))
-            {
-                dynamic handler = GetHandler(command);
+            dynamic handler = GetHandler(command);
 
-                return handler.ExecuteAsync((dynamic)command);
-            }
+            await handler.ExecuteAsync((dynamic)command);
         }
 
         private dynamic GetHandler<TCommand>(TCommand command) where TCommand : ICommand

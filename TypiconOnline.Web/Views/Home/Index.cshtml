@@ -1,4 +1,4 @@
-﻿@using TypiconOnline.Domain.WebQuery.Typicon;
+﻿@using TypiconOnline.Domain.WebQuery.Models;
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -28,7 +28,7 @@
 <div class="row">
     <div class="col-md-12">
         <h2>Доступные Уставы</h2>
-        @foreach (TypiconDTO typicon in ViewBag.Entities)
+        @foreach (TypiconEntityModel typicon in ViewBag.Entities)
         {
             <a asp-controller="Schedule" asp-action="Index" asp-route-id="@typicon.Id"><p>@typicon.Name</p></a>
         }

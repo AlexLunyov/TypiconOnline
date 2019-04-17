@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 { 
-    public class TypiconQuery : IDataQuery<Result<TypiconDTO>>
+    public class TypiconQuery : IDataQuery<Result<TypiconEntityModel>>
     {
         public TypiconQuery(int id)
         {

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
-    public class AllTypiconsQuery : IDataQuery<IEnumerable<TypiconDTO>>
+    public class AllTypiconsQuery : IDataQuery<IEnumerable<TypiconEntityModel>>
     {
         public AllTypiconsQuery() { }
 

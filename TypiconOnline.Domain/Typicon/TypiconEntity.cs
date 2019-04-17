@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Identity;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
@@ -12,9 +13,15 @@ namespace TypiconOnline.Domain.Typicon
     /// <summary>
     /// Агрегат Устава, поддерживающий версионность
     /// </summary>
-    public class TypiconEntity : ValueObjectBase<IRuleSerializerRoot>, IHasId<int>
+    public class TypiconEntity : ValueObjectBase, IHasId<int>
     {
         public int Id { get; set; }
+
+        public virtual ItemText Name { get; set; }
+        /// <summary>
+        /// Язык по умолчанию
+        /// </summary>
+        public virtual string DefaultLanguage { get; set; }
         public int? TemplateId { get; set; }
         /// <summary>
         /// Ссылка на Устав-шаблон.
@@ -48,9 +55,22 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         public virtual List<TypiconVersion> Versions { get; set; } = new List<TypiconVersion>();
 
-        protected override void Validate(IRuleSerializerRoot ruleSerializer)
+        protected override void Validate()
         {
-            throw new NotImplementedException();
+            if (Name == null || Name.IsEmpty)
+            {
+                AddBrokenConstraint(new BusinessConstraint("Имя Устава должно быть определено"));
+            }
+            else if (!Name.IsValid)
+            {
+                AppendAllBrokenConstraints(Name);
+            }
+
+            if (string.IsNullOrEmpty(DefaultLanguage)
+                || !ItemText.IsLanguageValid(DefaultLanguage))
+            {
+                AddBrokenConstraint(new BusinessConstraint("Значения языка по умолчанию указано неверно"));
+            }
         }
     }
 }

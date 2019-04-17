@@ -27,10 +27,10 @@ namespace TypiconOnline.Domain.Tests.Typicon
             TypiconVersion typiconEntity = new TypiconVersion()
             {
                 Id = 1,
-                Name = new ItemText()
-                {
-                    Items = new List<ItemTextUnit>() { new ItemTextUnit("cs-ru", "Типикон") }
-                },
+                //Name = new ItemText()
+                //{
+                //    Items = new List<ItemTextUnit>() { new ItemTextUnit("cs-ru", "Типикон") }
+                //},
                 Signs = new List<Sign>() { new Sign() { Id = 1 } }
             };
 

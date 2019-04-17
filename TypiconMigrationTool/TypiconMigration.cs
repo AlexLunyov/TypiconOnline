@@ -86,9 +86,9 @@ namespace TypiconMigrationTool
             //var roleTypesetter = new Role() { Name = "Редактор", SystemName = "typesetter" };
             //_dbContext.Set<Role>().Add(roleTypesetter);
 
-            await _userCreationService.CreateRole("admin", "Администратор");
-            await _userCreationService.CreateRole("editor", "Уставщик");
-            await _userCreationService.CreateRole("typesetter", "Редактор");
+            await _userCreationService.CreateRole(RoleConstants.AdministratorsRole, "Администратор");
+            await _userCreationService.CreateRole(RoleConstants.EditorsRole, "Уставщик");
+            await _userCreationService.CreateRole(RoleConstants.TypesettersRole, "Редактор");
 
             var user = new User()
             {
@@ -104,7 +104,7 @@ namespace TypiconMigrationTool
             //    new UserRole() { Role = roleTypesetter, User = user }
             //};
 
-            await _userCreationService.CreateUser(user, "eCa6?&OpM/", "admin", "editor", "typesetter");
+            await _userCreationService.CreateUser(user, "eCa6?&OpM/", RoleConstants.AdministratorsRole, RoleConstants.EditorsRole, RoleConstants.TypesettersRole);
 
             Commit();
 
@@ -115,6 +115,11 @@ namespace TypiconMigrationTool
         {
             var typicon = new TypiconEntity()
             {
+                Name = new ItemText()
+                {
+                    Items = new List<ItemTextUnit>() { new ItemTextUnit("cs-ru", "Типикон") }
+                },
+                DefaultLanguage = DEFAULT_LANGUAGE,
                 OwnerId = user.Id
             };
 
@@ -123,11 +128,6 @@ namespace TypiconMigrationTool
 
             var typiconEntity = new TypiconVersion()
             {
-                Name = new ItemText()
-                {
-                    Items = new List<ItemTextUnit>() { new ItemTextUnit("cs-ru", "Типикон") }
-                },
-                DefaultLanguage = DEFAULT_LANGUAGE,
                 TypiconId = typicon.Id,
 
                 //Делаем сразу опубликованную версию

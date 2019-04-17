@@ -3,29 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
-    public class AllTypiconsQueryHandler : DbContextQueryBase, IDataQueryHandler<AllTypiconsQuery, IEnumerable<TypiconDTO>>
+    public class AllTypiconsQueryHandler : DbContextQueryBase, IDataQueryHandler<AllTypiconsQuery, IEnumerable<TypiconEntityModel>>
     {
         public AllTypiconsQueryHandler(TypiconDBContext dbContext) : base(dbContext) { }
 
-        public IEnumerable<TypiconDTO> Handle([NotNull] AllTypiconsQuery query)
+        public IEnumerable<TypiconEntityModel> Handle([NotNull] AllTypiconsQuery query)
         {
             var versions = DbContext.Set<TypiconVersion>()
                 .Where(c => c.IsPublished);
 
-            var result = new List<TypiconDTO>();
+            var result = new List<TypiconEntityModel>();
 
             foreach (var vrs in versions)
             {
-                var dto = new TypiconDTO()
+                var dto = new TypiconEntityModel()
                 {
                     Id = vrs.TypiconId,
-                    VersionId = vrs.Id,
-                    Name = vrs.Name.FirstOrDefault(query.Language).Text
+                    Name = vrs.Typicon.Name.FirstOrDefault(query.Language).Text,
                 };
 
                 result.Add(dto);

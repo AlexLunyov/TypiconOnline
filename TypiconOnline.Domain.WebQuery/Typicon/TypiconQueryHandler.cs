@@ -5,6 +5,7 @@ using System.Linq;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
@@ -15,30 +16,29 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
     /// <summary>
     /// Возвращает Id и Name Устава
     /// </summary>
-    public class TypiconQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<TypiconQuery, Result<TypiconDTO>>
+    public class TypiconQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<TypiconQuery, Result<TypiconEntityModel>>
     {
         public TypiconQueryHandler(TypiconDBContext dbContext, [NotNull] IDataQueryProcessor queryProcessor)
             : base(dbContext, queryProcessor)
         {
         }
 
-        public Result<TypiconDTO> Handle([NotNull] TypiconQuery query)
+        public Result<TypiconEntityModel> Handle([NotNull] TypiconQuery query)
         {
             var publishedVersion = QueryProcessor.Process(new TypiconPublishedVersionQuery(query.Id));
 
             if (publishedVersion.Success)
             {
-                TypeAdapterConfig<TypiconVersion, TypiconDTO>
+                TypeAdapterConfig<TypiconVersion, TypiconEntityModel>
                     .NewConfig()
                     .Map(dest => dest.Id, src => src.TypiconId)
-                    .Map(dest => dest.VersionId, src => src.Id)
-                    .Map(dest => dest.Name, src => src.Name.FirstOrDefault(query.Language));
+                    .Map(dest => dest.Name, src => src.Typicon.Name.FirstOrDefault(query.Language));
 
-                return Result.Ok(publishedVersion.Value.Adapt<TypiconDTO>());
+                return Result.Ok(publishedVersion.Value.Adapt<TypiconEntityModel>());
             }
             else
             {
-                return Result.Fail<TypiconDTO>(publishedVersion.Error);
+                return Result.Fail<TypiconEntityModel>(publishedVersion.Error);
             }
         }
     }

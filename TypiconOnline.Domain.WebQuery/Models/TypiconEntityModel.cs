@@ -1,0 +1,21 @@
+﻿using JqueryDataTables.ServerSide.AspNetCoreWeb;
+
+namespace TypiconOnline.Domain.WebQuery.Models
+{
+    public class TypiconEntityModel
+    {
+        public int Id { get; set; }
+        [SearchableString]
+        [Sortable]
+        public string Name { get; set; }
+        
+        
+    }
+
+    public enum TypiconStatus
+    {
+        WaitingApprovement = 0,
+        Draft = 1,
+        Published = 2
+    }
+}

@@ -38,12 +38,6 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         public virtual TypiconEntity Typicon { get; set; }
 
-        public virtual ItemText Name { get; set; }
-        /// <summary>
-        /// Языка по умолчанию
-        /// </summary>
-        public virtual string DefaultLanguage { get; set; }
-
         /// <summary>
         /// Года с вычисленными переходящими праздниками
         /// </summary>
@@ -130,25 +124,6 @@ namespace TypiconOnline.Domain.Typicon
             if (Typicon == null || TypiconId == 0)
             {
                 AddError("Версия Устава должна иметь ссылку на Устав");
-            }
-
-            if (Name == null)
-            {
-                AddError("Имя Устава должно быть определено");
-            }
-            else if (!Name.IsValid)
-            {
-                var err = Name.GetBrokenConstraints();
-                if (err.Count > 0)
-                {
-                    AddError(err.GetSummary());
-                }
-            }
-
-            if (string.IsNullOrEmpty(DefaultLanguage)
-                || !ItemText.IsLanguageValid(DefaultLanguage))
-            {
-                AddError("Значения языка по умолчанию указано неверно");
             }
 
             //Signs

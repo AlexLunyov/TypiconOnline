@@ -1,0 +1,75 @@
+﻿
+<div class="container">
+    <div class="row">
+        <div class="col-12"><h1>Уставы</h1></div>
+    </div>
+    <div class="row">
+        <div class="form-group col-12">
+            <a class="btn btn-primary" href="/Typicons/Create">Создать новый Устав</a>
+        </div>
+        <div class="form-group col-12">
+            <div class="justify-content-center align-content-center">
+                <table id="typiconGrid" class="table table-striped table-bordered" style="width:100%">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+
+    function DeleteData(CustomerID)
+        {
+            if (confirm("Are you sure you want to delete ...?"))
+            {
+                Delete(CustomerID);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        function Delete(CustomerID)
+    {
+        var url = '@Url.Content("~/")' + "DemoGrid/Delete";
+
+        $.post(url, { ID: CustomerID }, function (data)
+                {
+                    if (data)
+                    {
+                        oTable = $('#example').DataTable();
+                        oTable.draw();
+                    }
+                    else
+                    {
+                        alert("Something Went Wrong!");
+                    }
+                });
+    }
+
+</script>
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/momentjs/moment.min.js" asp-append-version="true"></script>
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
+    <script src="~/js/typicons.js" asp-append-version="true"></script>
+}
+

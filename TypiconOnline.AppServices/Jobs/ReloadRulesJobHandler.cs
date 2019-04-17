@@ -93,7 +93,7 @@ namespace TypiconOnline.AppServices.Jobs
 
         private void ReloadMenologyRules(string folder, TypiconVersion typiconVersion)
         {
-            string setting = Path.Combine(folder, typiconVersion.Name.ToString(), "Menology");
+            string setting = Path.Combine(folder, typiconVersion.Typicon.ToString(), "Menology");
 
             var fileReader = new FileReader(setting);
 
@@ -101,7 +101,7 @@ namespace TypiconOnline.AppServices.Jobs
             {
                 if (rule.Date.IsEmpty && rule.LeapDate.IsEmpty)
                 {
-                    rule.RuleDefinition = fileReader.Read(rule.GetNameByLanguage(typiconVersion.DefaultLanguage));
+                    rule.RuleDefinition = fileReader.Read(rule.GetNameByLanguage(typiconVersion.Typicon.DefaultLanguage));
                 }
                 else
                 {
@@ -113,7 +113,7 @@ namespace TypiconOnline.AppServices.Jobs
 
         private void ReloadTriodionRules(string folder, TypiconVersion typiconVersion)
         {
-            string setting = Path.Combine(folder, typiconVersion.Name.ToString(), "Triodion");
+            string setting = Path.Combine(folder, typiconVersion.Typicon.Name.ToString(), "Triodion");
 
             var fileReader = new FileReader(setting);
 
@@ -125,7 +125,7 @@ namespace TypiconOnline.AppServices.Jobs
 
         private void ReloadExplicitAddRules(string folder, TypiconVersion typiconVersion)
         {
-            string folderPath = Path.Combine(folder, typiconVersion.Name.ToString(), "Explicit");
+            string folderPath = Path.Combine(folder, typiconVersion.Typicon.Name.ToString(), "Explicit");
 
             FileReader fileReader = new FileReader(folderPath);
 
@@ -157,7 +157,7 @@ namespace TypiconOnline.AppServices.Jobs
 
         private void ReloadCommonRules(string folder, TypiconVersion typiconVersion)
         {
-            string folderPath = Path.Combine(folder, typiconVersion.Name.ToString(), "Common");
+            string folderPath = Path.Combine(folder, typiconVersion.Typicon.Name.ToString(), "Common");
 
             FileReader fileReader = new FileReader(folderPath);
 
@@ -186,13 +186,13 @@ namespace TypiconOnline.AppServices.Jobs
 
         private void ReloadSigns(string folder, TypiconVersion typiconVersion)
         {
-            string setting = Path.Combine(folder, typiconVersion.Name.ToString(), "Sign");
+            string setting = Path.Combine(folder, typiconVersion.Typicon.Name.ToString(), "Sign");
 
             var fileReader = new FileReader(setting);
 
             foreach (Sign sign in typiconVersion.Signs)
             {
-                sign.RuleDefinition = fileReader.Read(sign.GetNameByLanguage(typiconVersion.DefaultLanguage));
+                sign.RuleDefinition = fileReader.Read(sign.GetNameByLanguage(typiconVersion.Typicon.DefaultLanguage));
             }
         }
 

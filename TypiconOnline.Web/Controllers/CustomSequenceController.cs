@@ -10,14 +10,17 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.WebQuery.Typicon;
+using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Web.Models.CustomSequenceModels;
+using TypiconOnline.Domain.Query.Typicon;
+using TypiconOnline.Web.Extensions;
 
 namespace TypiconOnline.Web.Controllers
 {
-    [Authorize(Roles = "admin, editor")]
+    [Authorize(Roles = "Admin, Editor")]
     public class CustomSequenceController : Controller
     {
         private readonly IDataQueryProcessor _queryProcessor;
@@ -36,7 +39,7 @@ namespace TypiconOnline.Web.Controllers
         [HttpGet]
         public IActionResult Index(CompleteSequenceViewModel model)
         {
-            ViewBag.Typicons = GetTypicons();
+            ViewBag.Typicons = _queryProcessor.GetTypicons();
 
             if (model == null)
             {
@@ -50,13 +53,13 @@ namespace TypiconOnline.Web.Controllers
         [HttpPost]
         public IActionResult Index(GetCustomSequenceViewModel model)
         {
-            ViewBag.Typicons = GetTypicons();
+            ViewBag.Typicons = _queryProcessor.GetTypicons();
 
             var outputModel = new CompleteSequenceViewModel(model);
 
             if (ModelState.IsValid)
             {
-                var typicon = _queryProcessor.Process(new TypiconQuery(model.Id));
+                var typicon = _queryProcessor.Process(new TypiconPublishedVersionQuery(model.Id));
 
                 typicon.OnSuccess(() =>
                 {
@@ -66,8 +69,8 @@ namespace TypiconOnline.Web.Controllers
                     //{
                     var output = _outputFormFactory.Create(_dataCalculator, new CreateOutputFormRequest()
                     {
-                        TypiconId = model.Id,
-                        TypiconVersionId = typicon.Value.VersionId,
+                        TypiconId = typicon.Value.TypiconId,
+                        TypiconVersionId = typicon.Value.Id,
                         Date = model.Date,
                         HandlingMode = HandlingMode.All
                     });
@@ -90,13 +93,6 @@ namespace TypiconOnline.Web.Controllers
                 
 
             return View(outputModel);
-        }
-
-        private IEnumerable<SelectListItem> GetTypicons()
-        {
-            var typicons = _queryProcessor.Process(new AllTypiconsQuery());
-
-            return typicons.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString() });
         }
 
         private string GetMessage(IEnumerable<BusinessConstraint> constraints)

@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TypiconOnline.Repository.EFCore.DataBase;
+using Newtonsoft.Json.Serialization;
 
 namespace TypiconOnline.Web
 {
@@ -57,16 +58,19 @@ namespace TypiconOnline.Web
 
             services.AddTypiconOnlineService(Configuration, container);
 
-            services.AddMvc(config =>
-            {
-                // using Microsoft.AspNetCore.Mvc.Authorization;
-                // using Microsoft.AspNetCore.Authorization;
-                var policy = new AuthorizationPolicyBuilder()
-                                 .RequireAuthenticatedUser()
-                                 .Build();
-                config.Filters.Add(new AuthorizeFilter(policy));
-            })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services
+                .AddAntiforgery(options => options.HeaderName = "XSRF-TOKEN")
+                .AddMvc(config =>
+                {
+                    // using Microsoft.AspNetCore.Mvc.Authorization;
+                    // using Microsoft.AspNetCore.Authorization;
+                    var policy = new AuthorizationPolicyBuilder()
+                                     .RequireAuthenticatedUser()
+                                     .Build();
+                    config.Filters.Add(new AuthorizeFilter(policy));
+                })
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver())
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

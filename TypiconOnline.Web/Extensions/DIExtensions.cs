@@ -44,6 +44,7 @@ using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Web.Controllers;
 using TypiconOnline.AppServices.Jobs.Scheduled;
+using TypiconOnline.Domain.WebQuery.Models;
 
 namespace TypiconOnline.Web
 {
@@ -110,7 +111,7 @@ namespace TypiconOnline.Web
 
 
             //container.Register(typeof(IDataQuery<>), typeof(QueryProcessor).Assembly);
-            container.Register(typeof(IDataQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconDTO).Assembly);
+            container.Register(typeof(IDataQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
             container.Register<IDataQueryProcessor, DataQueryProcessor>();
 
             //container.Register(typeof(IQuery<>), typeof(QueryProcessor).Assembly);
@@ -119,7 +120,10 @@ namespace TypiconOnline.Web
 
 
             container.Register(typeof(ICommandHandler<>), typeof(CommandProcessor).Assembly, typeof(OutputForms).Assembly);
-            container.Register<ICommandProcessor, CommandProcessor>();
+
+            container.RegisterConditional<ICommandProcessor, AsyncCommandProcessor>(
+                c => c.Consumer.ImplementationType == typeof(JobAsyncHostedService));
+            container.RegisterConditional<ICommandProcessor, CommandProcessor>(c => !c.Handled);
 
             services.AddDbContext<TypiconDBContext>(optionsBuilder =>
             {

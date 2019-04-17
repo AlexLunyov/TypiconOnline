@@ -10,6 +10,7 @@ using TypiconOnline.Domain.Command;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.Query;
@@ -65,7 +66,7 @@ namespace TypiconOnline.Tests.Common
             container.Register<IOutputFormFactory, OutputFormFactory>();
             container.Register<IScheduleDataCalculator, ScheduleDataCalculator>();
 
-            container.Register(typeof(IDataQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconDTO).Assembly);
+            container.Register(typeof(IDataQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
             container.Register<IDataQueryProcessor, DataQueryProcessor>();
 
             container.RegisterSingleton(typeof(IJobRepository), jobRepository);
