@@ -27,7 +27,7 @@ namespace TypiconOnline.WebServices.Hosting
             {
                 foreach (var job in Jobs.Reserve(MAX_TASKS))
                 {
-                    Task.Factory.StartNew(() => Processor.ExecuteAsync(job));
+                    Task.Factory.StartNew(() => Processor.Execute(job));
                 }
 
                 Thread.Sleep(1000);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TypiconOnline.AppServices.Implementations.Extensions;
+using TypiconOnline.AppServices.Extensions;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain;
@@ -24,9 +24,9 @@ namespace TypiconOnline.AppServices.Jobs.Validation
         {
         }
 
-        public async Task ExecuteAsync(ValidateCommonRuleJob job)
+        public async Task<Result> ExecuteAsync(ValidateCommonRuleJob job)
         {
-            await Handle(job, ErrorConstants.CommonRule);
+            return await Handle(job, ErrorConstants.CommonRule);
         }
     }
 }

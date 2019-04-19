@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TypiconOnline.AppServices.Implementations.Extensions;
+using TypiconOnline.AppServices.Extensions;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Interfaces;
@@ -25,11 +25,13 @@ namespace TypiconOnline.AppServices.Jobs.Validation
         {
         }
 
-        protected async Task Handle(ValidateRuleJob<T> job, string entityName)
+        protected async Task<Result> Handle(ValidateRuleJob<T> job, string entityName)
         {
             Jobs.Start(job);
 
             var rule = DbContext.GetRule<T>(job.Id);
+
+            var result = Result.Ok();
 
             if (rule != null)
             {
@@ -68,8 +70,13 @@ namespace TypiconOnline.AppServices.Jobs.Validation
             }
             else
             {
-                Jobs.Fail(job, $"Правило {typeof(T).Name} с Id = {job.Id} для валидации не найдено.");
+                var err = $"Правило {typeof(T).Name} с Id = {job.Id} для валидации не найдено.";
+                Jobs.Fail(job, err);
+
+                result = Result.Fail(err);
             }
+
+            return result;
         }
     }
 }

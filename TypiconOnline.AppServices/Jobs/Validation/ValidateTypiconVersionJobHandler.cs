@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TypiconOnline.AppServices.Implementations.Extensions;
+using TypiconOnline.AppServices.Extensions;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain;
@@ -26,11 +26,13 @@ namespace TypiconOnline.AppServices.Jobs.Validation
         {
         }
 
-        public Task ExecuteAsync(ValidateTypiconVersionJob job)
+        public Task<Result> ExecuteAsync(ValidateTypiconVersionJob job)
         {
             Jobs.Start(job);
 
             var version = DbContext.GetTypiconVersion(job.Id);
+
+            var result = Result.Ok();
 
             version.OnSuccess(async () =>
             {
@@ -38,10 +40,13 @@ namespace TypiconOnline.AppServices.Jobs.Validation
             })
             .OnFailure(() =>
             {
-                Jobs.Fail(job, $"Версия Устава с Id = {job.Id} для валидации не найдена.");
+                var err = $"Версия Устава с Id = {job.Id} для валидации не найдена.";
+                Jobs.Fail(job, err);
+
+                result = Result.Fail(err);
             });
 
-            return Task.CompletedTask;
+            return Task.FromResult(result);
         }
 
         private async Task DoTheJob(ValidateTypiconVersionJob job, TypiconVersion version)

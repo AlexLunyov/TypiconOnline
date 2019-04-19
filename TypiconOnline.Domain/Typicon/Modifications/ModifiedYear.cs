@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Infrastructure.Common.Domain;
 
@@ -8,7 +9,7 @@ namespace TypiconOnline.Domain.Typicon.Modifications
     /// <summary>
     /// Хранилище объектов ModifiedYear, объединенных по году
     /// </summary>
-    public class ModifiedYear : IHasId<int>//, IAggregateRoot
+    public class ModifiedYear : IHasId<int>, ITypiconVersionChild
     {
         public ModifiedYear() { }
 

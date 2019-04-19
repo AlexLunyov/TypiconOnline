@@ -39,6 +39,11 @@ namespace TypiconOnline.Domain.Typicon
         public virtual TypiconEntity Typicon { get; set; }
 
         /// <summary>
+        /// Номер Версии Устава. При создании новых версий, номер увеличивается на единицу
+        /// </summary>
+        public int VersionNumber { get; set; }
+
+        /// <summary>
         /// Года с вычисленными переходящими праздниками
         /// </summary>
         public virtual List<ModifiedYear> ModifiedYears { get; set; }

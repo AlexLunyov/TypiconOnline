@@ -6,9 +6,13 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon.Psalter
 {
-    public class Kathisma : ValueObjectBase<ITypiconSerializer>, IHasId<int>, IPsalterElement
+    public class Kathisma : ValueObjectBase<ITypiconSerializer>, ITypiconVersionChild, IPsalterElement
     {
         public int Id { get; set; }
+        /// <summary>
+        /// Id Устава (TypiconVersion)
+        /// </summary>
+        public virtual int TypiconVersionId { get; set; }
         public virtual TypiconVersion TypiconVersion { get; set; }
         public int Number { get; set; }
         public virtual ItemText NumberName { get; set; }

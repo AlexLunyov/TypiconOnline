@@ -16,7 +16,7 @@ using JetBrains.Annotations;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Interfaces;
 using TypiconOnline.Repository.EFCore.DataBase;
-using TypiconOnline.AppServices.Implementations.Extensions;
+using TypiconOnline.AppServices.Extensions;
 
 namespace TypiconOnline.AppServices.Implementations
 {

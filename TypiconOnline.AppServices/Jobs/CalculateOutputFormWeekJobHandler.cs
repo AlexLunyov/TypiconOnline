@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using TypiconOnline.AppServices.Implementations.Extensions;
+using TypiconOnline.AppServices.Extensions;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Infrastructure.Common.Command;
@@ -32,7 +32,7 @@ namespace TypiconOnline.AppServices.Jobs
             //_commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
         }
 
-        public Task ExecuteAsync(CalculateOutputFormWeekJob job)
+        public Task<Result> ExecuteAsync(CalculateOutputFormWeekJob job)
         {
             _jobs.Start(job);
 
@@ -53,7 +53,7 @@ namespace TypiconOnline.AppServices.Jobs
                     _jobs.Recreate(job, DELAY);
                 });
 
-            return Task.CompletedTask;
+            return Task.FromResult(Result.Ok());
         }
 
         private Result CheckModifiedYearsExistance(int id, int year)

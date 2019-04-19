@@ -13,8 +13,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<CommonRule> builder)
         {
-            //builder.HasOne(e => e.Owner).
-            //    WithMany().IsRequired();
+            builder.HasKey(c => c.Id);
         }
     }
 }

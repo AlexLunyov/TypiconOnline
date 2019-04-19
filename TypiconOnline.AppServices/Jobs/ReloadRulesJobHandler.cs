@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
-using TypiconOnline.AppServices.Implementations.Extensions;
+using TypiconOnline.AppServices.Extensions;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.Command;
@@ -35,7 +35,7 @@ namespace TypiconOnline.AppServices.Jobs
             _jobs = jobs ?? throw new ArgumentNullException(nameof(jobs));
         }
 
-        public async Task ExecuteAsync(ReloadRulesJob job)
+        public Task<Result> ExecuteAsync(ReloadRulesJob job)
         {
             _jobs.Start(job);
 
@@ -44,6 +44,8 @@ namespace TypiconOnline.AppServices.Jobs
             //находим версию Устава
             var version = _dbContext.GetTypiconVersion(job.TypiconId, job.TypiconVersionStatus);
 
+            Result result = Result.Ok();
+
             Result.Combine(path, version)
                 .OnSuccess(() =>
                 {
@@ -51,9 +53,9 @@ namespace TypiconOnline.AppServices.Jobs
                 })
                 .OnSuccess(async () => 
                 {
-                    ClearModifiedYears(version.Value);
-
                     await _dbContext.UpdateTypiconVersionAsync(version.Value);
+
+                    await _dbContext.ClearModifiedYearsAsync(version.Value.Id);
 
                     await _dbContext.ClearOutputFormsAsync(version.Value.TypiconId);
 
@@ -62,7 +64,11 @@ namespace TypiconOnline.AppServices.Jobs
                 .OnFailure(err =>
                 {
                     _jobs.Fail(job, err);
+
+                    result = Result.Fail(err);
                 });
+
+            return Task.FromResult(result);
         }
 
 

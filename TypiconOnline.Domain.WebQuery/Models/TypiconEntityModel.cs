@@ -8,14 +8,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
         [SearchableString]
         [Sortable]
         public string Name { get; set; }
-        
-        
     }
 
-    public enum TypiconStatus
-    {
-        WaitingApprovement = 0,
-        Draft = 1,
-        Published = 2
-    }
+    
 }

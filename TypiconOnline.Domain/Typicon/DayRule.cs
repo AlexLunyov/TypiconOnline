@@ -7,14 +7,14 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
 {
-    public abstract class DayRule : TypiconRule, IDayRule
+    public abstract class DayRule : TemplateHavingRule, IDayRule
     {
         public DayRule() { }
 
         /// <summary>
         /// Список последований текстов служб для данного дня Устава
         /// </summary>
-        public virtual ICollection<DayRuleWorship> DayRuleWorships { get; set; } = new List<DayRuleWorship>();
+        public virtual List<DayRuleWorship> DayRuleWorships { get; set; } = new List<DayRuleWorship>();
 
         public IReadOnlyList<DayWorship> DayWorships
         {

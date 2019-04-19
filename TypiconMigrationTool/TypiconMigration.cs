@@ -120,7 +120,8 @@ namespace TypiconMigrationTool
                     Items = new List<ItemTextUnit>() { new ItemTextUnit("cs-ru", "Типикон") }
                 },
                 DefaultLanguage = DEFAULT_LANGUAGE,
-                OwnerId = user.Id
+                OwnerId = user.Id,
+                Status = TypiconStatus.Draft
             };
 
             _dbContext.Set<TypiconEntity>().Add(typicon);
@@ -129,7 +130,7 @@ namespace TypiconMigrationTool
             var typiconEntity = new TypiconVersion()
             {
                 TypiconId = typicon.Id,
-
+                VersionNumber = 1,
                 //Делаем сразу опубликованную версию
                 BDate = DateTime.Now
             };
@@ -163,8 +164,6 @@ namespace TypiconMigrationTool
                 {
                     sign.Number = (int)signMigrator.Number;
                 }
-
-                sign.SignName.AddOrUpdate(DEFAULT_LANGUAGE, row.Name);
 
                 if (signMigrator.TemplateId != null)
                 {

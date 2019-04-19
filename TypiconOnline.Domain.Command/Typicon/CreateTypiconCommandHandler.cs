@@ -6,6 +6,7 @@ using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Infrastructure.Common.Command;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Command.Typicon
@@ -22,12 +23,14 @@ namespace TypiconOnline.Domain.Command.Typicon
             DbContext.SaveChanges();
         }
 
-        public async Task ExecuteAsync(CreateTypiconCommand command)
+        public async Task<Result> ExecuteAsync(CreateTypiconCommand command)
         {
             var obj = Create(command);
             DbContext.Set<TypiconEntity>().Add(obj);
 
             await DbContext.SaveChangesAsync();
+
+            return Result.Ok();
         }
 
         private TypiconEntity Create(CreateTypiconCommand command)

@@ -8,9 +8,13 @@ namespace TypiconOnline.Domain.Typicon
     /// <summary>
     /// Базовый класс для всех главных элементов системы: правил компоновки богослужебных текстов
     /// </summary>
-    public abstract class RuleEntity : ValueObjectBase<IRuleSerializerRoot>, IHasId<int>
+    public abstract class RuleEntity : ValueObjectBase<IRuleSerializerRoot>, ITypiconVersionChild
     {
         IRuleElement _rule;
+
+        public RuleEntity() { }
+
+        //public RuleEntity(RuleEntity source) { }
 
         public int Id { get; set; }
 

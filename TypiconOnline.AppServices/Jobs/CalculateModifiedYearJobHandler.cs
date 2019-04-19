@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Implementations;
-using TypiconOnline.AppServices.Implementations.Extensions;
+using TypiconOnline.AppServices.Extensions;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Common;
@@ -10,6 +10,7 @@ using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
 namespace TypiconOnline.AppServices.Jobs
 {
@@ -27,7 +28,7 @@ namespace TypiconOnline.AppServices.Jobs
             _jobs = jobs ?? throw new ArgumentNullException(nameof(jobs));
         }
 
-        public virtual Task ExecuteAsync(CalculateModifiedYearJob job)
+        public virtual async Task<Result> ExecuteAsync(CalculateModifiedYearJob job)
         {
             //if (_dbContext.IsModifiedYearExists(job.TypiconVersionId, job.Year))
             //{
@@ -40,11 +41,11 @@ namespace TypiconOnline.AppServices.Jobs
             var modifiedYear = InnerCreate(job.TypiconVersionId, job.Year);
 
             //фиксируем изменения
-            _dbContext.UpdateModifiedYear(modifiedYear);
+            await _dbContext.UpdateModifiedYearAsync(modifiedYear);
 
             _jobs.Finish(job);
 
-            return Task.CompletedTask;
+            return Result.Ok();
         }
 
         protected virtual ModifiedYear InnerCreate(int typiconVersionId, int year)

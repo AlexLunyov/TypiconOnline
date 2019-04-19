@@ -6,30 +6,26 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Infrastructure.Common.Command;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
 namespace TypiconOnline.Domain.Command
 {
     public sealed class AsyncCommandProcessor : CommandProcessor, IDisposable
     {
-        private readonly Container container;
-
         public AsyncCommandProcessor(Container container) : base(container)
         {
         }
 
-        public override void Execute<TCommand>(TCommand command) 
+        public override Result Execute<TCommand>(TCommand command) 
         {
-            using (AsyncScopedLifestyle.BeginScope(container))
-            {
-                base.Execute(command);
-            }
+            return ExecuteAsync(command).Result;
         }
 
-        public override async Task ExecuteAsync<TCommand>(TCommand command) 
+        public override async Task<Result> ExecuteAsync<TCommand>(TCommand command) 
         {
-            using (AsyncScopedLifestyle.BeginScope(container))
+            using (AsyncScopedLifestyle.BeginScope(Container))
             {
-                await base.ExecuteAsync(command);
+                return await base.ExecuteAsync(command);
             }
         }
     }

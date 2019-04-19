@@ -6,32 +6,31 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Infrastructure.Common.Command;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
 namespace TypiconOnline.Domain.Command
 {
     public class CommandProcessor : ICommandProcessor, IDisposable
     {
-        private readonly Container container;
-
         public CommandProcessor(Container container)
         {
-            this.container = container;
+            Container = container;
+        }
+
+        protected Container Container { get; }
+
+        //[DebuggerStepThrough]
+        public virtual Result Execute<TCommand>(TCommand command) where TCommand : ICommand
+        {
+            return ExecuteAsync(command).Result;
         }
 
         //[DebuggerStepThrough]
-        public virtual void Execute<TCommand>(TCommand command) where TCommand : ICommand
+        public virtual async Task<Result> ExecuteAsync<TCommand>(TCommand command) where TCommand : ICommand
         {
             dynamic handler = GetHandler(command);
 
-            handler.Execute((dynamic)command);
-        }
-
-        //[DebuggerStepThrough]
-        public virtual async Task ExecuteAsync<TCommand>(TCommand command) where TCommand : ICommand
-        {
-            dynamic handler = GetHandler(command);
-
-            await handler.ExecuteAsync((dynamic)command);
+            return await handler.ExecuteAsync((dynamic)command);
         }
 
         private dynamic GetHandler<TCommand>(TCommand command) where TCommand : ICommand
@@ -39,7 +38,7 @@ namespace TypiconOnline.Domain.Command
             var handlerType =
                 typeof(ICommandHandler<>).MakeGenericType(command.GetType());
 
-            return container.GetInstance(handlerType);
+            return Container.GetInstance(handlerType);
         }
 
         public void Dispose()

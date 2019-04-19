@@ -13,6 +13,8 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<TypiconVersionError> builder)
         {
+            builder.HasKey(c => c.Id);
+
             builder.HasOne(e => e.TypiconVersion)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade)

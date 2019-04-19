@@ -15,6 +15,11 @@ namespace TypiconOnline.Domain.Typicon
     /// </summary>
     public class TypiconEntity : ValueObjectBase, IHasId<int>
     {
+        public TypiconEntity()
+        {
+            Status = TypiconStatus.WaitingApprovement;
+        }
+
         public int Id { get; set; }
 
         public virtual ItemText Name { get; set; }
@@ -33,6 +38,8 @@ namespace TypiconOnline.Domain.Typicon
         /// Владелец (создатель) Устава
         /// </summary>
         public virtual User Owner { get; set; }
+
+        public TypiconStatus Status { get; set; }
 
         /// <summary>
         /// Список на промежуточную таблицу для Редакторов Устава
@@ -72,5 +79,15 @@ namespace TypiconOnline.Domain.Typicon
                 AddBrokenConstraint(new BusinessConstraint("Значения языка по умолчанию указано неверно"));
             }
         }
+    }
+
+    public enum TypiconStatus
+    {
+        WaitingApprovement = 0,
+        Approving = 1,
+        Draft = 2,
+        Validating = 3,
+        Publishing = 4,
+        Published = 5
     }
 }

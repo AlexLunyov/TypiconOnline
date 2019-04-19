@@ -42,9 +42,13 @@ namespace TypiconOnline.Web.Controllers
 
         [Route("{id:int}/{date?}/{language?}")]
         [Breadcrumb("Устав")] 
-        public IActionResult Index(int id, DateTime date, string language)
+        public IActionResult Index(int? id, DateTime date, string language)
         {
-            var typicon = queryProcessor.Process(new TypiconQuery(id));
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var typicon = queryProcessor.Process(new TypiconQuery(id.Value));
 
             if (typicon.Success)
             {
@@ -58,7 +62,7 @@ namespace TypiconOnline.Web.Controllers
 
                 ViewBag.Date = date.ToString("dd-MM-yyyy");
 
-                var weekResult = _outputForms.GetWeek(id, date, language);
+                var weekResult = _outputForms.GetWeek(id.Value, date, language);
 
                 ViewBag.Week = weekResult;
             }
@@ -69,14 +73,19 @@ namespace TypiconOnline.Web.Controllers
         // GET api/<controller>/getweek/1/01-01-2019
         //[HttpPost]
         [Route("{id}/{date?}/{language?}")]
-        public IActionResult Download(int id, DateTime date, string language)
+        public IActionResult Download(int? id, DateTime date, string language)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             if (date == null || date == DateTime.MinValue)
             {
                 date = DateTime.Now;
             }
 
-            var weekResult = _outputForms.GetWeek(id, date, language);
+            var weekResult = _outputForms.GetWeek(id.Value, date, language);
 
             if (weekResult.Success)
             {
@@ -109,8 +118,13 @@ namespace TypiconOnline.Web.Controllers
         [HttpGet]
         [Route("{id}/{date}/{w?}/{sequenceParams?}")]
         [Breadcrumb(Title = "Последовательность", FromAction = "Index")]
-        public IActionResult Sequence(int id, DateTime date, int? w, SequenceParams sequenceParams)
+        public IActionResult Sequence(int? id, DateTime date, int? w, SequenceParams sequenceParams)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             string language = "cs-ru";
 
             if (date == null || date == DateTime.MinValue)
@@ -123,7 +137,7 @@ namespace TypiconOnline.Web.Controllers
                 language = "cs-ru";
             }
 
-            var dayResult = _outputForms.Get(id, date, language);
+            var dayResult = _outputForms.Get(id.Value, date, language);
 
             string result = "";
 

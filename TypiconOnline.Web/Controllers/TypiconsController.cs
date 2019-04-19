@@ -15,6 +15,8 @@ using TypiconOnline.Web.Extensions;
 using TypiconOnline.Web.Models.TypiconViewModels;
 using TypiconOnline.Domain.Command.Typicon;
 using TypiconOnline.Infrastructure.Common.Command;
+using TypiconOnline.AppServices.Interfaces;
+using TypiconOnline.AppServices.Jobs;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TypiconOnline.Web.Controllers
@@ -22,19 +24,23 @@ namespace TypiconOnline.Web.Controllers
     [Authorize(Roles = "Admin, Editor")]
     public class TypiconsController : Controller
     {
-        private const string DEFAULT_LANGUAGE = "cs-ru"; 
+        private const string DEFAULT_LANGUAGE = "cs-ru";
         private readonly IDataQueryProcessor _queryProcessor;
         private readonly ICommandProcessor _commandProcessor;
         private readonly UserManager<User> _userManager;
+        private readonly IJobRepository _jobs;
 
         public TypiconsController(
             IDataQueryProcessor queryProcessor,
             ICommandProcessor commandProcessor,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            IJobRepository jobs
+            )
         {
             _queryProcessor = queryProcessor;
             _commandProcessor = commandProcessor;
             _userManager = userManager;
+            _jobs = jobs;
         }
         // GET: /<controller>/
         public IActionResult Index()
@@ -58,7 +64,7 @@ namespace TypiconOnline.Web.Controllers
                 var user = await _userManager.GetUserAsync(User);
                 if (user == null)
                 {
-                    throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                    throw new ApplicationException($"Невозможно найти Пользователя с Id = '{_userManager.GetUserId(User)}'.");
                 }
 
                 var command = new CreateTypiconCommand(model.Name, model.DefaultLanguage, model.TemplateId, user.Id);
@@ -69,6 +75,22 @@ namespace TypiconOnline.Web.Controllers
             }
 
             return View(model);
+        }
+
+        //[HttpPost]
+        //[Authorize(Roles = "Admin")]
+        //[ValidateAntiForgeryToken]
+        //[Route("{id?}")]
+        public IActionResult Approve(int id)
+        {
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
+
+            _jobs.Create(new ApproveTypiconEntityJob(id));
+
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> LoadData([FromBody]DTParameters param)

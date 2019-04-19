@@ -41,17 +41,19 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
             foreach (var typ in queryResult)
             {
-                var status = GetStatus(typ);
+                var inProcess = typ.Status == TypiconStatus.Approving
+                                || typ.Status == TypiconStatus.Validating
+                                || typ.Status == TypiconStatus.Publishing;
 
                 var dto = new TypiconEntityFilteredModel()
                 {
                     Id = typ.Id,
                     //PublishedVersionId = vrs.Id,
                     Name = typ.Name.FirstOrDefault(query.Language).Text,
-                    Status = status.ToString(),
-                    Editable = status != TypiconStatus.WaitingApprovement,
-                    Deletable = isAdmin || typ.OwnerId == query.UserId,
-                    Approvable = isAdmin && status == TypiconStatus.WaitingApprovement
+                    Status = typ.Status.ToString(),
+                    Editable = !inProcess,
+                    Deletable = (isAdmin || typ.OwnerId == query.UserId) && !inProcess,
+                    Approvable = isAdmin && typ.Status == TypiconStatus.WaitingApprovement
                 };
 
                 result.Add(dto);

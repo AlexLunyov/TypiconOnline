@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using TypiconOnline.AppServices.Implementations.Extensions;
+using TypiconOnline.AppServices.Extensions;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.Command;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.AppServices.Jobs.Scheduled
@@ -26,7 +27,7 @@ namespace TypiconOnline.AppServices.Jobs.Scheduled
             _jobs = jobs ?? throw new ArgumentNullException(nameof(jobs));
         }
 
-        public Task ExecuteAsync(NextModifiedYearJob job)
+        public Task<Result> ExecuteAsync(NextModifiedYearJob job)
         {
             _jobs.Start(job);
 
@@ -51,7 +52,7 @@ namespace TypiconOnline.AppServices.Jobs.Scheduled
             //и запускаем ее снова для следующей даты
             _jobs.Create(job, job.NextDate);
 
-            return Task.CompletedTask;
+            return Task.FromResult(Result.Ok());
         }
 
     }

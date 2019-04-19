@@ -13,13 +13,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<DayRule> builder)
         {
-            //builder.HasOne(c => c.TypiconVersion)
-            //    .WithMany()
-            //    .HasForeignKey(c => c.TypiconVersionId)
-            //    .OnDelete(DeleteBehavior.Cascade);
-
-            //builder.HasMany(c => c.DayRuleWorships).
-            //    WithOne().HasForeignKey(c => c.DayRuleId);
+            builder.HasKey(c => c.Id);
 
             builder.Ignore(c => c.DayWorships);
 
