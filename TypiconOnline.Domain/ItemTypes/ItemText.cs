@@ -107,6 +107,19 @@ namespace TypiconOnline.Domain.ItemTypes
             return (result != null ) ? new ItemTextUnit(result.Language, result.Text) : default(ItemTextUnit);
         }
 
+        public string this[string language]
+        {
+            get
+            {
+                var found = Items.FirstOrDefault(c => c.Language == language);
+                return (found != null) ? found.Text : string.Empty;
+            }
+            set
+            {
+                AddOrUpdate(language, value);
+            }
+        }
+
         protected virtual void Build(ItemText source)
         {
             source.Items.ForEach(AddOrUpdate);

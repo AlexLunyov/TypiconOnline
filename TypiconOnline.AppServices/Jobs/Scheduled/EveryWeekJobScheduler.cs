@@ -44,10 +44,20 @@ namespace TypiconOnline.AppServices.Jobs.Scheduled
             {
                 var date = DateTime.Now;
 
-                while (date.DayOfWeek != DayOfWeek)
+                //если тот же день недели, переносим ровно на неделю
+                if (date.DayOfWeek == DayOfWeek)
                 {
-                    date = date.AddDays(1);
+                    date = date.AddDays(7);
                 }
+                else
+                {
+                    //иначе находим следующие день недели
+                    while (date.DayOfWeek != DayOfWeek)
+                    {
+                        date = date.AddDays(1);
+                    }
+                }
+                
 
                 return new DateTime(date.Year, date.Month, date.Day, Hours, Minutes, 0);
             }

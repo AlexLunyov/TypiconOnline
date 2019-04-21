@@ -122,21 +122,46 @@ namespace TypiconOnline.Web.Controllers
 
 
         [HttpGet]
-        public IActionResult Edit(string id)
+        public IActionResult Edit(int id)
         {
-            try
+            if (id < 1)
             {
-                if (string.IsNullOrEmpty(id))
+                return NotFound();
+            }
+
+            var typicon = _queryProcessor.Process(new TypiconEditQuery(id));
+
+            if (typicon == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(typicon.Value);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(TypiconEntityEditModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
                 {
-                    return RedirectToAction("ShowGrid", "DemoGrid");
+                    throw new ApplicationException($"Невозможно найти Пользователя с Id = '{_userManager.GetUserId(User)}'.");
                 }
 
-                return View("Edit");
+                //проверить на права
+
+                var command = new EditTypiconCommand(model.Id, model.Name, model.DefaultLanguage);
+
+                await _commandProcessor.ExecuteAsync(command);
+
+                return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
-            {
-                throw;
-            }
+
+            return View(model);
         }
 
         [HttpPost]

@@ -120,5 +120,10 @@ namespace TypiconOnline.Domain.ItemTypes
         /// <returns></returns>
         public static string GetLocal(this ItemText item) => item.Items.FirstOrDefault()?.Text;
 
+        public static void ReplaceValues(this ItemText item, ItemText replace)
+        {
+            item.Items.Clear();
+            replace.Items.ForEach(c => item.AddOrUpdate(c));
+        }
     }
 }

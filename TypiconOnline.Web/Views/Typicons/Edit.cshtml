@@ -1,0 +1,250 @@
+﻿@model TypiconEntityEditModel
+@{
+    ViewData["Title"] = "Редактирование Устава";
+}
+<div class="row">
+    <div class="col-12">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#panel_properties">Свойства</a></li>
+            <li><a data-toggle="tab" href="#panel_jobs">Операции</a></li>
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    Редактирование Правил
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a asp-controller="Sign" asp-action="Index" asp-route-id="@Model.Id">Знаки служб</a></li>
+                    <li><a asp-controller="MenologyRule" asp-action="Index" asp-route-id="@Model.Id">Правила Минеи</a></li>
+                    <li><a asp-controller="TriodionRule" asp-action="Index" asp-route-id="@Model.Id">Правила Триоди</a></li>
+                    <li><a asp-controller="CommonRule" asp-action="Index" asp-route-id="@Model.Id">Общие Правила</a></li>
+                    <li><a asp-controller="ExplicitAddRule" asp-action="Index" asp-route-id="@Model.Id">Явные Правила</a></li>
+                    <li><a asp-controller="Kathisma" asp-action="Index" asp-route-id="@Model.Id">Кафизмы</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="tab-content">
+              <div id="panel_properties" class="tab-pane fade in active">
+                  <h2>Редактирование свойств Устава</h2>
+                  <form asp-action="Edit" method="post">
+                      <div asp-validation-summary="All" class="text-danger"></div>
+                      <div class="table-wrapper col-md-6">
+                          <div class="table-title">
+                              <div class="row">
+                                  <div class="col-sm-8"><h2>Наименование</h2></div>
+                                  <div class="col-sm-4">
+                                      <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Добавить</button>
+                                  </div>
+                              </div>
+                          </div>
+                          <table id="itemtext" class="table table-bordered">
+                              <thead>
+                                  <tr>
+                                      <th>Язык</th>
+                                      <th>Значение</th>
+                                      <th>Действия</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  @for (int i = 0; i < Model.Name.Items.Count; i++)
+                                  {
+                                      <tr>
+                                          <td class="language">@Model.Name.Items[i].Language</td>
+                                          <td class="text">@Model.Name.Items[i].Text</td>
+                                          <td>
+                                              <input class="language" type="hidden" asp-for="@Model.Name.Items[i].Language" />
+                                              <input class="text" type="hidden" asp-for="@Model.Name.Items[i].Text" />
+                                              <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                                              <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                              <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                          </td>
+                                      </tr>
+                                  }
+                              </tbody>
+                          </table>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="form-group table-title col-md-6">
+                          <h2>Язык по умолчанию</h2>
+                          <input asp-for="DefaultLanguage" class="form-control" />
+                          <span asp-validation-for="DefaultLanguage" class="text-danger"></span>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="form-group col-md-6"><div class="validation" asp-validation-summary="ModelOnly"></div></div>
+                      <div class="clearfix"></div>
+                      <div class="form-group">
+                          <div class="col-sm-12 col-md-6 text-right">
+                              <button class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Сохранить</button>
+                          </div>
+                      </div>
+                  </form>
+                </div>
+              <div id="panel_jobs" class="tab-pane fade">
+                  <h2>Операции над Уставом</h2>
+                  <button class="btn btn-primary" asp-action="Publish" asp-route-id="@Model.Id">Опубликовать черновик Устава</button>
+              </div>        
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style type="text/css">
+
+        /*.table-wrapper {
+            width: 700px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }*/
+
+        .table-title {
+            padding-bottom: 10px;
+            margin: 0 0 10px;
+        }
+
+            .table-title h2 {
+                margin: 6px 0 0;
+                font-size: 22px;
+            }
+
+            .table-title .add-new {
+                float: right;
+                height: 30px;
+                font-weight: bold;
+                font-size: 12px;
+                text-shadow: none;
+                min-width: 100px;
+                border-radius: 50px;
+                line-height: 13px;
+            }
+
+                .table-title .add-new i {
+                    margin-right: 4px;
+                }
+
+        table.table {
+            table-layout: fixed;
+        }
+
+            table.table tr th, table.table tr td {
+                border-color: #e9e9e9;
+            }
+
+            table.table th i {
+                font-size: 13px;
+                margin: 0 5px;
+                cursor: pointer;
+            }
+
+            table.table th:last-child {
+                width: 100px;
+            }
+
+            table.table td a {
+                cursor: pointer;
+                display: inline-block;
+                margin: 0 5px;
+                min-width: 24px;
+            }
+
+                table.table td a.add {
+                    color: #27C46B;
+                }
+
+                table.table td a.edit {
+                    color: #FFC107;
+                }
+
+                table.table td a.delete {
+                    color: #E34724;
+                }
+
+            table.table td i {
+                font-size: 19px;
+            }
+
+            table.table td a.add i {
+                font-size: 24px;
+                margin-right: -1px;
+                position: relative;
+                top: 3px;
+            }
+
+            table.table .form-control {
+                height: 32px;
+                line-height: 32px;
+                box-shadow: none;
+                border-radius: 2px;
+            }
+
+                table.table .form-control.error {
+                    border-color: #f50000;
+                }
+
+            table.table td .add {
+                display: none;
+            }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            var actions = $("table td:last-child").html();
+            // Append table with add row form on add new button click
+            $(".add-new").click(function () {
+                $(this).attr("disabled", "disabled");
+                var index = $("table tbody tr:last-child").index();
+                var row = '<tr>' +
+                    '<td class="language"><input type="text" class="form-control" name="Language" id="language"></td>' +
+                    '<td class="text"><input type="text" class="form-control" name="Text" id="text"></td>' +
+                    '<td>' + actions + '</td>' +
+                    '</tr>';
+                $("table").append(row);
+                $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
+                $("table tbody tr:last-child input.text").attr("name", "Name.Items[" + (index + 1) + "].Text");
+                $("table tbody tr:last-child input.language").attr("name", "Name.Items[" + (index + 1) + "].Language");
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+            // Add row on add button click
+            $(document).on("click", ".add", function () {
+                var empty = false;
+                var input = $(this).parents("tr").find('input[type="text"]');
+                input.each(function () {
+                    if (!$(this).val()) {
+                        $(this).addClass("error");
+                        empty = true;
+                    } else {
+                        $(this).removeClass("error");
+                    }
+                });
+                $(this).parents("tr").find(".error").first().focus();
+                if (!empty) {
+                    input.each(function () {
+                        $(this).parent("td").parent("tr").find("td input." + $(this).attr("id")).val($(this).val());
+                        $(this).parent("td").html($(this).val());
+                    });
+                    $(this).parents("tr").find(".add, .edit").toggle();
+                    $(".add-new").removeAttr("disabled");
+                }
+            });
+            // Edit row on edit button click
+            $(document).on("click", ".edit", function () {
+                $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '" id="' + $(this).attr("class") + '">');
+                });
+                $(this).parents("tr").find(".add, .edit").toggle();
+                $(".add-new").attr("disabled", "disabled");
+            });
+            // Delete row on delete button click
+            $(document).on("click", ".delete", function () {
+                $(this).parents("tr").remove();
+                $(".add-new").removeAttr("disabled");
+
+                $("table tbody tr").each(function (i) {
+                    $("td:last-child input.text").attr("name", "Name.Items[" + i + "].Text");
+                    $("td:last-child input.language").attr("name", "Name.Items[" + i + "].Language");
+                })
+            });
+        });
+    </script>
+}
