@@ -26,18 +26,7 @@ $(() => {
             ajax: {
                 type: "POST",
                 url: '/Typicons/LoadData/',
-                contentType: "application/json; charset=utf-8",
-                async: true,
-                headers: {
-                    "XSRF-TOKEN": document.querySelector('[name="__RequestVerificationToken"]').value
-                },
-                data: function (data) {
-                    //let additionalValues = [];
-                    //additionalValues[0] = "Additional Parameters 1";
-                    //additionalValues[1] = "Additional Parameters 2";
-                    //data.AdditionalValues = additionalValues;
-                    return JSON.stringify(data);
-                }
+                dataType: 'json'
             },
             columns: [
                 {

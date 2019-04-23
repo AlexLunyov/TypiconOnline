@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="JqueryDataTables.ServerSide.AspNetCoreWeb" Version="1.2.1" />
   </ItemGroup>
 

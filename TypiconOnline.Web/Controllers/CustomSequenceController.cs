@@ -17,10 +17,11 @@ using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Web.Models.CustomSequenceModels;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Web.Extensions;
+using TypiconOnline.Domain.Identity;
 
 namespace TypiconOnline.Web.Controllers
 {
-    [Authorize(Roles = "Admin, Editor")]
+    [Authorize(Roles = RoleConstants.AdminAndEditorRoles)]
     public class CustomSequenceController : Controller
     {
         private readonly IDataQueryProcessor _queryProcessor;

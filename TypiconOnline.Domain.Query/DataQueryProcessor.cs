@@ -10,28 +10,24 @@ namespace TypiconOnline.Domain.Query
 {
     public class DataQueryProcessor : IDataQueryProcessor, IDisposable
     {
-        private readonly Container container;
-        private readonly Scope scope;
+        protected Container Container { get; }
 
         public DataQueryProcessor(Container container)
         {
-            this.container = container;
-
-            scope = AsyncScopedLifestyle.BeginScope(container);
+            Container = container;
         }
 
         public void Dispose()
         {
-            scope.Dispose();
         }
 
         [DebuggerStepThrough]
-        public TResult Process<TResult>(IDataQuery<TResult> query)
+        public virtual TResult Process<TResult>(IDataQuery<TResult> query)
         {
             var handlerType =
                 typeof(IDataQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
 
-            dynamic handler = container.GetInstance(handlerType);
+            dynamic handler = Container.GetInstance(handlerType);
 
             return handler.Handle((dynamic)query);
         }

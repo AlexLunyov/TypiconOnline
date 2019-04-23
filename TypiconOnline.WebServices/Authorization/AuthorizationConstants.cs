@@ -4,10 +4,10 @@ using System.Text;
 
 namespace TypiconOnline.WebServices.Authorization
 {
-    public class AuthorizationConstants
+    public static class AuthorizationConstants
     {
-        public static readonly string CreateTypiconName = "Create";
-        public static readonly string EditTypiconName = "Edit";
-        public static readonly string DeleteTypiconName = "Delete";
+        public const string CreateTypiconName = "Create";
+        public const string EditTypiconName = "Edit";
+        public const string DeleteTypiconName = "Delete";
     }
 }

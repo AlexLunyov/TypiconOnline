@@ -4,10 +4,11 @@ using System.Text;
 
 namespace TypiconOnline.Domain.Identity
 {
-    public class RoleConstants
+    public static class RoleConstants
     {
-        public static readonly string AdministratorsRole = "Admin";
-        public static readonly string EditorsRole = "Editor";
-        public static readonly string TypesettersRole = "Typesetter";
+        public const string AdministratorsRole = "Admin";
+        public const string EditorsRole = "Editor";
+        public const string TypesettersRole = "Typesetter";
+        public const string AdminAndEditorRoles = "Admin, Editor";
     }
 }

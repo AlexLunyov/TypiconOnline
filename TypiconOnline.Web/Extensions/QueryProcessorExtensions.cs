@@ -16,5 +16,19 @@ namespace TypiconOnline.Web.Extensions
 
             return typicons.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString() });
         }
+
+        public static IEnumerable<SelectListItem> GetSigns(this IDataQueryProcessor queryProcessor, int typiconId, string language, int? exceptSignId = null)
+        {
+            var signs = queryProcessor.Process(new AllSignsQuery(typiconId, language, exceptSignId));
+
+            if (signs.Success)
+            {
+                return signs.Value.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString() });
+            }
+            else
+            {
+                return new List<SelectListItem>();
+            }
+        }
     }
 }

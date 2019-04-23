@@ -121,7 +121,10 @@ namespace TypiconOnline.AppServices.Jobs
         {
             var result = _repo.Reserve(count);
 
-            _logger.Log(LogLevel.Information, $"Called Reserve({count}) with {result.Count()} job result");
+            if (result.Count() > 0)
+            {
+                _logger.Log(LogLevel.Information, $"Called Reserve({count}) with {result.Count()} job result");
+            }
 
             return result;
         }

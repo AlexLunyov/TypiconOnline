@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public class TypiconEntityFilteredModel: TypiconEntityModel
+    public class TypiconEntityFilteredModel: TypiconEntityModel, IGridModel
     {
         [Sortable]
         public string Status { get; set; }

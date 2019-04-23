@@ -15,14 +15,6 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public CreateTypiconCommandHandler(TypiconDBContext dbContext) : base(dbContext) { }
 
-        public void Execute(CreateTypiconCommand command)
-        {
-            var obj = Create(command);
-            DbContext.Set<TypiconEntity>().Add(obj);
-
-            DbContext.SaveChanges();
-        }
-
         public async Task<Result> ExecuteAsync(CreateTypiconCommand command)
         {
             var obj = Create(command);

@@ -32,6 +32,14 @@ namespace TypiconOnline.WebServices.Authorization
                 return Task.FromResult(0);
             }
 
+            //нельзя редактировать, если Устав находится в каком-то процессе
+            if (resource.Status == TypiconStatus.Approving
+                || resource.Status == TypiconStatus.Publishing
+                || resource.Status == TypiconStatus.Validating)
+            {
+                return Task.FromResult(0);
+            }
+
             // Administrators can do anything.
             if (context.User.IsInRole(RoleConstants.AdministratorsRole))
             {

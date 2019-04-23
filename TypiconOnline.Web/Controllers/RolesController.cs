@@ -9,7 +9,7 @@ using TypiconOnline.Web.Models.RolesViewModels;
 
 namespace CustomIdentityApp.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = RoleConstants.AdministratorsRole)]
     public class RolesController : Controller
     {
         RoleManager<Role> _roleManager;

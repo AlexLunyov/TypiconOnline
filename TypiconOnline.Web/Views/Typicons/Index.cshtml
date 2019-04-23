@@ -1,4 +1,6 @@
-﻿
+﻿<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
 <div class="container">
     <div class="row">
         <div class="col-12"><h1>Уставы</h1></div>
@@ -20,7 +22,6 @@
                             <th></th>
                             <th></th>
                         </tr>
-
                     </thead>
                 </table>
             </div>
@@ -28,8 +29,80 @@
     </div>
 </div>
 
-<script>
+@section Scripts {
 
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script>
+    $(document).ready(function ()
+    {
+        $('#typiconGrid').DataTable({
+            language: {
+                processing: "Загрузка данных...",
+                zeroRecords: "Не найдено ни одного совпадения."
+            },
+            processing: true, // for show progress bar
+            serverSide: true, // for process server side
+            filter: true, // this is for disable filter (search box)
+            orderMulti: false, // for disable multiple column at once
+            ajax: {
+                    "url": "/Typicons/LoadData/",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+            columns: [
+                {
+                    name: "Id",
+                    data: "Id",
+                    visible: false,
+                    searchable: false
+                },
+                {
+                    name: "Name",
+                    data: "Name",
+                },
+                {
+                    name: "Status",
+                    data: "Status",
+                }
+                , {
+                    name: "Editable",
+                    data: "Editable",
+                    visible: false,
+                    searchable: false
+                }
+                , {
+                    name: "Deletable",
+                    data: "Deletable",
+                    visible: false,
+                    searchable: false
+                }
+                , {
+                    name: "Approvable",
+                    data: "Approvable",
+                    visible: false,
+                    searchable: false
+                }
+                , {
+                    title: "",
+                    render: function (data, type, row) {
+                        var str = "";
+                        if (row['Approvable']) {
+                            str = str + '&nbsp;<a class="btn btn-success" href="/Typicons/Approve/' + row['Id'] + '">Утвердить</>';
+                        }
+                        if (row['Editable']) {
+                            str = str + '&nbsp;<a class="btn btn-primary" href="/Typicons/Edit/' + row['Id'] + '">Редактировать</>';
+                        }
+                        if (row['Deletable']) {
+                            str = str + '&nbsp;<a class="btn btn-danger" href="/Typicons/Delete/' + row['Id'] + '">Удалить</>';
+                        }
+                        return str;
+                    },
+                    orderable: false
+                }
+            ]
+        });
+    });
 
 
     function DeleteData(CustomerID)
@@ -45,7 +118,7 @@
         }
 
 
-        function Delete(CustomerID)
+    function Delete(CustomerID)
     {
         var url = '@Url.Content("~/")' + "DemoGrid/Delete";
 
@@ -63,13 +136,8 @@
                 });
     }
 
-</script>
-@section Scripts {
-    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
-    <script src="~/lib/momentjs/moment.min.js" asp-append-version="true"></script>
-    <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
-    <script src="~/lib/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
-    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
-    <script src="~/js/typicons.js" asp-append-version="true"></script>
+    </script>
+
+
 }
 

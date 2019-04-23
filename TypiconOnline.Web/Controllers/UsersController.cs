@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CustomIdentityApp.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = RoleConstants.AdministratorsRole)]
     public class UsersController : Controller
     {
         UserManager<User> _userManager;

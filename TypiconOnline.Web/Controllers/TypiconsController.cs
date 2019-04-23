@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq.Dynamic;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Domain.WebQuery.Typicon;
 using Microsoft.AspNetCore.Authorization;
@@ -17,28 +16,26 @@ using TypiconOnline.Domain.Command.Typicon;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Jobs;
+using System.Linq.Expressions;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TypiconOnline.Web.Controllers
 {
-    [Authorize(Roles = "Admin, Editor")]
-    public class TypiconsController : Controller
+    [Authorize(Roles = RoleConstants.AdminAndEditorRoles)]
+    public class TypiconsController : TypiconBaseController<TypiconEntityFilteredModel>
     {
         private const string DEFAULT_LANGUAGE = "cs-ru";
-        private readonly IDataQueryProcessor _queryProcessor;
-        private readonly ICommandProcessor _commandProcessor;
         private readonly UserManager<User> _userManager;
         private readonly IJobRepository _jobs;
 
         public TypiconsController(
-            IDataQueryProcessor queryProcessor,
             ICommandProcessor commandProcessor,
             UserManager<User> userManager,
-            IJobRepository jobs
-            )
+            IJobRepository jobs,
+            IDataQueryProcessor queryProcessor,
+            IAuthorizationService authorizationService
+            ) : base(queryProcessor, authorizationService, commandProcessor)
         {
-            _queryProcessor = queryProcessor;
-            _commandProcessor = commandProcessor;
             _userManager = userManager;
             _jobs = jobs;
         }
@@ -51,7 +48,7 @@ namespace TypiconOnline.Web.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Typicons = _queryProcessor.GetTypicons();
+            ViewBag.Typicons = QueryProcessor.GetTypicons();
 
             return View();
         }
@@ -69,7 +66,7 @@ namespace TypiconOnline.Web.Controllers
 
                 var command = new CreateTypiconCommand(model.Name, model.DefaultLanguage, model.TemplateId, user.Id);
 
-                await _commandProcessor.ExecuteAsync(command);
+                await CommandProcessor.ExecuteAsync(command);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -93,7 +90,7 @@ namespace TypiconOnline.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> LoadData([FromBody]DTParameters param)
+        public async Task<IActionResult> LoadData()
         {
             try
             {
@@ -103,15 +100,7 @@ namespace TypiconOnline.Web.Controllers
                     throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
                 }
 
-                var data = _queryProcessor.Process(new AllTypiconsFilteredQuery(user.Id, DEFAULT_LANGUAGE));
-
-                return new JsonResult(new DTResult<TypiconEntityFilteredModel>
-                {
-                    draw = param.Draw,
-                    data = data,
-                    recordsFiltered = data.Count(),
-                    recordsTotal = data.Count()
-                });
+                return await LoadGridData(new AllTypiconsFilteredQuery(user.Id, DEFAULT_LANGUAGE));
             }
             catch (Exception e)
             {
@@ -129,9 +118,9 @@ namespace TypiconOnline.Web.Controllers
                 return NotFound();
             }
 
-            var typicon = _queryProcessor.Process(new TypiconEditQuery(id));
+            var typicon = QueryProcessor.Process(new TypiconEditQuery(id));
 
-            if (typicon == null)
+            if (typicon.Failure)
             {
                 return NotFound();
             }
@@ -146,17 +135,15 @@ namespace TypiconOnline.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.GetUserAsync(User);
-                if (user == null)
-                {
-                    throw new ApplicationException($"Невозможно найти Пользователя с Id = '{_userManager.GetUserId(User)}'.");
-                }
-
                 //проверить на права
+                if (! await IsAuthorizedToEdit(model.Id))
+                {
+                    return NotFound();
+                }
 
                 var command = new EditTypiconCommand(model.Id, model.Name, model.DefaultLanguage);
 
-                await _commandProcessor.ExecuteAsync(command);
+                await CommandProcessor.ExecuteAsync(command);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -191,6 +178,9 @@ namespace TypiconOnline.Web.Controllers
             }
         }
 
-
+        protected override Expression<Func<TypiconEntityFilteredModel, bool>> BuildExpression(string searchValue)
+        {
+            return m => m.Name == searchValue;
+        }
     }
 }

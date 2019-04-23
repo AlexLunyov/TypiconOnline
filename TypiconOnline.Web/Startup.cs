@@ -24,10 +24,25 @@ namespace TypiconOnline.Web
     public class Startup
     {
         private Container container = new Container();
+        private readonly IHostingEnvironment _hostingEnv;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+            if (env.IsDevelopment())
+            {
+                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
+                builder.AddUserSecrets<Startup>();
+            }
+
+            builder.AddEnvironmentVariables();
+            Configuration = builder.Build();
+
+            _hostingEnv = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -56,7 +71,7 @@ namespace TypiconOnline.Web
 
             IntegrateSimpleInjector(services);
 
-            services.AddTypiconOnlineService(Configuration, container);
+            services.AddTypiconOnlineService(Configuration, container, _hostingEnv);
 
             services
                 .AddAntiforgery(options => options.HeaderName = "XSRF-TOKEN")

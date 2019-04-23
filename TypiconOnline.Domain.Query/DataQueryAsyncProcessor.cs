@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
+using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query
@@ -11,12 +12,13 @@ namespace TypiconOnline.Domain.Query
     {
         public DataQueryAsyncProcessor(Container container) : base(container)
         {
-            using (AsyncScopedLifestyle.BeginScope(container))
-            {
-                var dbContext = container.GetInstance<TypiconDBContext>();
+        }
 
-                container.RegisterInstance(dbContext);
-            }
+        public override TResult Process<TResult>(IDataQuery<TResult> query)
+        {
+            AsyncScopedLifestyle.BeginScope(Container);
+
+            return base.Process(query);
         }
     }
 }

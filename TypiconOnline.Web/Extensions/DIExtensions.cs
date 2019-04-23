@@ -45,6 +45,9 @@ using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Web.Controllers;
 using TypiconOnline.AppServices.Jobs.Scheduled;
 using TypiconOnline.Domain.WebQuery.Models;
+using Microsoft.AspNetCore.Authorization;
+using TypiconOnline.WebServices.Authorization;
+using Microsoft.AspNetCore.Hosting;
 
 namespace TypiconOnline.Web
 {
@@ -53,7 +56,10 @@ namespace TypiconOnline.Web
     /// </summary>
     public static class DIExtensions
     {
-        public static void AddTypiconOnlineService(this IServiceCollection services, IConfiguration configuration, Container container)
+        public static void AddTypiconOnlineService(this IServiceCollection services
+            , IConfiguration configuration
+            , Container container,
+            IHostingEnvironment hostingEnv)
         {
             ////typiconservices
             //services.AddScoped<IEvangelionContext, EvangelionContext>();
@@ -88,14 +94,21 @@ namespace TypiconOnline.Web
             container.Register<IConfigurationRepository>(() => new ConfigurationRepository(configuration));
 
             //JobRepository
-            container.RegisterSingleton<IJobRepository>(() 
+            if (hostingEnv.IsDevelopment())
+            {
+                container.RegisterSingleton<IJobRepository>(() => new JobRepository());
+            }
+            else
+            {
+                container.RegisterSingleton<IJobRepository>(()
                 => new JobRepository(
                     //каждое воскресенье в 02.00 вычислять расписание на через следующую неделю
                     new NextWeekOutputFormsJob(new EveryWeekJobScheduler(DayOfWeek.Sunday, 02, 0), 2)
                     //каждое 1 декабря вычисляем переходящие праздники на следующий год
                     , new NextModifiedYearJob(new EveryYearJobScheduler(12, 1, 3, 0), 1)));
 
-            container.RegisterDecorator<IJobRepository, LoggingJobRepository>(Lifestyle.Singleton);
+                container.RegisterDecorator<IJobRepository, LoggingJobRepository>(Lifestyle.Singleton);
+            }
 
             //For SQLite
             //container.Register<JobHostedService>();
@@ -145,6 +158,12 @@ namespace TypiconOnline.Web
                 //PostgreSQL
                 //optionsBuilder.UseNpgsql(configuration.GetConnectionString("Postgre"));
             });
+
+            #region AuthorizationHandlers
+            // Authorization handlers.
+            services.AddScoped<IAuthorizationHandler,
+                                  TypiconCanEditAuthorizationHandler>();
+            #endregion
         }
     }
 }
