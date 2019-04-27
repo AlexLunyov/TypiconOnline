@@ -54,9 +54,6 @@ namespace TypiconOnline.Web
                 .AddEntityFrameworkStores<TypiconDBContext>()
                 .AddDefaultTokenProviders();
             
-            //services.AddTransient<IUserStore<User>, UserStore>();
-            //services.AddTransient<IRoleStore<UserRole>, RoleStore>();
-
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
@@ -67,11 +64,16 @@ namespace TypiconOnline.Web
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
+            //breadcrumbs
             services.AddBreadcrumbs(GetType().Assembly);
 
+            //DI
             IntegrateSimpleInjector(services);
-
             services.AddTypiconOnlineService(Configuration, container, _hostingEnv);
+
+            //session
+            services.AddDistributedMemoryCache();
+            services.AddSession();
 
             services
                 .AddAntiforgery(options => options.HeaderName = "XSRF-TOKEN")
@@ -107,6 +109,8 @@ namespace TypiconOnline.Web
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

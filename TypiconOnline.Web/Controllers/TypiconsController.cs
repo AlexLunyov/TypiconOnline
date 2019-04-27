@@ -17,6 +17,7 @@ using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Jobs;
 using System.Linq.Expressions;
+using TypiconOnline.Domain.WebQuery.Interfaces;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TypiconOnline.Web.Controllers
@@ -182,5 +183,6 @@ namespace TypiconOnline.Web.Controllers
         {
             return m => m.Name == searchValue;
         }
+
     }
 }

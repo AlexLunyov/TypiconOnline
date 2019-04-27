@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TypiconOnline.Domain.Query\TypiconOnline.Domain.Query.csproj" />
+    <ProjectReference Include="..\TypiconOnline.Domain.Rules\TypiconOnline.Domain.Rules.csproj" />
   </ItemGroup>
 
 </Project>

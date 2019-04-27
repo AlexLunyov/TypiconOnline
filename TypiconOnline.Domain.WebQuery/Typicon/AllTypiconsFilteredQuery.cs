@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TypiconOnline.Domain.WebQuery.Interfaces;
 using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
-    public class AllTypiconsFilteredQuery : IDataQuery<Result<IQueryable<TypiconEntityFilteredModel>>>
+    public class AllTypiconsFilteredQuery : IGridQuery<TypiconEntityFilteredModel>
     {
         public AllTypiconsFilteredQuery() { }
 
@@ -19,5 +20,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         public int UserId { get; set; }
 
         public string Language { get; } = "cs-ru";
+
+        public string GetKey() => $"{nameof(AllTypiconsFilteredQuery)}.{UserId}.{Language}";
     }
 }

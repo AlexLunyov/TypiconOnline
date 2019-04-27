@@ -9,18 +9,17 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
-    public class AllSignsQuery : IGridQuery<SignModel>
+    public class MenologyDayWorshipQuery : IDataQuery<Result<IQueryable<MenologyDayWorshipModel>>>
     {
-        public AllSignsQuery(int typiconId, string language, int? exceptSignId = null)
+        public MenologyDayWorshipQuery(DateTime? date, string language)
         {
-            TypiconId = typiconId;
+            Date = date;
             Language = language;
-            ExceptSignId = exceptSignId;
         }
-        public int TypiconId { get; }
+        /// <summary>
+        /// LeapDate
+        /// </summary>
+        public DateTime? Date { get; }
         public string Language { get; }
-        public int? ExceptSignId { get; }
-
-        public string GetKey() => $"{nameof(AllSignsQuery)}.{TypiconId}.{Language}.{ExceptSignId}";
     }
 }

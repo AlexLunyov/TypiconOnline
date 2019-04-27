@@ -9,18 +9,16 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
-    public class AllSignsQuery : IGridQuery<SignModel>
+    public class AllMenologyRulesQuery : IGridQuery<MenologyRuleModel>
     {
-        public AllSignsQuery(int typiconId, string language, int? exceptSignId = null)
+        public AllMenologyRulesQuery(int typiconId, string language)
         {
             TypiconId = typiconId;
             Language = language;
-            ExceptSignId = exceptSignId;
         }
         public int TypiconId { get; }
         public string Language { get; }
-        public int? ExceptSignId { get; }
 
-        public string GetKey() => $"{nameof(AllSignsQuery)}.{TypiconId}.{Language}.{ExceptSignId}";
+        public string GetKey() => $"{nameof(AllMenologyRulesQuery)}.{TypiconId}.{Language}";
     }
 }

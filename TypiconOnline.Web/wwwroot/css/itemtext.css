@@ -47,6 +47,10 @@ table.table {
         cursor: pointer;
     }
 
+    table.table th:last-child.dayworships {
+        width: 180px;
+    }
+
     table.table th:last-child {
         width: 100px;
     }

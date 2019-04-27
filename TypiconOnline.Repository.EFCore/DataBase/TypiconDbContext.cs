@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 using TypiconOnline.Domain;
 using TypiconOnline.Domain.Books.Katavasia;
@@ -34,6 +35,10 @@ namespace TypiconOnline.Repository.EFCore.DataBase
         {
             //Включаем ленивую загрузку всех связанных свойств
             optionsBuilder.UseLazyLoadingProxies();
+
+            //Игнорируем warnings
+
+            optionsBuilder.ConfigureWarnings(warnings => warnings.Log(CoreEventId.DetachedLazyLoadingWarning));
         }
 
         #region Modeling

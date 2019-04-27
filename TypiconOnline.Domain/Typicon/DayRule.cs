@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Typicon
         {
             get
             {
-                (DayRuleWorships as List<DayRuleWorship>).Sort();
+                DayRuleWorships.Sort();
                 
                 return (from drw in DayRuleWorships select drw.DayWorship).ToList();
             }

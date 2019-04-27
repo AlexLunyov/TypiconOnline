@@ -55,9 +55,9 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 });
 
             //ужасная мера
-            result = result
-                .ToList()
-                .AsQueryable();
+            //result = result
+            //    .ToList()
+            //    .AsQueryable();
 
 
             return Result.Ok(result);

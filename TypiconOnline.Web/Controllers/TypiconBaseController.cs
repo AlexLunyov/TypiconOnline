@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Identity;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.WebQuery.Interfaces;
 using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
+using TypiconOnline.Web.Extensions;
 using TypiconOnline.WebServices.Authorization;
 
 namespace TypiconOnline.Web.Controllers
@@ -34,6 +36,8 @@ namespace TypiconOnline.Web.Controllers
         protected IAuthorizationService AuthorizationService { get; }
         protected ICommandProcessor CommandProcessor { get; }
 
+        
+
         protected async Task<bool> IsAuthorizedToEdit(int id)
         {
             var request = QueryProcessor.Process(new TypiconEntityQuery(id));
@@ -52,9 +56,15 @@ namespace TypiconOnline.Web.Controllers
             return result.Succeeded;
         }
 
-        Expression<Func<int, int, bool>> lambda = (num, i) => num < i;
+        
 
-        protected async Task<IActionResult> LoadGridData(IDataQuery<Result<IQueryable<T>>> query, int? id = null)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="id">Id Устава</param>
+        /// <returns></returns>
+        protected async Task<IActionResult> LoadGridData(IGridQuery<T> query, int? id = null)
         {
             try
             {
@@ -81,7 +91,7 @@ namespace TypiconOnline.Web.Controllers
                 int recordsTotal = 0;
 
                 // Getting all Sign data
-                var request = QueryProcessor.Process(query);
+                var request = LoadStoredData(query);
 
                 if (request.Success)
                 {
@@ -117,5 +127,31 @@ namespace TypiconOnline.Web.Controllers
         }
 
         protected abstract Expression<Func<T, bool>> BuildExpression(string searchValue);
+
+        private Result<IQueryable<T>> LoadStoredData(IGridQuery<T> query)
+        {
+            if (HttpContext.Session.Keys.Contains(query.GetKey()))
+            {
+                return Result.Ok(HttpContext.Session.Get<List<T>>(query.GetKey()).AsQueryable());
+            }
+            else
+            {
+                var request = QueryProcessor.Process(query);
+                if (request.Success)
+                {
+                    HttpContext.Session.Set(query.GetKey(), request.Value.ToList());
+                }
+
+                return request;
+            }
+        }
+
+        protected void ClearStoredData(IGridQuery<T> query)
+        {
+            if (HttpContext.Session.Keys.Contains(query.GetKey()))
+            {
+                HttpContext.Session.Remove(query.GetKey());
+            }
+        }
     }
 }

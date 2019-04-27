@@ -131,10 +131,12 @@
 
     <script type="text/javascript">
 
-        createTextArea("modRule", '@Model.ModRuleDefinition');
-        createTextArea("rule", '@Model.RuleDefinition');
+        $(document).ready(function () {
+            createTextArea("modRule", '@Model.ModRuleDefinition');
+            createTextArea("rule", '@Model.RuleDefinition');
 
-        createItemTextTable("#itemtext", "Name");
+            createItemTextTable("#itemtext", "Name");
+        });
 
     </script>
 }

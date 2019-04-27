@@ -19,6 +19,14 @@ namespace TypiconOnline.Domain.ItemTypes
             Build(source);
         }
 
+        public ItemText(params ItemTextUnit[] items) : this()
+        {
+            foreach (var item in items)
+            {
+                AddOrUpdate(item);
+            }
+        }
+
         private List<ItemTextUnit> _items;
 
         [XmlElement("item")]
@@ -75,7 +83,7 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public void AddOrUpdate(ItemTextUnit item)
         {
-            if (Items.FirstOrDefault(c => c.Language == item.Language) is ItemTextUnit found)
+            if (Items.AsQueryable().FirstOrDefault(c => c.Language == item.Language) is ItemTextUnit found)
             {
                 found.Text = item.Text;
             }
@@ -94,7 +102,7 @@ namespace TypiconOnline.Domain.ItemTypes
         {
             ItemTextUnit result = null;
 
-            if (Items.FirstOrDefault(c => c.Language == language) is ItemTextUnit found)
+            if (Items.AsQueryable().FirstOrDefault(c => c.Language == language) is ItemTextUnit found)
             {
                 result = found;
             }
@@ -107,11 +115,18 @@ namespace TypiconOnline.Domain.ItemTypes
             return (result != null ) ? new ItemTextUnit(result.Language, result.Text) : default(ItemTextUnit);
         }
 
+        public string ToString(string language)
+        {
+            ItemTextUnit item = FirstOrDefault(language);
+
+            return (item != null) ? item.Text : string.Empty;
+        }
+
         public string this[string language]
         {
             get
             {
-                var found = Items.FirstOrDefault(c => c.Language == language);
+                var found = Items.AsQueryable().FirstOrDefault(c => c.Language == language);
                 return (found != null) ? found.Text : string.Empty;
             }
             set

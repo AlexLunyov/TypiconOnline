@@ -1,0 +1,399 @@
+﻿@model MenologyRuleEditModel
+@{
+    ViewData["Title"] = "Редактирование Правила Минеи";
+}
+<div class="row">
+    <div class="col-12">
+        <ul class="nav nav-tabs">
+            <li><a href="/Typicons/Edit/@ViewBag.TypiconId#panel_properties">Свойства</a></li>
+            <li><a href="/Typicons/Edit/@ViewBag.TypiconId#panel_jobs">Операции</a></li>
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    Редактирование Правил
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a asp-controller="Sign" asp-action="Index" asp-route-id="@ViewBag.TypiconId">Знаки служб</a></li>
+                    <li><a asp-controller="MenologyRule" asp-action="Index" asp-route-id="@ViewBag.TypiconId">Правила Минеи</a></li>
+                    <li><a asp-controller="TriodionRule" asp-action="Index" asp-route-id="@ViewBag.TypiconId">Правила Триоди</a></li>
+                    <li><a asp-controller="CommonRule" asp-action="Index" asp-route-id="@ViewBag.TypiconId">Общие Правила</a></li>
+                    <li><a asp-controller="ExplicitAddRule" asp-action="Index" asp-route-id="@ViewBag.TypiconId">Явные Правила</a></li>
+                    <li><a asp-controller="Kathisma" asp-action="Index" asp-route-id="@ViewBag.TypiconId">Кафизмы</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade in active">
+                <div class="col-md-8">
+                    <h2>Редактирование свойств Правила Минеи</h2>
+                </div>
+                <div class="clearfix"></div>
+                <form asp-action="Edit" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="col-xs-12">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-sm-9"><label asp-for="DayWorships">Тексты служб</label></div>
+                                <div class="col-sm-3 text-right">
+                                    <button type="button" class="btn btn-info add-worship" title="Добавить текст службы"><i class="fa fa-plus"></i> Добавить</button>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="dayworships" class="table table-bOrdered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th width="50px">#</th>
+                                    <th width="50px">Id</th>
+                                    <th>Наименование</th>
+                                    <th>Краткое наименование</th>
+                                    <th width="100px">Праздник</th>
+                                    <th class="dayworships">Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.DayWorships.Count; i++)
+                                {
+                                    <tr>
+                                        <td><b>@Model.DayWorships[i].Order</b></td>
+                                        <td>@Model.DayWorships[i].WorshipId</td>
+                                        <td>@Model.DayWorships[i].Name</td>
+                                        <td>@Model.DayWorships[i].ShortName</td>
+                                        <td>@Model.DayWorships[i].IsCelebrating</td>
+                                        <td>
+                                            <input class="WorshipId" type="hidden" asp-for="@Model.DayWorships[i].WorshipId" />
+                                            <input class="Order" type="hidden" asp-for="@Model.DayWorships[i].Order" />
+                                            <a class="down" title="Переместить вниз" data-toggle="tooltip"><i class="material-icons">arrow_drop_down</i></a>
+                                            <a class="up" title="Переместить вверх" data-toggle="tooltip"><i class="material-icons">arrow_drop_up</i></a>
+                                            <a class="delete" title="Удалить" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group col-sm-8">
+                        <label asp-for="TemplateId">Шаблон:</label>
+                        <select class="form-control" asp-for="TemplateId" asp-items="@ViewBag.Signs">
+                            <option value="">[Нет шаблона]</option>
+                        </select>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="checkbox col-sm-8">
+                        <label>
+                            <input type="checkbox" asp-for="IsAddition" /> <b>Как дополнение</b>
+                        </label>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <label asp-for="Date">Дата:</label>
+                            <div class="input-group date" id="date">
+                                <input type="text" class="form-control" />
+                                <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+                            </div>
+                            <input type="hidden" id="dtp_date" value="@Model.Date?.ToString("yyyy-MM-dd")" name="Date" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <label asp-for="Date">Дата (високосный год):</label>
+                            <div class="input-group date" id="leapdate">
+                                <input type="text" class="form-control" />
+                                <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+                            </div>
+                            <input type="hidden" id="dtp_leapdate" value="@Model.LeapDate?.ToString("yyyy-MM-dd")" name="LeapDate" />
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group col-xs-12">
+                        <label asp-for="ModRuleDefinition">Правило для переноса служб:</label>
+                        <div>
+                            <textarea id="modRule" class="form-control rounded-0" rows="30" asp-for="ModRuleDefinition"></textarea>
+                            <span asp-validation-for="ModRuleDefinition" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group col-xs-12">
+                        <label asp-for="ModRuleDefinition">Правило для последовательности:</label>
+                        <div>
+                            <textarea id="rule" class="form-control rounded-0" rows="30" asp-for="RuleDefinition"></textarea>
+                            <span asp-validation-for="RuleDefinition" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group"><div class="validation" asp-validation-summary="ModelOnly"></div></div>
+                    <div class="col-xs-12"><button class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Сохранить</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade dayworships-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Тексты служб</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    
+                    <div class="col-sm-12 col-md-4">
+                        <div id="wdate"></div>
+                        <button type="button" class="btn btn-primary nodate" aria-pressed="true">Переходящие праздники</button>
+                    </div>
+                    <div class="col-sm-12 col-md-8">
+                        <table id="worshipsGrid" class="table table-striped table-bOrdered" style="width:100%">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Наименование</th>
+                                    <th>Краткое наименование</th>
+                                    <th>Праздник</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="~/css/itemtext.css" />
+
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
+
+    <script src="~/lib/codemirror/codemirror.js"></script>
+    <link rel="stylesheet" href="~/lib/codemirror/codemirror.css">
+    <link rel="stylesheet" href="~/lib/codemirror/show-hint.css">
+    <link rel="stylesheet" href="~/lib/codemirror/xq-light.css">
+    <script src="~/lib/codemirror/xml.js"></script>
+    <script src="~/lib/codemirror/show-hint.js"></script>
+    <script src="~/lib/codemirror/xml-hint.js"></script>
+    <script src="~/js/textarea.js"></script>
+    <script src="~/js/dayworships.js"></script>
+
+    <script src="~/lib/momentjs/moment-with-locales.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            createDayWorsipsTable("#dayworships", "DayWorships", ["Order", "WorshipId"]);
+            createTextArea("modRule", '@Model.ModRuleDefinition');
+            createTextArea("rule", '@Model.RuleDefinition');
+
+            $('#date').datetimepicker({
+            locale: 'ru',
+            dayViewHeaderFormat: "MMMM",
+            format: "DD MMMM",
+            viewMode: "days",
+            maxDate: "2017-12-31",
+            minDate: "2017-01-01",
+            useCurrent: false,
+            showClear: true
+            @if (Model.Date != null)
+            {
+                <text>, defaultDate: "@Model.Date?.ToString("yyyy-MM-dd")"</text>
+            }
+            })
+            .on('dp.change', function (e) {
+                if (e.date != null) {
+                    $('#dtp_date').attr("value", moment(e.date).format("YYYY-MM-DD"));
+                }
+                else {
+                    $('#dtp_date').attr("value", "");
+                }
+            })
+            @if (Model.Date == null)
+            {
+                <text>.on('dp.show', function() {
+                    return $(this).data('DateTimePicker').defaultDate(moment("2017-01-01"));
+                })</text>
+            };
+
+            $('#leapdate').datetimepicker({
+                locale: 'ru',
+                dayViewHeaderFormat: "MMMM",
+                format: "DD MMMM",
+                viewMode: "days",
+                maxDate: "2016-12-31",
+                minDate: "2016-01-01",
+                useCurrent: false,
+                showClear: true
+                @if (Model.LeapDate != null)
+                {
+                    <text>, defaultDate: "@Model.LeapDate?.ToString("yyyy-MM-dd")"</text>
+                }
+            })
+            .on('dp.change', function (e) {
+                if (e.date != null) {
+                    $('#dtp_leapdate').attr("value", moment(e.date).format("YYYY-MM-DD"));
+                }
+                else {
+                    $('#dtp_leapdate').attr("value", "");
+                }
+            })
+            @if (Model.LeapDate == null)
+            {
+                <text>.on('dp.show', function() {
+                    return $(this).data('DateTimePicker').defaultDate(moment("2016-01-01"));
+                })</text>
+            };
+
+            //dayworships
+
+            $('.add-worship').on('click', function () {
+
+                //задаем значение календарю
+
+                var date = $('#date').data("DateTimePicker").date();
+                if (date != null) {
+                    date.add(-1, 'year');
+                    $('#wdate').data("DateTimePicker").date(date);
+                }
+                else {
+                    date = $('#leapdate').data("DateTimePicker").date();
+                    if (date != null) {
+                        $('#wdate').data("DateTimePicker").date(date);
+                    }
+                }
+
+                if (date == null) {
+
+                    $('.nodate').addClass('active');
+                    //задаем значение таблице
+                    table.ajax.url('/MenologyRule/GetDayWorships/').load();
+                }
+                else {
+                    $('.nodate').removeClass('active');
+                    //задаем значение таблице
+                    table.ajax.url('/MenologyRule/GetDayWorships/' + moment(date).format("YYYY-MM-DD")).load();
+                }
+
+                $(".dayworships-modal").modal('show');
+            });
+
+            
+
+            var table = $("#worshipsGrid").DataTable(
+            {
+                processing: true, // for show progress bar
+                serverSide: true, // for process server side
+                filter: false, // this is for disable filter (search box)
+                lengthChange: false,
+                paging: false,
+                info: false,
+                Ordering: false,
+                OrderMulti: false, // for disable multiple column at once
+                autoWidth: true,
+                rowId: "WorshipId",
+                ajax: {
+                    "url": "/MenologyRule/GetDayWorships/@Model.LeapDate?.ToString("yyyy-MM-dd")",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                columnDefs:
+                [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                columns: [
+                    { data: "WorshipId", name: "Id", autoWidth: true },
+                    { data: "Name", name: "Наименование", autoWidth: true },
+                    { data: "ShortName", name: "Краткое наименование", autoWidth: true },
+                    { data: "IsCelebrating", name: "Праздник", autoWidth: true },
+                    {
+                        data: null, render: function ()
+                        {
+                            return '<button class="btn btn-info btn-ws">Выбрать</a>';
+                        },
+                        Orderable: false
+                    },
+                ]
+            });
+
+            //добавляет службу в таблицу
+            $('#worshipsGrid').on('click', 'tbody tr td .btn-ws', function () {
+                var data = table.row($(this).parents('tr')).data();
+
+                //находим tr to
+
+                var trLast = $("#dayworships tbody tr:last-child");
+                var order = trLast.index() + 2;
+
+                var tr = '<tr>' +
+                    '<td><b>' + order + '</b></td>' +
+                    '<td>' + data.WorshipId + '</td>' +
+                    '<td>' + data.Name + '</td>' +
+                    '<td>' + data.ShortName + '</td>' +
+                    '<td>' + data.IsCelebrating + '</td>' +
+                    '<td>' + trLast.find("td:last-child").html() + '</td>' +
+                    '</tr>';
+                //добавляем ряд
+                $("#dayworships").append(tr);
+
+                //заполняем hidden поля
+                var td = $("#dayworships tbody tr:last-child td:last-child");
+
+                var hidOrder = td.find(".Order");
+                hidOrder.val(order);
+                hidOrder.attr('name', 'DayWorships[' + (order - 1) + '].Order');
+
+                var hidWId = td.find(".WorshipId");
+                hidWId.val(data.WorshipId);
+                hidWId.attr('name', 'DayWorships[' + (order - 1) + '].WorshipId');
+
+                calcBtns("#dayworships");
+                $(".dayworships-modal").modal('hide');
+
+                calcAddBtn("#dayworships", ".add-worship");
+
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+
+            //кнопка для загрузки переходящих праздников
+            $('.nodate').on('click', function () {
+                $('#wdate').data("DateTimePicker").clear();
+                $(this).addClass('active');
+
+                //задаем значение таблице
+                table.ajax.url('/MenologyRule/GetDayWorships/').load();
+            });
+
+            $('#wdate').datetimepicker({
+                locale: 'ru',
+                dayViewHeaderFormat: "MMMM",
+                format: "DD MMMM",
+                viewMode: "days",
+                maxDate: "2016-12-31",
+                minDate: "2016-01-01",
+                useCurrent: false,
+                inline: true,
+                defaultDate: "2016-01-01"
+            })
+            .on('dp.change', function (e) {
+
+                $('.nodate').removeClass('active');
+                table.ajax.url('/MenologyRule/GetDayWorships/' + moment(e.date).format("YYYY-MM-DD")).load();
+            })
+
+            @if (Model == null)
+            {
+                <text>.on('dp.show', function() {
+                    return $(this).data('DateTimePicker').defaultDate(moment("2016-01-01"));
+                })</text>
+            }
+        });
+        
+    </script>
+}

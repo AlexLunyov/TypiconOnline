@@ -21,20 +21,20 @@ using TypiconOnline.WebServices.Authorization;
 namespace TypiconOnline.Web.Controllers
 {
     //[Authorize(Roles = RoleConstants.AdminAndEditorRoles)]
-    public class SignController : TypiconChildBaseController<SignModel>
+    public class MenologyRuleController : TypiconChildBaseController<MenologyRuleModel>
     {
         private const string DEFAULT_LANGUAGE = "cs-ru";
         //private readonly IDataQueryProcessor _queryProcessor;
         //private readonly IAuthorizationService _authorizationService;
 
 
-        public SignController(
+        public MenologyRuleController(
             IDataQueryProcessor queryProcessor,
             IAuthorizationService authorizationService,
             ICommandProcessor commandProcessor) : base(queryProcessor, authorizationService, commandProcessor)
         {
         }
-        
+                
         /// <summary>
         /// 
         /// </summary>
@@ -48,7 +48,7 @@ namespace TypiconOnline.Web.Controllers
                 return NotFound();
             }
 
-            var typiconEntity = QueryProcessor.Process(new TypiconEntityBySignQuery(id));
+            var typiconEntity = QueryProcessor.Process(new TypiconEntityByMenologyRuleQuery(id));
 
             if (typiconEntity.Success
                 && await IsAuthorizedToEdit(typiconEntity.Value))
@@ -56,7 +56,7 @@ namespace TypiconOnline.Web.Controllers
                 ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Value.Id, DEFAULT_LANGUAGE, id);
                 ViewBag.TypiconId = typiconEntity.Value.Id;
 
-                var found = QueryProcessor.Process(new SignEditQuery(id));
+                var found = QueryProcessor.Process(new MenologyRuleEditQuery(id, DEFAULT_LANGUAGE));
 
                 if (found.Success)
                 {
@@ -68,20 +68,20 @@ namespace TypiconOnline.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(SignEditModel model)
+        public async Task<IActionResult> Edit(MenologyRuleEditModel model)
         {
-            var typiconEntity = QueryProcessor.Process(new TypiconEntityBySignQuery(model.Id));
+            var typiconEntity = QueryProcessor.Process(new TypiconEntityByMenologyRuleQuery(model.Id));
 
             if (ModelState.IsValid
                 && typiconEntity.Success
                 && await IsAuthorizedToEdit(typiconEntity.Value))
             {
-                var command = new EditSignCommand(model.Id,
-                    model.Name,
+                var command = new EditMenologyRuleCommand(model.Id,
+                    model.DayWorships.Select(c => (c.WorshipId, c.Order)),
                     model.TemplateId,
                     model.IsAddition,
-                    model.Number,
-                    model.Priority,
+                    model.Date,
+                    model.LeapDate,
                     model.RuleDefinition,
                     model.ModRuleDefinition);
 
@@ -111,7 +111,7 @@ namespace TypiconOnline.Web.Controllers
             {
                 ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Id, DEFAULT_LANGUAGE);
 
-                return View(new SignEditModel());
+                return View();
             }
 
             return Unauthorized();
@@ -145,14 +145,32 @@ namespace TypiconOnline.Web.Controllers
             return View(model);
         }
 
-        #region Overrides
-
-        protected override Expression<Func<SignModel, bool>> BuildExpression(string searchValue)
+        [Route("[controller]/[action]/{date?}")]
+        public IActionResult GetDayWorships(DateTime? date)
         {
-            return m => m.Name == searchValue || m.TemplateName == searchValue;
+            var result = QueryProcessor.Process(new MenologyDayWorshipQuery(date, DEFAULT_LANGUAGE));
+
+            if (result.Success)
+            {
+                return Json(new { data = result.Value.ToList() });
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
-        protected override IGridQuery<SignModel> GetQuery(int id) => new AllSignsQuery(id, DEFAULT_LANGUAGE);
+        #region Overrides
+
+        protected override Expression<Func<MenologyRuleModel, bool>> BuildExpression(string searchValue)
+        {
+            return m => m.Name == searchValue
+                    || m.TemplateName == searchValue
+                    || m.Date == searchValue
+                    || m.LeapDate == searchValue;
+        }
+
+        protected override IGridQuery<MenologyRuleModel> GetQuery(int id) => new Domain.WebQuery.Typicon.AllMenologyRulesQuery(id, DEFAULT_LANGUAGE);
 
         #endregion
     }

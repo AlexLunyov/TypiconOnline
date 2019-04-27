@@ -85,6 +85,8 @@ namespace TypiconOnline.Web
             container.Register<IScheduleWeekViewer<Result<DocxToStreamWeekResponse>>, DocxToStreamWeekViewer>();
             container.Register<ScheduleHandler, ServiceSequenceHandler>();
 
+            services.AddScoped<IRuleSerializerRoot, RuleSerializerRoot>();
+
             //Все контроллеры
             container.Register<IScheduleDataCalculator, ScheduleDataCalculator>();
             //CustomSequence Controller

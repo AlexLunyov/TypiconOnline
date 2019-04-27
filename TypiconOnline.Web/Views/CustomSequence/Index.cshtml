@@ -3,8 +3,8 @@
 
 @section Scripts {
 
+    <script src="~/lib/momentjs/moment-with-locales.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript" src="~/lib/bootstrap/dist/js/locales/bootstrap-datetimepicker.ru.js"></script>
 
     <script src="~/lib/codemirror/codemirror.js"></script>
     <link rel="stylesheet" href="~/lib/codemirror/codemirror.css">
@@ -17,15 +17,7 @@
     <script type="text/javascript">
 
         $('#datepicker').datetimepicker({
-            language: 'ru',
-            format: 'dd-mm-yyyy',
-            weekStart: 1,
-            todayBtn: 1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            minView: 2,
-            forceParse: 0
+            
         });
 
         var getclosestdayType = {
