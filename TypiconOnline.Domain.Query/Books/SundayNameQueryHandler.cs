@@ -11,11 +11,11 @@ namespace TypiconOnline.Domain.Query.Books
     /// <summary>
     /// Возвращает День Октоиха по заданной дате
     /// </summary>
-    public class SundayNameQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<SundayNameQuery, ItemText>
+    public class SundayNameQueryHandler : QueryStrategyHandlerBase, IQueryHandler<SundayNameQuery, ItemText>
     {
         private const string STRING_TO_PASTE = "[Имя]";
 
-        public SundayNameQueryHandler(TypiconDBContext dbContext, IDataQueryProcessor queryProcessor)
+        public SundayNameQueryHandler(TypiconDBContext dbContext, IQueryProcessor queryProcessor)
             : base(dbContext, queryProcessor) { }
 
         /// <summary>

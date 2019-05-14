@@ -46,7 +46,7 @@ namespace TypiconOnline.AppServices.Extensions
 
             return (version != null)
                 ? Result.Ok(version)
-                : Result.Fail<TypiconVersion>("Указанный Устав либо не существует, либо не существует его опубликованная версия.");
+                : Result.Fail<TypiconVersion>("Указанный Устав либо не существует, либо не существует его версия.");
         }
 
         /// <summary>

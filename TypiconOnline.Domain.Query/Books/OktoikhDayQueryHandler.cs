@@ -11,9 +11,9 @@ namespace TypiconOnline.Domain.Query.Books
     /// <summary>
     /// Возвращает День Октоиха по заданной дате
     /// </summary>
-    public class OktoikhDayQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<OktoikhDayQuery, OktoikhDay>
+    public class OktoikhDayQueryHandler : QueryStrategyHandlerBase, IQueryHandler<OktoikhDayQuery, OktoikhDay>
     {
-        public OktoikhDayQueryHandler(TypiconDBContext dbContext, IDataQueryProcessor queryProcessor) 
+        public OktoikhDayQueryHandler(TypiconDBContext dbContext, IQueryProcessor queryProcessor) 
             : base(dbContext, queryProcessor) { }
 
         public OktoikhDay Handle([NotNull] OktoikhDayQuery query)

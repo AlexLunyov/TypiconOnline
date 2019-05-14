@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace TypiconOnline.Infrastructure.Common.Query
 {
     /// <summary>
-    /// Средний по иерархии запрос.
+    /// Низший по иерархии запрос
     /// </summary>
     /// <typeparam name="TResult"></typeparam>
-    public interface IQuery<TResult> : IDataQuery<TResult>
+    public interface IQuery<TResult> 
     {
     }
 }

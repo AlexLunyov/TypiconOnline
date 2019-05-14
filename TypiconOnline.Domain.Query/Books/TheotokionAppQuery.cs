@@ -4,7 +4,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Books
 {
-    public class TheotokionAppQuery : IDataQuery<YmnosGroup>
+    public class TheotokionAppQuery : IQuery<YmnosGroup>
     {
         public TheotokionAppQuery(TheotokionAppPlace place, int ihos, DayOfWeek dayOfWeek)
         {

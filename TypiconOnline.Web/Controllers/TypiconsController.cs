@@ -33,7 +33,7 @@ namespace TypiconOnline.Web.Controllers
             ICommandProcessor commandProcessor,
             UserManager<User> userManager,
             IJobRepository jobs,
-            IDataQueryProcessor queryProcessor,
+            IQueryProcessor queryProcessor,
             IAuthorizationService authorizationService
             ) : base(queryProcessor, authorizationService, commandProcessor)
         {
@@ -41,8 +41,15 @@ namespace TypiconOnline.Web.Controllers
             _jobs = jobs;
         }
         // GET: /<controller>/
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            ClearStoredData(new AllTypiconsFilteredQuery(user.Id, DEFAULT_LANGUAGE));
+
             return View();
         }
 
@@ -76,7 +83,7 @@ namespace TypiconOnline.Web.Controllers
         }
 
         //[HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = RoleConstants.AdministratorsRole)]
         //[ValidateAntiForgeryToken]
         //[Route("{id?}")]
         public IActionResult Approve(int id)
@@ -101,7 +108,7 @@ namespace TypiconOnline.Web.Controllers
                     throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
                 }
 
-                return await LoadGridData(new AllTypiconsFilteredQuery(user.Id, DEFAULT_LANGUAGE));
+                return LoadGridData(new AllTypiconsFilteredQuery(user.Id, DEFAULT_LANGUAGE));
             }
             catch (Exception e)
             {
@@ -119,7 +126,15 @@ namespace TypiconOnline.Web.Controllers
                 return NotFound();
             }
 
+            //проверить на права
+            if (!IsAuthorizedToEdit(id))
+            {
+                return new ChallengeResult();
+            }
+
             var typicon = QueryProcessor.Process(new TypiconEditQuery(id));
+
+            ViewBag.IsAuthor = IsTypiconsAuthor(id);
 
             if (typicon.Failure)
             {
@@ -137,7 +152,7 @@ namespace TypiconOnline.Web.Controllers
             if (ModelState.IsValid)
             {
                 //проверить на права
-                if (! await IsAuthorizedToEdit(model.Id))
+                if (!IsAuthorizedToEdit(model.Id))
                 {
                     return NotFound();
                 }
@@ -153,30 +168,9 @@ namespace TypiconOnline.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(int id)
         {
-            try
-            {
-                if (string.IsNullOrEmpty(id))
-                {
-                    return RedirectToAction("ShowGrid", "DemoGrid");
-                }
-
-                int result = 0;
-
-                if (result > 0)
-                {
-                    return Json(data: true);
-                }
-                else
-                {
-                    return Json(data: false);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
         protected override Expression<Func<TypiconEntityFilteredModel, bool>> BuildExpression(string searchValue)
@@ -184,5 +178,68 @@ namespace TypiconOnline.Web.Controllers
             return m => m.Name == searchValue;
         }
 
+        //[HttpPost]
+        public IActionResult Publish(int id)
+        {
+            if (IsAuthorizedToEdit(id))
+            {
+                _jobs.Create(new PublishTypiconJob(id));
+            }
+            
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        /// <summary>
+        /// Поиск пользователей для добавления в Редакторы Устава
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
+        public IActionResult SearchUsers(string search)
+        {
+            var found = QueryProcessor.Process(new SearchUserQuery(search));
+
+            return Json(found);
+        }
+
+        /// <summary>
+        /// Добавляет Редактора Устава
+        /// </summary>
+        /// <param name="typiconId"></param>
+        /// <param name="editorId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> AddEditor(int typiconId, int editorId)
+        {
+            if (!IsAuthorizedToEdit(typiconId))
+            {
+                return new ChallengeResult();
+            }
+
+            var command = new AddEditorCommand(typiconId, editorId);
+
+            await CommandProcessor.ExecuteAsync(command);
+
+            return RedirectToAction(nameof(Edit), "Typicons", new { id = typiconId }, "panel_editors");
+        }
+
+        /// <summary>
+        /// Удаляет Редактора Устава
+        /// </summary>
+        /// <param name="typiconId"></param>
+        /// <param name="editorId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> DeleteEditor(int typiconId, int editorId)
+        {
+            if (!IsAuthorizedToEdit(typiconId))
+            {
+                return new ChallengeResult();
+            }
+
+            var command = new DeleteEditorCommand(typiconId, editorId);
+
+            await CommandProcessor.ExecuteAsync(command);
+
+            return RedirectToAction(nameof(Edit), "Typicons", new { id = typiconId }, "panel_editors");
+        }
     }
 }

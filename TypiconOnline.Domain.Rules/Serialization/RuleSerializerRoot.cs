@@ -11,13 +11,13 @@ namespace TypiconOnline.Domain.Serialization
     {
         protected Dictionary<string, object> factories = new Dictionary<string, object>();
 
-        public RuleSerializerRoot([NotNull] IDataQueryProcessor queryProcessor, ITypiconSerializer typiconSerializer)
+        public RuleSerializerRoot([NotNull] IQueryProcessor queryProcessor, ITypiconSerializer typiconSerializer)
         {
             QueryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
             TypiconSerializer = typiconSerializer ?? throw new ArgumentNullException(nameof(typiconSerializer));
         }
 
-        public IDataQueryProcessor QueryProcessor { get; }
+        public IQueryProcessor QueryProcessor { get; }
         public ITypiconSerializer TypiconSerializer { get; }
 
         /// <summary>

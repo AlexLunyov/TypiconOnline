@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
-using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.AppServices.Migration;
 using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Schedule;
@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             };
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
-            FileReader reader = new FileReader(folderPath);
+            var reader = new FileReader(folderPath);
             string xml = reader.Read("CommonRuleElement_Simple.xml");
 
             var element = TestRuleSerializer.Deserialize<WorshipSequence>(xml);

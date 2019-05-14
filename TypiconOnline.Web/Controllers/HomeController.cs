@@ -12,9 +12,9 @@ namespace TypiconOnline.Web.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        IDataQueryProcessor queryProcessor;
+        IQueryProcessor queryProcessor;
 
-        public HomeController(IDataQueryProcessor queryProcessor)
+        public HomeController(IQueryProcessor queryProcessor)
         {
             this.queryProcessor = queryProcessor ?? throw new ArgumentNullException("queryProcessor in HomeController");
         }

@@ -19,9 +19,9 @@ namespace TypiconOnline.AppServices.Implementations
 {
     public class ScheduleDayNameComposer : IScheduleDayNameComposer
     {
-        IDataQueryProcessor queryProcessor;
+        IQueryProcessor queryProcessor;
 
-        public ScheduleDayNameComposer([NotNull] IDataQueryProcessor queryProcessor)
+        public ScheduleDayNameComposer([NotNull] IQueryProcessor queryProcessor)
         {
             this.queryProcessor = queryProcessor;
         }

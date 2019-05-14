@@ -6,7 +6,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class AllMenologyRulesQuery : IDataQuery<IEnumerable<MenologyRule>>
+    public class AllMenologyRulesQuery : IQuery<IEnumerable<MenologyRule>>
     {
         public AllMenologyRulesQuery(int typiconId)
         {

@@ -10,9 +10,9 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class AllTriodionRulesQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<AllTriodionRulesQuery, IEnumerable<TriodionRule>>
+    public class AllTriodionRulesQueryHandler : QueryStrategyHandlerBase, IQueryHandler<AllTriodionRulesQuery, IEnumerable<TriodionRule>>
     {
-        public AllTriodionRulesQueryHandler(TypiconDBContext dbContext, [NotNull] IDataQueryProcessor queryProcessor)
+        public AllTriodionRulesQueryHandler(TypiconDBContext dbContext, [NotNull] IQueryProcessor queryProcessor)
             : base(dbContext, queryProcessor) { }
 
         public IEnumerable<TriodionRule> Handle([NotNull] AllTriodionRulesQuery query)

@@ -9,7 +9,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
-    public class MenologyDayWorshipQuery : IDataQuery<Result<IQueryable<MenologyDayWorshipModel>>>
+    public class MenologyDayWorshipQuery : IQuery<Result<IQueryable<MenologyDayWorshipModel>>>
     {
         public MenologyDayWorshipQuery(DateTime? date, string language)
         {

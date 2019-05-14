@@ -18,9 +18,9 @@ namespace TypiconOnline.Domain.Query.Typicon
     /// Используется в AppServices
     /// </summary>
     public class MenologyRuleQueryHandler : QueryStrategyHandlerBase
-        , IDataQueryHandler<MenologyRuleQuery, MenologyRule>
+        , IQueryHandler<MenologyRuleQuery, MenologyRule>
     {
-        public MenologyRuleQueryHandler(TypiconDBContext dbContext, [NotNull] IDataQueryProcessor queryProcessor) 
+        public MenologyRuleQueryHandler(TypiconDBContext dbContext, [NotNull] IQueryProcessor queryProcessor) 
             : base(dbContext, queryProcessor)
         {
         }

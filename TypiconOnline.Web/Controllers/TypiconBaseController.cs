@@ -10,7 +10,6 @@ using TypiconOnline.Domain.Identity;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.WebQuery.Interfaces;
-using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
@@ -23,7 +22,7 @@ namespace TypiconOnline.Web.Controllers
     public abstract class TypiconBaseController<T>: Controller where T : IGridModel
     {
         public TypiconBaseController(
-            IDataQueryProcessor queryProcessor,
+            IQueryProcessor queryProcessor,
             IAuthorizationService authorizationService,
             ICommandProcessor commandProcessor)
         {
@@ -32,30 +31,39 @@ namespace TypiconOnline.Web.Controllers
             CommandProcessor = commandProcessor;
         }
 
-        protected IDataQueryProcessor QueryProcessor { get; }
+        protected IQueryProcessor QueryProcessor { get; }
         protected IAuthorizationService AuthorizationService { get; }
         protected ICommandProcessor CommandProcessor { get; }
 
         
 
-        protected async Task<bool> IsAuthorizedToEdit(int id)
+        protected bool IsAuthorizedToEdit(int id)
         {
             var request = QueryProcessor.Process(new TypiconEntityQuery(id));
 
-            var result = await AuthorizationService.AuthorizeAsync(
+            var result = AuthorizationService.AuthorizeAsync(
                                                        User, request,
                                                        TypiconOperations.Edit);
-            return result.Succeeded;
+            return result.Result.Succeeded;
         }
 
-        protected async Task<bool> IsAuthorizedToEdit(TypiconEntity typiconEntity)
+        protected bool IsAuthorizedToEdit(TypiconEntity typiconEntity)
         {
-            var result = await AuthorizationService.AuthorizeAsync(
+            var result = AuthorizationService.AuthorizeAsync(
                                                        User, typiconEntity,
                                                        TypiconOperations.Edit);
-            return result.Succeeded;
+            return result.Result.Succeeded;
         }
 
+        protected bool IsTypiconsAuthor(int id)
+        {
+            var request = QueryProcessor.Process(new TypiconEntityQuery(id));
+
+            var result = AuthorizationService.AuthorizeAsync(
+                                                       User, request,
+                                                       TypiconOperations.Delete);
+            return result.Result.Succeeded;
+        }
         
 
         /// <summary>
@@ -64,11 +72,11 @@ namespace TypiconOnline.Web.Controllers
         /// <param name="query"></param>
         /// <param name="id">Id Устава</param>
         /// <returns></returns>
-        protected async Task<IActionResult> LoadGridData(IGridQuery<T> query, int? id = null)
+        protected IActionResult LoadGridData(IGridQuery<T> query, int? id = null)
         {
             try
             {
-                if (id.HasValue && !await IsAuthorizedToEdit(id.Value))
+                if (id.HasValue && !IsAuthorizedToEdit(id.Value))
                 {
                     return Unauthorized();
                 }

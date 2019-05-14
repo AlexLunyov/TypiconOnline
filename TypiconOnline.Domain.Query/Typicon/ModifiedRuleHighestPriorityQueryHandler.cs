@@ -10,7 +10,7 @@ using TypiconOnline.Repository.EFCore.DataBase;
 namespace TypiconOnline.Domain.Query.Typicon
 {
 
-    public class ModifiedRuleHighestPriorityQueryHandler : DbContextQueryBase, IDataQueryHandler<ModifiedRuleHighestPriorityQuery, ModifiedRule>
+    public class ModifiedRuleHighestPriorityQueryHandler : DbContextQueryBase, IQueryHandler<ModifiedRuleHighestPriorityQuery, ModifiedRule>
     {
         public ModifiedRuleHighestPriorityQueryHandler(TypiconDBContext dbContext) : base(dbContext) { }
 

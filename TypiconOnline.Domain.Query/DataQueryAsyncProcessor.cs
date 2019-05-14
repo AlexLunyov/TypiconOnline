@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.Query
         {
         }
 
-        public override TResult Process<TResult>(IDataQuery<TResult> query)
+        public override TResult Process<TResult>(IQuery<TResult> query)
         {
             AsyncScopedLifestyle.BeginScope(Container);
 

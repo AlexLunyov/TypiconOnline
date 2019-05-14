@@ -32,42 +32,33 @@ namespace TypiconMigrationTool
 
                 ConsoleKeyInfo info = Console.ReadKey();
 
-                Task task = null;
-
                 switch (info.KeyChar)
                 {
                     case '1':
                         {
                             var (uof, db, options) = uofFactory.GetMSSqlUnitOfWork();
-                            task = Migrate(uof, db, options, folderPath);
+                            Migrate(uof, db, options, folderPath);
                         }
                         break;
                     case '2':
                         {
                             var (uof, db, options) = uofFactory.GetSQLiteUnitOfWork();
-                            task = Migrate(uof, db, options, folderPath);
+                            Migrate(uof, db, options, folderPath);
                         }
                         break;
                     case '3':
                         {
                             var (uof, db, options) = uofFactory.GetPostgreSQLUnitOfWork();
-                            task = Migrate(uof, db, options, folderPath);
+                            Migrate(uof, db, options, folderPath);
                         }
                         break;
                     case '4':
                         {
                             var (uof, db, options) = uofFactory.GetMySQLUnitOfWork();
-                            task = Migrate(uof, db, options, folderPath);
+                            Migrate(uof, db, options, folderPath);
                         }
                         break;
                 }
-
-                if (task != null)
-                {
-                    task.Wait();
-                }
-
-
             }
 
 
@@ -85,7 +76,7 @@ namespace TypiconMigrationTool
 
 
 
-        private static async Task Migrate(IUnitOfWork unitOfWork, TypiconDBContext dbContext, Action<DbContextOptionsBuilder> optionsBuilder, string folderPath)
+        private static void Migrate(IUnitOfWork unitOfWork, TypiconDBContext dbContext, Action<DbContextOptionsBuilder> optionsBuilder, string folderPath)
         {
             ScheduleHandler sh = new ScheduleHandler("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=|DataDirectory|\\data\\ScheduleDB.mdb;");
 
@@ -93,7 +84,7 @@ namespace TypiconMigrationTool
 
             TypiconMigration migration = new TypiconMigration(unitOfWork, dbContext, sh, service, folderPath);
 
-            await migration.Execute();
+            migration.Execute();
         }
 
 

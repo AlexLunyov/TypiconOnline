@@ -3,7 +3,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class CommonRuleQuery : IDataQuery<CommonRule>
+    public class CommonRuleQuery : IQuery<CommonRule>
     {
         public CommonRuleQuery(int typiconId, string name)
         {

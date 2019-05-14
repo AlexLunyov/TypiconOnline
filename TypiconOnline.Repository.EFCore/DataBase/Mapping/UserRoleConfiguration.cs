@@ -14,7 +14,17 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<UserRole> builder)
         {
-            builder.HasKey(c => new { c.UserId, c.RoleId });
+            //builder.HasKey(c => new { c.UserId, c.RoleId });
+
+            builder.HasOne(ur => ur.Role)
+                .WithMany(r => r.UserRoles)
+                .HasForeignKey(ur => ur.RoleId)
+                .IsRequired();
+
+            builder.HasOne(ur => ur.User)
+                .WithMany(r => r.UserRoles)
+                .HasForeignKey(ur => ur.UserId)
+                .IsRequired();
         }
     }
 }

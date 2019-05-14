@@ -34,7 +34,9 @@ namespace TypiconMigrationTool
             c.UseMySql(ConfigurationManager.ConnectionStrings["MySql"].ConnectionString,
                 mySqlOptions =>
                 {
-                    mySqlOptions.ServerVersion(new Version(8, 0, 15), ServerType.MySql);
+                    mySqlOptions.ServerVersion(new Version(5, 6, 43), ServerType.MySql);
+                    //mySqlOptions.AnsiCharSet(CharSet.Utf8mb4);
+                    //mySqlOptions.UnicodeCharSet(CharSet.Utf8mb4);
                 });
             c.EnableSensitiveDataLogging();
         }

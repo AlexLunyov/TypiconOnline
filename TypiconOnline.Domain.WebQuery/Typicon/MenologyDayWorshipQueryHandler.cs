@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
     /// <summary>
     /// Возвращает все Тексты минейных служб по заданной дате
     /// </summary>
-    public class MenologyDayWorshipQueryHandler : DbContextQueryBase, IDataQueryHandler<MenologyDayWorshipQuery, Result<IQueryable<MenologyDayWorshipModel>>>
+    public class MenologyDayWorshipQueryHandler : DbContextQueryBase, IQueryHandler<MenologyDayWorshipQuery, Result<IQueryable<MenologyDayWorshipModel>>>
     {
         public MenologyDayWorshipQueryHandler(TypiconDBContext dbContext) : base(dbContext)
         {

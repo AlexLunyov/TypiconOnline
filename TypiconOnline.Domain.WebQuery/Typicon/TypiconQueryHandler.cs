@@ -16,9 +16,9 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
     /// <summary>
     /// Возвращает Id и Name Устава
     /// </summary>
-    public class TypiconQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<TypiconQuery, Result<TypiconEntityModel>>
+    public class TypiconQueryHandler : QueryStrategyHandlerBase, IQueryHandler<TypiconQuery, Result<TypiconEntityModel>>
     {
-        public TypiconQueryHandler(TypiconDBContext dbContext, [NotNull] IDataQueryProcessor queryProcessor)
+        public TypiconQueryHandler(TypiconDBContext dbContext, [NotNull] IQueryProcessor queryProcessor)
             : base(dbContext, queryProcessor)
         {
         }

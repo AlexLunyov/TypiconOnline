@@ -4,7 +4,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class TriodionRuleQuery : IDataQuery<TriodionRule>
+    public class TriodionRuleQuery : IQuery<TriodionRule>
     {
         public TriodionRuleQuery(int typiconVersionId, DateTime date)
         {

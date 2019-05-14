@@ -8,7 +8,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query
 {
-    public class DataQueryProcessor : IDataQueryProcessor, IDisposable
+    public class DataQueryProcessor : IQueryProcessor, IDisposable
     {
         protected Container Container { get; }
 
@@ -22,10 +22,10 @@ namespace TypiconOnline.Domain.Query
         }
 
         [DebuggerStepThrough]
-        public virtual TResult Process<TResult>(IDataQuery<TResult> query)
+        public virtual TResult Process<TResult>(IQuery<TResult> query)
         {
             var handlerType =
-                typeof(IDataQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
+                typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
 
             dynamic handler = Container.GetInstance(handlerType);
 

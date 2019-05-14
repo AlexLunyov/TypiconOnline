@@ -23,9 +23,9 @@ namespace TypiconOnline.Domain.Rules.Expressions
 {
     public class DaysFromEaster : Int
     {
-        IDataQueryProcessor queryProcessor;
+        IQueryProcessor queryProcessor;
 
-        public DaysFromEaster(string name, [NotNull] IDataQueryProcessor queryProcessor) : base(name)
+        public DaysFromEaster(string name, [NotNull] IQueryProcessor queryProcessor) : base(name)
         {
             this.queryProcessor = queryProcessor;
         }

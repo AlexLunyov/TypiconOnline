@@ -7,7 +7,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class TypiconPublishedVersionQuery : IDataQuery<Result<TypiconVersion>>
+    public class TypiconPublishedVersionQuery : IQuery<Result<TypiconVersion>>
     {
         public TypiconPublishedVersionQuery(int typiconId)
         {

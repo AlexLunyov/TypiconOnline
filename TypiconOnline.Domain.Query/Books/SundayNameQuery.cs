@@ -5,7 +5,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Books
 {
-    public class SundayNameQuery : IDataQuery<ItemText>
+    public class SundayNameQuery : IQuery<ItemText>
     {
         /// <summary>
         /// Возвращает строку с наименованием воскресного дня. 

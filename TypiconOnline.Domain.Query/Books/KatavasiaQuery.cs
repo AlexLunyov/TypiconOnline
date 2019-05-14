@@ -6,7 +6,7 @@ namespace TypiconOnline.Domain.Query.Books
     /// <summary>
     /// Запрос по имени Катавасии возвращает текст Канона, где определены только катавасии
     /// </summary>
-    public class KatavasiaQuery : IDataQuery<Kanonas>
+    public class KatavasiaQuery : IQuery<Kanonas>
     {
         public KatavasiaQuery(string name)
         {

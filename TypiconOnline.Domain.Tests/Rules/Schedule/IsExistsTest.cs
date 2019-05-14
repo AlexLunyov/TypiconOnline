@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
-using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.AppServices.Migration;
 using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Executables;
@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             ServiceSequenceHandler handler = new ServiceSequenceHandler();
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
-            FileReader reader = new FileReader(folderPath);
+            var reader = new FileReader(folderPath);
             string xml = reader.Read("IsExists.xml");
 
             //Дата --01-16 exists - false

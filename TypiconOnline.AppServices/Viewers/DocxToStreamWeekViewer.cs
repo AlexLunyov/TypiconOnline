@@ -19,10 +19,10 @@ namespace TypiconOnline.AppServices.Viewers
         const string FILE_START = "Расписание ";
         const int DAYS_PER_PAGE = 4;
 
-        private readonly IDataQueryProcessor _queryProcessor;
+        private readonly IQueryProcessor _queryProcessor;
         private readonly IConfigurationRepository _configRepo;
 
-        public DocxToStreamWeekViewer(IDataQueryProcessor queryProcessor, IConfigurationRepository configRepo)
+        public DocxToStreamWeekViewer(IQueryProcessor queryProcessor, IConfigurationRepository configRepo)
         {
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
             _configRepo = configRepo ?? throw new ArgumentNullException(nameof(configRepo));

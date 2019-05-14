@@ -66,8 +66,8 @@ namespace TypiconOnline.Tests.Common
             container.Register<IOutputFormFactory, OutputFormFactory>();
             container.Register<IScheduleDataCalculator, ScheduleDataCalculator>();
 
-            container.Register(typeof(IDataQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
-            container.Register<IDataQueryProcessor, DataQueryProcessor>();
+            container.Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
+            container.Register<IQueryProcessor, DataQueryProcessor>();
 
             container.RegisterSingleton(typeof(IJobRepository), jobRepository);
 

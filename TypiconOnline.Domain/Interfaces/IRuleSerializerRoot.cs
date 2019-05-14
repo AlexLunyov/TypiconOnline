@@ -7,7 +7,7 @@ namespace TypiconOnline.Domain.Interfaces
         /// <summary>
         /// Единая точка для обработки запросов
         /// </summary>
-        IDataQueryProcessor QueryProcessor { get; }
+        IQueryProcessor QueryProcessor { get; }
         /// <summary>
         /// Сериализатор для богослужебных текстов
         /// </summary>

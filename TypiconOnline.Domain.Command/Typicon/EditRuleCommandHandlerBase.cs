@@ -28,6 +28,8 @@ namespace TypiconOnline.Domain.Command.Typicon
 
             DbContext.Set<T>().Update(found);
 
+            found.TypiconVersion.IsModified = true;
+
             await DbContext.SaveChangesAsync();
 
             return Result.Ok();

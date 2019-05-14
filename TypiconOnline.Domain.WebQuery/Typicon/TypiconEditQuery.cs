@@ -7,7 +7,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 { 
-    public class TypiconEditQuery : IDataQuery<Result<TypiconEntityEditModel>>
+    public class TypiconEditQuery : IQuery<Result<TypiconEntityEditModel>>
     {
         public TypiconEditQuery(int id)
         {

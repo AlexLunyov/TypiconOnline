@@ -11,7 +11,7 @@ using TypiconOnline.Repository.EFCore.DataBase;
 namespace TypiconOnline.Domain.Query.Typicon
 {
 
-    public class ExplicitAddRuleQueryHandler : DbContextQueryBase, IDataQueryHandler<ExplicitAddRuleQuery, ExplicitAddRule>
+    public class ExplicitAddRuleQueryHandler : DbContextQueryBase, IQueryHandler<ExplicitAddRuleQuery, ExplicitAddRule>
     {
         public ExplicitAddRuleQueryHandler(TypiconDBContext dbContext) : base(dbContext) { }
 

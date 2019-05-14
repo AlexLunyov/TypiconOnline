@@ -3,6 +3,8 @@ using System;
 using System.IO;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.AppServices.Interfaces;
+using TypiconOnline.AppServices.Migration;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
@@ -17,7 +19,7 @@ namespace TypiconMigrationTool
         private ScheduleDBDataSet.MineinikRow _row;
         private string _folderPath;
 
-        private FileReader _fileReader;
+        private IFileReader _fileReader;
 
         /// <summary>
         /// 

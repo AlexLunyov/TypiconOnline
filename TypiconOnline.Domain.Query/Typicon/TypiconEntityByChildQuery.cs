@@ -8,7 +8,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public abstract class TypiconEntityByChildQuery<T>: IDataQuery<Result<TypiconEntity>> where T: ITypiconVersionChild, new()
+    public abstract class TypiconEntityByChildQuery<T>: IQuery<Result<TypiconEntity>> where T: ITypiconVersionChild, new()
     {
         public TypiconEntityByChildQuery(int id)
         {

@@ -16,10 +16,10 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
     /// <summary>
     /// Возвращает Id и Name Устава
     /// </summary>
-    public class SignEditQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<SignEditQuery, Result<SignEditModel>>
+    public class SignEditQueryHandler : DbContextQueryBase, IQueryHandler<SignEditQuery, Result<SignEditModel>>
     {
-        public SignEditQueryHandler(TypiconDBContext dbContext, [NotNull] IDataQueryProcessor queryProcessor)
-            : base(dbContext, queryProcessor)
+        public SignEditQueryHandler(TypiconDBContext dbContext)
+            : base(dbContext)
         {
         }
 

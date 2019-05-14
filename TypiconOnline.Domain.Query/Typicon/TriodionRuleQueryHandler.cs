@@ -19,9 +19,9 @@ namespace TypiconOnline.Domain.Query.Typicon
     /// Используется в AppServices
     /// </summary>
     public class TriodionRuleQueryHandler : QueryStrategyHandlerBase
-        , IDataQueryHandler<TriodionRuleQuery, TriodionRule>
+        , IQueryHandler<TriodionRuleQuery, TriodionRule>
     {
-        public TriodionRuleQueryHandler(TypiconDBContext dbContext, [NotNull] IDataQueryProcessor queryProcessor)
+        public TriodionRuleQueryHandler(TypiconDBContext dbContext, [NotNull] IQueryProcessor queryProcessor)
             : base(dbContext, queryProcessor)
         {
         }

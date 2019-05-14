@@ -12,7 +12,7 @@ namespace TypiconOnline.Domain.Query.Books
     /// <summary>
     /// Возвращает Псалм
     /// </summary>
-    public class PsalmQueryHandler : DbContextQueryBase, IDataQueryHandler<PsalmQuery, PsalmDto>
+    public class PsalmQueryHandler : DbContextQueryBase, IQueryHandler<PsalmQuery, PsalmDto>
     {
         readonly ITypiconSerializer serializer;
 

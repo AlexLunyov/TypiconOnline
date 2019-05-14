@@ -36,6 +36,7 @@ namespace TypiconMigrationTool
         private readonly IUnitOfWork _unitOfWork;
         private readonly ScheduleHandler _sh;
         private readonly UserCreationService _userCreationService;
+        private readonly IFileReader fileReader = new SimpleFileReader();
 
         private readonly string FOLDER_PATH;
 
@@ -53,11 +54,14 @@ namespace TypiconMigrationTool
             FOLDER_PATH = folderPath;
         }
 
-        public async Task Execute()
+        public void Execute()
         {
             Console.WriteLine("CreateSuperUser()");
 
-            User user = await CreateSuperUser();
+            User user = CreateSuperUser();
+
+            Console.WriteLine("CreateUsers()");
+            CreateUsers();
 
             Console.WriteLine("Migrate()");
 
@@ -77,7 +81,63 @@ namespace TypiconMigrationTool
             Commit();
         }
 
-        private async Task<User> CreateSuperUser()
+        private void CreateUsers()
+        {
+            string pass = "38ylN_mq#C!P";
+
+            _userCreationService.CreateUser(new User()
+            {
+                UserName = "berluki@mail.ru",
+                Email = "berluki@mail.ru",
+                FullName = "Уставщик"
+            }, pass, RoleConstants.EditorsRole);
+
+            _userCreationService.CreateUser(new User()
+            {
+                UserName = "berluki1@mail.ru",
+                Email = "berluki1@mail.ru",
+                FullName = "Уставщик1"
+            }, pass, RoleConstants.EditorsRole);
+
+            _userCreationService.CreateUser(new User()
+            {
+                UserName = "berluki2@mail.ru",
+                Email = "berluki2@mail.ru",
+                FullName = "Уставщик2"
+            }, pass, RoleConstants.EditorsRole);
+
+            _userCreationService.CreateUser(new User()
+            {
+                UserName = "piligrim@berluki.ru",
+                Email = "piligrim@berluki.ru",
+                FullName = "Редактор"
+            }, pass, RoleConstants.TypesettersRole);
+
+            _userCreationService.CreateUser(new User()
+            {
+                UserName = "piligrim1@berluki.ru",
+                Email = "piligrim1@berluki.ru",
+                FullName = "Редактор1"
+            }, pass, RoleConstants.TypesettersRole);
+
+            _userCreationService.CreateUser(new User()
+            {
+                UserName = "piligrim2@berluki.ru",
+                Email = "piligrim2@berluki.ru",
+                FullName = "Редактор2"
+            }, pass, RoleConstants.TypesettersRole);
+
+            _userCreationService.CreateUser(new User()
+            {
+                UserName = "piligrim3@berluki.ru",
+                Email = "piligrim3@berluki.ru",
+                FullName = "Редактор3"
+            }, pass, RoleConstants.TypesettersRole);
+
+            Commit();
+        }
+
+        private User CreateSuperUser()
         {
             //var roleAdmin = new Role() { Name = "Администратор", SystemName = "admin" };
             //_dbContext.Set<Role>().Add(roleAdmin);
@@ -86,9 +146,9 @@ namespace TypiconMigrationTool
             //var roleTypesetter = new Role() { Name = "Редактор", SystemName = "typesetter" };
             //_dbContext.Set<Role>().Add(roleTypesetter);
 
-            await _userCreationService.CreateRole(RoleConstants.AdministratorsRole, "Администратор");
-            await _userCreationService.CreateRole(RoleConstants.EditorsRole, "Уставщик");
-            await _userCreationService.CreateRole(RoleConstants.TypesettersRole, "Редактор");
+            _userCreationService.CreateRole(RoleConstants.AdministratorsRole, "Администратор");
+            _userCreationService.CreateRole(RoleConstants.EditorsRole, "Уставщик");
+            _userCreationService.CreateRole(RoleConstants.TypesettersRole, "Редактор");
 
             var user = new User()
             {
@@ -104,7 +164,7 @@ namespace TypiconMigrationTool
             //    new UserRole() { Role = roleTypesetter, User = user }
             //};
 
-            await _userCreationService.CreateUser(user, "eCa6?&OpM/", RoleConstants.AdministratorsRole, RoleConstants.EditorsRole, RoleConstants.TypesettersRole);
+            _userCreationService.CreateUser(user, "eCa6?&OpM/", RoleConstants.AdministratorsRole, RoleConstants.EditorsRole, RoleConstants.TypesettersRole);
 
             Commit();
 
@@ -132,15 +192,13 @@ namespace TypiconMigrationTool
                 TypiconId = typicon.Id,
                 VersionNumber = 1,
                 //Делаем сразу опубликованную версию
-                BDate = DateTime.Now
+                //BDate = DateTime.Now
             };
 
             typicon.Versions.Add(typiconEntity);
             Commit();
 
-            string folderPath = Path.Combine(FOLDER_PATH, TYPICON_NAME, "Sign"); 
-
-            FileReader fileReader = new FileReader(folderPath);
+            fileReader.FolderPath = Path.Combine(FOLDER_PATH, TYPICON_NAME, "Sign");
 
             int i = 1;
 
@@ -179,7 +237,7 @@ namespace TypiconMigrationTool
             Commit();
 
             MigrateMenologyDaysAndRules(typiconEntity);
-            Commit();
+            //Commit();
 
             MigrateTriodionDaysAndRules(typiconEntity);
             Commit();
@@ -201,9 +259,7 @@ namespace TypiconMigrationTool
             Timer timer = new Timer();
             timer.Start();
 
-            string folderPath = Path.Combine(FOLDER_PATH, TYPICON_NAME, "Explicit");
-
-            FileReader fileReader = new FileReader(folderPath);
+            fileReader.FolderPath = Path.Combine(FOLDER_PATH, TYPICON_NAME, "Explicit");
 
             IEnumerable<(string name, string content)> files = fileReader.ReadAllFromDirectory();
 
@@ -227,9 +283,9 @@ namespace TypiconMigrationTool
 
         private void MigrateTheotokionIrmologion()
         {
-            string folder = Path.Combine(FOLDER_PATH, @"Books\Irmologion\Theotokion");
+            fileReader.FolderPath = Path.Combine(FOLDER_PATH, @"Books\Irmologion\Theotokion");
 
-            ITheotokionAppFileReader reader = new TheotokionAppFileReader(new FileReader(folder));
+            ITheotokionAppFileReader reader = new TheotokionAppFileReader(fileReader);
 
             ITheotokionAppService service = new TheotokionAppService(_unitOfWork);
 
@@ -242,9 +298,9 @@ namespace TypiconMigrationTool
 
         private void MigrateOktoikh()
         {
-            string folder = Path.Combine(FOLDER_PATH, @"Books\Oktoikh");
+            fileReader.FolderPath = Path.Combine(FOLDER_PATH, @"Books\Oktoikh");
 
-            IOktoikhDayFileReader reader = new OktoikhDayFileReader(new FileReader(folder));
+            IOktoikhDayFileReader reader = new OktoikhDayFileReader(fileReader);
 
             IEasterContext easterContext = new EasterContext(_unitOfWork);
 
@@ -259,30 +315,26 @@ namespace TypiconMigrationTool
 
         private void MigrateKatavasia()
         {
-            string folder = Path.Combine(FOLDER_PATH, @"Books\Katavasia");
-
-            IFileReader reader = new FileReader(folder);
+            fileReader.FolderPath = Path.Combine(FOLDER_PATH, @"Books\Katavasia");
 
             IKatavasiaService service = new KatavasiaService(_unitOfWork);
 
             IKatavasiaFactory factory = new KatavasiaFactory();
 
-            IMigrationManager manager = new KatavasiaMigrationManager(factory, reader, service);
+            IMigrationManager manager = new KatavasiaMigrationManager(factory, fileReader, service);
 
             manager.Import();
         }
 
         private void MigrateWeekDayApp()
         {
-            string folder = Path.Combine(FOLDER_PATH, @"Books\WeekDayApp");
-
-            IFileReader reader = new FileReader(folder);
+            fileReader.FolderPath = Path.Combine(FOLDER_PATH, @"Books\WeekDayApp");
 
             var service = new WeekDayAppService(_unitOfWork);
 
             var factory = new WeekDayAppFactory();
 
-            IMigrationManager manager = new WeekDayAppMigrationManager(factory, reader, service);
+            IMigrationManager manager = new WeekDayAppMigrationManager(factory, fileReader, service);
 
             manager.Import();
         }
@@ -351,9 +403,7 @@ namespace TypiconMigrationTool
 
             //folder.AddFolder(childFolder);
 
-            string folderRulePath = Path.Combine(FOLDER_PATH, TYPICON_NAME, "Menology");
-
-            FileReader fileRuleReader = new FileReader(folderRulePath);
+            fileReader.FolderPath = Path.Combine(FOLDER_PATH, TYPICON_NAME, "Menology");
 
             MenologyDay menologyDay = null;
             MenologyRule menologyRule = null;
@@ -424,14 +474,16 @@ namespace TypiconMigrationTool
                                                     : menologyRule.GetNameByLanguage(DEFAULT_LANGUAGE);
 
                     //берем xml-правило из файла
-                    menologyRule.RuleDefinition = fileRuleReader.Read(n);
-                    menologyRule.ModRuleDefinition = fileRuleReader.Read(n, "mod");
+                    menologyRule.RuleDefinition = fileReader.Read(n);
+                    menologyRule.ModRuleDefinition = fileReader.Read(n, "mod");
                 }
                 else
                 {
                     int lastOrder = menologyRule.DayRuleWorships.Max(c => c.Order);
                     menologyRule.DayRuleWorships.Add(new DayRuleWorship() { DayRule = menologyRule, DayWorship = dayWorship, Order = lastOrder + 1 });
                 }
+
+                _unitOfWork.SaveChanges();
             }
 
             timer.Stop();
@@ -481,10 +533,8 @@ namespace TypiconMigrationTool
 
                 _dbContext.Set<TriodionDay>().Add(day);
 
-                string folderPath = Path.Combine(FOLDER_PATH, TYPICON_NAME, "Triodion");
-
-                FileReader fileReader = new FileReader(folderPath);
-
+                fileReader.FolderPath = Path.Combine(FOLDER_PATH, TYPICON_NAME, "Triodion");
+                
                 TriodionRule rule = new TriodionRule()
                 {
                     //Name = day.Name,
@@ -516,9 +566,7 @@ namespace TypiconMigrationTool
             Timer timer = new Timer();
             timer.Start();
 
-            string folderPath = Path.Combine(FOLDER_PATH, TYPICON_NAME, "Common");
-
-            FileReader fileReader = new FileReader(folderPath);
+            fileReader.FolderPath = Path.Combine(FOLDER_PATH, TYPICON_NAME, "Common");
 
             IEnumerable<(string name, string content)> files = fileReader.ReadAllFromDirectory();
 

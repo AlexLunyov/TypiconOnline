@@ -3,7 +3,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Books
 {
-    public class PsalmQuery : IDataQuery<PsalmDto>
+    public class PsalmQuery : IQuery<PsalmDto>
     {
         public PsalmQuery(int number)
         {

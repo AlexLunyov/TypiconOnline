@@ -12,9 +12,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
     public abstract class SourceHavingRuleBase: RuleExecutable, ICalcStructureElement
     {
         private readonly ITypiconSerializer serializer;
-        private readonly IDataQueryProcessor queryProcessor;
+        private readonly IQueryProcessor queryProcessor;
 
-        public SourceHavingRuleBase(string name, [NotNull] ITypiconSerializer serializer, [NotNull] IDataQueryProcessor queryProcessor) : base(name)
+        public SourceHavingRuleBase(string name, [NotNull] ITypiconSerializer serializer, [NotNull] IQueryProcessor queryProcessor) : base(name)
         {
             this.serializer = serializer;
             this.queryProcessor = queryProcessor;

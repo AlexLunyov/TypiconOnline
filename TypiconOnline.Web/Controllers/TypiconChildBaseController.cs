@@ -14,16 +14,16 @@ namespace TypiconOnline.Web.Controllers
     public abstract class TypiconChildBaseController<T> : TypiconBaseController<T> where T: IGridModel
     {
         public TypiconChildBaseController(
-            IDataQueryProcessor queryProcessor, 
+            IQueryProcessor queryProcessor, 
             IAuthorizationService authorizationService, 
             ICommandProcessor commandProcessor) : base(queryProcessor, authorizationService, commandProcessor)
         {
         }
 
         // GET: /<controller>/
-        public async Task<IActionResult> Index(int id)
+        public IActionResult Index(int id)
         {
-            if (await IsAuthorizedToEdit(id))
+            if (IsAuthorizedToEdit(id))
             {
                 ClearStoredData(GetQuery(id));
                 return View();
@@ -34,9 +34,9 @@ namespace TypiconOnline.Web.Controllers
             }
         }
 
-        public async Task<IActionResult> LoadData(int id)
+        public IActionResult LoadData(int id)
         {
-            return await LoadGridData(GetQuery(id), id);
+            return LoadGridData(GetQuery(id), id);
         }
 
         protected abstract IGridQuery<T> GetQuery(int id);

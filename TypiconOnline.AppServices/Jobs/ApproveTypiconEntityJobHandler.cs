@@ -63,6 +63,8 @@ namespace TypiconOnline.AppServices.Jobs
                             clone.BDate = null;
                             clone.VersionNumber = 1;
                             clone.TypiconId = job.TypiconId;
+                            //ставим true для возможности сразу опубликовать Устав
+                            clone.IsModified = true;
 
                             await _dbContext.UpdateTypiconVersionAsync(clone);
 
@@ -105,25 +107,5 @@ namespace TypiconOnline.AppServices.Jobs
                 return Fail(job, typicon.Error);
             };
         }
-
-
-        private TypiconVersion GetFullPublishedTypiconVersion(TypiconDBContext dbContext, int typiconId)
-        {
-            return dbContext.Set<TypiconVersion>()
-                    .Include(c => c.Signs)
-                        .ThenInclude(c => c.SignName)
-                    .Include(c => c.CommonRules)
-                    .Include(c => c.MenologyRules)
-                        .ThenInclude(c => c.DayRuleWorships)
-                    .Include(c => c.TriodionRules)
-                        .ThenInclude(c => c.DayRuleWorships)
-                    .Include(c => c.Kathismas)
-                        .ThenInclude(c => c.SlavaElements)
-                            .ThenInclude(c => c.PsalmLinks)
-                    .Include(c => c.ExplicitAddRules)
-                              .AsNoTracking()
-                              .FirstOrDefault(c => c.TypiconId == typiconId && c.IsPublished);
-        }
-
     }
 }

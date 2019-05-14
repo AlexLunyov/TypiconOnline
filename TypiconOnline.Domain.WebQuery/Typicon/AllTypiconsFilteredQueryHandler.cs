@@ -14,7 +14,7 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
-    public class AllTypiconsFilteredQueryHandler : DbContextQueryBase, IDataQueryHandler<AllTypiconsFilteredQuery, Result<IQueryable<TypiconEntityFilteredModel>>>
+    public class AllTypiconsFilteredQueryHandler : DbContextQueryBase, IQueryHandler<AllTypiconsFilteredQuery, Result<IQueryable<TypiconEntityFilteredModel>>>
     {
         UserManager<User> _userManager;
 
@@ -36,8 +36,9 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 //if not admin
                 if (!isAdmin)
                 {
-                    queryResult = queryResult.Where(c => c.OwnerId == query.UserId)
-                        .Where(c => c.EditableUserTypicons.Any(d => d.UserId == query.UserId));
+                    queryResult = queryResult
+                        .Where(c => c.OwnerId == query.UserId
+                                   || c.EditableUserTypicons.Any(d => d.UserId == query.UserId));
                 }
 
                 var result = new List<TypiconEntityFilteredModel>();
@@ -54,7 +55,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                         //PublishedVersionId = vrs.Id,
                         Name = typ.Name.FirstOrDefault(query.Language).Text,
                         Status = typ.Status.ToString(),
-                        Editable = !inProcess,
+                        Editable = typ.Status != TypiconStatus.WaitingApprovement && !inProcess,
                         Deletable = (isAdmin || typ.OwnerId == query.UserId) && !inProcess,
                         Approvable = isAdmin && typ.Status == TypiconStatus.WaitingApprovement
                     };

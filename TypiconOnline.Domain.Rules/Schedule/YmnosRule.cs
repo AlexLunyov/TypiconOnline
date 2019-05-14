@@ -12,7 +12,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class YmnosRule : SourceHavingRuleBase, ICustomInterpreted, IYmnosStructureRuleElement
     {
-        public YmnosRule(string name, ITypiconSerializer serializer, IDataQueryProcessor queryProcessor) 
+        public YmnosRule(string name, ITypiconSerializer serializer, IQueryProcessor queryProcessor) 
             : base(name, serializer, queryProcessor)
         {
 

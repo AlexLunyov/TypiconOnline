@@ -11,9 +11,9 @@ namespace TypiconOnline.Domain.Query.Books
     /// <summary>
     /// Возвращает наименование седмицы (вставляется в шапку шаблона седмицы)
     /// </summary>
-    public class WeekNameQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<WeekNameQuery, ItemText>
+    public class WeekNameQueryHandler : QueryStrategyHandlerBase, IQueryHandler<WeekNameQuery, ItemText>
     {
-        public WeekNameQueryHandler(TypiconDBContext dbContext, IDataQueryProcessor queryProcessor)
+        public WeekNameQueryHandler(TypiconDBContext dbContext, IQueryProcessor queryProcessor)
             : base(dbContext, queryProcessor) { }
 
         /// <summary>

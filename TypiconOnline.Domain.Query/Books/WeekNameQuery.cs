@@ -4,7 +4,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Books
 {
-    public class WeekNameQuery : IDataQuery<ItemText>
+    public class WeekNameQuery : IQuery<ItemText>
     {
         /// <summary>
         /// Возвращает наименование седмицы (вставляется в шапку шаблона седмицы)

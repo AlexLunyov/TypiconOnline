@@ -10,10 +10,10 @@ namespace TypiconOnline.Domain.Query.Typicon
     /// <summary>
     /// Возвращает коллекцию RuleElement запрашиваемого общего правила.
     /// </summary>
-    public class CommonRuleChildElementQueryHandler<T> : QueryStrategyHandlerBase, IDataQueryHandler<CommonRuleChildElementQuery<T>, T> 
+    public class CommonRuleChildElementQueryHandler<T> : QueryStrategyHandlerBase, IQueryHandler<CommonRuleChildElementQuery<T>, T> 
         where T: class, IRuleElement
     {
-        public CommonRuleChildElementQueryHandler(TypiconDBContext dbContext, IDataQueryProcessor queryProcessor)
+        public CommonRuleChildElementQueryHandler(TypiconDBContext dbContext, IQueryProcessor queryProcessor)
             : base(dbContext, queryProcessor) { }
 
         public T Handle([NotNull] CommonRuleChildElementQuery<T> query)

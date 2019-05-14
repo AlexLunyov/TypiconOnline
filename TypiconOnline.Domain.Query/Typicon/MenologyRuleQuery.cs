@@ -4,7 +4,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class MenologyRuleQuery : IDataQuery<MenologyRule>
+    public class MenologyRuleQuery : IQuery<MenologyRule>
     {
         public MenologyRuleQuery(int typiconId, DateTime date)
         {

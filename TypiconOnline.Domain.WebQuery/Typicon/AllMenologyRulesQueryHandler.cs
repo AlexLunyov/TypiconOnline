@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
     /// <summary>
     /// Возвращает все Знаки служб у черновика Сущности Устава
     /// </summary>
-    public class AllMenologyRulesQueryHandler : DbContextQueryBase, IDataQueryHandler<AllMenologyRulesQuery, Result<IQueryable<MenologyRuleModel>>>
+    public class AllMenologyRulesQueryHandler : DbContextQueryBase, IQueryHandler<AllMenologyRulesQuery, Result<IQueryable<MenologyRuleModel>>>
     {
         public AllMenologyRulesQueryHandler(TypiconDBContext dbContext) : base(dbContext)
         {

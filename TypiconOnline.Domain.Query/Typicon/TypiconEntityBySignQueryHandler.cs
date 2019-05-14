@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Query.Typicon
     /// <summary>
     /// Возвращает Id и Name Устава
     /// </summary>
-    public class TypiconEntityBySignQueryHandler : TypiconEntityByChildQueryHandlerBase<Sign>, IDataQueryHandler<TypiconEntityBySignQuery, Result<TypiconEntity>>
+    public class TypiconEntityBySignQueryHandler : TypiconEntityByChildQueryHandlerBase<Sign>, IQueryHandler<TypiconEntityBySignQuery, Result<TypiconEntity>>
     {
         public TypiconEntityBySignQueryHandler(TypiconDBContext dbContext) : base(dbContext) { }
 

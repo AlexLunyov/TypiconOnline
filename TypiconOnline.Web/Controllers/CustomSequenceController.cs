@@ -24,11 +24,11 @@ namespace TypiconOnline.Web.Controllers
     [Authorize(Roles = RoleConstants.AdminAndEditorRoles)]
     public class CustomSequenceController : Controller
     {
-        private readonly IDataQueryProcessor _queryProcessor;
+        private readonly IQueryProcessor _queryProcessor;
         private readonly IOutputFormFactory _outputFormFactory;
         private readonly CustomScheduleDataCalculator _dataCalculator;
 
-        public CustomSequenceController(IDataQueryProcessor queryProcessor, IOutputFormFactory outputFormFactory
+        public CustomSequenceController(IQueryProcessor queryProcessor, IOutputFormFactory outputFormFactory
             , CustomScheduleDataCalculator dataCalculator)
         {
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));

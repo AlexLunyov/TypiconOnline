@@ -9,7 +9,7 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
-    public class AllTypiconsQueryHandler : DbContextQueryBase, IDataQueryHandler<AllTypiconsQuery, IEnumerable<TypiconEntityModel>>
+    public class AllTypiconsQueryHandler : DbContextQueryBase, IQueryHandler<AllTypiconsQuery, IEnumerable<TypiconEntityModel>>
     {
         public AllTypiconsQueryHandler(TypiconDBContext dbContext) : base(dbContext) { }
 

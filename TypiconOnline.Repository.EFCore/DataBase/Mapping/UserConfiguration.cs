@@ -10,6 +10,9 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
         {
             builder.HasKey(c => c.Id);
 
+            builder.Property(u => u.UserName).HasMaxLength(255);
+            builder.Property(u => u.Email).HasMaxLength(255);
+
             //builder.HasMany(c => c.UserRoles);
         }
     }

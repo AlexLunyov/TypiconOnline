@@ -13,6 +13,7 @@ using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.AppServices.Migration;
 
 namespace TypiconOnline.AppServices.Jobs
 {

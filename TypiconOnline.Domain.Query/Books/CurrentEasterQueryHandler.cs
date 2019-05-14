@@ -8,7 +8,7 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Books
 {
-    public class CurrentEasterQueryHandler : DbContextQueryBase, IDataQueryHandler<CurrentEasterQuery, DateTime>
+    public class CurrentEasterQueryHandler : DbContextQueryBase, IQueryHandler<CurrentEasterQuery, DateTime>
     {
         public CurrentEasterQueryHandler(TypiconDBContext dbContext) : base(dbContext) { }
 

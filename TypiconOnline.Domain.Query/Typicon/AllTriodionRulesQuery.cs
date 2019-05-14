@@ -4,7 +4,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class AllTriodionRulesQuery : IDataQuery<IEnumerable<TriodionRule>>
+    public class AllTriodionRulesQuery : IQuery<IEnumerable<TriodionRule>>
     {
         public AllTriodionRulesQuery(int typiconId)
         {

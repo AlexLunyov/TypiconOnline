@@ -4,7 +4,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
-    public class AllTypiconsQuery : IDataQuery<IEnumerable<TypiconEntityModel>>
+    public class AllTypiconsQuery : IQuery<IEnumerable<TypiconEntityModel>>
     {
         public AllTypiconsQuery() { }
 

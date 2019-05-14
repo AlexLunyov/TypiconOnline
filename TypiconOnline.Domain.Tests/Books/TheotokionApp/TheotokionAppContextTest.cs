@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System.IO;
 using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.AppServices.Migration;
 
 namespace TypiconOnline.Domain.Tests.Books.TheotokionApp
 {
@@ -11,7 +12,7 @@ namespace TypiconOnline.Domain.Tests.Books.TheotokionApp
         public void TestMethod()
         {
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
-            FileReader reader = new FileReader(folderPath);
+            var reader = new FileReader(folderPath);
             string xml = reader.Read("YmnosGroupTest.xml");
 
             Domain.Books.TheotokionApp.TheotokionApp element = new Domain.Books.TheotokionApp.TheotokionApp()

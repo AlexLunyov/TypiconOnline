@@ -29,7 +29,7 @@ namespace TypiconOnline.Web.Controllers
 
 
         public MenologyRuleController(
-            IDataQueryProcessor queryProcessor,
+            IQueryProcessor queryProcessor,
             IAuthorizationService authorizationService,
             ICommandProcessor commandProcessor) : base(queryProcessor, authorizationService, commandProcessor)
         {
@@ -41,7 +41,7 @@ namespace TypiconOnline.Web.Controllers
         /// <param name="id">SignId</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public IActionResult Edit(int id)
         {
             if (id < 1)
             {
@@ -51,7 +51,7 @@ namespace TypiconOnline.Web.Controllers
             var typiconEntity = QueryProcessor.Process(new TypiconEntityByMenologyRuleQuery(id));
 
             if (typiconEntity.Success
-                && await IsAuthorizedToEdit(typiconEntity.Value))
+                && IsAuthorizedToEdit(typiconEntity.Value))
             {
                 ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Value.Id, DEFAULT_LANGUAGE, id);
                 ViewBag.TypiconId = typiconEntity.Value.Id;
@@ -74,7 +74,7 @@ namespace TypiconOnline.Web.Controllers
 
             if (ModelState.IsValid
                 && typiconEntity.Success
-                && await IsAuthorizedToEdit(typiconEntity.Value))
+                && IsAuthorizedToEdit(typiconEntity.Value))
             {
                 var command = new EditMenologyRuleCommand(model.Id,
                     model.DayWorships.Select(c => (c.WorshipId, c.Order)),
@@ -97,7 +97,7 @@ namespace TypiconOnline.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create(int id)
+        public IActionResult Create(int id)
         {
             if (id < 1)
             {
@@ -107,7 +107,7 @@ namespace TypiconOnline.Web.Controllers
             var typiconEntity = QueryProcessor.Process(new TypiconEntityQuery(id));
 
             if (typiconEntity != null
-                && await IsAuthorizedToEdit(typiconEntity))
+                && IsAuthorizedToEdit(typiconEntity))
             {
                 ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Id, DEFAULT_LANGUAGE);
 
@@ -124,7 +124,7 @@ namespace TypiconOnline.Web.Controllers
 
             if (ModelState.IsValid
                 && typiconEntity != null
-                && await IsAuthorizedToEdit(typiconEntity))
+                && IsAuthorizedToEdit(typiconEntity))
             {
                 var command = new CreateSignCommand(model.Id,
                     model.Name,

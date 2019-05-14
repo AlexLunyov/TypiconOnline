@@ -13,9 +13,9 @@ namespace TypiconOnline.Domain.Rules.Expressions
     /// </summary>
     public class DateByDaysFromEaster : DateExpression
     {
-        IDataQueryProcessor queryProcessor;
+        IQueryProcessor queryProcessor;
 
-        public DateByDaysFromEaster(string name, [NotNull] IDataQueryProcessor queryProcessor) : base(name)
+        public DateByDaysFromEaster(string name, [NotNull] IQueryProcessor queryProcessor) : base(name)
         {
             this.queryProcessor = queryProcessor;
         }

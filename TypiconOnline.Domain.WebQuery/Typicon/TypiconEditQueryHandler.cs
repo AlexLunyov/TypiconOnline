@@ -14,11 +14,11 @@ using TypiconOnline.Repository.EFCore.DataBase;
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
     /// <summary>
-    /// Возвращает Id и Name Устава
+    /// 
     /// </summary>
-    public class TypiconEditQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<TypiconEditQuery, Result<TypiconEntityEditModel>>
+    public class TypiconEditQueryHandler : QueryStrategyHandlerBase, IQueryHandler<TypiconEditQuery, Result<TypiconEntityEditModel>>
     {
-        public TypiconEditQueryHandler(TypiconDBContext dbContext, [NotNull] IDataQueryProcessor queryProcessor)
+        public TypiconEditQueryHandler(TypiconDBContext dbContext, [NotNull] IQueryProcessor queryProcessor)
             : base(dbContext, queryProcessor)
         {
         }
@@ -27,13 +27,17 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         {
             var typicon = DbContext.Set<TypiconEntity>().FirstOrDefault(c => c.Id == query.Id);
 
-            if (typicon != null)
+            var draft = DbContext.Set<TypiconVersion>().FirstOrDefault(c => c.TypiconId == query.Id && c.IsDraft);
+
+            if (typicon != null && draft != null)
             {
                 return Result.Ok(new TypiconEntityEditModel()
                 {
                     Id = typicon.Id,
                     Name = typicon.Name,
-                    DefaultLanguage = typicon.DefaultLanguage
+                    DefaultLanguage = typicon.DefaultLanguage,
+                    IsModified =  draft.IsModified,
+                    Editors = typicon.Editors.Select(c => (c.Id, c.FullName))
                 });
             }
             else

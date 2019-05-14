@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KontakionRule : SourceHavingRuleBase, IViewModelElement, ICustomInterpreted, IYmnosStructureRuleElement
     {
-        public KontakionRule(string name, ITypiconSerializer serializer, IDataQueryProcessor queryProcessor, 
+        public KontakionRule(string name, ITypiconSerializer serializer, IQueryProcessor queryProcessor, 
             IElementViewModelFactory<KontakionRule> viewModelFactory) : base(name, serializer, queryProcessor)
         {
             ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException("IElementViewModelFactory in KontakionRule");

@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using TypiconOnline.Domain.Serialization;
 using System.IO;
-using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.AppServices.Migration;
 using TypiconOnline.Domain.Books.Elements;
 
 namespace TypiconOnline.Domain.Tests.Rules.Days
@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         public void SixHourTest_Deserialization()
         {
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
-            FileReader reader = new FileReader(folderPath);
+            var reader = new FileReader(folderPath);
             string xml = reader.Read("SixHourTest.xml");
 
             TypiconSerializer ser = new TypiconSerializer();

@@ -7,7 +7,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Interfaces
 {
-    public interface IGridQuery<T> : IDataQuery<Result<IQueryable<T>>> where T: IGridModel
+    public interface IGridQuery<T> : IQuery<Result<IQueryable<T>>> where T: IGridModel
     {
         string GetKey();
     }

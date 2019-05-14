@@ -19,14 +19,14 @@ namespace TypiconOnline.AppServices.Implementations
 {
     public class ScheduleDataCalculator : IScheduleDataCalculator
     {
-        public ScheduleDataCalculator(IDataQueryProcessor queryProcessor, IRuleHandlerSettingsFactory settingsFactory)
+        public ScheduleDataCalculator(IQueryProcessor queryProcessor, IRuleHandlerSettingsFactory settingsFactory)
         {
             QueryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
             SettingsFactory = settingsFactory ?? throw new ArgumentNullException(nameof(settingsFactory));
         }
 
         
-        protected IDataQueryProcessor QueryProcessor { get; }
+        protected IQueryProcessor QueryProcessor { get; }
         protected IRuleHandlerSettingsFactory SettingsFactory { get; }
 
         /// <summary>

@@ -10,7 +10,7 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class TypiconPublishedVersionQueryHandler : DbContextQueryBase, IDataQueryHandler<TypiconPublishedVersionQuery, Result<TypiconVersion>>
+    public class TypiconPublishedVersionQueryHandler : DbContextQueryBase, IQueryHandler<TypiconPublishedVersionQuery, Result<TypiconVersion>>
     {
         public TypiconPublishedVersionQueryHandler([NotNull] TypiconDBContext dbContext) : base(dbContext)
         {

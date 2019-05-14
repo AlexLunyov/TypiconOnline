@@ -4,7 +4,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Books
 {
-    public class WeekDayAppQuery : IDataQuery<WeekDayApp>
+    public class WeekDayAppQuery : IQuery<WeekDayApp>
     {
         public WeekDayAppQuery(DayOfWeek dayOfWeek)
         {

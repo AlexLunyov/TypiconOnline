@@ -19,7 +19,7 @@ namespace TypiconMigrationTool.Typicon
             _roleManager = roleManager;
         }
 
-        public async Task CreateRole(string name, string normalizedName)
+        public void CreateRole(string name, string normalizedName)
         {
             Role role = new Role()
             {
@@ -27,14 +27,14 @@ namespace TypiconMigrationTool.Typicon
                 NormalizedName = normalizedName
             };
 
-            await _roleManager.CreateAsync(role);
+            _roleManager.CreateAsync(role).Wait();
         }
 
-        public async Task CreateUser(User user, string password, params string[] roles)
+        public void CreateUser(User user, string password, params string[] roles)
         {
-            var result = await _userManager.CreateAsync(user, password);
+            var result = _userManager.CreateAsync(user, password).Result;
 
-            if (result.Succeeded == false)
+            if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
                 {
@@ -43,9 +43,9 @@ namespace TypiconMigrationTool.Typicon
             }
             else
             {
-                result = await _userManager.AddToRolesAsync(user, roles);
+                result = _userManager.AddToRolesAsync(user, roles).Result;
 
-                if (result.Succeeded == false)
+                if (!result.Succeeded)
                 {
                     foreach (var error in result.Errors)
                     {

@@ -9,7 +9,7 @@ namespace TypiconOnline.Domain.Query.Books
     /// <summary>
     /// Возвращает Приложение на каждый день недели
     /// </summary>
-    public class WeekDayAppQueryHandler : DbContextQueryBase, IDataQueryHandler<WeekDayAppQuery, WeekDayApp>
+    public class WeekDayAppQueryHandler : DbContextQueryBase, IQueryHandler<WeekDayAppQuery, WeekDayApp>
     {
         public WeekDayAppQueryHandler(TypiconDBContext dbContext) : base(dbContext) { }
 

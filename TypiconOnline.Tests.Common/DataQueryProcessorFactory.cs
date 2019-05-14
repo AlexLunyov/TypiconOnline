@@ -9,8 +9,8 @@ namespace TypiconOnline.Tests.Common
 {
     public class DataQueryProcessorFactory
     {
-        private static IDataQueryProcessor queryProcessor;
-        public static IDataQueryProcessor Instance
+        private static IQueryProcessor queryProcessor;
+        public static IQueryProcessor Instance
         {
             get
             {
@@ -24,9 +24,9 @@ namespace TypiconOnline.Tests.Common
         }
 
 
-        public static IDataQueryProcessor Create() => Create(TypiconDbContextFactory.Create());
+        public static IQueryProcessor Create() => Create(TypiconDbContextFactory.Create());
 
-        public static IDataQueryProcessor Create(TypiconDBContext dbContext)
+        public static IQueryProcessor Create(TypiconDBContext dbContext)
         {
             var container = new SimpleInjector.Container();
 
@@ -36,7 +36,7 @@ namespace TypiconOnline.Tests.Common
 
             container.RegisterInstance(dbContext);
 
-            var processor = container.GetInstance<IDataQueryProcessor>();
+            var processor = container.GetInstance<IQueryProcessor>();
 
             return processor;
         }

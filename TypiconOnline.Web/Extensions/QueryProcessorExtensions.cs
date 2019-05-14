@@ -10,14 +10,14 @@ namespace TypiconOnline.Web.Extensions
 {
     public static class QueryProcessorExtensions
     {
-        public static IEnumerable<SelectListItem> GetTypicons(this IDataQueryProcessor queryProcessor)
+        public static IEnumerable<SelectListItem> GetTypicons(this IQueryProcessor queryProcessor)
         {
             var typicons = queryProcessor.Process(new AllTypiconsQuery());
 
             return typicons.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString() });
         }
 
-        public static IEnumerable<SelectListItem> GetSigns(this IDataQueryProcessor queryProcessor, int typiconId, string language, int? exceptSignId = null)
+        public static IEnumerable<SelectListItem> GetSigns(this IQueryProcessor queryProcessor, int typiconId, string language, int? exceptSignId = null)
         {
             var signs = queryProcessor.Process(new AllSignsQuery(typiconId, language, exceptSignId));
 

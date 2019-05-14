@@ -12,44 +12,29 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Command.Typicon
 {
-    public class CreateSignCommandHandler : DbContextCommandBase, ICommandHandler<CreateSignCommand>
+    public class CreateSignCommandHandler : CreateRuleCommandHandlerBase<Sign>, ICommandHandler<CreateSignCommand>
     {
         public CreateSignCommandHandler(TypiconDBContext dbContext) : base(dbContext) { }
 
         public async Task<Result> ExecuteAsync(CreateSignCommand command)
         {
-            var draft = DbContext.Set<TypiconVersion>()
-                            .Where(c => c.TypiconId == command.Id && c.IsDraft)
-                            .FirstOrDefault();
-
-            if (draft != null)
-            {
-                var obj = Create(command, draft.Id);
-
-                DbContext.Set<Sign>().Add(obj);
-
-                await DbContext.SaveChangesAsync();
-
-                return Result.Ok();
-            }
-            else
-            {
-                return Result.Fail($"Устав с Id = {command.Id} не был найден.");
-            }
+            return await base.ExecuteAsync(command);
         }
 
-        private Sign Create(CreateSignCommand command, int typiconVersionId)
+        protected override Sign Create(CreateRuleCommandBase<Sign> command, int typiconVersionId)
         {
+            var c = command as CreateSignCommand;
+
             return new Sign()
             {
-                IsAddition = command.IsAddition,
-                ModRuleDefinition = command.ModRuleDefinition,
-                SignName = command.Name,
-                Number = command.Number,
-                Priority = command.Priority,
-                RuleDefinition = command.RuleDefinition,
+                IsAddition = c.IsAddition,
+                ModRuleDefinition = c.ModRuleDefinition,
+                SignName = c.Name,
+                Number = c.Number,
+                Priority = c.Priority,
+                RuleDefinition = c.RuleDefinition,
                 TypiconVersionId = typiconVersionId,
-                TemplateId = command.TemplateId
+                TemplateId = c.TemplateId
             };
         }
     }

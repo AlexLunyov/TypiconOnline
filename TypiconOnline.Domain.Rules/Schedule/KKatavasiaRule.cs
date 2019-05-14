@@ -15,9 +15,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class KKatavasiaRule : KanonasItemRuleBase
     {
-        IDataQueryProcessor queryProcessor;
+        IQueryProcessor queryProcessor;
 
-        public KKatavasiaRule(string name, [NotNull] IDataQueryProcessor queryProcessor, ITypiconSerializer serializer) 
+        public KKatavasiaRule(string name, [NotNull] IQueryProcessor queryProcessor, ITypiconSerializer serializer) 
             : base(name, serializer)
         {
             this.queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));

@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using System.IO;
-using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.AppServices.Migration;
 
 namespace TypiconOnline.Tests.Common
 {
@@ -9,7 +9,7 @@ namespace TypiconOnline.Tests.Common
         public static string GetXmlString(string fileName)
         {
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
-            FileReader reader = new FileReader(folderPath);
+            var reader = new FileReader(folderPath);
             return reader.Read(fileName);
         }
     }

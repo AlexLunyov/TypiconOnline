@@ -2,7 +2,7 @@
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 using System.IO;
-using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.AppServices.Migration;
 using TypiconOnline.Domain.Books.Elements;
 
 namespace TypiconOnline.Domain.Tests.Rules.Days
@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         public void YmnosGroupTest_ValidIhos()
         {
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
-            FileReader reader = new FileReader(folderPath);
+            var reader = new SimpleFileReader(folderPath);
             string xml = reader.Read("YmnosGroupTest.xml");
 
             TypiconSerializer ser = new TypiconSerializer();

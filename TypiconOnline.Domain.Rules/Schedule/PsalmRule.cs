@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class PsalmRule : RuleExecutable, ICustomInterpreted, IViewModelElement, ICalcStructureElement
     {
-        public PsalmRule(string name, [NotNull] IDataQueryProcessor queryProcessor, [NotNull] IElementViewModelFactory<PsalmRule> viewModelFactory) : base(name)
+        public PsalmRule(string name, [NotNull] IQueryProcessor queryProcessor, [NotNull] IElementViewModelFactory<PsalmRule> viewModelFactory) : base(name)
         {
             QueryProcessor = queryProcessor ?? throw new ArgumentNullException("queryProcessor in PsalmRule");
             ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException("viewModelFactory in PsalmRule");
@@ -42,7 +42,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// <remarks>1-ориентированный</remarks>
         public int? EndStihos { get; set; }
 
-        protected IDataQueryProcessor QueryProcessor { get; }
+        protected IQueryProcessor QueryProcessor { get; }
 
         protected IElementViewModelFactory<PsalmRule> ViewModelFactory { get; }
 

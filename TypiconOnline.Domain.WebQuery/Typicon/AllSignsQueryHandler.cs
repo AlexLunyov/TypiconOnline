@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
     /// <summary>
     /// Возвращает все Знаки служб у черновика Сущности Устава
     /// </summary>
-    public class AllSignsQueryHandler : DbContextQueryBase, IDataQueryHandler<AllSignsQuery, Result<IQueryable<SignModel>>>
+    public class AllSignsQueryHandler : DbContextQueryBase, IQueryHandler<AllSignsQuery, Result<IQueryable<SignModel>>>
     {
         public AllSignsQueryHandler(TypiconDBContext dbContext) : base(dbContext)
         {

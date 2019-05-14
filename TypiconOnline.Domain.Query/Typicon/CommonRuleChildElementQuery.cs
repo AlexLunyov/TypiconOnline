@@ -8,7 +8,7 @@ namespace TypiconOnline.Domain.Query.Typicon
     /// <summary>
     /// Возвращает коллекцию RuleElement запрашиваемого общего правила.
     /// </summary>
-    public class CommonRuleChildElementQuery<T> : IDataQuery<T> where T : IRuleElement
+    public class CommonRuleChildElementQuery<T> : IQuery<T> where T : IRuleElement
     {
         /// <summary>
         /// 

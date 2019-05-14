@@ -3,6 +3,7 @@ using TypiconOnline.Domain.Serialization;
 using System.IO;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.Domain.Books.Elements;
+using TypiconOnline.AppServices.Migration;
 
 namespace TypiconOnline.Domain.Tests.Rules.Days
 {
@@ -13,7 +14,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Days
         public void Leitourgia_Deserialization()
         {
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
-            FileReader reader = new FileReader(folderPath);
+            var reader = new FileReader(folderPath);
             string xml = reader.Read("LeitourgiaTest.xml");
 
             TypiconSerializer ser = new TypiconSerializer();

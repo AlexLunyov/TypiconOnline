@@ -16,11 +16,11 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
     /// <summary>
     /// Возвращает Id и Name Устава
     /// </summary>
-    public class MenologyRuleEditQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<MenologyRuleEditQuery, Result<MenologyRuleEditModel>>
+    public class MenologyRuleEditQueryHandler : QueryStrategyHandlerBase, IQueryHandler<MenologyRuleEditQuery, Result<MenologyRuleEditModel>>
     {
         private const int YEAR = 2017;
         private const int LEAP_YEAR = 2016;
-        public MenologyRuleEditQueryHandler(TypiconDBContext dbContext, [NotNull] IDataQueryProcessor queryProcessor)
+        public MenologyRuleEditQueryHandler(TypiconDBContext dbContext, [NotNull] IQueryProcessor queryProcessor)
             : base(dbContext, queryProcessor)
         {
         }

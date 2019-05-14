@@ -120,17 +120,8 @@ namespace TypiconOnline.Web
             container.Register<JobAsyncHostedService>();
             services.AddHostedServiceFromContainer<JobAsyncHostedService>(container);
 
-            //query command jobs
-            //container.RegisterTypiconQueryClasses();
-            //container.RegisterTypiconCommandClasses();
-
-
-            //container.Register(typeof(IDataQuery<>), typeof(QueryProcessor).Assembly);
-            container.Register(typeof(IDataQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
-            container.Register<IDataQueryProcessor, DataQueryProcessor>();
-
             //container.Register(typeof(IQuery<>), typeof(QueryProcessor).Assembly);
-            container.Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly);
+            container.Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
             container.Register<IQueryProcessor, QueryProcessor>();
 
 
@@ -154,7 +145,7 @@ namespace TypiconOnline.Web
                 optionsBuilder.UseMySql(configuration.GetConnectionString("MySql"),
                         mySqlOptions =>
                         {
-                            mySqlOptions.ServerVersion(new Version(8, 0, 15), ServerType.MySql);
+                            mySqlOptions.ServerVersion(new Version(5, 6, 43), ServerType.MySql);
                         });
 
                 //PostgreSQL

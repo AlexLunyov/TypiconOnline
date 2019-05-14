@@ -18,7 +18,9 @@ using TypiconOnline.Repository.EFCore.DataBase.Mapping;
 
 namespace TypiconOnline.Repository.EFCore.DataBase
 {
-    public class TypiconDBContext : IdentityDbContext<User, Role, int>
+    public class TypiconDBContext : IdentityDbContext<User, Role, int, IdentityUserClaim<int>,
+                                        UserRole, IdentityUserLogin<int>,
+                                        IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         //public DbSet<User> Users { get; set; }
         //public DbSet<Typicon> Typicons { get; set; }
@@ -38,20 +40,90 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 
             //Игнорируем warnings
 
-            optionsBuilder.ConfigureWarnings(warnings => warnings.Log(CoreEventId.DetachedLazyLoadingWarning));
+            //optionsBuilder.ConfigureWarnings(warnings => warnings.Log(CoreEventId.DetachedLazyLoadingWarning));
         }
 
         #region Modeling
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             // настройка полей с помощью Fluent API TypiconSettings
 
-            //modelBuilder.ApplyConfiguration(new UserConfiguration()); 
+            //modelBuilder.ApplyConfiguration(new UserConfiguration());
             //modelBuilder.ApplyConfiguration(new RoleConfiguration());
             //modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
 
-            //modelBuilder.Entity<IdentityUserRole<int>>().HasKey(p => new { p.UserId, p.RoleId });
+            //modelBuilder.Entity<User>().Property(u => u.UserName).HasMaxLength(255);
+            //modelBuilder.Entity<User>().Property(u => u.Email).HasMaxLength(255);
+            //modelBuilder.Entity<Role>().Property(r => r.Name).HasMaxLength(255);
+
+            #region Identity
+
+            modelBuilder.Entity<User>(b =>
+            {
+                b.ToTable("Users");
+                b.HasKey(r => r.Id);
+                
+                b.Property(u => u.UserName).HasMaxLength(127);
+                b.Property(u => u.NormalizedUserName).HasMaxLength(127);
+                b.Property(u => u.FullName).HasMaxLength(127);
+                b.Property(u => u.Email).HasMaxLength(127);
+                b.Property(u => u.NormalizedEmail).HasMaxLength(127);
+
+                // Each User can have many entries in the UserRole join table
+                b.HasMany(e => e.UserRoles)
+                    .WithOne(e => e.User)
+                    .HasForeignKey(ur => ur.UserId)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity<Role>(role =>
+            {
+                role.ToTable("Roles");
+                role.HasKey(r => r.Id);
+                role.HasIndex(r => r.NormalizedName).HasName("RoleNameIndex").IsUnique();
+                role.Property(r => r.ConcurrencyStamp).IsConcurrencyToken();
+
+                role.Property(u => u.Name).HasMaxLength(127);
+                //role.Property(u => u.SystemName).HasMaxLength(127);
+                role.Property(u => u.NormalizedName).HasMaxLength(127);
+
+                // Each Role can have many entries in the UserRole join table
+                role.HasMany(e => e.UserRoles)
+                    .WithOne(e => e.Role)
+                    .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity<IdentityRoleClaim<int>>(roleClaim =>
+            {
+                roleClaim.ToTable("RoleClaims");
+                roleClaim.HasKey(rc => rc.Id);
+            });
+
+            modelBuilder.Entity<UserRole>(userRole =>
+            {
+                userRole.ToTable("UserRoles");
+                userRole.HasKey(r => new { r.UserId, r.RoleId });
+            });
+
+            modelBuilder.Entity<IdentityUserLogin<int>>(c =>
+            {
+                c.ToTable("UserLogins");
+                c.Property(m => m.LoginProvider).HasMaxLength(127);
+                c.Property(m => m.ProviderKey).HasMaxLength(127);
+            });
+            modelBuilder.Entity<IdentityUserClaim<int>>().ToTable("UserClaims");
+            modelBuilder.Entity<IdentityUserToken<int>>(c =>
+            {
+                c.ToTable("UserTokens");
+                c.Property(m => m.LoginProvider).HasMaxLength(127);
+                c.Property(m => m.Name).HasMaxLength(127);
+            });
+
+            #endregion
 
             modelBuilder.ApplyConfiguration(new TypiconConfiguration());
             modelBuilder.ApplyConfiguration(new TypiconVersionConfiguration());
@@ -104,7 +176,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase
             modelBuilder.ApplyConfiguration(new PsalmLinkConfiguration());
             modelBuilder.ApplyConfiguration(new PsalmConfiguration());
 
-            base.OnModelCreating(modelBuilder);
+            
         }
 
         #endregion

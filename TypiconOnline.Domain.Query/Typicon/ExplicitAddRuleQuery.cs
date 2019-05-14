@@ -4,7 +4,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class ExplicitAddRuleQuery : IDataQuery<ExplicitAddRule>
+    public class ExplicitAddRuleQuery : IQuery<ExplicitAddRule>
     {
         public ExplicitAddRuleQuery(int typiconVersionId, DateTime date)
         {

@@ -3,7 +3,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Books
 {
-    public class CurrentEasterQuery : IDataQuery<DateTime>
+    public class CurrentEasterQuery : IQuery<DateTime>
     {
         public CurrentEasterQuery(int year)
         {

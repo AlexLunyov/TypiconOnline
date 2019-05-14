@@ -10,7 +10,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 {
     public class ExapostilarionItemRule : SourceHavingRuleBase, IExapostilarionRuleElement, ICustomInterpreted
     {
-        public ExapostilarionItemRule(string name, ITypiconSerializer serializer, IDataQueryProcessor queryProcessor) 
+        public ExapostilarionItemRule(string name, ITypiconSerializer serializer, IQueryProcessor queryProcessor) 
             : base(name, serializer, queryProcessor)
         {
         }

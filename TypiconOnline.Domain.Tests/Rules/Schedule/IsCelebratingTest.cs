@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
-using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.AppServices.Migration;
 using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Executables;
@@ -23,7 +23,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             };
 
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
-            FileReader reader = new FileReader(folderPath);
+            var reader = new FileReader(folderPath);
             string xml = reader.Read("IsCelebrating_Simple.xml");
 
             //Ektenis element = RuleFactory.CreateElement(xml) as Ektenis;

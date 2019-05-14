@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.AppServices.Migration;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Tests.Rules.Serialization
@@ -52,7 +52,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Serialization
         public void XElementCreatorTest_Kanonas()
         {
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
-            FileReader reader = new FileReader(folderPath);
+            var reader = new FileReader(folderPath);
             string xml = reader.Read("KanonasRuleTest.xml");
 
             for (int i = 0; i < 1000; i++)

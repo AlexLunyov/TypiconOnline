@@ -9,8 +9,8 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.HasKey(c => c.Id);
-            
 
+            builder.Property(r => r.Name).HasMaxLength(255);
         }
     }
 }

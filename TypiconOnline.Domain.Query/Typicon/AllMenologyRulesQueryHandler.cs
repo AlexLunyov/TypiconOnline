@@ -10,9 +10,9 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class AllMenologyRulesQueryHandler : QueryStrategyHandlerBase, IDataQueryHandler<AllMenologyRulesQuery, IEnumerable<MenologyRule>>
+    public class AllMenologyRulesQueryHandler : QueryStrategyHandlerBase, IQueryHandler<AllMenologyRulesQuery, IEnumerable<MenologyRule>>
     {
-        public AllMenologyRulesQueryHandler(TypiconDBContext dbContext, [NotNull] IDataQueryProcessor queryProcessor)
+        public AllMenologyRulesQueryHandler(TypiconDBContext dbContext, [NotNull] IQueryProcessor queryProcessor)
             : base(dbContext, queryProcessor) { }
 
         public IEnumerable<MenologyRule> Handle([NotNull] AllMenologyRulesQuery query)

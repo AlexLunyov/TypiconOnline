@@ -7,9 +7,9 @@ namespace TypiconOnline.Domain.Query
 {
     public abstract class QueryStrategyHandlerBase : DbContextQueryBase
     {
-        protected IDataQueryProcessor QueryProcessor { get; }
+        protected IQueryProcessor QueryProcessor { get; }
 
-        protected QueryStrategyHandlerBase(TypiconDBContext dbContext, [NotNull] IDataQueryProcessor queryProcessor) : base(dbContext)
+        protected QueryStrategyHandlerBase(TypiconDBContext dbContext, [NotNull] IQueryProcessor queryProcessor) : base(dbContext)
         {
             QueryProcessor = queryProcessor;
         }

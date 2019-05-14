@@ -67,12 +67,10 @@
     <Compile Include="Domain\ValueObjectBaseT.cs" />
     <Compile Include="Interfaces\IConfigurationRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Query\IDataQuery.cs" />
-    <Compile Include="Query\IDataQueryHandler.cs" />
     <Compile Include="Query\IQuery.cs" />
-    <Compile Include="Query\IDataQueryProcessor.cs" />
     <Compile Include="Query\IQueryHandler.cs" />
     <Compile Include="Query\IQueryProcessor.cs" />
+    <Compile Include="Query\QueryDecoratorBase.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

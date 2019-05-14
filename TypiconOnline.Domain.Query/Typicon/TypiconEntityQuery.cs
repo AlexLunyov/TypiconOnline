@@ -3,7 +3,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class TypiconEntityQuery : IDataQuery<TypiconEntity>
+    public class TypiconEntityQuery : IQuery<TypiconEntity>
     {
         public TypiconEntityQuery(int typiconId)
         {

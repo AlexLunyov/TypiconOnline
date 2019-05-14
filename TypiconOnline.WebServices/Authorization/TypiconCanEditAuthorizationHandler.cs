@@ -42,25 +42,31 @@ namespace TypiconOnline.WebServices.Authorization
 
             // Administrators can do anything.
             if (context.User.IsInRole(RoleConstants.AdministratorsRole))
+
             {
                 context.Succeed(requirement);
-            }
-
-            // If we're not asking for create or delete permission, return.
-
-            if (requirement.Name != AuthorizationConstants.CreateTypiconName &&
-                requirement.Name != AuthorizationConstants.DeleteTypiconName)
-            {
-                return Task.FromResult(0);
             }
 
             var id = _userManager.GetUserId(context.User);
 
-            if (resource.OwnerId.ToString() == id 
-                || resource.EditableUserTypicons.Any(c => c.UserId.ToString() == id))
+            //Только Авторы могут удалять Устав
+            if (requirement == TypiconOperations.Delete)
             {
-                context.Succeed(requirement);
+                if (resource.OwnerId.ToString() == id)
+                {
+                    context.Succeed(requirement);
+                }
             }
+            else
+            {
+                if (resource.OwnerId.ToString() == id
+                || resource.EditableUserTypicons.Any(c => c.UserId.ToString() == id))
+                {
+                    context.Succeed(requirement);
+                }
+            }
+
+            
 
             return Task.FromResult(0);
         }

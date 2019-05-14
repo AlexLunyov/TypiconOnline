@@ -44,7 +44,7 @@ namespace TypiconOnline.Domain.Typicon
         /// <summary>
         /// Список на промежуточную таблицу для Редакторов Устава
         /// </summary>
-        public virtual IEnumerable<UserTypicon> EditableUserTypicons { get; set; } = new List<UserTypicon>();
+        public virtual ICollection<UserTypicon> EditableUserTypicons { get; set; } = new List<UserTypicon>();
         
         /// <summary>
         /// Редакторы Устава

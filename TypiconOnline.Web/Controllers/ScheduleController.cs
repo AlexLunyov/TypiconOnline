@@ -23,13 +23,13 @@ namespace TypiconOnline.Web.Controllers
     [AllowAnonymous]
     public class ScheduleController : Controller
     {
-        private readonly IDataQueryProcessor queryProcessor;
+        private readonly IQueryProcessor queryProcessor;
         private readonly IOutputForms _outputForms;
         private readonly IScheduleWeekViewer<string> _weekViewer;
         private readonly IScheduleWeekViewer<Result<DocxToStreamWeekResponse>> _weekDownloadViewer;
         private readonly IScheduleDayViewer<string> dayViewer;
 
-        public ScheduleController(IDataQueryProcessor queryProcessor, IOutputForms outputForms, IScheduleDayViewer<string> dayViewer
+        public ScheduleController(IQueryProcessor queryProcessor, IOutputForms outputForms, IScheduleDayViewer<string> dayViewer
             , IScheduleWeekViewer<string> weekViewer
             , IScheduleWeekViewer<Result<DocxToStreamWeekResponse>> weekDownloadViewer)
         {
@@ -60,7 +60,7 @@ namespace TypiconOnline.Web.Controllers
                     date = DateTime.Now;
                 }
 
-                ViewBag.Date = date.ToString("dd-MM-yyyy");
+                ViewBag.Date = date;
 
                 var weekResult = _outputForms.GetWeek(id.Value, date, language);
 

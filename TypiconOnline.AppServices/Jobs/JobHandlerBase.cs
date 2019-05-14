@@ -43,5 +43,12 @@ namespace TypiconOnline.AppServices.Jobs
 
             return Result.Fail(err);
         }
+
+        protected Result Recreate(TJob job, int delay = 5000)
+        {
+            Jobs.Recreate(job);
+
+            return Result.Fail($"Задача отложена на {delay} миллисекунд");
+        }
     }
 }

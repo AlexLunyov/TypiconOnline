@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Query.Typicon
     /// <summary>
     /// Возвращает Id и Name Устава
     /// </summary>
-    public class TypiconEntityByMenologyRuleQueryHandler : TypiconEntityByChildQueryHandlerBase<MenologyRule>, IDataQueryHandler<TypiconEntityByMenologyRuleQuery, Result<TypiconEntity>>
+    public class TypiconEntityByMenologyRuleQueryHandler : TypiconEntityByChildQueryHandlerBase<MenologyRule>, IQueryHandler<TypiconEntityByMenologyRuleQuery, Result<TypiconEntity>>
     {
         public TypiconEntityByMenologyRuleQueryHandler(TypiconDBContext dbContext) : base(dbContext) { }
 

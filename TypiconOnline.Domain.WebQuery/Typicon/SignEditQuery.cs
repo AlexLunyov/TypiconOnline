@@ -7,7 +7,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 { 
-    public class SignEditQuery : IDataQuery<Result<SignEditModel>>
+    public class SignEditQuery : IQuery<Result<SignEditModel>>
     {
         public SignEditQuery(int id)
         {

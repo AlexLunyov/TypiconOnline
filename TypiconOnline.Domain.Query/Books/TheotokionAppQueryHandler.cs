@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Query.Books
     /// <summary>
     /// Возвращает День Октоиха по заданной дате
     /// </summary>
-    public class TheotokionAppQueryHandler : DbContextQueryBase, IDataQueryHandler<TheotokionAppQuery, YmnosGroup>
+    public class TheotokionAppQueryHandler : DbContextQueryBase, IQueryHandler<TheotokionAppQuery, YmnosGroup>
     {
         readonly ITypiconSerializer serializer;
 

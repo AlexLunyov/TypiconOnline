@@ -15,9 +15,9 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// </summary>
     public class TheotokionAppRule : RuleExecutable, ICustomInterpreted, IYmnosStructureRuleElement
     {
-        IDataQueryProcessor queryProcessor;
+        IQueryProcessor queryProcessor;
 
-        public TheotokionAppRule(string name, [NotNull] IDataQueryProcessor queryProcessor) : base(name)
+        public TheotokionAppRule(string name, [NotNull] IQueryProcessor queryProcessor) : base(name)
         {
             this.queryProcessor = queryProcessor;
         }

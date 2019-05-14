@@ -6,7 +6,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query.Typicon
 {
-    public class ModifiedRuleHighestPriorityQuery : IDataQuery<ModifiedRule>
+    public class ModifiedRuleHighestPriorityQuery : IQuery<ModifiedRule>
     {
         public ModifiedRuleHighestPriorityQuery(int typiconVersionId, DateTime date)
         {

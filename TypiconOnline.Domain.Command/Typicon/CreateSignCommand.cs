@@ -7,7 +7,7 @@ using TypiconOnline.Infrastructure.Common.Command;
 
 namespace TypiconOnline.Domain.Command.Typicon
 {
-    public class CreateSignCommand : EditRuleCommandBase<Sign>
+    public class CreateSignCommand : CreateRuleCommandBase<Sign>
     {
         public CreateSignCommand(int id
             , ItemText name
