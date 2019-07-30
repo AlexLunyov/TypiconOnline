@@ -15,6 +15,11 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
         {
             builder.HasKey(c => c.Id);
 
+            builder.HasOne(c => c.PrevVersion)
+                .WithMany()
+                .HasForeignKey(c => c.PrevVersionId)
+                .IsRequired(false);
+
             builder.HasMany(e => e.ModifiedYears)
                 .WithOne(m => m.TypiconVersion)
                 .HasForeignKey(c => c.TypiconVersionId);

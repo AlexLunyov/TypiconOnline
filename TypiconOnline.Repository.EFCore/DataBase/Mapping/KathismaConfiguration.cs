@@ -29,7 +29,9 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
                 //.ToTable("KathismaNumberName");
             });
 
-            builder.HasMany(c => c.SlavaElements);
+            builder.HasMany(c => c.SlavaElements)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(c => c.TypiconVersion).WithMany(d => d.Kathismas);
 

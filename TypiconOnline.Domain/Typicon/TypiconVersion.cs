@@ -37,6 +37,15 @@ namespace TypiconOnline.Domain.Typicon
         /// Ссылка на сущность Устава
         /// </summary>
         public virtual TypiconEntity Typicon { get; set; }
+        /// <summary>
+        /// Id предыдущей версии TypiconVersion
+        /// </summary>
+        public int? PrevVersionId { get; set; }
+
+        /// <summary>
+        /// Ссылка на предыдущую версию Устава
+        /// </summary>
+        public virtual TypiconVersion PrevVersion { get; set; }
 
         /// <summary>
         /// Номер Версии Устава. При создании новых версий, номер увеличивается на единицу

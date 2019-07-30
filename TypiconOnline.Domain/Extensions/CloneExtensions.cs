@@ -19,7 +19,8 @@ namespace TypiconOnline.Domain.Extensions
                 EDate = source.EDate,
                 IsModified = source.IsModified,
                 ValidationStatus = source.ValidationStatus,
-                VersionNumber = source.VersionNumber
+                VersionNumber = source.VersionNumber,
+                PrevVersionId = source.Id
             };
 
             CloneCommonRules(version, source.CommonRules);

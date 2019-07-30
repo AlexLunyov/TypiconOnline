@@ -35,8 +35,8 @@ namespace TypiconMigrationTool
                 mySqlOptions =>
                 {
                     mySqlOptions.ServerVersion(new Version(5, 6, 43), ServerType.MySql);
-                    //mySqlOptions.AnsiCharSet(CharSet.Utf8mb4);
-                    //mySqlOptions.UnicodeCharSet(CharSet.Utf8mb4);
+                    mySqlOptions.AnsiCharSet(CharSet.Utf8mb4);
+                    mySqlOptions.UnicodeCharSet(CharSet.Utf8mb4);
                 });
             c.EnableSensitiveDataLogging();
         }

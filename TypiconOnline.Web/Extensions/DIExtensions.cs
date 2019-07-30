@@ -83,7 +83,10 @@ namespace TypiconOnline.Web
             container.Register<IScheduleDayViewer<string>, HtmlScheduleDayViewer>();
             container.Register<IScheduleWeekViewer<string>, TextScheduleWeekViewer>();
             container.Register<IScheduleWeekViewer<Result<DocxToStreamWeekResponse>>, DocxToStreamWeekViewer>();
-            container.Register<ScheduleHandler, ServiceSequenceHandler>();
+            //регистрируем просто ScheduleHandler - будет формировать только расписание, без последовательностей
+            //но зато повыситься производительность
+            //container.Register<ScheduleHandler, ServiceSequenceHandler>();
+            container.Register<ScheduleHandler>();
 
             services.AddScoped<IRuleSerializerRoot, RuleSerializerRoot>();
 

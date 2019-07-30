@@ -16,7 +16,9 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
         {
             builder.HasKey(c => c.Id);
 
-            builder.HasMany(c => c.PsalmLinks);
+            builder.HasMany(c => c.PsalmLinks)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

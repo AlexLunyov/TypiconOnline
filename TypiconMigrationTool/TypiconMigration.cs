@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using TypiconOnline.Repository.EFCore.DataBase;
 using Microsoft.Extensions.Configuration;
 using TypiconMigrationTool.Typicon;
+using TypiconOnline.AppServices.Jobs;
 
 namespace TypiconMigrationTool
 {
@@ -65,7 +66,10 @@ namespace TypiconMigrationTool
 
             Console.WriteLine("Migrate()");
 
-            Migrate(user);
+            var typicon = Migrate(user);
+
+            //выдает ошибку
+            //Publish(typicon);
 
             Console.WriteLine("MigrateEasters()");
             MigrateEasters();
@@ -79,6 +83,13 @@ namespace TypiconMigrationTool
             MigrateWeekDayApp();
 
             Commit();
+        }
+
+        private void Publish(TypiconEntity typicon)
+        {
+            var handler = new PublishTypiconJobHandler(_dbContext, new JobRepository());
+
+            handler.ExecuteAsync(new PublishTypiconJob(typicon.Id));
         }
 
         private void CreateUsers()
@@ -171,7 +182,7 @@ namespace TypiconMigrationTool
             return user;
         }
 
-        private void Migrate(User user)
+        private TypiconEntity Migrate(User user)
         {
             var typicon = new TypiconEntity()
             {
@@ -191,6 +202,7 @@ namespace TypiconMigrationTool
             {
                 TypiconId = typicon.Id,
                 VersionNumber = 1,
+                IsModified = true
                 //Делаем сразу опубликованную версию
                 //BDate = DateTime.Now
             };
@@ -249,7 +261,9 @@ namespace TypiconMigrationTool
             Commit();
 
             MigratePsalms();
-            MigrateKathismas(typiconEntity);            
+            MigrateKathismas(typiconEntity);
+
+            return typicon;
         }
 
         private void MigrateExplicitRules(TypiconVersion typiconEntity)
