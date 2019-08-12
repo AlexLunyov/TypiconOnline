@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using TypiconOnline.Domain.Command.Typicon;
 using TypiconOnline.Domain.Identity;
 using TypiconOnline.Domain.Query.Typicon;
+using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.WebQuery.Interfaces;
 using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Domain.WebQuery.Typicon;
@@ -21,7 +22,7 @@ using TypiconOnline.WebServices.Authorization;
 namespace TypiconOnline.Web.Controllers
 {
     //[Authorize(Roles = RoleConstants.AdminAndEditorRoles)]
-    public class SignController : TypiconChildBaseController<SignModel>
+    public class SignController : TypiconChildBaseController<SignModel, Sign>
     {
         private const string DEFAULT_LANGUAGE = "cs-ru";
         //private readonly IDataQueryProcessor _queryProcessor;
@@ -153,6 +154,12 @@ namespace TypiconOnline.Web.Controllers
         }
 
         protected override IGridQuery<SignModel> GetQuery(int id) => new AllSignsQuery(id, DEFAULT_LANGUAGE);
+
+        protected override TypiconEntityByChildQuery<Sign> GetTypiconEntityByChildQuery(int id) 
+            => new TypiconEntityBySignQuery(id);
+
+        protected override DeleteRuleCommandBase<Sign> GetDeleteCommand(int id)
+            =>  new DeleteSignCommand(id);
 
         #endregion
     }

@@ -107,8 +107,6 @@
         var row = table.row($(this).parents('tr'));
         var data = row.data();
 
-        //return (confirm('Вы действительно хотите удалить Правило Минеи "' + data.Name + '"?'));
-
         if (confirm('Вы действительно хотите удалить Правило Минеи "' + data.Name + '"?')) {
 
             $.post("/MenologyRule/Delete/@ViewContext.RouteData.Values["id"]/"+ data.Id, function (result) {

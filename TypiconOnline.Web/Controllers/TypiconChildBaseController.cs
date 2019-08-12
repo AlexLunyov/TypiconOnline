@@ -5,13 +5,19 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TypiconOnline.Domain.Command.Typicon;
+using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Query.Typicon;
+using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.WebQuery.Interfaces;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Web.Controllers
 {
-    public abstract class TypiconChildBaseController<T> : TypiconBaseController<T> where T: IGridModel
+    public abstract class TypiconChildBaseController<TGridModel, TDomain> : TypiconBaseController<TGridModel> 
+        where TGridModel : IGridModel
+        where TDomain : RuleEntity, new()
     {
         public TypiconChildBaseController(
             IQueryProcessor queryProcessor, 
@@ -39,6 +45,38 @@ namespace TypiconOnline.Web.Controllers
             return LoadGridData(GetQuery(id), id);
         }
 
-        protected abstract IGridQuery<T> GetQuery(int id);
+        [HttpPost]
+        [Route("[controller]/[action]/{typiconId}/{ruleId}")]
+        public async Task<IActionResult> Delete(int typiconId, int ruleId)
+        {
+            try
+            {
+                //проверка на права доступа
+
+                var typiconEntity = QueryProcessor.Process(GetTypiconEntityByChildQuery(typiconId));
+
+                if (typiconEntity.Success
+                    && IsAuthorizedToEdit(typiconEntity.Value))
+                {
+                    //удаление
+                    var result = await CommandProcessor.ExecuteAsync(GetDeleteCommand(ruleId));
+
+                    ClearStoredData(GetQuery(typiconId));
+
+                    return Json(data: result.Success);
+                }
+
+                return Json(data: typiconEntity.Success);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        protected abstract IGridQuery<TGridModel> GetQuery(int id);
+
+        protected abstract TypiconEntityByChildQuery<TDomain> GetTypiconEntityByChildQuery(int id);
+        protected abstract DeleteRuleCommandBase<TDomain> GetDeleteCommand(int id);
     }
 }

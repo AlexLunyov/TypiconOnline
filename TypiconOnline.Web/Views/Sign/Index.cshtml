@@ -87,7 +87,7 @@
                     {
                         data: null, render: function (data, type, row)
                         {
-                            return '<a class="btn btn-info" href="/Sign/Edit/' + row.Id + '">Edit</a> <a href="#" class="btn btn-danger" onclick=DeleteData("' + row.Id + "'); >Delete</a>";
+                            return '<a class="btn btn-info" href="/Sign/Edit/' + row.Id + '">Edit</a> <a href="#" class="btn btn-danger btn-delete">Delete</a>';
                         },
                         orderable: false
                     },
@@ -97,36 +97,27 @@
     });
 
 
-    function DeleteData(CustomerID)
-    {
-        if (confirm("Are you sure you want to delete ...?"))
-        {
-            Delete(CustomerID);
+    $('#signGrid').on('click', 'tbody tr td .btn-delete', function () {
+        var table = $('#signGrid').DataTable();
+        var row = table.row($(this).parents('tr'));
+        var data = row.data();
+
+        if (confirm('Вы действительно хотите удалить Знак службы "' + data.Name + '"?')) {
+
+            $.post("/Sign/Delete/@ViewContext.RouteData.Values["id"]/"+ data.Id, function (result) {
+                if (result) {
+                    row.remove();
+                }
+                else {
+                    alert("Что-то пошло не так.");
+                }
+                table.draw(false);
+            });
         }
-        else
-        {
+        else {
             return false;
         }
-    }
-
-
-    function Delete(CustomerID)
-    {
-        var url = '@Url.Content("~/")' + "DemoGrid/Delete";
-
-        $.post(url, { ID: CustomerID }, function (data)
-        {
-            if (data)
-            {
-                oTable = $('#example').DataTable();
-                oTable.draw();
-            }
-            else
-            {
-                alert("Something Went Wrong!");
-            }
-        });
-    }
+    });
 </script>
 }
 
