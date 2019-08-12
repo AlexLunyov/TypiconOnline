@@ -27,8 +27,16 @@ namespace TypiconOnline.Domain.Command.Typicon
 
             entity.TemplateId = c.TemplateId;
             entity.IsAddition = c.IsAddition;
-            entity.Date = (c.Date != null) ? new ItemDate(c.Date.Value.Month, c.Date.Value.Day) : null;
-            entity.LeapDate = (c.LeapDate != null) ? new ItemDate(c.LeapDate.Value.Month, c.LeapDate.Value.Day) : null;
+            if (c.Date != null)
+            {
+                entity.Date.Month = c.Date.Value.Month;
+                entity.Date.Day = c.Date.Value.Day;
+            }
+            if (c.LeapDate != null)
+            {
+                entity.LeapDate.Month = c.LeapDate.Value.Month;
+                entity.LeapDate.Day = c.LeapDate.Value.Day;
+            }
             entity.RuleDefinition = c.RuleDefinition;
             entity.ModRuleDefinition = c.ModRuleDefinition;
 

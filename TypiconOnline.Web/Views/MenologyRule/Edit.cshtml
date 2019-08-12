@@ -64,7 +64,7 @@
                                             <input class="Order" type="hidden" asp-for="@Model.DayWorships[i].Order" />
                                             <a class="down" title="Переместить вниз" data-toggle="tooltip"><i class="material-icons">arrow_drop_down</i></a>
                                             <a class="up" title="Переместить вверх" data-toggle="tooltip"><i class="material-icons">arrow_drop_up</i></a>
-                                            <a class="delete" title="Удалить" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                            <a class="delete" title="Удалить" data-toggle="tooltip"><i class="material-icons">delete</i></a>
                                         </td>
                                     </tr>
                                 }
@@ -187,6 +187,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+            
             createDayWorsipsTable("#dayworships", "DayWorships", ["Order", "WorshipId"]);
             createTextArea("modRule", '@Model.ModRuleDefinition');
             createTextArea("rule", '@Model.RuleDefinition');
@@ -206,11 +207,11 @@
             }
             })
             .on('dp.change', function (e) {
-                if (e.date != null) {
-                    $('#dtp_date').attr("value", moment(e.date).format("YYYY-MM-DD"));
+                if (!e.date) {
+                    $('#dtp_date').attr("value", "");
                 }
                 else {
-                    $('#dtp_date').attr("value", "");
+                    $('#dtp_date').attr("value", moment(e.date).format("YYYY-MM-DD"));
                 }
             })
             @if (Model.Date == null)
@@ -235,11 +236,11 @@
                 }
             })
             .on('dp.change', function (e) {
-                if (e.date != null) {
-                    $('#dtp_leapdate').attr("value", moment(e.date).format("YYYY-MM-DD"));
+                if (!e.date) {
+                    $('#dtp_leapdate').attr("value", "");
                 }
                 else {
-                    $('#dtp_leapdate').attr("value", "");
+                    $('#dtp_leapdate').attr("value", moment(e.date).format("YYYY-MM-DD"));
                 }
             })
             @if (Model.LeapDate == null)

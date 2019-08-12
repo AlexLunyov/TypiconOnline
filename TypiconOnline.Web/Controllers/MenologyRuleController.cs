@@ -111,14 +111,14 @@ namespace TypiconOnline.Web.Controllers
             {
                 ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Id, DEFAULT_LANGUAGE);
 
-                return View();
+                return View(new MenologyRuleEditModel());
             }
 
             return Unauthorized();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(SignEditModel model)
+        public async Task<IActionResult> Create(MenologyRuleEditModel model)
         {
             var typiconEntity = QueryProcessor.Process(new TypiconEntityQuery(model.Id));
 
@@ -126,12 +126,12 @@ namespace TypiconOnline.Web.Controllers
                 && typiconEntity != null
                 && IsAuthorizedToEdit(typiconEntity))
             {
-                var command = new CreateSignCommand(model.Id,
-                    model.Name,
+                var command = new CreateMenologyRuleCommand(model.Id,
+                    model.DayWorships.Select(c => (c.WorshipId, c.Order)),
                     model.TemplateId,
                     model.IsAddition,
-                    model.Number,
-                    model.Priority,
+                    model.Date,
+                    model.LeapDate,
                     model.RuleDefinition,
                     model.ModRuleDefinition);
 
@@ -159,6 +159,66 @@ namespace TypiconOnline.Web.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPost]
+        [Route("[controller]/[action]/{typiconId}/{ruleId}")]
+        public async Task<IActionResult> Delete(int typiconId, int ruleId)
+        {
+            try
+            {
+                //проверка на права доступа
+
+                var typiconEntity = QueryProcessor.Process(new TypiconEntityByMenologyRuleQuery(typiconId));
+
+                if (typiconEntity.Success
+                    && IsAuthorizedToEdit(typiconEntity.Value))
+                {
+                    //удаление
+                    var result = await CommandProcessor.ExecuteAsync(new DeleteMenologyRuleCommand(ruleId));
+
+                    ClearStoredData(GetQuery(typiconId));
+
+                    return Json(data: result.Success);
+                }
+
+                return Unauthorized();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">TypiconId</param>
+        /// <param name="ruleId">RuleId</param>
+        /// <returns></returns>
+        //[HttpPost]
+        //[HttpGet("[controller]/[action]/{id}/{ruleId}")]
+        //public async Task<IActionResult> Delete(int id, int ruleId)
+        //{
+        //    try
+        //    {
+        //        //проверка на права доступа
+
+        //        var typiconEntity = QueryProcessor.Process(new TypiconEntityByMenologyRuleQuery(id));
+
+        //        if (typiconEntity.Success
+        //            && IsAuthorizedToEdit(typiconEntity.Value))
+        //        {
+        //            //удаление
+        //            var result = await CommandProcessor.ExecuteAsync(new DeleteMenologyRuleCommand(ruleId));
+        //        }
+
+        //        return RedirectToAction(nameof(Index), new { id });
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
 
         #region Overrides
 

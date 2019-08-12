@@ -27,11 +27,11 @@
     </div>
     <div class="row">
         <div class="form-group col-12">
-            <a class="btn btn-primary" href="/Sign/Create/@ViewContext.RouteData.Values["id"]">Новое Правило Минеи</a>
+            <a class="btn btn-primary" href="/MenologyRule/Create/@ViewContext.RouteData.Values["id"]">Новое Правило Минеи</a>
         </div>
         <div class="form-group col-12">
             <div class="justify-content-center align-content-center">
-                <table id="signGrid" class="table table-striped table-bordered" style="width:100%">
+                <table id="menologyGrid" class="table table-striped table-bordered" style="width:100%">
                     <thead class="text-center">
                         <tr>
                             <th>Id</th>
@@ -63,7 +63,7 @@
 <script>
     $(document).ready(function ()
     {
-        $("#signGrid").DataTable(
+        $("#menologyGrid").DataTable(
             {
                 "processing": true, // for show progress bar
                 "serverSide": true, // for process server side
@@ -87,12 +87,13 @@
                     { "data": "IsAddition", "name": "IsAddition", "autoWidth": true },
                     { "data": "Date", "name": "Date", "autoWidth": true },
                     { "data": "LeapDate", "name": "LeapDate", "autoWidth": true },
-                    { "data": "HasModRuleDefinition", "name": "HasModRule", "autoWidth": true },
-                    { "data": "HasRuleDefinition", "name": "HasRule", "autoWidth": true },
+                    { "data": "HasModRuleDefinition", "name": "HasModRuleDefinition", "autoWidth": true },
+                    { "data": "HasRuleDefinition", "name": "HasRuleDefinition", "autoWidth": true },
                     {
                         data: null, render: function (data, type, row)
                         {
-                            return '<a class="btn btn-info" href="/MenologyRule/Edit/' + row.Id + '">Edit</a> <a href="#" class="btn btn-danger" onclick=DeleteData("' + row.Id + "'); >Delete</a>";
+                            return '<a class="btn btn-info" href="/MenologyRule/Edit/' + row.Id + '">Edit</a> ' +
+                                '<a href="#" class="btn btn-danger btn-delete">Delete</a>';
                         },
                         orderable: false
                     },
@@ -101,37 +102,31 @@
         );
     });
 
+    $('#menologyGrid').on('click', 'tbody tr td .btn-delete', function () {
+        var table = $('#menologyGrid').DataTable();
+        var row = table.row($(this).parents('tr'));
+        var data = row.data();
 
-    function DeleteData(CustomerID)
-    {
-        if (confirm("Are you sure you want to delete ...?"))
-        {
-            Delete(CustomerID);
+        //return (confirm('Вы действительно хотите удалить Правило Минеи "' + data.Name + '"?'));
+
+        if (confirm('Вы действительно хотите удалить Правило Минеи "' + data.Name + '"?')) {
+
+            $.post("/MenologyRule/Delete/@ViewContext.RouteData.Values["id"]/"+ data.Id, function (result) {
+                if (result) {
+                    row.remove();
+                }
+                else {
+                    alert("Что-то пошло не так.");
+                }
+                table.draw(false);
+            });
         }
-        else
-        {
+        else {
             return false;
         }
-    }
+    });
 
 
-    function Delete(CustomerID)
-    {
-        var url = '@Url.Content("~/")' + "DemoGrid/Delete";
-
-        $.post(url, { ID: CustomerID }, function (data)
-        {
-            if (data)
-            {
-                oTable = $('#example').DataTable();
-                oTable.draw();
-            }
-            else
-            {
-                alert("Something Went Wrong!");
-            }
-        });
-    }
 </script>
 }
 

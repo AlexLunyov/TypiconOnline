@@ -147,7 +147,10 @@ namespace TypiconOnline.Web.Controllers
                 var request = QueryProcessor.Process(query);
                 if (request.Success)
                 {
-                    HttpContext.Session.Set(query.GetKey(), request.Value.ToList());
+                    var col = request.Value.ToList();
+                    HttpContext.Session.Set(query.GetKey(), col);
+
+                    return Result.Ok(col.AsQueryable());
                 }
 
                 return request;

@@ -12,7 +12,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
     public class MenologyRuleEditModel : IValidatableObject
     {
         public int Id { get; set; }
-        public List<MenologyDayWorshipModel> DayWorships { get; set; }
+        public List<MenologyDayWorshipModel> DayWorships { get; set; } = new List<MenologyDayWorshipModel>();
         public int TemplateId { get; set; }
         public bool IsAddition { get; set; }
         public DateTime? Date { get; set; }

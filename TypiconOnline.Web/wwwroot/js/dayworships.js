@@ -81,7 +81,7 @@ function calcBtns(tableId) {
     else {
         $(tableId + " tbody tr:first-child td:last-child a.up").hide();
         $(tableId + " tbody tr:first-child td:last-child a.down").hide();
-        $(tableId + " tbody tr:last-child td:last-child a.delete").hide();
+        //$(tableId + " tbody tr:last-child td:last-child a.delete").hide();
     }
 }
 
