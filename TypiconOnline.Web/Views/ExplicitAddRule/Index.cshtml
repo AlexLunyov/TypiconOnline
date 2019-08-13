@@ -1,0 +1,115 @@
+﻿
+<link href="~/css/datatables.min.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li><a href="/Typicons/Edit/@ViewContext.RouteData.Values["id"]#panel_properties">Свойства</a></li>
+        <li><a href="/Typicons/Edit/@ViewContext.RouteData.Values["id"]#panel_jobs">Операции</a></li>
+        <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                Редактирование Правил
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a asp-controller="Sign" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Знаки служб</a></li>
+                <li><a asp-controller="MenologyRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Правила Минеи</a></li>
+                <li><a asp-controller="TriodionRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Правила Триоди</a></li>
+                <li><a asp-controller="CommonRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Общие Правила</a></li>
+                <li class="active"><label>Явные Правила</label></li>
+                <li><a asp-controller="Kathisma" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Кафизмы</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-12"><h1>Явные правила</h1></div>
+    </div>
+    <div class="row">
+        <div class="form-group col-12">
+            <a class="btn btn-primary" href="/ExplicitAddRule/Create/@ViewContext.RouteData.Values["id"]">Новое явное правило</a>
+        </div>
+        <div class="form-group col-12">
+            <div class="justify-content-center align-content-center">
+                <table id="expGrid" class="table table-striped table-bordered" style="width:100%">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Id</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+   
+
+
+
+<script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="~/lib/datatables/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function ()
+    {
+        $("#expGrid").DataTable(
+            {
+                "processing": true, // for show progress bar
+                "serverSide": true, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url": "/ExplicitAddRule/LoadData/@ViewContext.RouteData.Values["id"]",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs":
+                [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "columns": [
+                    { "data": "Id", "name": "Id", "autoWidth": true },
+                    { "data": "Date", "name": "Date", "autoWidth": true },
+                    {
+                        data: null, render: function (data, type, row)
+                        {
+                            return '<a class="btn btn-info" href="/ExplicitAddRule/Edit/' + row.Id + '">Edit</a> <a href="#" class="btn btn-danger btn-delete">Delete</a>';
+                        },
+                        orderable: false
+                    },
+                ]
+            }
+        );
+    });
+
+
+    $('#expGrid').on('click', 'tbody tr td .btn-delete', function () {
+        var table = $('#expGrid').DataTable();
+        var row = table.row($(this).parents('tr'));
+        var data = row.data();
+
+        if (confirm('Вы действительно хотите удалить Явное правило на дату "' + data.Date + '"?')) {
+
+            $.post("/ExplicitAddRule/Delete/@ViewContext.RouteData.Values["id"]/"+ data.Id, function (result) {
+                if (result) {
+                    row.remove();
+                }
+                else {
+                    alert("Что-то пошло не так.");
+                }
+                table.draw(false);
+            });
+        }
+        else {
+            return false;
+        }
+    });
+</script>
+}
+
