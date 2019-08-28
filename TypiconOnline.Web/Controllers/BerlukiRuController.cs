@@ -51,12 +51,12 @@ namespace TypiconOnline.Web.Controllers
 
                 week.OnSuccess(() =>
                 {
-                    resultString = _weekViewer.Execute(week.Value);
+                    resultString = _weekViewer.Execute(TYPICON_ID, week.Value);
 
                     var nextWeek = _outputForms.GetWeek(TYPICON_ID, date.AddDays(7), language);
                     nextWeek.OnSuccess(() =>
                     {
-                        resultString += _weekViewer.Execute(nextWeek.Value);
+                        resultString += _weekViewer.Execute(TYPICON_ID, nextWeek.Value);
                     })
                     .OnFailure(() => resultString = nextWeek.Error);
                 })

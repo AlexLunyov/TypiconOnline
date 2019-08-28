@@ -16,7 +16,7 @@ namespace TypiconOnline.AppServices.Implementations
             _dayViewer = dayViewer ?? throw new ArgumentNullException(nameof(dayViewer));
         }
 
-        public string Execute(LocalizedOutputWeek week)
+        public string Execute(int typiconId, LocalizedOutputWeek week)
         {
             var strBuilder = new StringBuilder();
 

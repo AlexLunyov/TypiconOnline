@@ -57,8 +57,8 @@ namespace TypiconOnline.Web
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
-                options.LoginPath = "/Login";
-                options.LogoutPath = "/Logout";
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
             });
 
             // Add application services.

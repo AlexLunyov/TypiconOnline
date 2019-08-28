@@ -66,7 +66,7 @@ namespace TypiconOnline.AppServices.Implementations
 
             var week = new LocalizedOutputWeek()
             {
-                Name = _nameComposer.GetLocalizedWeekName(date, language)
+                Name = _nameComposer.GetLocalizedWeekName(typiconId, date, language)
             };
 
             int i = 0;

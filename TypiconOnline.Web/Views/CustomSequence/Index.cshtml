@@ -1,117 +1,5 @@
 ﻿@model CompleteSequenceViewModel
 
-
-@section Scripts {
-
-    <script src="~/lib/momentjs/moment-with-locales.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.js"></script>
-
-    <script src="~/lib/codemirror/codemirror.js"></script>
-    <link rel="stylesheet" href="~/lib/codemirror/codemirror.css">
-    <link rel="stylesheet" href="~/lib/codemirror/show-hint.css">
-    <link rel="stylesheet" href="~/lib/codemirror/xq-light.css">
-    <script src="~/lib/codemirror/xml.js"></script>
-    <script src="~/lib/codemirror/show-hint.js"></script>
-    <script src="~/lib/codemirror/xml-hint.js"></script>
-
-    <script type="text/javascript">
-
-        $('#datepicker').datetimepicker({
-            
-        });
-
-        var getclosestdayType = {
-            attrs: {
-                dayofweek: ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье"],
-                weekcount: null
-            },
-            children: ["date"]
-        };
-
-        var valueType = {
-            children: ["daysfromeaster", "date", "int", "getclosestday", "getdayofweek"],
-            daysfromeaster: {
-                children: ["date"]
-            },
-            getclosestday: getclosestdayType,
-            getdayofweek: {
-                attrs: {
-                    name: null
-                },
-                children: ["date", "getclosestday"],
-                getclosestday: getclosestdayType
-            }
-        };
-
-        var switchType = {
-            attrs: {},
-            children: ["expression", "case", "default"],
-            expression: valueType,
-            case: {
-                children: ["values", "action"],
-                values: valueType,
-                action: executableType
-            }
-        };
-
-        var executableType = {
-            children: ["switch", "worship"],
-            switch: switchType
-        }
-
-        var tags = {
-            "!top": ["rule"],
-            rule: executableType,
-        };
-
-        function completeAfter(cm, pred) {
-            var cur = cm.getCursor();
-            if (!pred || pred()) setTimeout(function () {
-                if (!cm.state.completionActive)
-                    cm.showHint({ completeSingle: false });
-            }, 100);
-            return CodeMirror.Pass;
-        }
-
-        function completeIfAfterLt(cm) {
-            return completeAfter(cm, function () {
-                var cur = cm.getCursor();
-                return cm.getRange(CodeMirror.Pos(cur.line, cur.ch - 1), cur) == "<";
-            });
-        }
-
-        function completeIfInTag(cm) {
-            return completeAfter(cm, function () {
-                var tok = cm.getTokenAt(cm.getCursor());
-                if (tok.type == "string" && (!/['"]/.test(tok.string.charAt(tok.string.length - 1)) || tok.string.length == 1)) return false;
-                var inner = CodeMirror.innerMode(cm.getMode(), tok.state).state;
-                return inner.tagName;
-            });
-        }
-
-        var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("customArea"), {
-            mode: "xml",
-            lineNumbers: true,
-            lineWrapping: true,
-            scrollbarStyle: "native",
-            extraKeys: {
-                "'<'": completeAfter,
-                "'/'": completeIfAfterLt,
-                "' '": completeIfInTag,
-                "'='": completeIfInTag,
-                "Ctrl-Space": "autocomplete"
-            },
-            hintOptions: { schemaInfo: tags },
-            value: "@Model.CustomSequence"
-        });
-    </script>
-
-    <style>
-        div.container.body-content {
-            width: 100% !important;
-        }
-    </style>
-}
 <section>
     <div class="row">
         <div class="col-sm-12 col-md-6">
@@ -128,12 +16,11 @@
                 <div class="form-group">
                     <label class="col-xs-2 col-md-1 control-label pull-left">Дата:</label>
                     <div class="col-xs-10 col-md-11">
-                        <div id="datepicker" class="input-group date form_date" data-date="" data-date-format="dd-mm-yyyy" data-link-field="dtp_input" data-link-format="dd-mm-yyyy">
-                            <input class="form-control" size="16" type="text" value="@Model.Date.ToString("dd-MM-yyyy")" readonly>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        <div class="input-group date" id="date">
+                            <input type="text" class="form-control" />
+                            <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
                         </div>
-                        <input type="hidden" id="dtp_input" value="@Model.Date.ToString("dd-MM-yyyy")" name="date" />
-
+                        <input type="hidden" id="dtp_date" value="@Model.Date.ToString("yyyy-MM-dd")" name="Date" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -168,4 +55,59 @@
     </div>
 
 </section>
+
+@section Scripts
+{
+
+    <style>
+        div.container.body-content {
+            width: 100% !important;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
+
+
+    <script src="~/lib/codemirror/codemirror.js"></script>
+    <link rel="stylesheet" href="~/lib/codemirror/codemirror.css">
+    <link rel="stylesheet" href="~/lib/codemirror/show-hint.css">
+    <link rel="stylesheet" href="~/lib/codemirror/xq-light.css">
+    <script src="~/lib/codemirror/xml.js"></script>
+    <script src="~/lib/codemirror/show-hint.js"></script>
+    <script src="~/lib/codemirror/xml-hint.js"></script>
+    <script src="~/js/textarea.js"></script>
+
+    <script src="~/lib/momentjs/moment-with-locales.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.min.js"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            createTextArea("customArea", '@Model.CustomSequence');
+
+            $('#date').datetimepicker({
+            locale: 'ru',
+            dayViewHeaderFormat: "MMMM",
+            format: "DD MMMM YYYY года",
+            viewMode: "days",
+            maxDate: "2099-01-01",
+            minDate: "2010-12-31",
+            useCurrent: false,
+            defaultDate: "@Model.Date.ToString("yyyy-MM-dd")"
+            })
+            .on('dp.change', function (e) {
+                if (!e.date) {
+                    $('#dtp_date').attr("value", "");
+                }
+                else {
+                    $('#dtp_date').attr("value", moment(e.date).format("YYYY-MM-DD"));
+                }
+            });
+        });
+
+
+    </script>
+}
 

@@ -50,7 +50,7 @@ namespace TypiconOnline.AppServices.Tests.Viewers
                 }
             };
 
-            var result = viewer.Execute(week);
+            var result = viewer.Execute(1, week);
 
             //using (Stream file = File.Create($@"{TestContext.CurrentContext.TestDirectory}\Data\Output.docx"))
             //{

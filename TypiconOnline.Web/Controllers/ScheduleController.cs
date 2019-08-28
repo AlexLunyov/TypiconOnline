@@ -89,7 +89,7 @@ namespace TypiconOnline.Web.Controllers
 
             if (weekResult.Success)
             {
-                var file = _weekDownloadViewer.Execute(weekResult.Value);
+                var file = _weekDownloadViewer.Execute(id.Value, weekResult.Value);
 
                 if (file.Success)
                 {

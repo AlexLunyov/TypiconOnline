@@ -115,6 +115,11 @@
         /// Правило для разметки шапки для Псалма
         /// </summary>
         public const string Psalm = "_sys_psalm";
+
+        /// <summary>
+        /// Правило для Шаблона наименования Седмицы
+        /// </summary>
+        public const string WeekName = "_sys_weekName";
     }
 
     

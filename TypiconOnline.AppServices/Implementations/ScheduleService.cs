@@ -117,7 +117,7 @@ namespace TypiconOnline.AppServices.Implementations
         {
             OutputWeek week = new OutputWeek() 
             {
-                Name = nameComposer.GetWeekName(request.Date)
+                Name = nameComposer.GetWeekName(request.TypiconId, request.Date)
             };
 
             GetScheduleDayRequest dayRequest = new GetScheduleDayRequest()

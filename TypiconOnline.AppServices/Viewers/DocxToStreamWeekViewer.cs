@@ -28,7 +28,7 @@ namespace TypiconOnline.AppServices.Viewers
             _configRepo = configRepo ?? throw new ArgumentNullException(nameof(configRepo));
         }
 
-        public Result<DocxToStreamWeekResponse> Execute(LocalizedOutputWeek week)
+        public Result<DocxToStreamWeekResponse> Execute(int typiconId, LocalizedOutputWeek week)
         {
             if (week == null || week.Days.Count == 0)
             {
@@ -51,21 +51,21 @@ namespace TypiconOnline.AppServices.Viewers
 
                 var weekViewer = new DocxScheduleWeekViewer(stream, DAYS_PER_PAGE);
 
-                weekViewer.Execute(week);
+                weekViewer.Execute(typiconId, week);
 
                 DateTime date = week.Days[0].Date;
 
                 var response = new DocxToStreamWeekResponse(stream.ToArray()
                     , "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                    , GetFileName(date));
+                    , GetFileName(typiconId, date));
 
                 return Result.Ok(response);
             }
         }
 
-        private string GetFileName(DateTime date)
+        private string GetFileName(int typiconId, DateTime date)
         {
-            var weekName = _queryProcessor.Process(new WeekNameQuery(date, true));
+            var weekName = _queryProcessor.Process(new WeekNameQuery(typiconId, date, true));
 
             return $"{FILE_START} {date.ToString("yyyy-MM-dd")} {date.AddDays(6).ToString("yyyy-MM-dd")} {weekName.FirstOrDefault("cs-ru")}.docx";
         }

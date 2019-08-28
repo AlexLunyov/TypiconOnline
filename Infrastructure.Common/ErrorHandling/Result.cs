@@ -28,7 +28,7 @@ namespace TypiconOnline.Infrastructure.Common.ErrorHandling
 
         public static Result Ok() => new Result();
 
-        public static Result<T> Fail<T>(string message) => new Result<T>(default(T), message);
+        public static Result<T> Fail<T>(string message) => new Result<T>(default, message);
 
         public static Result<T> Ok<T>(T value) => new Result<T>(value);
 

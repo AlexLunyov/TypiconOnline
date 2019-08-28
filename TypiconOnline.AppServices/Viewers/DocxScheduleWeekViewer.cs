@@ -51,7 +51,7 @@ namespace TypiconOnline.AppServices.Viewers
             _daysPerPage = daysPerPage;
         }
 
-        public void Execute(LocalizedOutputWeek week)
+        public void Execute(int typiconId, LocalizedOutputWeek week)
         {
             if (week == null)
             {

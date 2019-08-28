@@ -15,6 +15,8 @@ namespace TypiconOnline.Domain.Tests.Typicon
     [TestFixture]
     public class BerlukiRuTest
     {
+        private const int TYPICON_ID = 1;
+
         [Test]
         public void BerlukiRu_Test()
         {
@@ -27,16 +29,16 @@ namespace TypiconOnline.Domain.Tests.Typicon
 
             var outputForms = OutputFormsFactory.Create(TypiconDbContextFactory.Create());
 
-            var week = outputForms.GetWeek(1, date, "cs-ru");
+            var week = outputForms.GetWeek(TYPICON_ID, date, "cs-ru");
 
             HtmlScheduleWeekViewer htmlViewer = new HtmlScheduleWeekViewer();
 
-            string resultString = htmlViewer.Execute(week.Value);
+            string resultString = htmlViewer.Execute(TYPICON_ID, week.Value);
 
             date = date.AddDays(7);
 
-            week = outputForms.GetWeek(1, date, "cs-ru");
-            resultString += htmlViewer.Execute(week.Value);
+            week = outputForms.GetWeek(TYPICON_ID, date, "cs-ru");
+            resultString += htmlViewer.Execute(TYPICON_ID, week.Value);
 
             Assert.Pass(resultString);
         }
@@ -51,7 +53,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
             {
                 Date = date,
                 Handler = new ScheduleHandler(),
-                TypiconId = 1,
+                TypiconId = TYPICON_ID,
                 CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };
 
@@ -63,7 +65,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
             GetScheduleDayRequest dayRequest2 = new GetScheduleDayRequest()
             {
                 Date = date,
-                TypiconId = 1,
+                TypiconId = TYPICON_ID,
                 Handler = new ScheduleHandler(),
                 CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };
@@ -73,7 +75,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
             GetScheduleWeekRequest weekRequest = new GetScheduleWeekRequest()
             {
                 Date = date,
-                TypiconId = 1,
+                TypiconId = TYPICON_ID,
                 Handler = new ScheduleHandler(),
                 CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
             };

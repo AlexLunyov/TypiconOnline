@@ -21,8 +21,6 @@ namespace TypiconOnline.Domain.Rules.Expressions
     {
         public Int(string name) : base(name) { }
 
-        private int _valueExpression;
-
         public virtual int ValueExpression
         {
             get

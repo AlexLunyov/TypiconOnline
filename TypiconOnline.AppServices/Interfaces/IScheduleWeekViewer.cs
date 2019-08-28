@@ -9,11 +9,11 @@ namespace TypiconOnline.AppServices.Interfaces
 {
     public interface IScheduleWeekViewer
     {
-        void Execute(LocalizedOutputWeek week);
+        void Execute(int typiconId, LocalizedOutputWeek week);
     }
 
     public interface IScheduleWeekViewer<T> where T : class
     {
-        T Execute(LocalizedOutputWeek week);
+        T Execute(int typiconId, LocalizedOutputWeek week);
     }
 }

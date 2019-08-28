@@ -12,7 +12,7 @@ namespace TypiconOnline.AppServices.Implementations
 {
     public class HtmlScheduleWeekViewer : IScheduleWeekViewer<string>
     {
-        public string Execute(LocalizedOutputWeek week)
+        public string Execute(int typiconId, LocalizedOutputWeek week)
         {
             string _resultString = "";
 

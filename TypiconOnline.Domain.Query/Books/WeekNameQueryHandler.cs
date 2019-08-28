@@ -38,6 +38,8 @@ namespace TypiconOnline.Domain.Query.Books
             //Пасха в прошлом году
             DateTime dPastEaster = QueryProcessor.Process(new CurrentEasterQuery(query.Date.Year - 1));
 
+            //Шаблоны из CommonRule
+
             var text = CalculateItemTextValue(query.Date, dEaster, dPastEaster, query.IsShortName);
 
             return text;
@@ -60,7 +62,7 @@ namespace TypiconOnline.Domain.Query.Books
 
             //вычисляем количество жней между текущим днем и днем Пасхи
             int day = date.DayOfYear - dEaster.DayOfYear;
-            int week = 0;
+            int week;
             if ((day < -55) || (day > 49))
             {
                 // n-ая по Пятидесятнице
@@ -71,13 +73,9 @@ namespace TypiconOnline.Domain.Query.Books
                     //ниже получаем день относительно прошлой Пасхи
 
                     day = day - dPastEaster.DayOfYear + date.DayOfYear;
+                }
 
-                    week = (day - 43) / 7;
-                }
-                else
-                {
-                    week = (day - 43) / 7;
-                }
+                week = (day - 43) / 7;
 
                 if (isShortName)
                 {
