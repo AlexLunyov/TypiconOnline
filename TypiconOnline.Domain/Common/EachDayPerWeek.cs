@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TypiconOnline.AppServices.Common
+namespace TypiconOnline.Domain.Common
 {
     public class EachDayPerWeek
     {

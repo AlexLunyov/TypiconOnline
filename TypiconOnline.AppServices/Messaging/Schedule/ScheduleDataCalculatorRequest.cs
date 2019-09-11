@@ -11,6 +11,7 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
 {
     public class ScheduleDataCalculatorRequest
     {
+        public int TypiconId { get; set; }
         public int TypiconVersionId { get; set; }
         public DateTime Date { get; set; }
         public CustomParamsCollection<IRuleApplyParameter> ApplyParameters { get; set; }

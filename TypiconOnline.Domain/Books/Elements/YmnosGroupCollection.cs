@@ -52,7 +52,10 @@ namespace TypiconOnline.Domain.Books.Elements
 
             if (startFrom < 1 || startFrom > TotalYmnisCount)
             {
-                throw new ArgumentOutOfRangeException("startFrom");
+                //чтобы не вылетал exception в случае отсутствия песнопений, 
+                //возвращаем default
+                //throw new ArgumentOutOfRangeException("startFrom");
+                return default;
             }
 
             if (count == 0)

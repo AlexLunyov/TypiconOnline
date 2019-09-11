@@ -53,7 +53,7 @@ namespace TypiconOnline.AppServices.Implementations
             //находим ModifiedRule с максимальным приоритетом
             var modifiedRule = QueryProcessor.Process(new ModifiedRuleHighestPriorityQuery(req.TypiconVersionId, req.Date));
 
-            //находим ModifiedRule с максимальным приоритетом
+            //находим ExplicitAddRule
             var explicitAddRule = QueryProcessor.Process(new ExplicitAddRuleQuery(req.TypiconVersionId, req.Date));
 
             //находим день Октоиха - не может быть null

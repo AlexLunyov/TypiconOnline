@@ -23,7 +23,7 @@ namespace TypiconOnline.Tests.Common
 
             var nameComposer = new ScheduleDayNameComposer(serializerRoot.QueryProcessor);
 
-            var outputFormFactory = new OutputFormFactory(new ScheduleDataCalculator(serializerRoot.QueryProcessor, settingsFactory)
+            var outputFormFactory = new OutputDayFactory(new ScheduleDataCalculator(serializerRoot.QueryProcessor, settingsFactory)
                 , nameComposer
                 , serializerRoot.TypiconSerializer
                 , new ServiceSequenceHandler());

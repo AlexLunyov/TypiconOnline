@@ -169,7 +169,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         //    }
         //}
 
-        public void CreateViewModel(IRuleHandler handler, Action<OutputElementCollection> append)
+        public void CreateViewModel(IRuleHandler handler, Action<OutputSectionModelCollection> append)
         {
             ViewModelFactory.Create(new CreateViewModelRequest<KanonasRule>()
             {

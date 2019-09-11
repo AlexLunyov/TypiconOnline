@@ -15,7 +15,7 @@ namespace TypiconOnline.Domain.Tests.ViewModels
         [Test]
         public void ViewModelItem_ToJSON()
         {
-            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(OutputElementCollection));
+            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(OutputSectionModelCollection));
 
             string json = string.Empty;
 
@@ -29,11 +29,11 @@ namespace TypiconOnline.Domain.Tests.ViewModels
             Assert.Pass(json);
         }
 
-        private OutputElementCollection GetModel()
+        private OutputSectionModelCollection GetModel()
         {
-            return new OutputElementCollection()
+            return new OutputSectionModelCollection()
             {
-                new OutputSection()
+                new OutputSectionModel()
                 {
                     Kind = ElementViewModelKind.Choir,
                     KindText = new ItemText() { Items = new List<ItemTextUnit>() { new ItemTextUnit() { Language = "cs-ru", Text = "Хор" } } },
@@ -56,7 +56,7 @@ namespace TypiconOnline.Domain.Tests.ViewModels
                         }
                     }
                 },
-                new OutputSection()
+                new OutputSectionModel()
                 {
                     Kind = ElementViewModelKind.Choir,
                     KindText = new ItemText() { Items = new List<ItemTextUnit>() { new ItemTextUnit() { Language = "cs-ru", Text = "Хор" } } },
@@ -79,7 +79,7 @@ namespace TypiconOnline.Domain.Tests.ViewModels
                         }
                     }
                 },
-                new OutputSection()
+                new OutputSectionModel()
                 {
                     Kind = ElementViewModelKind.Priest,
                     KindText = new ItemText() { Items = new List<ItemTextUnit>() { new ItemTextUnit() { Language = "cs-ru", Text = "Священник" } } },
@@ -92,7 +92,7 @@ namespace TypiconOnline.Domain.Tests.ViewModels
                         }
                     }
                 },
-                new OutputSection()
+                new OutputSectionModel()
                 {
                     Kind = ElementViewModelKind.Choir,
                     KindText = new ItemText() { Items = new List<ItemTextUnit>() { new ItemTextUnit() { Language = "cs-ru", Text = "Хор" } } },

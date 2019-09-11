@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
+using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
+using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Web.Controllers
 {
@@ -14,12 +17,12 @@ namespace TypiconOnline.Web.Controllers
     {
         const int TYPICON_ID = 1;
 
-        private readonly IOutputForms _outputForms;
+        private readonly IQueryProcessor _queryProcessor;
         private readonly IScheduleWeekViewer<string> _weekViewer = new HtmlScheduleWeekViewer();
 
-        public BerlukiRuController(IOutputForms outputForms)//, IScheduleWeekViewer<string> weekViewer)
+        public BerlukiRuController(IQueryProcessor queryProcessor)//, IScheduleWeekViewer<string> weekViewer)
         {
-            _outputForms = outputForms ?? throw new ArgumentNullException(nameof(outputForms));
+            _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
             //_weekViewer = weekViewer ?? throw new ArgumentNullException(nameof(weekViewer));
         }
 
@@ -47,13 +50,13 @@ namespace TypiconOnline.Web.Controllers
 
                 string resultString = "";
 
-                var week = _outputForms.GetWeek(TYPICON_ID, date, language);
+                var week = _queryProcessor.Process(new OutputWeekQuery(TYPICON_ID, date, new OutputFilter() { Language = language }));
 
                 week.OnSuccess(() =>
                 {
                     resultString = _weekViewer.Execute(TYPICON_ID, week.Value);
 
-                    var nextWeek = _outputForms.GetWeek(TYPICON_ID, date.AddDays(7), language);
+                    var nextWeek = _queryProcessor.Process(new OutputWeekQuery(TYPICON_ID, date.AddDays(7), new OutputFilter() { Language = language }));
                     nextWeek.OnSuccess(() =>
                     {
                         resultString += _weekViewer.Execute(TYPICON_ID, nextWeek.Value);

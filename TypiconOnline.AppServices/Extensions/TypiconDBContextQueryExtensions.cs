@@ -16,20 +16,6 @@ namespace TypiconOnline.AppServices.Extensions
 {
     public static class TypiconDBContextQueryExtensions
     {
-        public static Result<OutputDay> GetScheduleDay(this TypiconDBContext dbContext, int typiconId, DateTime date, ITypiconSerializer serializer)
-        {
-            var outputForm = dbContext.Set<OutputForm>().FirstOrDefault(c => c.TypiconId == typiconId && c.Date == date);
-
-            if (outputForm != null)
-            {
-                var day = serializer.Deserialize<OutputDay>(outputForm.Definition);
-
-                return Result.Ok(day);
-            }
-
-            return Result.Fail<OutputDay>("Выходная форма не найдена");
-        }
-
         public static bool IsModifiedYearExists(this TypiconDBContext dbContext, int typiconVersionId, int year)
         {
             lock (dbContext)

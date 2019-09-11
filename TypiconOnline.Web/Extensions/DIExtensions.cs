@@ -78,15 +78,15 @@ namespace TypiconOnline.Web
             container.Register<IScheduleDayNameComposer, ScheduleDayNameComposer>();
             container.Register<IRuleSerializerRoot, RuleSerializerRoot>();
             container.Register<ITypiconSerializer, TypiconSerializer>();
-            container.Register<IOutputForms, OutputForms>();
-            container.Register<IOutputFormFactory, OutputFormFactory>();
+            //container.Register<IOutputForms, OutputForms>();
+            container.Register<IOutputDayFactory, OutputDayFactory>();
             container.Register<IScheduleDayViewer<string>, HtmlScheduleDayViewer>();
             container.Register<IScheduleWeekViewer<string>, TextScheduleWeekViewer>();
             container.Register<IScheduleWeekViewer<Result<DocxToStreamWeekResponse>>, DocxToStreamWeekViewer>();
             //регистрируем просто ScheduleHandler - будет формировать только расписание, без последовательностей
             //но зато повыситься производительность
-            //container.Register<ScheduleHandler, ServiceSequenceHandler>();
-            container.Register<ScheduleHandler>();
+            container.Register<ScheduleHandler, ServiceSequenceHandler>();
+            //container.Register<ScheduleHandler>();
 
             services.AddScoped<IRuleSerializerRoot, RuleSerializerRoot>();
 
@@ -128,7 +128,7 @@ namespace TypiconOnline.Web
             container.Register<IQueryProcessor, QueryProcessor>();
 
 
-            container.Register(typeof(ICommandHandler<>), typeof(CommandProcessor).Assembly, typeof(OutputForms).Assembly);
+            container.Register(typeof(ICommandHandler<>), typeof(CommandProcessor).Assembly, typeof(ScheduleDataCalculator).Assembly);
 
             container.RegisterConditional<ICommandProcessor, AsyncCommandProcessor>(
                 c => c.Consumer.ImplementationType == typeof(JobAsyncHostedService));

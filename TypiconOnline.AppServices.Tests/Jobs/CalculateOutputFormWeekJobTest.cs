@@ -8,6 +8,8 @@ using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Jobs;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Tests.Common;
 
@@ -30,10 +32,10 @@ namespace TypiconOnline.AppServices.Tests.Jobs
 
             var task = handler.ExecuteAsync(job);
             task.Wait();
-            
-            var outputForms = OutputFormsFactory.Create(dbContext);
 
-            var week = outputForms.GetWeek(1, date, "cs-ru");
+            var queryProcessor = QueryProcessorFactory.Create();
+
+            var week = queryProcessor.Process(new OutputWeekQuery(1, date, new OutputFilter() { Language = "cs-ru" }));
 
             Assert.AreEqual(false, week.Success);
         }
@@ -60,9 +62,9 @@ namespace TypiconOnline.AppServices.Tests.Jobs
             task = weekHandler.ExecuteAsync(weekJob);
             task.Wait();
 
-            var outputForms = OutputFormsFactory.Create(dbContext);
+            var queryProcessor = QueryProcessorFactory.Create();
 
-            var week = outputForms.GetWeek(1, date, "cs-ru");
+            var week = queryProcessor.Process(new OutputWeekQuery(1, date, new OutputFilter() { Language = "cs-ru" }));
 
             Assert.AreEqual(true, week.Success);
         }
@@ -75,7 +77,7 @@ namespace TypiconOnline.AppServices.Tests.Jobs
 
             var settingsFactory = new RuleHandlerSettingsFactory(serializerRoot);
 
-            var outputFormFactory = new OutputFormFactory(new ScheduleDataCalculator(query, settingsFactory)
+            var outputFormFactory = new OutputDayFactory(new ScheduleDataCalculator(query, settingsFactory)
                 , new ScheduleDayNameComposer(query)
                 , serializerRoot.TypiconSerializer
                 , new ServiceSequenceHandler());

@@ -8,6 +8,7 @@ using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Typicon.Output;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -85,8 +86,7 @@ namespace TypiconOnline.AppServices.Implementations
                     //задаем имя дню
                     Name = nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.AllWorships),
                     Date = request.Date,
-                    SignNumber = signNumber,
-                    SignName = new ItemText(sign.SignName)
+                    PredefinedSign = sign
                 };
             }
 

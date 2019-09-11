@@ -11,9 +11,9 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
 {
     public static class YmnosGroupExtensions
     {
-        public static OutputElementCollection GetViewModel(this YmnosGroup group, IRuleHandler handler, IRuleSerializerRoot serializer)
+        public static OutputSectionModelCollection GetViewModel(this YmnosGroup group, IRuleHandler handler, IRuleSerializerRoot serializer)
         {
-            OutputElementCollection viewModel = new OutputElementCollection();
+            OutputSectionModelCollection viewModel = new OutputSectionModelCollection();
 
             group.Annotation.AppendViewModel(handler, viewModel);
             group.Prosomoion.AppendViewModel(handler.Settings.TypiconVersionId, serializer, viewModel, group.Ihos);
@@ -22,7 +22,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
             return viewModel;
         }
 
-        public static void AppendViewModel(this ItemText text, IRuleHandler handler, OutputElementCollection viewModel)
+        public static void AppendViewModel(this ItemText text, IRuleHandler handler, OutputSectionModelCollection viewModel)
         {
             if (text?.IsEmpty == false)
             {
@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
         }
 
         public static void AppendViewModel(this Prosomoion prosomoion, int typiconVersionId,
-            IRuleSerializerRoot serializer, OutputElementCollection viewModel, int? ihos = null)
+            IRuleSerializerRoot serializer, OutputSectionModelCollection viewModel, int? ihos = null)
         {
             ItemText ihosItemText = null;
             ItemText prosomoionItemText = null;
@@ -72,7 +72,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
         }
 
         private static void AppendYmnis(List<Ymnos> ymnis, IRuleHandler handler,
-            IRuleSerializerRoot serializer, OutputElementCollection viewModel)
+            IRuleSerializerRoot serializer, OutputSectionModelCollection viewModel)
         {
             var (StihosText, ChoirText) = GetStringValues(handler, serializer);
 

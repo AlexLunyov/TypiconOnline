@@ -7,14 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.Typicon.Output;
 
 namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 {
-    class OutputFormDayWorshipConfiguration : IEntityTypeConfiguration<OutputFormDayWorship>
+    class OutputFormDayWorshipConfiguration : IEntityTypeConfiguration<OutputDayWorship>
     {
-        public void Configure(EntityTypeBuilder<OutputFormDayWorship> builder)
+        public void Configure(EntityTypeBuilder<OutputDayWorship> builder)
         {
-            builder.HasKey(c => new { c.OutputFormId, c.DayWorshipId });
+            builder.HasKey(c => new { c.OutputDayId, c.DayWorshipId });
         }
     }
 }

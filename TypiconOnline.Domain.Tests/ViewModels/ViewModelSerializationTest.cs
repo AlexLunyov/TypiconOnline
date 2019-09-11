@@ -34,24 +34,24 @@ namespace TypiconOnline.Domain.Tests.ViewModels
             Assert.Pass(result);
         }
 
-        [Test]
-        public void ViewModelSerialization_DeserializeFull()
-        {
-            var service = ScheduleServiceFactory.Create();
+        //[Test]
+        //public void ViewModelSerialization_DeserializeFull()
+        //{
+        //    var service = ScheduleServiceFactory.Create();
 
-            var scheduleDay = service.GetScheduleDay(new GetScheduleDayRequest()
-            {
-                Handler = new ServiceSequenceHandler(),
-                Date = new DateTime(2017, 11, 13),
-                TypiconId = 1
-            });
+        //    var scheduleDay = service.GetScheduleDay(new GetScheduleDayRequest()
+        //    {
+        //        Handler = new ServiceSequenceHandler(),
+        //        Date = new DateTime(2017, 11, 13),
+        //        TypiconId = 1
+        //    });
 
-            var serializer = new TypiconSerializer();
+        //    var serializer = new TypiconSerializer();
 
-            var result = serializer.Serialize(scheduleDay.Day);
+        //    var result = serializer.Serialize(scheduleDay.Day);
 
-            Assert.IsNotEmpty(result);
-            Assert.Pass(result);
-        }
+        //    Assert.IsNotEmpty(result);
+        //    Assert.Pass(result);
+        //}
     }
 }

@@ -9,16 +9,18 @@ using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Rules.Interfaces;
-using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.Domain.Typicon.Output;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Domain;
+using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.AppServices.Extensions;
+using TypiconOnline.Domain.Common;
 
 namespace TypiconOnline.AppServices.Implementations
 {
-    public class OutputFormFactory : IOutputFormFactory
+    public class OutputDayFactory : IOutputDayFactory
     {
         private readonly IScheduleDayNameComposer _nameComposer;
         private readonly ITypiconSerializer _typiconSerializer;
@@ -28,7 +30,7 @@ namespace TypiconOnline.AppServices.Implementations
         //private readonly ScheduleHandler _handler = new ScheduleHandler();
         private readonly ScheduleHandler _handler;// = new ServiceSequenceHandler();
 
-        public OutputFormFactory(IScheduleDataCalculator dataCalculator
+        public OutputDayFactory(IScheduleDataCalculator dataCalculator
             , IScheduleDayNameComposer nameComposer
             , ITypiconSerializer typiconSerializer
             , ScheduleHandler handler)
@@ -46,14 +48,14 @@ namespace TypiconOnline.AppServices.Implementations
         /// <param name="typiconVersionId">Версия Устава</param>
         /// <param name="date"></param>
         /// <returns></returns>
-        public CreateOutputFormResponse Create(CreateOutputFormRequest req)
+        public CreateOutputDayResponse Create(CreateOutputDayRequest req)
         {
             OutputDayInfo dayInfo = null;
 
             return InnerCreate(req, ref dayInfo, _dataCalculator);
         }
 
-        public CreateOutputFormResponse Create(IScheduleDataCalculator dataCalculator, CreateOutputFormRequest req)
+        public CreateOutputDayResponse Create(IScheduleDataCalculator dataCalculator, CreateOutputDayRequest req)
         {
             if (dataCalculator == null)
             {
@@ -71,11 +73,11 @@ namespace TypiconOnline.AppServices.Implementations
         /// <param name="typiconVersionId"></param>
         /// <param name="date"></param>
         /// <returns></returns>
-        public IEnumerable<OutputForm> CreateWeek(CreateOutputFormWeekRequest req)
+        public IEnumerable<OutputDay> CreateWeek(CreateOutputWeekRequest req)
         {
-            List<OutputForm> result = new List<OutputForm>();
+            List<OutputDay> result = new List<OutputDay>();
 
-            var dayReq = new CreateOutputFormRequest()
+            var dayReq = new CreateOutputDayRequest()
             {
                 TypiconId = req.TypiconId,
                 TypiconVersionId = req.TypiconVersionId,
@@ -90,19 +92,20 @@ namespace TypiconOnline.AppServices.Implementations
 
                 var output = InnerCreate(dayReq, ref dayInfo, _dataCalculator);
 
-                result.Add(output.Form);
+                result.Add(output.Day);
             });
 
             return result;
         }
 
-        private CreateOutputFormResponse InnerCreate(CreateOutputFormRequest req, ref OutputDayInfo dayInfo, IScheduleDataCalculator dataCalculator)
+        private CreateOutputDayResponse InnerCreate(CreateOutputDayRequest req, ref OutputDayInfo dayInfo, IScheduleDataCalculator dataCalculator)
         {
             if (dayInfo == null)
             {
                 //Формируем данные для обработки
                 dayInfo = GetOutputDayInfo(dataCalculator, new ScheduleDataCalculatorRequest()
                 {
+                    TypiconId = req.TypiconId,
                     TypiconVersionId = req.TypiconVersionId,
                     Date = req.Date
                 });
@@ -112,7 +115,7 @@ namespace TypiconOnline.AppServices.Implementations
                 || req.HandlingMode == HandlingMode.All)
             {
                 //добавляем DayBefore
-                dayInfo.Day.Worships.AddRange(dayInfo.ScheduleResults.DayBefore);
+                dayInfo.Day.AddWorships(dayInfo.ScheduleResults.DayBefore, _typiconSerializer);
             }
 
             if (req.HandlingMode == HandlingMode.ThisDay 
@@ -120,7 +123,7 @@ namespace TypiconOnline.AppServices.Implementations
                 || req.HandlingMode == HandlingMode.AstronomicDay)
             {
                 //добавляем ThisDay
-                dayInfo.Day.Worships.AddRange(dayInfo.ScheduleResults.ThisDay);
+                dayInfo.Day.AddWorships(dayInfo.ScheduleResults.ThisDay, _typiconSerializer);
             }
 
             var localDayInfo = dayInfo;
@@ -131,22 +134,19 @@ namespace TypiconOnline.AppServices.Implementations
                 //Формируем данные для обработки от следующего дня
                 dayInfo = GetOutputDayInfo(dataCalculator, new ScheduleDataCalculatorRequest()
                 {
+                    TypiconId = req.TypiconId,
                     TypiconVersionId = req.TypiconVersionId,
                     Date = req.Date.AddDays(1)
                 });
 
                 //складываем значения
-                localDayInfo.Merge(dayInfo);
+                localDayInfo.Merge(dayInfo, _typiconSerializer);
             }
 
-            string definition = _typiconSerializer.Serialize(localDayInfo.Day);
-
-            var outputForm = new OutputForm(req.TypiconId, req.Date, definition);
-
             //Добавить ссылки на службы
-            outputForm.OutputFormDayWorships = GetOutputFormDayWorships(outputForm, localDayInfo.DayWorships);
+            localDayInfo.Day.OutputFormDayWorships = GetOutputDayDayWorships(localDayInfo.Day, localDayInfo.DayWorships);
 
-            return new CreateOutputFormResponse(outputForm, localDayInfo.Day, localDayInfo.BrokenConstraints);
+            return new CreateOutputDayResponse(localDayInfo.Day, localDayInfo.BrokenConstraints);
         }
 
         /// <summary>
@@ -178,11 +178,11 @@ namespace TypiconOnline.AppServices.Implementations
 
             var scheduleDay = new OutputDay
             {
+                TypiconId = request.TypiconId,
                 //задаем имя дню
                 Name = _nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.AllWorships),
                 Date = request.Date,
-                SignNumber = signNumber,
-                SignName = new ItemText(sign.SignName),
+                PredefinedSignId = sign.Id,
             };
 
             return new OutputDayInfo(scheduleDay, settings.AllWorships, results, brokenConstraints);
@@ -228,15 +228,15 @@ namespace TypiconOnline.AppServices.Implementations
         /// <param name="outputForm"></param>
         /// <param name="dayworships"></param>
         /// <returns></returns>
-        private List<OutputFormDayWorship> GetOutputFormDayWorships(OutputForm outputForm, IEnumerable<DayWorship> dayworships)
+        private List<OutputDayWorship> GetOutputDayDayWorships(OutputDay outputDay, IEnumerable<DayWorship> dayworships)
         {
-            var result = new List<OutputFormDayWorship>();
+            var result = new List<OutputDayWorship>();
 
             foreach (var worship in dayworships)
             {
-                var ofdw = new OutputFormDayWorship()
+                var ofdw = new OutputDayWorship()
                 {
-                    OutputForm = outputForm,
+                    OutputDay = outputDay,
                     //DayWorship = worship,
                     DayWorshipId = worship.Id
                 };

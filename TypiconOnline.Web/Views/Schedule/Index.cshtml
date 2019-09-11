@@ -49,7 +49,7 @@
     <div class="row col-sm-12">
         @if (ViewBag.Week.Success)
         {
-            <h2 class="@ViewBag.Week.Value.Name.Language">@ViewBag.Week.Value.Name.Text</h2>
+            <h2 class="@ViewBag.Week.Value.Name.Language">@ViewBag.Week.Value.Name.Text</h2>    
             @foreach (var day in ViewBag.Week.Value.Days)
             {
                 <h3>@day.Date.ToString("dd MMMM yyyy г.")</h3>
@@ -62,14 +62,24 @@
                         <tr>
                             <td>@worship.Time&nbsp;</td>
                             <td>
-                                <a asp-controller="schedule" asp-action="sequence" asp-route-id="@ViewBag.Id"
-                                   asp-route-date="@day.Date.ToString("yyyy-MM-dd")" asp-route-w="@i">
+                                @if (worship.HasSequence)
+                                {
+                                    <a asp-controller="schedule" asp-action="sequence" asp-route-id="@ViewBag.Id" asp-route-worshipId="@worship.Id">
+                                        <span class="@worship.Name.Text.Language">@worship.Name.Text.Text</span>
+                                        @if (worship.AdditionalName != null)
+                                        {
+                                            <span class="@worship.AdditionalName.Language">@worship.AdditionalName.Text</span>
+                                        }
+                                    </a>
+                                }
+                                else
+                                {
                                     <span class="@worship.Name.Text.Language">@worship.Name.Text.Text</span>
                                     @if (worship.AdditionalName != null)
                                     {
                                         <span class="@worship.AdditionalName.Language">@worship.AdditionalName.Text</span>
                                     }
-                                </a>
+                                }
                             </td>
                         </tr>
                         i++;

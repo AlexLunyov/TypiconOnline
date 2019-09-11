@@ -73,9 +73,7 @@ namespace TypiconOnline.AppServices.Implementations
             return result;
         }
 
-        public ItemTextUnit GetLocalizedWeekName(int typiconId, DateTime date, string language) => GetWeekName(typiconId, date)?.FirstOrDefault(language);
-
-        public ItemText GetWeekName(int typiconId, DateTime date) => queryProcessor.Process(new WeekNameQuery(typiconId, date, false));
+        public ItemTextUnit GetLocalizedWeekName(int typiconId, DateTime date, string language) => queryProcessor.Process(new WeekNameQuery(typiconId, date, false));
 
         private ItemText GetShortName(IReadOnlyList<DayWorship> dayWorships)
         {

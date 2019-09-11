@@ -13,22 +13,22 @@ namespace TypiconOnline.Domain.Tests.Rules.Handlers
     [TestFixture]
     public class ServiceSequenceHandlerTest
     {
-        [Test]
-        public void ServiceSequenceHandler_Working()
-        {
-            GetScheduleDayRequest request = new GetScheduleDayRequest()
-            {
-                Date = new DateTime(2017, 11, 13),//DateTime.Today,
-                Handler = new ServiceSequenceHandler(),
-                TypiconId = 1,
-                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
-            };
+        //[Test]
+        //public void ServiceSequenceHandler_Working()
+        //{
+        //    GetScheduleDayRequest request = new GetScheduleDayRequest()
+        //    {
+        //        Date = new DateTime(2017, 11, 13),//DateTime.Today,
+        //        Handler = new ServiceSequenceHandler(),
+        //        TypiconId = 1,
+        //        CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
+        //    };
 
-            ScheduleService scheduleService = ScheduleServiceFactory.Create();
+        //    ScheduleService scheduleService = ScheduleServiceFactory.Create();
 
-            GetScheduleDayResponse response = scheduleService.GetScheduleDay(request);
+        //    GetScheduleDayResponse response = scheduleService.GetScheduleDay(request);
 
-            Assert.Pass();
-        }
+        //    Assert.Pass();
+        //}
     }
 }

@@ -16,7 +16,7 @@ namespace TypiconOnline.AppServices.Tests.Implementation
         {
             var factory = Build();
 
-            var form = factory.Create(new CreateOutputFormRequest()
+            var form = factory.Create(new CreateOutputDayRequest()
             {
                 TypiconId = 1,
                 TypiconVersionId = 1,
@@ -27,7 +27,7 @@ namespace TypiconOnline.AppServices.Tests.Implementation
             Assert.NotNull(form);
         }
 
-        private OutputFormFactory Build()
+        private OutputDayFactory Build()
         {
             var dbContext = TypiconDbContextFactory.Create();
 
@@ -37,7 +37,7 @@ namespace TypiconOnline.AppServices.Tests.Implementation
 
             var settingsFactory = new RuleHandlerSettingsFactory(serializerRoot);
 
-            return new OutputFormFactory(new ScheduleDataCalculator(query, settingsFactory)
+            return new OutputDayFactory(new ScheduleDataCalculator(query, settingsFactory)
                 , new ScheduleDayNameComposer(query)
                 , serializerRoot.TypiconSerializer
                 , new ServiceSequenceHandler());

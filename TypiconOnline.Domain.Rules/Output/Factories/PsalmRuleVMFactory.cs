@@ -36,7 +36,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
             //вставляем номер Псалма
             viewHeader.Paragraphs[0].ReplaceForEach(NUMBER, req.Element.Number);
 
-            req.AppendModelAction(new OutputElementCollection() { viewHeader });
+            req.AppendModelAction(new OutputSectionModelCollection() { viewHeader });
         }
 
         private void AppendText(CreateViewModelRequest<PsalmRule> req, BookReading psalmReading)
@@ -45,7 +45,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
             var paragraphs = new List<ItemTextNoted>();
             psalmReading.Text.ForEach(c => paragraphs.Add(new ItemTextNoted(c)));
 
-            req.AppendModelAction(new OutputElementCollection() { OutputSectionFactory.Create(TextHolderKind.Lector, paragraphs) });
+            req.AppendModelAction(new OutputSectionModelCollection() { OutputSectionFactory.Create(TextHolderKind.Lector, paragraphs) });
         }
     }
 }

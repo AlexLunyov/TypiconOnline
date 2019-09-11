@@ -12,7 +12,7 @@ namespace TypiconOnline.Domain.Rules.Output
     /// </summary>
     [Serializable]
     [XmlRoot(OutputConstants.OutputSectionNodeName)]
-    public class OutputSection : ILocalizable<LocalizedOutputSection>
+    public class OutputSectionModel
     {
         [XmlElement(ElementName = OutputConstants.OutputSectionKindTextNodeName, IsNullable = true)]
         public ItemText KindText { get; set; }
@@ -23,16 +23,6 @@ namespace TypiconOnline.Domain.Rules.Output
         [XmlArray(ElementName = OutputConstants.OutputSectionChildNodeName, IsNullable = true)]
         [XmlArrayItem(ElementName = OutputConstants.ParagraphNodeName, Type = typeof(ItemTextNoted))]
         public List<ItemTextNoted> Paragraphs { get; set; }
-
-        public LocalizedOutputSection Localize(string language)
-        {
-            return new LocalizedOutputSection()
-            {
-                KindText = KindText?.Localize(language),
-                Kind = Kind,
-                Paragraphs = Paragraphs.Localize(language)
-            };
-        }
     }
 
     public enum ElementViewModelKind { Choir, Lector, Priest, Deacon, Stihos, Text, Irmos, Troparion, Chorus, Theotokion }

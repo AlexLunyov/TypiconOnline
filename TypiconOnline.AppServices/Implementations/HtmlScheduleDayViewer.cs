@@ -9,6 +9,7 @@ using System.Xml.Xsl;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.Domain.WebQuery.OutputFiltering;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 
 namespace TypiconOnline.AppServices.Implementations
@@ -26,7 +27,7 @@ namespace TypiconOnline.AppServices.Implementations
             this.configRepo = configRepo ?? throw new ArgumentNullException("configRepo in HtmlScheduleDayViewer");
         }
 
-        public string Execute(LocalizedOutputDay day)
+        public string Execute(FilteredOutputDay day)
         {
             //находим путь к файлу xslt
             var xsltFilePath = configRepo.GetConfigurationValue(XSLT_CONFIG);
@@ -48,9 +49,9 @@ namespace TypiconOnline.AppServices.Implementations
             return stringWriter.ToString();
         }
 
-        public string Execute(LocalizedOutputWorship viewModel)
+        public string Execute(FilteredOutputWorship viewModel)
         {
-            var day = new LocalizedOutputDay();
+            var day = new FilteredOutputDay();
             day.Worships.Add(viewModel);
 
             return Execute(day);

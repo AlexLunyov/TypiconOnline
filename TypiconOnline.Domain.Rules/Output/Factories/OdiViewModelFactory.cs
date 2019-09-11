@@ -18,11 +18,11 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
         enum ChorusKind { Slava, Blagoslovim, Inyne, Common }
 
         IRuleHandler handler;
-        Action<OutputElementCollection> appendModelAction;
+        Action<OutputSectionModelCollection> appendModelAction;
         IReadOnlyList<TextHolder> choruses;
         IRuleSerializerRoot serializer;
 
-        public OdiViewModelFactory(IRuleHandler handler, IRuleSerializerRoot serializer, Action<OutputElementCollection> appendModelAction)
+        public OdiViewModelFactory(IRuleHandler handler, IRuleSerializerRoot serializer, Action<OutputSectionModelCollection> appendModelAction)
         {
             this.handler = handler ?? throw new ArgumentNullException("IRuleHandler in OdiViewModelHandler");
             this.appendModelAction = appendModelAction ?? throw new ArgumentNullException("Action<ElementViewModel> in OdiViewModelHandler");
@@ -99,7 +99,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
                 var view = OutputSectionFactory.Create((kind == ChorusKind.Common) ? ElementViewModelKind.Chorus : ElementViewModelKind.Text,
                     new List<ItemTextNoted>() { new ItemTextNoted(text) }, handler.Settings.TypiconVersionId, serializer);
 
-                appendModelAction(new OutputElementCollection() { view });
+                appendModelAction(new OutputSectionModelCollection() { view });
             }
         }
 
@@ -171,7 +171,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
         {
             var view = OutputSectionFactory.Create(troparion, handler.Settings.TypiconVersionId, serializer);
 
-            appendModelAction(new OutputElementCollection() { view });
+            appendModelAction(new OutputSectionModelCollection() { view });
         }
     }
 }

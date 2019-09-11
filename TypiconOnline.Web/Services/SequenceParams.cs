@@ -9,6 +9,7 @@ namespace TypiconOnline.Web.Services
 {
     public class SequenceParams
     {
+        public string Language { get; set; } = "cs-ru";
         public bool? KekragariaShowPsalm { get; set; }
 
         public int? KekragariaYmnosCount { get; set; }

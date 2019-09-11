@@ -1,6 +1,65 @@
-﻿@{
+﻿@model Result<FilteredOutputWorshipExtended>
+@{
     ViewData["Title"] = "Последовательность ";
 }
 <div class="row col-sm-6"><breadcrumb></breadcrumb></div>
 <div class="clearfix"></div>
-<div class="row col-sm-12">@ViewBag.Sequence</div>
+@if (Model.Success)
+{
+    if (Model.Value.Name != null)
+    {
+        <div class="row">
+            <h1 class="text-center @Model.Value.Name.Text.Language">@Model.Value.Name.Text.Text</h1>
+        </div>
+    }
+    foreach (var s in Model.Value.Sections)
+    {
+        <div class="row">
+            <div class="col-sm-2">
+                @if (s.KindText != null)
+                {
+                    <label class="text-truncate red @s.KindText.Language">@s.KindText.Text</label>
+                }
+            </div>
+            @{
+                bool first = true;
+                foreach (var para in s.Paragraphs)
+                {
+                    <div class="@(first ? "" : "col-sm-offset-2 ") col-sm-10 @GetStyle(para)">@para.Text.Text</div>
+                    first = false;
+                }
+            }
+        </div>
+    }
+}
+else
+{
+    <div class="row col-sm-12"><h3>@Model.Error</h3></div>
+}
+
+
+@functions
+{
+public string GetStyle(FilteredParagraphNoted para)
+{
+    var str = para.Text.Language;
+    if (para.Style.Header != HeaderCaption.NotDefined)
+    {
+        str += " " + para.Style.Header.ToString();
+    }
+    if (para.Style.IsBold)
+    {
+        str += " font-weight-bold";
+    }
+    if (para.Style.IsRed)
+    {
+        str += " red";
+    }
+    if (para.Style.IsItalic)
+    {
+        str += " font-italic";
+    }
+
+    return str;
+}
+}

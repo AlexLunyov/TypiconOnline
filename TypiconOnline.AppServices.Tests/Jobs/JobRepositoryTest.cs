@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Jobs;
+using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Tests.Common;
 using TypiconOnline.WebServices.Hosting;
@@ -78,9 +80,9 @@ namespace TypiconOnline.AppServices.Tests.Jobs
 
             token.Cancel();
 
-            var outputForms = OutputFormsFactory.Create(dbContext);
+            var queryProcessor = QueryProcessorFactory.Create();
 
-            var week = outputForms.GetWeek(1, date, "cs-ru");
+            var week = queryProcessor.Process(new OutputWeekQuery(1, date, new OutputFilter() { Language = "cs-ru" }));
 
             Assert.AreEqual(true, week.Success);
         }
@@ -116,9 +118,9 @@ namespace TypiconOnline.AppServices.Tests.Jobs
                 Thread.Sleep(50);
             }
 
-            var outputForms = OutputFormsFactory.Create(dbContext);
+            var queryProcessor = QueryProcessorFactory.Create();
 
-            var week = outputForms.GetWeek(1, date, "cs-ru");
+            var week = queryProcessor.Process(new OutputWeekQuery(1, date, new OutputFilter() { Language = "cs-ru" }));
 
             Assert.AreEqual(true, week.Success);
         }

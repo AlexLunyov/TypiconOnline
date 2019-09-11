@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Days;
 
-namespace TypiconOnline.Domain.Typicon
+namespace TypiconOnline.Domain.Typicon.Output
 {
-    public class OutputFormDayWorship
+    public class OutputDayWorship
     {
-        public int OutputFormId { get; set; }
-        public virtual OutputForm OutputForm { get; set; }
+        public int OutputDayId { get; set; }
+        public virtual OutputDay OutputDay { get; set; }
         public int DayWorshipId { get; set; }
         public virtual DayWorship DayWorship { get; set; }
     }

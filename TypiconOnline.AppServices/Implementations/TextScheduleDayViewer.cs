@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.Domain.WebQuery.OutputFiltering;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -13,7 +14,7 @@ namespace TypiconOnline.AppServices.Implementations
     {
         private StringBuilder _resultStringBuilder = new StringBuilder();
 
-        public string Execute(LocalizedOutputDay day)
+        public string Execute(FilteredOutputDay day)
         {
             if (day == null) throw new ArgumentNullException("ScheduleDay");
 
@@ -31,24 +32,24 @@ namespace TypiconOnline.AppServices.Implementations
             return _resultStringBuilder.ToString();
         }
 
-        public string Execute(LocalizedOutputWorship viewModel)
+        public string Execute(FilteredOutputWorship viewModel)
         {
             throw new NotImplementedException();
         }
 
-        private void Render(LocalizedOutputWorship element)
+        private void Render(FilteredOutputWorship element)
         {
             _resultStringBuilder.AppendLine($"{element.Time} {element.Name} {element.AdditionalName}");
 
-            foreach (var item in element.ChildElements)
-            {
-                if (item.KindText != null)
-                {
-                    _resultStringBuilder.Append($"{item.KindText.Text} ");
-                }
+            //foreach (var item in element.ChildElements)
+            //{
+            //    if (item.KindText != null)
+            //    {
+            //        _resultStringBuilder.Append($"{item.KindText.Text} ");
+            //    }
 
-                item.Paragraphs.ForEach(c => _resultStringBuilder.AppendLine($"{c.Text} {c.Note?.Text}"));
-            } 
+            //    item.Paragraphs.ForEach(c => _resultStringBuilder.AppendLine($"{c.Text} {c.Note?.Text}"));
+            //} 
         }
     }
 }

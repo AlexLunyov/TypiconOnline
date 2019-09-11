@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Extensions\LocalizeExtensions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TypiconOnline.Domain.Query\TypiconOnline.Domain.Query.csproj" />
     <ProjectReference Include="..\TypiconOnline.Domain\TypiconOnline.Domain.csproj" />
   </ItemGroup>

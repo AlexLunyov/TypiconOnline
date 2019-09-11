@@ -11,9 +11,9 @@ namespace TypiconOnline.Domain.Rules.Handlers
     /// </summary>
     public class ScheduleResults
     {
-        public List<OutputWorship> DayBefore { get; set; } = new List<OutputWorship>();
-        public List<OutputWorship> ThisDay { get; set; } = new List<OutputWorship>();
-        public List<OutputWorship> NextDayFirstWorship { get; set; } = new List<OutputWorship>();
+        public List<OutputWorshipModel> DayBefore { get; set; } = new List<OutputWorshipModel>();
+        public List<OutputWorshipModel> ThisDay { get; set; } = new List<OutputWorshipModel>();
+        public List<OutputWorshipModel> NextDayFirstWorship { get; set; } = new List<OutputWorshipModel>();
 
         //public ICollection<OutputWorship> Common
         //{

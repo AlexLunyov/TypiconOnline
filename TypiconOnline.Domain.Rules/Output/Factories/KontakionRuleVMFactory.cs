@@ -32,9 +32,9 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
             }
         }
 
-        private void AppendKontakion(CreateViewModelRequest<KontakionRule> req, Kontakion kontakion, OutputSection view)
+        private void AppendKontakion(CreateViewModelRequest<KontakionRule> req, Kontakion kontakion, OutputSectionModel view)
         {
-            var viewModel = new OutputElementCollection() { view };
+            var viewModel = new OutputSectionModelCollection() { view };
 
             kontakion.Annotation.AppendViewModel(req.Handler, viewModel);
             kontakion.Prosomoion.AppendViewModel(req.Handler.Settings.TypiconVersionId, Serializer, viewModel);
@@ -43,16 +43,16 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
             req.AppendModelAction(viewModel);
         }
 
-        private void AppendIkos(CreateViewModelRequest<KontakionRule> req, ItemText ikos, OutputSection view)
+        private void AppendIkos(CreateViewModelRequest<KontakionRule> req, ItemText ikos, OutputSectionModel view)
         {
-            var viewModel = new OutputElementCollection() { view };
+            var viewModel = new OutputSectionModelCollection() { view };
 
             ikos.AppendViewModel(req.Handler, viewModel);
 
             req.AppendModelAction(viewModel);
         }
 
-        private (OutputSection Kontakion, OutputSection Ikos) GetHeaders(CreateViewModelRequest<KontakionRule> req, Kontakion kontakion)
+        private (OutputSectionModel Kontakion, OutputSectionModel Ikos) GetHeaders(CreateViewModelRequest<KontakionRule> req, Kontakion kontakion)
         {
             var headers = Serializer.GetCommonRuleChildren<TextHolder>(req.Handler.Settings.TypiconVersionId, CommonRuleConstants.Kontakion);
 

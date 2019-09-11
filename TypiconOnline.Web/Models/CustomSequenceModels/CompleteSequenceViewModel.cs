@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.Domain.WebQuery.OutputFiltering;
 
 namespace TypiconOnline.Web.Models.CustomSequenceModels
 {
@@ -18,7 +19,7 @@ namespace TypiconOnline.Web.Models.CustomSequenceModels
             CustomSequence = model.CustomSequence;
         }
 
-        public LocalizedOutputDay Day { get; set; }
+        public FilteredOutputDay Day { get; set; }
         public string StatusMessage { get; set; }
     }
 }

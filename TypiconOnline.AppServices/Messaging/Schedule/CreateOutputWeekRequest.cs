@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using TypiconOnline.AppServices.Common;
+using TypiconOnline.Domain.Common;
 
 namespace TypiconOnline.AppServices.Messaging.Schedule
 {
-    public class CreateOutputFormWeekRequest
+    public class CreateOutputWeekRequest
     {
         public int TypiconId { get; set; }
         public int TypiconVersionId { get; set; }

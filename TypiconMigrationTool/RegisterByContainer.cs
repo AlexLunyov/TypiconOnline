@@ -50,7 +50,6 @@ namespace TypiconMigrationTool
                 x.For<IOktoikhContext>().Use<OktoikhContext>();
                 x.For<ITheotokionAppContext>().Use<TheotokionAppContext>();
                 x.For<IEasterContext>().Use<EasterContext>();
-                x.For<IScheduleService>().Use<ScheduleService>();
                 x.For<IRuleSerializerRoot>().Use<RuleSerializerRoot>();
             });
         }

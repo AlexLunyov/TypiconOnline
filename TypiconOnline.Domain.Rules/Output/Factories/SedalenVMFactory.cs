@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
         {
             if ((req.Element as SedalenRule)?.Header is ItemTextHeader header)
             {
-                req.AppendModelAction(new OutputElementCollection() { OutputSectionFactory.Create(header) });
+                req.AppendModelAction(new OutputSectionModelCollection() { OutputSectionFactory.Create(header) });
             }
             else
             {

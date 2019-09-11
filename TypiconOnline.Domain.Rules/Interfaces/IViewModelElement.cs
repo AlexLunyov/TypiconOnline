@@ -5,6 +5,6 @@ namespace TypiconOnline.Domain.Rules.Interfaces
 {
     public interface IViewModelElement 
     {
-        void CreateViewModel(IRuleHandler handler, Action<OutputElementCollection> append);
+        void CreateViewModel(IRuleHandler handler, Action<OutputSectionModelCollection> append);
     }
 }

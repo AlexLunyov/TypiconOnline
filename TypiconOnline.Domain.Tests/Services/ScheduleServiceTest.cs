@@ -11,38 +11,38 @@ using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.Domain.Tests.Services
 {
-    [TestFixture]
-    public class ScheduleServiceTest
-    {
-        [Test]
-        public void ScheduleService_GetService()
-        {
-            GetScheduleDayRequest request = new GetScheduleDayRequest()
-            {
-                Date = new DateTime(2018, 5, 21),//DateTime.Today,
-                Handler = new ScheduleHandler(),
-                TypiconId = 1,
-                CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
-            };
+    //[TestFixture]
+    //public class ScheduleServiceTest
+    //{
+    //    [Test]
+    //    public void ScheduleService_GetService()
+    //    {
+    //        GetScheduleDayRequest request = new GetScheduleDayRequest()
+    //        {
+    //            Date = new DateTime(2018, 5, 21),//DateTime.Today,
+    //            Handler = new ScheduleHandler(),
+    //            TypiconId = 1,
+    //            CheckParameters = new CustomParamsCollection<IRuleCheckParameter>().SetModeParam(HandlingMode.AstronomicDay)
+    //        };
 
-            ScheduleService scheduleService = ScheduleServiceFactory.Create();
+    //        ScheduleService scheduleService = ScheduleServiceFactory.Create();
 
-            GetScheduleDayResponse response = scheduleService.GetScheduleDay(request);
+    //        GetScheduleDayResponse response = scheduleService.GetScheduleDay(request);
 
-            //unitOfWork.SaveChanges();
+    //        //unitOfWork.SaveChanges();
 
-            Assert.IsNotNull(response.Day);
+    //        Assert.IsNotNull(response.Day);
 
-            StringBuilder builder = new StringBuilder();
+    //        StringBuilder builder = new StringBuilder();
 
-            builder.AppendLine(response.Day.Date.ToShortDateString() + " " + response.Day.Name);
+    //        builder.AppendLine(response.Day.Date.ToShortDateString() + " " + response.Day.Name);
 
-            foreach (var service in response.Day.Worships)
-            {
-                builder.AppendLine(service.Time + " " + service.Name);
-            }
+    //        foreach (var service in response.Day.Worships)
+    //        {
+    //            builder.AppendLine(service.Time + " " + service.Name);
+    //        }
 
-            Assert.Pass(builder.ToString());
-        }
-    }
+    //        Assert.Pass(builder.ToString());
+    //    }
+    //}
 }

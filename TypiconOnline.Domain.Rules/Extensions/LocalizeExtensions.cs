@@ -8,6 +8,7 @@ namespace TypiconOnline.Domain.Rules.Extensions
 {
     public static class LocalizeExtensions
     {
+
         /// <summary>
         /// Оставляем только элемент с указанным языком, либо любой первый, если указанного нет
         /// </summary>
@@ -50,7 +51,7 @@ namespace TypiconOnline.Domain.Rules.Extensions
             };
         }
 
-        public static List<LocalizedOutputSection> Localize(this List<OutputSection> collection, string language)
+        public static List<LocalizedOutputSection> Localize(this List<OutputSectionModel> collection, string language)
         {
             var result = new List<LocalizedOutputSection>();
             collection.ForEach(c => result.Add(c.Localize(language)));
@@ -64,7 +65,7 @@ namespace TypiconOnline.Domain.Rules.Extensions
             return result;
         }
 
-        public static List<LocalizedOutputWorship> Localize(this List<OutputWorship> collection, string language)
+        public static List<LocalizedOutputWorship> Localize(this List<OutputWorshipModel> collection, string language)
         {
             var result = new List<LocalizedOutputWorship>();
             collection.ForEach(c => result.Add(c.Localize(language)));

@@ -9,6 +9,7 @@ using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.Domain.WebQuery.OutputFiltering;
 using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
@@ -23,18 +24,17 @@ namespace TypiconOnline.Web.Controllers
     [AllowAnonymous]
     public class ScheduleController : Controller
     {
-        private readonly IQueryProcessor queryProcessor;
-        private readonly IOutputForms _outputForms;
+        private readonly IQueryProcessor _queryProcessor;
         private readonly IScheduleWeekViewer<string> _weekViewer;
         private readonly IScheduleWeekViewer<Result<DocxToStreamWeekResponse>> _weekDownloadViewer;
         private readonly IScheduleDayViewer<string> dayViewer;
 
-        public ScheduleController(IQueryProcessor queryProcessor, IOutputForms outputForms, IScheduleDayViewer<string> dayViewer
+        public ScheduleController(IQueryProcessor queryProcessor
+            , IScheduleDayViewer<string> dayViewer
             , IScheduleWeekViewer<string> weekViewer
             , IScheduleWeekViewer<Result<DocxToStreamWeekResponse>> weekDownloadViewer)
         {
-            this.queryProcessor = queryProcessor ?? throw new ArgumentNullException("queryProcessor in ScheduleController");
-            _outputForms = outputForms ?? throw new ArgumentNullException(nameof(outputForms));
+            _queryProcessor = queryProcessor ?? throw new ArgumentNullException("queryProcessor in ScheduleController");
             _weekViewer = weekViewer ?? throw new ArgumentNullException(nameof(weekViewer));
             _weekDownloadViewer = weekDownloadViewer ?? throw new ArgumentNullException(nameof(weekDownloadViewer));
             this.dayViewer = dayViewer ?? throw new ArgumentNullException("dayViewer in ScheduleController");
@@ -48,7 +48,7 @@ namespace TypiconOnline.Web.Controllers
             {
                 return NotFound();
             }
-            var typicon = queryProcessor.Process(new TypiconQuery(id.Value));
+            var typicon = _queryProcessor.Process(new TypiconQuery(id.Value));
 
             if (typicon.Success)
             {
@@ -62,7 +62,7 @@ namespace TypiconOnline.Web.Controllers
 
                 ViewBag.Date = date;
 
-                var weekResult = _outputForms.GetWeek(id.Value, date, language);
+                var weekResult = _queryProcessor.Process(new OutputWeekQuery(id.Value, date, new OutputFilter() { Language = language }));
 
                 ViewBag.Week = weekResult;
             }
@@ -85,7 +85,7 @@ namespace TypiconOnline.Web.Controllers
                 date = DateTime.Now;
             }
 
-            var weekResult = _outputForms.GetWeek(id.Value, date, language);
+            var weekResult = _queryProcessor.Process(new OutputWeekQuery(id.Value, date, new OutputFilter() { Language = language }));
 
             if (weekResult.Success)
             {
@@ -116,50 +116,18 @@ namespace TypiconOnline.Web.Controllers
         /// <param name="w">Индекс службы</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("{id}/{date}/{w?}/{sequenceParams?}")]
+        [Route("{id}/{worshipId}/{filter?}")]
         [Breadcrumb(Title = "Последовательность", FromAction = "Index")]
-        public IActionResult Sequence(int? id, DateTime date, int? w, SequenceParams sequenceParams)
+        public IActionResult Sequence(int id, int worshipId, OutputFilter filter)
         {
-            if (id == null)
+            if (filter == null)
             {
-                return NotFound();
+                filter = new OutputFilter() { Language = "cs-ru" };
             }
 
-            string language = "cs-ru";
+            var worshipResult = _queryProcessor.Process(new OutputWorshipQuery(worshipId, filter));
 
-            if (date == null || date == DateTime.MinValue)
-            {
-                date = DateTime.Now;
-            }
-
-            if (string.IsNullOrEmpty(language))
-            {
-                language = "cs-ru";
-            }
-
-            var dayResult = _outputForms.Get(id.Value, date, language);
-
-            string result = "";
-
-            if (dayResult.Success)
-            {
-                if (w != null && dayResult.Value[(int)w] is LocalizedOutputWorship model)
-                {
-                    result = dayViewer.Execute(model);
-                }
-                else
-                {
-                    result = dayViewer.Execute(dayResult.Value);
-                }
-            }
-            else
-            {
-                result = dayResult.Error;
-            }
-
-            ViewBag.Sequence = new HtmlString(result);
-
-            return View();
+            return View(worshipResult);
         }
     }
 }

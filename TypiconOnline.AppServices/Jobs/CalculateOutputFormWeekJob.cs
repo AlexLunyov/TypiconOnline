@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TypiconOnline.AppServices.Common;
+using TypiconOnline.Domain.Common;
 
 namespace TypiconOnline.AppServices.Jobs
 {

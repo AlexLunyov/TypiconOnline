@@ -4,6 +4,7 @@ using System.Text;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Output;
+using TypiconOnline.Domain.WebQuery.OutputFiltering;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -16,7 +17,7 @@ namespace TypiconOnline.AppServices.Implementations
             _dayViewer = dayViewer ?? throw new ArgumentNullException(nameof(dayViewer));
         }
 
-        public string Execute(int typiconId, LocalizedOutputWeek week)
+        public string Execute(int typiconId, FilteredOutputWeek week)
         {
             var strBuilder = new StringBuilder();
 

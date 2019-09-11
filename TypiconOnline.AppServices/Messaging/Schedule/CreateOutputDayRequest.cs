@@ -5,7 +5,7 @@ using TypiconOnline.Domain.Rules;
 
 namespace TypiconOnline.AppServices.Messaging.Schedule
 {
-    public class CreateOutputFormRequest
+    public class CreateOutputDayRequest
     {
         public int TypiconId { get; set; }
         public int TypiconVersionId { get; set; }

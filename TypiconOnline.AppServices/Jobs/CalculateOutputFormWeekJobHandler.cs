@@ -17,12 +17,12 @@ namespace TypiconOnline.AppServices.Jobs
         private const int DELAY = 5000; 
 
         private readonly TypiconDBContext _dbContext;
-        private readonly IOutputFormFactory _outputFormFactory;
+        private readonly IOutputDayFactory _outputFormFactory;
         private readonly IJobRepository _jobs;
         //private readonly ICommandProcessor _commandProcessor;
 
         public CalculateOutputFormWeekJobHandler(TypiconDBContext dbContext
-            , IOutputFormFactory outputFormFactory
+            , IOutputDayFactory outputFormFactory
             , IJobRepository jobs
             /*, ICommandProcessor commandProcessor*/)
         {
@@ -69,7 +69,7 @@ namespace TypiconOnline.AppServices.Jobs
 
         private Task DoTheJob(CalculateOutputFormWeekJob job)
         {
-            var week = _outputFormFactory.CreateWeek(new CreateOutputFormWeekRequest()
+            var week = _outputFormFactory.CreateWeek(new CreateOutputWeekRequest()
             {
                 TypiconId = job.TypiconId,
                 TypiconVersionId = job.TypiconVersionId,
@@ -78,7 +78,7 @@ namespace TypiconOnline.AppServices.Jobs
 
             foreach (var day in week)
             {
-                _dbContext.UpdateOutputForm(day);
+                _dbContext.UpdateOutputDay(day);
             }
 
             return Task.CompletedTask;

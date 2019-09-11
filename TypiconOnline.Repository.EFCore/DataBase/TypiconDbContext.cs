@@ -149,8 +149,10 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 
             modelBuilder.ApplyConfiguration(new ExplicitAddRuleConfiguration());
 
-            modelBuilder.ApplyConfiguration(new OutputFormConfiguration()); 
+            modelBuilder.ApplyConfiguration(new OutputDayConfiguration());
+            modelBuilder.ApplyConfiguration(new OutputWorshipConfiguration());
             modelBuilder.ApplyConfiguration(new OutputFormDayWorshipConfiguration()); 
+
             modelBuilder.ApplyConfiguration(new TypiconVersionErrorConfiguration());
 
             modelBuilder.ApplyConfiguration(new MenologyDayConfiguration());

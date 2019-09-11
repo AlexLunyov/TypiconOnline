@@ -12,6 +12,7 @@ using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.WebQuery.OutputFiltering;
 
 namespace TypiconOnline.AppServices.Viewers
 {
@@ -51,7 +52,7 @@ namespace TypiconOnline.AppServices.Viewers
             _daysPerPage = daysPerPage;
         }
 
-        public void Execute(int typiconId, LocalizedOutputWeek week)
+        public void Execute(int typiconId, FilteredOutputWeek week)
         {
             if (week == null)
             {
@@ -152,7 +153,7 @@ namespace TypiconOnline.AppServices.Viewers
             return (Table) header;
         }
 
-        private Table GetDayTable(LocalizedOutputDay day, List<Table> templateTables)
+        private Table GetDayTable(FilteredOutputDay day, List<Table> templateTables)
         {
             Table dayTable = new Table();
 

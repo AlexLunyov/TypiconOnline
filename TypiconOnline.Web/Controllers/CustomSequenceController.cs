@@ -18,6 +18,7 @@ using TypiconOnline.Web.Models.CustomSequenceModels;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Web.Extensions;
 using TypiconOnline.Domain.Identity;
+using TypiconOnline.Domain.WebQuery.OutputFiltering;
 
 namespace TypiconOnline.Web.Controllers
 {
@@ -25,10 +26,10 @@ namespace TypiconOnline.Web.Controllers
     public class CustomSequenceController : Controller
     {
         private readonly IQueryProcessor _queryProcessor;
-        private readonly IOutputFormFactory _outputFormFactory;
+        private readonly IOutputDayFactory _outputFormFactory;
         private readonly CustomScheduleDataCalculator _dataCalculator;
 
-        public CustomSequenceController(IQueryProcessor queryProcessor, IOutputFormFactory outputFormFactory
+        public CustomSequenceController(IQueryProcessor queryProcessor, IOutputDayFactory outputFormFactory
             , CustomScheduleDataCalculator dataCalculator)
         {
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
@@ -68,7 +69,7 @@ namespace TypiconOnline.Web.Controllers
 
                     //try
                     //{
-                    var output = _outputFormFactory.Create(_dataCalculator, new CreateOutputFormRequest()
+                    var output = _outputFormFactory.Create(_dataCalculator, new CreateOutputDayRequest()
                     {
                         TypiconId = typicon.Value.TypiconId,
                         TypiconVersionId = typicon.Value.Id,
@@ -76,7 +77,7 @@ namespace TypiconOnline.Web.Controllers
                         HandlingMode = HandlingMode.All
                     });
 
-                    outputModel.Day = output.Day.Localize(model.Language);
+                    outputModel.Day = output.Day.FilterOut(new OutputFilter() { Language = model.Language });
 
                     outputModel.StatusMessage = GetMessage(output.BrokenConstraints);
                     //}

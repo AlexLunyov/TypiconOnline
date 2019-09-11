@@ -11,7 +11,7 @@ namespace TypiconOnline.Domain.Query.Books
     /// <summary>
     /// Возвращает наименование седмицы (вставляется в шапку шаблона седмицы)
     /// </summary>
-    public class WeekNameQueryHandler : QueryStrategyHandlerBase, IQueryHandler<WeekNameQuery, ItemText>
+    public class WeekNameQueryHandler : QueryStrategyHandlerBase, IQueryHandler<WeekNameQuery, ItemTextUnit>
     {
         public WeekNameQueryHandler(TypiconDBContext dbContext, IQueryProcessor queryProcessor)
             : base(dbContext, queryProcessor) { }
@@ -22,7 +22,7 @@ namespace TypiconOnline.Domain.Query.Books
         ///          Седмица 6-ая по Пасхе
         ///          Седмица 3-ая Великого поста
         /// </summary>
-        public ItemText Handle([NotNull] WeekNameQuery query)
+        public ItemTextUnit Handle([NotNull] WeekNameQuery query)
         {
             /* Есть три периода: Великий пост, попразднество Пасхи и все после нее.
              * Соответсвенно, имена будут зависить от удаления от дня Пасхи.
@@ -40,9 +40,9 @@ namespace TypiconOnline.Domain.Query.Books
 
             //Шаблоны из CommonRule
 
-            var text = CalculateItemTextValue(query.Date, dEaster, dPastEaster, query.IsShortName);
+            //var text = CalculateItemTextValue(query.Date, dEaster, dPastEaster, query.IsShortName);
 
-            return text;
+            return new ItemTextUnit("cs-ru", CalculateStringValue(query.Date, dEaster, dPastEaster, query.IsShortName));
         }
 
         private ItemText CalculateItemTextValue(DateTime date, DateTime dEaster, DateTime dPastEaster, bool isShortName)

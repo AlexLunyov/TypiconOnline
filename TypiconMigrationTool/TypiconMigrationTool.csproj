@@ -353,7 +353,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="RegisterByContainer.cs" />
-    <Compile Include="ScheduleServiceFactory.cs" />
     <Compile Include="Tests\EasterFakeContext.cs" />
     <Compile Include="Tests\MigrationDayServiceFactoryTest.cs" />
     <Compile Include="Timer.cs" />

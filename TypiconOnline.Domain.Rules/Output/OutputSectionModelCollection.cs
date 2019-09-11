@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Output
 {
@@ -8,7 +10,9 @@ namespace TypiconOnline.Domain.Rules.Output
     /// т.е. будут являться конечным результатом обработки правил
     /// </summary>
     [CollectionDataContract]
-    public class OutputElementCollection : List<OutputSection>
+    [Serializable]
+    [XmlRoot(OutputConstants.OutputWorshipChildNodeName)]
+    public class OutputSectionModelCollection : List<OutputSectionModel>
     {
     }
 

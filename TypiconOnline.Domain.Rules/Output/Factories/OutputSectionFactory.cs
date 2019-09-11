@@ -12,14 +12,14 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
 {
     public class OutputSectionFactory
     {
-        public static OutputSection Create(TextHolderKind kind, List<ItemTextNoted> p)
+        public static OutputSectionModel Create(TextHolderKind kind, List<ItemTextNoted> p)
         {
             return Create(kind, default(ItemText), p);
         }
 
-        public static OutputSection Create(TextHolderKind kind, ItemText kindText, List<ItemTextNoted> p)
+        public static OutputSectionModel Create(TextHolderKind kind, ItemText kindText, List<ItemTextNoted> p)
         {
-            return new OutputSection()
+            return new OutputSectionModel()
             {
                 Kind = Cast(kind),
                 KindText = kindText,
@@ -27,9 +27,9 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
             };
         }
 
-        public static OutputSection Create(ElementViewModelKind kind, List<ItemTextNoted> p, int typiconVersionId, IRuleSerializerRoot serializer)
+        public static OutputSectionModel Create(ElementViewModelKind kind, List<ItemTextNoted> p, int typiconVersionId, IRuleSerializerRoot serializer)
         {
-            return new OutputSection()
+            return new OutputSectionModel()
             {
                 Kind = kind,
                 KindText = GetKindItemTextValue(kind, typiconVersionId, serializer),
@@ -37,10 +37,10 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
             };
         }
 
-        public static OutputSection Create(TextHolder textHolder, int typiconVersionId, IRuleSerializerRoot serializer)
+        public static OutputSectionModel Create(TextHolder textHolder, int typiconVersionId, IRuleSerializerRoot serializer)
         {
             var kind = Cast(textHolder.Kind);
-            return new OutputSection()
+            return new OutputSectionModel()
             {
                 Kind = kind,
                 KindText = GetKindItemTextValue(kind, typiconVersionId, serializer),
@@ -48,10 +48,10 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
             };
         }
 
-        public static OutputSection Create(Ymnos ymnos, int typiconVersionId, IRuleSerializerRoot serializer)
+        public static OutputSectionModel Create(Ymnos ymnos, int typiconVersionId, IRuleSerializerRoot serializer)
         {
             var kind = Cast(ymnos.Kind);
-            return new OutputSection()
+            return new OutputSectionModel()
             {
                 Kind = Cast(ymnos.Kind),
                 KindText = GetKindItemTextValue(kind, typiconVersionId, serializer),
@@ -59,9 +59,9 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
             };
         }
 
-        public static OutputSection Create(ItemTextHeader header)
+        public static OutputSectionModel Create(ItemTextHeader header)
         {
-            return new OutputSection()
+            return new OutputSectionModel()
             {
                 Kind = ElementViewModelKind.Text,
                 Paragraphs = new List<ItemTextNoted>() { new ItemTextNoted(header) }

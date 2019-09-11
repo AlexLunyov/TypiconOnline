@@ -12,7 +12,6 @@ namespace TypiconOnline.AppServices.Interfaces
     public interface IScheduleDayNameComposer
     {
         ItemText Compose(DateTime date, int seniorRulePriority, IReadOnlyList<DayWorship> dayWorships);
-        ItemText GetWeekName(int typiconId, DateTime date);
         ItemTextUnit GetLocalizedWeekName(int typiconId, DateTime date, string language);
     }
 }

@@ -9,6 +9,6 @@ namespace TypiconOnline.Domain.Rules.Output.Messaging
         public T Element { get; set; }
         public DateTime Date { get; set; }
         public IRuleHandler Handler { get; set; }
-        public Action<OutputElementCollection> AppendModelAction { get; set; }
+        public Action<OutputSectionModelCollection> AppendModelAction { get; set; }
     }
 }

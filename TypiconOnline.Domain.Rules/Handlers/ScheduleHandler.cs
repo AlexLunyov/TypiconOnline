@@ -9,7 +9,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
 {
     public class ScheduleHandler : RuleHandlerBase
     {
-        private readonly List<OutputWorship> collection = new List<OutputWorship>();
+        private readonly List<OutputWorshipModel> collection = new List<OutputWorshipModel>();
         private readonly ScheduleResults scheduleResults = new ScheduleResults();
 
         public ScheduleHandler()//(RuleHandlerSettings request) : base(request)
@@ -56,10 +56,10 @@ namespace TypiconOnline.Domain.Rules.Handlers
             {
                 //задаем актуальную коллекцию
                 ActualWorshipMode = w.Mode;
-                ActualWorshipCollection.Add(new OutputWorship(w));
+                ActualWorshipCollection.Add(new OutputWorshipModel(w));
 
                 //TODO: удалить
-                collection.Add(new OutputWorship(w));
+                collection.Add(new OutputWorshipModel(w));
 
                 return true;
             }
@@ -68,14 +68,14 @@ namespace TypiconOnline.Domain.Rules.Handlers
         }
 
         //TODO: удалить
-        public ICollection<OutputWorship> GetResult() => collection;
+        public ICollection<OutputWorshipModel> GetResult() => collection;
 
         public ScheduleResults GetResults() => scheduleResults;
-        public ICollection<OutputWorship> ActualWorshipCollection
+        public ICollection<OutputWorshipModel> ActualWorshipCollection
         {
             get
             {
-                ICollection<OutputWorship> col = null;
+                ICollection<OutputWorshipModel> col = null;
 
                 switch (ActualWorshipMode)
                 {
@@ -94,7 +94,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
             
         }
 
-        public List<OutputSection> ActualWorshipChildElements
+        public OutputSectionModelCollection ActualWorshipChildElements
         {
             get
             {
@@ -103,7 +103,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 //если коллекция пуста, добавляем фейковую службу
                 if (found == null)
                 {
-                    found = new OutputWorship();
+                    found = new OutputWorshipModel();
                     ActualWorshipCollection.Add(found);
                 }
                 return found.ChildElements;

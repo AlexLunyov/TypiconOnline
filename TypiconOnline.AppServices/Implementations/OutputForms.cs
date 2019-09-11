@@ -34,17 +34,19 @@ namespace TypiconOnline.AppServices.Implementations
             _jobs = jobs ?? throw new ArgumentNullException(nameof(jobs));
         }
 
-        public Result<LocalizedOutputDay> Get(int typiconId, DateTime date, string language, HandlingMode handlingMode = HandlingMode.AstronomicDay)
+        public Result<FilteredOutputDay> GetDay(int typiconId, DateTime date, string language, HandlingMode handlingMode = HandlingMode.AstronomicDay)
         {
             date = date.Date;
 
             var scheduleDay = _dbContext.GetScheduleDay(typiconId, date, _serializer);
 
+            //нашли сформированный день
             if (scheduleDay.Success)
             {
                 return Result.Ok(scheduleDay.Value.Localize(language));
             }
 
+            //добавляем задачу на формирование дня
             var version = _dbContext.GetPublishedVersion(typiconId);
 
             if (version.Failure)
@@ -73,7 +75,7 @@ namespace TypiconOnline.AppServices.Implementations
 
             while (i < 7)
             {
-                var dayResult = Get(typiconId, date, language);
+                var dayResult = GetDay(typiconId, date, language);
 
                 if (dayResult.Failure)
                 {

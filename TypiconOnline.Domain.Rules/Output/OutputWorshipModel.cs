@@ -11,11 +11,11 @@ namespace TypiconOnline.Domain.Rules.Output
 {
     [Serializable]
     [XmlRoot(OutputConstants.OutputWorshipNodeName)]
-    public class OutputWorship : ILocalizable<LocalizedOutputWorship>
+    public class OutputWorshipModel
     {
-        public OutputWorship() { }
+        public OutputWorshipModel() { }
 
-        public OutputWorship(WorshipRule worship)
+        public OutputWorshipModel(WorshipRule worship)
         {
             Id = worship.Id;
             Time = worship.Time.Expression;
@@ -32,19 +32,9 @@ namespace TypiconOnline.Domain.Rules.Output
         [XmlElement(OutputConstants.OutputWorshipAdditionalNameAttrName)]
         public ItemText AdditionalName { get; set; }
         [XmlArray(OutputConstants.OutputWorshipChildNodeName)]
-        [XmlArrayItem(ElementName = OutputConstants.OutputSectionNodeName, Type = typeof(OutputSection))]
-        public List<OutputSection> ChildElements { get; set; } = new List<OutputSection>();
+        [XmlArrayItem(ElementName = OutputConstants.OutputSectionNodeName, Type = typeof(OutputSectionModel))]
+        public OutputSectionModelCollection ChildElements { get; set; } = new OutputSectionModelCollection();
 
-        public LocalizedOutputWorship Localize(string language)
-        {
-            return new LocalizedOutputWorship
-            {
-                Id = Id,
-                Time = Time,
-                Name = Name?.Localize(language),
-                AdditionalName = AdditionalName?.Localize(language),
-                ChildElements = ChildElements.Localize(language)
-            };
-        }
+        
     }
 }

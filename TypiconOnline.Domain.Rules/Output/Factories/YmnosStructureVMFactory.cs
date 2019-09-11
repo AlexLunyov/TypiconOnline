@@ -24,7 +24,7 @@ namespace TypiconOnline.Domain.Rules.Output.Factories
                 return;
             }
 
-            OutputElementCollection viewModel = new OutputElementCollection();
+            OutputSectionModelCollection viewModel = new OutputSectionModelCollection();
 
             //здесь вставляется индивидуальная обработка наследников
             AppendCustomForm(req/*, viewModel*/);
