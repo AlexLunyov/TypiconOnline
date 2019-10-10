@@ -10,7 +10,7 @@ using TypiconOnline.Repository.EFCore.DataBase;
 namespace TypiconOnline.AppServices.Jobs
 {
     /// <summary>
-    /// Вычисляет выходные формы для каждого дня указанного года по версии Устава
+    /// Вычисляет выходные формы для недели по версии Устава
     /// </summary>
     public class CalculateOutputFormWeekJobHandler : ICommandHandler<CalculateOutputFormWeekJob>
     {

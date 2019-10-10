@@ -21,7 +21,7 @@ namespace TypiconOnline.AppServices.Tests.Jobs
         [Test]
         public void CalculateOutputFormYearJob_Failed()
         {
-            var date = new DateTime(2019, 2, 1);
+            var date = new DateTime(2019, 9, 1);
 
             var dbContext = TypiconDbContextFactory.Create();
             var jobRepo = new JobRepository();

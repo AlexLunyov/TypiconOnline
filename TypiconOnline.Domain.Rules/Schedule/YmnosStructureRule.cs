@@ -39,7 +39,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             //TODO: добавить проверку на наличие элементов stichira в дочерних элементах
         }
 
-        protected override bool IsAuthorized(IRuleHandler handler) => handler.IsAuthorized<YmnosStructureRule>();
+        protected override bool IsAuthorized(IRuleHandler handler) => handler.IsTypeAuthorized(this as YmnosStructureRule);
 
         public virtual void CreateViewModel(IRuleHandler handler, Action<OutputSectionModelCollection> append)
         {

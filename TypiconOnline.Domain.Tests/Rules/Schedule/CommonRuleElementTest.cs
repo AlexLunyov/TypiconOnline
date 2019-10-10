@@ -36,11 +36,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             element.Interpret(handler);
 
-            var model = handler.GetResult();
+            var model = handler.ActualWorshipChildElements;
 
             //WorshipSequenceViewModel model = new WorshipSequenceViewModel(element, handler);
 
-            Assert.AreEqual(30, model.FirstOrDefault()?.ChildElements.Count);
+            Assert.AreEqual(30, model.Count);
         }
     }
 }

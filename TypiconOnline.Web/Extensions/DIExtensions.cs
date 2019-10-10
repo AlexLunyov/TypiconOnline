@@ -1,53 +1,31 @@
-﻿using CacheManager.Core;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using SimpleInjector;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TypiconOnline.AppServices.Configuration;
 using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.Domain.Books;
-using TypiconOnline.Domain.Books.Apostol;
-using TypiconOnline.Domain.Books.Easter;
-using TypiconOnline.Domain.Books.Evangelion;
-using TypiconOnline.Domain.Books.Katavasia;
-using TypiconOnline.Domain.Books.Oktoikh;
-using TypiconOnline.Domain.Books.OldTestament;
-using TypiconOnline.Domain.Books.Psalter;
-using TypiconOnline.Domain.Books.TheotokionApp;
-using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Domain.Serialization;
-using TypiconOnline.Infrastructure.Common.Domain;
-using TypiconOnline.Infrastructure.Common.Interfaces;
-using TypiconOnline.Infrastructure.Common.UnitOfWork;
-using TypiconOnline.Repository.EFCore;
-using TypiconOnline.Repository.EFCore.DataBase;
-using TypiconOnline.AppServices.Configuration;
-using TypiconOnline.Domain.Books.WeekDayApp;
-using TypiconOnline.Domain.Typicon;
-using SimpleInjector;
 using TypiconOnline.AppServices.Jobs;
-using TypiconOnline.Domain.Query;
-using TypiconOnline.Infrastructure.Common.Query;
-using TypiconOnline.Infrastructure.Common.Command;
-using TypiconOnline.Domain.Command;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-using TypiconOnline.WebServices.Hosting;
-using TypiconOnline.AppServices.Messaging.Schedule;
-using TypiconOnline.Infrastructure.Common.ErrorHandling;
-using TypiconOnline.AppServices.Viewers;
-using TypiconOnline.Domain.WebQuery.Typicon;
-using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Web.Controllers;
 using TypiconOnline.AppServices.Jobs.Scheduled;
+using TypiconOnline.AppServices.Messaging.Schedule;
+using TypiconOnline.AppServices.Viewers;
+using TypiconOnline.Domain.Command;
+using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Query;
+using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.WebQuery.Models;
-using Microsoft.AspNetCore.Authorization;
+using TypiconOnline.Infrastructure.Common.Command;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
+using TypiconOnline.Infrastructure.Common.Interfaces;
+using TypiconOnline.Infrastructure.Common.Query;
+using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.WebServices.Authorization;
-using Microsoft.AspNetCore.Hosting;
+using TypiconOnline.WebServices.Hosting;
 
 namespace TypiconOnline.Web
 {
@@ -125,7 +103,7 @@ namespace TypiconOnline.Web
 
             //container.Register(typeof(IQuery<>), typeof(QueryProcessor).Assembly);
             container.Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
-            container.Register<IQueryProcessor, QueryProcessor>();
+            container.Register<IQueryProcessor, DataQueryProcessor>();
 
 
             container.Register(typeof(ICommandHandler<>), typeof(CommandProcessor).Assembly, typeof(ScheduleDataCalculator).Assembly);

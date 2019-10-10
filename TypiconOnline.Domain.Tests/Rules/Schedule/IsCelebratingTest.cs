@@ -37,11 +37,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             rule.GetRule<ExecContainer>(Serializer).Interpret(handler);
 
-            var model = handler.GetResult();            
+            var model = handler.ActualWorshipChildElements;            
 
             //var model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
 
-            Assert.AreEqual(3, model.FirstOrDefault()?.ChildElements.Count);
+            Assert.AreEqual(3, model.Count);
 
             //а теперь находим правило НЕ праздничное
             rule = TypiconVersion.GetMenologyRule(new DateTime(2017, 10, 15));
@@ -52,11 +52,11 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             handler.ClearResult();
             rule.GetRule<ExecContainer>(Serializer).Interpret(handler);
 
-            model = handler.GetResult();
+            model = handler.ActualWorshipChildElements;
 
             //model = rule.GetRule<EktenisRule>(TestRuleSerializer.Root).CreateViewModel(handler) as EktenisViewModel;
 
-            Assert.AreEqual(2, model.FirstOrDefault()?.ChildElements.Count);
+            Assert.AreEqual(2, model.Count);
         }
     }
 }

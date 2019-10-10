@@ -1,14 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <sedalen>
-  <if>
-    <expression>
-      <equals>
-        <date/>
-        <date>--11-09</date>
-      </equals>
-    </expression>
-    <then>
-      <ymnosrule source="oktoikh" place="sedalen2" count="3"/>
-    </then>
-  </if>
+  <definition>
+    <if>
+      <expression>
+        <equals>
+          <date/>
+          <date>--11-09</date>
+        </equals>
+      </expression>
+      <then>
+        <ymnosrule source="oktoikh" place="sedalen2" count="3"/>
+      </then>
+    </if>
+  </definition>
 </sedalen>

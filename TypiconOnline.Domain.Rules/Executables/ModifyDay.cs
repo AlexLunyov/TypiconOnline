@@ -175,7 +175,7 @@ namespace TypiconOnline.Domain.Rules.Executables
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-            if (IsValid && handler.IsAuthorized<ModifyDay>() && !this.AsAdditionHandled(handler))
+            if (IsValid && handler.IsTypeAuthorized(this) && !this.AsAdditionHandled(handler))
             {
                 InterpretChildDateExp(handler);
 

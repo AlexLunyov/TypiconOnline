@@ -109,7 +109,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-            if (handler.IsAuthorized<WorshipRule>() && !this.AsAdditionHandled(handler))
+            if (handler.IsTypeAuthorized(this) && !this.AsAdditionHandled(handler))
             {
                 handler.Execute(this);
 

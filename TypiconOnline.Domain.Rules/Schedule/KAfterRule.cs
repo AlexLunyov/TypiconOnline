@@ -56,7 +56,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-            if (handler.IsAuthorized<KAfterRule>() && !this.AsAdditionHandled(handler))
+            if (handler.IsTypeAuthorized(this) && !this.AsAdditionHandled(handler))
             {
                 base.InnerInterpret(handler);
 

@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-            if (handler.IsAuthorized<KekragariaRule>())
+            if (handler.IsTypeAuthorized(this))
             {
                 base.InnerInterpret(handler);
             }

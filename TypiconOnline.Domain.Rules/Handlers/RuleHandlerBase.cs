@@ -29,15 +29,15 @@ namespace TypiconOnline.Domain.Rules.Handlers
             }
         }
 
-        public bool IsTypeAuthorized(ICustomInterpreted t) 
+        public virtual bool IsTypeAuthorized(ICustomInterpreted t) 
         {
             return IsTypeAuthorized(t.GetType());
         }
 
-        public virtual bool IsAuthorized<T>() where T : ICustomInterpreted
-        {
-            return IsTypeAuthorized(typeof(T));
-        }
+        //public virtual bool IsAuthorized<T>() where T : ICustomInterpreted
+        //{
+        //    return IsTypeAuthorized(typeof(T));
+        //}
 
         private bool IsTypeAuthorized(Type type)
         {

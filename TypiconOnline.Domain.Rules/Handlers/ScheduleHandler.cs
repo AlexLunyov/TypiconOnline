@@ -44,9 +44,6 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
         public override void ClearResult()
         {
-            //TODO: удалить
-            collection.Clear();
-
             scheduleResults.Clear();
         }
 
@@ -66,9 +63,6 @@ namespace TypiconOnline.Domain.Rules.Handlers
 
             return false;
         }
-
-        //TODO: удалить
-        public ICollection<OutputWorshipModel> GetResult() => collection;
 
         public ScheduleResults GetResults() => scheduleResults;
         public ICollection<OutputWorshipModel> ActualWorshipCollection

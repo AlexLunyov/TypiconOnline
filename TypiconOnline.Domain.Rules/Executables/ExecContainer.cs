@@ -26,7 +26,7 @@ namespace TypiconOnline.Domain.Rules.Executables
         protected override void InnerInterpret(IRuleHandler handler)
         {
             //Добавляем IAsAdditionElement append реализацию
-            AppendHandling(handler);
+            var appended = AppendHandling(handler);
 
             foreach (RuleElementBase el in ChildElements)
             {
@@ -34,7 +34,7 @@ namespace TypiconOnline.Domain.Rules.Executables
             }
 
             //и сразу же их удаляем
-            RemoveAppended();
+            RemoveAppended(appended);
         }
 
         protected override void Validate()
@@ -72,8 +72,10 @@ namespace TypiconOnline.Domain.Rules.Executables
         public IReadOnlyList<T> GetChildElements<T>(RuleHandlerSettings settings, Func<T, bool> predicate = null) //where T : RuleExecutable, ICustomInterpreted
         {
             //используем специальный обработчик
-            //чтобы создать список источников канонов на обработку
+            //чтобы найти все дочерние элементы по искомым признакам
             var childrenHandler = new CollectorRuleHandler<T>() { Settings = settings };
+
+            //Interpret(childrenHandler);
 
             foreach (RuleElementBase elem in ChildElements)
             {
@@ -85,12 +87,29 @@ namespace TypiconOnline.Domain.Rules.Executables
             return (predicate != null) ? result.Where(predicate).ToList() : result;
         }
 
+        public IReadOnlyList<IAsAdditionElement> GetAsAdditionChildElements(RuleHandlerSettings settings, IAsAdditionElement element, Func<IAsAdditionElement, bool> predicate = null)
+        {
+            //используем специальный обработчик
+            //чтобы найти все дочерние элементы по искомым признакам
+            var childrenHandler = new AsAdditionElementHandler(element, predicate) { Settings = settings };
+
+            //Interpret(childrenHandler);
+
+            foreach (RuleElementBase elem in ChildElements)
+            {
+                elem.Interpret(childrenHandler);
+            }
+
+            return childrenHandler.GetResult();
+        }
+
         /// <summary>
         /// Добавляет к текущему элементу все дочерние элементы из дополнения, помеченные как append
         /// </summary>
         /// <param name="handler"></param>
-        protected void AppendHandling(IRuleHandler handler)
+        protected IEnumerable<RuleElementBase> AppendHandling(IRuleHandler handler)
         {
+            var result = new List<RuleElementBase>();
             if (this is IAsAdditionElement rewritableElement && handler.Settings.Addition?.RuleContainer is ExecContainer container)
             {
                 //ищем элементы, у которых Parent - с таким же именем как и ExecContainer,
@@ -100,22 +119,34 @@ namespace TypiconOnline.Domain.Rules.Executables
 
                 if (found.Count > 0)
                 {
-                    ChildElements.AddRange(found.Cast<RuleElementBase>());
+                    result.AddRange(found.Cast<RuleElementBase>());
+                    ChildElements.AddRange(result);
                 }
             }
+
+            return result;
         }
 
         /// <summary>
         /// Удаляем из коллекции дочерних элементов ранее добавленные IAsAdditionElements
         /// </summary>
-        protected void RemoveAppended()
+        protected void RemoveAppended(IEnumerable<RuleElementBase> collection)
         {
-            if (this is IAsAdditionElement additionElement)
+            if (collection == null)
             {
-                ChildElements.RemoveAll(c => (c is IAsAdditionElement a) 
-                                            && a.AsAdditionMode == AsAdditionMode.Append 
-                                            && a.Parent?.AsAdditionName == additionElement.AsAdditionName);
+                return;
             }
+
+            foreach (var element in collection)
+            {
+                ChildElements.Remove(element);
+            }
+            //if (this is IAsAdditionElement additionElement)
+            //{
+            //    ChildElements.RemoveAll(c => (c is IAsAdditionElement a) 
+            //                                && a.AsAdditionMode == AsAdditionMode.Append 
+            //                                && a.Parent?.AsAdditionName == additionElement.AsAdditionName);
+            //}
             
         }
 

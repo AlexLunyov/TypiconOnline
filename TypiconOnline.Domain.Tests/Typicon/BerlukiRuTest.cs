@@ -22,14 +22,14 @@ namespace TypiconOnline.Domain.Tests.Typicon
         [Test]
         public void BerlukiRu_Test()
         {
-            DateTime date = new DateTime(2017, 09, 03);//DateTime.Now;
+            DateTime date = new DateTime(2019, 09, 03);//DateTime.Now;
 
             if ((date.DayOfWeek == DayOfWeek.Sunday) && (date.Hour > 17))
             {
                 date = date.AddDays(1);
             }
 
-            var queryProcessor = QueryProcessorFactory.Create();
+            var queryProcessor = DataQueryProcessorFactory.Create();
 
             var week = queryProcessor.Process(new OutputWeekQuery(TYPICON_ID, date, new OutputFilter() { Language = "cs-ru" }));
 

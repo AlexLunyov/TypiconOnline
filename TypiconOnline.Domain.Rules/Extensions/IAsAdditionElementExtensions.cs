@@ -21,9 +21,8 @@ namespace TypiconOnline.Domain.Rules.Extensions
             if (handler.Settings.Addition?.RuleContainer is ExecContainer container)
             {
                 //ищем элемент(ы) для замены
-                var foundItems = container.GetChildElements<IAsAdditionElement>(handler.Settings.Addition,
-                        c => c.AsAdditionName == element.AsAdditionName 
-                            && (c.AsAdditionMode == AsAdditionMode.Rewrite || c.AsAdditionMode == AsAdditionMode.Remove));
+                var foundItems = container.GetAsAdditionChildElements(handler.Settings.Addition, element,
+                        c => (c.AsAdditionMode == AsAdditionMode.Rewrite || c.AsAdditionMode == AsAdditionMode.Remove));
 
                 //если находим, исполняем/исключаем его вместо настоящего элемента
                 foreach (var found in foundItems)
@@ -72,6 +71,73 @@ namespace TypiconOnline.Domain.Rules.Extensions
             (found as RuleElementBase).Interpret(handler);
 
             handler.Settings = currentsettings;
+        }
+
+        /// <summary>
+        /// Возвращает уровень глубины элемента <see cref="IAsAdditionElement"/>
+        /// </summary>
+        /// <param name="elem"></param>
+        /// <returns></returns>
+        public static int GetDepth(this IAsAdditionElement elem)
+        {
+            int result = 0;
+
+            while (elem.Parent != null)
+            {
+                elem = elem.Parent;
+                result++;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Сравнение с элементом <see cref="IAsAdditionElement"/> на совпадение
+        /// </summary>
+        /// <param name="elem">Элемент в основном правиле</param>
+        /// <param name="elemToMatch">Элемент в Дополнении</param>
+        /// <returns></returns>
+        public static AsAdditionMatchingResult IsMatch(this IAsAdditionElement elem, IAsAdditionElement elemToMatch)
+        {
+            //Находим разницу в уровнях глубины элементов
+            int dif = elem.GetDepth() - elemToMatch.GetDepth();
+
+            /* 
+             * Зашли слишком глубоко - надо останавливаться, сравнение имеет отрицательный результат
+             * Например, элемент в основном правиле - worship?id=moleben
+             * А элемент в дополнении - worship/kekragaria
+             */
+            if (dif < 0)
+            {
+                return AsAdditionMatchingResult.Fail;
+            }
+
+            /* 
+             * Уровни одинаковые - значит сравниваем напрямую
+             */
+            if (dif == 0)
+            {
+                return (elem.AsAdditionName == elemToMatch.AsAdditionName) 
+                    ? AsAdditionMatchingResult.Success 
+                    : AsAdditionMatchingResult.Fail;
+            }
+
+            //Элемент в дополнении имеет меньшую глубину
+            
+            var compareResult = AsAdditionMatchingResult.Continue;
+
+            //сравниваем родителей, пока не выйдем на одинаковый уровень
+            while (compareResult == AsAdditionMatchingResult.Continue)
+            {
+                elem = elem.Parent;
+                compareResult = elem.IsMatch(elemToMatch);
+            }
+
+            //Если на одинаковом уровне значения совпадают, значит возвращаем Continue
+            //Иначе  - Fail
+            return (compareResult == AsAdditionMatchingResult.Success) 
+                ? AsAdditionMatchingResult.Continue 
+                : AsAdditionMatchingResult.Fail;
         }
     }
 }

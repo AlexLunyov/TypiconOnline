@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-            if (handler.IsAuthorized<EktenisRule>())
+            if (handler.IsTypeAuthorized(this))
             {
                 base.InnerInterpret(handler);
                 //используем специальный обработчик для Ektenis,

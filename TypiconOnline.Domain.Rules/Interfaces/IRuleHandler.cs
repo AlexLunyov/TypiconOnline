@@ -7,7 +7,7 @@ namespace TypiconOnline.Domain.Rules.Interfaces
     /// </summary>
     public interface IRuleHandler
     {
-        bool IsAuthorized<T>() where T : ICustomInterpreted;
+        //bool IsAuthorized<T>() where T : ICustomInterpreted;
         bool IsTypeAuthorized(ICustomInterpreted t);
 
         bool Execute(ICustomInterpreted element);

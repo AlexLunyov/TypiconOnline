@@ -35,7 +35,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// </summary>
         public IReadOnlyList<Kanonas> Kanones => _kanonesCalc.AsReadOnly();
 
-        #region IRewritableElement implementation 
+        #region IAsAdditionElement implementation 
         /// <summary>
         /// Ссылка на KanonasRule
         /// </summary>
@@ -78,7 +78,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-            if (handler.IsAuthorized<KOdiRule>() && !this.AsAdditionHandled(handler))
+            if (handler.IsTypeAuthorized(this) && !this.AsAdditionHandled(handler))
             {
                 //используем специальный обработчик для KKatavasiaRule
                 var katavasia = GetChildElements<KKatavasiaRule>(handler.Settings);

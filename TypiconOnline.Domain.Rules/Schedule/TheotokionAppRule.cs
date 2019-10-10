@@ -39,7 +39,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-            if (handler.IsAuthorized<TheotokionAppRule>())
+            if (handler.IsTypeAuthorized(this))
             {
                 handler.Execute(this);
             }

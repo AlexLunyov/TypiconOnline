@@ -31,7 +31,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             var mockFactory = new Mock<IRuleHandler>();
             mockFactory.Setup(c => c.Execute((It.IsAny<ICustomInterpreted>())));
-            mockFactory.Setup(c => c.IsAuthorized<ICustomInterpreted>()).Returns(true);
+            mockFactory.Setup(c => c.IsTypeAuthorized(It.IsAny<ICustomInterpreted>())).Returns(true);
             mockFactory.SetupProperty(c => c.Settings, settings);
 
             KekragariaRule element = TestRuleSerializer.Deserialize<KekragariaRule>(xml);
@@ -50,7 +50,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             var mockFactory = new Mock<IRuleHandler>();
             mockFactory.Setup(c => c.Execute((It.IsAny<ICustomInterpreted>())));
-            mockFactory.Setup(c => c.IsAuthorized<ICustomInterpreted>()).Returns(true);
+            mockFactory.Setup(c => c.IsTypeAuthorized(It.IsAny<ICustomInterpreted>())).Returns(true);
             mockFactory.SetupProperty(c => c.Settings, settings);
 
             KekragariaRule element = TestRuleSerializer.Deserialize<KekragariaRule>(xml);
@@ -69,7 +69,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
 
             var mockFactory = new Mock<IRuleHandler>();
             mockFactory.Setup(c => c.Execute((It.IsAny<ICustomInterpreted>())));
-            mockFactory.Setup(c => c.IsAuthorized<ICustomInterpreted>()).Returns(true);
+            mockFactory.Setup(c => c.IsTypeAuthorized(It.IsAny<ICustomInterpreted>())).Returns(true);
             mockFactory.SetupProperty(c => c.Settings, settings);
 
             KekragariaRule element = TestRuleSerializer.Deserialize<KekragariaRule>(xml);

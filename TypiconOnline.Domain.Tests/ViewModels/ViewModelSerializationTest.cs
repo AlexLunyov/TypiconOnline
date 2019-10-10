@@ -24,11 +24,11 @@ namespace TypiconOnline.Domain.Tests.ViewModels
 
             settings.RuleContainer.Interpret(handler);
 
-            var viewModel = handler.GetResult();
+            var viewModel = handler.ActualWorshipChildElements;
 
             var serializer = new TypiconSerializer();
 
-            var result = serializer.Serialize(viewModel.First());
+            var result = serializer.Serialize(viewModel);
 
             Assert.IsNotEmpty(result);
             Assert.Pass(result);

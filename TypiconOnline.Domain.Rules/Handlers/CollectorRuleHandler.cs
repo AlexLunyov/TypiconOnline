@@ -23,17 +23,29 @@ namespace TypiconOnline.Domain.Rules.Handlers
             ClearResult();
         }
 
-        public override bool IsAuthorized<U>()
+        public override bool IsTypeAuthorized(ICustomInterpreted t)
         {
-            bool result = base.IsAuthorized<U>();
+            bool result = base.IsTypeAuthorized(t);
 
             foreach (var type in AuthorizedTypes)
             {
-                result ^= type.IsInterface && typeof(U).GetInterface(type.Name) != null;
+                result ^= type.IsInterface && t.GetType().GetInterface(type.Name) != null;
             }
 
             return result;
         }
+
+        //public override bool IsAuthorized<U>()
+        //{
+        //    bool result = base.IsAuthorized<U>();
+
+        //    foreach (var type in AuthorizedTypes)
+        //    {
+        //        result ^= type.IsInterface && typeof(U).GetInterface(type.Name) != null;
+        //    }
+
+        //    return result;
+        //}
 
         /// <summary>
         /// 

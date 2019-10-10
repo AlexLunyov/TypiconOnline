@@ -26,6 +26,6 @@ namespace TypiconOnline.Domain.Rules.Schedule
             });
         }
 
-        protected override bool IsAuthorized(IRuleHandler handler) => handler.IsAuthorized<ExapostilarionRule>();
+        protected override bool IsAuthorized(IRuleHandler handler) => handler.IsTypeAuthorized(this);
     }
 }

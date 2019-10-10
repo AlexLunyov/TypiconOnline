@@ -1,4 +1,5 @@
 ﻿using TypiconOnline.Domain.Query;
+using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Tests.Common
@@ -9,7 +10,8 @@ namespace TypiconOnline.Tests.Common
         {
             var container = new SimpleInjector.Container();
 
-            container.RegisterTypiconQueryClasses();
+            container.Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
+            container.Register<IQueryProcessor, QueryProcessor>();
 
             container.Register(UnitOfWorkFactory.Create, SimpleInjector.Lifestyle.Singleton);
 

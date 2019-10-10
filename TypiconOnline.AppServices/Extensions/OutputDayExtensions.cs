@@ -16,8 +16,8 @@ namespace TypiconOnline.AppServices.Extensions
             {
                 OutputDay = day,
                 Time = worshipModel.Time,
-                Name = worshipModel.Name,
-                AdditionalName = worshipModel.AdditionalName ?? new ItemText(),
+                Name = new ItemTextStyled(worshipModel.Name),
+                AdditionalName = (worshipModel.AdditionalName != null) ?  new ItemText(worshipModel.AdditionalName) : new ItemText(),
                 Definition = typiconSerializer.Serialize(worshipModel.ChildElements)
             };
             day.Worships.Add(w);

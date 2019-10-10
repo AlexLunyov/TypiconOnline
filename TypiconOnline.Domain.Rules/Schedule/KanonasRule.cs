@@ -79,7 +79,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected IElementViewModelFactory<KanonasRule> ViewModelFactory { get; }
 
-        #region IRewritableElement implementation
+        #region IAsAdditionElement implementation
 
         public IAsAdditionElement Parent { get; }
 
@@ -114,11 +114,11 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void InnerInterpret(IRuleHandler handler)
         {
-            if (handler.IsAuthorized<KanonasRule>() && !this.AsAdditionHandled(handler))
+            if (handler.IsTypeAuthorized(this) && !this.AsAdditionHandled(handler))
             {
                 //Добавляем IAsAdditionElement append реализацию
                 //Приходится явно вызывать метод, т.к. функционал ExecContainer.InnerInterpret не используется 
-                AppendHandling(handler);
+                var appended = AppendHandling(handler);
 
                 Odes = GetChildElements<KOdiRule>(handler.Settings);
 
@@ -139,7 +139,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
                 }
 
                 //и сразу же удаляем appended IAsAdditionElements
-                RemoveAppended();
+                RemoveAppended(appended);
 
                 handler.Execute(this);
             }

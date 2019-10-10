@@ -1,6 +1,9 @@
-﻿using TypiconOnline.Domain.Interfaces;
+﻿using TypiconOnline.AppServices.Interfaces;
+using TypiconOnline.AppServices.Jobs;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Repository.EFCore.DataBase;
@@ -31,8 +34,10 @@ namespace TypiconOnline.Tests.Common
             var container = new SimpleInjector.Container();
 
             container.Register<ITypiconSerializer, TypiconSerializer>();
+            container.RegisterSingleton<IJobRepository>(() => new JobRepository());
 
-            container.RegisterTypiconQueryClasses();
+            container.Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
+            container.Register<IQueryProcessor, QueryProcessor>();
 
             container.RegisterInstance(dbContext);
 

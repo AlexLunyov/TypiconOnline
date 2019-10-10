@@ -62,4 +62,23 @@
         /// </summary>
         RewriteValues
     }
+
+    /// <summary>
+    /// Результат сравнения элементов <see cref="TypiconOnline.Domain.Interfaces.IAsAdditionElement"/>
+    /// </summary>
+    public enum AsAdditionMatchingResult
+    {
+        /// <summary>
+        /// Элемент равен
+        /// </summary>
+        Success,
+        /// <summary>
+        /// Необходимо продолжать сравнение глубже
+        /// </summary>
+        Continue,
+        /// <summary>
+        /// Не равен и необходимо останавливаться
+        /// </summary>
+        Fail
+    }
 }
