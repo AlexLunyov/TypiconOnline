@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TypiconOnline.AppServices.Jobs;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
+using TypiconOnline.Domain.Typicon.Output;
 using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.AppServices.Extensions
@@ -20,7 +21,7 @@ namespace TypiconOnline.AppServices.Extensions
 
         public static async Task ClearOutputFormsAsync(this TypiconDBContext dbContext, int typiconId)
         {
-            int numberOfRowDeleted = await dbContext.Database.ExecuteSqlCommandAsync("DELETE FROM OutputForm WHERE TypiconId={0}", typiconId);
+            int numberOfRowDeleted = await dbContext.Database.ExecuteSqlCommandAsync($"DELETE FROM OUTPUTDAY WHERE TypiconId={typiconId}");
         }
 
         public static async Task ClearRuleErrorsAsync(this TypiconDBContext dbContext, int entityId)

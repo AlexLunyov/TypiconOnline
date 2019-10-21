@@ -17,7 +17,9 @@ namespace TypiconOnline.Domain.Query.Typicon
         public ModifiedRule Handle([NotNull] ModifiedRuleHighestPriorityQuery query)
         {
             var found = DbContext.Set<ModifiedRule>()
-                .Where(c => c.Parent.TypiconVersionId == query.TypiconVersionId && c.Date.Date == query.Date)
+                .Where(c => c.Parent.TypiconVersionId == query.TypiconVersionId 
+                    && c.Date.Date == query.Date
+                    && !c.IsAddition)
                 .ToList();
 
             return (found != null) ? found.Min() : default(ModifiedRule);

@@ -275,6 +275,9 @@ namespace TypiconOnline.AppServices.Implementations
         /// <param name="settings"></param>
         private void FillAllSettingsByWorships(RuleHandlerSettings settings)
         {
+            //для начала собираем общую коллекцию текстов служб
+
+
             if (settings.Addition is RuleHandlerSettings addition)
             {
                 addition.Menologies.AddRange(settings.Menologies);

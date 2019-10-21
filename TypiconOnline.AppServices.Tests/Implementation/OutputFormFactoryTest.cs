@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using TypiconOnline.AppServices.Implementations;
+using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -20,7 +21,7 @@ namespace TypiconOnline.AppServices.Tests.Implementation
             {
                 TypiconId = 1,
                 TypiconVersionId = 1,
-                Date = new DateTime(2019, 1, 1),
+                Date = new DateTime(2019, 11, 2),
                 HandlingMode = HandlingMode.AstronomicDay
             });
 
@@ -37,7 +38,15 @@ namespace TypiconOnline.AppServices.Tests.Implementation
 
             var settingsFactory = new RuleHandlerSettingsFactory(serializerRoot);
 
-            return new OutputDayFactory(new ScheduleDataCalculator(query, settingsFactory)
+            var dataCalculator = new ExplicitDataCalculator(query,
+                new AsAdditionDataCalculator(query,
+                    new TransparentDataCalculator(query,
+                        new MajorDataCalculator(query, settingsFactory)
+                        , settingsFactory)
+                    , settingsFactory)
+                , settingsFactory);
+
+            return new OutputDayFactory(dataCalculator
                 , new ScheduleDayNameComposer(query)
                 , serializerRoot.TypiconSerializer
                 , new ServiceSequenceHandler());

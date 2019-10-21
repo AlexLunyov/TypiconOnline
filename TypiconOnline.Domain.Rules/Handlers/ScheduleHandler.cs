@@ -9,7 +9,6 @@ namespace TypiconOnline.Domain.Rules.Handlers
 {
     public class ScheduleHandler : RuleHandlerBase
     {
-        private readonly List<OutputWorshipModel> collection = new List<OutputWorshipModel>();
         private readonly ScheduleResults scheduleResults = new ScheduleResults();
 
         public ScheduleHandler()//(RuleHandlerSettings request) : base(request)
@@ -33,7 +32,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
             {
                 base.Settings = value;
 
-                ClearResult();
+                //ClearResult();
             }
         }
 
@@ -54,9 +53,6 @@ namespace TypiconOnline.Domain.Rules.Handlers
                 //задаем актуальную коллекцию
                 ActualWorshipMode = w.Mode;
                 ActualWorshipCollection.Add(new OutputWorshipModel(w));
-
-                //TODO: удалить
-                collection.Add(new OutputWorshipModel(w));
 
                 return true;
             }

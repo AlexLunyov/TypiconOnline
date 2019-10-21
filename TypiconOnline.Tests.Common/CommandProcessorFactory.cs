@@ -64,7 +64,20 @@ namespace TypiconOnline.Tests.Common
             container.Register<IRuleSerializerRoot, RuleSerializerRoot>();
             //container.Register<IOutputForms, OutputForms>();
             container.Register<IOutputDayFactory, OutputDayFactory>();
+
             container.Register<IScheduleDataCalculator, ScheduleDataCalculator>();
+            container.RegisterDecorator(
+                typeof(IScheduleDataCalculator),
+                typeof(TransparentDataCalculator));
+
+            container.RegisterDecorator(
+                typeof(IScheduleDataCalculator),
+                typeof(AsAdditionDataCalculator));
+
+            container.RegisterDecorator(
+                typeof(IScheduleDataCalculator),
+                typeof(ExplicitDataCalculator));
+
 
             container.Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
             container.Register<IQueryProcessor, DataQueryProcessor>();
