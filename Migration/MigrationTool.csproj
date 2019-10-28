@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="appsettings.Development.json" />
+    <None Remove="appsettings.json" />
+    <None Remove="data\SQLiteDB.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="data\SQLiteDB.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.0.1" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.0.0-rc1.final" />
+    <PackageReference Include="structuremap" Version="4.7.1" />
+    <PackageReference Include="System.Data.OleDb" Version="4.7.0-preview1.19504.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TypiconOnline.AppServices\TypiconOnline.AppServices.csproj" />
+    <ProjectReference Include="..\TypiconOnline.Repository.EFCore\TypiconOnline.Repository.EFCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ScheduleHandling">
+      <HintPath>..\lib\ScheduleHandling.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

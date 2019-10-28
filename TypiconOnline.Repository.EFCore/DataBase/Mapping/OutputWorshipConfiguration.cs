@@ -25,7 +25,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
                 name.OwnsMany(c => c.Items, items =>
                 {
                     items.Property<int>("NameId");
-                    items.HasForeignKey("NameId");
+                    items.WithOwner().HasForeignKey("NameId");
                     items.Property<int>("Id");
                     items.HasKey("Id");
                     items.ToTable("OutputWorshipNameItems");
@@ -37,7 +37,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
                 name.OwnsMany(c => c.Items, items =>
                 {
                     items.Property<int>("AddNameId");
-                    items.HasForeignKey("AddNameId");
+                    items.WithOwner().HasForeignKey("AddNameId");
                     items.Property<int>("Id");
                     items.HasKey("Id");
                     items.ToTable("OutputWorshipAddNameItems");

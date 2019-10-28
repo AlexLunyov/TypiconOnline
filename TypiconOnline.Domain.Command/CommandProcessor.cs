@@ -10,7 +10,7 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
 namespace TypiconOnline.Domain.Command
 {
-    public class CommandProcessor : ICommandProcessor, IDisposable
+    public class CommandProcessor : ICommandProcessor//, IDisposable
     {
         public CommandProcessor(Container container)
         {
@@ -41,9 +41,9 @@ namespace TypiconOnline.Domain.Command
             return Container.GetInstance(handlerType);
         }
 
-        public void Dispose()
-        {
-            //scope.Dispose();
-        }
+        //public void Dispose()
+        //{
+        //    //scope.Dispose();
+        //}
     }
 }

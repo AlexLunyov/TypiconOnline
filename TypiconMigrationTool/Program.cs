@@ -78,7 +78,7 @@ namespace TypiconMigrationTool
 
         private static void Migrate(IUnitOfWork unitOfWork, TypiconDBContext dbContext, Action<DbContextOptionsBuilder> optionsBuilder, string folderPath)
         {
-            ScheduleHandler sh = new ScheduleHandler("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=|DataDirectory|\\data\\ScheduleDB.mdb;");
+            ScheduleHandler sh = new ScheduleHandler("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=E:\\Programming\\Documentation\\TypiconOnline.Documentation\\Db\\ScheduleDB.mdb;");
 
             var service = GetUserCreationService(optionsBuilder);
 

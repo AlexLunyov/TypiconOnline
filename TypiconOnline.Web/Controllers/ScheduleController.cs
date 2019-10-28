@@ -1,19 +1,13 @@
 ﻿using System;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
-using SmartBreadcrumbs.Attributes;
+//using SmartBreadcrumbs.Attributes;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
-using TypiconOnline.Domain.Rules;
-using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
-using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Domain.WebQuery.OutputFiltering;
 using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
-using TypiconOnline.Web.Services;
 
 namespace TypiconOnline.Web.Controllers
 {
@@ -41,7 +35,7 @@ namespace TypiconOnline.Web.Controllers
         }
 
         [Route("{id:int}/{date?}/{language?}")]
-        [Breadcrumb("Устав")] 
+        //[Breadcrumb("Устав")] 
         public IActionResult Index(int? id, DateTime date, string language)
         {
             if (id == null)
@@ -117,7 +111,7 @@ namespace TypiconOnline.Web.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{id}/{worshipId}/{filter?}")]
-        [Breadcrumb(Title = "Последовательность", FromAction = "Index")]
+        //[Breadcrumb(Title = "Последовательность", FromAction = "Index")]
         public IActionResult Sequence(int id, int worshipId, OutputFilter filter)
         {
             if (filter == null)

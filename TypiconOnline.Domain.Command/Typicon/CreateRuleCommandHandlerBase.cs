@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.Command.Typicon
         {
             var version = DbContext.Set<TypiconVersion>()
                 .FirstOrDefault(c => c.TypiconId == command.TypiconId
-                                    && c.IsDraft);
+                                    && c.BDate == null && c.EDate == null);
 
             if (version == null)
             {

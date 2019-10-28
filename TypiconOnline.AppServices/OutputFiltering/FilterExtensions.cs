@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Output;
@@ -106,7 +107,10 @@ namespace TypiconOnline.Domain.WebQuery.OutputFiltering
                 Date = day.Date,
                 SignName = day.PredefinedSign.SignName.FilterOut(filter),
                 SignNumber = day.PredefinedSign.Number ?? 0,
-                Worships = day.Worships.FilterOut(filter)
+                Worships = day.Worships
+                            .OrderBy(c => c.Order)
+                            .ToList()
+                            .FilterOut(filter)
          };
     }
 }

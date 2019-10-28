@@ -123,7 +123,16 @@ namespace TypiconOnline.Domain.ItemTypes
         public static void ReplaceValues(this ItemText item, ItemText replace)
         {
             item.Items.Clear();
-            replace.Items.ForEach(c => item.AddOrUpdate(c));
+            replace?.Items.ForEach(c => item.AddOrUpdate(c));
+        }
+
+        public static void ReplaceValues(this ItemTextStyled item, ItemTextStyled replace)
+        {
+            item.IsBold = replace.IsBold;
+            item.IsItalic = replace.IsItalic;
+            item.IsRed = replace.IsRed;
+
+            (item as ItemText).ReplaceValues(replace);
         }
     }
 }

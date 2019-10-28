@@ -39,7 +39,7 @@ namespace TypiconOnline.Web.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id">SignId</param>
+        /// <param name="id">MenologyRuleId</param>
         /// <returns></returns>
         [HttpGet]
         public IActionResult Edit(int id)
@@ -54,7 +54,7 @@ namespace TypiconOnline.Web.Controllers
             if (typiconEntity.Success
                 && IsAuthorizedToEdit(typiconEntity.Value))
             {
-                ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Value.Id, DEFAULT_LANGUAGE, id);
+                ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Value.Id, DEFAULT_LANGUAGE);
                 ViewBag.TypiconId = typiconEntity.Value.Id;
 
                 var found = QueryProcessor.Process(new MenologyRuleEditQuery(id, DEFAULT_LANGUAGE));
@@ -171,7 +171,7 @@ namespace TypiconOnline.Web.Controllers
                     || m.LeapDate == searchValue;
         }
 
-        protected override IGridQuery<MenologyRuleModel> GetQuery(int id) => new Domain.WebQuery.Typicon.AllMenologyRulesQuery(id, DEFAULT_LANGUAGE);
+        protected override IGridQuery<MenologyRuleModel> GetQuery(int id) => new Domain.WebQuery.Typicon.AllMenologyDaysQuery(id, DEFAULT_LANGUAGE);
 
         protected override TypiconEntityByChildQuery<MenologyRule> GetTypiconEntityByChildQuery(int id)
             => new TypiconEntityByMenologyRuleQuery(id);

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
+    /// <summary>
+    /// Используется как дочерняя коллекция для <see cref="MenologyRuleEditModel"/>
+    /// </summary>
     public class MenologyDayWorshipModel
     {
         public int WorshipId { get; set; }

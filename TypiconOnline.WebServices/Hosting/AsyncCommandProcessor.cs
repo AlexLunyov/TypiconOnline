@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Command;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
-namespace TypiconOnline.Domain.Command
+namespace TypiconOnline.WebServices.Hosting
 {
-    public sealed class AsyncCommandProcessor : CommandProcessor, IDisposable
+    public sealed class AsyncCommandProcessor : CommandProcessor//, IDisposable
     {
         public AsyncCommandProcessor(Container container) : base(container)
         {

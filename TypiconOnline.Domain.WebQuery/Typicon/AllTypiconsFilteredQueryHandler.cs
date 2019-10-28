@@ -76,11 +76,11 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         {
             TypiconStatus status = TypiconStatus.WaitingApprovement;
 
-            if (typicon.Versions.Any(c => c.IsPublished))
+            if (typicon.Versions.Any(c => c.BDate != null && c.EDate == null))
             {
                 status = TypiconStatus.Published;
             }
-            else if (typicon.Versions.Any(c => c.IsDraft))
+            else if (typicon.Versions.Any(c => c.BDate == null && c.EDate == null))
             {
                 status = TypiconStatus.Draft;
             }

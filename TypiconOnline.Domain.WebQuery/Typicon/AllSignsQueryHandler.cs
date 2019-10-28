@@ -28,7 +28,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         public Result<IQueryable<SignModel>> Handle([NotNull] AllSignsQuery query)
         {
             var draft = DbContext.Set<TypiconVersion>()
-                            .Where(c => c.TypiconId == query.TypiconId && c.IsDraft)
+                            .Where(c => c.TypiconId == query.TypiconId && c.BDate == null && c.EDate == null)
                             .FirstOrDefault();
 
             if (draft == null)

@@ -10,5 +10,6 @@ namespace TypiconOnline.Domain.Identity
         public const string EditorsRole = "Editor";
         public const string TypesettersRole = "Typesetter";
         public const string AdminAndEditorRoles = "Admin, Editor";
+        public const string AdminAndTypesetterRoles = "Admin, Typesetter";
     }
 }

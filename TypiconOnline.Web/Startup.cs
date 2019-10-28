@@ -4,29 +4,21 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TypiconOnline.Web.Services;
-using SimpleInjector.Lifestyles;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using SimpleInjector.Integration.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewComponents;
 using SimpleInjector;
 using TypiconOnline.Domain.Identity;
-using TypiconOnline.WebServices.Identity;
-using SmartBreadcrumbs.Extensions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Mvc;
+//using SmartBreadcrumbs.Extensions;
 using TypiconOnline.Repository.EFCore.DataBase;
 using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Hosting;
 
 namespace TypiconOnline.Web
 {
     public class Startup
     {
-        private Container container = new Container();
-        private readonly IHostingEnvironment _hostingEnv;
+        private readonly Container container = new Container();
+        private readonly IWebHostEnvironment _hostingEnv;
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -53,96 +45,110 @@ namespace TypiconOnline.Web
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<TypiconDBContext>()
                 .AddDefaultTokenProviders();
-            
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.Cookie.HttpOnly = true;
-                options.LoginPath = "/Account/Login";
-                options.LogoutPath = "/Account/Logout";
-            });
+
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.Cookie.HttpOnly = true;
+            //    options.LoginPath = "/Account/Login";
+            //    options.LogoutPath = "/Account/Logout";
+            //});
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
             //breadcrumbs
-            services.AddBreadcrumbs(GetType().Assembly);
-
-            //DI
-            IntegrateSimpleInjector(services);
-            services.AddTypiconOnlineService(Configuration, container, _hostingEnv);
+            //services.AddBreadcrumbs(GetType().Assembly);
 
             //session
             services.AddDistributedMemoryCache();
             services.AddSession();
 
+            services.AddControllersWithViews();
+
+            //DI
+            IntegrateSimpleInjector(services);
+            services.AddTypiconOnlineService(Configuration, container, _hostingEnv);
+
             services
-                .AddAntiforgery(options => options.HeaderName = "XSRF-TOKEN")
-                .AddMvc(config =>
-                {
-                    // using Microsoft.AspNetCore.Mvc.Authorization;
-                    // using Microsoft.AspNetCore.Authorization;
-                    var policy = new AuthorizationPolicyBuilder()
-                                     .RequireAuthenticatedUser()
-                                     .Build();
-                    config.Filters.Add(new AuthorizeFilter(policy));
-                })
-                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver())
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                //.AddAntiforgery(options => options.HeaderName = "XSRF-TOKEN")
+                //.AddMvc(config =>
+                //{
+                //    // using Microsoft.AspNetCore.Mvc.Authorization;
+                //    // using Microsoft.AspNetCore.Authorization;
+                //    var policy = new AuthorizationPolicyBuilder()
+                //                     .RequireAuthenticatedUser()
+                //                     .Build();
+                //    config.Filters.Add(new AuthorizeFilter(policy));
+                //})
+                .AddMvc()
+                .AddNewtonsoftJson(options =>
+                       options.SerializerSettings.ContractResolver =
+                          new DefaultContractResolver());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            InitializeContainer(app);
+            app.UseSimpleInjector(container, options =>
+            {
+                //options.UseLogging();
+                //options.UseLocalization();
+            });
+
+            container.Verify();
 
             //if (env.IsDevelopment())
             //{
-                app.UseBrowserLink();
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+            //app.UseBrowserLink();
+            app.UseDeveloperExceptionPage();
+            //app.excUseDatabaseErrorPage();
             //}
             //else
             //{
             //    app.UseExceptionHandler("/Home/Error");
             //}
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseRouting();
+
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseSession();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                //endpoints.MapDefaultControllerRoute().RequireAuthorization();
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
 
         private void IntegrateSimpleInjector(IServiceCollection services)
         {
-            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+            //container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddSingleton<IControllerActivator>(
-                new SimpleInjectorControllerActivator(container));
-            services.AddSingleton<IViewComponentActivator>(
-                new SimpleInjectorViewComponentActivator(container));
+            //services.AddSingleton<IControllerActivator>(
+            //    new SimpleInjectorControllerActivator(container));
+            //services.AddSingleton<IViewComponentActivator>(
+            //    new SimpleInjectorViewComponentActivator(container));
 
-            services.EnableSimpleInjectorCrossWiring(container);
-            services.UseSimpleInjectorAspNetRequestScoping(container);
-        }
+            //services.EnableSimpleInjectorCrossWiring(container);
+            //services.UseSimpleInjectorAspNetRequestScoping(container);
 
-        private void InitializeContainer(IApplicationBuilder app)
-        {
-            // Add application presentation components:
-            container.RegisterMvcControllers(app);
-            container.RegisterMvcViewComponents(app);
-
-            // Allow Simple Injector to resolve services from ASP.NET Core.
-            container.AutoCrossWireAspNetComponents(app);
+            services.AddSimpleInjector(container, options =>
+            {
+                options.AddAspNetCore()
+                    .AddControllerActivation()
+                    .AddViewComponentActivation()
+                    .AddPageModelActivation()
+                    .AddTagHelperActivation();
+            });
         }
     }
 }

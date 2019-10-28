@@ -13,5 +13,6 @@ namespace TypiconOnline.Domain.Typicon.Output
         public virtual OutputDay OutputDay { get; set; }
         public int DayWorshipId { get; set; }
         public virtual DayWorship DayWorship { get; set; }
+
     }
 }

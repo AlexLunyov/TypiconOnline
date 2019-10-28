@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SmartBreadcrumbs.Attributes;
+//using SmartBreadcrumbs.Attributes;
 using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Web.Models;
@@ -19,7 +19,7 @@ namespace TypiconOnline.Web.Controllers
             this.queryProcessor = queryProcessor ?? throw new ArgumentNullException("queryProcessor in HomeController");
         }
 
-        [DefaultBreadcrumb("Главная")]
+        //[DefaultBreadcrumb("Главная")]
         public IActionResult Index()
         {
             ViewBag.Entities = queryProcessor.Process(new AllTypiconsQuery());

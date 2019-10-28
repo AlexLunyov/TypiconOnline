@@ -20,7 +20,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
                 d.OwnsMany(c => c.Items, a =>
                 {
                     a.Property<int>("NameId");
-                    a.HasForeignKey("NameId");
+                    a.WithOwner().HasForeignKey("NameId");
                     a.Property<int>("Id");
                     a.HasKey("Id");
                     a.ToTable("ModifiedRuleShortNameItems");

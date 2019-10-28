@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Extensions.Internal;
+using Microsoft.EntityFrameworkCore;
 using TypiconOnline.Domain.Identity;
 using TypiconOnline.Repository.EFCore.DataBase;
 
@@ -100,8 +100,7 @@ namespace TypiconOnline.WebServices.Identity
         public async Task<User> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
             return await db.Set<User>()
-                           .AsAsyncEnumerable()
-                           .SingleOrDefault(p => p.UserName.Equals(normalizedUserName, StringComparison.OrdinalIgnoreCase), cancellationToken);
+                .FirstOrDefaultAsync(p => p.UserName.Equals(normalizedUserName, StringComparison.OrdinalIgnoreCase), cancellationToken);
         }
 
         public Task SetPasswordHashAsync(User user, string passwordHash, CancellationToken cancellationToken)

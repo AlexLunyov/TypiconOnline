@@ -15,6 +15,11 @@ namespace TypiconOnline.Domain.Typicon.Output
         public int Id { get; set; }
         public int OutputDayId { get; set; }
         /// <summary>
+        /// Порядок в коллекции, 1-ориентированный.
+        /// Необходим для сортировки в коллекции у OutputDay
+        /// </summary>
+        public int Order { get; set; }
+        /// <summary>
         /// Ссылка на День
         /// </summary>
         public virtual OutputDay OutputDay { get; set; }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using SimpleInjector;
 using System;
@@ -37,7 +38,7 @@ namespace TypiconOnline.Web
         public static void AddTypiconOnlineService(this IServiceCollection services
             , IConfiguration configuration
             , Container container,
-            IHostingEnvironment hostingEnv)
+            IWebHostEnvironment hostingEnv)
         {
             ////typiconservices
             //services.AddScoped<IEvangelionContext, EvangelionContext>();
@@ -50,6 +51,17 @@ namespace TypiconOnline.Web
             //services.AddScoped<IKatavasiaContext, KatavasiaContext>();
 
             //services.AddScoped<IScheduleService, ScheduleService>();
+
+            //Queries and Commands
+            //container.Register(typeof(IQuery<>), typeof(QueryProcessor).Assembly);
+            container.Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
+            container.Register<IQueryProcessor, DataQueryProcessor>();
+
+            container.Register(typeof(ICommandHandler<>), typeof(CommandProcessor).Assembly, typeof(ScheduleDataCalculator).Assembly);
+
+            container.RegisterConditional<ICommandProcessor, AsyncCommandProcessor>(
+                c => c.Consumer.ImplementationType == typeof(JobAsyncHostedService));
+            container.RegisterConditional<ICommandProcessor, CommandProcessor>(c => !c.Handled);
 
             //OutputForms
             container.Register<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
@@ -114,16 +126,7 @@ namespace TypiconOnline.Web
             container.Register<JobAsyncHostedService>();
             services.AddHostedServiceFromContainer<JobAsyncHostedService>(container);
 
-            //container.Register(typeof(IQuery<>), typeof(QueryProcessor).Assembly);
-            container.Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
-            container.Register<IQueryProcessor, DataQueryProcessor>();
-
-
-            container.Register(typeof(ICommandHandler<>), typeof(CommandProcessor).Assembly, typeof(ScheduleDataCalculator).Assembly);
-
-            container.RegisterConditional<ICommandProcessor, AsyncCommandProcessor>(
-                c => c.Consumer.ImplementationType == typeof(JobAsyncHostedService));
-            container.RegisterConditional<ICommandProcessor, CommandProcessor>(c => !c.Handled);
+            
 
             services.AddDbContext<TypiconDBContext>(optionsBuilder =>
             {

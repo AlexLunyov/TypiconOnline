@@ -34,7 +34,7 @@ namespace TypiconOnline.AppServices.Extensions
 
         public static IEnumerable<TriodionRule> GetAllTriodionRules(this TypiconDBContext dbContext, int typiconVersionId)
         {
-            return dbContext.Set<TriodionRule>().Where(c => c.TypiconVersionId == typiconVersionId);
+            return dbContext.Set<TriodionRule>().Where(c => c.TypiconVersionId == typiconVersionId).ToList();
         }
 
         public static TriodionRule GetTriodionRule(this TypiconDBContext dbContext, int typiconVersionId, DateTime date)

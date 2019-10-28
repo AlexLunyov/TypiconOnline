@@ -8,7 +8,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Query
 {
-    public class DataQueryProcessor : IQueryProcessor, IDisposable
+    public class DataQueryProcessor : IQueryProcessor//, IDisposable
     {
         protected Container Container { get; }
 
@@ -17,9 +17,9 @@ namespace TypiconOnline.Domain.Query
             Container = container;
         }
 
-        public void Dispose()
-        {
-        }
+        //public void Dispose()
+        //{
+        //}
 
         [DebuggerStepThrough]
         public virtual TResult Process<TResult>(IQuery<TResult> query)

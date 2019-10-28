@@ -13,7 +13,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
     {
         public void Configure(EntityTypeBuilder<TriodionDay> builder)
         {
-            builder.ToTable("TriodionDays");
+            //builder.ToTable("TriodionDays");
         }
     }
 }

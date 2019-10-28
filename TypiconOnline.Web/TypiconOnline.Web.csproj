@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Web" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <UserSecretsId>aspnet-TypiconOnline.Web-EA5844BE-0BB5-4A7B-A292-4C5A1D121B64</UserSecretsId>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -24,14 +24,16 @@
     <PackageReference Include="CacheManager.Serialization.Json" Version="1.2.0" />
     <PackageReference Include="JqueryDataTables.ServerSide.AspNetCoreWeb" Version="1.2.1" />
     <PackageReference Include="Mapster" Version="3.3.2" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.3" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" PrivateAssets="All" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
-    <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc" Version="4.5.1" />
-    <PackageReference Include="SmartBreadcrumbs" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" PrivateAssets="All" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.0.1" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.0.0-rc1.final" />
+    <PackageReference Include="SimpleInjector" Version="4.7.1" />
+    <PackageReference Include="SimpleInjector.Integration.AspNetCore" Version="4.7.1" />
+    <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc" Version="4.7.2" />
+    <PackageReference Include="SimpleInjector.Integration.GenericHost" Version="4.7.1" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="wilx.System.Linq.Dynamic.Core" Version="2.1.0" />
   </ItemGroup>

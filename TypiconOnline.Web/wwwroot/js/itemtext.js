@@ -1,8 +1,9 @@
-﻿function createItemTextTable(itemTextId, itemTextName) {
+﻿function createItemTextTable(itemTextId, itemTextName, addbtnId = ".add-new") {
     $('[data-toggle="tooltip"]').tooltip();
-    var actions = $(itemTextId + " td:last-child").html();
+    //var actions = $(itemTextId + " td:last-child").html();
+    var actions = getActionsCell(itemTextName);
     // Append table with add row form on add new button click
-    $(".add-new").click(function () {
+    $(addbtnId).click(function () {
         $(this).attr("disabled", "disabled");
         var index = $(itemTextId + " tbody tr:last-child").index();
         var row = '<tr>' +
@@ -17,7 +18,7 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
     // Add row on add button click
-    $(document).on("click", ".add", function () {
+    $(itemTextId).on("click", ".add", function () {
         var empty = false;
         var input = $(this).parents("tr").find('input[type="text"]');
         input.each(function () {
@@ -35,25 +36,33 @@
                 $(this).parent("td").html($(this).val());
             });
             $(this).parents("tr").find(".add, .edit").toggle();
-            $(".add-new").removeAttr("disabled");
+            $(addbtnId).removeAttr("disabled");
         }
     });
     // Edit row on edit button click
-    $(document).on("click", ".edit", function () {
+    $(itemTextId).on("click", ".edit", function () {
         $(this).parents("tr").find("td:not(:last-child)").each(function () {
             $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '" id="' + $(this).attr("class") + '">');
         });
         $(this).parents("tr").find(".add, .edit").toggle();
-        $(".add-new").attr("disabled", "disabled");
+        $(addbtnId).attr("disabled", "disabled");
     });
     // Delete row on delete button click
-    $(document).on("click", ".delete", function () {
+    $(itemTextId).on("click", ".delete", function () {
         $(this).parents("tr").remove();
-        $(".add-new").removeAttr("disabled");
+        $(addbtnId).removeAttr("disabled");
 
         $(itemTextId + " tbody tr").each(function (i) {
             $("td:last-child input.text").attr("name", itemTextName + ".Items[" + i + "].Text");
             $("td:last-child input.language").attr("name", itemTextName + ".Items[" + i + "].Language");
         })
     });
+}
+
+function getActionsCell(itemTextName) {
+    return '<input class="language" type="hidden" asp-for="' + itemTextName + '.Items[i].Language" />'
+        + '<input class="text" type = "hidden" asp -for= "' + itemTextName + '.Items[i].Text" />'
+        + '<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>'
+        + '<a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>'
+        + '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>';
 }

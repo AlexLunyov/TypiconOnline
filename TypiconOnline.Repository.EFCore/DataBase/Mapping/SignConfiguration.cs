@@ -22,7 +22,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
                 name.OwnsMany(c => c.Items, items =>
                 {
                     items.Property<int>("NameId");
-                    items.HasForeignKey("NameId");
+                    items.WithOwner().HasForeignKey("NameId");
                     items.Property<int>("Id");
                     items.HasKey("Id");
                     items.ToTable("SignNameItems");

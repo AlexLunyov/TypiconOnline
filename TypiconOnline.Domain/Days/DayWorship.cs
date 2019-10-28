@@ -9,7 +9,7 @@ namespace TypiconOnline.Domain.Days
     public class DayWorship : DayStructureBase
     {
         private ItemTextStyled _worshipName;
-        private ItemTextStyled _worshipShortName;
+        private ItemText _worshipShortName;
 
         public DayWorship() { }
 
@@ -31,13 +31,13 @@ namespace TypiconOnline.Domain.Days
         /// <summary>
         /// Краткое наименование праздника (для Недель - используется при формировании расписания)
         /// </summary>
-        public virtual ItemTextStyled WorshipShortName //{ get; set; }// = new ItemTextStyled();
+        public virtual ItemText WorshipShortName //{ get; set; }// = new ItemTextStyled();
         {
             get
             {
                 if (_worshipShortName == null)
                 {
-                    _worshipShortName = new ItemTextStyled();
+                    _worshipShortName = new ItemText();
                 }
                 return _worshipShortName;
             }

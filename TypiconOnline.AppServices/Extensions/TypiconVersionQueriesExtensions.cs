@@ -20,7 +20,7 @@ namespace TypiconOnline.AppServices.Extensions
         {
             var version = dbContext.Set<TypiconVersion>()
                 .FirstOrDefault(c => c.TypiconId == typiconId
-                                    && c.IsPublished);
+                                    && c.BDate != null && c.EDate == null);
 
             return (version != null)
                 ? Result.Ok(version)
@@ -29,7 +29,7 @@ namespace TypiconOnline.AppServices.Extensions
 
         public static IEnumerable<TypiconVersion> GetAllPublishedVersions(this TypiconDBContext dbContext)
         {
-            return dbContext.Set<TypiconVersion>().Where(c => c.IsPublished);
+            return dbContext.Set<TypiconVersion>().Where(c => c.BDate != null && c.EDate == null);
         }
 
         /// <summary>
@@ -41,8 +41,8 @@ namespace TypiconOnline.AppServices.Extensions
         {
             var version = dbContext.Set<TypiconVersion>()
                 .FirstOrDefault(c => (status == TypiconVersionStatus.Draft)
-                                        ? c.TypiconId == typiconId && c.IsDraft
-                                        : c.TypiconId == typiconId && c.IsPublished);
+                                        ? c.TypiconId == typiconId && c.BDate == null && c.EDate == null
+                                        : c.TypiconId == typiconId && c.BDate != null && c.EDate == null);
 
             return (version != null)
                 ? Result.Ok(version)

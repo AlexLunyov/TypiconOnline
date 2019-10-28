@@ -27,7 +27,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         {
             var typicon = DbContext.Set<TypiconEntity>().FirstOrDefault(c => c.Id == query.Id);
 
-            var draft = DbContext.Set<TypiconVersion>().FirstOrDefault(c => c.TypiconId == query.Id && c.IsDraft);
+            var draft = DbContext.Set<TypiconVersion>().FirstOrDefault(c => c.TypiconId == query.Id && c.BDate == null && c.EDate == null);
 
             if (typicon != null && draft != null)
             {

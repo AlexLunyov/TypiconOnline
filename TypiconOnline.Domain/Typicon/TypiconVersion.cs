@@ -115,8 +115,8 @@ namespace TypiconOnline.Domain.Typicon
 
         #region Lambdas
 
-        public bool IsPublished => BDate != null && EDate == null;
-        public bool IsDraft => BDate == null && EDate == null;
+        //public bool IsPublished => BDate != null && EDate == null;
+        //public bool IsDraft => BDate == null && EDate == null;
         #endregion
 
         #region Validation

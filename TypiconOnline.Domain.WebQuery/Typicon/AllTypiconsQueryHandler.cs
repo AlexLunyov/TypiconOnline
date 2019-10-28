@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using TypiconOnline.Domain.Query;
@@ -16,22 +17,30 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         public IEnumerable<TypiconEntityModel> Handle([NotNull] AllTypiconsQuery query)
         {
             var versions = DbContext.Set<TypiconVersion>()
-                .Where(c => c.IsPublished);
-
-            var result = new List<TypiconEntityModel>();
-
-            foreach (var vrs in versions)
-            {
-                var dto = new TypiconEntityModel()
+                .AsNoTracking()
+                .Where(c => c.BDate != null && c.EDate == null)
+                //.Where(c => c.IsPublished)
+                //.AsEnumerable()
+                .Select(c => new TypiconEntityModel()
                 {
-                    Id = vrs.TypiconId,
-                    Name = vrs.Typicon.Name.FirstOrDefault(query.Language).Text,
-                };
+                    Id = c.TypiconId,
+                    Name = c.Typicon.Name.FirstOrDefault(query.Language).Text,
+                });
 
-                result.Add(dto);
-            }
+            //var result = new List<TypiconEntityModel>();
 
-            return result.AsEnumerable();
+            //foreach (var vrs in versions)
+            //{
+            //    var dto = new TypiconEntityModel()
+            //    {
+            //        Id = vrs.TypiconId,
+            //        Name = vrs.Typicon.Name.FirstOrDefault(query.Language).Text,
+            //    };
+
+            //    result.Add(dto);
+            //}
+
+            return versions.AsEnumerable();
 
             //TypeAdapterConfig<TypiconVersion, TypiconDTO>
             //        .NewConfig()

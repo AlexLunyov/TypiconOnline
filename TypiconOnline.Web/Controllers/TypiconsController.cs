@@ -235,7 +235,7 @@ namespace TypiconOnline.Web.Controllers
                 return new ChallengeResult();
             }
 
-            var command = new DeleteEditorCommand(typiconId, editorId);
+            var command = new DeleteMenologyDayCommand(typiconId, editorId);
 
             await CommandProcessor.ExecuteAsync(command);
 

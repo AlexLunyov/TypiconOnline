@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
@@ -15,6 +16,7 @@ namespace TypiconOnline.AppServices.Extensions
             var w = new OutputWorship()
             {
                 OutputDay = day,
+                Order = day.GetMaxOrder() + 1,
                 Time = worshipModel.Time,
                 Name = new ItemTextStyled(worshipModel.Name),
                 AdditionalName = (worshipModel.AdditionalName != null) ?  new ItemText(worshipModel.AdditionalName) : new ItemText(),
@@ -29,6 +31,11 @@ namespace TypiconOnline.AppServices.Extensions
             {
                 day.AddWorship(wm, typiconSerializer);
             }
+        }
+
+        private static int GetMaxOrder(this OutputDay day)
+        {
+            return (day.Worships.Count != 0) ? day.Worships.Max(c => c.Order) : 0;
         }
     }
 }
