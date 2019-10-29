@@ -48,9 +48,11 @@ namespace TypiconOnline.AppServices.Implementations
 
                 var settings = _settingsFactory.CreateRecursive(new CreateRuleSettingsRequest(request)
                 {
-                    Rule = dayRule,
-                    SignNumber = modifiedRule.SignNumber
+                    Rule = dayRule
                 });
+
+                //задаем номер знака, если он был отдельно задан в ModifiedRule
+                result.Settings.SignNumber = modifiedRule.SignNumber;
 
                 //добавляем DayWorships
                 if (TypeEqualsOrSubclassOf<MenologyRule>.Is(modifiedRule.DayRule))

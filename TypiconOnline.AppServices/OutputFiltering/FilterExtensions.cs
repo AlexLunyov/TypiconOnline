@@ -106,7 +106,7 @@ namespace TypiconOnline.Domain.WebQuery.OutputFiltering
                 Name = day.Name.FilterOut(filter),
                 Date = day.Date,
                 SignName = day.PredefinedSign.SignName.FilterOut(filter),
-                SignNumber = day.PredefinedSign.Number ?? 0,
+                SignNumber = day.CustomSignNumber,
                 Worships = day.Worships
                             .OrderBy(c => c.Order)
                             .ToList()

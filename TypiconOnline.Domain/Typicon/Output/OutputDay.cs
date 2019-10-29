@@ -34,7 +34,10 @@ namespace TypiconOnline.Domain.Typicon.Output
         /// Ссылка на предустановленный Знак службы
         /// </summary>
         public virtual Sign PredefinedSign { get; set; }
-
+        /// <summary>
+        /// Номер предустановленного знака для отображения в расписании (может отличаться от указанного в <see cref="PredefinedSign"/>)
+        /// </summary>
+        public int CustomSignNumber { get; set; }
         //Добавить ссылки на тексты служб
         public virtual List<OutputDayWorship> OutputFormDayWorships { get; set; }
 

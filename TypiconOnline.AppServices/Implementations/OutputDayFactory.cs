@@ -173,9 +173,6 @@ namespace TypiconOnline.AppServices.Implementations
 
             var sign = response.Rule.Template.GetPredefinedTemplate();
 
-            //Если settings.SignNumber определен в ModifiedRule, то назначаем его
-            int signNumber = settings.SignNumber ?? sign.Number.Value;
-
             var scheduleDay = new OutputDay
             {
                 TypiconId = request.TypiconId,
@@ -183,6 +180,8 @@ namespace TypiconOnline.AppServices.Implementations
                 Name = _nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.AllWorships),
                 Date = request.Date,
                 PredefinedSignId = sign.Id,
+                //Если settings.SignNumber определен в ModifiedRule, то назначаем его
+                CustomSignNumber = settings.SignNumber ?? sign.Number.Value
             };
 
             return new OutputDayInfo(scheduleDay, settings.AllWorships, results, brokenConstraints);
