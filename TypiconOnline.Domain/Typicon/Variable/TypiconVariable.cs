@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Typicon.Variable
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public string Type { get; set; }
+        public VariableType Type { get; set; }
 
         public virtual List<VariableRuleLink<CommonRule>> CommonRuleLinks { get; set; } = new List<VariableRuleLink<CommonRule>>();
         public virtual List<VariableModRuleLink<Sign>> SignLinks { get; set; } = new List<VariableModRuleLink<Sign>>();

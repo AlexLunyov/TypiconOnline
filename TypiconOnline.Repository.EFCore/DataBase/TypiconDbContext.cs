@@ -166,19 +166,19 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 
             modelBuilder.Entity<VariableModRuleLink<Sign>>(c =>
             {
-                c.HasKey(d => new { d.VariableId, d.EntityId });
+                c.HasKey(d => new { d.VariableId, d.EntityId, d.DefinitionType });
                 c.ToTable("SignVariables");
             });
 
             modelBuilder.Entity<VariableModRuleLink<MenologyRule>>(c =>
             {
-                c.HasKey(d => new { d.VariableId, d.EntityId });
+                c.HasKey(d => new { d.VariableId, d.EntityId, d.DefinitionType });
                 c.ToTable("MenologyRuleVariables");
             });
 
             modelBuilder.Entity<VariableModRuleLink<TriodionRule>>(c =>
             {
-                c.HasKey(d => new { d.VariableId, d.EntityId });
+                c.HasKey(d => new { d.VariableId, d.EntityId, d.DefinitionType });
                 c.ToTable("TriodionRuleVariables");
             });
 

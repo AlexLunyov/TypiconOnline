@@ -172,7 +172,7 @@ namespace TypiconOnline.Web.Controllers
 
         protected override Expression<Func<TypiconVariableModel, bool>> BuildExpression(string searchValue)
         {
-            return m => m.Name == searchValue || m.Type == searchValue || m.Count.ToString() == searchValue;
+            return m => m.Name == searchValue || m.Type.ToString() == searchValue || m.Count.ToString() == searchValue;
         }
 
         #endregion

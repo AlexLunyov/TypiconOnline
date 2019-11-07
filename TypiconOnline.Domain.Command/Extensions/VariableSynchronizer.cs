@@ -84,13 +84,14 @@ namespace TypiconOnline.Domain.Command.Utilities
             return (errors.Count > 0) ? Result.Fail(string.Join('\n', errors)) : Result.Ok();
         }
 
-        private static IEnumerable<(string Name, string Type)> GetLocalVariables(CollectorSerializerRoot serializerRoot, string definition)
+        private static IEnumerable<(string Name, VariableType Type)> GetLocalVariables(CollectorSerializerRoot serializerRoot, string definition)
         {
+            serializerRoot.ClearHavingVariables();
             serializerRoot.Container<RootContainer>().Deserialize(definition);
 
             var result = serializerRoot.GetHavingVariables();
 
-            var localVariables = new List<(string Name, string Type)>();
+            var localVariables = new List<(string Name, VariableType Type)>();
 
             foreach (var r in result)
             {

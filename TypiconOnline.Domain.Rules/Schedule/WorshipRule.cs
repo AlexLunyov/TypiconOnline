@@ -6,6 +6,7 @@ using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Interfaces;
 using TypiconOnline.Domain.Rules.Variables;
+using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Schedule
@@ -113,13 +114,13 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         #region IHavingVariables implementation
 
-        public IEnumerable<(string, string)> GetVariableNames()
+        public IEnumerable<(string, VariableType)> GetVariableNames()
         {
-            var result = new List<(string, string)>();
+            var result = new List<(string, VariableType)>();
             
             if (!Time.HasValue)
             {
-                result.Add((Time.VariableName, Time.GetType().FullName));
+                result.Add((Time.VariableName, VariableType.Time));
             }
 
             return result;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TypiconOnline.Domain.Typicon.Variable;
 
 namespace TypiconOnline.Domain.Rules.Interfaces
 {
@@ -13,6 +14,6 @@ namespace TypiconOnline.Domain.Rules.Interfaces
         /// 
         /// </summary>
         /// <returns>Имя переменной и ее тип</returns>
-        IEnumerable<(string Name, string Type)> GetVariableNames();
+        IEnumerable<(string Name, VariableType Type)> GetVariableNames();
     }
 }

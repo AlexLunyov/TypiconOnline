@@ -29,6 +29,8 @@ namespace TypiconOnline.Domain.Rules.Serialization
             _collection.Add(element);
         }
 
+        public void ClearHavingVariables() => _collection.Clear();
+
         public IEnumerable<IHavingVariables> GetHavingVariables() => _collection;
     }
 }
