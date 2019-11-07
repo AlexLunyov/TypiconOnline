@@ -12,6 +12,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
         public ItemText Name { get; set; } = new ItemText();
         public string DefaultLanguage { get; set; }
         public bool IsModified { get; set; }
+        public bool IsTemplate { get; set; }
         /// <summary>
         /// Список Id И Имен редакторов Устава
         /// </summary>

@@ -5,6 +5,7 @@ using System.Text;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Psalter;
+using TypiconOnline.Domain.Typicon.Variable;
 
 namespace TypiconOnline.Domain.Extensions
 {
@@ -22,6 +23,8 @@ namespace TypiconOnline.Domain.Extensions
                 VersionNumber = source.VersionNumber,
                 PrevVersionId = source.Id
             };
+
+            CloneTypiconVariables(version, source.TypiconVariables);
 
             CloneCommonRules(version, source.CommonRules);
             CloneExplicitAddRules(version, source.ExplicitAddRules);
@@ -54,6 +57,9 @@ namespace TypiconOnline.Domain.Extensions
                 CloneSignsAndDayRules(versionTo, versionFrom, sign, newSign);
 
                 versionTo.Signs.Add(newSign);
+
+                //VariableLinks
+                sign.VariableLinks.CloneVariableModRuleLinks(versionTo, newSign);
             }
 
             //находим MenologyRules
@@ -83,6 +89,9 @@ namespace TypiconOnline.Domain.Extensions
                 });
 
                 versionTo.MenologyRules.Add(newMenology);
+
+                //VariableLinks
+                oldMenology.VariableLinks.CloneVariableModRuleLinks(versionTo, newMenology);
             }
 
             //находим TriodionRules
@@ -112,6 +121,9 @@ namespace TypiconOnline.Domain.Extensions
                 });
 
                 versionTo.TriodionRules.Add(newTriodion);
+
+                //VariableLinks
+                oldTriodion.VariableLinks.CloneVariableModRuleLinks(versionTo, newTriodion);
             }
         }
 
@@ -148,7 +160,7 @@ namespace TypiconOnline.Domain.Extensions
             });
         }
 
-        private static void CloneExplicitAddRules(TypiconVersion version, List<ExplicitAddRule> explicitAddRules)
+        private static void CloneExplicitAddRules(TypiconVersion versionTo, List<ExplicitAddRule> explicitAddRules)
         {
             explicitAddRules.ForEach(c =>
             {
@@ -156,14 +168,17 @@ namespace TypiconOnline.Domain.Extensions
                 {
                     Date = c.Date,
                     RuleDefinition = c.RuleDefinition,
-                    TypiconVersion = version
+                    TypiconVersion = versionTo
                 };
 
-                version.ExplicitAddRules.Add(rule);
+                versionTo.ExplicitAddRules.Add(rule);
+
+                //VariableLinks
+                c.VariableLinks.CloneVariableRuleLinks(versionTo, rule);
             });
         }
 
-        private static void CloneCommonRules(TypiconVersion version, List<CommonRule> commonRules)
+        private static void CloneCommonRules(TypiconVersion versionTo, List<CommonRule> commonRules)
         {
             commonRules.ForEach(c =>
             {
@@ -171,10 +186,53 @@ namespace TypiconOnline.Domain.Extensions
                 {
                     Name = c.Name,
                     RuleDefinition = c.RuleDefinition,
+                    TypiconVersion = versionTo
+                };
+
+                versionTo.CommonRules.Add(rule);
+
+                //VariableLinks
+                c.VariableLinks.CloneVariableRuleLinks(versionTo, rule);
+            });
+        }
+
+        private static void CloneTypiconVariables(TypiconVersion version, List<TypiconVariable> typiconVariables)
+        {
+            typiconVariables.ForEach(c =>
+            {
+                var entity = new TypiconVariable()
+                {
+                    Name = c.Name,
+                    Type = c.Type,
+                    Description = c.Description,
                     TypiconVersion = version
                 };
 
-                version.CommonRules.Add(rule);
+                version.TypiconVariables.Add(entity);
+            });
+        }
+
+        private static void CloneVariableRuleLinks<T>(this List<VariableRuleLink<T>> links, TypiconVersion version, T rule) where T: RuleEntity, new()
+        {
+            links.ForEach(link =>
+            {
+                var newVariable = version.TypiconVariables
+                    .First(v => v.Name == link.Variable.Name
+                                      && v.Type == link.Variable.Type);
+
+                newVariable.AddLink(rule);
+            });
+        }
+
+        private static void CloneVariableModRuleLinks<T>(this List<VariableModRuleLink<T>> links, TypiconVersion version, T rule) where T : ModRuleEntity, new()
+        {
+            links.ForEach(link =>
+            {
+                var newVariable = version.TypiconVariables
+                    .First(v => v.Name == link.Variable.Name
+                                      && v.Type == link.Variable.Type);
+
+                newVariable.AddLink(rule, link.DefinitionType);
             });
         }
     }

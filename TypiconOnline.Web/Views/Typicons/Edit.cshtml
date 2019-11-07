@@ -11,6 +11,7 @@
         {
             <li><a data-toggle="tab" href="#panel_editors">Редакторы</a></li>
         }
+        <li><a asp-controller="TypiconVariables" asp-action="Index" asp-route-id="@Model.Id">Переменные</a></li>
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 Редактирование Правил
@@ -132,7 +133,9 @@
                 </div>
             </div>
         }
-
+        <div id="panel_vars" class="tab-pane fade">
+            @await Html.PartialAsync((Model.IsTemplate) ? "_TemplateVariables" : "_Variables")
+        </div>
     </div>
 </div>
 @section Scripts

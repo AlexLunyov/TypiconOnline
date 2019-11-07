@@ -7,6 +7,7 @@
         <ul class="nav nav-tabs">
             <li><a href="/Typicons/Edit/@ViewBag.TypiconId#panel_properties">Свойства</a></li>
             <li><a href="/Typicons/Edit/@ViewBag.TypiconId#panel_jobs">Операции</a></li>
+            <li><a asp-controller="TypiconVariables" asp-action="Index" asp-route-id="@ViewBag.TypiconId">Переменные</a></li>
             <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                     Редактирование Правил

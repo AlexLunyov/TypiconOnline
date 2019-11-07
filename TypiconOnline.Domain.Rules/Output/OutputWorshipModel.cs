@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Rules.Output
         public OutputWorshipModel(WorshipRule worship)
         {
             Id = worship.Id;
-            Time = worship.Time.Expression;
+            Time = (worship.Time.HasValue) ? worship.Time.Value.Expression : string.Empty;
             Name = worship.Name;
             AdditionalName = worship.AdditionalName;
         }

@@ -40,6 +40,10 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
                 .WithOne(d => d.TypiconVersion)
                 .HasForeignKey(c => c.TypiconVersionId);
 
+            builder.HasMany(c => c.TypiconVariables)
+                .WithOne(d => d.TypiconVersion)
+                .HasForeignKey(c => c.TypiconVersionId);
+
             builder.HasMany(c => c.Kathismas)
                 .WithOne(d => d.TypiconVersion);
         }

@@ -1,0 +1,139 @@
+﻿
+<link href="~/css/datatables.min.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li><a href="/Typicons/Edit/@ViewContext.RouteData.Values["id"]#panel_properties">Свойства</a></li>
+        <li><a href="/Typicons/Edit/@ViewContext.RouteData.Values["id"]#panel_jobs">Операции</a></li>
+        <li><a data-toggle="tab">Переменные</a></li>
+        <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                Редактирование Правил
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a asp-controller="Sign" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Знаки служб</a></li>
+                <li><a asp-controller="MenologyRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Правила Минеи</a></li>
+                <li><a asp-controller="TriodionRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Правила Триоди</a></li>
+                <li><a asp-controller="CommonRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Общие Правила</a></li>
+                <li><a asp-controller="ExplicitAddRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Явные Правила</a></li>
+                <li><a asp-controller="Kathisma" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Кафизмы</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-12"><h2>Переменные Устава</h2></div>
+    </div>
+    <div class="row">
+        <div class="form-group col-12">
+            <div class="justify-content-center align-content-center">
+                <table id="varGrid" class="table table-striped table-bordered" style="width:100%">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Count</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade editvar-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div id="modalWindow" class="modal-dialog modal-lg">
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#varGrid").DataTable(
+                {
+                    "processing": true, // for show progress bar
+                    "serverSide": true, // for process server side
+                    "filter": true, // this is for disable filter (search box)
+                    "orderMulti": false, // for disable multiple column at once
+                    "ajax": {
+                        "url": "/TypiconVariables/LoadData/@ViewContext.RouteData.Values["id"]",
+                        "type": "POST",
+                        "datatype": "json"
+                    },
+                    "columnDefs":
+                        [{
+                            "targets": [0],
+                            "visible": false,
+                            "searchable": false
+                        }],
+                    "columns": [
+                        { "data": "Id", "name": "Id", "autoWidth": true },
+                        { "data": "Name", "name": "Name", "autoWidth": true },
+                        { "data": "Type", "name": "Type", "autoWidth": true },
+                        { "data": "Count", "name": "Count", "autoWidth": true },
+                        {
+                            data: null, render: function (data, type, row) {
+                                return '<a class="edit" href="#" title="Редактировать описание" data-toggle="tooltip"><i class="material-icons">chat_bubble</i></a> ' +
+                                    '<a class="define" href="#" title="Задать значение Переменной" data-toggle="tooltip"><i class="material-icons">low_priority</i></a></a>';
+                            },
+                            orderable: false
+                        },
+                    ]
+                }
+            );
+
+            $('#varGrid').on('click', 'tbody tr td .edit', function () {
+                var table = $('#varGrid').DataTable();
+                var row = table.row($(this).parents('tr'));
+                var data = row.data();
+
+                $("#modalWindow").load("/TypiconVariables/Edit/" + data.Id);
+
+                $(".editvar-modal").modal('show');
+            });
+
+            $('#varGrid').on('click', 'tbody tr td .define', function () {
+                var table = $('#varGrid').DataTable();
+                var row = table.row($(this).parents('tr'));
+                var data = row.data();
+
+                $("#modalWindow").load("/TypiconVariables/Define/" + data.Id);
+
+                $(".editvar-modal").modal('show');
+            });
+        });
+
+        function submitForm(e) {
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+
+            var form = $("#editVarForm");
+            var url = form.attr("action");
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    if (data == null) {
+                        $('#varGrid').DataTable().draw(false);
+                        $(".editvar-modal").modal('hide');
+                    }
+                    else {
+                        alert(data);
+                    }
+                }
+            });
+
+            return false;
+        }
+    </script>
+}

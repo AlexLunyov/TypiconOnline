@@ -1,4 +1,6 @@
-﻿using TypiconOnline.Domain.Interfaces;
+﻿using System.Collections.Generic;
+using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
@@ -12,6 +14,11 @@ namespace TypiconOnline.Domain.Typicon
         /// Используется при формировании настроек для обработчика Правил
         /// </summary>
         public bool IsTransparent { get; set; }
+
+        /// <summary>
+        /// Список на используемые в данном Правиле Переменные Устава
+        /// </summary>
+        public virtual List<VariableModRuleLink<TriodionRule>> VariableLinks { get; set; }
 
         protected override void Validate(IRuleSerializerRoot serializerRoot)
         {

@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Command.Utilities;
+using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Rules.Serialization;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Command.Typicon
 {
-    public abstract class EditRuleCommandHandlerBase<T> : DbContextCommandBase where T : RuleEntity, new()
+    public abstract class EditRuleCommandHandlerBase<T> : DbContextCommandBase where T : class, ITypiconVersionChild, new()
     {
-        protected EditRuleCommandHandlerBase(TypiconDBContext dbContext) : base(dbContext)
+        protected EditRuleCommandHandlerBase(TypiconDBContext dbContext, CollectorSerializerRoot serializerRoot) : base(dbContext)
         {
+            SerializerRoot = serializerRoot ?? throw new ArgumentNullException(nameof(serializerRoot));
         }
+
+        protected CollectorSerializerRoot SerializerRoot { get; }
 
         protected async Task<Result> ExecuteAsync(EditRuleCommandBase<T> command) 
         {
@@ -24,7 +30,19 @@ namespace TypiconOnline.Domain.Command.Typicon
                 return Result.Fail($"Объект с Id {command.Id} не найден.");
             }
 
-            UpdateValues(found, command);
+            var version = found.TypiconVersion;
+
+            //можно редактировать только правила черновика
+            if (!(version.BDate == null && version.EDate == null))
+            {
+                return Result.Fail($"Правило относится к Версии Устава, находящейся не в статусе Черновика.");
+            }
+
+            var updResult = UpdateValues(found, command);
+            if (updResult.Failure)
+            {
+                return updResult;
+            }
 
             DbContext.Set<T>().Update(found);
 
@@ -35,6 +53,6 @@ namespace TypiconOnline.Domain.Command.Typicon
             return Result.Ok();
         }
 
-        protected abstract void UpdateValues(T found, EditRuleCommandBase<T> command);
+        protected abstract Result UpdateValues(T found, EditRuleCommandBase<T> command);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
@@ -15,6 +16,8 @@ namespace TypiconOnline.Domain.Typicon
         /// Должно быть уникальным в рамках Устава
         /// </summary>
         public virtual string Name { get; set; }
+
+        public virtual List<VariableRuleLink<CommonRule>> VariableLinks { get; set; } = new List<VariableRuleLink<CommonRule>>();
 
         protected override void Validate(IRuleSerializerRoot serializerRoot)
         {

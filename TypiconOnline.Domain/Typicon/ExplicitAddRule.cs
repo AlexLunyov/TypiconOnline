@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
@@ -18,6 +19,8 @@ namespace TypiconOnline.Domain.Typicon
         /// Конкретная дата
         /// </summary>
         public DateTime Date { get; set; }
+
+        public virtual List<VariableRuleLink<ExplicitAddRule>> VariableLinks { get; set; } = new List<VariableRuleLink<ExplicitAddRule>>();
 
         protected override void Validate(IRuleSerializerRoot serializerRoot)
         {

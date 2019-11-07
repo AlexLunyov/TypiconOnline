@@ -9,9 +9,9 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconMigrationTool
 {
-    public class DbContext : TypiconDBContext
+    public class MigrationDbContext : TypiconDBContext
     {
-        public DbContext() : base(CreateOptions()) { }
+        public MigrationDbContext() : base(CreateOptions()) { }
 
         private static DbContextOptions<TypiconDBContext> CreateOptions()
         {

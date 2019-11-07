@@ -18,6 +18,7 @@ using TypiconOnline.Domain.Command;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Serialization;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.Command;
@@ -54,6 +55,9 @@ namespace TypiconOnline.Web
             container.Register<IScheduleDayNameComposer, ScheduleDayNameComposer>();
             container.Register<IRuleSerializerRoot, RuleSerializerRoot>();
             container.Register<ITypiconSerializer, TypiconSerializer>();
+            //Для TypiconVariables
+            container.Register<CollectorSerializerRoot>(); 
+
             //container.Register<IOutputForms, OutputForms>();
             container.Register<IOutputDayFactory, OutputDayFactory>();
             container.Register<IScheduleDayViewer<string>, HtmlScheduleDayViewer>();

@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.Query.Typicon
     /// <summary>
     /// Возвращает Id и Name Устава
     /// </summary>
-    public abstract class TypiconEntityByChildQueryHandlerBase<T> : DbContextQueryBase where T: RuleEntity, new()
+    public abstract class TypiconEntityByChildQueryHandlerBase<T> : DbContextQueryBase where T: class, ITypiconVersionChild, new()
     {
         public TypiconEntityByChildQueryHandlerBase(TypiconDBContext dbContext) : base(dbContext) { }
 

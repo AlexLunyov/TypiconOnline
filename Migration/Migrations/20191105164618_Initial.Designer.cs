@@ -4,11 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using TypiconMigrationTool;
 
 namespace MigrationTool.Migrations
 {
-    [DbContext(typeof(DbContext))]
-    [Migration("20191022121124_Initial")]
+    [DbContext(typeof(MigrationDbContext))]
+    [Migration("20191105164618_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -565,6 +566,9 @@ namespace MigrationTool.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("CustomSignNumber")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
@@ -606,6 +610,9 @@ namespace MigrationTool.Migrations
 
                     b.Property<string>("Definition")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("OutputDayId")
                         .HasColumnType("INTEGER");
@@ -813,6 +820,115 @@ namespace MigrationTool.Migrations
                     b.HasIndex("TypiconVersionId");
 
                     b.ToTable("TypiconVersionError");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.TypiconVariable", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("TypiconVersionId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypiconVersionId");
+
+                    b.ToTable("TypiconVariable");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.VariableModRuleLink<TypiconOnline.Domain.Typicon.MenologyRule>", b =>
+                {
+                    b.Property<int>("VariableId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DefinitionType")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("VariableId", "EntityId");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("MenologyRuleVariables");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.VariableModRuleLink<TypiconOnline.Domain.Typicon.Sign>", b =>
+                {
+                    b.Property<int>("VariableId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DefinitionType")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("VariableId", "EntityId");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("SignVariables");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.VariableModRuleLink<TypiconOnline.Domain.Typicon.TriodionRule>", b =>
+                {
+                    b.Property<int>("VariableId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DefinitionType")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("VariableId", "EntityId");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("TriodionRuleVariables");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.VariableRuleLink<TypiconOnline.Domain.Typicon.CommonRule>", b =>
+                {
+                    b.Property<int>("VariableId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("VariableId", "EntityId");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("CommonRuleVariables");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.VariableRuleLink<TypiconOnline.Domain.Typicon.ExplicitAddRule>", b =>
+                {
+                    b.Property<int>("VariableId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("VariableId", "EntityId");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("ExplicitAddRuleVariables");
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Days.MenologyDay", b =>
@@ -1484,6 +1600,90 @@ namespace MigrationTool.Migrations
                     b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
                         .WithMany()
                         .HasForeignKey("TypiconVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.TypiconVariable", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
+                        .WithMany("TypiconVariables")
+                        .HasForeignKey("TypiconVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.VariableModRuleLink<TypiconOnline.Domain.Typicon.MenologyRule>", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.MenologyRule", "Entity")
+                        .WithMany()
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TypiconOnline.Domain.Typicon.Variable.TypiconVariable", "Variable")
+                        .WithMany("MenologyRuleLinks")
+                        .HasForeignKey("VariableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.VariableModRuleLink<TypiconOnline.Domain.Typicon.Sign>", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.Sign", "Entity")
+                        .WithMany()
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TypiconOnline.Domain.Typicon.Variable.TypiconVariable", "Variable")
+                        .WithMany("SignLinks")
+                        .HasForeignKey("VariableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.VariableModRuleLink<TypiconOnline.Domain.Typicon.TriodionRule>", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.TriodionRule", "Entity")
+                        .WithMany()
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TypiconOnline.Domain.Typicon.Variable.TypiconVariable", "Variable")
+                        .WithMany("TriodionRuleLinks")
+                        .HasForeignKey("VariableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.VariableRuleLink<TypiconOnline.Domain.Typicon.CommonRule>", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.CommonRule", "Entity")
+                        .WithMany()
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TypiconOnline.Domain.Typicon.Variable.TypiconVariable", "Variable")
+                        .WithMany("CommonRuleLinks")
+                        .HasForeignKey("VariableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.VariableRuleLink<TypiconOnline.Domain.Typicon.ExplicitAddRule>", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.ExplicitAddRule", "Entity")
+                        .WithMany()
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TypiconOnline.Domain.Typicon.Variable.TypiconVariable", "Variable")
+                        .WithMany("ExplicitAddRuleLinks")
+                        .HasForeignKey("VariableId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

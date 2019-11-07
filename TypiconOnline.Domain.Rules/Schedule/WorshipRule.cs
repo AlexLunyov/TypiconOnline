@@ -1,9 +1,11 @@
-﻿using TypiconOnline.Domain.Interfaces;
+﻿using System.Collections.Generic;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Interfaces;
+using TypiconOnline.Domain.Rules.Variables;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Rules.Schedule
@@ -12,7 +14,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
     /// Элемент "Служба". Является строкой в расписании. 
     /// Включает в себя последовательность богослужения, задекларированного в названии
     /// </summary>
-    public class WorshipRule : RuleExecutable, ICustomInterpreted, IAsAdditionElement
+    public class WorshipRule : RuleExecutable, ICustomInterpreted, IAsAdditionElement, IHavingVariables
     {
         private ItemTextStyled _name = new ItemTextStyled();
 
@@ -26,7 +28,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// Идентификатор для поиска (используется в переопределении правил AsAddition)
         /// </summary>
         public string Id { get; set; }
-        public ItemTime Time { get; set; }
+        public VariableItemTime Time { get; set; }
 
         public ItemTextStyled Name
         {
@@ -48,6 +50,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
         /// Указание, в какое место добавлять службу
         /// </summary>
         public WorshipMode Mode { get; set; } = WorshipMode.ThisDay;
+
+        #endregion
 
         #region IRewritableElement implementation
 
@@ -74,6 +78,8 @@ namespace TypiconOnline.Domain.Rules.Schedule
         }
 
         public AsAdditionMode AsAdditionMode { get; set; }
+
+        
 
         public void RewriteValues(IAsAdditionElement source)
         {
@@ -105,6 +111,20 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         #endregion
 
+        #region IHavingVariables implementation
+
+        public IEnumerable<(string, string)> GetVariableNames()
+        {
+            var result = new List<(string, string)>();
+            
+            if (!Time.HasValue)
+            {
+                result.Add((Time.VariableName, Time.GetType().FullName));
+            }
+
+            return result;
+        }
+
         #endregion
 
         protected override void InnerInterpret(IRuleHandler handler)
@@ -119,7 +139,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override void Validate()
         {
-            if (!Time.IsValid)
+            if (Time.HasValue && !Time.Value.IsValid)
             {
                 AddBrokenConstraint(WorshipRuleBusinessConstraint.TimeTypeMismatch, ElementName);
             }

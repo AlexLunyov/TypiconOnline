@@ -37,6 +37,8 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
                 .IsRequired(false)
                 ;
 
+            //builder.HasMany(c => c.VariableLinks);
+
             //builder.Ignore(c => c.IsTemplate);
         }
     }

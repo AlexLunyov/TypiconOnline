@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Command.Utilities;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Rules.Serialization;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Infrastructure.Common.Command;
@@ -14,16 +17,28 @@ namespace TypiconOnline.Domain.Command.Typicon
 {
     public class EditMenologyRuleCommandHandler : EditRuleCommandHandlerBase<MenologyRule>, ICommandHandler<EditMenologyRuleCommand>
     {
-        public EditMenologyRuleCommandHandler(TypiconDBContext dbContext) : base(dbContext) { }
+        public EditMenologyRuleCommandHandler(TypiconDBContext dbContext, CollectorSerializerRoot serializerRoot) : base(dbContext, serializerRoot) { }
 
         public async Task<Result> ExecuteAsync(EditMenologyRuleCommand command)
         {
             return await base.ExecuteAsync(command);
         }
 
-        protected override void UpdateValues(MenologyRule entity, EditRuleCommandBase<MenologyRule> command)
+        protected override Result UpdateValues(MenologyRule entity, EditRuleCommandBase<MenologyRule> command)
         {
             var c = command as EditMenologyRuleCommand;
+
+            //Синхронизируем Переменные Устава
+            if (entity.RuleDefinition != c.RuleDefinition)
+            {
+                entity.RuleDefinition = c.RuleDefinition;
+                entity.SyncRuleVariables(SerializerRoot);
+            }
+            if (entity.ModRuleDefinition != c.ModRuleDefinition)
+            {
+                entity.ModRuleDefinition = c.ModRuleDefinition;
+                entity.SyncModRuleVariables(SerializerRoot);
+            }
 
             entity.TemplateId = c.TemplateId;
             entity.IsAddition = c.IsAddition;
@@ -37,8 +52,6 @@ namespace TypiconOnline.Domain.Command.Typicon
                 entity.LeapDate.Month = c.LeapDate.Value.Month;
                 entity.LeapDate.Day = c.LeapDate.Value.Day;
             }
-            entity.RuleDefinition = c.RuleDefinition;
-            entity.ModRuleDefinition = c.ModRuleDefinition;
 
             entity.DayRuleWorships.Clear();
 
@@ -46,6 +59,8 @@ namespace TypiconOnline.Domain.Command.Typicon
             {
                 entity.DayRuleWorships.Add(new DayRuleWorship() { DayRuleId = entity.Id, DayWorshipId = id, Order = order });
             }
+
+            return Result.Ok();
         }
     }
 }

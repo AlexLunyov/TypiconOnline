@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
@@ -41,6 +43,11 @@ namespace TypiconOnline.Domain.Typicon
             }
             set => _leapDate = value;
         }
+
+        /// <summary>
+        /// Список на используемые в данном Правиле Переменные Устава
+        /// </summary>
+        public virtual List<VariableModRuleLink<MenologyRule>> VariableLinks { get; set; }
 
         protected override void Validate(IRuleSerializerRoot serializerRoot)
         {

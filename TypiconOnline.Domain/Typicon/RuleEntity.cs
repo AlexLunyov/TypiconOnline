@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Infrastructure.Common.Domain;
+using TypiconOnline.Infrastructure.Common.Events;
 
 namespace TypiconOnline.Domain.Typicon
 {
@@ -34,9 +35,12 @@ namespace TypiconOnline.Domain.Typicon
             }
             set
             {
-                _ruleDefinition = value;
-                _rule = null;
-                //IsValidated = false;
+                if (_ruleDefinition != value)
+                {
+                    _ruleDefinition = value;
+                    _rule = null;
+                    //IsValidated = false;
+                }
             }
         }
 
@@ -86,5 +90,7 @@ namespace TypiconOnline.Domain.Typicon
                 }
             }
         }
+
+        
     }
 }

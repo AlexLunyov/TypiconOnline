@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<rule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///E:/Programming/Documentation/TypiconOnline.Documentation/XML/Rules/RulesSchema.xsd">
+  <worship time="16.00" mode="daybefore">
+    <name>
+      <item language="cs-ru">Всенощное бдение.</item>
+    </name>
+  </worship>
+  <worship time="[WorshipTime]">
+    <name>
+      <item language="cs-ru">Часы 3-й и 6-й.</item>
+    </name>
+  </worship>
+  <worship time="[WorshipTime]">
+    <name>
+      <item language="cs-ru">Божественная литургия.</item>
+    </name>
+  </worship>
+  <!-- Если не в период Великого или Успенского постов -->
+  <if>
+    <expression>
+      <or>
+        <!-- между Великим и Успенским-->
+        <and>
+          <more>
+            <date/>
+            <datebydaysfromeaster>
+              <int>7</int>
+            </datebydaysfromeaster>
+          </more>
+          <less>
+            <date/>
+            <date>--08-14</date>
+          </less>
+        </and>
+        <!-- между Новым годом и Великим постом-->
+        <lessequals>
+          <date/>
+          <datebydaysfromeaster>
+            <int>-49</int>
+          </datebydaysfromeaster>
+        </lessequals>
+        <!-- между Успенским постом и Новым годом-->
+        <more>
+          <date/>
+          <date>--08-28</date>
+        </more>
+      </or>
+    </expression>
+    <then>
+      <!-- Если это воскресенье-->
+      <worship id="moleben" time="[MolebenTime]">
+        <name>
+          <item language="cs-ru">Молебен перед иконой Божией Матери "Всецарица".</item>
+        </name>
+      </worship>
+    </then>
+  </if>
+</rule>

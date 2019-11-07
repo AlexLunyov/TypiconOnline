@@ -171,7 +171,7 @@ namespace TypiconOnline.Web.Controllers
                     || m.LeapDate == searchValue;
         }
 
-        protected override IGridQuery<MenologyRuleModel> GetQuery(int id) => new Domain.WebQuery.Typicon.AllMenologyDaysQuery(id, DEFAULT_LANGUAGE);
+        protected override IGridQuery<MenologyRuleModel> GetQuery(int id) => new AllMenologyDaysQuery(id, DEFAULT_LANGUAGE);
 
         protected override TypiconEntityByChildQuery<MenologyRule> GetTypiconEntityByChildQuery(int id)
             => new TypiconEntityByMenologyRuleQuery(id);

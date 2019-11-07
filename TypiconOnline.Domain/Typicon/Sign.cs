@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
@@ -40,6 +42,11 @@ namespace TypiconOnline.Domain.Typicon
             }
             set => _signName = value;
         }
+
+        /// <summary>
+        /// Список на используемые в данном Правиле Переменные Устава
+        /// </summary>
+        public virtual List<VariableModRuleLink<Sign>> VariableLinks { get; set; }
 
         public string GetNameByLanguage(string language)
         {

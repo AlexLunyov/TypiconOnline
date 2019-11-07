@@ -6,6 +6,7 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Domain.Typicon.Psalter;
+using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon
@@ -25,6 +26,8 @@ namespace TypiconOnline.Domain.Typicon
             TriodionRules = new List<TriodionRule>();
             Kathismas = new List<Kathisma>();
             ExplicitAddRules = new List<ExplicitAddRule>();
+
+            TypiconVariables = new List<TypiconVariable>();
 
             ValidationStatus = ValidationStatus.NotValidated;
             Errors = new List<TypiconVersionError>();
@@ -80,6 +83,10 @@ namespace TypiconOnline.Domain.Typicon
         /// Явно определяемые дополнительные Правила
         /// </summary>
         public virtual List<ExplicitAddRule> ExplicitAddRules { get; set; }
+        /// <summary>
+        /// Переменные Устава
+        /// </summary>
+        public virtual List<TypiconVariable> TypiconVariables { get; set; }
 
         /// <summary>
         /// Признак того, что любое из дочерних свойств было изменено.

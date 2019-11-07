@@ -577,6 +577,28 @@ namespace MigrationTool.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TypiconVariable",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    TypiconVersionId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TypiconVariable", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TypiconVariable_TypiconVersion_TypiconVersionId",
+                        column: x => x.TypiconVersionId,
+                        principalTable: "TypiconVersion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TypiconVersionError",
                 columns: table => new
                 {
@@ -689,7 +711,8 @@ namespace MigrationTool.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     TypiconId = table.Column<int>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
-                    PredefinedSignId = table.Column<int>(nullable: false)
+                    PredefinedSignId = table.Column<int>(nullable: false),
+                    CustomSignNumber = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -725,6 +748,79 @@ namespace MigrationTool.Migrations
                         name: "FK_SignNameItems_Sign_NameId",
                         column: x => x.NameId,
                         principalTable: "Sign",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CommonRuleVariables",
+                columns: table => new
+                {
+                    VariableId = table.Column<int>(nullable: false),
+                    EntityId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommonRuleVariables", x => new { x.VariableId, x.EntityId });
+                    table.ForeignKey(
+                        name: "FK_CommonRuleVariables_CommonRule_EntityId",
+                        column: x => x.EntityId,
+                        principalTable: "CommonRule",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CommonRuleVariables_TypiconVariable_VariableId",
+                        column: x => x.VariableId,
+                        principalTable: "TypiconVariable",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExplicitAddRuleVariables",
+                columns: table => new
+                {
+                    VariableId = table.Column<int>(nullable: false),
+                    EntityId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExplicitAddRuleVariables", x => new { x.VariableId, x.EntityId });
+                    table.ForeignKey(
+                        name: "FK_ExplicitAddRuleVariables_ExplicitAddRule_EntityId",
+                        column: x => x.EntityId,
+                        principalTable: "ExplicitAddRule",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExplicitAddRuleVariables_TypiconVariable_VariableId",
+                        column: x => x.VariableId,
+                        principalTable: "TypiconVariable",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SignVariables",
+                columns: table => new
+                {
+                    VariableId = table.Column<int>(nullable: false),
+                    EntityId = table.Column<int>(nullable: false),
+                    DefinitionType = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SignVariables", x => new { x.VariableId, x.EntityId });
+                    table.ForeignKey(
+                        name: "FK_SignVariables_Sign_EntityId",
+                        column: x => x.EntityId,
+                        principalTable: "Sign",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SignVariables_TypiconVariable_VariableId",
+                        column: x => x.VariableId,
+                        principalTable: "TypiconVariable",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -783,6 +879,31 @@ namespace MigrationTool.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MenologyRuleVariables",
+                columns: table => new
+                {
+                    VariableId = table.Column<int>(nullable: false),
+                    EntityId = table.Column<int>(nullable: false),
+                    DefinitionType = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenologyRuleVariables", x => new { x.VariableId, x.EntityId });
+                    table.ForeignKey(
+                        name: "FK_MenologyRuleVariables_DayRule_EntityId",
+                        column: x => x.EntityId,
+                        principalTable: "DayRule",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MenologyRuleVariables_TypiconVariable_VariableId",
+                        column: x => x.VariableId,
+                        principalTable: "TypiconVariable",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ModifiedRule",
                 columns: table => new
                 {
@@ -817,6 +938,31 @@ namespace MigrationTool.Migrations
                         name: "FK_ModifiedRule_ModifiedYear_ModifiedYearId",
                         column: x => x.ModifiedYearId,
                         principalTable: "ModifiedYear",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TriodionRuleVariables",
+                columns: table => new
+                {
+                    VariableId = table.Column<int>(nullable: false),
+                    EntityId = table.Column<int>(nullable: false),
+                    DefinitionType = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TriodionRuleVariables", x => new { x.VariableId, x.EntityId });
+                    table.ForeignKey(
+                        name: "FK_TriodionRuleVariables_DayRule_EntityId",
+                        column: x => x.EntityId,
+                        principalTable: "DayRule",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TriodionRuleVariables_TypiconVariable_VariableId",
+                        column: x => x.VariableId,
+                        principalTable: "TypiconVariable",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -873,6 +1019,7 @@ namespace MigrationTool.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     OutputDayId = table.Column<int>(nullable: false),
+                    Order = table.Column<int>(nullable: false),
                     Time = table.Column<string>(nullable: true),
                     Name_IsBold = table.Column<bool>(nullable: true),
                     Name_IsItalic = table.Column<bool>(nullable: true),
@@ -996,6 +1143,11 @@ namespace MigrationTool.Migrations
                 column: "TypiconVersionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CommonRuleVariables_EntityId",
+                table: "CommonRuleVariables",
+                column: "EntityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DayRule_TemplateId",
                 table: "DayRule",
                 column: "TemplateId");
@@ -1036,6 +1188,11 @@ namespace MigrationTool.Migrations
                 column: "TypiconVersionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExplicitAddRuleVariables_EntityId",
+                table: "ExplicitAddRuleVariables",
+                column: "EntityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Kathisma_TypiconVersionId",
                 table: "Kathisma",
                 column: "TypiconVersionId");
@@ -1044,6 +1201,11 @@ namespace MigrationTool.Migrations
                 name: "IX_KathismaNumberNameItems_NameId",
                 table: "KathismaNumberNameItems",
                 column: "NameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MenologyRuleVariables_EntityId",
+                table: "MenologyRuleVariables",
+                column: "EntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ModifiedRule_DayRuleId",
@@ -1142,9 +1304,19 @@ namespace MigrationTool.Migrations
                 column: "NameId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SignVariables_EntityId",
+                table: "SignVariables",
+                column: "EntityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SlavaElement_KathismaId",
                 table: "SlavaElement",
                 column: "KathismaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TriodionRuleVariables_EntityId",
+                table: "TriodionRuleVariables",
+                column: "EntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TypiconEntity_OwnerId",
@@ -1160,6 +1332,11 @@ namespace MigrationTool.Migrations
                 name: "IX_TypiconEntityNameItems_NameId",
                 table: "TypiconEntityNameItems",
                 column: "NameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TypiconVariable_TypiconVersionId",
+                table: "TypiconVariable",
+                column: "TypiconVersionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TypiconVersion_PrevVersionId",
@@ -1211,7 +1388,7 @@ namespace MigrationTool.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CommonRule");
+                name: "CommonRuleVariables");
 
             migrationBuilder.DropTable(
                 name: "DayRuleWorship");
@@ -1226,13 +1403,16 @@ namespace MigrationTool.Migrations
                 name: "EasterItem");
 
             migrationBuilder.DropTable(
-                name: "ExplicitAddRule");
+                name: "ExplicitAddRuleVariables");
 
             migrationBuilder.DropTable(
                 name: "Katavasia");
 
             migrationBuilder.DropTable(
                 name: "KathismaNumberNameItems");
+
+            migrationBuilder.DropTable(
+                name: "MenologyRuleVariables");
 
             migrationBuilder.DropTable(
                 name: "ModifiedRuleShortNameItems");
@@ -1262,7 +1442,13 @@ namespace MigrationTool.Migrations
                 name: "SignNameItems");
 
             migrationBuilder.DropTable(
+                name: "SignVariables");
+
+            migrationBuilder.DropTable(
                 name: "TheotokionApp");
+
+            migrationBuilder.DropTable(
+                name: "TriodionRuleVariables");
 
             migrationBuilder.DropTable(
                 name: "TypiconEntityNameItems");
@@ -1289,7 +1475,13 @@ namespace MigrationTool.Migrations
                 name: "WeekDayApp");
 
             migrationBuilder.DropTable(
+                name: "CommonRule");
+
+            migrationBuilder.DropTable(
                 name: "DayWorshipShortName");
+
+            migrationBuilder.DropTable(
+                name: "ExplicitAddRule");
 
             migrationBuilder.DropTable(
                 name: "ModifiedRuleShortName");
@@ -1302,6 +1494,9 @@ namespace MigrationTool.Migrations
 
             migrationBuilder.DropTable(
                 name: "SlavaElement");
+
+            migrationBuilder.DropTable(
+                name: "TypiconVariable");
 
             migrationBuilder.DropTable(
                 name: "Roles");

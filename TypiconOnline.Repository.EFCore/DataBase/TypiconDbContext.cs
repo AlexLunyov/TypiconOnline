@@ -14,6 +14,7 @@ using TypiconOnline.Domain.Identity;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Psalter;
+using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Repository.EFCore.DataBase.Mapping;
 
 namespace TypiconOnline.Repository.EFCore.DataBase
@@ -151,7 +152,43 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 
             modelBuilder.ApplyConfiguration(new OutputDayConfiguration());
             modelBuilder.ApplyConfiguration(new OutputWorshipConfiguration());
-            modelBuilder.ApplyConfiguration(new OutputFormDayWorshipConfiguration()); 
+            modelBuilder.ApplyConfiguration(new OutputFormDayWorshipConfiguration());
+
+            #region Variables
+
+            modelBuilder.Entity<TypiconVariable>();
+
+            modelBuilder.Entity<VariableRuleLink<CommonRule>>(c =>
+            {
+                c.HasKey(d => new { d.VariableId, d.EntityId });
+                c.ToTable("CommonRuleVariables");
+            });
+
+            modelBuilder.Entity<VariableModRuleLink<Sign>>(c =>
+            {
+                c.HasKey(d => new { d.VariableId, d.EntityId });
+                c.ToTable("SignVariables");
+            });
+
+            modelBuilder.Entity<VariableModRuleLink<MenologyRule>>(c =>
+            {
+                c.HasKey(d => new { d.VariableId, d.EntityId });
+                c.ToTable("MenologyRuleVariables");
+            });
+
+            modelBuilder.Entity<VariableModRuleLink<TriodionRule>>(c =>
+            {
+                c.HasKey(d => new { d.VariableId, d.EntityId });
+                c.ToTable("TriodionRuleVariables");
+            });
+
+            modelBuilder.Entity<VariableRuleLink<ExplicitAddRule>>(c =>
+            {
+                c.HasKey(d => new { d.VariableId, d.EntityId });
+                c.ToTable("ExplicitAddRuleVariables");
+            });
+
+            #endregion
 
             modelBuilder.ApplyConfiguration(new TypiconVersionErrorConfiguration());
 

@@ -5,6 +5,7 @@ using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Variables;
 using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
@@ -35,7 +36,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
             obj.Id = (attr != null) ? attr.Value : string.Empty;
 
             attr = req.Descriptor.Element.Attributes[RuleConstants.WorshipRuleTimeAttrName];
-            obj.Time = new ItemTime((attr != null) ? attr.Value : string.Empty);
+            obj.Time = new VariableItemTime((attr != null) ? attr.Value : string.Empty);
 
             obj.Name = req.Descriptor.Element
                 .GetItemTextStyled(SerializerRoot.TypiconSerializer, RuleConstants.WorshipRuleNameNode);

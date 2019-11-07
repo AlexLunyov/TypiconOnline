@@ -25,7 +25,7 @@ namespace TypiconOnline.Domain.Serialization
         /// </summary>
         /// <typeparam name="T">Елемент правила. Также учитываются все его наследники</typeparam>
         /// <returns></returns>
-        public IRuleSerializerContainer<T> Container<T>() where T : IRuleElement
+        public virtual IRuleSerializerContainer<T> Container<T>() where T : IRuleElement
         {
             string key = typeof(T).Name;
             if (factories.Keys.Contains(key) == true)
@@ -42,7 +42,7 @@ namespace TypiconOnline.Domain.Serialization
         /// <typeparam name="T1">Елемент правила. Также учитываются все его наследники</typeparam>
         /// <typeparam name="T2">Второе условие</typeparam>
         /// <returns></returns>
-        public IRuleSerializerContainer<T1> Container<T1, T2>() where T1 : IRuleElement
+        public virtual IRuleSerializerContainer<T1> Container<T1, T2>() where T1 : IRuleElement
         {
             string key = typeof(T1).Name + typeof(T2).Name;
 

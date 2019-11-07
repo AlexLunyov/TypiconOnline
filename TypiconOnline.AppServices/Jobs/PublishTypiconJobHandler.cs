@@ -97,6 +97,7 @@ namespace TypiconOnline.AppServices.Jobs
                             transaction.Rollback();
 
                             version.Value.Typicon.Status = prevStatus;
+                            version.Value.IsModified = true;
                             await _dbContext.UpdateTypiconEntityAsync(version.Value.Typicon);
 
                             return Fail(job, ex.Message);
