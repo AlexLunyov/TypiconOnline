@@ -97,6 +97,11 @@ namespace TypiconOnline.Domain.Typicon
         public virtual bool IsModified { get; set; }
 
         /// <summary>
+        /// Признак, является ли Версия Шаблоном (может иметь Переменные и быть опубликована)
+        /// </summary>
+        public bool IsTemplate { get; set; }
+
+        /// <summary>
         /// Дата создания черновика
         /// </summary>
         public DateTime CDate { get; set; }
@@ -110,7 +115,8 @@ namespace TypiconOnline.Domain.Typicon
         public DateTime? EDate { get; set; }
 
         public ValidationStatus ValidationStatus { get; set; }
-
+        
+        //TODO: Убрать - не используется
         protected List<TypiconVersionError> Errors { get; set; }
         /// <summary>
         /// Признак того, был ли объект валидирован.

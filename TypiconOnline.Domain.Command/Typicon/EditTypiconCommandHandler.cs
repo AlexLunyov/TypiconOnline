@@ -29,11 +29,36 @@ namespace TypiconOnline.Domain.Command.Typicon
             //будет думать, что TypiconEntity удалена
             found.Name.ReplaceValues(command.Name);
 
+            //считаем, что существует версия Черновика Устава
+            //Находим его и выставлем значение свойства IsTemplate
+            UpdateIsTemplateProperty(found, command.IsTemplate);
+
             found.DefaultLanguage = command.DefaultLanguage;
 
             DbContext.Set<TypiconEntity>().Update(found);
 
             await DbContext.SaveChangesAsync();
+
+            return Result.Ok();
+        }
+
+        private Result UpdateIsTemplateProperty(TypiconEntity found, bool isTemplate)
+        {
+            //назодим черновик
+            var draft = DbContext.Set<TypiconVersion>()
+                .FirstOrDefault(c => c.TypiconId == found.Id
+                                && c.BDate == null && c.EDate == null);
+
+            if (draft == null)
+            {
+                return Result.Fail($"Версия черновика Устава с id={found.Id} не найдена.");
+            }
+
+            if (draft.IsTemplate != isTemplate)
+            {
+                draft.IsTemplate = isTemplate;
+                draft.IsModified = true;
+            }
 
             return Result.Ok();
         }

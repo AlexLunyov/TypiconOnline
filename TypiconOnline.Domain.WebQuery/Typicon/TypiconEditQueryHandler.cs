@@ -37,6 +37,8 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                     Name = typicon.Name,
                     DefaultLanguage = typicon.DefaultLanguage,
                     IsModified =  draft.IsModified,
+                    IsTemplate = draft.IsTemplate,
+                    HasVariables = draft.TypiconVariables.Any(),
                     Editors = typicon.Editors.Select(c => (c.Id, c.FullName))
                 });
             }

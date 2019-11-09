@@ -59,9 +59,13 @@ namespace TypiconOnline.Web.Controllers
                 var weekResult = _queryProcessor.Process(new OutputWeekQuery(id.Value, date, new OutputFilter() { Language = language }));
 
                 ViewBag.Week = weekResult;
-            }
 
-            return View();
+                return View();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // GET api/<controller>/getweek/1/01-01-2019

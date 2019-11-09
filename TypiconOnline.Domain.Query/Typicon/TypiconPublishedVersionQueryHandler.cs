@@ -19,7 +19,10 @@ namespace TypiconOnline.Domain.Query.Typicon
         public Result<TypiconVersion> Handle(TypiconPublishedVersionQuery query)
         {
             var version = DbContext.Set<TypiconVersion>()
-                .FirstOrDefault(c => c.TypiconId == query.TypiconId && c.BDate != null && c.EDate == null);
+                .FirstOrDefault(c => c.TypiconId == query.TypiconId 
+                                && c.BDate != null 
+                                && c.EDate == null
+                                && !c.IsTemplate);
 
             return (version != null)
                 ? Result.Ok(version)

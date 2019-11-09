@@ -19,6 +19,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
             var versions = DbContext.Set<TypiconVersion>()
                 .AsNoTracking()
                 .Where(c => c.BDate != null && c.EDate == null)
+                .Where(c => !c.IsTemplate)
                 //.Where(c => c.IsPublished)
                 //.AsEnumerable()
                 .Select(c => new TypiconEntityModel()

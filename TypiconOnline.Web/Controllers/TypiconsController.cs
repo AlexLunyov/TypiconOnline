@@ -157,7 +157,7 @@ namespace TypiconOnline.Web.Controllers
                     return NotFound();
                 }
 
-                var command = new EditTypiconCommand(model.Id, model.Name, model.DefaultLanguage);
+                var command = new EditTypiconCommand(model.Id, model.Name, model.IsTemplate, model.DefaultLanguage);
 
                 await CommandProcessor.ExecuteAsync(command);
 

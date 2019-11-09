@@ -31,22 +31,28 @@ namespace TypiconOnline.AppServices.Jobs
         protected override async Task<Result> DoTheJob(PublishTypiconJob job)
         {
             //находим черновик
-            var version = _dbContext.GetTypiconVersion(job.TypiconId, TypiconVersionStatus.Draft);
+            var found = _dbContext.GetTypiconVersion(job.TypiconId, TypiconVersionStatus.Draft);
 
-            if (version.Success)
+            if (found.Success)
             {
-                if (version.Value.Typicon.Status == TypiconStatus.Approving
-                    || version.Value.Typicon.Status == TypiconStatus.Publishing
-                    || version.Value.Typicon.Status == TypiconStatus.Validating)
+                var version = found.Value;
+                if (version.Typicon.Status == TypiconStatus.Approving
+                    || version.Typicon.Status == TypiconStatus.Publishing
+                    || version.Typicon.Status == TypiconStatus.Validating)
                 {
                     return Fail(job, "Устав находится в состоянии, не подлежащем для публикации");
                 }
+                //Шаблон и есть переменные - так нельзя публиковать
+                else if (!version.IsTemplate && version.TypiconVariables.Any())
+                {
+                    return Fail(job, "Устав находится в состоянии, не подлежащем для публикации. Устав должен быть либо определен как Шаблон, либо всем Переменным должны быть заданы значения.");
+                }
                 else
                 {
-                    var prevStatus = version.Value.Typicon.Status;
+                    var prevStatus = version.Typicon.Status;
                     //TypiconEntity
-                    version.Value.Typicon.Status = TypiconStatus.Publishing;
-                    await _dbContext.UpdateTypiconEntityAsync(version.Value.Typicon);
+                    version.Typicon.Status = TypiconStatus.Publishing;
+                    await _dbContext.UpdateTypiconEntityAsync(version.Typicon);
 
                     using (var transaction = _dbContext.Database.BeginTransaction())
                     {
@@ -57,13 +63,13 @@ namespace TypiconOnline.AppServices.Jobs
                              */
                             //version.Value.ValidationStatus
 
-                            version.Value.IsModified = false;
-                            version.Value.ModifiedYears.Clear();
+                            version.IsModified = false;
+                            version.ModifiedYears.Clear();
 
                             //new draft
-                            var clone = version.Value.Clone();
+                            var clone = version.Clone();
                             clone.TypiconId = job.TypiconId;
-                            clone.VersionNumber = version.Value.VersionNumber + 1;
+                            clone.VersionNumber = version.VersionNumber + 1;
                             clone.BDate = null;
                             await _dbContext.UpdateTypiconVersionAsync(clone);
 
@@ -75,16 +81,16 @@ namespace TypiconOnline.AppServices.Jobs
                             }
 
                             //new publish
-                            version.Value.BDate = DateTime.Now;
+                            version.BDate = DateTime.Now;
 
                             //outputforms
                             await _dbContext.ClearOutputFormsAsync(job.TypiconId);
 
-                            //SendMessage to Owner and sender
+                            //TODO: SendMessage to Owner and sender
 
 
                             //typiconEntity
-                            version.Value.Typicon.Status = TypiconStatus.Published;
+                            version.Typicon.Status = TypiconStatus.Published;
 
                             _dbContext.SaveChanges();
 
@@ -96,9 +102,9 @@ namespace TypiconOnline.AppServices.Jobs
                         {
                             transaction.Rollback();
 
-                            version.Value.Typicon.Status = prevStatus;
-                            version.Value.IsModified = true;
-                            await _dbContext.UpdateTypiconEntityAsync(version.Value.Typicon);
+                            version.Typicon.Status = prevStatus;
+                            version.IsModified = true;
+                            await _dbContext.UpdateTypiconEntityAsync(version.Typicon);
 
                             return Fail(job, ex.Message);
                         }
@@ -107,9 +113,9 @@ namespace TypiconOnline.AppServices.Jobs
             }
             else
             {
-                //SendMessage to Owner and sender
+                //TODO: SendMessage to Owner and sender
 
-                return Fail(job, version.Error);
+                return Fail(job, found.Error);
             };
         }
 

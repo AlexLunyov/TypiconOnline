@@ -19,6 +19,7 @@ namespace TypiconOnline.Domain.Extensions
                 CDate = DateTime.Now,
                 EDate = source.EDate,
                 IsModified = source.IsModified,
+                IsTemplate = source.IsTemplate,
                 ValidationStatus = source.ValidationStatus,
                 VersionNumber = source.VersionNumber,
                 PrevVersionId = source.Id
