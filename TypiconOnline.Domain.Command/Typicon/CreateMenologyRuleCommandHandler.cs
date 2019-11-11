@@ -27,13 +27,12 @@ namespace TypiconOnline.Domain.Command.Typicon
         {
             var c = command as CreateMenologyRuleCommand;
 
+
             var entity = new MenologyRule
             {
-                TypiconVersionId = typiconVersion.Id,
+                TypiconVersion = typiconVersion,
                 TemplateId = c.TemplateId,
                 IsAddition = c.IsAddition,
-                Date = (c.Date != null) ? new ItemDate(c.Date.Value.Month, c.Date.Value.Day) : new ItemDate(),
-                LeapDate = (c.LeapDate != null) ? new ItemDate(c.LeapDate.Value.Month, c.LeapDate.Value.Day) : new ItemDate(),
                 RuleDefinition = c.RuleDefinition,
                 ModRuleDefinition = c.ModRuleDefinition
             };

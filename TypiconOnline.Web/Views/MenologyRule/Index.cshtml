@@ -92,8 +92,11 @@
                     {
                         data: null, render: function (data, type, row)
                         {
-                            return '<a class="btn btn-info" href="/MenologyRule/Edit/' + row.Id + '">Edit</a> ' +
-                                '<a href="#" class="btn btn-danger btn-delete">Delete</a>';
+                            var str = '<a class="btn btn-info" href="/MenologyRule/Edit/' + row.Id + '">Edit</a> ';
+                            if (row.Date == "" && row.LeapDate == "") {
+                                str += '<a href="#" class="btn btn-danger btn-delete">Delete</a>';
+                            }
+                            return str;
                         },
                         orderable: false
                     },
@@ -106,6 +109,10 @@
         var table = $('#menologyGrid').DataTable();
         var row = table.row($(this).parents('tr'));
         var data = row.data();
+
+        if (data.Date != "" || data.LeapDate != "") {
+            return false;
+        }
 
         if (confirm('Вы действительно хотите удалить Правило Минеи "' + data.Name + '"?')) {
 

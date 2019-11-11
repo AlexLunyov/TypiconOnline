@@ -42,16 +42,6 @@ namespace TypiconOnline.Domain.Command.Typicon
 
             entity.TemplateId = c.TemplateId;
             entity.IsAddition = c.IsAddition;
-            if (c.Date != null)
-            {
-                entity.Date.Month = c.Date.Value.Month;
-                entity.Date.Day = c.Date.Value.Day;
-            }
-            if (c.LeapDate != null)
-            {
-                entity.LeapDate.Month = c.LeapDate.Value.Month;
-                entity.LeapDate.Day = c.LeapDate.Value.Day;
-            }
 
             entity.DayRuleWorships.Clear();
 

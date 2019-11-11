@@ -35,7 +35,7 @@ namespace TypiconOnline.Domain.Command.Typicon
                 Number = c.Number,
                 Priority = c.Priority,
                 RuleDefinition = c.RuleDefinition,
-                TypiconVersionId = typiconVersion.Id,
+                TypiconVersion = typiconVersion,
                 TemplateId = c.TemplateId
             };
 

@@ -20,5 +20,13 @@ namespace TypiconOnline.Domain.Command.Typicon
         {
             return await base.ExecuteAsync(command);
         }
+
+        protected override Result PerformAdditionalWork(MenologyRule found, DeleteRuleCommandBase<MenologyRule> command)
+        {
+            //удаляем только переходящие праздники
+            return (!found.LeapDate.IsEmpty || !found.Date.IsEmpty)
+                ? Result.Fail($"Удаление невозможно: Правило Минеи с Id={found.Id} не является Правлиом для переходящих праздников.")
+                : Result.Ok();
+        }
     }
 }

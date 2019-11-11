@@ -1,6 +1,9 @@
 ﻿@model MenologyRuleEditModel
 @{
     ViewData["Title"] = "Редактирование Правила Минеи";
+
+    const string DateFormat = "dd-MM-yyyy";
+    const string DateClientFormat = "DD-MM-YYYY";
 }
 <div class="row">
     <div class="col-12">
@@ -89,21 +92,19 @@
                     <div class="form-group">
                         <div class="col-sm-8">
                             <label asp-for="Date">Дата:</label>
-                            <div class="input-group date" id="date">
-                                <input type="text" class="form-control" />
-                                <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="@((Model.Date.HasValue) ? Model.Date.Value.ToString("dd MMMM") : "" )" readonly />
+                                <input type="hidden" id="date_val" class="form-control" value="@((Model.Date.HasValue) ? Model.Date.Value.ToString(DateFormat) : "" )" />
                             </div>
-                            <input type="hidden" id="dtp_date" value="@Model.Date?.ToString("yyyy-MM-dd")" name="Date" />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-8">
-                            <label asp-for="Date">Дата (високосный год):</label>
-                            <div class="input-group date" id="leapdate">
-                                <input type="text" class="form-control" />
-                                <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+                            <label asp-for="LeapDate">Дата (високосный год):</label>
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="@((Model.LeapDate.HasValue) ? Model.LeapDate.Value.ToString("dd MMMM") : "" )" readonly />
+                                <input type="hidden" id="leapdate_val" class="form-control" value="@((Model.LeapDate.HasValue) ? Model.LeapDate.Value.ToString(DateFormat) : "" )" />
                             </div>
-                            <input type="hidden" id="dtp_leapdate" value="@Model.LeapDate?.ToString("yyyy-MM-dd")" name="LeapDate" />
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -193,78 +194,21 @@
             createTextArea("modRule", '@Model.ModRuleDefinition');
             createTextArea("rule", '@Model.RuleDefinition');
 
-            $('#date').datetimepicker({
-            locale: 'ru',
-            dayViewHeaderFormat: "MMMM",
-            format: "DD MMMM",
-            viewMode: "days",
-            maxDate: "2017-12-31",
-            minDate: "2017-01-01",
-            useCurrent: false,
-            showClear: true
-            @if (Model.Date != null)
-            {
-                <text>, defaultDate: "@Model.Date?.ToString("yyyy-MM-dd")"</text>
-            }
-            })
-            .on('dp.change', function (e) {
-                if (!e.date) {
-                    $('#dtp_date').attr("value", "");
-                }
-                else {
-                    $('#dtp_date').attr("value", moment(e.date).format("YYYY-MM-DD"));
-                }
-            })
-            @if (Model.Date == null)
-            {
-                <text>.on('dp.show', function() {
-                    return $(this).data('DateTimePicker').defaultDate(moment("2017-01-01"));
-                })</text>
-            };
-
-            $('#leapdate').datetimepicker({
-                locale: 'ru',
-                dayViewHeaderFormat: "MMMM",
-                format: "DD MMMM",
-                viewMode: "days",
-                maxDate: "2016-12-31",
-                minDate: "2016-01-01",
-                useCurrent: false,
-                showClear: true
-                @if (Model.LeapDate != null)
-                {
-                    <text>, defaultDate: "@Model.LeapDate?.ToString("yyyy-MM-dd")"</text>
-                }
-            })
-            .on('dp.change', function (e) {
-                if (!e.date) {
-                    $('#dtp_leapdate').attr("value", "");
-                }
-                else {
-                    $('#dtp_leapdate').attr("value", moment(e.date).format("YYYY-MM-DD"));
-                }
-            })
-            @if (Model.LeapDate == null)
-            {
-                <text>.on('dp.show', function() {
-                    return $(this).data('DateTimePicker').defaultDate(moment("2016-01-01"));
-                })</text>
-            };
-
             //dayworships
 
             $('.add-worship').on('click', function () {
 
                 //задаем значение календарю
-
-                var date = $('#date').data("DateTimePicker").date();
+                var date = moment($('#date_val').val(), "@(DateClientFormat)");
                 if (date != null) {
                     date.add(-1, 'year');
+                    alert(date);
                     $('#wdate').data("DateTimePicker").date(date);
                 }
                 else {
-                    date = $('#leapdate').data("DateTimePicker").date();
+                    date = moment($('#leapdate_val').val(), "@(DateClientFormat)");
                     if (date != null) {
+                        alert(date);
                         $('#wdate').data("DateTimePicker").date(date);
                     }
                 }
@@ -339,7 +283,7 @@
                     '<td>' + data.Name + '</td>' +
                     '<td>' + data.ShortName + '</td>' +
                     '<td>' + data.IsCelebrating + '</td>' +
-                    '<td>' + trLast.find("td:last-child").html() + '</td>' +
+                    '<td>' + getWorshipActionsCell("DayWorships") + '</td>' +
                     '</tr>';
                 //добавляем ряд
                 $("#dayworships").append(tr);

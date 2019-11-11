@@ -1,4 +1,4 @@
-﻿@model MenologyRuleEditModel
+﻿@model MenologyRuleCreateModel
 @{
     ViewData["Title"] = "Создание Правила Минеи";
 }
@@ -25,7 +25,7 @@
         <div class="tab-content">
             <div class="tab-pane fade in active">
                 <div class="col-md-8">
-                    <h2>Редактирование свойств Правила Минеи</h2>
+                    <h2>Создание Правила Минеи</h2>
                 </div>
                 <div class="clearfix"></div>
                 <form asp-action="Edit" method="post">
@@ -77,33 +77,13 @@
                         <select class="form-control" asp-for="TemplateId" asp-items="@ViewBag.Signs">
                             <option value="">[Нет шаблона]</option>
                         </select>
+                        <span asp-validation-for="TemplateId" class="text-danger"></span>
                     </div>
                     <div class="clearfix"></div>
                     <div class="checkbox col-sm-8">
                         <label>
                             <input type="checkbox" asp-for="IsAddition" /> <b>Как дополнение</b>
                         </label>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="form-group">
-                        <div class="col-sm-8">
-                            <label asp-for="Date">Дата:</label>
-                            <div class="input-group date" id="date">
-                                <input type="text" class="form-control" />
-                                <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
-                            </div>
-                            <input type="hidden" id="dtp_date" value="@Model.Date?.ToString("yyyy-MM-dd")" name="Date" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-8">
-                            <label asp-for="Date">Дата (високосный год):</label>
-                            <div class="input-group date" id="leapdate">
-                                <input type="text" class="form-control" />
-                                <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
-                            </div>
-                            <input type="hidden" id="dtp_leapdate" value="@Model.LeapDate?.ToString("yyyy-MM-dd")" name="LeapDate" />
-                        </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="form-group col-xs-12">
@@ -192,98 +172,18 @@
             createTextArea("modRule", '@Model.ModRuleDefinition');
             createTextArea("rule", '@Model.RuleDefinition');
 
-            $('#date').datetimepicker({
-            locale: 'ru',
-            dayViewHeaderFormat: "MMMM",
-            format: "DD MMMM",
-            viewMode: "days",
-            maxDate: "2017-12-31",
-            minDate: "2017-01-01",
-            useCurrent: false,
-            showClear: true
-            @if (Model.Date != null)
-            {
-                <text>, defaultDate: "@Model.Date?.ToString("yyyy-MM-dd")"</text>
-            }
-            })
-            .on('dp.change', function (e) {
-                if (!e.date) {
-                    $('#dtp_date').attr("value", "");
-                }
-                else {
-                    $('#dtp_date').attr("value", moment(e.date).format("YYYY-MM-DD"));
-                }
-            })
-            @if (Model.Date == null)
-            {
-                <text>.on('dp.show', function() {
-                    return $(this).data('DateTimePicker').defaultDate(moment("2017-01-01"));
-                })</text>
-            };
-
-            $('#leapdate').datetimepicker({
-                locale: 'ru',
-                dayViewHeaderFormat: "MMMM",
-                format: "DD MMMM",
-                viewMode: "days",
-                maxDate: "2016-12-31",
-                minDate: "2016-01-01",
-                useCurrent: false,
-                showClear: true
-                @if (Model.LeapDate != null)
-                {
-                    <text>, defaultDate: "@Model.LeapDate?.ToString("yyyy-MM-dd")"</text>
-                }
-            })
-            .on('dp.change', function (e) {
-                if (!e.date) {
-                    $('#dtp_leapdate').attr("value", "");
-                }
-                else {
-                    $('#dtp_leapdate').attr("value", moment(e.date).format("YYYY-MM-DD"));
-                }
-            })
-            @if (Model.LeapDate == null)
-            {
-                <text>.on('dp.show', function() {
-                    return $(this).data('DateTimePicker').defaultDate(moment("2016-01-01"));
-                })</text>
-            };
-
             //dayworships
 
             $('.add-worship').on('click', function () {
 
                 //задаем значение календарю
 
-                var date = $('#date').data("DateTimePicker").date();
-                if (date != null) {
-                    date.add(-1, 'year');
-                    $('#wdate').data("DateTimePicker").date(date);
-                }
-                else {
-                    date = $('#leapdate').data("DateTimePicker").date();
-                    if (date != null) {
-                        $('#wdate').data("DateTimePicker").date(date);
-                    }
-                }
-
-                if (date == null) {
-
-                    $('.nodate').addClass('active');
+                $('.nodate').addClass('active');
                     //задаем значение таблице
                     table.ajax.url('/MenologyRule/GetDayWorships/').load();
-                }
-                else {
-                    $('.nodate').removeClass('active');
-                    //задаем значение таблице
-                    table.ajax.url('/MenologyRule/GetDayWorships/' + moment(date).format("YYYY-MM-DD")).load();
-                }
 
                 $(".dayworships-modal").modal('show');
             });
-
-
 
             var table = $("#worshipsGrid").DataTable(
             {
@@ -298,7 +198,7 @@
                 autoWidth: true,
                 rowId: "WorshipId",
                 ajax: {
-                    "url": "/MenologyRule/GetDayWorships/@Model.LeapDate?.ToString("yyyy-MM-dd")",
+                    "url": "/MenologyRule/GetDayWorships/",
                     "type": "GET",
                     "datatype": "json"
                 },

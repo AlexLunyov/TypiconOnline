@@ -81,8 +81,6 @@ namespace TypiconOnline.Web.Controllers
                     model.DayWorships.Select(c => (c.WorshipId, c.Order)),
                     model.TemplateId,
                     model.IsAddition,
-                    model.Date,
-                    model.LeapDate,
                     model.RuleDefinition,
                     model.ModRuleDefinition);
 
@@ -112,14 +110,14 @@ namespace TypiconOnline.Web.Controllers
             {
                 ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Id, DEFAULT_LANGUAGE);
 
-                return View(new MenologyRuleEditModel());
+                return View(new MenologyRuleCreateModel());
             }
 
             return Unauthorized();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(MenologyRuleEditModel model)
+        public async Task<IActionResult> Create(MenologyRuleCreateModel model)
         {
             var typiconEntity = QueryProcessor.Process(new TypiconEntityQuery(model.Id));
 
@@ -131,8 +129,6 @@ namespace TypiconOnline.Web.Controllers
                     model.DayWorships.Select(c => (c.WorshipId, c.Order)),
                     model.TemplateId,
                     model.IsAddition,
-                    model.Date,
-                    model.LeapDate,
                     model.RuleDefinition,
                     model.ModRuleDefinition);
 
@@ -171,7 +167,7 @@ namespace TypiconOnline.Web.Controllers
                     || m.LeapDate == searchValue;
         }
 
-        protected override IGridQuery<MenologyRuleModel> GetQuery(int id) => new AllMenologyDaysQuery(id, DEFAULT_LANGUAGE);
+        protected override IGridQuery<MenologyRuleModel> GetQuery(int id) => new AllMenologyRulesWebQuery(id, DEFAULT_LANGUAGE);
 
         protected override TypiconEntityByChildQuery<MenologyRule> GetTypiconEntityByChildQuery(int id)
             => new TypiconEntityByMenologyRuleQuery(id);

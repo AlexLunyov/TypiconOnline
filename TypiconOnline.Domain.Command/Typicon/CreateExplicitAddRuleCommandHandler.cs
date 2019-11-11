@@ -31,7 +31,7 @@ namespace TypiconOnline.Domain.Command.Typicon
             {
                 Date = c.Date,
                 RuleDefinition = c.RuleDefinition,
-                TypiconVersionId = typiconVersion.Id,
+                TypiconVersion = typiconVersion,
             };
 
             entity.SyncRuleVariables(SerializerRoot);

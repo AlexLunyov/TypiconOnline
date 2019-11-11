@@ -18,14 +18,14 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
     /// <summary>
     /// Возвращает все Знаки служб у черновика Сущности Устава
     /// </summary>
-    public class AllMenologyRulesQueryHandler : DbContextQueryBase, IQueryHandler<AllMenologyDaysQuery, Result<IQueryable<MenologyRuleModel>>>
+    public class AllMenologyRulesWebQueryHandler : DbContextQueryBase, IQueryHandler<AllMenologyRulesWebQuery, Result<IQueryable<MenologyRuleModel>>>
     {
-        public AllMenologyRulesQueryHandler(TypiconDBContext dbContext) : base(dbContext)
+        public AllMenologyRulesWebQueryHandler(TypiconDBContext dbContext) : base(dbContext)
         {
             
         }
 
-        public Result<IQueryable<MenologyRuleModel>> Handle([NotNull] AllMenologyDaysQuery query)
+        public Result<IQueryable<MenologyRuleModel>> Handle([NotNull] AllMenologyRulesWebQuery query)
         {
             var draft = DbContext.Set<TypiconVersion>()
                             .Where(c => c.TypiconId == query.TypiconId 
@@ -71,7 +71,5 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
             return Result.Ok(result);
         }
-
-        
     }
 }

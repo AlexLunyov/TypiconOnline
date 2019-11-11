@@ -9,9 +9,9 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
-    public class AllMenologyDaysQuery : IGridQuery<MenologyRuleModel>
+    public class AllMenologyRulesWebQuery : IGridQuery<MenologyRuleModel>
     {
-        public AllMenologyDaysQuery(int typiconId, string language)
+        public AllMenologyRulesWebQuery(int typiconId, string language)
         {
             TypiconId = typiconId;
             Language = language;
@@ -19,6 +19,6 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         public int TypiconId { get; }
         public string Language { get; }
 
-        public string GetKey() => $"{nameof(AllMenologyDaysQuery)}.{TypiconId}.{Language}";
+        public string GetKey() => $"{nameof(AllMenologyRulesWebQuery)}.{TypiconId}.{Language}";
     }
 }

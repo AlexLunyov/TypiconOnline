@@ -94,3 +94,11 @@ function calcAddBtn(tableId, btn) {
         $(btn).removeAttr("disabled");
     }
 }
+
+function getWorshipActionsCell(name) {
+    return '<input class="WorshipId" type="hidden" asp-for="' + name + '.DayWorships[i].WorshipId" />' +
+            '<input class="Order" type = "hidden" asp -for= "' + name + '.DayWorships[i].Order" />' +
+            '<a class="down" title="Переместить вниз" data-toggle="tooltip"><i class="material-icons">arrow_drop_down</i></a>' +
+            '<a class="up" title="Переместить вверх" data-toggle="tooltip"><i class="material-icons">arrow_drop_up</i></a>' +
+            '<a class="delete" title="Удалить" data-toggle="tooltip"><i class="material-icons">delete</i></a>';
+}
