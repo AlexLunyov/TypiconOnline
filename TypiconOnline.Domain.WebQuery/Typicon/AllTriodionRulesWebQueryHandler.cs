@@ -16,16 +16,16 @@ using TypiconOnline.Repository.EFCore.DataBase;
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
     /// <summary>
-    /// Возвращает все Знаки служб у черновика Сущности Устава
+    /// 
     /// </summary>
-    public class AllMenologyRulesWebQueryHandler : DbContextQueryBase, IQueryHandler<AllMenologyRulesWebQuery, Result<IQueryable<MenologyRuleGridModel>>>
+    public class AllTriodionRulesWebQueryHandler : DbContextQueryBase, IQueryHandler<AllTriodionRulesWebQuery, Result<IQueryable<TriodionRuleGridModel>>>
     {
-        public AllMenologyRulesWebQueryHandler(TypiconDBContext dbContext) : base(dbContext)
+        public AllTriodionRulesWebQueryHandler(TypiconDBContext dbContext) : base(dbContext)
         {
             
         }
 
-        public Result<IQueryable<MenologyRuleGridModel>> Handle([NotNull] AllMenologyRulesWebQuery query)
+        public Result<IQueryable<TriodionRuleGridModel>> Handle([NotNull] AllTriodionRulesWebQuery query)
         {
             var draft = DbContext.Set<TypiconVersion>()
                             .Where(c => c.TypiconId == query.TypiconId 
@@ -34,10 +34,10 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
             if (draft == null)
             {
-                return Result.Fail<IQueryable<MenologyRuleGridModel>>($"Черновик для Устава с Id={query.TypiconId} не был найден.");
+                return Result.Fail<IQueryable<TriodionRuleGridModel>>($"Черновик для Устава с Id={query.TypiconId} не был найден.");
             }
 
-            var entities = DbContext.Set<MenologyRule>()
+            var entities = DbContext.Set<TriodionRule>()
                 .Include(c => c.DayRuleWorships)
                     .ThenInclude(c => c.DayWorship)
                         .ThenInclude(c => c.WorshipName)
@@ -52,17 +52,16 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 .Where(c => c.TypiconVersionId == draft.Id);
                 //.ToList();
 
-            var result = entities.Select(c => new MenologyRuleGridModel()
-                {
-                    Id = c.Id,
-                    IsAddition = c.IsAddition,
-                    Name = c.GetNameByLanguage(query.Language),
-                    Date = (!c.Date.IsEmpty) ? c.Date.ToString() : string.Empty,
-                    LeapDate = (!c.LeapDate.IsEmpty) ? c.LeapDate.ToString() : string.Empty,
-                    HasModRuleDefinition = !string.IsNullOrEmpty(c.ModRuleDefinition),
-                    HasRuleDefinition = !string.IsNullOrEmpty(c.RuleDefinition),
-                    TemplateName = c.Template.GetNameByLanguage(query.Language)
-                });
+            var result = entities.Select(c => new TriodionRuleGridModel()
+            {
+                Id = c.Id,
+                Name = c.GetNameByLanguage(query.Language),
+                DaysFromEaster = c.DaysFromEaster,
+                IsTransparent = c.IsTransparent,
+                HasModRuleDefinition = !string.IsNullOrEmpty(c.ModRuleDefinition),
+                HasRuleDefinition = !string.IsNullOrEmpty(c.RuleDefinition),
+                TemplateName = c.Template.GetNameByLanguage(query.Language)
+            });
 
             //ужасная мера
             //result = result

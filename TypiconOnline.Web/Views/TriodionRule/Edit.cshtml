@@ -1,9 +1,6 @@
-﻿@model MenologyRuleEditModel
+﻿@model TriodionRuleCreateEditModel
 @{
-    ViewData["Title"] = "Редактирование Правила Минеи";
-
-    const string DateFormat = "dd-MM-yyyy";
-    const string DateClientFormat = "DD-MM-YYYY";
+    ViewData["Title"] = "Редактирование Правила Триоди";
 }
 <div class="row">
     <div class="col-12">
@@ -29,7 +26,7 @@
         <div class="tab-content">
             <div class="tab-pane fade in active">
                 <div class="col-md-8">
-                    <h2>Редактирование свойств Правила Минеи</h2>
+                    <h2>Редактирование свойств Правила Триоди</h2>
                 </div>
                 <div class="clearfix"></div>
                 <form asp-action="Edit" method="post">
@@ -85,28 +82,15 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="checkbox col-sm-8">
-                        <label>
-                            <input type="checkbox" asp-for="IsAddition" /> <b>Как дополнение</b>
-                        </label>
+                        <label asp-for="DaysFromEaster">Количество дней от Пасхи:</label>
+                        <input type="number" id="daysFE_val" class="form-control" asp-for="DaysFromEaster" />
+                        <span asp-validation-for="DaysFromEaster" class="text-danger"></span>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="form-group">
-                        <div class="col-sm-8">
-                            <label asp-for="Date">Дата:</label>
-                            <div class="form-group">
-                                <input type="text" class="form-control" value="@((Model.Date.HasValue) ? Model.Date.Value.ToString("dd MMMM") : "" )" readonly />
-                                <input type="hidden" id="date_val" class="form-control" value="@((Model.Date.HasValue) ? Model.Date.Value.ToString(DateFormat) : "" )" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-8">
-                            <label asp-for="LeapDate">Дата (високосный год):</label>
-                            <div class="form-group">
-                                <input type="text" class="form-control" value="@((Model.LeapDate.HasValue) ? Model.LeapDate.Value.ToString("dd MMMM") : "" )" readonly />
-                                <input type="hidden" id="leapdate_val" class="form-control" value="@((Model.LeapDate.HasValue) ? Model.LeapDate.Value.ToString(DateFormat) : "" )" />
-                            </div>
-                        </div>
+                    <div class="checkbox col-sm-8">
+                        <label>
+                            <input type="checkbox" asp-for="IsTransparent" /> <b>Как "прозрачное" дополнение</b>
+                        </label>
                     </div>
                     <div class="clearfix"></div>
                     <div class="form-group col-xs-12">
@@ -141,13 +125,12 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    
                     <div class="col-sm-12 col-md-4">
-                        <div id="wdate"></div>
-                        <button type="button" class="btn btn-primary nodate" aria-pressed="true">Переходящие праздники</button>
+                        <label>Количество дней от Пасхи:</label>
+                        <input type="number" id="daysFE" class="form-control" placeholder="Количество дней от Пасхи" />
                     </div>
                     <div class="col-sm-12 col-md-8">
-                        <table id="worshipsGrid" class="table table-striped table-bOrdered" style="width:100%">
+                        <table id="trwGrid" class="table table-striped table-bOrdered" style="width:100%">
                             <thead class="text-center">
                                 <tr>
                                     <th>Id</th>
@@ -170,8 +153,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="~/css/itemtext.css" />
 
-    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
-
     <script src="~/lib/codemirror/codemirror.js"></script>
     <link rel="stylesheet" href="~/lib/codemirror/codemirror.css">
     <link rel="stylesheet" href="~/lib/codemirror/show-hint.css">
@@ -181,9 +162,6 @@
     <script src="~/lib/codemirror/xml-hint.js"></script>
     <script src="~/js/textarea.js"></script>
     <script src="~/js/dayworships.js"></script>
-
-    <script src="~/lib/momentjs/moment-with-locales.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.min.js"></script>
 
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
@@ -199,39 +177,22 @@
 
             $('.add-worship').on('click', function () {
 
-                //задаем значение календарю
-                var date = moment($('#date_val').val(), "@(DateClientFormat)");
-                if (date != null) {
-                    date.add(-1, 'year');
-                    alert(date);
-                    $('#wdate').data("DateTimePicker").date(date);
+                //задаем значение полю
+                var days = $("daysFE_val").val();
+                if (days == null) {
+                    days = 0;
                 }
-                else {
-                    date = moment($('#leapdate_val').val(), "@(DateClientFormat)");
-                    if (date != null) {
-                        alert(date);
-                        $('#wdate').data("DateTimePicker").date(date);
-                    }
-                }
+                $("daysFE").val(days);
 
-                if (date == null) {
-
-                    $('.nodate').addClass('active');
-                    //задаем значение таблице
-                    table.ajax.url('/MenologyRule/GetDayWorships/').load();
-                }
-                else {
-                    $('.nodate').removeClass('active');
-                    //задаем значение таблице
-                    table.ajax.url('/MenologyRule/GetDayWorships/' + moment(date).format("YYYY-MM-DD")).load();
-                }
+                //задаем значение таблице
+                table.ajax.url('/TriodionRule/GetDayWorships/' + days).load();
 
                 $(".dayworships-modal").modal('show');
             });
 
             
 
-            var table = $("#worshipsGrid").DataTable(
+            var table = $("#trwGrid").DataTable(
             {
                 processing: true, // for show progress bar
                 serverSide: true, // for process server side
@@ -244,7 +205,7 @@
                 autoWidth: true,
                 rowId: "WorshipId",
                 ajax: {
-                    "url": "/MenologyRule/GetDayWorships/@Model.LeapDate?.ToString("yyyy-MM-dd")",
+                    "url": "/TriodionRule/GetDayWorships/",
                     "type": "GET",
                     "datatype": "json"
                 },
@@ -270,7 +231,7 @@
             });
 
             //добавляет службу в таблицу
-            $('#worshipsGrid').on('click', 'tbody tr td .btn-ws', function () {
+            $('#trwGrid').on('click', 'tbody tr td .btn-ws', function () {
                 var data = table.row($(this).parents('tr')).data();
 
                 //находим tr to
@@ -307,39 +268,6 @@
 
                 $('[data-toggle="tooltip"]').tooltip();
             });
-
-            //кнопка для загрузки переходящих праздников
-            $('.nodate').on('click', function () {
-                $('#wdate').data("DateTimePicker").clear();
-                $(this).addClass('active');
-
-                //задаем значение таблице
-                table.ajax.url('/MenologyRule/GetDayWorships/').load();
-            });
-
-            $('#wdate').datetimepicker({
-                locale: 'ru',
-                dayViewHeaderFormat: "MMMM",
-                format: "DD MMMM",
-                viewMode: "days",
-                maxDate: "2016-12-31",
-                minDate: "2016-01-01",
-                useCurrent: false,
-                inline: true,
-                defaultDate: "2016-01-01"
-            })
-            .on('dp.change', function (e) {
-
-                $('.nodate').removeClass('active');
-                table.ajax.url('/MenologyRule/GetDayWorships/' + moment(e.date).format("YYYY-MM-DD")).load();
-            })
-
-            @if (Model == null)
-            {
-                <text>.on('dp.show', function() {
-                    return $(this).data('DateTimePicker').defaultDate(moment("2016-01-01"));
-                })</text>
-            }
         });
         
     </script>

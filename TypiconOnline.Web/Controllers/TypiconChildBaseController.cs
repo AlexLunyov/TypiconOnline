@@ -53,7 +53,7 @@ namespace TypiconOnline.Web.Controllers
             {
                 //проверка на права доступа
 
-                var typiconEntity = QueryProcessor.Process(GetTypiconEntityByChildQuery(typiconId));
+                var typiconEntity = QueryProcessor.Process(GetTypiconEntityByChildQuery(ruleId));
 
                 if (typiconEntity.Success
                     && IsAuthorizedToEdit(typiconEntity.Value))

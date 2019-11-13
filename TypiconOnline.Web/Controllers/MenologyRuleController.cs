@@ -22,7 +22,7 @@ using TypiconOnline.WebServices.Authorization;
 namespace TypiconOnline.Web.Controllers
 {
     //[Authorize(Roles = RoleConstants.AdminAndEditorRoles)]
-    public class MenologyRuleController : TypiconChildBaseController<MenologyRuleModel, MenologyRule>
+    public class MenologyRuleController : TypiconChildBaseController<MenologyRuleGridModel, MenologyRule>
     {
         private const string DEFAULT_LANGUAGE = "cs-ru";
         //private readonly IDataQueryProcessor _queryProcessor;
@@ -89,7 +89,7 @@ namespace TypiconOnline.Web.Controllers
                 return RedirectToAction(nameof(Index), new { id = typiconEntity.Value.Id });
             }
 
-            ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Value.Id, DEFAULT_LANGUAGE, model.Id);
+            ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Value.Id, DEFAULT_LANGUAGE);
             ViewBag.TypiconId = typiconEntity.Value.Id;
 
             return View(model);
@@ -137,7 +137,7 @@ namespace TypiconOnline.Web.Controllers
                 return RedirectToAction(nameof(Index), new { id = typiconEntity.Id });
             }
 
-            ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Id, DEFAULT_LANGUAGE, model.Id);
+            ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Id, DEFAULT_LANGUAGE);
 
             return View(model);
         }
@@ -159,7 +159,7 @@ namespace TypiconOnline.Web.Controllers
 
         #region Overrides
 
-        protected override Expression<Func<MenologyRuleModel, bool>> BuildExpression(string searchValue)
+        protected override Expression<Func<MenologyRuleGridModel, bool>> BuildExpression(string searchValue)
         {
             return m => m.Name == searchValue
                     || m.TemplateName == searchValue
@@ -167,7 +167,7 @@ namespace TypiconOnline.Web.Controllers
                     || m.LeapDate == searchValue;
         }
 
-        protected override IGridQuery<MenologyRuleModel> GetQuery(int id) => new AllMenologyRulesWebQuery(id, DEFAULT_LANGUAGE);
+        protected override IGridQuery<MenologyRuleGridModel> GetQuery(int id) => new AllMenologyRulesWebQuery(id, DEFAULT_LANGUAGE);
 
         protected override TypiconEntityByChildQuery<MenologyRule> GetTypiconEntityByChildQuery(int id)
             => new TypiconEntityByMenologyRuleQuery(id);

@@ -9,7 +9,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
-    public class AllSignsQuery : IGridQuery<SignModel>
+    public class AllSignsQuery : IGridQuery<SignGridModel>
     {
         public AllSignsQuery(int typiconId, string language, int? exceptSignId = null)
         {

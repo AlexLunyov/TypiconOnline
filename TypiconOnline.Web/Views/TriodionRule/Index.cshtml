@@ -1,0 +1,126 @@
+﻿
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li><a href="/Typicons/Edit/@ViewContext.RouteData.Values["id"]#panel_properties">Свойства</a></li>
+        <li><a href="/Typicons/Edit/@ViewContext.RouteData.Values["id"]#panel_jobs">Операции</a></li>
+        <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                Редактирование Правил
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a asp-controller="Sign" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Знаки служб</a></li>
+                <li><a asp-controller="MenologyRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Правила Минеи</a></li>
+                <li class="active"><label>Правила Триоди</label></li>
+                <li><a asp-controller="CommonRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Общие Правила</a></li>
+                <li><a asp-controller="ExplicitAddRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Явные Правила</a></li>
+                <li><a asp-controller="Kathisma" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Кафизмы</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-12"><h1>Правила Триоди</h1></div>
+    </div>
+    <div class="row">
+        <div class="form-group col-12">
+            <a class="btn btn-primary" href="/TriodionRule/Create/@ViewContext.RouteData.Values["id"]">Новое Правило Триоди</a>
+        </div>
+        <div class="form-group col-12">
+            <div class="justify-content-center align-content-center">
+                <table id="triodionGrid" class="table table-striped table-bordered" style="width:100%">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>TemplateName</th>
+                            <th>DaysFromEaster</th>
+                            <th>IsTransparent</th>
+                            <th>HasModRule</th>
+                            <th>HasRule</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+   
+
+
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function ()
+    {
+        $("#triodionGrid").DataTable(
+            {
+                "processing": true, // for show progress bar
+                "serverSide": true, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url": "/TriodionRule/LoadData/@ViewContext.RouteData.Values["id"]",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs":
+                [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "columns": [
+                    { "data": "Id", "name": "Id", "autoWidth": true },
+                    { "data": "Name", "name": "Name", "autoWidth": true },
+                    { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
+                    { "data": "DaysFromEaster", "name": "DaysFromEaster", "autoWidth": true },
+                    { "data": "IsTransparent", "name": "IsTransparent", "autoWidth": true },
+                    { "data": "HasModRuleDefinition", "name": "HasModRuleDefinition", "autoWidth": true },
+                    { "data": "HasRuleDefinition", "name": "HasRuleDefinition", "autoWidth": true },
+                    {
+                        data: null, render: function (data, type, row)
+                        {
+                            return '<a class="btn btn-info" href="/TriodionRule/Edit/' + row.Id + '">Edit</a> <a href="#" class="btn btn-danger btn-delete">Delete</a>';
+                        },
+                        orderable: false
+                    },
+                ]
+            }
+        );
+    });
+
+    $('#triodionGrid').on('click', 'tbody tr td .btn-delete', function () {
+        var table = $('#triodionGrid').DataTable();
+        var row = table.row($(this).parents('tr'));
+        var data = row.data();
+
+        if (confirm('Вы действительно хотите удалить Правило Триоди "' + data.Name + '"?')) {
+
+            $.post("/TriodionRule/Delete/@ViewContext.RouteData.Values["id"]/"+ data.Id, function (result) {
+                if (result) {
+                    row.remove();
+                }
+                else {
+                    alert("Что-то пошло не так.");
+                }
+                table.draw(false);
+            });
+        }
+        else {
+            return false;
+        }
+    });
+
+
+</script>
+}
+

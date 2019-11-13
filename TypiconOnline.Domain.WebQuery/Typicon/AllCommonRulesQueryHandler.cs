@@ -18,14 +18,14 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
     /// <summary>
     /// Возвращает все Общие правила у черновика Сущности Устава
     /// </summary>
-    public class AllCommonRulesQueryHandler : DbContextQueryBase, IQueryHandler<AllCommonRulesQuery, Result<IQueryable<CommonRuleModel>>>
+    public class AllCommonRulesQueryHandler : DbContextQueryBase, IQueryHandler<AllCommonRulesQuery, Result<IQueryable<CommonRuleGridModel>>>
     {
         public AllCommonRulesQueryHandler(TypiconDBContext dbContext) : base(dbContext)
         {
             
         }
 
-        public Result<IQueryable<CommonRuleModel>> Handle([NotNull] AllCommonRulesQuery query)
+        public Result<IQueryable<CommonRuleGridModel>> Handle([NotNull] AllCommonRulesQuery query)
         {
             var draft = DbContext.Set<TypiconVersion>()
                             .Where(c => c.TypiconId == query.TypiconId && c.BDate == null && c.EDate == null)
@@ -33,13 +33,13 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
             if (draft == null)
             {
-                return Result.Fail<IQueryable<CommonRuleModel>>($"Черновик для Устава с Id={query.TypiconId} не был найден.");
+                return Result.Fail<IQueryable<CommonRuleGridModel>>($"Черновик для Устава с Id={query.TypiconId} не был найден.");
             }
 
             var CommonRules = DbContext.Set<CommonRule>()
                 .Where(c => c.TypiconVersionId == draft.Id);
 
-            var result = CommonRules.Select(c => new CommonRuleModel()
+            var result = CommonRules.Select(c => new CommonRuleGridModel()
                 {
                     Id = c.Id,
                     Name = c.Name

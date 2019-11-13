@@ -9,7 +9,16 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public class MenologyRuleCreateModel : MenologyRuleModelBase
+    public class TriodionRuleCreateEditModel : DayRuleModelBase<TriodionDayWorshipModel>
     {
+        public int DaysFromEaster { get; set; }
+        public bool IsTransparent { get; set; }
+        public TriodionRuleModelMode Mode { get; set; }
+    }
+
+    public enum TriodionRuleModelMode
+    {
+        Create,
+        Edit
     }
 }

@@ -5,13 +5,15 @@ using TypiconOnline.Domain.WebQuery.Interfaces;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public class SignModel : IGridModel
+    public class MenologyRuleGridModel : IGridModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string TemplateName { get; set; }
         public bool IsAddition { get; set; }
-        public int? Number { get; set; }
-        public int Priority { get; set; }
+        public string Date { get; set; }
+        public string LeapDate { get; set; }
+        public bool HasModRuleDefinition { get; set; }
+        public bool HasRuleDefinition { get; set; }
     }
 }

@@ -9,16 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public class MenologyRuleEditModel : IValidatableObject
+    public class MenologyRuleEditModel : MenologyRuleModelBase
     {
-        public int Id { get; set; }
-        public List<MenologyDayWorshipModel> DayWorships { get; set; } = new List<MenologyDayWorshipModel>();
-        public int TemplateId { get; set; }
-        public bool IsAddition { get; set; }
         public DateTime? Date { get; set; }
         public DateTime? LeapDate { get; set; }
-        public string ModRuleDefinition { get; set; }
-        public string RuleDefinition { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

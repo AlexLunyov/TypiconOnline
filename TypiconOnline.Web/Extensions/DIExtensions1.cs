@@ -20,12 +20,14 @@ using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Serialization;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Domain.WebQuery.Interfaces;
 using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.Web.Services;
 using TypiconOnline.WebServices.Authorization;
 using TypiconOnline.WebServices.Hosting;
 
@@ -138,7 +140,18 @@ namespace TypiconOnline.Web
 
             //For MySql
             //container.Register<JobAsyncHostedService>();
-            
+
+            #region Validation
+
+            // Register ModelValidator<TModel> adapter class
+            container.Register(typeof(ModelValidator<>), typeof(ModelValidator<>),
+                Lifestyle.Singleton);
+
+            // Auto-register all validator implementations
+            container.Collection.Register(
+                typeof(IValidator<>), typeof(MenologyRuleCreateModelValidator).Assembly);
+
+            #endregion
 
             #region AuthorizationHandlers
 

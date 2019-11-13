@@ -14,8 +14,8 @@ namespace TypiconOnline.Domain.Typicon
 
         public MenologyRule()
         {
-            //Date = new ItemDate();
-            //DateB = new ItemDate();
+            Date = new ItemDate();
+            LeapDate = new ItemDate();
         }
 
         public virtual ItemDate Date //{ get; set; }

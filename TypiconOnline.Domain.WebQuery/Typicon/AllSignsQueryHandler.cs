@@ -18,14 +18,14 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
     /// <summary>
     /// Возвращает все Знаки служб у черновика Сущности Устава
     /// </summary>
-    public class AllSignsQueryHandler : DbContextQueryBase, IQueryHandler<AllSignsQuery, Result<IQueryable<SignModel>>>
+    public class AllSignsQueryHandler : DbContextQueryBase, IQueryHandler<AllSignsQuery, Result<IQueryable<SignGridModel>>>
     {
         public AllSignsQueryHandler(TypiconDBContext dbContext) : base(dbContext)
         {
             
         }
 
-        public Result<IQueryable<SignModel>> Handle([NotNull] AllSignsQuery query)
+        public Result<IQueryable<SignGridModel>> Handle([NotNull] AllSignsQuery query)
         {
             var draft = DbContext.Set<TypiconVersion>()
                             .Where(c => c.TypiconId == query.TypiconId && c.BDate == null && c.EDate == null)
@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
             if (draft == null)
             {
-                return Result.Fail<IQueryable<SignModel>>($"Черновик для Устава с Id={query.TypiconId} не был найден.");
+                return Result.Fail<IQueryable<SignGridModel>>($"Черновик для Устава с Id={query.TypiconId} не был найден.");
             }
 
             var signs = DbContext.Set<Sign>()
@@ -44,7 +44,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 signs = signs.Where(c => c.Id != query.ExceptSignId.Value);
             }
 
-            var result = signs.Select(c => new SignModel()
+            var result = signs.Select(c => new SignGridModel()
                 {
                     Id = c.Id,
                     IsAddition = c.IsAddition,

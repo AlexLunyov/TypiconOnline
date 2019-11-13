@@ -9,16 +9,17 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
-    public class AllMenologyRulesWebQuery : IGridQuery<MenologyRuleGridModel>
+    public class TriodionDayWorshipQuery : IQuery<Result<IQueryable<TriodionDayWorshipModel>>>
     {
-        public AllMenologyRulesWebQuery(int typiconId, string language)
+        public TriodionDayWorshipQuery(int daysFromEaster, string language)
         {
-            TypiconId = typiconId;
+            DaysFromEaster = daysFromEaster;
             Language = language;
         }
-        public int TypiconId { get; }
+        /// <summary>
+        /// DaysFromEaster
+        /// </summary>
+        public int DaysFromEaster { get; }
         public string Language { get; }
-
-        public string GetKey() => $"{nameof(AllMenologyRulesWebQuery)}.{TypiconId}.{Language}";
     }
 }

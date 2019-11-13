@@ -9,7 +9,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
-    public class AllCommonRulesQuery : IGridQuery<CommonRuleModel>
+    public class AllCommonRulesQuery : IGridQuery<CommonRuleGridModel>
     {
         public AllCommonRulesQuery(int typiconId)
         {

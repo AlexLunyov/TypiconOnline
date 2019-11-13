@@ -122,7 +122,11 @@ namespace TypiconOnline.Web
             });
 
             //JSON
-            services.AddMvc()
+            services.AddMvc(options =>
+                {
+                    options.ModelValidatorProviders.Add(
+                        new SimpleInjectorModelValidatorProvider(container));
+                })
                 .AddNewtonsoftJson(options =>
                        options.SerializerSettings.ContractResolver =
                           new DefaultContractResolver());

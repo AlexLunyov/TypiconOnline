@@ -5,9 +5,9 @@ using TypiconOnline.Domain.WebQuery.Interfaces;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public class CommonRuleModel : IGridModel
+    public class ExplicitAddRuleGridModel : IGridModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Date { get; set; }
     }
 }

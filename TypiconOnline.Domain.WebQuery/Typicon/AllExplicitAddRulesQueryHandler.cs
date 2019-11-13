@@ -18,14 +18,14 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
     /// <summary>
     /// Возвращает все Явные правила у черновика Сущности Устава
     /// </summary>
-    public class AllExplicitAddRulesQueryHandler : DbContextQueryBase, IQueryHandler<AllExplicitAddRulesQuery, Result<IQueryable<ExplicitAddRuleModel>>>
+    public class AllExplicitAddRulesQueryHandler : DbContextQueryBase, IQueryHandler<AllExplicitAddRulesQuery, Result<IQueryable<ExplicitAddRuleGridModel>>>
     {
         public AllExplicitAddRulesQueryHandler(TypiconDBContext dbContext) : base(dbContext)
         {
             
         }
 
-        public Result<IQueryable<ExplicitAddRuleModel>> Handle([NotNull] AllExplicitAddRulesQuery query)
+        public Result<IQueryable<ExplicitAddRuleGridModel>> Handle([NotNull] AllExplicitAddRulesQuery query)
         {
             var draft = DbContext.Set<TypiconVersion>()
                             .Where(c => c.TypiconId == query.TypiconId && c.BDate == null && c.EDate == null)
@@ -33,13 +33,13 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
             if (draft == null)
             {
-                return Result.Fail<IQueryable<ExplicitAddRuleModel>>($"Черновик для Устава с Id={query.TypiconId} не был найден.");
+                return Result.Fail<IQueryable<ExplicitAddRuleGridModel>>($"Черновик для Устава с Id={query.TypiconId} не был найден.");
             }
 
             var found = DbContext.Set<ExplicitAddRule>()
                 .Where(c => c.TypiconVersionId == draft.Id);
 
-            var result = found.Select(c => new ExplicitAddRuleModel()
+            var result = found.Select(c => new ExplicitAddRuleGridModel()
             {
                 Id = c.Id,
                 Date = c.Date.ToString("dd-MM-yyyy")

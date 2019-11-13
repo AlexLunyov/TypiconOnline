@@ -22,7 +22,7 @@ using TypiconOnline.WebServices.Authorization;
 namespace TypiconOnline.Web.Controllers
 {
     //[Authorize(Roles = RoleConstants.AdminAndEditorRoles)]
-    public class CommonRuleController : TypiconChildBaseController<CommonRuleModel, CommonRule>
+    public class CommonRuleController : TypiconChildBaseController<CommonRuleGridModel, CommonRule>
     {
         private const string DEFAULT_LANGUAGE = "cs-ru";
         //private readonly IDataQueryProcessor _queryProcessor;
@@ -132,12 +132,12 @@ namespace TypiconOnline.Web.Controllers
 
         #region Overrides
 
-        protected override Expression<Func<CommonRuleModel, bool>> BuildExpression(string searchValue)
+        protected override Expression<Func<CommonRuleGridModel, bool>> BuildExpression(string searchValue)
         {
             return m => m.Name == searchValue;
         }
 
-        protected override IGridQuery<CommonRuleModel> GetQuery(int id) => new AllCommonRulesQuery(id);
+        protected override IGridQuery<CommonRuleGridModel> GetQuery(int id) => new AllCommonRulesQuery(id);
 
         protected override TypiconEntityByChildQuery<CommonRule> GetTypiconEntityByChildQuery(int id) 
             => new TypiconEntityByCommonRuleQuery(id);
