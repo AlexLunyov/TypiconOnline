@@ -6,11 +6,9 @@ using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public class ExplicitAddRuleEditModel
+    public class ExplicitAddRuleEditModel : RuleModelBase
     {
-        public int Id { get; set; }
         public DateTime Date { get; set; }
-        [Required]
-        public string RuleDefinition { get; set; }
+        public ModelMode Mode { get; set; }
     }
 }

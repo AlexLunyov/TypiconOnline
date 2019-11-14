@@ -13,10 +13,10 @@ namespace TypiconOnline.Domain.WebQuery.Models
     {
         public int DaysFromEaster { get; set; }
         public bool IsTransparent { get; set; }
-        public TriodionRuleModelMode Mode { get; set; }
+        public ModelMode Mode { get; set; }
     }
 
-    public enum TriodionRuleModelMode
+    public enum ModelMode
     {
         Create,
         Edit

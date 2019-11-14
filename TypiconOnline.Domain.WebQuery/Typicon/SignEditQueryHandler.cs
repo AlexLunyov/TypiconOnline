@@ -16,34 +16,34 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
     /// <summary>
     /// Возвращает Id и Name Устава
     /// </summary>
-    public class SignEditQueryHandler : DbContextQueryBase, IQueryHandler<SignEditQuery, Result<SignEditModel>>
+    public class SignEditQueryHandler : DbContextQueryBase, IQueryHandler<SignEditQuery, Result<SignCreateEditModel>>
     {
         public SignEditQueryHandler(TypiconDBContext dbContext)
             : base(dbContext)
         {
         }
 
-        public Result<SignEditModel> Handle([NotNull] SignEditQuery query)
+        public Result<SignCreateEditModel> Handle([NotNull] SignEditQuery query)
         {
             var found = DbContext.Set<Sign>().FirstOrDefault(c => c.Id == query.Id);
 
             if (found != null)
             {
-                return Result.Ok(new SignEditModel()
+                return Result.Ok(new SignCreateEditModel()
                 {
                     Id = found.Id,
                     Name = found.SignName,
                     IsAddition = found.IsAddition,
                     Number = found.Number,
                     Priority = found.Priority,
-                    TemplateId = found.TemplateId,
+                    TemplateId = found.TemplateId.HasValue ? found.TemplateId.Value : 0,
                     ModRuleDefinition = found.ModRuleDefinition,
                     RuleDefinition = found.RuleDefinition
                 });
             }
             else
             {
-                return Result.Fail<SignEditModel>($"Знак службы с Id={query.Id} не найден.");
+                return Result.Fail<SignCreateEditModel>($"Знак службы с Id={query.Id} не найден.");
             }
         }
     }

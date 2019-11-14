@@ -73,7 +73,9 @@ namespace TypiconOnline.Web.Controllers
         {
             var typiconEntity = QueryProcessor.Process(new TypiconEntityByTriodionRuleQuery(model.Id));
 
-            model.Mode = TriodionRuleModelMode.Edit;
+            model.Mode = ModelMode.Edit;
+
+            TryValidateModel(model);
 
             if (ModelState.IsValid
                 && typiconEntity.Success
@@ -124,7 +126,9 @@ namespace TypiconOnline.Web.Controllers
         {
             var typiconEntity = QueryProcessor.Process(new TypiconEntityQuery(model.Id));
 
-            model.Mode = TriodionRuleModelMode.Create;
+            model.Mode = ModelMode.Create;
+
+            TryValidateModel(model);
 
             if (ModelState.IsValid
                 && typiconEntity != null

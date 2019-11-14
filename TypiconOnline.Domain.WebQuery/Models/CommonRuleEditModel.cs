@@ -6,11 +6,10 @@ using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public class CommonRuleEditModel
+    public class CommonRuleEditModel : RuleModelBase
     {
-        public int Id { get; set; }
+        //[Required(ErrorMessage = "Поле обязательно для заполнения.")]
         public string Name { get; set; }
-        [Required]
-        public string RuleDefinition { get; set; }
+        public ModelMode Mode { get; set; }
     }
 }

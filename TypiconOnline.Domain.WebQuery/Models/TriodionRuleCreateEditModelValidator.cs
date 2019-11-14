@@ -33,13 +33,15 @@ namespace TypiconOnline.Domain.WebQuery.Models
             //проверяем на уникальность DaysFromEaster
             TriodionRule found = null;
 
-            if (model.Mode == TriodionRuleModelMode.Create)
+            if (model.Mode == ModelMode.Create)
             {
                 //если объект создается, Id = Id версии Устава,
                 //значит ищем TriodionRule с таким же DaysFromEaster
                 found = DbContext.Set<TriodionRule>()
                     .FirstOrDefault(c => c.DaysFromEaster == model.DaysFromEaster
-                                         && c.TypiconVersionId == model.Id);
+                                         && c.TypiconVersion.TypiconId == model.Id
+                                             && c.TypiconVersion.BDate == null
+                                             && c.TypiconVersion.EDate == null);
             }
             else
             {

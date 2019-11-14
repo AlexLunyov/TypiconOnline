@@ -69,7 +69,7 @@ namespace TypiconOnline.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(SignEditModel model)
+        public async Task<IActionResult> Edit(SignCreateEditModel model)
         {
             var typiconEntity = QueryProcessor.Process(new TypiconEntityBySignQuery(model.Id));
 
@@ -112,14 +112,14 @@ namespace TypiconOnline.Web.Controllers
             {
                 ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Id, DEFAULT_LANGUAGE);
 
-                return View(new SignEditModel());
+                return View(new SignCreateEditModel());
             }
 
             return Unauthorized();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(SignEditModel model)
+        public async Task<IActionResult> Create(SignCreateEditModel model)
         {
             var typiconEntity = QueryProcessor.Process(new TypiconEntityQuery(model.Id));
 

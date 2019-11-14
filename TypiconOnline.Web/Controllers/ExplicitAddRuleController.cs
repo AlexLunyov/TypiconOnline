@@ -72,6 +72,10 @@ namespace TypiconOnline.Web.Controllers
         {
             var typiconEntity = QueryProcessor.Process(GetTypiconEntityByChildQuery(model.Id));
 
+            model.Mode = ModelMode.Edit;
+
+            TryValidateModel(model);
+
             if (ModelState.IsValid
                 && typiconEntity.Success
                 && IsAuthorizedToEdit(typiconEntity.Value))
@@ -113,6 +117,10 @@ namespace TypiconOnline.Web.Controllers
         public async Task<IActionResult> Create(ExplicitAddRuleEditModel model)
         {
             var typiconEntity = QueryProcessor.Process(new TypiconEntityQuery(model.Id));
+
+            model.Mode = ModelMode.Create;
+
+            TryValidateModel(model);
 
             if (ModelState.IsValid
                 && typiconEntity != null

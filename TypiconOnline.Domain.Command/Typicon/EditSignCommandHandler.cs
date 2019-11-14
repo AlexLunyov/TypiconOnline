@@ -44,7 +44,7 @@ namespace TypiconOnline.Domain.Command.Typicon
             //будет думать, что TypiconEntity удалена
             entity.SignName.ReplaceValues(c.Name);
 
-            entity.TemplateId = c.TemplateId;
+            entity.TemplateId = (c.TemplateId > 0) ? c.TemplateId : null;
             entity.IsAddition = c.IsAddition;
             entity.Number = c.Number;
             entity.Priority = c.Priority;
