@@ -18,7 +18,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 namespace TypiconOnline.Web.Controllers
 {
     [Authorize(Roles = RoleConstants.AdminAndTypesetterRoles)]
-    public class OktoikhDayController : TextBaseController<OktoikhDayModel>
+    public class OktoikhDayController : TextBaseController<OktoikhDayGridModel>
     {
         public OktoikhDayController(IQueryProcessor queryProcessor
             , ICommandProcessor commandProcessor) : base(queryProcessor, commandProcessor)
@@ -110,9 +110,9 @@ namespace TypiconOnline.Web.Controllers
         //    }
         //}
 
-        protected override IGridQuery<OktoikhDayModel> GetQuery() => new AllOktoikhDaysQuery();
+        protected override IGridQuery<OktoikhDayGridModel> GetQuery() => new AllOktoikhDaysQuery();
 
-        protected override Expression<Func<OktoikhDayModel, bool>> BuildExpression(string searchValue)
+        protected override Expression<Func<OktoikhDayGridModel, bool>> BuildExpression(string searchValue)
         {
             return m => m.Ihos.ToString() == searchValue
                     || m.DayOfWeek == searchValue;

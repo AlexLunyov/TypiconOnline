@@ -83,7 +83,7 @@ namespace TypiconOnline.Domain.ItemTypes
 
         public void AddOrUpdate(ItemTextUnit item)
         {
-            if (Items.AsQueryable().FirstOrDefault(c => c.Language == item.Language) is ItemTextUnit found)
+            if (Items.FirstOrDefault(c => c.Language == item.Language) is ItemTextUnit found)
             {
                 found.Text = item.Text;
             }

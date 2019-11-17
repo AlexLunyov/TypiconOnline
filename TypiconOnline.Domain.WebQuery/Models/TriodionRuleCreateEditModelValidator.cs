@@ -11,7 +11,7 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public class TriodionRuleCreateEditModelValidator : DayRuleModelValidatorBase<TriodionDayWorshipModel>, IValidator<TriodionRuleCreateEditModel>
+    public class TriodionRuleCreateEditModelValidator : DayRuleModelValidatorBase<TriodionRuleCreateEditModel, TriodionDayWorshipModel>
     {
         public TriodionRuleCreateEditModelValidator(IRuleSerializerRoot ruleSerializer, TypiconDBContext dbContext) : base(ruleSerializer)
         {
@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
 
         protected TypiconDBContext DbContext { get; }
 
-        public IEnumerable<ValidationResult> Validate(TriodionRuleCreateEditModel model)
+        public override IEnumerable<ValidationResult> Validate(TriodionRuleCreateEditModel model)
         {
             var errors = ValidateDayRule(model);
 

@@ -8,11 +8,11 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public class MenologyRuleCreateModelValidator : DayRuleModelValidatorBase<MenologyDayWorshipModel>, IValidator<MenologyRuleCreateModel>
+    public class MenologyRuleCreateModelValidator : DayRuleModelValidatorBase<MenologyRuleCreateModel, MenologyDayWorshipModel>
     {
         public MenologyRuleCreateModelValidator(IRuleSerializerRoot ruleSerializer) : base(ruleSerializer) { }
 
-        public IEnumerable<ValidationResult> Validate(MenologyRuleCreateModel model)
+        public override IEnumerable<ValidationResult> Validate(MenologyRuleCreateModel model)
         {
             var errors = ValidateDayRule(model);
 

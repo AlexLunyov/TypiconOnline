@@ -8,7 +8,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
     /// <summary>
     /// 
     /// </summary>
-    public class OktoikhDayModel : IGridModel
+    public class OktoikhDayGridModel : IGridModel
     {
         public int Id { get; set; }
         public int Ihos { get; set; }

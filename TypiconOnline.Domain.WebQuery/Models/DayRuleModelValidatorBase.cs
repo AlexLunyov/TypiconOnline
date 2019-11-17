@@ -8,11 +8,11 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public abstract class DayRuleModelValidatorBase<T> : TemplateRuleModelValidatorBase
+    public abstract class DayRuleModelValidatorBase<T, U> : TemplateRuleModelValidatorBase<T> where T : class, new()
     {
         public DayRuleModelValidatorBase(IRuleSerializerRoot ruleSerializer) : base(ruleSerializer) { }
 
-        protected List<ValidationResult> ValidateDayRule(DayRuleModelBase<T> model)
+        protected List<ValidationResult> ValidateDayRule(DayRuleModelBase<U> model)
         {
             var errors = ValidateModRule(model);
 

@@ -11,7 +11,7 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public class ExplicitAddRuleEditModelValidator : RuleModelValidatorBase, IValidator<ExplicitAddRuleEditModel>
+    public class ExplicitAddRuleEditModelValidator : RuleModelValidatorBase<ExplicitAddRuleEditModel>
     {
         public ExplicitAddRuleEditModelValidator(IRuleSerializerRoot ruleSerializer, TypiconDBContext dbContext) : base(ruleSerializer)
         {
@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
 
         protected TypiconDBContext DbContext { get; }
 
-        public IEnumerable<ValidationResult> Validate(ExplicitAddRuleEditModel model)
+        public override IEnumerable<ValidationResult> Validate(ExplicitAddRuleEditModel model)
         {
             var errors = ValidateRule(model);
 
@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
             }
             else
             {
-                //проверяем на уникальность DaysFromEaster
+                //проверяем на уникальность Date
                 ExplicitAddRule found = null;
 
                 if (model.Mode == ModelMode.Create)

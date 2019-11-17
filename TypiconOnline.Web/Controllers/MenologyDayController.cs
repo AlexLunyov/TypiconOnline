@@ -18,7 +18,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 namespace TypiconOnline.Web.Controllers
 {
     [Authorize(Roles = RoleConstants.AdminAndTypesetterRoles)]
-    public class MenologyDayController : TextBaseController<MenologyDayModel>
+    public class MenologyDayController : TextBaseController<MenologyDayGridModel>
     {
         public MenologyDayController(IQueryProcessor queryProcessor
             , ICommandProcessor commandProcessor) : base(queryProcessor, commandProcessor)
@@ -120,9 +120,9 @@ namespace TypiconOnline.Web.Controllers
             }
         }
 
-        protected override IGridQuery<MenologyDayModel> GetQuery() => new AllMenologyDaysQuery(DEFAULT_LANGUAGE);
+        protected override IGridQuery<MenologyDayGridModel> GetQuery() => new AllMenologyDaysQuery(DEFAULT_LANGUAGE);
 
-        protected override Expression<Func<MenologyDayModel, bool>> BuildExpression(string searchValue)
+        protected override Expression<Func<MenologyDayGridModel, bool>> BuildExpression(string searchValue)
         {
             return m => m.Name == searchValue
                     || m.ShortName == searchValue

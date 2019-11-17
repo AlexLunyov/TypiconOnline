@@ -11,7 +11,7 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public class CommonRuleEditModelValidator : RuleModelValidatorBase, IValidator<CommonRuleEditModel>
+    public class CommonRuleEditModelValidator : RuleModelValidatorBase<CommonRuleEditModel>
     {
         public CommonRuleEditModelValidator(IRuleSerializerRoot ruleSerializer, TypiconDBContext dbContext) : base(ruleSerializer) 
         {
@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
 
         protected TypiconDBContext DbContext { get; }
 
-        public IEnumerable<ValidationResult> Validate(CommonRuleEditModel model)
+        public override IEnumerable<ValidationResult> Validate(CommonRuleEditModel model)
         {
             var errors = ValidateRule(model);
 

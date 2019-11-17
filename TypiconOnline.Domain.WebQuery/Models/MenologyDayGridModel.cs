@@ -8,7 +8,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
     /// <summary>
     /// 
     /// </summary>
-    public class MenologyDayModel : IGridModel
+    public class MenologyDayGridModel : IGridModel
     {
         public int Id { get; set; }
         public string Date { get; set; }

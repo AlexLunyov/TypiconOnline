@@ -19,14 +19,14 @@ namespace TypiconOnline.Domain.WebQuery.Books
     /// <summary>
     /// Возвращает все Тексты Минейных служб
     /// </summary>
-    public class AllMenologyDaysQueryHandler : DbContextQueryBase, IQueryHandler<AllMenologyDaysQuery, Result<IQueryable<MenologyDayModel>>>
+    public class AllMenologyDaysQueryHandler : DbContextQueryBase, IQueryHandler<AllMenologyDaysQuery, Result<IQueryable<MenologyDayGridModel>>>
     {
         public AllMenologyDaysQueryHandler(TypiconDBContext dbContext) : base(dbContext)
         {
             
         }
 
-        public Result<IQueryable<MenologyDayModel>> Handle([NotNull] AllMenologyDaysQuery query)
+        public Result<IQueryable<MenologyDayGridModel>> Handle([NotNull] AllMenologyDaysQuery query)
         {
             var entities = DbContext.Set<MenologyDay>()
                 .Include(c => c.DayWorships)
@@ -37,7 +37,7 @@ namespace TypiconOnline.Domain.WebQuery.Books
                             .ThenInclude(c => c.Items)
                 .ToList();
 
-            var result = entities.SelectMany(q => q.DayWorships.Select(c => new MenologyDayModel()
+            var result = entities.SelectMany(q => q.DayWorships.Select(c => new MenologyDayGridModel()
             {
                 Id = c.Id,
                 Date = (!q.Date.IsEmpty) ? q.Date.ToString() : string.Empty,

@@ -9,7 +9,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Books
 {
-    public class AllMenologyDaysQuery : IGridQuery<MenologyDayModel>
+    public class AllMenologyDaysQuery : IGridQuery<MenologyDayGridModel>
     {
         public AllMenologyDaysQuery(string language)
         {

@@ -21,21 +21,21 @@ namespace TypiconOnline.Domain.WebQuery.Books
     /// <summary>
     /// Возвращает все Тексты Дней Октоиха
     /// </summary>
-    public class AllOktoikhDaysQueryHandler : DbContextQueryBase, IQueryHandler<AllOktoikhDaysQuery, Result<IQueryable<OktoikhDayModel>>>
+    public class AllOktoikhDaysQueryHandler : DbContextQueryBase, IQueryHandler<AllOktoikhDaysQuery, Result<IQueryable<OktoikhDayGridModel>>>
     {
         public AllOktoikhDaysQueryHandler(TypiconDBContext dbContext) : base(dbContext)
         {
             
         }
 
-        public Result<IQueryable<OktoikhDayModel>> Handle([NotNull] AllOktoikhDaysQuery query)
+        public Result<IQueryable<OktoikhDayGridModel>> Handle([NotNull] AllOktoikhDaysQuery query)
         {
             var entities = DbContext.Set<OktoikhDay>()
                 .ToList();
 
             var info = new CultureInfo("ru-RU").DateTimeFormat;
 
-            var result = entities.Select(c => new OktoikhDayModel()
+            var result = entities.Select(c => new OktoikhDayGridModel()
             {
                 Id = c.Id,
                 Ihos = c.Ihos,

@@ -9,7 +9,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Books
 {
-    public class AllOktoikhDaysQuery : IGridQuery<OktoikhDayModel>
+    public class AllOktoikhDaysQuery : IGridQuery<OktoikhDayGridModel>
     {
         public AllOktoikhDaysQuery(/*string language*/)
         {

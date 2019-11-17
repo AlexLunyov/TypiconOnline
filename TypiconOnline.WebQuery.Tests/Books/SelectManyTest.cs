@@ -26,7 +26,7 @@ namespace TypiconOnline.WebQuery.Tests.Books
                             .ThenInclude(c => c.Items);
             //.ToList();
 
-            var result = entities.SelectMany(q => q.DayWorships.Select(c => new MenologyDayModel()
+            var result = entities.SelectMany(q => q.DayWorships.Select(c => new MenologyDayGridModel()
             {
                 Id = c.Id,
                 //Date = (!q.Date.IsEmpty) ? q.Date.ToString() : string.Empty,

@@ -11,12 +11,12 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public class SignCreateEditModelValidator : TemplateRuleModelValidatorBase, IValidator<SignCreateEditModel>
+    public class SignCreateEditModelValidator : TemplateRuleModelValidatorBase<SignCreateEditModel>
     {
         const string DefaultLanguage = "cs-ru";
         public SignCreateEditModelValidator(IRuleSerializerRoot ruleSerializer) : base(ruleSerializer) { }
 
-        public IEnumerable<ValidationResult> Validate(SignCreateEditModel model)
+        public override IEnumerable<ValidationResult> Validate(SignCreateEditModel model)
         {
             var errors = ValidateModRule(model);
 

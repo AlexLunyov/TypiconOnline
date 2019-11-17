@@ -44,6 +44,7 @@
                         }
                     </tbody>
                 </table>
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="col-md-8">
                 <div class="table-title">
@@ -79,6 +80,7 @@
                         }
                     </tbody>
                 </table>
+                <span asp-validation-for="ShortName" class="text-danger"></span>
             </div>
             <div class="clearfix"></div>
             <div class="form-group">
@@ -90,6 +92,7 @@
                     </div>
                     <input type="hidden" id="dtp_leapdate" value="@Model.LeapDate?.ToString("yyyy-MM-dd")" name="LeapDate" />
                 </div>
+                <span asp-validation-for="LeapDate" class="text-danger"></span>
             </div>
             <div class="clearfix"></div>
             <div class="checkbox col-sm-8">
