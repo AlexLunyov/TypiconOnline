@@ -224,7 +224,7 @@ namespace TypiconMigrationTool
                     Priority = signMigrator.Priority,
                     TypiconVersionId = typiconEntity.Id,
                     //Owner = typiconEntity,
-                    IsTemplate = row.IsTemplate,
+                    //IsTemplate = row.IsTemplate,
                     RuleDefinition = fileReader.Read(row.Name),
                     ModRuleDefinition = fileReader.Read(row.Name, "mod")
                 };

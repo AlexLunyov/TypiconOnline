@@ -4,30 +4,13 @@
 
 
 <div class="container">
-    <ul class="nav nav-tabs">
-        <li><a href="/Typicons/Edit/@ViewContext.RouteData.Values["id"]#panel_properties">Свойства</a></li>
-        <li><a href="/Typicons/Edit/@ViewContext.RouteData.Values["id"]#panel_jobs">Операции</a></li>
-        <li class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                Редактирование Правил
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li class="active"><label>Знаки служб</label></li>
-                <li><a asp-controller="MenologyRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Правила Минеи</a></li>
-                <li><a asp-controller="TriodionRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Правила Триоди</a></li>
-                <li><a asp-controller="CommonRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Общие Правила</a></li>
-                <li><a asp-controller="ExplicitAddRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Явные Правила</a></li>
-                <li><a asp-controller="Kathisma" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Кафизмы</a></li>
-            </ul>
-        </li>
-    </ul>
+    @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.Sign })
     <div class="row">
-        <div class="col-12"><h1>Знаки служб</h1></div>
+        <div class="col-12"><h2>Знаки служб</h2></div>
     </div>
     <div class="row">
         <div class="form-group col-12">
-            <a class="btn btn-primary" href="/Sign/Create/@ViewContext.RouteData.Values["id"]">Новый Знак службы</a>
+            <a class="btn btn-primary" asp-controller="Sign" asp-action="Create" asp-route-id="@ViewContext.RouteData.Values["id"]">Новый Знак службы</a>
         </div>
         <div class="form-group col-12">
             <div class="justify-content-center align-content-center">

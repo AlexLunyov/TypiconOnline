@@ -46,7 +46,7 @@
                                     <div class="panel-body">
                                         @foreach (var link in Model.Links)
                                         {
-                                            <p><a asp-controller="@link.EntityName" asp-action="Edit" asp-route-id="@link.EntityId">@link.EntityName (@link.DefinitionType.ToString())</a></p>
+                                            <p><a target="_blank" asp-controller="@link.EntityName" asp-action="Edit" asp-route-id="@link.EntityId">@link.EntityName (@link.DefinitionType.ToString())</a></p>
                                         }
                                     </div>
                                 </div>

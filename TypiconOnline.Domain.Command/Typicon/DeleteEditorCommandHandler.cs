@@ -13,11 +13,11 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Command.Typicon
 {
-    public class DeleteMenologyDayCommandHandler : DbContextCommandBase, ICommandHandler<DeleteMenologyDayCommand>
+    public class DeleteMenologyDayCommandHandler : DbContextCommandBase, ICommandHandler<DeleteEditorCommand>
     {
         public DeleteMenologyDayCommandHandler(TypiconDBContext dbContext) : base(dbContext) { }
 
-        public async Task<Result> ExecuteAsync(DeleteMenologyDayCommand command)
+        public async Task<Result> ExecuteAsync(DeleteEditorCommand command)
         {
             var found = DbContext.Set<UserTypicon>().FirstOrDefault(c => c.TypiconId == command.TypiconId && c.UserId == command.UserId);
 

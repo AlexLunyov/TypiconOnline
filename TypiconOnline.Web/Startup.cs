@@ -1,20 +1,28 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TypiconOnline.Web.Services;
-using SimpleInjector;
-using TypiconOnline.Domain.Identity;
-//using SmartBreadcrumbs.Extensions;
-using TypiconOnline.Repository.EFCore.DataBase;
-using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using SimpleInjector;
+//using SmartBreadcrumbs.Extensions;
+using System;
+using TypiconOnline.Domain.Identity;
+using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.Web.Services;
+using TypiconOnline.WebServices.Authorization;
+using TypiconOnline.WebServices.Hosting;
 
 namespace TypiconOnline.Web
 {
     public class Startup
     {
+        private const string GetScheduleCorsPolicy = "GetSchedulePolicy";
+
         private readonly Container container = new Container();
         private readonly IWebHostEnvironment _hostingEnv;
 
@@ -39,19 +47,18 @@ namespace TypiconOnline.Web
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<TypiconDBContext>()
                 .AddDefaultTokenProviders();
 
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.Cookie.HttpOnly = true;
-            //    options.LoginPath = "/Account/Login";
-            //    options.LogoutPath = "/Account/Logout";
-            //});
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
@@ -60,33 +67,104 @@ namespace TypiconOnline.Web
             //services.AddBreadcrumbs(GetType().Assembly);
 
             //session
-            services.AddDistributedMemoryCache();
+            //services.AddDistributedMemoryCache();
             services.AddSession();
+
+            #region Authorization handlers
+
+            services.AddScoped<IAuthorizationHandler,
+                                  TypiconCanEditAuthorizationHandler>();
+
+            #endregion
+
+            #region DbContext
+
+            services.AddDbContext<TypiconDBContext>(optionsBuilder =>
+            {
+                //SqlServer
+                //var connectionString = configuration.GetConnectionString("MSSql");
+                //optionsBuilder.UseSqlServer(connectionString);
+
+                //SQLite
+                //var connectionString = configuration.GetConnectionString("DBTypicon");
+                //optionsBuilder.UseSqlite(connectionString);
+
+                //MySQL
+                optionsBuilder.UseMySql(Configuration.GetConnectionString("MySql"),
+                        mySqlOptions =>
+                        {
+                            mySqlOptions.ServerVersion(new Version(5, 6, 43), ServerType.MySql);
+                        });
+
+                //PostgreSQL
+                //optionsBuilder.UseNpgsql(configuration.GetConnectionString("Postgre"));
+            });
+
+            #endregion
 
             services.AddControllersWithViews();
 
-            //DI
-            IntegrateSimpleInjector(services);
-            services.AddTypiconOnlineService(Configuration, container, _hostingEnv);
+            //services.AddLogging();
+            //services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services
-                //.AddAntiforgery(options => options.HeaderName = "XSRF-TOKEN")
-                //.AddMvc(config =>
-                //{
-                //    // using Microsoft.AspNetCore.Mvc.Authorization;
-                //    // using Microsoft.AspNetCore.Authorization;
-                //    var policy = new AuthorizationPolicyBuilder()
-                //                     .RequireAuthenticatedUser()
-                //                     .Build();
-                //    config.Filters.Add(new AuthorizeFilter(policy));
-                //})
-                .AddMvc()
+            services.AddSimpleInjector(container, options =>
+            {
+                //HostedService
+                options.AddHostedService<TimedHostedService<JobExecutor>>();
+                container.RegisterInstance(new TimedHostedService<JobExecutor>.Settings(
+                    interval: TimeSpan.FromSeconds(1),
+                    action: service => service.Execute()));
+                container.Register<JobExecutor>();
+
+                options.AddAspNetCore()
+                    .AddControllerActivation()
+                    .AddViewComponentActivation()
+                    .AddPageModelActivation()
+                    .AddTagHelperActivation();
+            });
+
+            //CORS
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(GetScheduleCorsPolicy, builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+                options.AddDefaultPolicy( builder =>
+                {
+                    builder.WithOrigins("https://typicon.online",
+                                        "https://localhost:44303");
+                });
+            });
+
+            //JSON
+            services.AddMvc(options =>
+                {
+                    options.ModelValidatorProviders.Add(
+                        new SimpleInjectorModelValidatorProvider(container));
+                })
                 .AddNewtonsoftJson(options =>
                        options.SerializerSettings.ContractResolver =
                           new DefaultContractResolver());
+
+            #region Authorize policies
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdminRole",
+                     policy => policy.RequireRole("Admin"));
+                options.AddPolicy("RequireEditorRole",
+                    policy => policy.RequireRole("Editor"));
+                options.AddPolicy("RequireTypesetterRole",
+                    policy => policy.RequireRole("Typesetter"));
+            });
+
+            #endregion
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSimpleInjector(container, options =>
@@ -95,60 +173,41 @@ namespace TypiconOnline.Web
                 //options.UseLocalization();
             });
 
+            InitializeContainer();
+
             container.Verify();
 
-            //if (env.IsDevelopment())
-            //{
-            //app.UseBrowserLink();
-            app.UseDeveloperExceptionPage();
-            //app.excUseDatabaseErrorPage();
-            //}
-            //else
-            //{
-            //    app.UseExceptionHandler("/Home/Error");
-            //}
-
-            app.UseHttpsRedirection();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSession();
+            app.UseHttpsRedirection();
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapDefaultControllerRoute().RequireAuthorization();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
 
-        private void IntegrateSimpleInjector(IServiceCollection services)
+        private void InitializeContainer()
         {
-            //container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
-
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            //services.AddSingleton<IControllerActivator>(
-            //    new SimpleInjectorControllerActivator(container));
-            //services.AddSingleton<IViewComponentActivator>(
-            //    new SimpleInjectorViewComponentActivator(container));
-
-            //services.EnableSimpleInjectorCrossWiring(container);
-            //services.UseSimpleInjectorAspNetRequestScoping(container);
-
-            services.AddSimpleInjector(container, options =>
-            {
-                options.AddAspNetCore()
-                    .AddControllerActivation()
-                    .AddViewComponentActivation()
-                    .AddPageModelActivation()
-                    .AddTagHelperActivation();
-            });
+            container.AddWebDI(Configuration, _hostingEnv);
         }
     }
 }

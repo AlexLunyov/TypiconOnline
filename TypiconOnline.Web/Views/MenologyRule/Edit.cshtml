@@ -7,25 +7,7 @@
 }
 <div class="row">
     <div class="col-12">
-        <ul class="nav nav-tabs">
-            <li><a href="/Typicons/Edit/@ViewBag.TypiconId#panel_properties">Свойства</a></li>
-            <li><a href="/Typicons/Edit/@ViewBag.TypiconId#panel_jobs">Операции</a></li>
-            <li><a asp-controller="TypiconVariables" asp-action="Index" asp-route-id="@ViewBag.TypiconId">Переменные</a></li>
-            <li class="dropdown">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                    Редактирование Правил
-                    <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a asp-controller="Sign" asp-action="Index" asp-route-id="@ViewBag.TypiconId">Знаки служб</a></li>
-                    <li><a asp-controller="MenologyRule" asp-action="Index" asp-route-id="@ViewBag.TypiconId">Правила Минеи</a></li>
-                    <li><a asp-controller="TriodionRule" asp-action="Index" asp-route-id="@ViewBag.TypiconId">Правила Триоди</a></li>
-                    <li><a asp-controller="CommonRule" asp-action="Index" asp-route-id="@ViewBag.TypiconId">Общие Правила</a></li>
-                    <li><a asp-controller="ExplicitAddRule" asp-action="Index" asp-route-id="@ViewBag.TypiconId">Явные Правила</a></li>
-                    <li><a asp-controller="Kathisma" asp-action="Index" asp-route-id="@ViewBag.TypiconId">Кафизмы</a></li>
-                </ul>
-            </li>
-        </ul>
+        @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.Rule })
         <div class="tab-content">
             <div class="tab-pane fade in active">
                 <div class="col-md-8">

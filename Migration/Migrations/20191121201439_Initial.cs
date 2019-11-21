@@ -394,6 +394,7 @@ namespace MigrationTool.Migrations
                     PrevVersionId = table.Column<int>(nullable: true),
                     VersionNumber = table.Column<int>(nullable: false),
                     IsModified = table.Column<bool>(nullable: false),
+                    IsTemplate = table.Column<bool>(nullable: false),
                     CDate = table.Column<DateTime>(nullable: false),
                     BDate = table.Column<DateTime>(nullable: true),
                     EDate = table.Column<DateTime>(nullable: true),
@@ -556,8 +557,7 @@ namespace MigrationTool.Migrations
                     TemplateId = table.Column<int>(nullable: true),
                     IsAddition = table.Column<bool>(nullable: false),
                     Number = table.Column<int>(nullable: true),
-                    Priority = table.Column<int>(nullable: false),
-                    IsTemplate = table.Column<bool>(nullable: false)
+                    Priority = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -585,7 +585,7 @@ namespace MigrationTool.Migrations
                     TypiconVersionId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    Type = table.Column<string>(nullable: true)
+                    Type = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -810,7 +810,7 @@ namespace MigrationTool.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SignVariables", x => new { x.VariableId, x.EntityId });
+                    table.PrimaryKey("PK_SignVariables", x => new { x.VariableId, x.EntityId, x.DefinitionType });
                     table.ForeignKey(
                         name: "FK_SignVariables_Sign_EntityId",
                         column: x => x.EntityId,
@@ -831,7 +831,7 @@ namespace MigrationTool.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    PsalmId = table.Column<int>(nullable: true),
+                    PsalmId = table.Column<int>(nullable: false),
                     StartStihos = table.Column<int>(nullable: true),
                     EndStihos = table.Column<int>(nullable: true),
                     SlavaElementId = table.Column<int>(nullable: true)
@@ -844,7 +844,7 @@ namespace MigrationTool.Migrations
                         column: x => x.PsalmId,
                         principalTable: "Psalm",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PsalmLink_SlavaElement_SlavaElementId",
                         column: x => x.SlavaElementId,
@@ -888,7 +888,7 @@ namespace MigrationTool.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MenologyRuleVariables", x => new { x.VariableId, x.EntityId });
+                    table.PrimaryKey("PK_MenologyRuleVariables", x => new { x.VariableId, x.EntityId, x.DefinitionType });
                     table.ForeignKey(
                         name: "FK_MenologyRuleVariables_DayRule_EntityId",
                         column: x => x.EntityId,
@@ -952,7 +952,7 @@ namespace MigrationTool.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TriodionRuleVariables", x => new { x.VariableId, x.EntityId });
+                    table.PrimaryKey("PK_TriodionRuleVariables", x => new { x.VariableId, x.EntityId, x.DefinitionType });
                     table.ForeignKey(
                         name: "FK_TriodionRuleVariables_DayRule_EntityId",
                         column: x => x.EntityId,

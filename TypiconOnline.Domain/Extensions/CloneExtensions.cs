@@ -45,7 +45,6 @@ namespace TypiconOnline.Domain.Extensions
                 var newSign = new Sign()
                 {
                     IsAddition = sign.IsAddition,
-                    IsTemplate = sign.IsTemplate,
                     ModRuleDefinition = sign.ModRuleDefinition,
                     Number = sign.Number,
                     Priority = sign.Priority,

@@ -1,10 +1,10 @@
 using NUnit.Framework;
 using System.Linq;
-using TypiconOnline.Domain.Command.Utilities;
+using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Tests.Common;
 
-namespace TypiconOnline.Domain.Command.Tests
+namespace TypiconOnline.Domain.Rules.Tests
 {
     public class VariablesTest
     {

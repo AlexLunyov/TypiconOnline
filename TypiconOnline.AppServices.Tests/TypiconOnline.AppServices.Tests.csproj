@@ -10,10 +10,14 @@
 
   <ItemGroup>
     <None Remove="Data\SQLiteDB.db" />
+    <None Remove="TestData\TypiconVersion.xml" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Data\SQLiteDB.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\TypiconVersion.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

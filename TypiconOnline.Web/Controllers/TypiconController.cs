@@ -18,18 +18,19 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Jobs;
 using System.Linq.Expressions;
 using TypiconOnline.Domain.WebQuery.Interfaces;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TypiconOnline.Web.Controllers
 {
     [Authorize(Roles = RoleConstants.AdminAndEditorRoles)]
-    public class TypiconsController : TypiconBaseController<TypiconEntityFilteredModel>
+    public class TypiconController : TypiconBaseController<TypiconEntityFilteredModel>
     {
         private const string DEFAULT_LANGUAGE = "cs-ru";
         private readonly UserManager<User> _userManager;
         private readonly IJobRepository _jobs;
 
-        public TypiconsController(
+        public TypiconController(
             ICommandProcessor commandProcessor,
             UserManager<User> userManager,
             IJobRepository jobs,
@@ -121,28 +122,15 @@ namespace TypiconOnline.Web.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            if (id < 1)
-            {
-                return NotFound();
-            }
+            var model = GetModel(id);
 
-            //проверить на права
-            if (!IsAuthorizedToEdit(id))
-            {
-                return new ChallengeResult();
-            }
-
-            var typicon = QueryProcessor.Process(new TypiconEditQuery(id));
-
-            ViewBag.IsAuthor = IsTypiconsAuthor(id);
-
-            if (typicon.Failure)
+            if (model.Failure)
             {
                 return NotFound();
             }
             else
             {
-                return View(typicon.Value);
+                return View(model.Value);
             }
         }
 
@@ -172,6 +160,12 @@ namespace TypiconOnline.Web.Controllers
         {
             throw new NotImplementedException();
         }
+
+        [HttpGet]
+        public IActionResult Operations(int id) => Edit(id);
+
+        [HttpGet]
+        public IActionResult Editors(int id) => Edit(id);
 
         protected override Expression<Func<TypiconEntityFilteredModel, bool>> BuildExpression(string searchValue)
         {
@@ -219,7 +213,7 @@ namespace TypiconOnline.Web.Controllers
 
             await CommandProcessor.ExecuteAsync(command);
 
-            return RedirectToAction(nameof(Edit), "Typicons", new { id = typiconId }, "panel_editors");
+            return RedirectToAction(nameof(Edit), "Typicon", new { id = typiconId }, "panel_editors");
         }
 
         /// <summary>
@@ -235,11 +229,22 @@ namespace TypiconOnline.Web.Controllers
                 return new ChallengeResult();
             }
 
-            var command = new DeleteMenologyDayCommand(typiconId, editorId);
+            var command = new DeleteEditorCommand(typiconId, editorId);
 
             await CommandProcessor.ExecuteAsync(command);
 
-            return RedirectToAction(nameof(Edit), "Typicons", new { id = typiconId }, "panel_editors");
+            return RedirectToAction(nameof(Edit), "Typicon", new { id = typiconId }, "panel_editors");
+        }
+
+        private Result<TypiconEntityEditModel> GetModel(int typiconId)
+        {
+            //проверить на права
+            if (!IsAuthorizedToEdit(typiconId))
+            {
+                return Result.Fail<TypiconEntityEditModel>($"Вы не имеете прав на просмотр Устава с Id={typiconId}");
+            }
+
+            return QueryProcessor.Process(new TypiconEditQuery(typiconId));
         }
     }
 }

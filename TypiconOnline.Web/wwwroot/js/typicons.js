@@ -25,7 +25,7 @@ $(() => {
             dom: '<tr>',
             ajax: {
                 type: "POST",
-                url: '/Typicons/LoadData/',
+                url: '/Typicon/LoadData/',
                 dataType: 'json'
             },
             columns: [
@@ -68,13 +68,13 @@ $(() => {
                     render: function (data, type, row) {
                         var str = "";
                         if (row['Approvable']) {
-                            str = str + '&nbsp;<a class="btn btn-success" href="/Typicons/Approve/' + row['Id'] + '">Утвердить</>';
+                            str = str + '&nbsp;<a class="btn btn-success" href="/Typicon/Approve/' + row['Id'] + '">Утвердить</>';
                         }
                         if (row['Editable']) {
-                            str = str + '&nbsp;<a class="btn btn-primary" href="/Typicons/Edit/' + row['Id'] + '">Редактировать</>';
+                            str = str + '&nbsp;<a class="btn btn-primary" href="/Typicon/Edit/' + row['Id'] + '">Редактировать</>';
                         }
                         if (row['Deletable']) {
-                            str = str + '&nbsp;<a class="btn btn-danger" href="/Typicons/Delete/' + row['Id'] + '">Удалить</>';
+                            str = str + '&nbsp;<a class="btn btn-danger" href="/Typicon/Delete/' + row['Id'] + '">Удалить</>';
                         }
                         return str;
                     }

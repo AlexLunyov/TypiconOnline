@@ -5,9 +5,9 @@ using TypiconOnline.Infrastructure.Common.Command;
 
 namespace TypiconOnline.Domain.Command.Typicon
 {
-    public class DeleteMenologyDayCommand : ICommand
+    public class DeleteEditorCommand : ICommand
     {
-        public DeleteMenologyDayCommand(int typiconId, int userId)
+        public DeleteEditorCommand(int typiconId, int userId)
         {
             TypiconId = typiconId;
             UserId = userId;

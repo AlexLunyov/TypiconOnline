@@ -1,0 +1,99 @@
+﻿@model TypiconEntityEditModel
+@{
+    ViewData["Title"] = "Редактирование Устава";
+}
+
+    <div class="container">
+        @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.Editors })
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Редакторы</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <table id="editorsGrid" class="table table-striped table-bordered" style="width:100%">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Список редакторов</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ((int id, string name) in Model.Editors)
+                        {
+                            <tr>
+                                <td>@name</td>
+                                <td><a asp-action="DeleteEditor" asp-route-typiconId="@Model.Id" asp-route-editorId="@id" title="Delete" data-toggle="tooltip" class="delete" onclick="return confirm('Вы уверены?')"><i class="material-icons">&#xE872;</i></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label>Поиск по имени или адресу электронной почты</label>
+                <form class="form-inline" method="post" asp-action="AddEditor">
+                    <div class="form-group">
+                        <input class="form-control" id="searchEditor" placeholder="Имя пользователя или EMail" autocomplete="off">
+                        <input type="hidden" id="editorId" name="editorId" />
+                    </div>
+                    <button class="btn btn-primary" id="addEditor" disabled="disabled" asp-action="AddEditor" asp-route-typiconId="@Model.Id">Добавить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+@section Scripts
+{
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="~/css/itemtext.css" />
+
+    <script type="text/javascript" src="https://cdn.rawgit.com/bassjobsen/Bootstrap-3-Typeahead/master/bootstrap3-typeahead.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#searchEditor').typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 1,
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Typicon/SearchUsers?search=' + request,
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            items = [];
+                            map = {};
+                            $.each(data, function (i, item) {
+                                map[item.Name] = item;
+                                items.push(item.Name);
+                            });
+                            response(items);
+                            //$(".dropdown-menu").css("height", "auto");
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                updater: function (item) {
+                    $('#editorId').val(map[item].Id);
+                    $('#addEditor').removeAttr("disabled");
+                    return item;
+                }
+            });
+            $('#searchEditor').on("input", function () {
+                $('#editorId').removeAttr("value");
+                $('#addEditor').attr("disabled", "disabled");
+            });
+        });
+
+    </script>
+}

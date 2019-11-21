@@ -11,9 +11,9 @@ using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
-namespace TypiconOnline.Domain.Command.Utilities
+namespace TypiconOnline.Domain.Rules.Extensions
 {
-    public static class VariableSynchronizer
+    public static class VariableSynchronizationExtensions
     {
         public static Result SyncRuleVariables<T>(this T entity, CollectorSerializerRoot serializerRoot)
             where T : RuleEntity, new()

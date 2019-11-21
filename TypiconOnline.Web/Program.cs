@@ -35,6 +35,6 @@ namespace TypiconOnline.Web
 
         public static IWebHostBuilder CreateHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<StartUp1>();
+                .UseStartup<Startup>();
     }
 }

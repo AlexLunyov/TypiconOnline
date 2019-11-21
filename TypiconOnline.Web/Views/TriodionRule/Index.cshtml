@@ -4,30 +4,13 @@
 
 
 <div class="container">
-    <ul class="nav nav-tabs">
-        <li><a href="/Typicons/Edit/@ViewContext.RouteData.Values["id"]#panel_properties">Свойства</a></li>
-        <li><a href="/Typicons/Edit/@ViewContext.RouteData.Values["id"]#panel_jobs">Операции</a></li>
-        <li class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                Редактирование Правил
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a asp-controller="Sign" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Знаки служб</a></li>
-                <li><a asp-controller="MenologyRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Правила Минеи</a></li>
-                <li class="active"><label>Правила Триоди</label></li>
-                <li><a asp-controller="CommonRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Общие Правила</a></li>
-                <li><a asp-controller="ExplicitAddRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Явные Правила</a></li>
-                <li><a asp-controller="Kathisma" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Кафизмы</a></li>
-            </ul>
-        </li>
-    </ul>
+    @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.Triodion })
     <div class="row">
         <div class="col-12"><h1>Правила Триоди</h1></div>
     </div>
     <div class="row">
         <div class="form-group col-12">
-            <a class="btn btn-primary" href="/TriodionRule/Create/@ViewContext.RouteData.Values["id"]">Новое Правило Триоди</a>
+            <a class="btn btn-primary" asp-controller="TriodionRule" asp-action="Create" asp-route-id="@ViewContext.RouteData.Values["id"]">Новое Правило Триоди</a>
         </div>
         <div class="form-group col-12">
             <div class="justify-content-center align-content-center">

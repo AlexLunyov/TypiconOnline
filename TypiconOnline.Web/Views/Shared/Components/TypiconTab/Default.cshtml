@@ -1,0 +1,118 @@
+@using TypiconOnline.Web.Models.TypiconViewModels
+@model TypiconTabModel
+    <div class="row">
+        <div class="col-12">
+            <h1>Редактирование Устава</h1>
+        </div>
+    </div>
+    <div class="row">
+        <ul class="nav nav-tabs">
+            @if (Model.Tab == TypiconTab.Properties)
+            {
+                <li class="active"><a href="#">Свойства</a></li>
+            }
+            else
+            {
+                <li><a asp-controller="Typicon" asp-action="Edit" asp-route-id="@Model.TypiconId">Свойства</a></li>
+            }
+            @if (Model.Tab == TypiconTab.Operations)
+            {
+                <li class="active"><a href="#">Операции</a></li>
+            }
+            else
+            {
+                <li><a asp-controller="Typicon" asp-action="Operations" asp-route-id="@Model.TypiconId">Операции</a></li>
+            }
+            @if (Model.UserIsAuthor)
+            {
+                @if (Model.Tab == TypiconTab.Editors)
+                {
+                    <li class="active"><a href="#">Редакторы</a></li>
+                }
+                else
+                {
+                    <li><a asp-controller="Typicon" asp-action="Editors" asp-route-id="@Model.TypiconId">Редакторы</a></li>
+                }
+            }
+            @if (Model.Tab == TypiconTab.Variables)
+            {
+                <li class="active">
+                    <a href="#">
+                        Переменные
+                        @if (Model.VariablesCount > 0)
+                        {
+                            <span id="varCountSpan" class="label label-@((!Model.IsTemplate && Model.VariablesCount > 0) ? "danger" : "default")">@Model.VariablesCount</span>
+                        }
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a asp-controller="TypiconVariables" asp-action="Index" asp-route-id="@Model.TypiconId">
+                        Переменные
+                        @if (Model.VariablesCount > 0)
+                        {
+                            <span id="varCountSpan" class="label label-@((!Model.IsTemplate && Model.VariablesCount > 0) ? "danger" : "default")">@Model.VariablesCount</span>
+                        }
+                    </a>
+                </li>
+            }
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    Редактирование Правил
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    @if (Model.Tab == TypiconTab.Sign)
+                    {
+                        <li class="active"><a href="#">Знаки служб</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-controller="Sign" asp-action="Index" asp-route-id="@Model.TypiconId">Знаки служб</a></li>
+                    }
+                    @if (Model.Tab == TypiconTab.Menology)
+                    {
+                        <li class="active"><a href="#">Минея</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-controller="MenologyRule" asp-action="Index" asp-route-id="@Model.TypiconId">Минея</a></li>
+                    }
+                    @if (Model.Tab == TypiconTab.Triodion)
+                    {
+                        <li class="active"><a href="#">Триодь</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-controller="TriodionRule" asp-action="Index" asp-route-id="@Model.TypiconId">Триодь</a></li>
+                    }
+                    @if (Model.Tab == TypiconTab.Common)
+                    {
+                        <li class="active"><a href="#">Общие</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-controller="CommonRule" asp-action="Index" asp-route-id="@Model.TypiconId">Общие</a></li>
+                    }
+                    @if (Model.Tab == TypiconTab.Explicit)
+                    {
+                        <li class="active"><a href="#">Явные</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-controller="ExplicitAddRule" asp-action="Index" asp-route-id="@Model.TypiconId">Явные</a></li>
+                    }
+                    @if (Model.Tab == TypiconTab.Kathizma)
+                    {
+                        <li class="active"><a href="#">Кафизмы</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-controller="Kathisma" asp-action="Index" asp-route-id="@Model.TypiconId">Кафизмы</a></li>
+                    }
+                </ul>
+            </li>
+        </ul>
+    </div>

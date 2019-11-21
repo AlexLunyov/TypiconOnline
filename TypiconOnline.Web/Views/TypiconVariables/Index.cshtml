@@ -1,30 +1,10 @@
-﻿
-<link href="~/css/datatables.min.css" rel="stylesheet" />
+﻿<link href="~/css/datatables.min.css" rel="stylesheet" />
 <link href="~/lib/bootstrap/dist/css/responsive.bootstrap.min.css" rel="stylesheet" />
 
-
 <div class="container">
-    <ul class="nav nav-tabs">
-        <li><a href="/Typicons/Edit/@ViewContext.RouteData.Values["id"]#panel_properties">Свойства</a></li>
-        <li><a href="/Typicons/Edit/@ViewContext.RouteData.Values["id"]#panel_jobs">Операции</a></li>
-        <li><a data-toggle="tab">Переменные</a></li>
-        <li class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                Редактирование Правил
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a asp-controller="Sign" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Знаки служб</a></li>
-                <li><a asp-controller="MenologyRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Правила Минеи</a></li>
-                <li><a asp-controller="TriodionRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Правила Триоди</a></li>
-                <li><a asp-controller="CommonRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Общие Правила</a></li>
-                <li><a asp-controller="ExplicitAddRule" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Явные Правила</a></li>
-                <li><a asp-controller="Kathisma" asp-action="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">Кафизмы</a></li>
-            </ul>
-        </li>
-    </ul>
+    @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.Variables })
     <div class="row">
-        <div class="col-12"><h2>Переменные Устава</h2></div>
+        <div class="col-12"><h2>Переменные</h2></div>
     </div>
     <div class="row">
         <div class="form-group col-12">
@@ -58,7 +38,7 @@
 
     <script>
         $(document).ready(function () {
-            $("#varGrid").DataTable(
+            var table = $("#varGrid").DataTable(
                 {
                     "processing": true, // for show progress bar
                     "serverSide": true, // for process server side
@@ -91,8 +71,7 @@
                 }
             );
 
-            $('#varGrid').on('click', 'tbody tr td .edit', function () {
-                var table = $('#varGrid').DataTable();
+            table.on('click', 'tbody tr td .edit', function () {
                 var row = table.row($(this).parents('tr'));
                 var data = row.data();
 
@@ -101,14 +80,26 @@
                 $(".editvar-modal").modal('show');
             });
 
-            $('#varGrid').on('click', 'tbody tr td .define', function () {
-                var table = $('#varGrid').DataTable();
+            table.on('click', 'tbody tr td .define', function () {
                 var row = table.row($(this).parents('tr'));
                 var data = row.data();
 
                 $("#modalWindow").load("/TypiconVariables/Define/" + data.Id);
 
                 $(".editvar-modal").modal('show');
+            });
+
+            table.on('draw', function () {
+                //redraw VariablesCount
+                var count = table.data().count();
+                var span = $('#varCountSpan');
+                if (!count || count == 0) {
+                    span.hide();
+                }
+                else {
+                    span.html(count);
+                    span.show();
+                }
             });
         });
 

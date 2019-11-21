@@ -78,19 +78,19 @@ namespace TypiconOnline.Domain.Typicon.Variable
             switch (typeof(T).Name)
             {
                 case nameof(CommonRule):
-                    CommonRuleLinks.RemoveAll(c => c.EntityId == entity.Id);
+                    CommonRuleLinks.RemoveAll(c => c.Entity == entity/* || c.EntityId == entity.Id*/);
                     break;
                 case nameof(Sign):
-                    SignLinks.RemoveAll(c => c.EntityId == entity.Id && c.DefinitionType == definitionType);
+                    SignLinks.RemoveAll(c => (c.Entity == entity/* || c.EntityId == entity.Id*/) && c.DefinitionType == definitionType);
                     break;
                 case nameof(MenologyRule):
-                    MenologyRuleLinks.RemoveAll(c => c.EntityId == entity.Id && c.DefinitionType == definitionType);
+                    MenologyRuleLinks.RemoveAll(c => (c.Entity == entity/* || c.EntityId == entity.Id*/) && c.DefinitionType == definitionType);
                     break;
                 case nameof(TriodionRule):
-                    TriodionRuleLinks.RemoveAll(c => c.EntityId == entity.Id && c.DefinitionType == definitionType);
+                    TriodionRuleLinks.RemoveAll(c => (c.Entity == entity/* || c.EntityId == entity.Id*/) && c.DefinitionType == definitionType);
                     break;
                 case nameof(ExplicitAddRule):
-                    ExplicitAddRuleLinks.RemoveAll(c => c.EntityId == entity.Id);
+                    ExplicitAddRuleLinks.RemoveAll(c => c.Entity == entity/* || c.EntityId == entity.Id*/);
                     break;
             }
         }

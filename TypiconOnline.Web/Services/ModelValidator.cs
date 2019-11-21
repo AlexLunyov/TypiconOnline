@@ -16,8 +16,15 @@ namespace TypiconOnline.Web.Services
         public ModelValidator(IEnumerable<IValidator<TModel>> validators) =>
             this.validators = validators;
 
-        public IEnumerable<ModelValidationResult> Validate(ModelValidationContext ctx) =>
-            this.Validate((TModel)ctx.Model);
+        public IEnumerable<ModelValidationResult> Validate(ModelValidationContext ctx) 
+        {
+            if (ctx.Model == null)
+            {
+                return Enumerable.Empty<ModelValidationResult>();
+            }
+
+            return Validate((TModel)ctx.Model);
+        }
 
         private IEnumerable<ModelValidationResult> Validate(TModel model) =>
             from validator in this.validators

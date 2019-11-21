@@ -1,0 +1,44 @@
+﻿@model TypiconEntityEditModel
+@{
+    ViewData["Title"] = "Редактирование Устава";
+}
+    <div class="container">
+        @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.Operations })
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Операции</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-8">
+                @{
+                    var pblDisabled = !Model.IsModified || (!Model.IsTemplate && Model.HasVariables);
+                }
+                <a class="btn btn-primary" asp-action="Publish" asp-route-id="@Model.Id" disabled="@(pblDisabled ? " disabled" : null)">Опубликовать черновик Устава</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-8">
+            @if (pblDisabled)
+            {
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Публикация не доступна по следующим причинам</h3>
+                    </div>
+                    <div class="panel-body">
+                        @if (!Model.IsModified)
+                        {
+                            <div class="clearfix"></div>
+                            <div class="form-group col-md-6">Не было внесено изменений в черновик Устава.</div>
+                        }
+                        @if (!Model.IsTemplate && Model.HasVariables)
+                        {
+                            <div class="clearfix"></div>
+                            <div class="form-group col-md-6">Устав должен быть либо определен как Шаблон, либо всем Переменным должны быть заданы значения.</div>
+                        }
+                    </div>
+                </div>
+            }
+            </div>
+        </div>
+    </div>

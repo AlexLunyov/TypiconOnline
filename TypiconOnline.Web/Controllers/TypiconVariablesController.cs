@@ -18,6 +18,7 @@ using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Web.Extensions;
+using TypiconOnline.Web.Models;
 using TypiconOnline.WebServices.Authorization;
 
 namespace TypiconOnline.Web.Controllers

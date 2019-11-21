@@ -653,7 +653,7 @@ namespace MigrationTool.Migrations
                     b.Property<int?>("EndStihos")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("PsalmId")
+                    b.Property<int>("PsalmId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("SlavaElementId")
@@ -694,9 +694,6 @@ namespace MigrationTool.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsAddition")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsTemplate")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ModRuleDefinition")
@@ -771,6 +768,9 @@ namespace MigrationTool.Migrations
                     b.Property<bool>("IsModified")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsTemplate")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("PrevVersionId")
                         .HasColumnType("INTEGER");
 
@@ -832,8 +832,8 @@ namespace MigrationTool.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("TypiconVersionId")
                         .HasColumnType("INTEGER");
@@ -856,7 +856,7 @@ namespace MigrationTool.Migrations
                     b.Property<int>("DefinitionType")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("VariableId", "EntityId");
+                    b.HasKey("VariableId", "EntityId", "DefinitionType");
 
                     b.HasIndex("EntityId");
 
@@ -874,7 +874,7 @@ namespace MigrationTool.Migrations
                     b.Property<int>("DefinitionType")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("VariableId", "EntityId");
+                    b.HasKey("VariableId", "EntityId", "DefinitionType");
 
                     b.HasIndex("EntityId");
 
@@ -892,7 +892,7 @@ namespace MigrationTool.Migrations
                     b.Property<int>("DefinitionType")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("VariableId", "EntityId");
+                    b.HasKey("VariableId", "EntityId", "DefinitionType");
 
                     b.HasIndex("EntityId");
 
@@ -1461,7 +1461,9 @@ namespace MigrationTool.Migrations
                 {
                     b.HasOne("TypiconOnline.Domain.Books.Psalter.Psalm", "Psalm")
                         .WithMany()
-                        .HasForeignKey("PsalmId");
+                        .HasForeignKey("PsalmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TypiconOnline.Domain.Typicon.Psalter.SlavaElement", null)
                         .WithMany("PsalmLinks")
@@ -1614,7 +1616,7 @@ namespace MigrationTool.Migrations
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.VariableModRuleLink<TypiconOnline.Domain.Typicon.MenologyRule>", b =>
                 {
                     b.HasOne("TypiconOnline.Domain.Typicon.MenologyRule", "Entity")
-                        .WithMany()
+                        .WithMany("VariableLinks")
                         .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1629,7 +1631,7 @@ namespace MigrationTool.Migrations
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.VariableModRuleLink<TypiconOnline.Domain.Typicon.Sign>", b =>
                 {
                     b.HasOne("TypiconOnline.Domain.Typicon.Sign", "Entity")
-                        .WithMany()
+                        .WithMany("VariableLinks")
                         .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1644,7 +1646,7 @@ namespace MigrationTool.Migrations
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.VariableModRuleLink<TypiconOnline.Domain.Typicon.TriodionRule>", b =>
                 {
                     b.HasOne("TypiconOnline.Domain.Typicon.TriodionRule", "Entity")
-                        .WithMany()
+                        .WithMany("VariableLinks")
                         .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1659,7 +1661,7 @@ namespace MigrationTool.Migrations
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.VariableRuleLink<TypiconOnline.Domain.Typicon.CommonRule>", b =>
                 {
                     b.HasOne("TypiconOnline.Domain.Typicon.CommonRule", "Entity")
-                        .WithMany()
+                        .WithMany("VariableLinks")
                         .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1674,7 +1676,7 @@ namespace MigrationTool.Migrations
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Variable.VariableRuleLink<TypiconOnline.Domain.Typicon.ExplicitAddRule>", b =>
                 {
                     b.HasOne("TypiconOnline.Domain.Typicon.ExplicitAddRule", "Entity")
-                        .WithMany()
+                        .WithMany("VariableLinks")
                         .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -18,13 +18,16 @@ using TypiconOnline.Domain.Command;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Domain.Rules.Serialization;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Domain.WebQuery.Interfaces;
 using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.Web.Services;
 using TypiconOnline.WebServices.Authorization;
 using TypiconOnline.WebServices.Hosting;
 
@@ -35,23 +38,9 @@ namespace TypiconOnline.Web
     /// </summary>
     public static class DIExtensions
     {
-        public static void AddTypiconOnlineService(this IServiceCollection services
-            , IConfiguration configuration
-            , Container container,
-            IWebHostEnvironment hostingEnv)
+        public static void AddWebDI(this Container container, IConfiguration configuration
+            , IWebHostEnvironment hostingEnv)
         {
-            ////typiconservices
-            //services.AddScoped<IEvangelionContext, EvangelionContext>();
-            //services.AddScoped<IApostolContext, ApostolContext>();
-            //services.AddScoped<IOldTestamentContext, OldTestamentContext>();
-            //services.AddScoped<IPsalterContext, PsalterContext>();
-            //services.AddScoped<IOktoikhContext, OktoikhContext>();
-            //services.AddScoped<ITheotokionAppContext, TheotokionAppContext>();
-            //services.AddScoped<IEasterContext, EasterContext>();
-            //services.AddScoped<IKatavasiaContext, KatavasiaContext>();
-
-            //services.AddScoped<IScheduleService, ScheduleService>();
-
             //Queries and Commands
             //container.Register(typeof(IQuery<>), typeof(QueryProcessor).Assembly);
             container.Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
@@ -60,7 +49,7 @@ namespace TypiconOnline.Web
             container.Register(typeof(ICommandHandler<>), typeof(CommandProcessor).Assembly, typeof(ScheduleDataCalculator).Assembly);
 
             container.RegisterConditional<ICommandProcessor, AsyncCommandProcessor>(
-                c => c.Consumer.ImplementationType == typeof(JobAsyncHostedService));
+                c => c.Consumer.ImplementationType == typeof(JobExecutor));
             container.RegisterConditional<ICommandProcessor, CommandProcessor>(c => !c.Handled);
 
             //OutputForms
@@ -68,6 +57,9 @@ namespace TypiconOnline.Web
             container.Register<IScheduleDayNameComposer, ScheduleDayNameComposer>();
             container.Register<IRuleSerializerRoot, RuleSerializerRoot>();
             container.Register<ITypiconSerializer, TypiconSerializer>();
+            //Для TypiconVariables
+            container.Register<CollectorSerializerRoot>(); 
+
             //container.Register<IOutputForms, OutputForms>();
             container.Register<IOutputDayFactory, OutputDayFactory>();
             container.Register<IScheduleDayViewer<string>, HtmlScheduleDayViewer>();
@@ -78,9 +70,7 @@ namespace TypiconOnline.Web
             //container.Register<ScheduleHandler, ServiceSequenceHandler>();
             container.Register<ScheduleHandler>();
 
-            services.AddScoped<IRuleSerializerRoot, RuleSerializerRoot>();
-
-            //Все контроллеры
+            ////Все контроллеры
             container.Register<IScheduleDataCalculator, MajorDataCalculator>();
 
             container.RegisterDecorator(
@@ -118,41 +108,51 @@ namespace TypiconOnline.Web
                 container.RegisterDecorator<IJobRepository, LoggingJobRepository>(Lifestyle.Singleton);
             }
 
+            //container.Register(() => {
+            //    var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
+
+            //    //SqlServer
+            //    //var connectionString = configuration.GetConnectionString("MSSql");
+            //    //optionsBuilder.UseSqlServer(connectionString);
+
+            //    //SQLite
+            //    //var connectionString = configuration.GetConnectionString("DBTypicon");
+            //    //optionsBuilder.UseSqlite(connectionString);
+
+            //    //MySQL
+            //    optionsBuilder.UseMySql(configuration.GetConnectionString("MySql"),
+            //            mySqlOptions =>
+            //            {
+            //                mySqlOptions.ServerVersion(new Version(5, 6, 43), ServerType.MySql);
+            //            });
+
+            //    //PostgreSQL
+            //    //optionsBuilder.UseNpgsql(configuration.GetConnectionString("Postgre"));
+
+            //    return new TypiconDBContext(optionsBuilder.Options);
+            //});
+
             //For SQLite
             //container.Register<JobHostedService>();
             //services.AddHostedServiceFromContainer<JobHostedService>(container);
 
             //For MySql
-            container.Register<JobAsyncHostedService>();
-            services.AddHostedServiceFromContainer<JobAsyncHostedService>(container);
+            //container.Register<JobAsyncHostedService>();
 
-            
+            #region Validation
 
-            services.AddDbContext<TypiconDBContext>(optionsBuilder =>
-            {
-                //SqlServer
-                //var connectionString = configuration.GetConnectionString("MSSql");
-                //optionsBuilder.UseSqlServer(connectionString);
+            // Register ModelValidator<TModel> adapter class
+            container.Register(typeof(ModelValidator<>), typeof(ModelValidator<>),
+                Lifestyle.Singleton);
 
-                //SQLite
-                //var connectionString = configuration.GetConnectionString("DBTypicon");
-                //optionsBuilder.UseSqlite(connectionString);
+            // Auto-register all validator implementations
+            container.Collection.Register(
+                typeof(IValidator<>), typeof(MenologyRuleCreateModelValidator).Assembly);
 
-                //MySQL
-                optionsBuilder.UseMySql(configuration.GetConnectionString("MySql"),
-                        mySqlOptions =>
-                        {
-                            mySqlOptions.ServerVersion(new Version(5, 6, 43), ServerType.MySql);
-                        });
-
-                //PostgreSQL
-                //optionsBuilder.UseNpgsql(configuration.GetConnectionString("Postgre"));
-            });
+            #endregion
 
             #region AuthorizationHandlers
-            // Authorization handlers.
-            services.AddScoped<IAuthorizationHandler,
-                                  TypiconCanEditAuthorizationHandler>();
+
             #endregion
         }
     }
