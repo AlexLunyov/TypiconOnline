@@ -3,11 +3,23 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-12">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="index">Главная</a></li>
+                <li class="active">Уставы</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-12"><h1>Уставы</h1></div>
     </div>
     <div class="row">
         <div class="form-group col-12">
-            <a class="btn btn-primary" href="/Typicon/Create">Создать новый Устав</a>
+            <a class="btn btn-primary" asp-controller="Typicon" asp-action="Create">Создать новый Устав</a>
+            @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
+            {
+                <btn id="btnImport" class="btn btn-success">Импортировать Устав</btn>
+            }
         </div>
         <div class="form-group col-12">
             <div class="justify-content-center align-content-center">
@@ -29,6 +41,61 @@
     </div>
 </div>
 
+<div class="modal fade typ-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div id="modalWindow" class="modal-dialog modal-sm">
+    </div>
+</div>
+
+<div class="modal fade import-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Импортирование Устава</h4>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Import" asp-controller="Typicon" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label>Выберите файл:</label>
+                                <div class="form-group">
+                                    <input name="file" type="file" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><button id="exportBtn" class="btn btn-primary">Импортировать</button></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade delete-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="panel-title">Удаление Устава</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-sm-12">Вы уверены? <br />Удаление Устава безвозвратно.</div>
+                </div>
+                <div class="row">
+                    <form asp-controller="Typicon" asp-action="Delete" method="post" enctype="multipart/form-data">
+                        <div class="form-group col-sm-12">
+                            <input id="delTypId" type="hidden" name="id" />
+                            <button class="btn btn-danger">Удалить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
 
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -36,7 +103,8 @@
     <script>
     $(document).ready(function ()
     {
-        $('#typiconGrid').DataTable({
+        var table = $("#typiconGrid").DataTable(
+        {
             language: {
                 processing: "Загрузка данных...",
                 zeroRecords: "Не найдено ни одного совпадения."
@@ -88,19 +156,54 @@
                     render: function (data, type, row) {
                         var str = "";
                         if (row['Approvable']) {
-                            str = str + '&nbsp;<a class="btn btn-success" href="/Typicon/Approve/' + row['Id'] + '">Утвердить</>';
+                            str = str + '&nbsp;<a class="btn btn-success" title="Утвердить Устав" href="/Typicon/Approve/' + row['Id'] + '">Утвердить</a>';
                         }
                         if (row['Editable']) {
-                            str = str + '&nbsp;<a class="btn btn-primary" href="/Typicon/Edit/' + row['Id'] + '">Редактировать</>';
+                            str = str + '&nbsp;<a class="btn btn-primary" title="Редактировать Устав" href="/Typicon/Edit/' + row['Id'] + '">Редактировать</a>';
                         }
                         if (row['Deletable']) {
-                            str = str + '&nbsp;<a class="btn btn-danger" href="/Typicon/Delete/' + row['Id'] + '">Удалить</>';
+                            str = str + '&nbsp;<a href="#" class="btn btn-danger btn-delete" title="Удалить Устав">Удалить</a>';
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
+                        {
+                            <text>
+                            if (row['Editable']) {
+                                str = str + '&nbsp;<a class="btn btn-success export" href="#" title="Экспортировать Устав" data-toggle="tooltip" class="btn btn-primary">Экспортировать</a>';
+                            }
+                            </text>
                         }
                         return str;
                     },
                     orderable: false
                 }
             ]
+        });
+
+        setInterval(function () {
+            table.processing( false );
+            table.ajax.reload( null, false ); // user paging is not reset on reload
+        }, 3000 );
+
+        table.on('click', 'tbody tr td .export', function () {
+            var row = table.row($(this).parents('tr'));
+            var data = row.data();
+
+            $("#modalWindow").load("/Typicon/ExportGet/" + data.Id);
+
+            $(".typ-modal").modal('show');
+        });
+
+        $('#btnImport').on('click', function () {
+            $(".import-modal").modal('show');
+        });
+
+        table.on('click', 'tbody tr td .btn-delete', function () {
+            var row = table.row($(this).parents('tr'));
+            var data = row.data();
+
+            $("#delTypId").val(data.Id);
+
+            $(".delete-modal").modal('show');
         });
     });
 

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 //using SmartBreadcrumbs.Attributes;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.AppServices.Messaging.Schedule;
+using TypiconOnline.AppServices.Messaging.Common;
 using TypiconOnline.Domain.WebQuery.OutputFiltering;
 using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
@@ -26,13 +26,13 @@ namespace TypiconOnline.Web.Controllers
 
         private readonly IQueryProcessor _queryProcessor;
         private readonly IScheduleWeekViewer<string> _weekViewer;
-        private readonly IScheduleWeekViewer<Result<DocxToStreamWeekResponse>> _weekDownloadViewer;
+        private readonly IScheduleWeekViewer<Result<FileDownloadResponse>> _weekDownloadViewer;
         private readonly IScheduleDayViewer<string> dayViewer;
 
         public ScheduleController(IQueryProcessor queryProcessor
             , IScheduleDayViewer<string> dayViewer
             , IScheduleWeekViewer<string> weekViewer
-            , IScheduleWeekViewer<Result<DocxToStreamWeekResponse>> weekDownloadViewer)
+            , IScheduleWeekViewer<Result<FileDownloadResponse>> weekDownloadViewer)
         {
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
             _weekViewer = weekViewer ?? throw new ArgumentNullException(nameof(weekViewer));

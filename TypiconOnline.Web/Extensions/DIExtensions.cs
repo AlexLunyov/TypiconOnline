@@ -12,7 +12,9 @@ using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Jobs;
 using TypiconOnline.AppServices.Jobs.Scheduled;
+using TypiconOnline.AppServices.Messaging.Common;
 using TypiconOnline.AppServices.Messaging.Schedule;
+using TypiconOnline.AppServices.Migration.Typicon;
 using TypiconOnline.AppServices.Viewers;
 using TypiconOnline.Domain.Command;
 using TypiconOnline.Domain.Interfaces;
@@ -20,6 +22,7 @@ using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Serialization;
 using TypiconOnline.Domain.Serialization;
+using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.WebQuery.Interfaces;
 using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.Command;
@@ -63,12 +66,18 @@ namespace TypiconOnline.Web
             //container.Register<IOutputForms, OutputForms>();
             container.Register<IOutputDayFactory, OutputDayFactory>();
             container.Register<IScheduleDayViewer<string>, HtmlScheduleDayViewer>();
-            container.Register<IScheduleWeekViewer<string>, TextScheduleWeekViewer>();
-            container.Register<IScheduleWeekViewer<Result<DocxToStreamWeekResponse>>, DocxToStreamWeekViewer>();
+            container.Register<IScheduleWeekViewer<string>, TextScheduleWeekViewer>(); 
+            container.Register<IScheduleWeekViewer<Result<FileDownloadResponse>>, DocxToStreamWeekViewer>();
+
+            container.Register<ITypiconExportManager, TypiconXmlExportManager>();
+            container.Register<ITypiconImportManager, TypiconXmlImportManager>();
+            container.Register<IProjector<TypiconVersion, TypiconVersionProjection>, TypiconExportProjector>();
+            container.Register<IProjector<TypiconVersionProjection, TypiconEntity>, TypiconImportProjector>();
+
             //регистрируем просто ScheduleHandler - будет формировать только расписание, без последовательностей
             //но зато повыситься производительность
-            //container.Register<ScheduleHandler, ServiceSequenceHandler>();
-            container.Register<ScheduleHandler>();
+            container.Register<ScheduleHandler, ServiceSequenceHandler>();
+            //container.Register<ScheduleHandler>();
 
             ////Все контроллеры
             container.Register<IScheduleDataCalculator, MajorDataCalculator>();

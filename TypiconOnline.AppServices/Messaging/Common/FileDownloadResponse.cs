@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TypiconOnline.AppServices.Messaging.Schedule
+namespace TypiconOnline.AppServices.Messaging.Common
 {
-    public class DocxToStreamWeekResponse
+    public class FileDownloadResponse
     {
-        public DocxToStreamWeekResponse(byte[] content, string contentType, string fileDownloadName)
+        public FileDownloadResponse(byte[] content, string contentType, string fileDownloadName)
         {
             if (string.IsNullOrEmpty(contentType))
             {

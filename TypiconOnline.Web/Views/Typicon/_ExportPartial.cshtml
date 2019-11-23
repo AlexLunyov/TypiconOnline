@@ -1,0 +1,47 @@
+﻿@model IEnumerable<SelectListItem>
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Экспортирование Устава</h4>
+    </div>
+    <div class="modal-body">
+        <form id="exportForm" asp-controller="Typicon" asp-action="Export">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label>Выберите версию Устава:</label>
+                        <div class="form-group">
+                            <select class="form-control" name="versionId" asp-items="@Model">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12"><button id="exportBtn" class="btn btn-primary">Экспортировать</button></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function exportForm(e) {
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+
+        $(".typ-modal").modal('hide');
+
+        return true;
+
+        //var form = $("#exportForm");
+        //var url = form.attr("action");
+
+        //$.ajax({
+        //    type: "POST",
+        //    url: url,
+        //    data: form.serialize(), // serializes the form's elements.
+        //    success: function (data) {
+                    
+        //        return true;
+        //    }
+        //});
+    }
+</script>

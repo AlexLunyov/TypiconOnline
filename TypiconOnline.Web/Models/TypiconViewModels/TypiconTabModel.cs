@@ -29,6 +29,16 @@ namespace TypiconOnline.Web.Models.TypiconViewModels
         /// <summary>
         /// Редактирование или создание любого вложенного Правила
         /// </summary>
-        Rule
+        CreateSign,
+        EditSign,
+        CreateMenology,
+        EditMenology,
+        CreateTriodion,
+        EditTriodion,
+        CreateCommon,
+        EditCommon,
+        CreateExplicit,
+        EditExplicit,
+        EditKathizma
     }
 }

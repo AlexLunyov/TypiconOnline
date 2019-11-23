@@ -5,8 +5,8 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
 namespace TypiconOnline.AppServices.Interfaces
 {
-    public interface IImportManager<TDomain, TProjection>
+    public interface IProjector<TDomain, TProjection>
     {
-        Result<TDomain> Import(TProjection projection);
+        Result<TProjection> Project(TDomain domain);
     }
 }

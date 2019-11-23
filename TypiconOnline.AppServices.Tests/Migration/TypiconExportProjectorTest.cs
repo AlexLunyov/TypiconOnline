@@ -17,32 +17,32 @@ using TypiconOnline.Tests.Common;
 namespace TypiconOnline.AppServices.Tests.Migration
 {
     [TestFixture]
-    public class TypiconExportManagerTest
+    public class TypiconExportProjectorTest
     {
         [Test]
-        public void TypiconExportManagerTest_Export()
+        public void TypiconExportProjectorTest_Export()
         {
             var dbContext = TypiconDbContextFactory.Create();
 
             var typicon = dbContext.Set<TypiconVersion>().FirstOrDefault();
 
-            var manager = new TypiconExportManager();
+            var manager = new TypiconExportProjector();
 
-            var projection = manager.Export(typicon);
+            var projection = manager.Project(typicon);
 
             Assert.IsNotNull(projection.Value);
         }
 
         [Test]
-        public void TypiconExportManagerTest_SaveToFile()
+        public void TypiconExportProjectorTest_SaveToFile()
         {
             var dbContext = TypiconDbContextFactory.Create();
 
             var typicon = dbContext.Set<TypiconVersion>().FirstOrDefault();
 
-            var manager = new TypiconExportManager();
+            var manager = new TypiconExportProjector();
 
-            var projection = manager.Export(typicon);
+            var projection = manager.Project(typicon);
 
             var xml = new TypiconSerializer().Serialize(projection.Value);
 
@@ -50,9 +50,9 @@ namespace TypiconOnline.AppServices.Tests.Migration
         }
 
         [Test]
-        public void TypiconImportManagerTest_Import()
+        public void TypiconImportProjectorTest_Import()
         {
-            var manager = new TypiconImportManager(
+            var manager = new TypiconImportProjector(
                 new CollectorSerializerRoot(
                     QueryProcessorFactory.Create()
                     , new TypiconSerializer()));
@@ -61,7 +61,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
 
             var projection = new TypiconSerializer().Deserialize<TypiconVersionProjection>(xml);
 
-            var entity = manager.Import(projection);
+            var entity = manager.Project(projection);
 
             var vars = entity.Value.Versions.First().TypiconVariables;
 
@@ -70,9 +70,9 @@ namespace TypiconOnline.AppServices.Tests.Migration
         }
 
         [Test]
-        public void TypiconImportManagerTest_Import_To_Db()
+        public void TypiconImportProjectorTest_Import_To_Db()
         {
-            var manager = new TypiconImportManager(
+            var manager = new TypiconImportProjector(
                 new CollectorSerializerRoot(
                     QueryProcessorFactory.Create()
                     , new TypiconSerializer()));
@@ -81,7 +81,7 @@ namespace TypiconOnline.AppServices.Tests.Migration
 
             var projection = new TypiconSerializer().Deserialize<TypiconVersionProjection>(xml);
 
-            var entity = manager.Import(projection);
+            var entity = manager.Project(projection);
 
             var dbContext = TypiconDbContextFactory.Create();
 

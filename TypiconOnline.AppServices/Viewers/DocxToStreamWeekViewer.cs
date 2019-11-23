@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using TypiconOnline.AppServices.Interfaces;
-using TypiconOnline.AppServices.Messaging.Schedule;
+using TypiconOnline.AppServices.Messaging.Common;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Query.Books;
 using TypiconOnline.Domain.Rules.Output;
@@ -14,7 +14,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.AppServices.Viewers
 {
-    public class DocxToStreamWeekViewer : IScheduleWeekViewer<Result<DocxToStreamWeekResponse>>
+    public class DocxToStreamWeekViewer : IScheduleWeekViewer<Result<FileDownloadResponse>>
     {
         const string DOCX_CONFIG = "DocxWeekViewer_Template";
         const string FILE_START = "Расписание ";
@@ -29,7 +29,7 @@ namespace TypiconOnline.AppServices.Viewers
             _configRepo = configRepo ?? throw new ArgumentNullException(nameof(configRepo));
         }
 
-        public Result<DocxToStreamWeekResponse> Execute(int typiconId, FilteredOutputWeek week)
+        public Result<FileDownloadResponse> Execute(int typiconId, FilteredOutputWeek week)
         {
             if (week == null || week.Days.Count == 0)
             {
@@ -43,7 +43,7 @@ namespace TypiconOnline.AppServices.Viewers
 
             if (byteArray.Length == 0)
             {
-                Result.Fail<DocxToStreamWeekResponse>("Файл шаблона не найден. Обратитесь к администратору системы.");
+                Result.Fail<FileDownloadResponse>("Файл шаблона не найден. Обратитесь к администратору системы.");
             }
 
             using (MemoryStream stream = new MemoryStream())
@@ -56,7 +56,7 @@ namespace TypiconOnline.AppServices.Viewers
 
                 DateTime date = week.Days[0].Date;
 
-                var response = new DocxToStreamWeekResponse(stream.ToArray()
+                var response = new FileDownloadResponse(stream.ToArray()
                     , "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                     , GetFileName(typiconId, date));
 

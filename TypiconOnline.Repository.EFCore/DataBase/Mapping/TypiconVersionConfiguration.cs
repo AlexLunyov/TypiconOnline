@@ -18,6 +18,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
             builder.HasOne(c => c.PrevVersion)
                 .WithMany()
                 .HasForeignKey(c => c.PrevVersionId)
+                .OnDelete(DeleteBehavior.SetNull)
                 .IsRequired(false);
 
             builder.HasMany(e => e.ModifiedYears)

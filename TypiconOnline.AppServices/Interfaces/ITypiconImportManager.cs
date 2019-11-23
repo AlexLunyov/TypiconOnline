@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TypiconOnline.AppServices.Messaging.Common;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
 namespace TypiconOnline.AppServices.Interfaces
 {
-    public interface IExportManager<TDomain, TProjection>
+    public interface ITypiconImportManager
     {
-        Result<TProjection> Export(TDomain domain);
+        Result Import(byte[] file);
     }
 }

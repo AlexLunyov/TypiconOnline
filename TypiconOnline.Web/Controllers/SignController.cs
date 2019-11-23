@@ -55,7 +55,7 @@ namespace TypiconOnline.Web.Controllers
                 && IsAuthorizedToEdit(typiconEntity.Value))
             {
                 ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Value.Id, DEFAULT_LANGUAGE, id);
-                ViewBag.TypiconId = typiconEntity.Value.Id;
+                ViewBag.TypiconId = typiconEntity.Value.Id.ToString();
 
                 var found = QueryProcessor.Process(new SignEditQuery(id));
 
@@ -92,7 +92,7 @@ namespace TypiconOnline.Web.Controllers
             }
 
             ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Value.Id, DEFAULT_LANGUAGE, model.Id);
-            ViewBag.TypiconId = typiconEntity.Value.Id;
+            ViewBag.TypiconId = typiconEntity.Value.Id.ToString();
 
             return View(model);
         }

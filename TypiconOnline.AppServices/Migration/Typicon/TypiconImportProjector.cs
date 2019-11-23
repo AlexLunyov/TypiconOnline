@@ -18,15 +18,15 @@ namespace TypiconOnline.AppServices.Migration.Typicon
     /// <summary>
     /// Конвертирует проекцию Устава в доменный сущность вместе со всеми вложенными коллекциями
     /// </summary>
-    public class TypiconImportManager : IImportManager<TypiconEntity, TypiconVersionProjection>
+    public class TypiconImportProjector : IProjector<TypiconVersionProjection, TypiconEntity>
     {
         private readonly CollectorSerializerRoot _serializerRoot;
-        public TypiconImportManager(CollectorSerializerRoot serializerRoot)
+        public TypiconImportProjector(CollectorSerializerRoot serializerRoot)
         {
             _serializerRoot = serializerRoot ?? throw new ArgumentNullException(nameof(serializerRoot));
         }
 
-        public Result<TypiconEntity> Import(TypiconVersionProjection projection)
+        public Result<TypiconEntity> Project(TypiconVersionProjection projection)
         {
             try
             {
@@ -39,13 +39,13 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                     OwnerId = projection.OwnerId
                 };
 
-                //Импортируем редакторов
-                entity.EditableUserTypicons = projection.Editors?
-                    .Select(userId => new UserTypicon() 
-                    { 
-                        Typicon = entity,
-                        UserId = userId
-                    }).ToList();
+                ////Не импортируем редакторов
+                //entity.EditableUserTypicons = projection.Editors?
+                //    .Select(userId => new UserTypicon() 
+                //    { 
+                //        Typicon = entity,
+                //        UserId = userId
+                //    }).ToList();
 
                 //Создаем Черновик
                 var version = new TypiconVersion()

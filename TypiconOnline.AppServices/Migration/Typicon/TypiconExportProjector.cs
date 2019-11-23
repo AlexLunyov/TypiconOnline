@@ -10,9 +10,9 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
 namespace TypiconOnline.AppServices.Migration.Typicon
 {
-    public class TypiconExportManager : IExportManager<TypiconVersion, TypiconVersionProjection>
+    public class TypiconExportProjector : IProjector<TypiconVersion, TypiconVersionProjection>
     {
-        public Result<TypiconVersionProjection> Export(TypiconVersion entity)
+        public Result<TypiconVersionProjection> Project(TypiconVersion entity)
         {
             try
             {
@@ -50,8 +50,8 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                     MenologyRules = entity.MenologyRules.Select(c => new MenologyRuleProjection()
                     {
                         TemplateId = c.TemplateId,
-                        Date = c.Date.Expression,
-                        LeapDate = c.LeapDate.Expression,
+                        Date = c.Date.ToString(),
+                        LeapDate = c.LeapDate.ToString(),
                         IsAddition = c.IsAddition,
                         DayWorships = c.DayRuleWorships.Select(d => (d.DayWorshipId, d.Order)).ToList(),
                         RuleDefinition = c.RuleDefinition,

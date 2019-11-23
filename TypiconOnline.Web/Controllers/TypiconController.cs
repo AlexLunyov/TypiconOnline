@@ -19,6 +19,9 @@ using TypiconOnline.AppServices.Jobs;
 using System.Linq.Expressions;
 using TypiconOnline.Domain.WebQuery.Interfaces;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TypiconOnline.Web.Controllers
@@ -29,17 +32,23 @@ namespace TypiconOnline.Web.Controllers
         private const string DEFAULT_LANGUAGE = "cs-ru";
         private readonly UserManager<User> _userManager;
         private readonly IJobRepository _jobs;
+        private readonly ITypiconExportManager _exportManager;
+        private readonly ITypiconImportManager _importManager;
 
         public TypiconController(
-            ICommandProcessor commandProcessor,
-            UserManager<User> userManager,
-            IJobRepository jobs,
-            IQueryProcessor queryProcessor,
-            IAuthorizationService authorizationService
+            ICommandProcessor commandProcessor
+            , UserManager<User> userManager
+            , IJobRepository jobs
+            , IQueryProcessor queryProcessor
+            , IAuthorizationService authorizationService
+            , ITypiconExportManager exportManager
+            , ITypiconImportManager importManager
             ) : base(queryProcessor, authorizationService, commandProcessor)
         {
             _userManager = userManager;
             _jobs = jobs;
+            _exportManager = exportManager;
+            _importManager = importManager;
         }
         // GET: /<controller>/
         public async Task<IActionResult> Index()
@@ -148,17 +157,97 @@ namespace TypiconOnline.Web.Controllers
                 var command = new EditTypiconCommand(model.Id, model.Name, model.IsTemplate, model.DefaultLanguage);
 
                 await CommandProcessor.ExecuteAsync(command);
-
-                return RedirectToAction(nameof(Index));
             }
 
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            if (!IsTypiconsAuthor(id))
+            {
+                return Json(new { error = "Ошибка авторизации."});
+            }
+
+            var command = new DeleteTypiconCommand(id);
+
+            var result = await CommandProcessor.ExecuteAsync(command);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        /// <summary>
+        /// Экспорт сериализованного Устава
+        /// </summary>
+        /// <param name="typiconVersionId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Authorize(Roles = RoleConstants.AdministratorsRole)]
+        public IActionResult ExportGet(int id)
+        {
+            var versions = QueryProcessor.Process(new TypiconVersionsQuery(id));
+
+            if (versions.Success)
+            {
+                return PartialView("_ExportPartial", versions.Value.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString() }));
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
+        /// Экспорт сериализованного Устава
+        /// </summary>
+        /// <param name="typiconVersionId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize(Roles = RoleConstants.AdministratorsRole)]
+        public IActionResult Export(int versionId)
+        {
+            var exportResult = _exportManager.Export(versionId);
+
+            if (exportResult.Success)
+            {
+                return File(exportResult.Value.Content, exportResult.Value.ContentType, exportResult.Value.FileDownloadName);
+            }
+            else
+            {
+                return new JsonResult(new { error = exportResult.Error });
+            }
+        }
+
+        /// <summary>
+        /// Экспорт сериализованного Устава
+        /// </summary>
+        /// <param name="typiconVersionId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize(Roles = RoleConstants.AdministratorsRole)]
+        public IActionResult Import(IFormFile file)
+        {
+            if (file != null)
+            {
+                byte[] data = null;
+                // считываем переданный файл в массив байтов
+                using (var binaryReader = new BinaryReader(file.OpenReadStream()))
+                {
+                    data = binaryReader.ReadBytes((int)file.Length);
+                }
+
+                var importResult = _importManager.Import(data);
+
+                if (importResult.Success)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return new JsonResult(new { error = importResult.Error });
+                }
+            }
+            
+            return new JsonResult(new { error = "Ошибка: пустой файл" });
         }
 
         [HttpGet]

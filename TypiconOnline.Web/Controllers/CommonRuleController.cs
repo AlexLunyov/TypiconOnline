@@ -54,7 +54,7 @@ namespace TypiconOnline.Web.Controllers
             if (typiconEntity.Success
                 && IsAuthorizedToEdit(typiconEntity.Value))
             {
-                ViewBag.TypiconId = typiconEntity.Value.Id;
+                ViewBag.TypiconId = typiconEntity.Value.Id.ToString();
 
                 var found = QueryProcessor.Process(new CommonRuleEditQuery(id));
 
@@ -89,7 +89,7 @@ namespace TypiconOnline.Web.Controllers
                 return RedirectToAction(nameof(Index), new { id = typiconEntity.Value.Id });
             }
 
-            ViewBag.TypiconId = typiconEntity.Value.Id;
+            ViewBag.TypiconId = typiconEntity.Value.Id.ToString();
 
             return View(model);
         }
