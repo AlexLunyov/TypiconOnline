@@ -17,31 +17,60 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12"><button id="exportBtn" class="btn btn-primary">Экспортировать</button></div>
+                <div class="col-xs-12">
+                    <button id="exportBtn" class="btn btn-primary" type="button"><i id="exportSpinner" class="fas fa-file-export"></i> Экспортировать</button>
+                </div>
+                <div class="col-xs-12" id="progressTxt" hidden></div>
             </div>
         </form>
     </div>
 </div>
 
 <script>
-    function exportForm(e) {
-        e.preventDefault(); // avoid to execute the actual submit of the form.
 
-        $(".typ-modal").modal('hide');
+    function base64ToArrayBuffer(base64) {
+        var binaryString = window.atob(base64);
+        var binaryLen = binaryString.length;
+        var bytes = new Uint8Array(binaryLen);
+        for (var i = 0; i < binaryLen; i++) {
+           var ascii = binaryString.charCodeAt(i);
+           bytes[i] = ascii;
+        }
+        return bytes;
+     }
 
-        return true;
+    $("#exportBtn").on("click", function () {
+        var form = $("#exportForm");
+        var url = form.attr("action");
 
-        //var form = $("#exportForm");
-        //var url = form.attr("action");
+        $("#exportBtn").attr("disabled", "disabled");
+        $("#exportSpinner").attr("class", "fa fa-spinner fa-spin");
+        $("#progressTxt").removeAttr("hidden");
+        $("#progressTxt").text("Отправлен запрос на сервер...");
 
-        //$.ajax({
-        //    type: "POST",
-        //    url: url,
-        //    data: form.serialize(), // serializes the form's elements.
-        //    success: function (data) {
-                    
-        //        return true;
-        //    }
-        //});
-    }
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success: function (data) {
+                var arr = data.file;
+                var byteArray = base64ToArrayBuffer(arr);
+                var a = window.document.createElement('a');
+
+                a.href = window.URL.createObjectURL(new Blob([byteArray], { type: data.type }));
+                a.download = data.filename;
+
+                // Append anchor to body.
+                document.body.appendChild(a)
+                a.click();
+                
+                // Remove anchor from body
+                document.body.removeChild(a);
+
+                $(".typ-modal").modal('hide');
+            }
+        });
+    });
+    
 </script>

@@ -57,6 +57,6 @@ namespace TypiconOnline.AppServices.Implementations
         }
 
         private string GetFileName(string name, int versionNumber)
-            => $"{FILE_START} {name} v.{versionNumber} {DateTime.Now.ToShortDateString()}.xml";
+            => $"{FILE_START} {name} v.{versionNumber} {DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss")}.xml";
     }
 }

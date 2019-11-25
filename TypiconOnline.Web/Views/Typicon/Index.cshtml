@@ -18,7 +18,7 @@
             <a class="btn btn-primary" asp-controller="Typicon" asp-action="Create">Создать новый Устав</a>
             @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
             {
-                <btn id="btnImport" class="btn btn-success">Импортировать Устав</btn>
+        <btn id="importModBtn" class="btn btn-success"><i class="fas fa-file-import"></i> Импортировать Устав</btn>
             }
         </div>
         <div class="form-group col-12">
@@ -51,20 +51,23 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Импортирование Устава</h4>
+                <h4 class="modal-title">Импортирование Устава</h4>                
             </div>
             <div class="modal-body">
-                <form asp-action="Import" asp-controller="Typicon" method="post" enctype="multipart/form-data">
+                <form id="importForm" asp-action="Import" asp-controller="Typicon" method="post" enctype="multipart/form-data">
                     <div class="row">
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <label>Выберите файл:</label>
                                 <div class="form-group">
-                                    <input name="file" type="file" class="form-control" />
+                                    <input id="importFile" name="file" type="file" class="form-control" accept="text/xml" />
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12"><button id="exportBtn" class="btn btn-primary">Импортировать</button></div>
+                        <div class="col-xs-12">
+                            <button id="importPostBtn" class="btn btn-primary" type="button"><i id="importSpinner" class="fas fa-file-import"></i> Импортировать</button>
+                        </div>
+                        <div class="col-xs-12" id="prImpTxt" hidden></div>
                     </div>
                 </form>
             </div>
@@ -97,6 +100,7 @@
 </div>
 
 @section Scripts {
+    <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/all.min.css">
 
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
@@ -109,7 +113,7 @@
                 processing: "Загрузка данных...",
                 zeroRecords: "Не найдено ни одного совпадения."
             },
-            processing: true, // for show progress bar
+            processing: false, // for show progress bar
             serverSide: true, // for process server side
             filter: true, // this is for disable filter (search box)
             orderMulti: false, // for disable multiple column at once
@@ -180,7 +184,7 @@
         });
 
         setInterval(function () {
-            table.processing( false );
+            table.processing = true;
             table.ajax.reload( null, false ); // user paging is not reset on reload
         }, 3000 );
 
@@ -193,8 +197,46 @@
             $(".typ-modal").modal('show');
         });
 
-        $('#btnImport').on('click', function () {
+        $('#importModBtn').on('click', function () {
             $(".import-modal").modal('show');
+        });
+
+        $("#importPostBtn").on("click", function () {
+            var postData = new FormData();
+            var fileInp = $('#importFile');
+            postData.append('file', fileInp[0].files[0]);
+
+            var url = $("#importForm").attr("action");
+
+            $("#importPostBtn").attr("disabled", "disabled");
+
+            var importSpinner = $("#importSpinner");
+            var imp = importSpinner.attr("class", "fa fa-spinner fa-spin");
+            $("#prImpTxt").removeAttr("hidden");
+            fileInp.attr("disabled", "disabled");
+            $("#prImpTxt").text("Запущен процесс импортирования...");
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: postData, // serializes the form's elements.
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                success: function (data) {
+                    $("#importPostBtn").removeAttr("disabled");
+                    importSpinner.attr("class", imp);
+                    fileInp.removeAttr("disabled");
+
+                    if (data.success) {
+                        $("#prImpTxt").attr("hidden", "hidden");
+                        $(".import-modal").modal('hide');
+                        table.ajax.reload( null, false ); // user paging is not reset on reload
+                    }
+                    else {
+                        $("#prImpTxt").text(data.msg);
+                    }
+                }
+            });
         });
 
         table.on('click', 'tbody tr td .btn-delete', function () {

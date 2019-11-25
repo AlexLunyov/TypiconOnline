@@ -209,7 +209,7 @@ namespace TypiconOnline.Web.Controllers
 
             if (exportResult.Success)
             {
-                return File(exportResult.Value.Content, exportResult.Value.ContentType, exportResult.Value.FileDownloadName);
+                return Json(new { file = exportResult.Value.Content, type = exportResult.Value.ContentType, filename = exportResult.Value.FileDownloadName });
             }
             else
             {
@@ -237,17 +237,10 @@ namespace TypiconOnline.Web.Controllers
 
                 var importResult = _importManager.Import(data);
 
-                if (importResult.Success)
-                {
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    return new JsonResult(new { error = importResult.Error });
-                }
+                return new JsonResult(new { success = importResult.Success, msg = importResult.Error });
             }
             
-            return new JsonResult(new { error = "Ошибка: пустой файл" });
+            return new JsonResult(new { success = false, msg = "Ошибка: пустой файл" });
         }
 
         [HttpGet]

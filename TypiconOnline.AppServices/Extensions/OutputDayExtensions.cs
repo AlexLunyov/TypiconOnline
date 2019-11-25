@@ -19,8 +19,12 @@ namespace TypiconOnline.AppServices.Extensions
                 Order = day.GetMaxOrder() + 1,
                 Time = worshipModel.Time,
                 Name = new ItemTextStyled(worshipModel.Name),
-                AdditionalName = (worshipModel.AdditionalName != null) ?  new ItemText(worshipModel.AdditionalName) : new ItemText(),
-                Definition = typiconSerializer.Serialize(worshipModel.ChildElements)
+                AdditionalName = (worshipModel.AdditionalName != null) 
+                    ? new ItemText(worshipModel.AdditionalName) 
+                    : new ItemText(),
+                Definition = (worshipModel.ChildElements.Any()) 
+                    ? typiconSerializer.Serialize(worshipModel.ChildElements)
+                    : string.Empty
             };
             day.Worships.Add(w);
         }
