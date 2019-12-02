@@ -34,13 +34,19 @@ namespace TypiconOnline.Infrastructure.Common.ErrorHandling
 
         public static Result Combine(params Result[] results)
         {
+            var errors = new StringBuilder();
+
             foreach (Result result in results)
             {
                 if (result.Failure)
-                    return result;
+                {
+                    errors.AppendLine(result.Error);
+                }
             }
 
-            return Ok();
+            return (errors.Length == 0) 
+                ? Ok()
+                : Fail(errors.ToString());
         }
     }
 

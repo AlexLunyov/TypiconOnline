@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using SimpleInjector;
 using System;
 using TypiconOnline.AppServices.Configuration;
@@ -13,7 +9,6 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Jobs;
 using TypiconOnline.AppServices.Jobs.Scheduled;
 using TypiconOnline.AppServices.Messaging.Common;
-using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.AppServices.Migration.Typicon;
 using TypiconOnline.AppServices.Viewers;
 using TypiconOnline.Domain.Command;
@@ -29,9 +24,7 @@ using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
-using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Web.Services;
-using TypiconOnline.WebServices.Authorization;
 using TypiconOnline.WebServices.Hosting;
 
 namespace TypiconOnline.Web

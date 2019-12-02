@@ -8,7 +8,7 @@ namespace TypiconOnline.Tests.Common
     {
         public static string GetXmlString(string fileName)
         {
-            string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData");
+            string folderPath = Path.Combine(TestFileCommander.ExecFolder, @"TestData");
             var reader = new FileReader(folderPath);
             return reader.Read(fileName);
         }

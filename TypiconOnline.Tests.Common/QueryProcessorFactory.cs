@@ -8,12 +8,7 @@ namespace TypiconOnline.Tests.Common
     {
         public static IQueryProcessor Create()
         {
-            var container = new SimpleInjector.Container();
-
-            container.Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
-            container.Register<IQueryProcessor, QueryProcessor>();
-
-            container.Register(UnitOfWorkFactory.Create, SimpleInjector.Lifestyle.Singleton);
+            var container = new SIContainer();
 
             var processor = container.GetInstance<IQueryProcessor>();
 

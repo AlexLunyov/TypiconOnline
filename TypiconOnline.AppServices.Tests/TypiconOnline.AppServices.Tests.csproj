@@ -9,13 +9,53 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\OutputForm\0.docx" />
+    <None Remove="Data\OutputForm\1.docx" />
+    <None Remove="Data\OutputForm\2.docx" />
+    <None Remove="Data\OutputForm\3.docx" />
+    <None Remove="Data\OutputForm\4.docx" />
+    <None Remove="Data\OutputForm\5.docx" />
+    <None Remove="Data\OutputForm\6.docx" />
+    <None Remove="Data\OutputForm\7.docx" />
+    <None Remove="Data\OutputForm\8.docx" />
+    <None Remove="Data\OutputForm\week.docx" />
     <None Remove="Data\SQLiteDB.db" />
     <None Remove="TestData\TypiconVersion.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Data\SQLiteDB.db">
+    <Content Include="Data\OutputForm\0.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\OutputForm\1.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\OutputForm\2.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\OutputForm\3.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\OutputForm\4.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\OutputForm\5.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\OutputForm\6.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\OutputForm\7.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\OutputForm\8.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\OutputForm\week.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\SQLiteDB.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\TypiconVersion.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -46,8 +86,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NewFolder\" />
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestData\DocxViewerWeek.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
