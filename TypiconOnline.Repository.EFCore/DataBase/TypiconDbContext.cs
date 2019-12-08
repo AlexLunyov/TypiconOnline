@@ -152,7 +152,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 
             modelBuilder.ApplyConfiguration(new OutputDayConfiguration());
             modelBuilder.ApplyConfiguration(new OutputWorshipConfiguration());
-            modelBuilder.ApplyConfiguration(new OutputFormDayWorshipConfiguration());
+            modelBuilder.ApplyConfiguration(new OutputFormDayWorshipConfiguration()); 
 
             #region Variables
 
@@ -189,6 +189,9 @@ namespace TypiconOnline.Repository.EFCore.DataBase
             });
 
             #endregion
+
+            modelBuilder.ApplyConfiguration(new PrintDayTemplateConfiguration());
+            modelBuilder.ApplyConfiguration(new PrintWeekTemplateConfiguration());
 
             modelBuilder.ApplyConfiguration(new TypiconVersionErrorConfiguration());
 

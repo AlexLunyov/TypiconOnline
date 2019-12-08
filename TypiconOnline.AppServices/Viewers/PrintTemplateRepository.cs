@@ -42,7 +42,7 @@ namespace TypiconOnline.AppServices.Viewers
                 {
                     using (MemoryStream stream = new MemoryStream())
                     {
-                        stream.Write(day.PrintForm, 0, day.PrintForm.Length);
+                        stream.Write(day.PrintFile, 0, day.PrintFile.Length);
 
                         using (var doc = WordprocessingDocument.Open(stream, false))
                         {

@@ -1,25 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TypiconOnline.Domain.Interfaces;
-using TypiconOnline.Infrastructure.Common.Domain;
+using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.Typicon.Print;
+using TypiconOnline.Infrastructure.Common.Command;
 
-namespace TypiconOnline.Domain.Typicon.Print
+namespace TypiconOnline.Domain.Command.Typicon
 {
-    public class PrintDayTemplate : ITypiconVersionChild, IHasId<int>
+    public class CreatePrintDayTemplateCommand : CreateRuleCommandBase<PrintDayTemplate>
     {
-        public int Id { get; set; }
+        public CreatePrintDayTemplateCommand(int id
+            , int number
+            , string name
+            , char? sign
+            , byte[] file
+            , string fileName) : base(id)
+        {
+            Number = number;
+            Name = name;
+            Sign = sign;
+            PrintFile = file;
+            PrintFileName = fileName;
 
-        /// <summary>
-        /// Id Устава (TypiconVersion)
-        /// </summary>
-        public virtual int TypiconVersionId { get; set; }
-
-        public virtual TypiconVersion TypiconVersion { get; set; }
-
-        /// <summary>
-        /// Уникальный номер в пределах версии Устава (указывается в определениях Правил)
-        /// </summary>
+        }
         public int Number { get; set; }
 
         /// <summary>

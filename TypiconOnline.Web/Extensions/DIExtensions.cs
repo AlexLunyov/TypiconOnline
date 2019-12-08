@@ -58,9 +58,11 @@ namespace TypiconOnline.Web
 
             //container.Register<IOutputForms, OutputForms>();
             container.Register<IOutputDayFactory, OutputDayFactory>();
-            container.Register<IScheduleDayViewer<string>, HtmlScheduleDayViewer>();
+            container.Register<IScheduleDayViewer<string>, HtmlScheduleDayViewer>(); 
             container.Register<IScheduleWeekViewer<string>, TextScheduleWeekViewer>(); 
-            container.Register<IScheduleWeekViewer<Result<FileDownloadResponse>>, DocxToStreamWeekViewer>();
+            //container.Register<IScheduleWeekViewer<Result<FileDownloadResponse>>, DocxToStreamWeekViewer>();
+
+            container.Register<IScheduleWeekViewer<Result<FileDownloadResponse>>, DocxFromOutputTemplatesWeekViewer>();
 
             container.Register<ITypiconExportManager, TypiconXmlExportManager>();
             container.Register<ITypiconImportManager, TypiconXmlImportManager>();

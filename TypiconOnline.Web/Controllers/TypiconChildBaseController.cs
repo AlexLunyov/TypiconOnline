@@ -17,7 +17,7 @@ namespace TypiconOnline.Web.Controllers
 {
     public abstract class TypiconChildBaseController<TGridModel, TDomain> : TypiconBaseController<TGridModel> 
         where TGridModel : IGridModel
-        where TDomain : RuleEntity, new()
+        where TDomain : class, ITypiconVersionChild, new()
     {
         public TypiconChildBaseController(
             IQueryProcessor queryProcessor, 
@@ -27,7 +27,7 @@ namespace TypiconOnline.Web.Controllers
         }
 
         // GET: /<controller>/
-        public IActionResult Index(int id)
+        public virtual IActionResult Index(int id)
         {
             if (IsAuthorizedToEdit(id))
             {

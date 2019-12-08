@@ -65,7 +65,7 @@ namespace TypiconOnline.AppServices.Tests.OutputForm
             return new PrintDayTemplate()
             {
                 Number = number,
-                PrintForm = arr
+                PrintFile = arr
             };
         }
 
@@ -76,7 +76,7 @@ namespace TypiconOnline.AppServices.Tests.OutputForm
             return new PrintWeekTemplate()
             {
                 DaysPerPage = 4,
-                PrintForm = arr
+                PrintFile = arr
             };
         }
 

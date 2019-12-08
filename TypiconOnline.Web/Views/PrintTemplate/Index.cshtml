@@ -1,0 +1,137 @@
+﻿@model PrintWeekTemplateModel
+
+<link href="~/css/datatables.min.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+
+<div class="container">
+    @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.PrintTemplate })
+    <div class="row">
+        <div class="col-12"><h2>Печатный шаблон седмицы</h2></div>
+    </div>
+    <div class="row">
+        <div class="form-group col-12" id="weekview">
+            @if (Model == null)
+            {
+                <a class="btn btn-primary" asp-controller="PrintTemplate" asp-action="CreateWeek" asp-route-id="@ViewContext.RouteData.Values["id"]">Создать</a>
+            }
+            else
+            {
+                <div class="justify-content-center align-content-center">
+                    <table class="table table-striped table-bordered" style="width:100%">
+                        <thead class="text-center">
+                            <tr>
+                                <th>Кол-во дней на печатный лист</th>
+                                <th>Файл</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@Model.DaysPerPage</td>
+                                <td>@Model.PrintFileName</td>
+                                <td>
+                                    <a class="btn btn-info" asp-controller="PrintTemplate" asp-action="EditWeek" asp-route-id="@Model.Id"><i class="fas fa-file-edit"></i> Редактировать</a>
+                                    <a class="btn btn-default" asp-controller="PrintTemplate" asp-action="DownLoadWeek" asp-route-id="@Model.Id"><i class="fas fa-file-download"></i> Скачать</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12"><h2>Печатные шаблоны дней</h2></div>
+    </div>
+    <div class="row">
+        <div class="form-group col-12">
+            <a class="btn btn-primary" asp-controller="PrintTemplate" asp-action="CreateDay" asp-route-id="@ViewContext.RouteData.Values["id"]">Новый печатный шаблон дня</a>
+        </div>
+        <div class="form-group col-12">
+            <div class="justify-content-center align-content-center">
+                <table id="prnTmpGrid" class="table table-striped table-bordered" style="width:100%">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Id</th>
+                            <th>Number</th>
+                            <th>HasFile</th>
+                            <th>Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+    $(document).ready(function ()
+    {
+        //$("#weekview").load("/PrintTemplate/WeekView/@ViewContext.RouteData.Values["id"]");
+
+        $("#prnTmpGrid").DataTable(
+            {
+                "processing": true, // for show progress bar
+                "serverSide": true, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url": "/PrintTemplate/LoadData/@ViewContext.RouteData.Values["id"]",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs":
+                [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "columns": [
+                    { "data": "Id", "name": "Id", "autoWidth": true },
+                    { "data": "Number", "name": "Number", "autoWidth": true },
+                    { "data": "HasFile", "name": "HasFile", "autoWidth": true },
+                    { "data": "Name", "name": "Name", "autoWidth": true },
+                    {
+                        data: null, render: function (data, type, row)
+                        {
+                            return '<a class="btn btn-info" href="/PrintTemplate/EditDay/' + row.Id + '">Редактировать</a> <a href="#" class="btn btn-danger btn-delete">Удалить</a>';
+                        },
+                        orderable: false
+                    },
+                ]
+            }
+        );
+    });
+
+
+    $('#prnTmpGrid').on('click', 'tbody tr td .btn-delete', function () {
+        var table = $('#prnTmpGrid').DataTable();
+        var row = table.row($(this).parents('tr'));
+        var data = row.data();
+
+        if (confirm('Вы действительно хотите удалить Печатный шаблон дня "' + data.Number + '"?')) {
+
+            $.post("/PrintTemplate/Delete/@ViewContext.RouteData.Values["id"]/"+ data.Id, function (result) {
+                if (result) {
+                    row.remove();
+                }
+                else {
+                    alert("Что-то пошло не так.");
+                }
+                table.draw(false);
+            });
+        }
+        else {
+            return false;
+        }
+    });
+    </script>
+}
+

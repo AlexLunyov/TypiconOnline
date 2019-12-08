@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Serialization;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
@@ -10,7 +11,7 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Command.Typicon
 {
-    public abstract class CreateRuleCommandHandlerBase<T> : DbContextCommandBase where T : RuleEntity, new()
+    public abstract class CreateRuleCommandHandlerBase<T> : DbContextCommandBase where T : class, ITypiconVersionChild, new()
     {
         protected CreateRuleCommandHandlerBase(TypiconDBContext dbContext, CollectorSerializerRoot serializerRoot) : base(dbContext)
         {

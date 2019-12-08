@@ -62,7 +62,7 @@ namespace TypiconOnline.AppServices.Viewers
 
             using (MemoryStream stream = new MemoryStream())
             {
-                stream.Write(weekTemplate.PrintForm, 0, weekTemplate.PrintForm.Length);
+                stream.Write(weekTemplate.PrintFile, 0, weekTemplate.PrintFile.Length);
 
                 var errors = new StringBuilder();
 

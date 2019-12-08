@@ -19,6 +19,7 @@ namespace TypiconOnline.Web.Models.TypiconViewModels
         Properties,
         Operations,
         Editors,
+        PrintTemplate,
         Variables,
         Sign,
         Menology,
@@ -39,6 +40,8 @@ namespace TypiconOnline.Web.Models.TypiconViewModels
         EditCommon,
         CreateExplicit,
         EditExplicit,
-        EditKathizma
+        EditKathizma,
+        CreatePrintTemplate,
+        EditPrintTemplate
     }
 }
