@@ -9,14 +9,7 @@ using TypiconOnline.Domain.WebQuery.Models;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public class PrintDayTemplateCreateModel
+    public class PrintDayTemplateCreateModel : PrintDayTemplateModelBase
     {
-        public int Id { get; set; }
-        public int Number { get; set; }
-        public string Name { get; set; }
-        [Required]
-        [MaxFileSize(500 * 1024)]
-        [AllowedExtensions(new string[] { ".docx" })]
-        public IFormFile File { get; set; }
     }
 }

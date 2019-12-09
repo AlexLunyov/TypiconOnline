@@ -7,8 +7,14 @@ using TypiconOnline.Domain.WebQuery.Attributes;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public class PrintWeekTemplateEditModel : PrintWeekTemplateModelBase
+    public abstract class PrintWeekTemplateModelBase
     {
-        public string OldFileName { get; set; }
+        public int Id { get; set; }
+
+        public int TypiconVersionId { get; set; }
+
+        public int DaysPerPage { get; set; }
+
+        public IFormFile File { get; set; }
     }
 }

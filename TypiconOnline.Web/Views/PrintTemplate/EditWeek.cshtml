@@ -4,7 +4,7 @@
 }
 <div class="row">
     <div class="col-12">
-        @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.EditPrintTemplate })
+        @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewBag.TypiconId, tab = TypiconTab.EditPrintTemplate })
         <div class="row">
             <div class="col-md-8">
                 <h2>Редактирование печатного шаблона седмицы</h2>

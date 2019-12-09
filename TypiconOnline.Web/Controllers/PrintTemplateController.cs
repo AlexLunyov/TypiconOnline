@@ -143,6 +143,7 @@ namespace TypiconOnline.Web.Controllers
                 && IsAuthorizedToEdit(typiconEntity.Value))
             {
                 var found = QueryProcessor.Process(new PrintWeekTemplateEditQuery(id));
+                ViewBag.TypiconId = typiconEntity.Value.Id.ToString();
 
                 if (found.Success)
                 {
@@ -265,6 +266,8 @@ namespace TypiconOnline.Web.Controllers
                 && IsAuthorizedToEdit(typiconEntity.Value))
             {
                 var found = QueryProcessor.Process(new PrintDayTemplateEditQuery(id));
+
+                ViewBag.TypiconId = typiconEntity.Value.Id.ToString();
 
                 if (found.Success)
                 {

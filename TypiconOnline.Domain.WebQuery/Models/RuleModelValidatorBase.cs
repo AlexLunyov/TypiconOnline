@@ -8,14 +8,9 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public abstract class RuleModelValidatorBase<T> : ModelValidatorBase<T> where T: class, new()
+    public abstract class RuleModelValidatorBase<T> : RuleSerializerModelValidatorBase<T> where T: class, new()
     {
-        public RuleModelValidatorBase(IRuleSerializerRoot ruleSerializer)
-        {
-            RuleSerializer = ruleSerializer ?? throw new ArgumentNullException(nameof(ruleSerializer));
-        }
-
-        protected IRuleSerializerRoot RuleSerializer { get; }
+        public RuleModelValidatorBase(IRuleSerializerRoot ruleSerializer) : base(ruleSerializer) { }
 
         protected List<ValidationResult> ValidateRule(RuleModelBase model)
         {

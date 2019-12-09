@@ -215,11 +215,11 @@ namespace TypiconOnline.AppServices.Viewers
                 return Result.Fail($"Поле {OutputTemplateConstants.WorshipName} должно быть определено внутри шаблона");
             }
 
-            OpenXmlElement row = FindCommonParent<TableRow>(timePlacement, worshipNamePlacement);
+            OpenXmlElement row = DocxUtility.FindCommonParent<TableRow>(timePlacement, worshipNamePlacement);
 
             if (row == null)
             {
-                row = FindCommonParent<Paragraph>(timePlacement, worshipNamePlacement);
+                row = DocxUtility.FindCommonParent<Paragraph>(timePlacement, worshipNamePlacement);
             }
 
             if (row == null)
@@ -240,34 +240,6 @@ namespace TypiconOnline.AppServices.Viewers
             row.Parent.RemoveChild(row);
 
             return Result.Ok();
-        }
-
-        private OpenXmlElement FindCommonParent<T>(Text timePlacement, Text worshipNamePlacement) where T: OpenXmlElement
-        {
-            var parentTime = FindParent<T>(timePlacement);
-
-            var parentWorshipName = FindParent<T>(worshipNamePlacement);
-
-            return (parentTime != null && parentTime == parentWorshipName)
-                ? parentTime
-                : default;
-        }
-
-        private OpenXmlElement FindParent<T>(OpenXmlElement element) where T : OpenXmlElement
-        {
-            if (element.Parent == null)
-            {
-                return default;
-            }
-
-            if (element.Parent is T)
-            {
-                return element.Parent;
-            }
-            else
-            {
-                return FindParent<T>(element.Parent);
-            }
         }
 
         private string GetFileName(int typiconId, DateTime date)
