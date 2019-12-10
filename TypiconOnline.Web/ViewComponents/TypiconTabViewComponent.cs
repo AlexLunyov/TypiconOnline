@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Query.Typicon;
@@ -37,7 +38,10 @@ namespace TypiconOnline.Web.ViewComponents
                         Tab = tab,
                         UserIsAuthor = await IsTypiconsAuthor(draft.Value.Typicon),
                         IsTemplate = draft.Value.IsTemplate,
-                        VariablesCount = draft.Value.TypiconVariables.Count
+                        VariablesCount = draft.Value.TypiconVariables.Count,
+                        EmptyPrintTemplatesCount = draft.Value
+                            .PrintDayTemplates
+                            .Count(c => c.PrintFile == null || c.PrintFile.Length == 0)
                     });
                 }
             }

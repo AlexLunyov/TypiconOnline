@@ -16,9 +16,9 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public DeleteTriodionRuleCommandHandler(TypiconDBContext dbContext) : base(dbContext) { }
 
-        public async Task<Result> ExecuteAsync(DeleteTriodionRuleCommand command)
+        public Task<Result> ExecuteAsync(DeleteTriodionRuleCommand command)
         {
-            return await base.ExecuteAsync(command);
+            return Task.FromResult(Execute(command));
         }
     }
 }

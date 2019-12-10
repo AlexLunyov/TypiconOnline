@@ -19,9 +19,9 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public EditTriodionRuleCommandHandler(TypiconDBContext dbContext, CollectorSerializerRoot serializerRoot) : base(dbContext, serializerRoot) { }
 
-        public async Task<Result> ExecuteAsync(EditTriodionRuleCommand command)
+        public Task<Result> ExecuteAsync(EditTriodionRuleCommand command)
         {
-            return await base.ExecuteAsync(command);
+            return Task.FromResult(Execute(command));
         }
 
         protected override Result UpdateValues(TriodionRule entity, EditRuleCommandBase<TriodionRule> command)
@@ -29,16 +29,16 @@ namespace TypiconOnline.Domain.Command.Typicon
             var c = command as EditTriodionRuleCommand;
 
             //Синхронизируем Переменные Устава
-            if (entity.RuleDefinition != c.RuleDefinition)
-            {
+            //if (entity.RuleDefinition != c.RuleDefinition)
+            //{
                 entity.RuleDefinition = c.RuleDefinition;
-                entity.SyncRuleVariables(SerializerRoot);
-            }
-            if (entity.ModRuleDefinition != c.ModRuleDefinition)
-            {
+            //    entity.SyncRuleVariables(SerializerRoot);
+            //}
+            //if (entity.ModRuleDefinition != c.ModRuleDefinition)
+            //{
                 entity.ModRuleDefinition = c.ModRuleDefinition;
-                entity.SyncModRuleVariables(SerializerRoot);
-            }
+            //    entity.SyncModRuleVariables(SerializerRoot);
+            //}
 
             entity.TemplateId = c.TemplateId;
             entity.DaysFromEaster = c.DaysFromEaster;

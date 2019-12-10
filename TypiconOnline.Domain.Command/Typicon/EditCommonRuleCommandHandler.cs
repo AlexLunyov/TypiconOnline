@@ -19,9 +19,9 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public EditCommonRuleCommandHandler(TypiconDBContext dbContext, CollectorSerializerRoot serializerRoot) : base(dbContext, serializerRoot) { }
 
-        public async Task<Result> ExecuteAsync(EditCommonRuleCommand command)
+        public Task<Result> ExecuteAsync(EditCommonRuleCommand command)
         {
-            return await base.ExecuteAsync(command);
+            return Task.FromResult(Execute(command));
         }
 
         protected override Result UpdateValues(CommonRule entity, EditRuleCommandBase<CommonRule> command)
@@ -31,11 +31,11 @@ namespace TypiconOnline.Domain.Command.Typicon
             entity.Name = c.Name;
 
             //Синхронизируем Переменные Устава
-            if (entity.RuleDefinition != c.RuleDefinition)
-            {
+            //if (entity.RuleDefinition != c.RuleDefinition)
+            //{
                 entity.RuleDefinition = c.RuleDefinition;
-                entity.SyncRuleVariables(SerializerRoot);
-            }
+            //    entity.SyncRuleVariables(SerializerRoot);
+            //}
 
             return Result.Ok();
         }

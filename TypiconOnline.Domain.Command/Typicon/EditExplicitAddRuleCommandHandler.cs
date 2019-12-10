@@ -19,9 +19,9 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public EditExplicitAddRuleCommandHandler(TypiconDBContext dbContext, CollectorSerializerRoot serializerRoot) : base(dbContext, serializerRoot) { }
 
-        public async Task<Result> ExecuteAsync(EditExplicitAddRuleCommand command)
+        public Task<Result> ExecuteAsync(EditExplicitAddRuleCommand command)
         {
-            return await base.ExecuteAsync(command);
+            return Task.FromResult(Execute(command));
         }
 
         protected override Result UpdateValues(ExplicitAddRule entity, EditRuleCommandBase<ExplicitAddRule> command)
@@ -31,11 +31,11 @@ namespace TypiconOnline.Domain.Command.Typicon
             entity.Date = c.Date;
 
             //Синхронизируем Переменные Устава
-            if (entity.RuleDefinition != c.RuleDefinition)
-            {
+            //if (entity.RuleDefinition != c.RuleDefinition)
+            //{
                 entity.RuleDefinition = c.RuleDefinition;
-                entity.SyncRuleVariables(SerializerRoot);
-            }
+            //    entity.SyncRuleVariables(SerializerRoot);
+            //}
 
             return Result.Ok();
         }

@@ -17,9 +17,9 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public DeletePrintDayTemplateCommandHandler(TypiconDBContext dbContext) : base(dbContext) { }
 
-        public async Task<Result> ExecuteAsync(DeletePrintDayTemplateCommand command)
+        public Task<Result> ExecuteAsync(DeletePrintDayTemplateCommand command)
         {
-            return await base.ExecuteAsync(command);
+            return Task.FromResult(Execute(command));
         }
     }
 }

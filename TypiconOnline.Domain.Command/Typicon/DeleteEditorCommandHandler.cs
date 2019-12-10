@@ -28,7 +28,7 @@ namespace TypiconOnline.Domain.Command.Typicon
 
             DbContext.Set<UserTypicon>().Remove(found);
 
-            await DbContext.SaveChangesAsync();
+            //await DbContext.SaveChangesAsync();
 
             return Result.Ok();
         }

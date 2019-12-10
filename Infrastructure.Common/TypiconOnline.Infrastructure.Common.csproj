@@ -56,6 +56,8 @@
     <Compile Include="ErrorHandling\ResultExtensions.cs" />
     <Compile Include="ErrorHandling\ValidationFailure.cs" />
     <Compile Include="Events\IDomainEvent.cs" />
+    <Compile Include="Events\IDomainEventHandler.cs" />
+    <Compile Include="Events\IEventDispatcher.cs" />
     <Compile Include="Events\IHasDomainEvents.cs" />
     <Compile Include="Interfaces\ICacheStorage.cs" />
     <Compile Include="Domain\BusinessConstraint.cs" />

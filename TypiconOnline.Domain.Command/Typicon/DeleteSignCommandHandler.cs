@@ -16,9 +16,9 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public DeleteSignCommandHandler(TypiconDBContext dbContext) : base(dbContext) { }
 
-        public async Task<Result> ExecuteAsync(DeleteSignCommand command)
+        public Task<Result> ExecuteAsync(DeleteSignCommand command)
         {
-            return await base.ExecuteAsync(command);
+            return Task.FromResult(Execute(command));
         }
     }
 }

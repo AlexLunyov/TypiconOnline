@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 using TypiconOnline.Domain.Interfaces;
@@ -10,11 +11,11 @@ using TypiconOnline.Infrastructure.Common.Query;
 namespace TypiconOnline.Domain.Rules.Serialization
 {
     /// <summary>
-    /// Обертка для базового класса. Нужен для определения Переменных в десериализуемом Правиле
+    /// Обертка для базового класса. Нужен для собирания в общую коллекцию всех десериализуемых элементов
     /// </summary>
     public class CollectorSerializerRoot : RuleSerializerRoot
     {
-        private List<IHavingVariables> _collection = new List<IHavingVariables>();
+        private List<IRuleElement> _collection = new List<IRuleElement>();
         public CollectorSerializerRoot([NotNull] IQueryProcessor queryProcessor, ITypiconSerializer typiconSerializer) : base(queryProcessor, typiconSerializer)
         {
         }
@@ -24,13 +25,18 @@ namespace TypiconOnline.Domain.Rules.Serialization
             return new CollectorContainer<T>(base.Container<T>(), this);
         }
 
-        public void AddHavingVariablesElement(IHavingVariables element)
+        public void AddElement(IRuleElement element)
         {
             _collection.Add(element);
         }
 
-        public void ClearHavingVariables() => _collection.Clear();
+        public void ClearElements() => _collection.Clear();
 
-        public IEnumerable<IHavingVariables> GetHavingVariables() => _collection;
+        public IEnumerable<T> GetElements<T>()
+        {
+            return _collection
+                .Where(c => c is T)
+                .Cast<T>();
+        }
     }
 }

@@ -39,6 +39,8 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                     IsModified =  draft.IsModified,
                     IsTemplate = draft.IsTemplate,
                     HasVariables = draft.TypiconVariables.Any(),
+                    HasEmptyPrintTemplates = draft.PrintDayTemplates
+                                                    .Any(c => c.PrintFile == null || c.PrintFile.Length == 0),
                     Editors = typicon.Editors.Select(c => (c.Id, c.FullName))
                 });
             }

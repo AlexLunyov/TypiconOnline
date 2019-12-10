@@ -10,6 +10,7 @@ namespace TypiconOnline.AppServices.Interfaces
     {
         string FolderPath { get; set; }
         string Read(string fileName);
+        byte[] ReadBinary(string fileName);
         string Read(params string[] names);
         IEnumerable<(string name, string content)> ReadAllFromDirectory();
     }

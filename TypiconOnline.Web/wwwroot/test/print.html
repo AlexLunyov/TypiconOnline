@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> - Typicon.Online</title>
+
+    
+        <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
+        <link rel="stylesheet" href="/css/site.min.css" />
+        <link rel="stylesheet" href="/lib/twitter-bootstrap/css/all.min.css">
+    
+    
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Typicon.Online</a>
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false">Уставщик <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Typicon">Уставы</a></li>
+                                <li><a href="/CustomSequence">Custom sequence</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false">Тексты служб <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/MenologyDay">Минея</a></li>
+                                <li><a href="/TriodionDay">Триодь</a></li>
+                                <li><a href="/OktoikhDay">Октоих</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false">Администратор <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Users">Пользователи</a></li>
+                                <li><a href="/Roles">Роли</a></li>
+                            </ul>
+                        </li>
+                </ul>
+                
+
+    <form method="post" id="logoutForm" class="navbar-right" action="/Account/Logout">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a title="Manage" href="/Manage/Index">Hello ftroem@gmail.com!</a>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
+            </li>
+        </ul>
+    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8L0RbUso1vVMrQCKnwcF4elLhGu0Ygp1KgnjVCEyRc6B5btAMfvdivlYY0CuhCTayBOa9CmMvmXjYY3zQ_ty3HfGmi4F5GMcJZ_wwwVQ5aC2R5MQ-gAPOnUSIs7XsbN2bBxMKHE5Ki0gL055M4vmVueEN-vwvvBqfrMXLUVzyAYoQiIdzmvfh-9V7kS-LYdclg" /></form>
+
+             </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        
+<link href="/css/datatables.min.css" rel="stylesheet" />
+<link href="/lib/bootstrap/dist/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+
+<div class="container">
+        
+    <div class="row">
+        <div class="col-12">
+            <ol class="breadcrumb">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/Typicon">Уставы</a></li>
+
+                            <li class="active">Устав</li>
+                                    </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h1>Редактирование Устава</h1>
+        </div>
+    </div>
+    <div class="row">
+        <ul class="nav nav-tabs">
+                <li><a href="/Typicon/Edit/1">Свойства</a></li>
+                <li><a href="/Typicon/Operations/1">Операции</a></li>
+                    <li><a href="/Typicon/Editors/1">Редакторы</a></li>
+                <li class="active"><a href="#">Печатные шаблоны</a></li>
+                <li>
+                    <a href="/TypiconVariables/Index/1">
+                        Переменные
+                    </a>
+                </li>
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    Редактирование Правил
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                        <li><a href="/Sign/Index/1">Знаки служб</a></li>
+                        <li><a href="/MenologyRule/Index/1">Минея</a></li>
+                        <li><a href="/TriodionRule/Index/1">Триодь</a></li>
+                        <li><a href="/CommonRule/Index/1">Общие</a></li>
+                        <li><a href="/ExplicitAddRule/Index/1">Явные</a></li>
+                        <li><a href="/Kathisma/Index/1">Кафизмы</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-12"><h2>Печатный шаблон седмицы</h2></div>
+    </div>
+    <div class="row">
+        <div class="form-group col-12" id="weekview">
+                <div class="justify-content-center align-content-center">
+                    <table class="table table-striped table-bordered" style="width:100%">
+                        <thead class="text-center">
+                            <tr>
+                                <th>Кол-во дней на печатный лист</th>
+                                <th>Файл</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>4</td>
+                                <td>week.docx</td>
+                                <td>
+                                    <a class="btn btn-info" href="/PrintTemplate/EditWeek/1"><i class="fas fa-file-edit"></i> Редактировать</a>
+                                    <a class="btn btn-default" href="/PrintTemplate/DownLoadWeek/1"><i class="fas fa-file-download"></i> Скачать</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12"><h2>Печатные шаблоны дней</h2></div>
+    </div>
+    <div class="row">
+        <div class="form-group col-12">
+            <a class="btn btn-primary" href="/PrintTemplate/CreateDay/1">Новый печатный шаблон дня</a>
+        </div>
+        <div class="form-group col-12">
+            <div class="justify-content-center align-content-center">
+                <table id="prnTmpGrid" class="table table-striped table-bordered" style="width:100%">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Id</th>
+                            <th>Number</th>
+                            <th>HasFile</th>
+                            <th>Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+        <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Нажмите, чтобы вернуться на начало страницы" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
+
+        <footer>
+            <div class="row col-sm-12">
+                <hr />
+                <p>&copy; 2019 - Typicon.Online</p>
+            </div>
+        </footer>
+    </div>
+
+    
+        <script src="/lib/jquery/dist/jquery.js"></script>
+        <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="/js/site.js?v=IZwgSlBUoWXEDkycsYc7zQkkgqYTmGGGrNb1taP-YtI"></script>
+    
+    
+
+    
+
+    <script src="/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/lib/datatables/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+    $(document).ready(function ()
+    {
+        $("#prnTmpGrid").DataTable(
+            {
+                "processing": true, // for show progress bar
+                "serverSide": true, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url": "/PrintTemplate/LoadData/1",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs":
+                [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "columns": [
+                    { "data": "Id", "name": "Id", "autoWidth": true },
+                    { "data": "Number", "name": "Number", "autoWidth": true },
+                    { "data": "HasFile", "name": "HasFile", "autoWidth": true },
+                    { "data": "Name", "name": "Name", "autoWidth": true },
+                    {
+                        data: null, render: function (data, type, row)
+                        {
+                            var str = '<a class="btn btn-info" href="/PrintTemplate/EditDay/' + row.Id + '">Редактировать</a>';
+                            if (row['Deletable']) {
+                                str = str + '&nbsp;<a href="#" class="btn btn-danger btn-delete">Удалить</a>';
+                            }
+                            return str;
+                        },
+                        orderable: false
+                    },
+                ]
+            }
+        );
+    });
+
+
+    $('#prnTmpGrid').on('click', 'tbody tr td .btn-delete', function () {
+        var table = $('#prnTmpGrid').DataTable();
+        var row = table.row($(this).parents('tr'));
+        var data = row.data();
+
+        if (confirm('Вы действительно хотите удалить Печатный шаблон дня "' + data.Number + '"?')) {
+
+            $.post("/PrintTemplate/Delete/1/"+ data.Id, function (result) {
+                if (result) {
+                    row.remove();
+                }
+                else {
+                    alert("Что-то пошло не так.");
+                }
+                table.draw(false);
+            });
+        }
+        else {
+            return false;
+        }
+    });
+    </script>
+
+</body>
+</html>

@@ -16,7 +16,7 @@ namespace TypiconOnline.Domain.Command.Typicon
         {
         }
 
-        protected async Task<Result> ExecuteAsync(DeleteRuleCommandBase<T> command) 
+        protected Result Execute(DeleteRuleCommandBase<T> command) 
         {
             var found = DbContext.Set<T>().FirstOrDefault(c => c.Id == command.Id);
 
@@ -41,7 +41,7 @@ namespace TypiconOnline.Domain.Command.Typicon
 
                 version.IsModified = true;
 
-                await DbContext.SaveChangesAsync();
+                //await DbContext.SaveChangesAsync();
             }
             
             return addWorkResult;

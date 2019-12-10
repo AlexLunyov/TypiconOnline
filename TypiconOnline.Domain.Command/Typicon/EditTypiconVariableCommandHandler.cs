@@ -20,9 +20,9 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public EditTypiconVariableCommandHandler(TypiconDBContext dbContext, CollectorSerializerRoot serializerRoot) : base(dbContext, serializerRoot) { }
 
-        public async Task<Result> ExecuteAsync(EditTypiconVariableCommand command)
+        public Task<Result> ExecuteAsync(EditTypiconVariableCommand command)
         {
-            return await base.ExecuteAsync(command);
+            return Task.FromResult(Execute(command));
         }
 
         protected override Result UpdateValues(TypiconVariable entity, EditRuleCommandBase<TypiconVariable> command)

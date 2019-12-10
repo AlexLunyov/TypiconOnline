@@ -8,11 +8,15 @@
 
   <ItemGroup>
     <None Remove="Data\SQLiteDB.db" />
+    <None Remove="TestData\PrintTemplateTest.xml" />
     <None Remove="TestData\VariablesTest.xml" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Data\SQLiteDB.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\PrintTemplateTest.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\VariablesTest.xml">

@@ -21,9 +21,9 @@ namespace TypiconOnline.Domain.Rules.Serialization
         {
             var result = _innerContainer.Deserialize(description);
 
-            if (result is IHavingVariables c)
+            if (result != null)
             {
-                _serializerRoot.AddHavingVariablesElement(c);
+                _serializerRoot.AddElement(result);
             }
 
             return result;
@@ -33,9 +33,9 @@ namespace TypiconOnline.Domain.Rules.Serialization
         {
             var result = _innerContainer.Deserialize(descriptor, parent);
 
-            if (result is IHavingVariables c)
+            if (result != null)
             {
-                _serializerRoot.AddHavingVariablesElement(c);
+                _serializerRoot.AddElement(result);
             }
 
             return result;

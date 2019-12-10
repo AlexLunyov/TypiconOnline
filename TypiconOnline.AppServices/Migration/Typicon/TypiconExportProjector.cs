@@ -41,7 +41,7 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                         TemplateId = c.TemplateId,
                         IsAddition = c.IsAddition,
                         Name = new ItemText(c.SignName),
-                        Number = c.Number,
+                        Number = (c.PrintTemplate != null) ? c.PrintTemplate.Number : default,
                         Priority = c.Priority,
                         RuleDefinition = c.RuleDefinition,
                         ModRuleDefinition = c.ModRuleDefinition,
@@ -83,13 +83,30 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                             }).ToList()
                         }).ToList()
                     }).ToList(),
-                    //TypiconVariables = entity.TypiconVariables.Select(c => new TypiconVariableProjection()
-                    //{
-                    //    Id = c.Id,
-                    //    Name = c.Name,
-                    //    Description = c.Description,
-                    //    Type = c.Type
-                    //}).ToList()
+                    TypiconVariables = entity.TypiconVariables.Select(c => new TypiconVariableProjection()
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        Description = c.Description,
+                        Type = c.Type
+                    }).ToList(),
+                    PrintWeekTemplate = (entity.PrintWeekTemplate != null) 
+                        ? new PrintWeekTemplateProjection()
+                        {
+                            DaysPerPage = entity.PrintWeekTemplate.DaysPerPage,
+                            PrintFile = entity.PrintWeekTemplate.PrintFile,
+                            PrintFileName = entity.PrintWeekTemplate.PrintFileName
+                        }
+                        : null,
+                    PrintDayTemplates = entity.PrintDayTemplates.Select(c => new PrintDayTemplateProjection()
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        Number = c.Number,
+                        PrintFile = c.PrintFile,
+                        PrintFileName = c.PrintFileName,
+                        Sign = c.SignSymbol
+                    }).ToList()
                 };
 
                 return Result.Ok(projection);

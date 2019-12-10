@@ -214,6 +214,10 @@ namespace TypiconMigrationTool
 
             int i = 1;
 
+            var printImporter = new PrintTemplateImporter(Path.Combine(FOLDER_PATH, TYPICON_NAME, "PrintTemplate"));
+
+            typiconEntity.PrintWeekTemplate = printImporter.GetWeek(typiconEntity);
+
             foreach (ScheduleDBDataSet.ServiceSignsRow row in _sh.DataSet.ServiceSigns.Rows)
             {
                 SignMigrator signMigrator = new SignMigrator(row.Number);
@@ -230,14 +234,20 @@ namespace TypiconMigrationTool
                 };
                 sign.SignName.AddOrUpdate(DEFAULT_LANGUAGE, row.Name);
 
-                if (signMigrator.Number != null)
+                if (signMigrator.Number != null
+                    && !typiconEntity.PrintDayTemplates
+                    .Any(c => c.Number == signMigrator.Number.Value))
                 {
-                    sign.Number = (int)signMigrator.Number;
+                    var day = printImporter.GetDay(signMigrator.Number.Value, signMigrator.Name, typiconEntity);
+
+                    typiconEntity.PrintDayTemplates.Add(day);
+
+                    sign.PrintTemplate = day;
                 }
 
                 if (signMigrator.TemplateId != null)
                 {
-                    sign.Template = typiconEntity.Signs.First(c => c.Number == signMigrator.TemplateId);
+                    sign.Template = typiconEntity.Signs.First(c => c.PrintTemplate?.Number == signMigrator.TemplateId);
                     sign.IsAddition = true;
                 }
 

@@ -45,8 +45,12 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                     Id = c.Id,
                     Name = c.Name,
                     Number = c.Number,
-                    HasFile = c.PrintFile.Length > 0
-                });
+                    HasFile = (c.PrintFile != null && c.PrintFile.Length > 0),
+                    Deletable = c.SignLinks.Count == 0
+                             && c.SignPrintLinks.Count == 0
+                             && c.MenologyPrintLinks.Count == 0
+                             && c.TriodionPrintLinks.Count == 0
+            });
 
             //ужасная мера
             //result = result
@@ -56,7 +60,5 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
             return Result.Ok(result);
         }
-
-        
     }
 }

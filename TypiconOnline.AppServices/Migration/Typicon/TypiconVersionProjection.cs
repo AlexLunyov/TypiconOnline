@@ -29,11 +29,16 @@ namespace TypiconOnline.AppServices.Migration.Typicon
         [XmlArray("ExplicitAddRules")]
         [XmlArrayItem("ExplicitAddRule")]
         public virtual List<ExplicitAddRuleProjection> ExplicitAddRules { get; set; }
-        //[XmlArray("TypiconVariables")]
-        //[XmlArrayItem("TypiconVariable")]
-        //public virtual List<TypiconVariableProjection> TypiconVariables { get; set; }
+        [XmlArray("TypiconVariables")]
+        [XmlArrayItem("TypiconVariable")]
+        public virtual List<TypiconVariableProjection> TypiconVariables { get; set; }
         [XmlArray("Kathismas")]
         [XmlArrayItem("Kathisma")]
         public virtual List<KathismaProjection> Kathismas { get; set; }
+        [XmlElement("PrintWeekTemplate")]
+        public virtual PrintWeekTemplateProjection PrintWeekTemplate { get; set; }
+        [XmlArray("PrintDayTemplates")]
+        [XmlArrayItem("PrintDayTemplate")]
+        public virtual List<PrintDayTemplateProjection> PrintDayTemplates { get; set; }
     }
 }

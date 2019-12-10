@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.Typicon.Print;
 using TypiconOnline.Domain.Typicon.Psalter;
 using TypiconOnline.Domain.Typicon.Variable;
 
@@ -27,12 +28,41 @@ namespace TypiconOnline.Domain.Extensions
 
             CloneTypiconVariables(version, source.TypiconVariables);
 
+            ClonePrintTemplates(version, source);
+
             CloneCommonRules(version, source.CommonRules);
             CloneExplicitAddRules(version, source.ExplicitAddRules);
             CloneKathismas(version, source.Kathismas);
             CloneSignsAndDayRules(version, source);
 
             return version;
+        }
+
+        private static void ClonePrintTemplates(TypiconVersion version, TypiconVersion source)
+        {
+            //week
+            version.PrintWeekTemplate = (source.PrintWeekTemplate is PrintWeekTemplate w)
+                ? new PrintWeekTemplate()
+                {
+                    DaysPerPage = w.DaysPerPage,
+                    PrintFile = w.PrintFile,
+                    PrintFileName = w.PrintFileName,
+                    TypiconVersion = version
+                }
+                : null;
+
+            //days
+            version.PrintDayTemplates
+                .AddRange(source.PrintDayTemplates
+                    .Select(c => new PrintDayTemplate()
+                    {
+                        Name = c.Name,
+                        Number = c.Number,
+                        PrintFile = c.PrintFile,
+                        PrintFileName = c.PrintFileName,
+                        SignSymbol = c.SignSymbol,
+                        TypiconVersion = version
+                    }));
         }
 
         private static void CloneSignsAndDayRules(TypiconVersion versionTo, TypiconVersion versionFrom, Sign oldTemplate = null, Sign newTemplate = null)
@@ -46,7 +76,11 @@ namespace TypiconOnline.Domain.Extensions
                 {
                     IsAddition = sign.IsAddition,
                     ModRuleDefinition = sign.ModRuleDefinition,
-                    Number = sign.Number,
+                    
+                    PrintTemplate = (sign.PrintTemplate != null)
+                        ? versionTo.PrintDayTemplates.First(c => c.Number == sign.PrintTemplate.Number)
+                        : default,
+                    
                     Priority = sign.Priority,
                     RuleDefinition = sign.RuleDefinition,
                     SignName = new ItemText(sign.SignName),
@@ -60,6 +94,9 @@ namespace TypiconOnline.Domain.Extensions
 
                 //VariableLinks
                 sign.VariableLinks.CloneVariableModRuleLinks(versionTo, newSign);
+
+                //PrintTemplateLinks
+                sign.PrintTemplateLinks.ClonePrintTemplateLinks(versionTo, newSign);
             }
 
             //находим MenologyRules
@@ -92,6 +129,9 @@ namespace TypiconOnline.Domain.Extensions
 
                 //VariableLinks
                 oldMenology.VariableLinks.CloneVariableModRuleLinks(versionTo, newMenology);
+
+                //PrintTemplateLinks
+                oldMenology.PrintTemplateLinks.ClonePrintTemplateLinks(versionTo, newMenology);
             }
 
             //находим TriodionRules
@@ -124,6 +164,9 @@ namespace TypiconOnline.Domain.Extensions
 
                 //VariableLinks
                 oldTriodion.VariableLinks.CloneVariableModRuleLinks(versionTo, newTriodion);
+
+                //PrintTemplateLinks
+                oldTriodion.PrintTemplateLinks.ClonePrintTemplateLinks(versionTo, newTriodion);
             }
         }
 
@@ -233,6 +276,17 @@ namespace TypiconOnline.Domain.Extensions
                                       && v.Type == link.Variable.Type);
 
                 newVariable.AddLink(rule, link.DefinitionType);
+            });
+        }
+
+        private static void ClonePrintTemplateLinks<T>(this List<PrintTemplateModRuleLink<T>> links, TypiconVersion version, T rule) where T : ModRuleEntity, new()
+        {
+            links.ForEach(link =>
+            {
+                var newPrintTemplate = version.PrintDayTemplates
+                    .First(v => v.Number == link.Template.Number);
+
+                newPrintTemplate.AddLink(rule);
             });
         }
     }

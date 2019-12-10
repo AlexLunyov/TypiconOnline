@@ -16,9 +16,9 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public DeleteMenologyRuleCommandHandler(TypiconDBContext dbContext) : base(dbContext) { }
 
-        public async Task<Result> ExecuteAsync(DeleteMenologyRuleCommand command)
+        public Task<Result> ExecuteAsync(DeleteMenologyRuleCommand command)
         {
-            return await base.ExecuteAsync(command);
+            return Task.FromResult(Execute(command));
         }
 
         protected override Result PerformAdditionalWork(MenologyRule found, DeleteRuleCommandBase<MenologyRule> command)

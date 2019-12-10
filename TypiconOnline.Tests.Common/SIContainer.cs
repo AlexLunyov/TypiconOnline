@@ -21,6 +21,7 @@ using TypiconOnline.Domain.WebQuery.Interfaces;
 using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
+using TypiconOnline.Infrastructure.Common.Events;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.WebServices.Hosting;
@@ -29,12 +30,12 @@ namespace TypiconOnline.Tests.Common
 {
     public class SIContainer : Container
     {
-        public SIContainer() : base()
+        public SIContainer(bool withEvents = false) : base()
         {
-            Register();
+            Register(withEvents);
         }
 
-        private void Register()
+        private void Register(bool withEvents = false)
         {
             //Queries and Commands
             //Register(typeof(IQuery<>), typeof(QueryProcessor).Assembly);
@@ -53,7 +54,7 @@ namespace TypiconOnline.Tests.Common
             Register<IRuleSerializerRoot, RuleSerializerRoot>();
             Register<ITypiconSerializer, TypiconSerializer>();
             //Для TypiconVariables
-            Register<CollectorSerializerRoot>();
+            Register<VariablesCollectorSerializerRoot>();
 
             //Register<IOutputForms, OutputForms>();
             Register<IOutputDayFactory, OutputDayFactory>();
@@ -91,7 +92,17 @@ namespace TypiconOnline.Tests.Common
 
             RegisterSingleton<IJobRepository>(() => new JobRepository());
 
-            RegisterInstance(TypiconDbContextFactory.Create());
+            //RegisterInstance((withEvents) 
+            //    ? TypiconDbContextFactory.CreateWithEvents()
+            //    : TypiconDbContextFactory.Create());
+
+            /*
+             * Events
+             */
+            Register<IEventDispatcher, DomainEventDispatcher>();
+
+            var assemblies = new[] { typeof(DomainEventDispatcher).Assembly };
+            Collection.Register(typeof(IDomainEventHandler<>), assemblies);
         }
     }
 }

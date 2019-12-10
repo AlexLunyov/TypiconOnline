@@ -55,6 +55,7 @@ namespace TypiconOnline.Web.Controllers
                 && IsAuthorizedToEdit(typiconEntity.Value))
             {
                 ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Value.Id, DEFAULT_LANGUAGE, id);
+                ViewBag.PrintTemplates = QueryProcessor.GetPrintTemplates(typiconEntity.Value.Id);
                 ViewBag.TypiconId = typiconEntity.Value.Id.ToString();
 
                 var found = QueryProcessor.Process(new SignEditQuery(id));
@@ -81,7 +82,7 @@ namespace TypiconOnline.Web.Controllers
                     model.Name,
                     model.TemplateId,
                     model.IsAddition,
-                    model.Number,
+                    model.PrintTemplateId,
                     model.Priority,
                     model.RuleDefinition,
                     model.ModRuleDefinition);
@@ -92,6 +93,7 @@ namespace TypiconOnline.Web.Controllers
             }
 
             ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Value.Id, DEFAULT_LANGUAGE, model.Id);
+            ViewBag.PrintTemplates = QueryProcessor.GetPrintTemplates(typiconEntity.Value.Id);
             ViewBag.TypiconId = typiconEntity.Value.Id.ToString();
 
             return View(model);
@@ -111,6 +113,7 @@ namespace TypiconOnline.Web.Controllers
                 && IsAuthorizedToEdit(typiconEntity))
             {
                 ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Id, DEFAULT_LANGUAGE);
+                ViewBag.PrintTemplates = QueryProcessor.GetPrintTemplates(typiconEntity.Id);
 
                 return View(new SignCreateEditModel());
             }
@@ -131,7 +134,7 @@ namespace TypiconOnline.Web.Controllers
                     model.Name,
                     model.TemplateId,
                     model.IsAddition,
-                    model.Number,
+                    model.PrintTemplateId,
                     model.Priority,
                     model.RuleDefinition,
                     model.ModRuleDefinition);
@@ -142,6 +145,7 @@ namespace TypiconOnline.Web.Controllers
             }
 
             ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Id, DEFAULT_LANGUAGE, model.Id);
+            ViewBag.PrintTemplates = QueryProcessor.GetPrintTemplates(typiconEntity.Id);
 
             return View(model);
         }

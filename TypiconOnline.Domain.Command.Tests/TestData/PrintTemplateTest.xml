@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<rule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Rules/RulesModSchema.xsd">
+  <if>
+    <expression>
+      <!--Если воскресенье, то составляем правило особым образом.
+				В будущем, надо вынести все в отдельное общее правило CommonRule.-->
+      <equals>
+        <getdayofweek>
+          <date/>
+        </getdayofweek>
+        <getdayofweek name="воскресенье"/>
+      </equals>
+    </expression>
+    <then>
+      <modifyday signnumber="8" daymove="0"/>
+      <modifyday signnumber="10" daymove="0"/>
+    </then>
+  </if>
+</rule>

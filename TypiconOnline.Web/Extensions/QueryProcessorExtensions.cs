@@ -16,7 +16,7 @@ namespace TypiconOnline.Web.Extensions
 
             return typicons.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString() });
         }
-
+        
         public static IEnumerable<SelectListItem> GetSigns(this IQueryProcessor queryProcessor, int typiconId, string language, int? exceptSignId = null)
         {
             var signs = queryProcessor.Process(new AllSignsQuery(typiconId, language, exceptSignId));
@@ -24,6 +24,20 @@ namespace TypiconOnline.Web.Extensions
             if (signs.Success)
             {
                 return signs.Value.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString() });
+            }
+            else
+            {
+                return new List<SelectListItem>();
+            }
+        }
+
+        public static IEnumerable<SelectListItem> GetPrintTemplates(this IQueryProcessor queryProcessor, int typiconId)
+        {
+            var signs = queryProcessor.Process(new AllPrintDayTemplatesQuery(typiconId));
+
+            if (signs.Success)
+            {
+                return signs.Value.Select(c => new SelectListItem() { Text = $"{c.Number} ({c.Name})", Value = c.Id.ToString() });
             }
             else
             {

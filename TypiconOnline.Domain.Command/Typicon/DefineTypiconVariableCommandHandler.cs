@@ -20,7 +20,7 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public DefineTypiconVariableCommandHandler(TypiconDBContext dbContext) : base(dbContext) { }
 
-        public async Task<Result> ExecuteAsync(DefineTypiconVariableCommand command) => await base.ExecuteAsync(command);
+        public Task<Result> ExecuteAsync(DefineTypiconVariableCommand command) => Task.FromResult(Execute(command));
 
         protected override Result PerformAdditionalWork(TypiconVariable found, DeleteRuleCommandBase<TypiconVariable> command)
         {

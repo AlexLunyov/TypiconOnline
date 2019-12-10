@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using SimpleInjector;
 using System;
 using TypiconOnline.AppServices.Configuration;
@@ -12,6 +14,7 @@ using TypiconOnline.AppServices.Messaging.Common;
 using TypiconOnline.AppServices.Migration.Typicon;
 using TypiconOnline.AppServices.Viewers;
 using TypiconOnline.Domain.Command;
+using TypiconOnline.Domain.Command.Events;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Rules.Handlers;
@@ -22,8 +25,10 @@ using TypiconOnline.Domain.WebQuery.Interfaces;
 using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
+using TypiconOnline.Infrastructure.Common.Events;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
+using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Web.Services;
 using TypiconOnline.WebServices.Hosting;
 
@@ -44,9 +49,20 @@ namespace TypiconOnline.Web
 
             container.Register(typeof(ICommandHandler<>), typeof(CommandProcessor).Assembly, typeof(ScheduleDataCalculator).Assembly);
 
+            //events handler
+            container.RegisterDecorator(
+                typeof(ICommandHandler<>),
+                typeof(EventsCommandHandler<>));
+
             container.RegisterConditional<ICommandProcessor, AsyncCommandProcessor>(
                 c => c.Consumer.ImplementationType == typeof(JobExecutor));
             container.RegisterConditional<ICommandProcessor, CommandProcessor>(c => !c.Handled);
+
+            //events
+            container.Register<IEventDispatcher, DomainEventDispatcher>();
+
+            var assemblies = new[] { typeof(DomainEventDispatcher).Assembly };
+            container.Collection.Register(typeof(IDomainEventHandler<>), assemblies);
 
             //OutputForms
             container.Register<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
@@ -54,7 +70,7 @@ namespace TypiconOnline.Web
             container.Register<IRuleSerializerRoot, RuleSerializerRoot>();
             container.Register<ITypiconSerializer, TypiconSerializer>();
             //Для TypiconVariables
-            container.Register<CollectorSerializerRoot>(); 
+            container.Register<VariablesCollectorSerializerRoot>(); 
 
             //container.Register<IOutputForms, OutputForms>();
             container.Register<IOutputDayFactory, OutputDayFactory>();
@@ -74,7 +90,7 @@ namespace TypiconOnline.Web
             container.Register<ScheduleHandler, ServiceSequenceHandler>();
             //container.Register<ScheduleHandler>();
 
-            ////Все контроллеры
+            //Все контроллеры
             container.Register<IScheduleDataCalculator, MajorDataCalculator>();
 
             container.RegisterDecorator(

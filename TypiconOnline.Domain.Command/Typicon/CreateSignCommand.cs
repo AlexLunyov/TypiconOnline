@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Command.Typicon
             , ItemText name
             , int? templateId
             , bool isAddition
-            , int? number
+            , int? printTemplateId
             , int priority
             , string ruleDefinition
             , string modRuleDefinition) : base(id)
@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain.Command.Typicon
             Name = name;
             TemplateId = templateId;
             IsAddition = isAddition;
-            Number = number;
+            PrintTemplateId = printTemplateId;
             Priority = priority;
             RuleDefinition = ruleDefinition;
             ModRuleDefinition = modRuleDefinition;
@@ -29,7 +29,7 @@ namespace TypiconOnline.Domain.Command.Typicon
         public ItemText Name { get; }
         public int? TemplateId { get; }
         public bool IsAddition { get; }
-        public int? Number { get; }
+        public int? PrintTemplateId { get; }
         public int Priority { get; }
         public string RuleDefinition { get; }
         public string ModRuleDefinition { get; }

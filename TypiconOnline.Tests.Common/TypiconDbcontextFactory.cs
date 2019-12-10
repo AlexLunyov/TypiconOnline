@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.Infrastructure.Common.Events;
 
 namespace TypiconOnline.Tests.Common
 {
@@ -14,7 +15,20 @@ namespace TypiconOnline.Tests.Common
     {
         public static TypiconDBContext Create()
         {
-            
+            return new TypiconDBContext(GetOptions());
+        }
+
+        public static EventsTypiconDBContext CreateWithEvents()
+        {
+            var container = new SIContainer(withEvents: true);
+
+            var dispatcher = container.GetInstance<IEventDispatcher>();
+
+            return new EventsTypiconDBContext(dispatcher, GetOptions());
+        }
+
+        private static DbContextOptions<TypiconDBContext> GetOptions()
+        {
             var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
 
             //SQLite connection
@@ -32,7 +46,7 @@ namespace TypiconOnline.Tests.Common
 
             optionsBuilder.EnableSensitiveDataLogging();
 
-            return new TypiconDBContext(optionsBuilder.Options);
+            return optionsBuilder.Options;
         }
     }
 }

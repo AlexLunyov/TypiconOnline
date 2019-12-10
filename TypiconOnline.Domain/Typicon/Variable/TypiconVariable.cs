@@ -28,70 +28,74 @@ namespace TypiconOnline.Domain.Typicon.Variable
         public virtual List<VariableModRuleLink<TriodionRule>> TriodionRuleLinks { get; set; } = new List<VariableModRuleLink<TriodionRule>>();
         public virtual List<VariableRuleLink<ExplicitAddRule>> ExplicitAddRuleLinks { get; set; } = new List<VariableRuleLink<ExplicitAddRule>>();
 
-        public void AddLink<T>(T entity, DefinitionType definitionType = DefinitionType.Rule) where T : RuleEntity, new()
+        public void AddLink<T>(T entity, DefinitionType definitionType = DefinitionType.Rule) where T : RuleEntity//, new()
         {
-            switch (typeof(T).Name)
+            if (entity is CommonRule)
             {
-                case nameof(CommonRule):
-                    CommonRuleLinks.Add(new VariableRuleLink<CommonRule>()
-                    {
-                        Variable = this,
-                        Entity = entity as CommonRule
-                    });
-                    break;
-                case nameof(Sign):
-                    SignLinks.Add(new VariableModRuleLink<Sign>()
-                    {
-                        Variable = this,
-                        Entity = entity as Sign,
-                        DefinitionType = definitionType
-                    });
-                    break;
-                case nameof(MenologyRule):
-                    MenologyRuleLinks.Add(new VariableModRuleLink<MenologyRule>()
-                    {
-                        Variable = this,
-                        Entity = entity as MenologyRule,
-                        DefinitionType = definitionType
-                    });
-                    break;
-                case nameof(TriodionRule):
-                    TriodionRuleLinks.Add(new VariableModRuleLink<TriodionRule>()
-                    {
-                        Variable = this,
-                        Entity = entity as TriodionRule,
-                        DefinitionType = definitionType
-                    });
-                    break;
-                case nameof(ExplicitAddRule):
-                    ExplicitAddRuleLinks.Add(new VariableRuleLink<ExplicitAddRule>()
-                    {
-                        Variable = this,
-                        Entity = entity as ExplicitAddRule
-                    });
-                    break;
+                CommonRuleLinks.Add(new VariableRuleLink<CommonRule>()
+                {
+                    Variable = this,
+                    Entity = entity as CommonRule
+                });
+            }
+            else if (entity is Sign)
+            {
+                SignLinks.Add(new VariableModRuleLink<Sign>()
+                {
+                    Variable = this,
+                    Entity = entity as Sign,
+                    DefinitionType = definitionType
+                });
+            }
+            else if (entity is MenologyRule)
+            {
+                MenologyRuleLinks.Add(new VariableModRuleLink<MenologyRule>()
+                {
+                    Variable = this,
+                    Entity = entity as MenologyRule,
+                    DefinitionType = definitionType
+                });
+            }
+            else if (entity is TriodionRule)
+            {
+                TriodionRuleLinks.Add(new VariableModRuleLink<TriodionRule>()
+                {
+                    Variable = this,
+                    Entity = entity as TriodionRule,
+                    DefinitionType = definitionType
+                });
+            }
+            else if (entity is ExplicitAddRule)
+            {
+                ExplicitAddRuleLinks.Add(new VariableRuleLink<ExplicitAddRule>()
+                {
+                    Variable = this,
+                    Entity = entity as ExplicitAddRule
+                });
             }
         }
 
-        public void ClearLinks<T>(T entity, DefinitionType definitionType = DefinitionType.Rule) where T : RuleEntity, new()
+        public void ClearLinks<T>(T entity, DefinitionType definitionType = DefinitionType.Rule) where T : RuleEntity//, new()
         {
-            switch (typeof(T).Name)
+            if (entity is CommonRule)
             {
-                case nameof(CommonRule):
-                    CommonRuleLinks.RemoveAll(c => c.Entity == entity/* || c.EntityId == entity.Id*/);
-                    break;
-                case nameof(Sign):
-                    SignLinks.RemoveAll(c => (c.Entity == entity/* || c.EntityId == entity.Id*/) && c.DefinitionType == definitionType);
-                    break;
-                case nameof(MenologyRule):
-                    MenologyRuleLinks.RemoveAll(c => (c.Entity == entity/* || c.EntityId == entity.Id*/) && c.DefinitionType == definitionType);
-                    break;
-                case nameof(TriodionRule):
-                    TriodionRuleLinks.RemoveAll(c => (c.Entity == entity/* || c.EntityId == entity.Id*/) && c.DefinitionType == definitionType);
-                    break;
-                case nameof(ExplicitAddRule):
-                    ExplicitAddRuleLinks.RemoveAll(c => c.Entity == entity/* || c.EntityId == entity.Id*/);
-                    break;
+                CommonRuleLinks.RemoveAll(c => c.Entity == entity);
+            }
+            else if (entity is Sign)
+            {
+                SignLinks.RemoveAll(c => c.Entity == entity && c.DefinitionType == definitionType);
+            }
+            else if (entity is MenologyRule)
+            {
+                MenologyRuleLinks.RemoveAll(c => c.Entity == entity && c.DefinitionType == definitionType);
+            }
+            else if (entity is TriodionRule)
+            {
+                TriodionRuleLinks.RemoveAll(c => c.Entity == entity && c.DefinitionType == definitionType);
+            }
+            else if (entity is ExplicitAddRule)
+            {
+                ExplicitAddRuleLinks.RemoveAll(c => c.Entity == entity);
             }
         }
 

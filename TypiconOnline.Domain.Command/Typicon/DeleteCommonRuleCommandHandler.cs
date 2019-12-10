@@ -16,9 +16,9 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public DeleteCommonRuleCommandHandler(TypiconDBContext dbContext) : base(dbContext) { }
 
-        public async Task<Result> ExecuteAsync(DeleteCommonRuleCommand command)
+        public Task<Result> ExecuteAsync(DeleteCommonRuleCommand command)
         {
-            return await base.ExecuteAsync(command);
+            return Task.FromResult(Execute(command));
         }
     }
 }

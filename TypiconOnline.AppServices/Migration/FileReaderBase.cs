@@ -103,5 +103,17 @@ namespace TypiconOnline.AppServices.Migration
         }
 
         protected abstract string InnerRead(string fileName);
+
+        public byte[] ReadBinary(string fileName)
+        {
+            try
+            {
+                return File.ReadAllBytes(Path.Combine(FolderPath, fileName));
+            }
+            catch
+            {
+                return default;
+            }
+        }
     }
 }

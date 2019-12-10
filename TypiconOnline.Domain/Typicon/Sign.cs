@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Typicon.Print;
 using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Infrastructure.Common.Domain;
 
@@ -15,12 +16,15 @@ namespace TypiconOnline.Domain.Typicon
         public virtual Sign Template { get; set; }
         public virtual bool IsAddition { get; set; }
 
+        
+        public int? PrintTemplateId { get; set; }
         /// <summary>
-        /// Предустановленный номер, согласно знакам служб Типикона. 
+        /// Предустановленный Печатный шаблон, согласно знакам служб Типикона. 
         /// Например, для служб без знака, 6-ричных, славословных, полиелейных, бденных и т.д.
-        /// Используется в Расписании.
+        /// Используется в для формирования печтной формы Расписания.
         /// </summary>
-        public int? Number { get; set; }
+        public virtual PrintDayTemplate PrintTemplate { get; set; }
+
         public int Priority { get; set; }
 
         private ItemText _signName;
@@ -44,6 +48,11 @@ namespace TypiconOnline.Domain.Typicon
         /// Список на используемые в данном Правиле Переменные Устава
         /// </summary>
         public virtual List<VariableModRuleLink<Sign>> VariableLinks { get; set; }
+
+        /// <summary>
+        /// Список на используемые в определении данного Правила Печатные шаблоны
+        /// </summary>
+        public virtual List<PrintTemplateModRuleLink<Sign>> PrintTemplateLinks { get; set; }
 
         public string GetNameByLanguage(string language)
         {
@@ -72,25 +81,25 @@ namespace TypiconOnline.Domain.Typicon
         /// Если таквойо отсутствует, возвращает 0.
         /// </summary>
         /// <returns></returns>
-        public int GetNumber()
-        {
-            int result = 0;
+        //public int GetNumber()
+        //{
+        //    int result = 0;
 
-            if (Number != null)
-            {
-                result = (int)Number;
-            }
-            else if (Template != null)
-            {
-                result = Template.GetNumber();
-            }
+        //    if (PrintTemplate != null)
+        //    {
+        //        result = PrintTemplate.Number;
+        //    }
+        //    else if (Template != null)
+        //    {
+        //        result = Template.GetNumber();
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         public Sign GetPredefinedTemplate()
         {
-            if (Number.HasValue)
+            if (PrintTemplate != null)
             {
                 return this;
             }
@@ -100,7 +109,7 @@ namespace TypiconOnline.Domain.Typicon
                 return Template.GetPredefinedTemplate();
             }
 
-            return default(Sign);
+            return default;
         }
     }
 }

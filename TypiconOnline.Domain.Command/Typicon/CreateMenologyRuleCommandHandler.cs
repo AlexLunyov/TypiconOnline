@@ -38,8 +38,8 @@ namespace TypiconOnline.Domain.Command.Typicon
             };
 
             //Синхронизируем Переменные Устава
-            entity.SyncRuleVariables(SerializerRoot);
-            entity.SyncModRuleVariables(SerializerRoot);
+            //entity.SyncRuleVariables(SerializerRoot);
+            //entity.SyncModRuleVariables(SerializerRoot);
 
             foreach (var i in c.DayWorshipIds)
             {

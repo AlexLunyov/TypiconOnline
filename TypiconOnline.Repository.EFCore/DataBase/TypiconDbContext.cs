@@ -13,6 +13,7 @@ using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Identity;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.Typicon.Print;
 using TypiconOnline.Domain.Typicon.Psalter;
 using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Repository.EFCore.DataBase.Mapping;
@@ -190,8 +191,32 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 
             #endregion
 
-            modelBuilder.ApplyConfiguration(new PrintDayTemplateConfiguration());
             modelBuilder.ApplyConfiguration(new PrintWeekTemplateConfiguration());
+            modelBuilder.ApplyConfiguration(new PrintDayTemplateConfiguration());
+
+            #region PrintDayTemplate Links
+
+            modelBuilder.Entity<PrintTemplateModRuleLink<Sign>>(c =>
+            {
+                c.HasKey(d => new { d.TemplateId, d.EntityId });
+                c.ToTable("SignPrintLinks");
+            });
+
+            modelBuilder.Entity<PrintTemplateModRuleLink<MenologyRule>>(c =>
+            {
+                c.HasKey(d => new { d.TemplateId, d.EntityId });
+                c.ToTable("MenologyRulePrintLinks");
+            });
+
+            modelBuilder.Entity<PrintTemplateModRuleLink<TriodionRule>>(c =>
+            {
+                c.HasKey(d => new { d.TemplateId, d.EntityId });
+                c.ToTable("TriodionRulePrintLinks");
+            });
+
+            #endregion
+
+
 
             modelBuilder.ApplyConfiguration(new TypiconVersionErrorConfiguration());
 

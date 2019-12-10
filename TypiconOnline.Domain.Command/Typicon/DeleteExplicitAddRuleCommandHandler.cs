@@ -16,9 +16,9 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public DeleteExplicitAddRuleCommandHandler(TypiconDBContext dbContext) : base(dbContext) { }
 
-        public async Task<Result> ExecuteAsync(DeleteExplicitAddRuleCommand command)
+        public Task<Result> ExecuteAsync(DeleteExplicitAddRuleCommand command)
         {
-            return await base.ExecuteAsync(command);
+            return Task.FromResult(Execute(command));
         }
     }
 }

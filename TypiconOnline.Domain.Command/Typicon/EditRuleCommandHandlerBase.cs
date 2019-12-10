@@ -21,7 +21,7 @@ namespace TypiconOnline.Domain.Command.Typicon
 
         protected CollectorSerializerRoot SerializerRoot { get; }
 
-        protected async Task<Result> ExecuteAsync(EditRuleCommandBase<T> command) 
+        protected Result Execute(EditRuleCommandBase<T> command) 
         {
             var found = DbContext.Set<T>().FirstOrDefault(c => c.Id == command.Id);
 
@@ -48,7 +48,7 @@ namespace TypiconOnline.Domain.Command.Typicon
 
             found.TypiconVersion.IsModified = true;
 
-            await DbContext.SaveChangesAsync();
+            //await DbContext.SaveChangesAsync();
 
             return Result.Ok();
         }

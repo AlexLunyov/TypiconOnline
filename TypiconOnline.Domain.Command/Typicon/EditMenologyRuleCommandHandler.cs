@@ -19,9 +19,9 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public EditMenologyRuleCommandHandler(TypiconDBContext dbContext, CollectorSerializerRoot serializerRoot) : base(dbContext, serializerRoot) { }
 
-        public async Task<Result> ExecuteAsync(EditMenologyRuleCommand command)
+        public Task<Result> ExecuteAsync(EditMenologyRuleCommand command)
         {
-            return await base.ExecuteAsync(command);
+            return Task.FromResult(Execute(command));
         }
 
         protected override Result UpdateValues(MenologyRule entity, EditRuleCommandBase<MenologyRule> command)
@@ -29,16 +29,16 @@ namespace TypiconOnline.Domain.Command.Typicon
             var c = command as EditMenologyRuleCommand;
 
             //Синхронизируем Переменные Устава
-            if (entity.RuleDefinition != c.RuleDefinition)
-            {
+            //if (entity.RuleDefinition != c.RuleDefinition)
+            //{
                 entity.RuleDefinition = c.RuleDefinition;
-                entity.SyncRuleVariables(SerializerRoot);
-            }
-            if (entity.ModRuleDefinition != c.ModRuleDefinition)
-            {
+            //    entity.SyncRuleVariables(SerializerRoot);
+            //}
+            //if (entity.ModRuleDefinition != c.ModRuleDefinition)
+            //{
                 entity.ModRuleDefinition = c.ModRuleDefinition;
-                entity.SyncModRuleVariables(SerializerRoot);
-            }
+            //    entity.SyncModRuleVariables(SerializerRoot);
+            //}
 
             entity.TemplateId = c.TemplateId;
             entity.IsAddition = c.IsAddition;

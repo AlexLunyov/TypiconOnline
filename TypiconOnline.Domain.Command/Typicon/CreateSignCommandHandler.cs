@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.Command.Typicon
                 IsAddition = c.IsAddition,
                 ModRuleDefinition = c.ModRuleDefinition,
                 SignName = c.Name,
-                Number = c.Number,
+                PrintTemplateId = c.PrintTemplateId,
                 Priority = c.Priority,
                 RuleDefinition = c.RuleDefinition,
                 TypiconVersion = typiconVersion,
@@ -40,8 +40,8 @@ namespace TypiconOnline.Domain.Command.Typicon
             };
 
             //Синхронизируем Переменные Устава
-            entity.SyncRuleVariables(SerializerRoot);
-            entity.SyncModRuleVariables(SerializerRoot);
+            //entity.SyncRuleVariables(SerializerRoot);
+            //entity.SyncModRuleVariables(SerializerRoot);
 
             return entity;
         }

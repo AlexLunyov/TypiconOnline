@@ -9,7 +9,7 @@ using TypiconMigrationTool;
 namespace MigrationTool.Migrations
 {
     [DbContext(typeof(MigrationDbContext))]
-    [Migration("20191121201439_Initial")]
+    [Migration("20191210091900_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -627,6 +627,108 @@ namespace MigrationTool.Migrations
                     b.ToTable("OutputWorship");
                 });
 
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Print.PrintDayTemplate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<byte[]>("PrintFile")
+                        .HasColumnType("BLOB");
+
+                    b.Property<string>("PrintFileName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<char?>("SignSymbol")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("TypiconVersionId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypiconVersionId");
+
+                    b.ToTable("PrintDayTemplate");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Print.PrintTemplateModRuleLink<TypiconOnline.Domain.Typicon.MenologyRule>", b =>
+                {
+                    b.Property<int>("TemplateId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TemplateId", "EntityId");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("MenologyRulePrintLinks");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Print.PrintTemplateModRuleLink<TypiconOnline.Domain.Typicon.Sign>", b =>
+                {
+                    b.Property<int>("TemplateId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TemplateId", "EntityId");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("SignPrintLinks");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Print.PrintTemplateModRuleLink<TypiconOnline.Domain.Typicon.TriodionRule>", b =>
+                {
+                    b.Property<int>("TemplateId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TemplateId", "EntityId");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("TriodionRulePrintLinks");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Print.PrintWeekTemplate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DaysPerPage")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<byte[]>("PrintFile")
+                        .HasColumnType("BLOB");
+
+                    b.Property<string>("PrintFileName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("TypiconVersionId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypiconVersionId")
+                        .IsUnique();
+
+                    b.ToTable("PrintWeekTemplate");
+                });
+
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Psalter.Kathisma", b =>
                 {
                     b.Property<int>("Id")
@@ -701,7 +803,7 @@ namespace MigrationTool.Migrations
                     b.Property<string>("ModRuleDefinition")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Number")
+                    b.Property<int?>("PrintTemplateId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Priority")
@@ -717,6 +819,8 @@ namespace MigrationTool.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PrintTemplateId");
 
                     b.HasIndex("TemplateId");
 
@@ -1412,6 +1516,69 @@ namespace MigrationTool.Migrations
                         });
                 });
 
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Print.PrintDayTemplate", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
+                        .WithMany("PrintDayTemplates")
+                        .HasForeignKey("TypiconVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Print.PrintTemplateModRuleLink<TypiconOnline.Domain.Typicon.MenologyRule>", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.MenologyRule", "Entity")
+                        .WithMany("PrintTemplateLinks")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TypiconOnline.Domain.Typicon.Print.PrintDayTemplate", "Template")
+                        .WithMany("MenologyPrintLinks")
+                        .HasForeignKey("TemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Print.PrintTemplateModRuleLink<TypiconOnline.Domain.Typicon.Sign>", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.Sign", "Entity")
+                        .WithMany("PrintTemplateLinks")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TypiconOnline.Domain.Typicon.Print.PrintDayTemplate", "Template")
+                        .WithMany("SignPrintLinks")
+                        .HasForeignKey("TemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Print.PrintTemplateModRuleLink<TypiconOnline.Domain.Typicon.TriodionRule>", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.TriodionRule", "Entity")
+                        .WithMany("PrintTemplateLinks")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TypiconOnline.Domain.Typicon.Print.PrintDayTemplate", "Template")
+                        .WithMany("TriodionPrintLinks")
+                        .HasForeignKey("TemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Print.PrintWeekTemplate", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
+                        .WithOne("PrintWeekTemplate")
+                        .HasForeignKey("TypiconOnline.Domain.Typicon.Print.PrintWeekTemplate", "TypiconVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Psalter.Kathisma", b =>
                 {
                     b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
@@ -1483,6 +1650,10 @@ namespace MigrationTool.Migrations
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Sign", b =>
                 {
+                    b.HasOne("TypiconOnline.Domain.Typicon.Print.PrintDayTemplate", "PrintTemplate")
+                        .WithMany("SignLinks")
+                        .HasForeignKey("PrintTemplateId");
+
                     b.HasOne("TypiconOnline.Domain.Typicon.Sign", "Template")
                         .WithMany()
                         .HasForeignKey("TemplateId")
@@ -1588,7 +1759,8 @@ namespace MigrationTool.Migrations
                 {
                     b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "PrevVersion")
                         .WithMany()
-                        .HasForeignKey("PrevVersionId");
+                        .HasForeignKey("PrevVersionId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("TypiconOnline.Domain.Typicon.TypiconEntity", "Typicon")
                         .WithMany("Versions")

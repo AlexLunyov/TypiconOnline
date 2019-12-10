@@ -31,10 +31,9 @@ namespace TypiconOnline.Domain.WebQuery.Models
                 errors.Add(new ValidationResult($"Наименование заполнено с неверным определением языка", new List<string>() { "Name" }));
             }
 
-            if (model.Number.HasValue
-                && (model.Number.Value < 0 || model.Number.Value > 8))
+            if (model.TemplateId < 1 && model.PrintTemplateId < 1)
             {
-                errors.Add(new ValidationResult("Предустановленный номер должен быть определн в диапазоне (0..8)", new List<string>() { "Number" }));
+                errors.Add(new ValidationResult("Если Ссылка на Шаблон не определена, то должен быть указан Печатный шаблон", new List<string>() { "PrintTemplateId" }));
             }
 
             if (model.Priority < 1 || model.Priority > 5)

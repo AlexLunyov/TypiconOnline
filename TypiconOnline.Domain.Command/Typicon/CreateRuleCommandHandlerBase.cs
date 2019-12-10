@@ -37,7 +37,7 @@ namespace TypiconOnline.Domain.Command.Typicon
 
             version.IsModified = true;
 
-            await DbContext.SaveChangesAsync();
+            //await DbContext.SaveChangesAsync();
 
             return Result.Ok();
         }

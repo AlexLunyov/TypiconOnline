@@ -19,9 +19,9 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public EditSignCommandHandler(TypiconDBContext dbContext, CollectorSerializerRoot serializerRoot) : base(dbContext, serializerRoot) { }
 
-        public async Task<Result> ExecuteAsync(EditSignCommand command)
+        public Task<Result> ExecuteAsync(EditSignCommand command)
         {
-            return await base.ExecuteAsync(command);
+            return Task.FromResult(Execute(command));
         }
 
         protected override Result UpdateValues(Sign entity, EditRuleCommandBase<Sign> command)
@@ -29,16 +29,16 @@ namespace TypiconOnline.Domain.Command.Typicon
             var c = command as EditSignCommand;
 
             //Синхронизируем Переменные Устава
-            if (entity.RuleDefinition != c.RuleDefinition)
-            {
+            //if (entity.RuleDefinition != c.RuleDefinition)
+            //{
                 entity.RuleDefinition = c.RuleDefinition;
-                entity.SyncRuleVariables(SerializerRoot);
-            }
-            if (entity.ModRuleDefinition != c.ModRuleDefinition)
-            {
+            //    entity.SyncRuleVariables(SerializerRoot);
+            //}
+            //if (entity.ModRuleDefinition != c.ModRuleDefinition)
+            //{
                 entity.ModRuleDefinition = c.ModRuleDefinition;
-                entity.SyncModRuleVariables(SerializerRoot);
-            }
+            //    entity.SyncModRuleVariables(SerializerRoot);
+            //}
 
             //не возможно просто присвоить значение, потому как ef core 
             //будет думать, что TypiconEntity удалена
@@ -46,7 +46,7 @@ namespace TypiconOnline.Domain.Command.Typicon
 
             entity.TemplateId = (c.TemplateId > 0) ? c.TemplateId : null;
             entity.IsAddition = c.IsAddition;
-            entity.Number = c.Number;
+            entity.PrintTemplateId = (c.PrintTemplateId > 0) ? c.PrintTemplateId : null;
             entity.Priority = c.Priority;
 
             return Result.Ok();

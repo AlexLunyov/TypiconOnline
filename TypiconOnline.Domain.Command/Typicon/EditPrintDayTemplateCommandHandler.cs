@@ -20,9 +20,9 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public EditPrintDayTemplateCommandHandler(TypiconDBContext dbContext, CollectorSerializerRoot serializerRoot) : base(dbContext, serializerRoot) { }
 
-        public async Task<Result> ExecuteAsync(EditPrintDayTemplateCommand command)
+        public Task<Result> ExecuteAsync(EditPrintDayTemplateCommand command)
         {
-            return await base.ExecuteAsync(command);
+            return Task.FromResult(Execute(command));
         }
 
         protected override Result UpdateValues(PrintDayTemplate entity, EditRuleCommandBase<PrintDayTemplate> command)
@@ -31,7 +31,7 @@ namespace TypiconOnline.Domain.Command.Typicon
 
             entity.Name = c.Name;
             entity.Number = c.Number;
-            entity.Sign = c.Sign;
+            entity.SignSymbol = c.Sign;
 
             if (c.PrintFile != null)
             {

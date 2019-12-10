@@ -34,7 +34,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                     Id = found.Id,
                     Name = found.SignName,
                     IsAddition = found.IsAddition,
-                    Number = found.Number,
+                    PrintTemplateId = found.PrintTemplateId,
                     Priority = found.Priority,
                     TemplateId = found.TemplateId.HasValue ? found.TemplateId.Value : 0,
                     ModRuleDefinition = found.ModRuleDefinition,

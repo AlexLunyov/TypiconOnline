@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TypiconOnline.Domain.Interfaces;
+using TypiconOnline.Domain.Typicon.Print;
 using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Infrastructure.Common.Domain;
 
@@ -19,6 +20,11 @@ namespace TypiconOnline.Domain.Typicon
         /// Список на используемые в данном Правиле Переменные Устава
         /// </summary>
         public virtual List<VariableModRuleLink<TriodionRule>> VariableLinks { get; set; }
+
+        /// <summary>
+        /// Список на используемые в определении данного Правила Печатные шаблоны
+        /// </summary>
+        public virtual List<PrintTemplateModRuleLink<TriodionRule>> PrintTemplateLinks { get; set; }
 
         protected override void Validate(IRuleSerializerRoot serializerRoot)
         {

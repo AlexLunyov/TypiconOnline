@@ -34,7 +34,7 @@ namespace TypiconOnline.Domain.Command.Typicon
                 TypiconVersion = typiconVersion,
             };
 
-            entity.SyncRuleVariables(SerializerRoot);
+            //entity.SyncRuleVariables(SerializerRoot);
 
             return entity;
         }

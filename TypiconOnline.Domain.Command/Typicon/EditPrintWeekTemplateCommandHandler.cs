@@ -20,9 +20,9 @@ namespace TypiconOnline.Domain.Command.Typicon
     {
         public EditPrintWeekTemplateCommandHandler(TypiconDBContext dbContext, CollectorSerializerRoot serializerRoot) : base(dbContext, serializerRoot) { }
 
-        public async Task<Result> ExecuteAsync(EditPrintWeekTemplateCommand command)
+        public Task<Result> ExecuteAsync(EditPrintWeekTemplateCommand command)
         {
-            return await base.ExecuteAsync(command);
+            return Task.FromResult(Execute(command));
         }
 
         protected override Result UpdateValues(PrintWeekTemplate entity, EditRuleCommandBase<PrintWeekTemplate> command)

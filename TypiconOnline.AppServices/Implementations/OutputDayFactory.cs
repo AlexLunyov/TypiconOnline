@@ -181,7 +181,8 @@ namespace TypiconOnline.AppServices.Implementations
                 Date = request.Date,
                 PredefinedSignId = sign.Id,
                 //Если settings.SignNumber определен в ModifiedRule, то назначаем его
-                CustomSignNumber = settings.SignNumber ?? sign.Number.Value
+                CustomSignNumber = settings.SignNumber 
+                    ?? ((sign.PrintTemplate != null) ? sign.PrintTemplate.Number : 0)
             };
 
             return new OutputDayInfo(scheduleDay, settings.AllWorships, results, brokenConstraints);

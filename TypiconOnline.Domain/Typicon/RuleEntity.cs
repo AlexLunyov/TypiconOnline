@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TypiconOnline.Domain.Events;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Infrastructure.Common.Domain;
 using TypiconOnline.Infrastructure.Common.Events;
@@ -9,7 +10,7 @@ namespace TypiconOnline.Domain.Typicon
     /// <summary>
     /// Базовый класс для всех главных элементов системы: правил компоновки богослужебных текстов
     /// </summary>
-    public abstract class RuleEntity : ValueObjectBase<IRuleSerializerRoot>, ITypiconVersionChild
+    public abstract class RuleEntity : ValueObjectBase<IRuleSerializerRoot>, ITypiconVersionChild, IHasDomainEvents
     {
         IRuleElement _rule;
 
@@ -37,12 +38,21 @@ namespace TypiconOnline.Domain.Typicon
             {
                 if (_ruleDefinition != value)
                 {
+                    Events.Add(new RuleDefinitionChangedEvent(this, _ruleDefinition, value));
+
                     _ruleDefinition = value;
                     _rule = null;
-                    //IsValidated = false;
                 }
             }
         }
+
+        #region IHasDomainEvents implementation
+
+        protected readonly List<IDomainEvent> Events = new List<IDomainEvent>();
+
+        public IEnumerable<IDomainEvent> GetDomainEvents() => Events;
+
+        #endregion
 
         /// <summary>
         /// Возвращает объектную версию описания Правила

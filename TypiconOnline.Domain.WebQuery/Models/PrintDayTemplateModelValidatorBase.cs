@@ -9,6 +9,7 @@ using TypiconOnline.AppServices.Viewers;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.AppServices.Extensions;
 using DocumentFormat.OpenXml;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
@@ -21,8 +22,13 @@ namespace TypiconOnline.Domain.WebQuery.Models
 
         readonly string[] EXTENSIONS = { ".docx" };
 
-        public PrintDayTemplateModelValidatorBase(IRuleSerializerRoot ruleSerializer)
-            : base(ruleSerializer) { }
+        public PrintDayTemplateModelValidatorBase(IRuleSerializerRoot ruleSerializer, TypiconDBContext dbContext)
+            : base(ruleSerializer)
+        {
+            DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        }
+
+        protected TypiconDBContext DbContext { get; }
 
         protected List<ValidationResult> ValidatePrintDayTemplate(PrintDayTemplateModelBase model)
         {

@@ -19,7 +19,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
 
         const int MAX_FILE_SIZE = 500 * 1024;
 
-        readonly string[] EXTENSIONS = { ".docx " };
+        readonly string[] EXTENSIONS = { ".docx" };
 
         public PrintWeekTemplateModelValidatorBase(IRuleSerializerRoot ruleSerializer)
             : base(ruleSerializer) { }

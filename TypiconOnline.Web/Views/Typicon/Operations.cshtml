@@ -12,7 +12,8 @@
         <div class="row">
             <div class="form-group col-sm-8">
                 @{
-                    var pblDisabled = !Model.IsModified || (!Model.IsTemplate && Model.HasVariables);
+                    var pblDisabled = !Model.IsModified 
+                        || (!Model.IsTemplate && (Model.HasVariables || Model.HasEmptyPrintTemplates));
                 }
                 <a class="btn btn-primary" asp-action="Publish" asp-route-id="@Model.Id" disabled="@(pblDisabled ? " disabled" : null)">Опубликовать черновик Устава</a>
             </div>
@@ -35,6 +36,11 @@
                         {
                             <div class="clearfix"></div>
                             <div class="form-group col-md-6">Устав должен быть либо определен как Шаблон, либо всем Переменным должны быть заданы значения.</div>
+                        }
+                        @if (!Model.IsTemplate && Model.HasEmptyPrintTemplates)
+                        {
+                            <div class="clearfix"></div>
+                            <div class="form-group col-md-6">Устав должен быть либо определен как Шаблон, либо все Печатные шаблоны должны иметь загруженные файлы.</div>
                         }
                     </div>
                 </div>

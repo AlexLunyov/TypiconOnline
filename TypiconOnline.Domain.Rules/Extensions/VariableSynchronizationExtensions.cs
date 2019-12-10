@@ -16,19 +16,19 @@ namespace TypiconOnline.Domain.Rules.Extensions
     public static class VariableSynchronizationExtensions
     {
         public static Result SyncRuleVariables<T>(this T entity, CollectorSerializerRoot serializerRoot)
-            where T : RuleEntity, new()
+            where T : RuleEntity//, new()
         {
             return InnerSyncVariables(entity, serializerRoot, entity.RuleDefinition, DefinitionType.Rule);
         }
 
         public static Result SyncModRuleVariables<T>(this T entity, CollectorSerializerRoot serializerRoot)
-            where T : ModRuleEntity, new()
+            where T : ModRuleEntity//, new()
         {
             return InnerSyncVariables(entity, serializerRoot, entity.ModRuleDefinition, DefinitionType.ModRule);
         }
 
         private static Result InnerSyncVariables<T>(T entity, CollectorSerializerRoot serializerRoot, string definition, DefinitionType definitionType)
-            where T: RuleEntity, new()
+            where T: RuleEntity//, new()
         {
             //получаем все переменные Устава
             var globalVariables = entity.TypiconVersion.TypiconVariables;
@@ -86,10 +86,10 @@ namespace TypiconOnline.Domain.Rules.Extensions
 
         private static IEnumerable<(string Name, VariableType Type)> GetLocalVariables(CollectorSerializerRoot serializerRoot, string definition)
         {
-            serializerRoot.ClearHavingVariables();
+            serializerRoot.ClearElements();
             serializerRoot.Container<RootContainer>().Deserialize(definition);
 
-            var result = serializerRoot.GetHavingVariables();
+            var result = serializerRoot.GetElements<IHavingVariables>();
 
             var localVariables = new List<(string Name, VariableType Type)>();
 

@@ -111,11 +111,29 @@
             }
             @if (Model.Tab == TypiconTab.PrintTemplate)
             {
-                <li class="active"><a href="#">Печатные шаблоны</a></li>
+                <li class="active">
+                    <a href="#">
+                        Печатные шаблоны
+                        @if (Model.EmptyPrintTemplatesCount > 0)
+                        {
+                            <span id="varCountSpan" class="label label-@((!Model.IsTemplate && Model.EmptyPrintTemplatesCount > 0) ? "danger" : "default")"
+                                  title="Количество печатных шаблонов без загруженных файлов">@Model.EmptyPrintTemplatesCount</span>
+                        }
+                    </a>
+                </li>
             }
             else
             {
-                <li><a asp-controller="PrintTemplate" asp-action="Index" asp-route-id="@Model.TypiconId">Печатные шаблоны</a></li>
+                <li>
+                    <a asp-controller="PrintTemplate" asp-action="Index" asp-route-id="@Model.TypiconId">
+                        Печатные шаблоны
+                        @if (Model.EmptyPrintTemplatesCount > 0)
+                        {
+                        <span id="varCountSpan" class="label label-@((!Model.IsTemplate && Model.EmptyPrintTemplatesCount > 0) ? "danger" : "default")"
+                                title="Количество печатных шаблонов без загруженных файлов">@Model.EmptyPrintTemplatesCount</span>
+                        }
+                    </a>
+                </li>
             }
             @if (Model.Tab == TypiconTab.Variables)
             {
@@ -124,7 +142,8 @@
                         Переменные
                         @if (Model.VariablesCount > 0)
                         {
-                            <span id="varCountSpan" class="label label-@((!Model.IsTemplate && Model.VariablesCount > 0) ? "danger" : "default")">@Model.VariablesCount</span>
+                            <span id="varCountSpan" class="label label-@((!Model.IsTemplate && Model.VariablesCount > 0) ? "danger" : "default")"
+                                  title="Количество переменных">@Model.VariablesCount</span>
                         }
                     </a>
                 </li>
@@ -136,7 +155,8 @@
                         Переменные
                         @if (Model.VariablesCount > 0)
                         {
-                            <span id="varCountSpan" class="label label-@((!Model.IsTemplate && Model.VariablesCount > 0) ? "danger" : "default")">@Model.VariablesCount</span>
+                            <span id="varCountSpan" class="label label-@((!Model.IsTemplate && Model.VariablesCount > 0) ? "danger" : "default")"
+                                  title="Количество переменных">@Model.VariablesCount</span>
                         }
                     </a>
                 </li>

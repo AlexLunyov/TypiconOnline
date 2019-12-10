@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.Command.Typicon
 
             DbContext.Set<TypiconEntity>().Update(found);
 
-            await DbContext.SaveChangesAsync();
+            //await DbContext.SaveChangesAsync();
 
             return Result.Ok();
         }

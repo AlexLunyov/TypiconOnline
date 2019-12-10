@@ -5,6 +5,7 @@ using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon.Modifications;
+using TypiconOnline.Domain.Typicon.Print;
 using TypiconOnline.Domain.Typicon.Psalter;
 using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Infrastructure.Common.Domain;
@@ -28,6 +29,8 @@ namespace TypiconOnline.Domain.Typicon
             ExplicitAddRules = new List<ExplicitAddRule>();
 
             TypiconVariables = new List<TypiconVariable>();
+
+            PrintDayTemplates = new List<PrintDayTemplate>();
 
             ValidationStatus = ValidationStatus.NotValidated;
             Errors = new List<TypiconVersionError>();
@@ -87,6 +90,14 @@ namespace TypiconOnline.Domain.Typicon
         /// Переменные Устава
         /// </summary>
         public virtual List<TypiconVariable> TypiconVariables { get; set; }
+        /// <summary>
+        /// Печатный шаблон седмицы. Используется в формировани печатной версии Расписания на неделю
+        /// </summary>
+        public virtual PrintWeekTemplate PrintWeekTemplate { get; set; }
+        /// <summary>
+        /// Печатные шаблоны дней. Используются в формировани печатной версии Расписания на неделю
+        /// </summary>
+        public virtual List<PrintDayTemplate> PrintDayTemplates { get; set; }
 
         /// <summary>
         /// Признак того, что любое из дочерних свойств было изменено.

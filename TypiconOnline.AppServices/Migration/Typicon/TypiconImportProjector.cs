@@ -12,6 +12,7 @@ using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Domain.Rules.Extensions;
 using TypiconOnline.Domain.Typicon.Psalter;
+using TypiconOnline.Domain.Typicon.Print;
 
 namespace TypiconOnline.AppServices.Migration.Typicon
 {
@@ -57,6 +58,9 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                     IsModified = true
                 };
 
+                ImportVariables(version, projection);
+                ImportPrintTemplates(version, projection);
+
                 ImportSignsAndDayRules(version, projection);
                 ImportCommonRules(version, projection.CommonRules);
                 ImportExplicitAddRules(version, projection.ExplicitAddRules);
@@ -73,6 +77,47 @@ namespace TypiconOnline.AppServices.Migration.Typicon
             {
                 return Result.Fail<TypiconEntity>(ex.Message);
             }
+        }
+
+        private void ImportPrintTemplates(TypiconVersion version, TypiconVersionProjection projection)
+        {
+            //week
+            if (projection.PrintWeekTemplate is PrintWeekTemplateProjection c)
+            {
+                version.PrintWeekTemplate = new PrintWeekTemplate()
+                {
+                    TypiconVersion = version,
+                    DaysPerPage = c.DaysPerPage,
+                    PrintFile = c.PrintFile,
+                    PrintFileName = c.PrintFileName
+                };
+            }
+
+            //days
+            version.PrintDayTemplates
+                .AddRange(projection.PrintDayTemplates
+                    .Select(d => new PrintDayTemplate()
+                    {
+                        TypiconVersion = version,
+                        Name = d.Name,
+                        Number = d.Number,
+                        PrintFile = d.PrintFile,
+                        PrintFileName = d.PrintFileName,
+                        SignSymbol = d.Sign
+                    }));
+        }
+
+        private void ImportVariables(TypiconVersion version, TypiconVersionProjection projection)
+        {
+            version.TypiconVariables
+                .AddRange(projection.TypiconVariables
+                    .Select(c => new TypiconVariable()
+                    {
+                        TypiconVersion = version,
+                        Name = c.Name,
+                        Description = c.Description,
+                        Type = c.Type
+                    }));
         }
 
         private void ImportKathismas(TypiconVersion version, List<KathismaProjection> kathismas)
@@ -155,7 +200,11 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                 {
                     IsAddition = sign.IsAddition,
                     ModRuleDefinition = sign.ModRuleDefinition,
-                    Number = sign.Number,
+                    
+                    PrintTemplate = (sign.Number.HasValue) 
+                        ? version.PrintDayTemplates.First(c => c.Number == sign.Number) 
+                        : default,
+                    
                     Priority = sign.Priority,
                     RuleDefinition = sign.RuleDefinition,
                     SignName = sign.Name,

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Events;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Infrastructure.Common.Domain;
 
@@ -25,8 +26,13 @@ namespace TypiconOnline.Domain.Typicon
             get => _modRuleDefinition;
             set
             {
-                _modRuleDefinition = value;
-                _modRule = null;
+                if (_modRuleDefinition != value)
+                {
+                    Events.Add(new RuleModDefinitionChangedEvent(this, _modRuleDefinition, value));
+
+                    _modRuleDefinition = value;
+                    _modRule = null;
+                }
             }
         }
 

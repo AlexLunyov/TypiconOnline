@@ -74,8 +74,6 @@
     <script>
     $(document).ready(function ()
     {
-        //$("#weekview").load("/PrintTemplate/WeekView/@ViewContext.RouteData.Values["id"]");
-
         $("#prnTmpGrid").DataTable(
             {
                 "processing": true, // for show progress bar
@@ -101,7 +99,11 @@
                     {
                         data: null, render: function (data, type, row)
                         {
-                            return '<a class="btn btn-info" href="/PrintTemplate/EditDay/' + row.Id + '">Редактировать</a> <a href="#" class="btn btn-danger btn-delete">Удалить</a>';
+                            var str = '<a class="btn btn-info" href="/PrintTemplate/EditDay/' + row.Id + '">Редактировать</a>';
+                            if (row['Deletable']) {
+                                str = str + '&nbsp;<a href="#" class="btn btn-danger btn-delete">Удалить</a>';
+                            }
+                            return str;
                         },
                         orderable: false
                     },

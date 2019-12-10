@@ -49,7 +49,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                     Id = c.Id,
                     IsAddition = c.IsAddition,
                     Name = c.GetNameByLanguage(query.Language),
-                    Number = c.Number,
+                    Number = (c.PrintTemplate != null) ? c.PrintTemplate.Number : default,
                     Priority = c.Priority,
                     TemplateName = (c.Template != null) ? c.Template.GetNameByLanguage(query.Language) : string.Empty
                 });
