@@ -79,7 +79,7 @@ namespace TypiconOnline.Web.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Неверная попытка входа в систему.");
                     return View(model);
                 }
             }
@@ -139,7 +139,7 @@ namespace TypiconOnline.Web.Controllers
             else
             {
                 _logger.LogWarning("Invalid authenticator code entered for user with ID {UserId}.", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
+                ModelState.AddModelError(string.Empty, "Неверный код аутентификатора.");
                 return View();
             }
         }
@@ -193,7 +193,7 @@ namespace TypiconOnline.Web.Controllers
             else
             {
                 _logger.LogWarning("Invalid recovery code entered for user with ID {UserId}", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid recovery code entered.");
+                ModelState.AddModelError(string.Empty, "Введен неверный код восстановления.");
                 return View();
             }
         }
@@ -268,7 +268,7 @@ namespace TypiconOnline.Web.Controllers
         {
             if (remoteError != null)
             {
-                ErrorMessage = $"Error from external provider: {remoteError}";
+                ErrorMessage = $"Ошибка внешнего поставщика: {remoteError}";
                 return RedirectToAction(nameof(Login));
             }
             var info = await _signInManager.GetExternalLoginInfoAsync();
@@ -344,7 +344,25 @@ namespace TypiconOnline.Web.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
             }
             var result = await _userManager.ConfirmEmailAsync(user, code);
+
+            //Добавляем роль Уставщик
+            if (result.Succeeded)
+            {
+                result = await _userManager.AddToRoleAsync(user, RoleConstants.EditorsRole);
+
+                
+            }
+
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Relogin()
+        {
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction(nameof(Login));
         }
 
         [HttpGet]
@@ -372,8 +390,9 @@ namespace TypiconOnline.Web.Controllers
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.ResetPasswordCallbackLink(user.Id.ToString(), code, Request.Scheme);
-                await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+                await _emailSender.SendEmailAsync(model.Email, "Сбросить пароль"/*"Reset Password"*/,
+                    $"Пожалуйста, сбросьте Ваш пароль, нажав на ссылку: <a href='{callbackUrl}'>ссылка</a>");
+                    //$"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
 

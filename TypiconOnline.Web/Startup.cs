@@ -49,7 +49,8 @@ namespace TypiconOnline.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<User, Role>()
+            services.AddIdentity<User, Role>(
+                options => options.SignIn.RequireConfirmedEmail = true)
                 .AddEntityFrameworkStores<TypiconDBContext>()
                 .AddDefaultTokenProviders();
 
@@ -155,11 +156,11 @@ namespace TypiconOnline.Web
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireAdminRole",
-                     policy => policy.RequireRole("Admin"));
+                     policy => policy.RequireRole(RoleConstants.AdministratorsRole));
                 options.AddPolicy("RequireEditorRole",
-                    policy => policy.RequireRole("Editor"));
+                    policy => policy.RequireRole(RoleConstants.EditorsRole));
                 options.AddPolicy("RequireTypesetterRole",
-                    policy => policy.RequireRole("Typesetter"));
+                    policy => policy.RequireRole(RoleConstants.TypesettersRole));
             });
 
             #endregion

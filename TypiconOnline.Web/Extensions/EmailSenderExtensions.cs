@@ -11,8 +11,8 @@ namespace TypiconOnline.Web.Services
     {
         public static Task SendEmailConfirmationAsync(this IEmailSender emailSender, string email, string link)
         {
-            return emailSender.SendEmailAsync(email, "Confirm your email",
-                $"Please confirm your account by clicking this link: <a href='{HtmlEncoder.Default.Encode(link)}'>link</a>");
+            return emailSender.SendEmailAsync(email, "Typicon.online: Подтвердите Ваш почтовый адрес",
+                $"Пожалуйста, подтвердите ваш аккаунт нажатием на данную ссылку: <a href='{HtmlEncoder.Default.Encode(link)}'>ссылка</a>");
         }
     }
 }

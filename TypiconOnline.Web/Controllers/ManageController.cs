@@ -98,7 +98,7 @@ namespace TypiconOnline.Web.Controllers
                 }
             }
 
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Ваш профиль был обновлен";
             return RedirectToAction(nameof(Index));
         }
 
@@ -120,9 +120,9 @@ namespace TypiconOnline.Web.Controllers
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
             var email = user.Email;
-            await _emailSender.SendEmailConfirmationAsync(email, callbackUrl);
+            await _emailSender.SendEmailConfirmationAsync(email, callbackUrl);  
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "Письмо с подтверждением отправлено. Пожалуйста, проверьте вашу электронную почту.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -169,7 +169,7 @@ namespace TypiconOnline.Web.Controllers
 
             await _signInManager.SignInAsync(user, isPersistent: false);
             _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            StatusMessage = "Ваш пароль был изменен.";
 
             return RedirectToAction(nameof(ChangePassword));
         }
@@ -217,7 +217,7 @@ namespace TypiconOnline.Web.Controllers
             }
 
             await _signInManager.SignInAsync(user, isPersistent: false);
-            StatusMessage = "Your password has been set.";
+            StatusMessage = "Ваш пароль был задан.";
 
             return RedirectToAction(nameof(SetPassword));
         }
@@ -278,7 +278,7 @@ namespace TypiconOnline.Web.Controllers
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            StatusMessage = "The external login was added.";
+            StatusMessage = "Внешний логин был добавлен.";
             return RedirectToAction(nameof(ExternalLogins));
         }
 
@@ -299,7 +299,7 @@ namespace TypiconOnline.Web.Controllers
             }
 
             await _signInManager.SignInAsync(user, isPersistent: false);
-            StatusMessage = "The external login was removed.";
+            StatusMessage = "Внешний логин был удален.";
             return RedirectToAction(nameof(ExternalLogins));
         }
 
@@ -398,7 +398,7 @@ namespace TypiconOnline.Web.Controllers
 
             if (!is2faTokenValid)
             {
-                ModelState.AddModelError("Code", "Verification code is invalid.");
+                ModelState.AddModelError("Code", "Код проверки заполнен не верно.");
                 await LoadSharedKeyAndQrCodeUriAsync(user, model);
                 return View(model);
             }

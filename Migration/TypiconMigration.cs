@@ -100,49 +100,56 @@ namespace TypiconMigrationTool
             {
                 UserName = "berluki@mail.ru",
                 Email = "berluki@mail.ru",
-                FullName = "Уставщик"
+                FullName = "Уставщик",
+                EmailConfirmed = true
             }, pass, RoleConstants.EditorsRole);
 
             _userCreationService.CreateUser(new User()
             {
                 UserName = "berluki1@mail.ru",
                 Email = "berluki1@mail.ru",
-                FullName = "Уставщик1"
+                FullName = "Уставщик1",
+                EmailConfirmed = true
             }, pass, RoleConstants.EditorsRole);
 
             _userCreationService.CreateUser(new User()
             {
                 UserName = "berluki2@mail.ru",
                 Email = "berluki2@mail.ru",
-                FullName = "Уставщик2"
+                FullName = "Уставщик2",
+                EmailConfirmed = true
             }, pass, RoleConstants.EditorsRole);
 
             _userCreationService.CreateUser(new User()
             {
                 UserName = "piligrim@berluki.ru",
                 Email = "piligrim@berluki.ru",
-                FullName = "Редактор"
+                FullName = "Редактор",
+                EmailConfirmed = true
             }, pass, RoleConstants.TypesettersRole);
 
             _userCreationService.CreateUser(new User()
             {
                 UserName = "piligrim1@berluki.ru",
                 Email = "piligrim1@berluki.ru",
-                FullName = "Редактор1"
+                FullName = "Редактор1",
+                EmailConfirmed = true
             }, pass, RoleConstants.TypesettersRole);
 
             _userCreationService.CreateUser(new User()
             {
                 UserName = "piligrim2@berluki.ru",
                 Email = "piligrim2@berluki.ru",
-                FullName = "Редактор2"
+                FullName = "Редактор2",
+                EmailConfirmed = true
             }, pass, RoleConstants.TypesettersRole);
 
             _userCreationService.CreateUser(new User()
             {
                 UserName = "piligrim3@berluki.ru",
                 Email = "piligrim3@berluki.ru",
-                FullName = "Редактор3"
+                FullName = "Редактор3",
+                EmailConfirmed = true
             }, pass, RoleConstants.TypesettersRole);
 
             Commit();
@@ -165,7 +172,8 @@ namespace TypiconMigrationTool
             {
                 UserName = "ftroem@gmail.com",
                 Email = "ftroem@gmail.com",
-                FullName = "Администратор"
+                FullName = "Администратор",
+                EmailConfirmed = true
             };
 
             //user.UserRoles = new List<UserRole>()
