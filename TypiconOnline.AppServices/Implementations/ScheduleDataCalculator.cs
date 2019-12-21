@@ -13,6 +13,7 @@ using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
+using TypiconOnline.Domain.Typicon.Print;
 using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.AppServices.Implementations
@@ -63,13 +64,13 @@ namespace TypiconOnline.AppServices.Implementations
             RuleHandlerSettings settings = CreateFromExplicit(req, explicitAddRule);
 
             //Номер Знака службы, указанный в ModifiedRule, который будет использовать в отображении Расписания
-            int? signNumber = null;
+            PrintDayTemplate printDayTemplate = null;
 
-            settings = CreateFromModifiedAsAddition(req, ref modifiedRule, out signNumber, settings);
+            settings = CreateFromModifiedAsAddition(req, ref modifiedRule, ref printDayTemplate, settings);
 
             settings = CreateFromTransparent(req, (modifiedRule == null), triodionRule, settings);
             //получаем главное Правило
-            var (majorRule, outputSettings) = CreateFromMajor(req, modifiedRule, menologyRule, triodionRule, oktoikhDay, settings, signNumber);
+            var (majorRule, outputSettings) = CreateFromMajor(req, modifiedRule, menologyRule, triodionRule, oktoikhDay, settings, printDayTemplate);
 
             FillAllSettingsByWorships(outputSettings);
 
@@ -86,14 +87,14 @@ namespace TypiconOnline.AppServices.Implementations
                 : default(RuleHandlerSettings);
         }
 
-        private RuleHandlerSettings CreateFromModifiedAsAddition(ScheduleDataCalculatorRequest req, ref ModifiedRule modifiedRule, out int? signNumber, RuleHandlerSettings settings)
+        private RuleHandlerSettings CreateFromModifiedAsAddition(ScheduleDataCalculatorRequest req, ref ModifiedRule modifiedRule, ref PrintDayTemplate printDayTemplate, RuleHandlerSettings settings)
         {
-            signNumber = null;
+            printDayTemplate = null;
 
             if (modifiedRule != null)
             {
-                //custom SignNumber
-                signNumber = modifiedRule.SignNumber;
+                //custom printDayTemplate
+                printDayTemplate = modifiedRule.PrintDayTemplate;
 
                 if (modifiedRule.IsAddition)
                 {
@@ -155,7 +156,7 @@ namespace TypiconOnline.AppServices.Implementations
         /// </summary>
         /// <returns>Правило для обработки, настройки для обработчика правил</returns>
         private (DayRule MajorRule, RuleHandlerSettings Settings) CreateFromMajor(ScheduleDataCalculatorRequest req, ModifiedRule modifiedRule, MenologyRule menologyRule, TriodionRule triodionRule
-            , OktoikhDay oktoikhDay, RuleHandlerSettings settings, int? signNumber)
+            , OktoikhDay oktoikhDay, RuleHandlerSettings settings, PrintDayTemplate printDayTemplate)
         {
             (DayRule MajorRule, IEnumerable<DayWorship> Menologies, IEnumerable<DayWorship> Triodions) r;
 
@@ -178,7 +179,7 @@ namespace TypiconOnline.AppServices.Implementations
                 Triodions = r.Triodions,
                 OktoikhDay = oktoikhDay,
                 AdditionalSettings = settings,
-                SignNumber = signNumber
+                PrintDayTemplate = printDayTemplate
             });
 
             return (r.MajorRule, settings);

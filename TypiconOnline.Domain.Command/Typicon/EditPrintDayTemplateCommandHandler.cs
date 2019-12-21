@@ -31,7 +31,8 @@ namespace TypiconOnline.Domain.Command.Typicon
 
             entity.Name = c.Name;
             entity.Number = c.Number;
-            entity.SignSymbol = c.Sign;
+            entity.Icon = c.Icon;
+            entity.IsRed = c.IsRed;
 
             if (c.PrintFile != null)
             {

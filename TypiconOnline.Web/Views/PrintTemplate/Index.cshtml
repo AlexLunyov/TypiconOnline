@@ -54,9 +54,10 @@
                     <thead class="text-center">
                         <tr>
                             <th>Id</th>
-                            <th>Number</th>
-                            <th>HasFile</th>
-                            <th>Name</th>
+                            <th>Номер</th>
+                            <th>Наличие файла</th>
+                            <th>Наименование</th>
+                            <th>Знак</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -96,6 +97,17 @@
                     { "data": "Number", "name": "Number", "autoWidth": true },
                     { "data": "HasFile", "name": "HasFile", "autoWidth": true },
                     { "data": "Name", "name": "Name", "autoWidth": true },
+                    {
+                        data: "Icon", name: "Знак", autoWidth: true,
+                        render: function (data)
+                        {
+                            var str = '';
+                            if (data != null) {
+                                str = '<img src="../../images/sign/' + data + '.png" />';
+                            }
+                            return str;
+                        }
+                    },
                     {
                         data: null, render: function (data, type, row)
                         {

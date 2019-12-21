@@ -1,5 +1,6 @@
 ﻿using System;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Typicon.Print;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon.Modifications
@@ -13,7 +14,7 @@ namespace TypiconOnline.Domain.Typicon.Modifications
         public ItemTextStyled ShortName { get; set; }
         public bool AsAddition { get; set; }
         public bool UseFullName { get; set; }
-        public int? SignNumber { get; set; }
+        public int? PrintDayTemplateId { get; set; }
         public DayWorshipsFilter Filter { get; set; }
     }
 }

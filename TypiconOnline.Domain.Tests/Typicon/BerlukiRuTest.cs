@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.Tests.Typicon
 
             var week = queryProcessor.Process(new OutputWeekQuery(TYPICON_ID, date, new OutputFilter() { Language = "cs-ru" }));
 
-            HtmlScheduleWeekViewer htmlViewer = new HtmlScheduleWeekViewer();
+            var htmlViewer = new HtmlSimpleScheduleWeekViewer();
 
             string resultString = htmlViewer.Execute(TYPICON_ID, week.Value);
 

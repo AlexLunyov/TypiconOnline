@@ -22,6 +22,8 @@ namespace TypiconOnline.Domain.Extensions
                 IsModified = source.IsModified,
                 IsTemplate = source.IsTemplate,
                 ValidationStatus = source.ValidationStatus,
+                Name = new ItemText(source.Name),
+                Description = new ItemText(source.Description),
                 VersionNumber = source.VersionNumber,
                 PrevVersionId = source.Id
             };
@@ -60,7 +62,8 @@ namespace TypiconOnline.Domain.Extensions
                         Number = c.Number,
                         PrintFile = c.PrintFile,
                         PrintFileName = c.PrintFileName,
-                        SignSymbol = c.SignSymbol,
+                        Icon = c.Icon,
+                        IsRed = c.IsRed,
                         TypiconVersion = version
                     }));
         }

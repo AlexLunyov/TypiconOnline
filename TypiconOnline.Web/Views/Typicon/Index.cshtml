@@ -27,11 +27,9 @@
                     <thead class="text-center">
                         <tr>
                             <th>Id</th>
-                            <th>Name</th>
-                            <th>Status</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th>Наименование</th>
+                            <th>Сист. имя</th>
+                            <th>Статус</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -87,9 +85,8 @@
                     <div class="form-group col-sm-12">Вы уверены? <br />Удаление Устава безвозвратно.</div>
                 </div>
                 <div class="row">
-                    <form asp-controller="Typicon" asp-action="Delete" method="post" enctype="multipart/form-data">
+                    <form id="frmDltTyp" asp-controller="Typicon" asp-action="Delete" method="post">
                         <div class="form-group col-sm-12">
-                            <input id="delTypId" type="hidden" name="id" />
                             <button class="btn btn-danger">Удалить</button>
                         </div>
                     </form>
@@ -128,42 +125,28 @@
                     searchable: false
                 },
                 {
-                    name: "Name",
+                    name: "Наименование",
                     data: "Name",
                 },
                 {
-                    name: "Status",
+                    name: "Сист. имя",
+                    data: "SystemName",
+                },
+                {
+                    name: "Статус",
                     data: "Status",
-                }
-                , {
-                    name: "Editable",
-                    data: "Editable",
-                    visible: false,
-                    searchable: false
-                }
-                , {
-                    name: "Deletable",
-                    data: "Deletable",
-                    visible: false,
-                    searchable: false
-                }
-                , {
-                    name: "Approvable",
-                    data: "Approvable",
-                    visible: false,
-                    searchable: false
                 }
                 , {
                     title: "",
                     render: function (data, type, row) {
                         var str = "";
-                        if (row['Approvable']) {
-                            str = str + '&nbsp;<a class="btn btn-success" title="Утвердить Устав" href="/Typicon/Approve/' + row['Id'] + '">Утвердить</a>';
+                        if (row['Reviewable']) {
+                            str = str + '&nbsp;<a class="btn btn-success" title="Утвердить Устав" href="/Typicon/Review/' + row['Id'] + '">Рассмотреть</a>';
                         }
                         if (row['Editable']) {
                             str = str + '&nbsp;<a class="btn btn-primary" title="Редактировать Устав" href="/Typicon/Edit/' + row['Id'] + '">Редактировать</a>';
                         }
-                        if (row['Deletable']) {
+                        if (row['DeleteLink'] != null) {
                             str = str + '&nbsp;<a href="#" class="btn btn-danger btn-delete" title="Удалить Устав">Удалить</a>';
                         }
                         @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
@@ -183,7 +166,7 @@
 
         setInterval(function () {
             table.processing = true;
-            table.ajax.reload( null, false ); // user paging is not reset on reload
+            //table.ajax.reload( null, false ); // user paging is not reset on reload
         }, 3000 );
 
         table.on('click', 'tbody tr td .export', function () {
@@ -241,7 +224,9 @@
             var row = table.row($(this).parents('tr'));
             var data = row.data();
 
-            $("#delTypId").val(data.Id);
+            var link = "typicon/" + data.DeleteLink + "/" + data.Id;
+
+            $("#frmDltTyp").attr("action", link);
 
             $(".delete-modal").modal('show');
         });

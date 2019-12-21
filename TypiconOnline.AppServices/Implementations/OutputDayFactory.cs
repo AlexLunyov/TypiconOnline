@@ -180,9 +180,8 @@ namespace TypiconOnline.AppServices.Implementations
                 Name = _nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.AllWorships),
                 Date = request.Date,
                 PredefinedSignId = sign.Id,
-                //Если settings.SignNumber определен в ModifiedRule, то назначаем его
-                CustomSignNumber = settings.SignNumber 
-                    ?? ((sign.PrintTemplate != null) ? sign.PrintTemplate.Number : 0)
+                //Если settings.PrintDayTemplate определен в ModifiedRule, то назначаем его
+                PrintDayTemplate = settings.PrintDayTemplate ?? sign.PrintTemplate
             };
 
             return new OutputDayInfo(scheduleDay, settings.AllWorships, results, brokenConstraints);

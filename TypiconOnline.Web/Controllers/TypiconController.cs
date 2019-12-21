@@ -22,6 +22,7 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using TypiconOnline.Domain.ItemTypes;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TypiconOnline.Web.Controllers
@@ -68,7 +69,11 @@ namespace TypiconOnline.Web.Controllers
         {
             ViewBag.Typicons = QueryProcessor.GetTypicons();
 
-            return View();
+            return View(new CreateTypiconModel()
+            {
+                Name = new ItemText(new ItemText(new ItemTextUnit("cs-ru", "[Новое значение]"))),
+                Description = new ItemText(new ItemText(new ItemTextUnit("cs-ru", "[Новое значение]")))
+            });
         }
 
         [HttpPost]
@@ -82,14 +87,32 @@ namespace TypiconOnline.Web.Controllers
                     throw new ApplicationException($"Невозможно найти Пользователя с Id = '{_userManager.GetUserId(User)}'.");
                 }
 
-                var command = new CreateTypiconCommand(model.Name, model.DefaultLanguage, model.TemplateId, user.Id);
+                var command = new CreateTypiconCommand(model.Name, model.Description, model.SystemName, model.DefaultLanguage, model.TemplateId, user.Id);
 
                 await CommandProcessor.ExecuteAsync(command);
 
                 return RedirectToAction(nameof(Index));
             }
 
+            ViewBag.Typicons = QueryProcessor.GetTypicons();
+
             return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = RoleConstants.AdministratorsRole)]
+        public IActionResult Review(int id)
+        {
+            var model = QueryProcessor.Process(new TypiconClaimQuery(id));
+
+            if (model.Failure)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(model.Value);
+            }
         }
 
         //[HttpPost]
@@ -103,9 +126,27 @@ namespace TypiconOnline.Web.Controllers
             //    return NotFound();
             //}
 
-            _jobs.Create(new ApproveTypiconEntityJob(id));
+            _jobs.Create(new ApproveTypiconClaimJob(id));
 
             return RedirectToAction("Index");
+        }
+
+        //[HttpPost]
+        [Authorize(Roles = RoleConstants.AdministratorsRole)]
+        //[ValidateAntiForgeryToken]
+        //[Route("{id?}")]
+        public async Task<IActionResult> Reject(TypiconClaimModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var command = new RejectTypiconClaimCommand(model.Id, model.ResultMessage);
+
+                await CommandProcessor.ExecuteAsync(command);
+
+                return RedirectToAction("Index");
+            }
+
+            return View(nameof(Review), model);
         }
 
         public async Task<IActionResult> LoadData()
@@ -154,7 +195,7 @@ namespace TypiconOnline.Web.Controllers
                     return NotFound();
                 }
 
-                var command = new EditTypiconCommand(model.Id, model.Name, model.IsTemplate, model.DefaultLanguage);
+                var command = new EditTypiconCommand(model.Id, model.Name, model.Description, model.IsTemplate, model.DefaultLanguage);
 
                 await CommandProcessor.ExecuteAsync(command);
             }
@@ -171,6 +212,21 @@ namespace TypiconOnline.Web.Controllers
             }
 
             var command = new DeleteTypiconCommand(id);
+
+            var result = await CommandProcessor.ExecuteAsync(command);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        /// <summary>
+        /// Удаление Заявки
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> DeleteClaim(int id)
+        {
+            var command = new DeleteTypiconClaimCommand(HttpContext.User, id);
 
             var result = await CommandProcessor.ExecuteAsync(command);
 
@@ -251,7 +307,8 @@ namespace TypiconOnline.Web.Controllers
 
         protected override Expression<Func<TypiconEntityFilteredModel, bool>> BuildExpression(string searchValue)
         {
-            return m => m.Name == searchValue;
+            return m => m.Name == searchValue
+                || m.SystemName == searchValue;
         }
 
         //[HttpPost]

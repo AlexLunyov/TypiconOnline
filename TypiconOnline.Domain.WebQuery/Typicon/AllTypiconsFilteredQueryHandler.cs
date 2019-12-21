@@ -25,43 +25,85 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
         public Result<IQueryable<TypiconEntityFilteredModel>> Handle([NotNull] AllTypiconsFilteredQuery query)
         {
-            IQueryable<TypiconEntity> queryResult = DbContext.Set<TypiconEntity>();
-
             var user = _userManager.FindByIdAsync(query.UserId.ToString()).Result;
 
             if (user != null)
             {
                 var isAdmin = _userManager.IsInRoleAsync(user, RoleConstants.AdministratorsRole).Result;
 
+                var result = new List<TypiconEntityFilteredModel>();
+
+                #region TypiconVersions
+
+                //черновики
+                IQueryable<TypiconVersion> versResult = DbContext
+                    .Set<TypiconVersion>()
+                    .Where(c => c.BDate == null && c.EDate == null);
+
                 //if not admin
                 if (!isAdmin)
                 {
-                    queryResult = queryResult
-                        .Where(c => c.OwnerId == query.UserId
-                                   || c.EditableUserTypicons.Any(d => d.UserId == query.UserId));
+                    versResult = versResult
+                        .Where(c => c.Typicon.OwnerId == query.UserId
+                                   || c.Typicon.EditableUserTypicons.Any(d => d.UserId == query.UserId));
                 }
 
-                var result = new List<TypiconEntityFilteredModel>();
-
-                foreach (var typ in queryResult)
+                foreach (var typ in versResult.ToList())
                 {
-                    var inProcess = typ.Status == TypiconStatus.Approving
-                                    || typ.Status == TypiconStatus.Validating
-                                    || typ.Status == TypiconStatus.Publishing;
+                    var inProcess = typ.Typicon.Status == TypiconStatus.Approving
+                                    || typ.Typicon.Status == TypiconStatus.Validating
+                                    || typ.Typicon.Status == TypiconStatus.Publishing;
 
                     var dto = new TypiconEntityFilteredModel()
                     {
-                        Id = typ.Id,
+                        Id = typ.TypiconId,
                         //PublishedVersionId = vrs.Id,
                         Name = typ.Name.FirstOrDefault(query.Language).Text,
-                        Status = typ.Status.ToString(),
-                        Editable = typ.Status != TypiconStatus.WaitingApprovement && !inProcess,
-                        Deletable = (isAdmin || typ.OwnerId == query.UserId) && !inProcess,
-                        Approvable = isAdmin && typ.Status == TypiconStatus.WaitingApprovement
+                        SystemName = typ.Typicon.SystemName,
+                        Status = typ.Typicon.Status.ToString(),
+                        Editable = typ.Typicon.Status != TypiconStatus.WaitingApprovement && !inProcess,
+                        DeleteLink = ((isAdmin || typ.Typicon.OwnerId == query.UserId) && !inProcess)
+                            ? "Delete"
+                            : default,
+                        Reviewable = false //уже все рассмотрены и одобрены
                     };
 
                     result.Add(dto);
                 }
+
+                #endregion
+
+                #region TypiconClaims
+
+                IQueryable<TypiconClaim> claimsResult = DbContext.Set<TypiconClaim>();
+
+                //if not admin
+                if (!isAdmin)
+                {
+                    claimsResult = claimsResult.Where(c => c.OwnerId == query.UserId);
+                }
+
+                foreach (var claim in claimsResult)
+                {
+                    var inProcess = claim.Status == TypiconClaimStatus.InProcess;
+
+                    var dto = new TypiconEntityFilteredModel()
+                    {
+                        Id = claim.Id,
+                        Name = claim.Name.FirstOrDefault(query.Language).Text,
+                        SystemName = claim.SystemName,
+                        Status = claim.Status.ToString(),
+                        Editable = false,
+                        DeleteLink = ((isAdmin || claim.OwnerId == query.UserId) && !inProcess)
+                            ? "DeleteClaim"
+                            : default,
+                        Reviewable = isAdmin && claim.Status == TypiconClaimStatus.WatingForReview
+                    };
+
+                    result.Add(dto);
+                }
+
+                #endregion
 
                 return Result.Ok(result.AsQueryable());
             }

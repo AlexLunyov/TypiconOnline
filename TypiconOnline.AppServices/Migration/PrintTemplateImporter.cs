@@ -14,7 +14,7 @@ namespace TypiconOnline.AppServices.Migration
             _fileReader = new SimpleFileReader(folder);
         }
 
-        public PrintDayTemplate GetDay(int number, string name, TypiconVersion version)
+        public PrintDayTemplate GetDay(int number, int? icon, bool isRed, string name, TypiconVersion version)
         {
             var fileName = $"{number.ToString()}.docx";
             var file = _fileReader.ReadBinary(fileName);
@@ -23,6 +23,8 @@ namespace TypiconOnline.AppServices.Migration
             {
                 Name = name,
                 Number = number,
+                Icon = icon,
+                IsRed = isRed,
                 PrintFile = file,
                 PrintFileName = fileName,
                 TypiconVersion = version

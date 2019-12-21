@@ -5,6 +5,7 @@ using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Infrastructure.Common.Domain;
+using TypiconOnline.Domain.Typicon.Print;
 
 namespace TypiconOnline.Domain.Typicon.Modifications
 {
@@ -27,7 +28,11 @@ namespace TypiconOnline.Domain.Typicon.Modifications
 
         public virtual bool UseFullName { get; set; }
 
-        public virtual int? SignNumber { get; set; }
+        public virtual int? PrintDayTemplateId { get; set; }
+        /// <summary>
+        /// Ссылка на печатный шаблон
+        /// </summary>
+        public virtual PrintDayTemplate PrintDayTemplate { get; set; }
 
         ItemTextStyled _shortName;
         public virtual ItemTextStyled ShortName

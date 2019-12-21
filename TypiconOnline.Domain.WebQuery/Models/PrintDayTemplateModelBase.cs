@@ -9,6 +9,8 @@ namespace TypiconOnline.Domain.WebQuery.Models
     {
         public int Id { get; set; }
         public int Number { get; set; }
+        public int? Icon { get; set; }
+        public bool IsRed { get; set; }
         public string Name { get; set; }
         public IFormFile File { get; set; }
     }

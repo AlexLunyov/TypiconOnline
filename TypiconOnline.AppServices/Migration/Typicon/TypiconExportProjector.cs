@@ -18,7 +18,9 @@ namespace TypiconOnline.AppServices.Migration.Typicon
             {
                 var projection = new TypiconVersionProjection()
                 {
-                    Name = new ItemText(entity.Typicon.Name),
+                    Name = new ItemText(entity.Name),
+                    Description = new ItemText(entity.Description),
+                    SystemName = entity.Typicon.SystemName,
                     OwnerId = entity.Typicon.OwnerId,
                     Editors = entity.Typicon.EditableUserTypicons.Select(c => c.UserId).ToList(),
                     IsTemplate = entity.IsTemplate,
@@ -105,7 +107,7 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                         Number = c.Number,
                         PrintFile = c.PrintFile,
                         PrintFileName = c.PrintFileName,
-                        Sign = c.SignSymbol
+                        Icon = c.Icon
                     }).ToList()
                 };
 

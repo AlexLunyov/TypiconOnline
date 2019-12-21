@@ -11,6 +11,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
         public int Number { get; set; }
         public bool HasFile { get; set; }
         public string Name { get; set; }
+        public int? Icon { get; set; }
         public bool Deletable { get; set; }
     }
 }

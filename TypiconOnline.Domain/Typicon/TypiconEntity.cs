@@ -22,7 +22,13 @@ namespace TypiconOnline.Domain.Typicon
 
         public int Id { get; set; }
 
-        public virtual ItemText Name { get; set; }
+        
+
+        /// <summary>
+        /// Системное имя-идентификатор, однозначно определяющее Устав, 
+        /// по которому будет совершаться обращение для получения расписания
+        /// </summary>
+        public string SystemName { get; set; }
         /// <summary>
         /// Язык по умолчанию
         /// </summary>
@@ -64,15 +70,6 @@ namespace TypiconOnline.Domain.Typicon
 
         protected override void Validate()
         {
-            if (Name == null || Name.IsEmpty)
-            {
-                AddBrokenConstraint(new BusinessConstraint("Имя Устава должно быть определено"));
-            }
-            else if (!Name.IsValid)
-            {
-                AppendAllBrokenConstraints(Name);
-            }
-
             if (string.IsNullOrEmpty(DefaultLanguage)
                 || !ItemText.IsLanguageValid(DefaultLanguage))
             {

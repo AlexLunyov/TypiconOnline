@@ -25,7 +25,8 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 .Select(c => new TypiconEntityModel()
                 {
                     Id = c.TypiconId,
-                    Name = c.Typicon.Name.FirstOrDefault(query.Language).Text,
+                    Name = c.Name.FirstOrDefault(query.Language).Text,
+                    SystemName = c.Typicon.SystemName
                 });
 
             //var result = new List<TypiconEntityModel>();

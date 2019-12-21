@@ -35,5 +35,19 @@ namespace TypiconOnline.AppServices.Extensions
 
             await dbContext.SaveChangesAsync();
         }
+
+        public static async Task AddTypiconEntityAsync(this TypiconDBContext dbContext, TypiconEntity entity)
+        {
+            dbContext.Set<TypiconEntity>().Add(entity);
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        public static async Task RemoveTypiconClaimAsync(this TypiconDBContext dbContext, TypiconClaim claim)
+        {
+            dbContext.Set<TypiconClaim>().Remove(claim);
+
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

@@ -30,7 +30,13 @@ namespace TypiconOnline.Domain.Typicon.Print
         /// <summary>
         /// Символ отображения знака службы. Используется в веб-версии расписания
         /// </summary>
-        public char? SignSymbol { get; set; }
+        public int? Icon { get; set; }
+
+        /// <summary>
+        /// Отображать ли красным в веб-версии расписания
+        /// </summary>
+        public bool IsRed { get; set; }
+
         /// <summary>
         /// Word-документ с определенными в нем полями для отображения дня Выходной формы
         /// </summary>

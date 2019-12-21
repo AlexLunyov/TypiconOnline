@@ -50,7 +50,7 @@ namespace TypiconOnline.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentity<User, Role>(
-                options => options.SignIn.RequireConfirmedEmail = true)
+                /*options => options.SignIn.RequireConfirmedAccount = true*/)
                 .AddEntityFrameworkStores<TypiconDBContext>()
                 .AddDefaultTokenProviders();
 

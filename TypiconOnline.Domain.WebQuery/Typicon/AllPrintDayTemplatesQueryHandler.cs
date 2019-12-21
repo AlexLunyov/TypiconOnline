@@ -45,6 +45,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                     Id = c.Id,
                     Name = c.Name,
                     Number = c.Number,
+                    Icon = c.Icon,
                     HasFile = (c.PrintFile != null && c.PrintFile.Length > 0),
                     Deletable = c.SignLinks.Count == 0
                              && c.SignPrintLinks.Count == 0

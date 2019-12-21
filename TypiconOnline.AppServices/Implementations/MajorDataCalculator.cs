@@ -61,7 +61,7 @@ namespace TypiconOnline.AppServices.Implementations
                 Menologies = r.Menologies,
                 Triodions = r.Triodions,
                 OktoikhDay = oktoikhDay,
-                SignNumber = modifiedRule?.SignNumber
+                PrintDayTemplate = modifiedRule?.PrintDayTemplate
             });
 
             //теперь дублируем тексты служб на Additions, вычисленные для данных настроек

@@ -102,7 +102,7 @@ namespace TypiconOnline.AppServices.Implementations
                 TypiconVersionId = req.TypiconVersionId,
                 Date = req.Date,
                 RuleContainer = container,
-                SignNumber = req.SignNumber,
+                PrintDayTemplate = req.PrintDayTemplate,
                 ApplyParameters = req.ApplyParameters,
                 CheckParameters = req.CheckParameters,
                 OktoikhDay = req.OktoikhDay,

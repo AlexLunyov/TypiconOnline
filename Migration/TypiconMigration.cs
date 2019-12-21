@@ -194,10 +194,8 @@ namespace TypiconMigrationTool
         {
             var typicon = new TypiconEntity()
             {
-                Name = new ItemText()
-                {
-                    Items = new List<ItemTextUnit>() { new ItemTextUnit("cs-ru", "Типикон") }
-                },
+                
+                SystemName = "Типикон",
                 DefaultLanguage = DEFAULT_LANGUAGE,
                 OwnerId = user.Id,
                 Status = TypiconStatus.Draft
@@ -209,6 +207,14 @@ namespace TypiconMigrationTool
             var typiconEntity = new TypiconVersion()
             {
                 TypiconId = typicon.Id,
+                Name = new ItemText()
+                {
+                    Items = new List<ItemTextUnit>() { new ItemTextUnit("cs-ru", "Типикон") }
+                },
+                Description = new ItemText()
+                {
+                    Items = new List<ItemTextUnit>() { new ItemTextUnit("cs-ru", "Описание Устава Типикон") }
+                },
                 VersionNumber = 1,
                 IsModified = true
                 //Делаем сразу опубликованную версию
@@ -246,7 +252,7 @@ namespace TypiconMigrationTool
                     && !typiconEntity.PrintDayTemplates
                     .Any(c => c.Number == signMigrator.Number.Value))
                 {
-                    var day = printImporter.GetDay(signMigrator.Number.Value, signMigrator.Name, typiconEntity);
+                    var day = printImporter.GetDay(signMigrator.Number.Value, signMigrator.Icon, signMigrator.IsRed, signMigrator.Name, typiconEntity);
 
                     typiconEntity.PrintDayTemplates.Add(day);
 

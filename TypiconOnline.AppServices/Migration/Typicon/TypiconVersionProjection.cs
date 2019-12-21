@@ -10,6 +10,8 @@ namespace TypiconOnline.AppServices.Migration.Typicon
     public class TypiconVersionProjection
     {
         public virtual ItemText Name { get; set; }
+        public virtual ItemText Description { get; set; }
+        public virtual string SystemName { get; set; }
         public virtual string DefaultLanguage { get; set; }
         public bool IsTemplate { get; set; }
         public int OwnerId { get; set; }

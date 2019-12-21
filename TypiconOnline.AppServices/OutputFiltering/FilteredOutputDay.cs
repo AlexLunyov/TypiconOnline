@@ -11,10 +11,15 @@ namespace TypiconOnline.Domain.WebQuery.OutputFiltering
     {
         public ItemTextUnit Name { get; set; }
         public virtual DateTime Date { get; set; }
-        /// <summary>
-        /// Номер знака службы
-        /// </summary>
         public int SignNumber { get; set; }
+        /// <summary>
+        /// Символ знака службы
+        /// </summary>
+        public int? Icon { get; set; }
+        /// <summary>
+        /// Отображать ли красным наименование дня
+        /// </summary>
+        public bool IsRed { get; set; }
         /// <summary>
         /// Наименование знака службы
         /// </summary>

@@ -25,6 +25,8 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         public virtual PrintDayTemplate PrintTemplate { get; set; }
 
+        
+
         public int Priority { get; set; }
 
         private ItemText _signName;

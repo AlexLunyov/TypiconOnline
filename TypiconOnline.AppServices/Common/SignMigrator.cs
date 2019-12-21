@@ -12,18 +12,18 @@ namespace TypiconOnline.AppServices.Common
         static readonly Dictionary<int, Item> _signs = new Dictionary<int, Item>()
         {
             { 13, new Item() { Name = "Пасха", Priority = 1, TemplateId = 5 } },
-            { 10, new Item() { Name = "День Светлой седмицы", Priority = 2, TemplateId = 4, Number = 0 } },
-            { 5, new Item() { Name = "Бдение с литией", Priority = 3, Number = 5 } },
-            { 4, new Item() { Name = "Бдение", Priority = 3, Number = 4 } },
-            { 3, new Item() { Name = "Полиелей", Priority = 3, Number = 3 } },
-            { 8, new Item() { Name = "Воскресный день", Priority = 3, Number = 8 } },
+            { 10, new Item() { Name = "День Светлой седмицы", Priority = 2, TemplateId = 4, Number = 0, Icon = 0 } },
+            { 5, new Item() { Name = "Бдение с литией", Priority = 3, Number = 5, Icon = 5, IsRed = true } },
+            { 4, new Item() { Name = "Бдение", Priority = 3, Number = 4, Icon = 4, IsRed = true } },
+            { 3, new Item() { Name = "Полиелей", Priority = 3, Number = 3, Icon = 3 } },
+            { 8, new Item() { Name = "Воскресный день", Priority = 3, Number = 8, IsRed = true } },
             { 9, new Item() { Name = "Воскресенье с Соборованием", Priority = 3, TemplateId = 8 } },
             { 6, new Item() { Name = "Аллилуиа", Priority = 4, Number = 6 } },
             { 7, new Item() { Name = "Литургия Преждеосвященных Даров", Priority = 4, Number = 7 } },
             { 11, new Item() { Name = "Поминовение усопших", Priority = 4,TemplateId = 0 } },
             { 12, new Item() { Name = "Поминовение усопших (Постом)", Priority = 3, TemplateId = 0 } },
-            { 2, new Item() { Name = "Славословная", Priority = 5,TemplateId = 0, Number = 2 } },
-            { 1, new Item() { Name = "Шестеричная", Priority = 5, TemplateId = 0, Number = 1 } },
+            { 2, new Item() { Name = "Славословная", Priority = 5,TemplateId = 0, Number = 2, Icon = 2 } },
+            { 1, new Item() { Name = "Шестеричная", Priority = 5, TemplateId = 0, Number = 1, Icon = 1 } },
             { 0, new Item() { Name = "Без знака", Priority = 5, Number = 0 } },
             { 14, new Item() { Name = "Двунадесятый Господский праздник", Priority = 1, TemplateId = 5 } },
             { 15, new Item() { Name = "День Страстной седмицы", Priority = 2, TemplateId = 7 } },
@@ -104,6 +104,22 @@ namespace TypiconOnline.AppServices.Common
             }
         }
 
+        public int? Icon
+        {
+            get
+            {
+                return _signs[_oldID].Icon;
+            }
+        }
+
+        public bool IsRed
+        {
+            get
+            {
+                return _signs[_oldID].IsRed;
+            }
+        }
+
         /// <summary>
         /// Возвращает имя базового шаблона (элемента, у которого TemplateId == null)
         /// </summary>
@@ -133,6 +149,8 @@ namespace TypiconOnline.AppServices.Common
             public int Priority;
             public int? TemplateId;
             public int? Number;
+            public int? Icon;
+            public bool IsRed = false;
         }
     }
 }

@@ -6,13 +6,13 @@ namespace TypiconOnline.Domain.Query.Typicon
 {
     public class MenologyRuleQuery : IQuery<MenologyRule>
     {
-        public MenologyRuleQuery(int typiconId, DateTime date)
+        public MenologyRuleQuery(int typiconVersionId, DateTime date)
         {
-            TypiconId = typiconId;
+            TypiconVersionId = typiconVersionId;
             Date = date;
         }
 
-        public int TypiconId { get; }
+        public int TypiconVersionId { get; }
         public DateTime Date { get; }
     }
 }

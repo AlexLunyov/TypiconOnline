@@ -12,6 +12,7 @@ using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
+using TypiconOnline.Domain.Typicon.Print;
 
 namespace TypiconOnline.AppServices.Messaging.Schedule
 {
@@ -36,7 +37,7 @@ namespace TypiconOnline.AppServices.Messaging.Schedule
         public IEnumerable<DayWorship> Triodions { get; set; }
         public OktoikhDay OktoikhDay { get; set; }
         public RuleHandlerSettings AdditionalSettings { get; set; }
-        public int? SignNumber { get; set; }
+        public PrintDayTemplate PrintDayTemplate { get; set; }
         /// <summary>
         /// Опция определяет, какое определение Правила используется: RuleDefinition или ModRuleDefinition
         /// </summary>

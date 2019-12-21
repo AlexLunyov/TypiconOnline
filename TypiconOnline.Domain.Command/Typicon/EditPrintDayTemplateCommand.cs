@@ -7,13 +7,15 @@ namespace TypiconOnline.Domain.Command.Typicon
         public EditPrintDayTemplateCommand(int id
             , int number
             , string name
-            , char? sign
+            , int? icon
+            , bool isRed
             , byte[] file
             , string fileName) : base(id)
         {
             Number = number;
             Name = name;
-            Sign = sign;
+            Icon = icon;
+            IsRed = isRed;
             PrintFile = file;
             PrintFileName = fileName;
 
@@ -23,7 +25,9 @@ namespace TypiconOnline.Domain.Command.Typicon
         /// <summary>
         /// Символ отображения знака службы. Используется в веб-версии расписания
         /// </summary>
-        public char? Sign { get; set; }
+        public int? Icon { get; set; }
+
+        public bool IsRed { get; set; }
         /// <summary>
         /// Word-документ с определенными в нем полями для отображения дня Выходной формы
         /// </summary>

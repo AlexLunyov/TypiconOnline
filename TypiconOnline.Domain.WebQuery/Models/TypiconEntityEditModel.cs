@@ -10,6 +10,8 @@ namespace TypiconOnline.Domain.WebQuery.Models
     {
         public int Id { get; set; }
         public ItemText Name { get; set; } = new ItemText();
+        public ItemText Description { get; set; } = new ItemText();
+        public string SystemName { get; set; }
         public string DefaultLanguage { get; set; }
         public bool IsModified { get; set; }
         public bool IsTemplate { get; set; }

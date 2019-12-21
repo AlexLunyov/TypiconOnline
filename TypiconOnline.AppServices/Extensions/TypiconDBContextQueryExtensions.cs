@@ -63,16 +63,16 @@ namespace TypiconOnline.AppServices.Extensions
             return dbContext.Set<TypiconVersionError>().Where(c => c.TypiconVersionId == id);
         }
 
-        public static Result<TypiconEntity> GetTypiconEntity(this TypiconDBContext dbContext, int id)
+        public static Result<TypiconClaim> GetTypiconClaim(this TypiconDBContext dbContext, int id)
         {
-            var found = dbContext.Set<TypiconEntity>().FirstOrDefault(c => c.Id == id);
+            var found = dbContext.Set<TypiconClaim>().FirstOrDefault(c => c.Id == id);
 
             if (found != null)
             {
                 return Result.Ok(found);
             }
 
-            return Result.Fail<TypiconEntity>($"Устав с заданным Id={id} не был найден.");
+            return Result.Fail<TypiconClaim>($"Заявка на создание Устава с заданным Id={id} не была найдена.");
         }
     }
 }

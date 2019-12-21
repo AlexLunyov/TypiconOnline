@@ -53,6 +53,9 @@ namespace TypiconOnline.Domain.Typicon
         /// </summary>
         public virtual TypiconVersion PrevVersion { get; set; }
 
+        public virtual ItemText Name { get; set; }
+        public virtual ItemText Description { get; set; }
+
         /// <summary>
         /// Номер Версии Устава. При создании новых версий, номер увеличивается на единицу
         /// </summary>

@@ -25,13 +25,32 @@ namespace TypiconOnline.Domain.Command.Typicon
                 return Result.Fail($"Устав с Id {command.Id} не найден.");
             }
 
+            //находим черновик
+            var draft = DbContext.Set<TypiconVersion>()
+                .FirstOrDefault(c => c.TypiconId == found.Id
+                                && c.BDate == null && c.EDate == null);
+
+            if (draft == null)
+            {
+                return Result.Fail($"Версия черновика Устава с id={found.Id} не найдена.");
+            }
+
+            if (draft.IsTemplate != command.IsTemplate)
+            {
+                draft.IsTemplate = command.IsTemplate;
+                
+            }
+
             //не возможно просто присвоить значение, потому как ef core 
             //будет думать, что TypiconEntity удалена
-            found.Name.ReplaceValues(command.Name);
+            draft.Name.ReplaceValues(command.Name);
+            draft.Description.ReplaceValues(command.Description);
 
             //считаем, что существует версия Черновика Устава
             //Находим его и выставлем значение свойства IsTemplate
-            UpdateIsTemplateProperty(found, command.IsTemplate);
+            //UpdateIsTemplateProperty(found, command.IsTemplate);
+
+            draft.IsModified = true;
 
             found.DefaultLanguage = command.DefaultLanguage;
 
@@ -44,7 +63,7 @@ namespace TypiconOnline.Domain.Command.Typicon
 
         private Result UpdateIsTemplateProperty(TypiconEntity found, bool isTemplate)
         {
-            //назодим черновик
+            //находим черновик
             var draft = DbContext.Set<TypiconVersion>()
                 .FirstOrDefault(c => c.TypiconId == found.Id
                                 && c.BDate == null && c.EDate == null);
@@ -61,17 +80,6 @@ namespace TypiconOnline.Domain.Command.Typicon
             }
 
             return Result.Ok();
-        }
-
-        private TypiconEntity Create(CreateTypiconCommand command)
-        {
-            return new TypiconEntity()
-            {
-                Name = new ItemText() { Items = new List<ItemTextUnit>() { new ItemTextUnit(command.DefaultLanguage, command.Name) } },
-                DefaultLanguage = command.DefaultLanguage,
-                TemplateId = command.TemplateId,
-                OwnerId = command.OwnerId
-            };
         }
     }
 }

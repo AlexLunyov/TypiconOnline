@@ -17,6 +17,7 @@ using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Interfaces;
 using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.AppServices.Extensions;
+using TypiconOnline.Domain.Typicon.Print;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -55,6 +56,7 @@ namespace TypiconOnline.AppServices.Implementations
 
             if (dayRule != null)
             {
+                //приоритет
                 int? priority = (element as ModifyDay).Priority;
 
                 if (priority == null)
@@ -62,7 +64,15 @@ namespace TypiconOnline.AppServices.Implementations
                     priority = dayRule.Template.Priority;
                 }
 
-                var request = CreateRequest(dayRule, element as ModifyDay, (int)priority);
+                PrintDayTemplate printTemplate = null;
+
+                //ссылка на печатный шаблон
+                if ((element as ModifyDay).SignNumber != null)
+                {
+                    printTemplate = _dbContext.GetPrintDayTemplate(_typiconVersionId, (int)(element as ModifyDay).SignNumber);
+                }
+
+                var request = CreateRequest(dayRule, element as ModifyDay, (int)priority, printTemplate);
 
                 _modifiedYear.AddModifiedRule(request);
 
@@ -72,7 +82,7 @@ namespace TypiconOnline.AppServices.Implementations
             return result;
         }
 
-        private ModificationsRuleRequest CreateRequest(DayRule dayRule, ModifyDay md, int priority)
+        private ModificationsRuleRequest CreateRequest(DayRule dayRule, ModifyDay md, int priority, PrintDayTemplate printTemplate)
         {
             return new ModificationsRuleRequest()
             {
@@ -83,7 +93,7 @@ namespace TypiconOnline.AppServices.Implementations
                 AsAddition = md.AsAddition,
                 IsLastName = md.IsLastName,
                 UseFullName = md.UseFullName,
-                SignNumber = md.SignNumber,
+                PrintDayTemplateId = printTemplate?.Id,
                 Filter = md.Filter
             };
         }

@@ -8,7 +8,7 @@ namespace TypiconOnline.AppServices.Migration.Typicon
         public int Id { get; set; }
         public int Number { get; set; }
         public string Name { get; set; }
-        public char? Sign { get; set; }
+        public int? Icon { get; set; }
         public byte[] PrintFile { get; set; }
         public string PrintFileName { get; set; }
     }

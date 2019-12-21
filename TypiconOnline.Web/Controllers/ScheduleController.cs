@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 //using SmartBreadcrumbs.Attributes;
 using TypiconOnline.AppServices.Interfaces;
@@ -24,20 +26,23 @@ namespace TypiconOnline.Web.Controllers
     {
         private const string DEFAULT_LANGUAGE = "cs-ru";
 
+        private const string HTML = "html";
+        private const string JSON = "json";
+
         private readonly IQueryProcessor _queryProcessor;
         private readonly IScheduleWeekViewer<string> _weekViewer;
         private readonly IScheduleWeekViewer<Result<FileDownloadResponse>> _weekDownloadViewer;
-        private readonly IScheduleDayViewer<string> dayViewer;
+        //private readonly IScheduleDayViewer<string> dayViewer;
 
         public ScheduleController(IQueryProcessor queryProcessor
-            , IScheduleDayViewer<string> dayViewer
+            //, IScheduleDayViewer<string> dayViewer
             , IScheduleWeekViewer<string> weekViewer
             , IScheduleWeekViewer<Result<FileDownloadResponse>> weekDownloadViewer)
         {
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
             _weekViewer = weekViewer ?? throw new ArgumentNullException(nameof(weekViewer));
             _weekDownloadViewer = weekDownloadViewer ?? throw new ArgumentNullException(nameof(weekDownloadViewer));
-            this.dayViewer = dayViewer ?? throw new ArgumentNullException("dayViewer in ScheduleController");
+            //this.dayViewer = dayViewer ?? throw new ArgumentNullException("dayViewer in ScheduleController");
         }
 
         [Route("{id:int}/{date?}/{language?}")]
@@ -143,51 +148,101 @@ namespace TypiconOnline.Web.Controllers
         /// <returns></returns>
         [HttpGet]
         [EnableCors("GetSchedulePolicy")]
-        [Route("{id}/{weeksCount?}/{language?}")]
-        public IActionResult Get(int id, int? weeksCount = 2, string language = DEFAULT_LANGUAGE)
+        public IActionResult Json(string id, int? weeksCount, string language = DEFAULT_LANGUAGE)
+        {
+            var weeks = GetSchedule(id, weeksCount, language);
+
+            object result = null;
+
+            weeks.OnSuccess(() =>
+                {
+                    Result.Combine(weeks.Value.ToArray<Result>())
+                        .OnSuccess(() =>
+                        {
+                            //Json
+                            result = new 
+                            { 
+                                schedule = weeks
+                                    .Value
+                                    .Select(c => c.Value.Week) 
+                            };
+                        })
+                        .OnFailure(err => result = new { err });
+                })
+                .OnFailure(err => result = new { err });
+
+            return Json(result);
+        }
+
+        /// <summary>
+        /// Возвращает html с расписанием
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="weeksCount"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [EnableCors("GetSchedulePolicy")]
+        public IActionResult Html(string id, int? weeksCount = 2, string language = DEFAULT_LANGUAGE)
+        {
+            string resultString = "";
+
+            var weeks = GetSchedule(id, weeksCount, language);
+
+            weeks.OnSuccess(() =>
+                {
+                    Result.Combine(weeks.Value.ToArray<Result>())
+                        .OnSuccess(() =>
+                        {
+                            //HTML
+                            resultString = string
+                                        .Join("", weeks.Value.Select(
+                                            c => _weekViewer.Execute(c.Value.Id, c.Value.Week)));
+                        })
+                        .OnFailure(err => resultString = err);
+                })
+                .OnFailure(err => resultString = err);
+
+            return Content(resultString, "text/html", Encoding.UTF8);
+        }
+
+        private Result<List<Result<(int Id, FilteredOutputWeek Week)>>> GetSchedule(string id, int? weeksCount = 2, string language = DEFAULT_LANGUAGE)
         {
             try
             {
+                //date
                 var date = DateTime.Now;
                 if ((date.DayOfWeek == DayOfWeek.Sunday) && (date.Hour > 17))
                 {
                     date = date.AddDays(1);
                 }
 
-                if (weeksCount < 0)
+                //weeksCount
+                if (weeksCount < 1 || weeksCount > 5)
                 {
-                    weeksCount = 2;
+                    return Result.Fail<List<Result<(int Id, FilteredOutputWeek Week)>>>($"Параметр {nameof(weeksCount)} может принимать значения в диапазоне 1..5");
                 }
-                if (weeksCount > 5)
+                else
                 {
-                    weeksCount = 5;
-                }
+                    //получаем коллекцию седмиц
+                    var weeks = new List<Result<(int Id, FilteredOutputWeek Week)>>();
 
-                var weeks = new List<Result<FilteredOutputWeek>>();
-
-                for (int i = 0; i < weeksCount; i++)
-                {
-                    var week = _queryProcessor.Process(new OutputWeekQuery(id, date, new OutputFilter() { Language = language }));
-
-                    weeks.Add(week);
-
-                    date = date.AddDays(7);
-                }
-
-                object result = null;
-
-                Result.Combine(weeks.ToArray<Result>())
-                    .OnSuccess(() =>
+                    for (int i = 0; i < weeksCount; i++)
                     {
-                        result = new { schedule = weeks.ToArray<Result>() };
-                    })
-                    .OnFailure(err => result = new { err });
+                        var week = _queryProcessor.Process(new OutputWeekBySystemNameQuery(id, date, weeksCount.Value, new OutputFilter() { Language = language }));
 
-                return Json(result);
+                        weeks.Add(week);
+
+                        date = date.AddDays(7);
+                    }
+
+                    return Result.Ok(weeks);
+                }
             }
-            catch //(Exception ex)
+            catch
             {
-                return Json(new { error = "Системная ошибка." });
+                return Result.Fail<List<Result<(int Id, FilteredOutputWeek Week)>>>(
+                    @"Произошла ошибка в формировании расписания. <a ref=""mailto:admin@typicon.online"">Обратитесь</a> к администратору сайта.");
             }
         }
     }

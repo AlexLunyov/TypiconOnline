@@ -8,6 +8,7 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
+using TypiconOnline.Domain.Typicon.Print;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {
@@ -60,7 +61,7 @@ namespace TypiconOnline.Domain.Rules.Handlers
         /// Номер Знака службы, который будет использовать для отображения в Расписании.
         /// Issue #6
         /// </summary>
-        public int? SignNumber { get; set; }
+        public PrintDayTemplate PrintDayTemplate { get; set; }
 
         public CustomParamsCollection<IRuleApplyParameter> ApplyParameters { get; set; } = new CustomParamsCollection<IRuleApplyParameter>();
         public CustomParamsCollection<IRuleCheckParameter> CheckParameters { get; set; } = new CustomParamsCollection<IRuleCheckParameter>();

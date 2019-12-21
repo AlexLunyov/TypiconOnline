@@ -44,13 +44,13 @@ namespace TypiconOnline.Domain.Query.Typicon
 
             if (DateTime.IsLeapYear(query.Date.Year))
             {
-                expression = c => c.TypiconVersionId == query.TypiconId 
+                expression = c => c.TypiconVersionId == query.TypiconVersionId 
                                && c.LeapDate.Day == query.Date.Day
                                && c.LeapDate.Month == query.Date.Month;
             }
             else
             {
-                expression = c => c.TypiconVersionId == query.TypiconId 
+                expression = c => c.TypiconVersionId == query.TypiconVersionId 
                                && c.Date.Day == query.Date.Day
                                && c.Date.Month == query.Date.Month;
             }

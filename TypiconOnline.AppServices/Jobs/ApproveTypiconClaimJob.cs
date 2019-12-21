@@ -4,9 +4,9 @@ using System.Text;
 
 namespace TypiconOnline.AppServices.Jobs
 {
-    public class ApproveTypiconEntityJob : IJob
+    public class ApproveTypiconClaimJob : IJob
     {
-        public ApproveTypiconEntityJob(int typiconId)
+        public ApproveTypiconClaimJob(int typiconId)
         {
             TypiconId = typiconId;
         }
@@ -15,7 +15,7 @@ namespace TypiconOnline.AppServices.Jobs
 
         public bool Equals(IJob other)
         {
-            if (other is ApproveTypiconEntityJob j)
+            if (other is ApproveTypiconClaimJob j)
             {
                 return TypiconId == j.TypiconId;
             }

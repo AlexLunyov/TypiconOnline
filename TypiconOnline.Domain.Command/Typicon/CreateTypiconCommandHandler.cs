@@ -18,21 +18,25 @@ namespace TypiconOnline.Domain.Command.Typicon
         public Task<Result> ExecuteAsync(CreateTypiconCommand command)
         {
             var obj = Create(command);
-            DbContext.Set<TypiconEntity>().Add(obj);
+            DbContext.Set<TypiconClaim>().Add(obj);
 
             //await DbContext.SaveChangesAsync();
 
             return Task.FromResult(Result.Ok());
         }
 
-        private TypiconEntity Create(CreateTypiconCommand command)
+        private TypiconClaim Create(CreateTypiconCommand command)
         {
-            return new TypiconEntity()
+            return new TypiconClaim()
             {
-                Name = new ItemText() { Items = new List<ItemTextUnit>() { new ItemTextUnit(command.DefaultLanguage, command.Name) } },
+                Name = new ItemText(command.Name),
+                Description = new ItemText(command.Description),
+                SystemName = command.SystemName.ToLower(),
                 DefaultLanguage = command.DefaultLanguage,
                 TemplateId = command.TemplateId,
-                OwnerId = command.OwnerId
+                OwnerId = command.OwnerId,
+                CreateDate = DateTime.Now,
+                Status = TypiconClaimStatus.WatingForReview
             };
         }
     }

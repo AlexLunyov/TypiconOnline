@@ -32,7 +32,8 @@ namespace TypiconOnline.Domain.Command.Typicon
             {
                 Name = c.Name,
                 Number = c.Number,
-                SignSymbol = c.Sign,
+                Icon = c.Icon,
+                IsRed = c.IsRed,
                 PrintFile = c.PrintFile,
                 PrintFileName = c.PrintFileName,
                 TypiconVersion = typiconVersion

@@ -17,9 +17,8 @@ namespace TypiconOnline.AppServices.Implementations
     public class HtmlScheduleDayViewer : IScheduleDayViewer<string>
     {
         const string XSLT_CONFIG = "ScheduleDayViewer_XsltFile";
-
-        ITypiconSerializer xmlSerializer;
-        IConfigurationRepository configRepo;
+        readonly ITypiconSerializer xmlSerializer;
+        readonly IConfigurationRepository configRepo;
 
         public HtmlScheduleDayViewer(ITypiconSerializer xmlSerializer, IConfigurationRepository configRepo)
         {

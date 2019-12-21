@@ -34,7 +34,9 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 return Result.Ok(new TypiconEntityEditModel()
                 {
                     Id = typicon.Id,
-                    Name = typicon.Name,
+                    Name = draft.Name,
+                    Description = draft.Description,
+                    SystemName = typicon.SystemName,
                     DefaultLanguage = typicon.DefaultLanguage,
                     IsModified =  draft.IsModified,
                     IsTemplate = draft.IsTemplate,

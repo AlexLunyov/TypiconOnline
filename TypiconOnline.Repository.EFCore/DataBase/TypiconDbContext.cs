@@ -128,6 +128,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase
             #endregion
 
             modelBuilder.ApplyConfiguration(new TypiconConfiguration());
+            modelBuilder.ApplyConfiguration(new TypiconClaimConfiguration());
             modelBuilder.ApplyConfiguration(new TypiconVersionConfiguration());
             modelBuilder.ApplyConfiguration(new UserTypiconConfiguration()); 
 

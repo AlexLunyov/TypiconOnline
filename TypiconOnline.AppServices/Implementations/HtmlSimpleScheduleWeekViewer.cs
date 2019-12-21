@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,10 +11,7 @@ using TypiconOnline.Domain.WebQuery.OutputFiltering;
 
 namespace TypiconOnline.AppServices.Implementations
 {
-    /// <summary>
-    /// Вместо [sign] помещаем span на место знаков служб
-    /// </summary>
-    public class HtmlInnerScheduleWeekViewer : IScheduleWeekViewer<string>
+    public class HtmlSimpleScheduleWeekViewer : IScheduleWeekViewer<string>
     {
         public string Execute(int typiconId, FilteredOutputWeek week)
         {
@@ -31,45 +27,21 @@ namespace TypiconOnline.AppServices.Implementations
             {
                 _resultString += "<div style=\"margin - top:10px; \">";
 
-                int sign = SignMigrator.GetOldId(k => k.Key == day.SignNumber);
-
-                _resultString += "<img style=\"margin-right: 10px;\" src=\"";
-                
-                switch (sign)
+                //Sign
+                if (day.Icon.HasValue)
                 {
-                    case 2:
-                        _resultString += "Signs/6.png\" alt = \"Шестеричная служба\">";
-                        break;
-                    case 3:
-                        _resultString += "Signs/slav.png\" alt = \"Славословная служба\">";
-                        break;
-                    case 4:
-                        _resultString += "Signs/pol.png\" alt = \"Полиелейная служба\">";
-                        break;
-                    case 5:
-                        _resultString += "Signs/bd.png\" alt = \"Бденная служба\">";
-                        break;
-                    case 6:
-                        _resultString += "Signs/lit.png\" alt = \"Бденная служба с литией\">";
-                        break;
-                    default:
-                        _resultString += "Signs/0.png\">";
-                        break;
+                    _resultString += "<img src=\"http://www.typicon.online/images/sign/" + day.Icon + ".png\"/>";
                 }
-
-                _resultString += "<strong>";
-
+                
                 //если бдение или бдение с литией или воскресный день - красим в красный цвет
-                if (sign == 5 || sign == 6 || sign == 9)
+                if (day.IsRed)
                     _resultString += "<span style=\"color: #ff0000;\">";
 
-                CultureInfo ruRU = new CultureInfo("ru-RU");
+                _resultString += "<strong>" + day.Date.ToString("dd MMMM yyyy г.") + "<br/>";
+                _resultString += day.Date.ToString("dddd").ToUpper() + "<br/>";
+                _resultString += day.Name.Text + "</strong>";
 
-                _resultString += day.Date.ToString("dd MMMM yyyy г.", ruRU) + "<br/>";
-                _resultString += day.Date.ToString("dddd", ruRU).ToUpper() + "<br/>";
-                _resultString += day.Name + "</strong>";
-
-                if (sign == 5 || sign == 6 || sign == 9)
+                if (day.IsRed)
                     _resultString += "</span>";
 
                 _resultString += "</div>";
@@ -81,7 +53,7 @@ namespace TypiconOnline.AppServices.Implementations
                     _resultString += "<tr><td>";
 
                     _resultString += service.Time.ToString() + "&nbsp;</td><td>";
-                    _resultString += service.Name;
+                    _resultString += service.Name.Text;
 
                     //additionalName
                     if (service.AdditionalName != null)

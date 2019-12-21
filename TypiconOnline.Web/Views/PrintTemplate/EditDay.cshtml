@@ -2,52 +2,92 @@
 @{
     ViewData["Title"] = "Редактирование печатного шаблона";
 }
-<div class="row">
-    <div class="col-12">
-        @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewBag.TypiconId, tab = TypiconTab.EditPrintTemplate })
-        <div class="row">
-            <div class="col-md-8">
-                <h2>Редактирование печатного шаблона</h2>
-            </div>
-            <div class="clearfix"></div>
-            <form asp-action="EditDay" method="post" enctype="multipart/form-data">
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <div class="col-sm-8">
-                        <label asp-for="Number">Номер:</label>
-                        <input asp-for="Number" class="form-control" />
-                        <span asp-validation-for="Number" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="form-group">
-                    <div class="col-sm-8">
-                        <label asp-for="Name">Наименование:</label>
-                        <input asp-for="Name" class="form-control" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="form-group">
-                    <div class="col-sm-8">
-                        <label asp-for="File">Файл:</label>
-                        <input id="importFile" asp-for="File" type="file" class="form-control" accept="text/docx" />
-                        <span asp-validation-for="File" class="text-danger"></span>
-                    </div>
-                </div>
-                @if (!string.IsNullOrEmpty(Model.OldFileName))
-                {
-                    <div class="clearfix"></div>
-                    <div class="form-group">
-                        <div class="col-sm-8">
-                            @Model.OldFileName <a class="btn btn-default" asp-controller="PrintTemplate" asp-action="DownloadDay" asp-route-id="@Model.Id" title="Скачать файл" data-toggle="tooltip"><i class="fas fa-file-search"></i> Скачать</a>
-                        </div>
-                        <input type="hidden" asp-for="OldFileName"/>
-                    </div>
-                }
-                <div class="form-group"><div class="validation" asp-validation-summary="ModelOnly"></div></div>
-                <div class="col-xs-12"><button class="btn btn-primary" asp-action="EditDay">Сохранить</button></div>
-            </form>
+<div class="container">
+    @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewBag.TypiconId, tab = TypiconTab.EditPrintTemplate })
+    <div class="row">
+        <div class="col-8">
+            <h2>Редактирование печатного шаблона</h2>
         </div>
     </div>
+    <form class="row" asp-action="EditDay" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <div asp-validation-summary="All" class="text-danger"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label asp-for="Number">Номер</label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label asp-for="Name">Наименование</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label asp-for="File">Файл</label>
+                <input id="importFile" asp-for="File" type="file" class="form-control" accept="text/docx" />
+                <span asp-validation-for="File" class="text-danger"></span>
+            </div>
+        </div>
+        @if (!string.IsNullOrEmpty(Model.OldFileName))
+        {
+            <div class="row">
+                <div class="form-group col-sm-8">
+                    @Model.OldFileName <a class="btn btn-default" asp-controller="PrintTemplate" asp-action="DownloadDay" asp-route-id="@Model.Id" title="Скачать файл" data-toggle="tooltip"><i class="fas fa-file-search"></i> Скачать</a>
+                </div>
+                <input type="hidden" asp-for="OldFileName" />
+            </div>
+        }
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label asp-for="Icon">Знак</label>
+                <select id="iconSelect" class="form-control" asp-for="Icon">
+                    <option>[Нет]</option>
+                    <option value="0" data-image="../../images/sign/0.png">Без знака</option>
+                    <option value="1" data-image="../../images/sign/1.png">Шестеричный</option>
+                    <option value="2" data-image="../../images/sign/2.png">Славословие</option>
+                    <option value="3" data-image="../../images/sign/3.png">Полиелей</option>
+                    <option value="4" data-image="../../images/sign/4.png">Бдение</option>
+                    <option value="5" data-image="../../images/sign/5.png">Бдение с литией</option>
+                </select>
+                <span asp-validation-for="Icon" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="checkbox col-sm-8">
+                <label>
+                    <input type="checkbox" asp-for="IsRed" /> <b>Отображать название дня красным цветом (в web-форме)</b>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-8">
+                <div class="validation" asp-validation-summary="ModelOnly"></div>
+            </div>
+        </div>
+        <div class="row"><div class="form-group col-xs-12"><button class="btn btn-primary" asp-action="EditDay">Сохранить</button></div></div>
+    </form>
 </div>
+
+@section Scripts
+{
+    <script src="~/lib/msdropdown/jquery.dd.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="~/lib/msdropdown/dd.css" />
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#iconSelect").msDropDown();
+        });
+
+
+    </script>
+}

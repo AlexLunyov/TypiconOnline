@@ -5,6 +5,7 @@ using System.Text;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
+using TypiconOnline.Domain.Typicon.Print;
 using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.Domain.Typicon.Output
@@ -34,10 +35,13 @@ namespace TypiconOnline.Domain.Typicon.Output
         /// Ссылка на предустановленный Знак службы
         /// </summary>
         public virtual Sign PredefinedSign { get; set; }
+
+        public int PrintDayTemplateId { get; set; }
         /// <summary>
         /// Номер предустановленного знака для отображения в расписании (может отличаться от указанного в <see cref="PredefinedSign"/>)
         /// </summary>
-        public int CustomSignNumber { get; set; }
+        public virtual PrintDayTemplate PrintDayTemplate { get; set; }
+
         //Добавить ссылки на тексты служб
         public virtual List<OutputDayWorship> OutputFormDayWorships { get; set; }
 

@@ -235,7 +235,8 @@ namespace TypiconOnline.Web.Controllers
                 var command = new CreatePrintDayTemplateCommand(id: model.Id
                     , number: model.Number
                     , name: model.Name
-                    , sign: null
+                    , icon: model.Icon
+                    , isRed: model.IsRed
                     , file: data
                     , fileName: fileName);
 
@@ -304,7 +305,8 @@ namespace TypiconOnline.Web.Controllers
                 var command = new EditPrintDayTemplateCommand(id: model.Id
                     , number: model.Number
                     , name: model.Name
-                    , sign: null
+                    , icon: model.Icon
+                    , isRed: model.IsRed
                     , file: data
                     , fileName: fileName);
 

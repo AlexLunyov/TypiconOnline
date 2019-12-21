@@ -15,6 +15,34 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
         {
             builder.HasKey(c => c.Id);
 
+            builder.OwnsOne(c => c.Name, d =>
+            {
+                d.OwnsMany(c => c.Items, a =>
+                {
+                    a.Property<int>("NameId");
+                    a.WithOwner().HasForeignKey("NameId");
+                    a.Property<int>("Id");
+                    a.HasKey("Id");
+                    a.ToTable("TypiconNameItems");
+                })
+                .Ignore("Discriminator");
+                //.ToTable("TypiconVersionName");
+            });
+
+            builder.OwnsOne(c => c.Description, d =>
+            {
+                d.OwnsMany(c => c.Items, a =>
+                {
+                    a.Property<int>("DescriptionId");
+                    a.WithOwner().HasForeignKey("DescriptionId");
+                    a.Property<int>("Id");
+                    a.HasKey("Id");
+                    a.ToTable("TypiconDescriptionItems");
+                })
+                .Ignore("Discriminator");
+                //.ToTable("TypiconVersionName");
+            });
+
             builder.HasOne(c => c.PrevVersion)
                 .WithMany()
                 .HasForeignKey(c => c.PrevVersionId)

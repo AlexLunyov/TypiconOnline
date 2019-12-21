@@ -52,7 +52,7 @@ namespace TypiconOnline.AppServices.Implementations
                 });
 
                 //задаем номер знака, если он был отдельно задан в ModifiedRule
-                result.Settings.SignNumber = modifiedRule.SignNumber;
+                result.Settings.PrintDayTemplate = modifiedRule.PrintDayTemplate;
 
                 //добавляем DayWorships
                 if (TypeEqualsOrSubclassOf<MenologyRule>.Is(modifiedRule.DayRule))

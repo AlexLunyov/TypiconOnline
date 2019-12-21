@@ -37,6 +37,13 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
                 .IsRequired(false)
                 ;
 
+            builder.HasOne(e => e.PrintTemplate).
+                WithMany()
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasForeignKey(c => c.PrintTemplateId)
+                .IsRequired(false)
+                ;
+
             //builder.HasMany(c => c.VariableLinks);
 
             //builder.Ignore(c => c.IsTemplate);

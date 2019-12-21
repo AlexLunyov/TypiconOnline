@@ -86,4 +86,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\images\sign\" />
+  </ItemGroup>
 </Project>

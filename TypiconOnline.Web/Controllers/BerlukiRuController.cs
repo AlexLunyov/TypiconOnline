@@ -18,7 +18,7 @@ namespace TypiconOnline.Web.Controllers
         const int TYPICON_ID = 1;
 
         private readonly IQueryProcessor _queryProcessor;
-        private readonly IScheduleWeekViewer<string> _weekViewer = new HtmlScheduleWeekViewer();
+        private readonly IScheduleWeekViewer<string> _weekViewer = new HtmlSimpleScheduleWeekViewer();
 
         public BerlukiRuController(IQueryProcessor queryProcessor)//, IScheduleWeekViewer<string> weekViewer)
         {

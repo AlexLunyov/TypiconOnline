@@ -120,7 +120,7 @@ namespace TypiconOnline.AppServices.Jobs
 
         private void ReloadTriodionRules(string folder, TypiconVersion typiconVersion)
         {
-            string setting = Path.Combine(folder, typiconVersion.Typicon.Name.ToString(), "Triodion");
+            string setting = Path.Combine(folder, typiconVersion.Typicon.SystemName, "Triodion");
 
             var fileReader = new FileReader(setting);
 
@@ -132,7 +132,7 @@ namespace TypiconOnline.AppServices.Jobs
 
         private void ReloadExplicitAddRules(string folder, TypiconVersion typiconVersion)
         {
-            string folderPath = Path.Combine(folder, typiconVersion.Typicon.Name.ToString(), "Explicit");
+            string folderPath = Path.Combine(folder, typiconVersion.Typicon.SystemName, "Explicit");
 
             FileReader fileReader = new FileReader(folderPath);
 
@@ -164,7 +164,7 @@ namespace TypiconOnline.AppServices.Jobs
 
         private void ReloadCommonRules(string folder, TypiconVersion typiconVersion)
         {
-            string folderPath = Path.Combine(folder, typiconVersion.Typicon.Name.ToString(), "Common");
+            string folderPath = Path.Combine(folder, typiconVersion.Typicon.SystemName, "Common");
 
             FileReader fileReader = new FileReader(folderPath);
 
@@ -193,7 +193,7 @@ namespace TypiconOnline.AppServices.Jobs
 
         private void ReloadSigns(string folder, TypiconVersion typiconVersion)
         {
-            string setting = Path.Combine(folder, typiconVersion.Typicon.Name.ToString(), "Sign");
+            string setting = Path.Combine(folder, typiconVersion.Typicon.SystemName, "Sign");
 
             var fileReader = new FileReader(setting);
 

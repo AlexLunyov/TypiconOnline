@@ -11,7 +11,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
         [Sortable]
         public string Status { get; set; }
         public bool Editable { get; set; }
-        public bool Deletable { get; set; }
-        public bool Approvable { get; set; }
+        public string DeleteLink { get; set; }
+        public bool Reviewable { get; set; }
     }
 }

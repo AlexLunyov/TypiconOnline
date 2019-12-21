@@ -49,7 +49,7 @@ namespace TypiconOnline.Domain.Typicon.Modifications
                 IsAddition = request.AsAddition,
                 UseFullName = request.UseFullName,
                 Filter = request.Filter,
-                SignNumber = request.SignNumber,
+                PrintDayTemplateId = request.PrintDayTemplateId,
                 ShortName = (request.ShortName != null) ? new ItemTextStyled(request.ShortName) : new ItemTextStyled()
             };
 

@@ -34,7 +34,7 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                 //Создаем TypiconEntity
                 var entity = new TypiconEntity()
                 {
-                    Name = projection.Name,
+                    SystemName = projection.SystemName,
                     DefaultLanguage = projection.DefaultLanguage,
                     Status = TypiconStatus.Draft,
                     OwnerId = projection.OwnerId
@@ -54,6 +54,8 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                     Typicon = entity,
                     CDate = DateTime.Now,
                     IsTemplate = projection.IsTemplate,
+                    Name = projection.Name,
+                    Description = projection.Description,
                     VersionNumber = 1,
                     IsModified = true
                 };
@@ -103,7 +105,7 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                         Number = d.Number,
                         PrintFile = d.PrintFile,
                         PrintFileName = d.PrintFileName,
-                        SignSymbol = d.Sign
+                        Icon = d.Icon
                     }));
         }
 

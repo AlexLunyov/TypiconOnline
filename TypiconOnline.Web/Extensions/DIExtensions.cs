@@ -29,6 +29,7 @@ using TypiconOnline.Infrastructure.Common.Events;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.Web.Models.TypiconViewModels;
 using TypiconOnline.Web.Services;
 using TypiconOnline.WebServices.Hosting;
 
@@ -75,7 +76,7 @@ namespace TypiconOnline.Web
             //container.Register<IOutputForms, OutputForms>();
             container.Register<IOutputDayFactory, OutputDayFactory>();
             container.Register<IScheduleDayViewer<string>, HtmlScheduleDayViewer>(); 
-            container.Register<IScheduleWeekViewer<string>, TextScheduleWeekViewer>(); 
+            container.Register<IScheduleWeekViewer<string>, HtmlSimpleScheduleWeekViewer>(); 
             //container.Register<IScheduleWeekViewer<Result<FileDownloadResponse>>, DocxToStreamWeekViewer>();
 
             container.Register<IScheduleWeekViewer<Result<FileDownloadResponse>>, DocxFromOutputTemplatesWeekViewer>();
@@ -167,7 +168,7 @@ namespace TypiconOnline.Web
 
             // Auto-register all validator implementations
             container.Collection.Register(
-                typeof(IValidator<>), typeof(MenologyRuleCreateModelValidator).Assembly);
+                typeof(IValidator<>), typeof(MenologyRuleCreateModelValidator).Assembly, typeof(CreateTypiconModelValidator).Assembly);
 
             #endregion
 

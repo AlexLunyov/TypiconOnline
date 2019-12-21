@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.Typicon.Print;
 using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.AppServices.Extensions
@@ -28,8 +29,12 @@ namespace TypiconOnline.AppServices.Extensions
         public static MenologyRule GetMenologyRule(this TypiconDBContext dbContext, int typiconVersionId, DateTime date)
         {
             return (DateTime.IsLeapYear(date.Year))
-                ? dbContext.Set<MenologyRule>().FirstOrDefault(c => c.LeapDate.Day == date.Day && c.LeapDate.Month == date.Month)
-                : dbContext.Set<MenologyRule>().FirstOrDefault(c => c.Date.Day == date.Day && c.Date.Month == date.Month);
+                ? dbContext.Set<MenologyRule>().FirstOrDefault(c => c.TypiconVersionId == typiconVersionId 
+                                                                    && c.LeapDate.Day == date.Day 
+                                                                    && c.LeapDate.Month == date.Month)
+                : dbContext.Set<MenologyRule>().FirstOrDefault(c => c.TypiconVersionId == typiconVersionId
+                                                                    && c.Date.Day == date.Day 
+                                                                    && c.Date.Month == date.Month);
         }
 
         public static IEnumerable<TriodionRule> GetAllTriodionRules(this TypiconDBContext dbContext, int typiconVersionId)
@@ -50,6 +55,12 @@ namespace TypiconOnline.AppServices.Extensions
         public static T GetRule<T>(this TypiconDBContext dbContext, int id) where T : RuleEntity, new()
         {
             return dbContext.Set<T>().FirstOrDefault(c => c.Id == id);
+        }
+
+        public static PrintDayTemplate GetPrintDayTemplate(this TypiconDBContext dbContext, int typiconVersionId, int number)
+        {
+            return dbContext.Set<PrintDayTemplate>().FirstOrDefault(c => c.TypiconVersionId == typiconVersionId
+                                                                    && c.Number == number);
         }
     }
 }

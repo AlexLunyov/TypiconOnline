@@ -8,6 +8,9 @@ namespace TypiconOnline.Domain.WebQuery.Models
         [SearchableString]
         [Sortable]
         public string Name { get; set; }
+        [SearchableString]
+        [Sortable]
+        public string SystemName { get; set; }
     }
 
     

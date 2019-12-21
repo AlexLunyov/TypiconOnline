@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 TypeAdapterConfig<TypiconVersion, TypiconEntityModel>
                     .NewConfig()
                     .Map(dest => dest.Id, src => src.TypiconId)
-                    .Map(dest => dest.Name, src => src.Typicon.Name.FirstOrDefault(query.Language));
+                    .Map(dest => dest.Name, src => src.Name.FirstOrDefault(query.Language));
 
                 return Result.Ok(publishedVersion.Value.Adapt<TypiconEntityModel>());
             }
