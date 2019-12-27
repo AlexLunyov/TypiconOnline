@@ -17,46 +17,12 @@
     <div class="container body-content">
         <div class="row">
             <div class="col-md-12">
-                <div class="clearfix"></div>
-                <div class="form-group col-md-6">
-                    <label>Поиск по имени или адресу электронной почты</label>
-                    <form class="form-inline" method="post" asp-action="AddEditor">
-                        <div class="form-group">
-                            <input class="form-control" id="searchEditor" placeholder="Имя пользователя или EMail">
-                            <input type="hidden" id="editorId" name="editorId" />
-                        </div>
-                        <button class="btn btn-primary" id="addEditor" disabled="disabled" asp-action="AddEditor" asp-route-typiconId="@Model.Id">Добавить</button>
-                    </form>
-                </div>
+                <script language="Javascript">
+                    document.write ( '<script language="Javascript" src="https://typicon.online/schedule/html?id=berluki"/>');
+                </script>
             </div>
-        </div>
-        <div id="the-basics">
-            <input class="typeahead" type="text" placeholder="States of USA">
         </div>
     </div>
 
-    <script type="text/javascript" src="https://cdn.rawgit.com/bassjobsen/Bootstrap-3-Typeahead/master/bootstrap3-typeahead.min.js"></script>
-
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-
-            $.ajax({
-                url: 'https://typicon.online/typicon/get/1',
-                dataType: "json",
-                type: "GET",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    alert("success" + data);
-                },
-                error: function (response) {
-                    alert("error" + response.responseText);
-                },
-                failure: function (response) {
-                    alert("failure" + response.responseText);
-                }
-            });
-        });
-    </script>
 </body>
 </html>

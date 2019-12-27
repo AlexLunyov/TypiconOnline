@@ -14,6 +14,7 @@ using TypiconOnline.Domain.WebQuery.OutputFiltering;
 using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
+using TypiconOnline.Web.Models.ScheduleViewModels;
 
 namespace TypiconOnline.Web.Controllers
 {
@@ -57,26 +58,54 @@ namespace TypiconOnline.Web.Controllers
 
             if (typicon.Success)
             {
-                ViewBag.TypiconName = typicon.Value.Name;
-                ViewBag.Id = typicon.Value.Id;
+                //ViewBag.TypiconName = typicon.Value.Name;
+                //ViewBag.Id = typicon.Value.Id;
 
                 if (date == null || date == DateTime.MinValue)
                 {
                     date = DateTime.Now;
                 }
 
-                ViewBag.Date = date;
+                //ViewBag.Date = date;
 
                 var weekResult = _queryProcessor.Process(new OutputWeekQuery(id.Value, date, new OutputFilter() { Language = language }));
 
-                ViewBag.Week = weekResult;
+                //ViewBag.Week = weekResult;
 
-                return View();
+                return View(new ScheduleViewModel()
+                {
+                    Id = typicon.Value.Id,
+                    Date = date,
+                    Language = language,
+                    Name = typicon.Value.Name,
+                    Week = weekResult
+                });
             }
             else
             {
                 return NotFound();
             }
+        }
+
+        [HttpGet]
+        public IActionResult View(int id, DateTime date, string language = DEFAULT_LANGUAGE)
+        {
+            var weekResult = _queryProcessor.Process(new OutputWeekQuery(id, date, new OutputFilter() { Language = language }));
+
+            object result = null;
+
+            weekResult.OnSuccess(() =>
+                {
+                    result = new
+                    {
+                        schedule = weekResult.Value
+                    };
+                })
+                .OnFailure(err => result = new { err });
+
+            return Json(result);
+
+            //return PartialView("_View", weekResult);
         }
 
         // GET api/<controller>/getweek/1/01-01-2019
@@ -143,14 +172,20 @@ namespace TypiconOnline.Web.Controllers
         /// Возвращает Json с расписанием
         /// </summary>
         /// <param name="id">Is Устава</param>
+        /// <param name="date">Дата</param>
         /// <param name="weeksCount">Количество недель для расписания</param>
         /// <param name="language">Язык локализации</param>
         /// <returns></returns>
         [HttpGet]
         [EnableCors("GetSchedulePolicy")]
-        public IActionResult Json(string id, int? weeksCount, string language = DEFAULT_LANGUAGE)
+        public IActionResult Json(string id, DateTime date, int? weeksCount, string language = DEFAULT_LANGUAGE)
         {
-            var weeks = GetSchedule(id, weeksCount, language);
+            if (date == null || date == DateTime.MinValue)
+            {
+                date = DateTime.Now;
+            }
+
+            var weeks = GetSchedule(id, date, weeksCount, language);
 
             object result = null;
 
@@ -187,7 +222,7 @@ namespace TypiconOnline.Web.Controllers
         {
             string resultString = "";
 
-            var weeks = GetSchedule(id, weeksCount, language);
+            var weeks = GetSchedule(id, DateTime.Now, weeksCount, language);
 
             weeks.OnSuccess(() =>
                 {
@@ -206,18 +241,24 @@ namespace TypiconOnline.Web.Controllers
             return Content(resultString, "text/html", Encoding.UTF8);
         }
 
-        private Result<List<Result<(int Id, FilteredOutputWeek Week)>>> GetSchedule(string id, int? weeksCount = 2, string language = DEFAULT_LANGUAGE)
+        private Result<List<Result<(int Id, FilteredOutputWeek Week)>>> GetSchedule(string id, DateTime? d, int? weeksCount = 2, string language = DEFAULT_LANGUAGE)
         {
             try
             {
                 //date
-                var date = DateTime.Now;
+                var date = d ?? DateTime.Now;
+
                 if ((date.DayOfWeek == DayOfWeek.Sunday) && (date.Hour > 17))
                 {
                     date = date.AddDays(1);
                 }
 
                 //weeksCount
+                if (!weeksCount.HasValue)
+                {
+                    weeksCount = 2;
+                }
+
                 if (weeksCount < 1 || weeksCount > 5)
                 {
                     return Result.Fail<List<Result<(int Id, FilteredOutputWeek Week)>>>($"Параметр {nameof(weeksCount)} может принимать значения в диапазоне 1..5");

@@ -1,0 +1,49 @@
+﻿@using System.Linq;
+@using TypiconOnline.Domain.Rules.Output;
+
+@model Result<FilteredOutputWeek>
+
+@if (Model.Success)
+{
+    <h2 class="@Model.Value.Name.Language">@Model.Value.Name.Text</h2>
+    @foreach (var day in Model.Value.Days)
+    {
+        <h3>@day.Date.ToString("dd MMMM yyyy г.")</h3>
+        <h3 class="@day.Name.Language">@day.Name.Text</h3>
+        <h4 class="@day.SignName.Language">Знак службы: @day.SignName.Text</h4>
+        <table>
+            @{int i = 0;}
+            @foreach (var worship in day.Worships)
+            {
+                <tr>
+                    <td>@worship.Time&nbsp;</td>
+                    <td>
+                        @if (worship.HasSequence)
+                        {
+                            <a asp-controller="schedule" asp-action="sequence" asp-route-id="@ViewBag.Id" asp-route-worshipId="@worship.Id">
+                                <span class="@worship.Name.Text.Language">@worship.Name.Text.Text</span>
+                                @if (worship.AdditionalName != null)
+                                {
+                                    <span class="@worship.AdditionalName.Language">@worship.AdditionalName.Text</span>
+                                }
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="@worship.Name.Text.Language">@worship.Name.Text.Text</span>
+                            @if (worship.AdditionalName != null)
+                            {
+                                <span class="@worship.AdditionalName.Language">@worship.AdditionalName.Text</span>
+                            }
+                        }
+                    </td>
+                </tr>
+                i++;
+            }
+        </table>
+    }
+}
+else
+{
+    <h3>@Model.Error</h3>
+}

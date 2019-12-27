@@ -77,7 +77,7 @@
                             <label asp-for="Date">Дата:</label>
                             <div class="form-group">
                                 <input type="text" class="form-control" value="@((Model.Date.HasValue) ? Model.Date.Value.ToString("dd MMMM") : "" )" readonly />
-                                <input type="hidden" id="date_val" class="form-control" value="@((Model.Date.HasValue) ? Model.Date.Value.ToString(DateFormat) : "" )" />
+                                <input type="hidden" id="date_val" class="form-control" value="@((Model.Date.HasValue) ? Model.Date.Value.ToString(DateFormat) : "" )" name="Date" />
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                             <label asp-for="LeapDate">Дата (високосный год):</label>
                             <div class="form-group">
                                 <input type="text" class="form-control" value="@((Model.LeapDate.HasValue) ? Model.LeapDate.Value.ToString("dd MMMM") : "" )" readonly />
-                                <input type="hidden" id="leapdate_val" class="form-control" value="@((Model.LeapDate.HasValue) ? Model.LeapDate.Value.ToString(DateFormat) : "" )" />
+                                <input type="hidden" id="leapdate_val" class="form-control" value="@((Model.LeapDate.HasValue) ? Model.LeapDate.Value.ToString(DateFormat) : "" )" name="LeapDate" />
                             </div>
                         </div>
                     </div>

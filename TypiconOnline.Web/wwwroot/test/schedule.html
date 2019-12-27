@@ -1,0 +1,332 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>&#x423;&#x441;&#x442;&#x430;&#x432; &#x422;&#x438;&#x43F;&#x438;&#x43A;&#x43E;&#x43D; - Typicon.Online</title>
+
+    
+        <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
+        <link rel="stylesheet" href="/css/site.min.css" />
+        <link rel="stylesheet" href="/lib/twitter-bootstrap/css/all.min.css">
+    
+    
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Typicon.Online</a>
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false">Уставщик <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Typicon">Уставы</a></li>
+                                <li><a href="/CustomSequence">Custom sequence</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false">Тексты служб <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/MenologyDay">Минея</a></li>
+                                <li><a href="/TriodionDay">Триодь</a></li>
+                                <li><a href="/OktoikhDay">Октоих</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false">Администратор <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Users">Пользователи</a></li>
+                                <li><a href="/Roles">Роли</a></li>
+                            </ul>
+                        </li>
+                </ul>
+                
+
+    <form method="post" id="logoutForm" class="navbar-right" action="/Account/Logout">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a title="Manage" href="/Manage/Index">Hello ftroem@gmail.com!</a>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
+            </li>
+        </ul>
+    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8L0RbUso1vVMrQCKnwcF4emoDjjLVireBALB7RhtaLJOgJcnschwETS9RCcp43xTIGvNyLV4YLGgp1M2Cte2JYvbU5-CqHfhTLl3wY6lM04Yzp9gB5Ms9dhPktAgWU63VMJmGOqKuBWOOOHCD615GdCZpo9HYlS6nxFLg3hKPQGdEY5y-DyA3u-QYjpcbp1w2w" /></form>
+
+             </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        
+
+<section>
+    <div class="clearfix"></div>
+    <div class="row col-sm-12"><h1>Расписание</h1></div>
+    <form id="formSchedule" method="post" class="form-inline" action="/Schedule/Index/1">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-2">
+                    <button id="btnPrev" class="btn btn-default prev" type="button"><span class="fas fa-chevron-left"></span></button>
+                </div>
+                <div class="col-xs-8">
+                    <div class="input-group date" id="datepicker">
+                        <input type="text" class="form-control">
+                        <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+                    </div>
+                    <input type="hidden" id="dtp_date" value="2019-12-26" name="Date" />
+                </div>
+                <div class="col-xs-2 text-right">
+                    <button id="btnNext" class="btn btn-default next" type="button"><span class="fas fa-chevron-right"></span></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-6">
+                    <button id="btnView" class="btn btn-default btn-block" type="button"><span id="spanView" class="fas fa-search"></span> Смотреть</button>
+                </div>
+                <div class="col-xs-6">
+                    <button id="btnDownload" class="btn btn-primary  btn-block" formaction="/Schedule/Download/1"><span class="fas fa-save"></span> Скачать </button>
+                </div>
+            </div>
+            <input type="hidden" id="typId" value="1" name="Id" />
+            <input type="hidden" id="language" value="cs-ru" name="Language" />
+        </div>
+    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8L0RbUso1vVMrQCKnwcF4emoDjjLVireBALB7RhtaLJOgJcnschwETS9RCcp43xTIGvNyLV4YLGgp1M2Cte2JYvbU5-CqHfhTLl3wY6lM04Yzp9gB5Ms9dhPktAgWU63VMJmGOqKuBWOOOHCD615GdCZpo9HYlS6nxFLg3hKPQGdEY5y-DyA3u-QYjpcbp1w2w" />
+    </form>
+
+</section>
+<section>
+    <div class="row col-sm-12" id="week">
+        
+
+    <h2 class="cs-ru">&#x421;&#x435;&#x434;&#x43C;&#x438;&#x446;&#x430; 28-&#x430;&#x44F; &#x43F;&#x43E; &#x41F;&#x44F;&#x442;&#x438;&#x434;&#x435;&#x441;&#x44F;&#x442;&#x43D;&#x438;&#x446;&#x435;</h2>
+        <h3>23 &#x434;&#x435;&#x43A;&#x430;&#x431;&#x440;&#x44F; 2019 &#x433;.</h3>
+        <h3 class="cs-ru">&#x421;&#x432;&#x442;. &#x418;&#x43E;&#x430;&#x441;&#x430;&#x301;&#x444;&#x430;, &#x435;&#x43F;. &#x411;&#x435;&#x43B;&#x433;&#x43E;&#x440;&#x43E;&#x301;&#x434;&#x441;&#x43A;&#x43E;&#x433;&#x43E;.</h3>
+        <h4 class="cs-ru">Знак службы: &#x421;&#x43B;&#x430;&#x432;&#x43E;&#x441;&#x43B;&#x43E;&#x432;&#x43D;&#x430;&#x44F;</h4>
+        <table>
+                <tr>
+                    <td>06.00&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x41F;&#x43E;&#x43B;&#x443;&#x43D;&#x43E;&#x449;&#x43D;&#x438;&#x446;&#x430;. &#x423;&#x442;&#x440;&#x435;&#x43D;&#x44F;. &#x427;&#x430;&#x441;&#x44B;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>08.00&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x411;&#x43E;&#x436;&#x435;&#x441;&#x442;&#x432;&#x435;&#x43D;&#x43D;&#x430;&#x44F; &#x43B;&#x438;&#x442;&#x443;&#x440;&#x433;&#x438;&#x44F;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>17.30&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">9-&#x439; &#x447;&#x430;&#x441;. &#x412;&#x435;&#x447;&#x435;&#x440;&#x43D;&#x44F;. &#x41C;&#x430;&#x43B;&#x43E;&#x435; &#x43F;&#x43E;&#x432;&#x435;&#x447;&#x435;&#x440;&#x438;&#x435;.</span>
+                    </td>
+                </tr>
+        </table>
+        <h3>24 &#x434;&#x435;&#x43A;&#x430;&#x431;&#x440;&#x44F; 2019 &#x433;.</h3>
+        <h3 class="cs-ru">&#x41F;&#x440;&#x43F;. &#x414;&#x430;&#x43D;&#x438;&#x438;&#x301;&#x43B;&#x430; &#x421;&#x442;&#x43E;&#x301;&#x43B;&#x43F;&#x43D;&#x438;&#x43A;&#x430;.</h3>
+        <h4 class="cs-ru">Знак службы: &#x411;&#x435;&#x437; &#x437;&#x43D;&#x430;&#x43A;&#x430;</h4>
+        <table>
+                <tr>
+                    <td>06.00&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x41F;&#x43E;&#x43B;&#x443;&#x43D;&#x43E;&#x449;&#x43D;&#x438;&#x446;&#x430;. &#x423;&#x442;&#x440;&#x435;&#x43D;&#x44F;. &#x427;&#x430;&#x441;&#x44B;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>08.00&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x411;&#x43E;&#x436;&#x435;&#x441;&#x442;&#x432;&#x435;&#x43D;&#x43D;&#x430;&#x44F; &#x43B;&#x438;&#x442;&#x443;&#x440;&#x433;&#x438;&#x44F;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>17.30&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">9-&#x439; &#x447;&#x430;&#x441;. &#x412;&#x435;&#x447;&#x435;&#x440;&#x43D;&#x44F;. &#x41C;&#x430;&#x43B;&#x43E;&#x435; &#x43F;&#x43E;&#x432;&#x435;&#x447;&#x435;&#x440;&#x438;&#x435;.</span>
+                    </td>
+                </tr>
+        </table>
+        <h3>25 &#x434;&#x435;&#x43A;&#x430;&#x431;&#x440;&#x44F; 2019 &#x433;.</h3>
+        <h3 class="cs-ru">&#x421;&#x432;&#x442;. &#x421;&#x43F;&#x438;&#x440;&#x438;&#x434;&#x43E;&#x301;&#x43D;&#x430;, &#x435;&#x43F;. &#x422;&#x440;&#x438;&#x43C;&#x438;&#x444;&#x443;&#x301;&#x43D;&#x442;&#x441;&#x43A;&#x43E;&#x433;&#x43E;, &#x447;&#x443;&#x434;&#x43E;&#x442;&#x432;&#x43E;&#x440;&#x446;&#x430;.</h3>
+        <h4 class="cs-ru">Знак службы: &#x428;&#x435;&#x441;&#x442;&#x435;&#x440;&#x438;&#x447;&#x43D;&#x430;&#x44F;</h4>
+        <table>
+                <tr>
+                    <td>06.00&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x41F;&#x43E;&#x43B;&#x443;&#x43D;&#x43E;&#x449;&#x43D;&#x438;&#x446;&#x430;. &#x423;&#x442;&#x440;&#x435;&#x43D;&#x44F;. &#x427;&#x430;&#x441;&#x44B;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>08.00&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x411;&#x43E;&#x436;&#x435;&#x441;&#x442;&#x432;&#x435;&#x43D;&#x43D;&#x430;&#x44F; &#x43B;&#x438;&#x442;&#x443;&#x440;&#x433;&#x438;&#x44F;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>17.30&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">9-&#x439; &#x447;&#x430;&#x441;. &#x412;&#x435;&#x447;&#x435;&#x440;&#x43D;&#x44F;. &#x41C;&#x430;&#x43B;&#x43E;&#x435; &#x43F;&#x43E;&#x432;&#x435;&#x447;&#x435;&#x440;&#x438;&#x435;.</span>
+                    </td>
+                </tr>
+        </table>
+        <h3>26 &#x434;&#x435;&#x43A;&#x430;&#x431;&#x440;&#x44F; 2019 &#x433;.</h3>
+        <h3 class="cs-ru">&#x41F;&#x440;&#x43F;. &#x413;&#x435;&#x301;&#x440;&#x43C;&#x430;&#x43D;&#x430; &#x410;&#x43B;&#x44F;&#x301;&#x441;&#x43A;&#x438;&#x43D;&#x441;&#x43A;&#x43E;&#x433;&#x43E;.</h3>
+        <h4 class="cs-ru">Знак службы: &#x421;&#x43B;&#x430;&#x432;&#x43E;&#x441;&#x43B;&#x43E;&#x432;&#x43D;&#x430;&#x44F;</h4>
+        <table>
+                <tr>
+                    <td>06.00&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x41F;&#x43E;&#x43B;&#x443;&#x43D;&#x43E;&#x449;&#x43D;&#x438;&#x446;&#x430;. &#x423;&#x442;&#x440;&#x435;&#x43D;&#x44F;. &#x427;&#x430;&#x441;&#x44B;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>08.00&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x411;&#x43E;&#x436;&#x435;&#x441;&#x442;&#x432;&#x435;&#x43D;&#x43D;&#x430;&#x44F; &#x43B;&#x438;&#x442;&#x443;&#x440;&#x433;&#x438;&#x44F;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x41C;&#x43E;&#x43B;&#x435;&#x431;&#x435;&#x43D; &#x441;&#x432;&#x442;. &#x41D;&#x438;&#x43A;&#x43E;&#x43B;&#x430;&#x44E; &#x427;&#x443;&#x434;&#x43E;&#x442;&#x432;&#x43E;&#x440;&#x446;&#x443;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>17.30&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">9-&#x439; &#x447;&#x430;&#x441;. &#x412;&#x435;&#x447;&#x435;&#x440;&#x43D;&#x44F;. &#x41C;&#x430;&#x43B;&#x43E;&#x435; &#x43F;&#x43E;&#x432;&#x435;&#x447;&#x435;&#x440;&#x438;&#x435;.</span>
+                    </td>
+                </tr>
+        </table>
+        <h3>27 &#x434;&#x435;&#x43A;&#x430;&#x431;&#x440;&#x44F; 2019 &#x433;.</h3>
+        <h3 class="cs-ru">&#x41C;&#x447;&#x447;. &#x424;&#x438;&#x301;&#x440;&#x441;&#x430;, &#x41B;&#x435;&#x432;&#x43A;&#x438;&#x301;&#x44F;, &#x424;&#x438;&#x43B;&#x438;&#x43C;&#x43E;&#x301;&#x43D;&#x430;, &#x410;&#x43F;&#x43E;&#x43B;&#x43B;&#x43E;&#x301;&#x43D;&#x438;&#x44F;, &#x410;&#x440;&#x438;&#x430;&#x301;&#x43D;&#x430; &#x438; &#x41A;&#x430;&#x43B;&#x43B;&#x438;&#x43D;&#x438;&#x301;&#x43A;&#x430;.</h3>
+        <h4 class="cs-ru">Знак службы: &#x411;&#x435;&#x437; &#x437;&#x43D;&#x430;&#x43A;&#x430;</h4>
+        <table>
+                <tr>
+                    <td>06.00&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x41F;&#x43E;&#x43B;&#x443;&#x43D;&#x43E;&#x449;&#x43D;&#x438;&#x446;&#x430;. &#x423;&#x442;&#x440;&#x435;&#x43D;&#x44F;. &#x427;&#x430;&#x441;&#x44B;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>08.00&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x411;&#x43E;&#x436;&#x435;&#x441;&#x442;&#x432;&#x435;&#x43D;&#x43D;&#x430;&#x44F; &#x43B;&#x438;&#x442;&#x443;&#x440;&#x433;&#x438;&#x44F;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x41C;&#x43E;&#x43B;&#x435;&#x431;&#x435;&#x43D; &#x43F;&#x435;&#x440;&#x435;&#x434; &#x438;&#x43A;&#x43E;&#x43D;&#x43E;&#x439; &#x411;&#x43E;&#x436;&#x438;&#x435;&#x439; &#x41C;&#x430;&#x442;&#x435;&#x440;&#x438; &quot;&#x41D;&#x435;&#x443;&#x43F;&#x438;&#x432;&#x430;&#x435;&#x43C;&#x430;&#x44F; &#x447;&#x430;&#x448;&#x430;&quot;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>17.30&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">9-&#x439; &#x447;&#x430;&#x441;. &#x412;&#x435;&#x447;&#x435;&#x440;&#x43D;&#x44F;. &#x41C;&#x430;&#x43B;&#x43E;&#x435; &#x43F;&#x43E;&#x432;&#x435;&#x447;&#x435;&#x440;&#x438;&#x435;.</span>
+                    </td>
+                </tr>
+        </table>
+        <h3>28 &#x434;&#x435;&#x43A;&#x430;&#x431;&#x440;&#x44F; 2019 &#x433;.</h3>
+        <h3 class="cs-ru">&#x421;&#x449;&#x43C;&#x447;. &#x418;&#x43B;&#x430;&#x440;&#x438;&#x43E;&#x301;&#x43D;&#x430;, &#x430;&#x440;&#x445;&#x438;&#x435;&#x43F;. &#x412;&#x435;&#x440;&#x435;&#x301;&#x439;&#x441;&#x43A;&#x43E;&#x433;&#x43E;.</h3>
+        <h4 class="cs-ru">Знак службы: &#x421;&#x43B;&#x430;&#x432;&#x43E;&#x441;&#x43B;&#x43E;&#x432;&#x43D;&#x430;&#x44F;</h4>
+        <table>
+                <tr>
+                    <td>06.00&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x41F;&#x43E;&#x43B;&#x443;&#x43D;&#x43E;&#x449;&#x43D;&#x438;&#x446;&#x430;. &#x423;&#x442;&#x440;&#x435;&#x43D;&#x44F;. &#x427;&#x430;&#x441;&#x44B;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>08.00&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x411;&#x43E;&#x436;&#x435;&#x441;&#x442;&#x432;&#x435;&#x43D;&#x43D;&#x430;&#x44F; &#x43B;&#x438;&#x442;&#x443;&#x440;&#x433;&#x438;&#x44F;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x41C;&#x43E;&#x43B;&#x435;&#x431;&#x435;&#x43D; &#x43F;&#x435;&#x440;&#x435;&#x434; &#x438;&#x43A;&#x43E;&#x43D;&#x43E;&#x439; &quot;&#x41B;&#x43E;&#x431;&#x437;&#x430;&#x43D;&#x438;&#x435; &#x418;&#x438;&#x441;&#x443;&#x441;&#x430; &#x425;&#x440;&#x438;&#x441;&#x442;&#x430; &#x418;&#x443;&#x434;&#x43E;&#x44E;&quot;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>16.00&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x412;&#x441;&#x435;&#x43D;&#x43E;&#x449;&#x43D;&#x43E;&#x435; &#x431;&#x434;&#x435;&#x43D;&#x438;&#x435;.</span>
+                    </td>
+                </tr>
+        </table>
+        <h3>29 &#x434;&#x435;&#x43A;&#x430;&#x431;&#x440;&#x44F; 2019 &#x433;.</h3>
+        <h3 class="cs-ru">&#x41D;&#x435;&#x434;&#x435;&#x43B;&#x44F; 28-&#x430;&#x44F; &#x43F;&#x43E; &#x41F;&#x44F;&#x442;&#x438;&#x434;&#x435;&#x441;&#x44F;&#x442;&#x43D;&#x438;&#x446;&#x435;, &#x441;&#x432;&#x44F;&#x442;&#x44B;&#x445; &#x43F;&#x440;&#x430;&#x43E;&#x442;&#x435;&#x446;. &#x413;&#x43B;&#x430;&#x441; 3-&#x439;.</h3>
+        <h4 class="cs-ru">Знак службы: &#x41F;&#x43E;&#x43B;&#x438;&#x435;&#x43B;&#x435;&#x439;</h4>
+        <table>
+                <tr>
+                    <td>08.40&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x427;&#x430;&#x441;&#x44B; 3-&#x439; &#x438; 6-&#x439;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>09.00&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">&#x411;&#x43E;&#x436;&#x435;&#x441;&#x442;&#x432;&#x435;&#x43D;&#x43D;&#x430;&#x44F; &#x43B;&#x438;&#x442;&#x443;&#x440;&#x433;&#x438;&#x44F;.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>17.30&nbsp;</td>
+                    <td>
+                            <span class="cs-ru">9-&#x439; &#x447;&#x430;&#x441;. &#x412;&#x435;&#x447;&#x435;&#x440;&#x43D;&#x44F;. &#x41C;&#x430;&#x43B;&#x43E;&#x435; &#x43F;&#x43E;&#x432;&#x435;&#x447;&#x435;&#x440;&#x438;&#x435;.</span>
+                    </td>
+                </tr>
+        </table>
+
+
+    </div>
+</section>
+
+
+        <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Нажмите, чтобы вернуться на начало страницы" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
+
+        <footer>
+            <div class="row col-sm-12">
+                <hr />
+                <p>&copy; 2019 - Typicon.Online</p>
+            </div>
+        </footer>
+    </div>
+
+    
+        <script src="/lib/jquery/dist/jquery.js"></script>
+        <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="/js/site.js?v=IZwgSlBUoWXEDkycsYc7zQkkgqYTmGGGrNb1taP-YtI"></script>
+    
+    
+
+    
+    
+    <script src="/lib/momentjs/moment-with-locales.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/js/schedule.js"></script>
+
+    <script type="text/javascript">
+        //Perform('2019-12-26');
+
+    </script>
+
+</body>
+</html>
