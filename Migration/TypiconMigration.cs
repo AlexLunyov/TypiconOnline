@@ -582,7 +582,9 @@ namespace TypiconMigrationTool
                     //IsAddition = true,
                     Template = typiconEntity.Signs.First(c => c.SignName.FirstOrDefault(DEFAULT_LANGUAGE).Text == row.ServiceSignsRow.Name),
                     RuleDefinition = fileReader.Read(row.DayFromEaster.ToString()),
-                    ModRuleDefinition = fileReader.Read(row.DayFromEaster.ToString(), "mod")
+                    ModRuleDefinition = fileReader.Read(row.DayFromEaster.ToString(), "mod"),
+                    IsTransparent = row.IsTransparent,
+                    IsAddition = row.IsAddition
 
                 };
                 rule.DayRuleWorships = new List<DayRuleWorship>() { new DayRuleWorship() { DayRule = rule, DayWorship = dayWorship, Order = 1 } };

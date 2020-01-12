@@ -22,7 +22,9 @@ namespace TypiconOnline.Domain.Rules.Extensions
             {
                 //ищем элемент(ы) для замены
                 var foundItems = container.GetAsAdditionChildElements(handler.Settings.Addition, element,
-                        c => (c.AsAdditionMode == AsAdditionMode.Rewrite || c.AsAdditionMode == AsAdditionMode.Remove));
+                        c => (c.AsAdditionMode == AsAdditionMode.Rewrite 
+                           || c.AsAdditionMode == AsAdditionMode.Remove
+                           || c.AsAdditionMode == AsAdditionMode.RewriteValues));
 
                 //если находим, исполняем/исключаем его вместо настоящего элемента
                 foreach (var found in foundItems)
@@ -35,32 +37,28 @@ namespace TypiconOnline.Domain.Rules.Extensions
                                 {
                                     //если rewrite, то исполняем элемент
                                     Rewrite(found, handler);
+
+                                    result = true;
                                 }
                                 break;
                             case AsAdditionMode.Remove:
                                 {
+                                    result = true;
                                     //если remove, то просто ничего не делаем
                                 }
                                 break;
                             case AsAdditionMode.RewriteValues:
                                 {
-                                    RewriteValues(found, handler);
+                                    //переписываем внутренние значения элемента и только
+                                    element.RewriteValues(found);
                                 }
                                 break;
                         }
-
-                        result = true;
                     }
                 }
-                
             }
 
             return result;
-        }
-
-        private static void RewriteValues(IAsAdditionElement found, IRuleHandler handler)
-        {
-            throw new NotImplementedException();
         }
 
         private static void Rewrite(IAsAdditionElement found, IRuleHandler handler)

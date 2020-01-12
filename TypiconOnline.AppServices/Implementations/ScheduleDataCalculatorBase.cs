@@ -40,6 +40,12 @@ namespace TypiconOnline.AppServices.Implementations
             return lastAddition;
         }
 
+        protected RuleHandlerSettings GetLastAddition(RuleHandlerSettings settings)
+        {
+            return (settings.Addition == null) ?
+                settings : GetLastAddition(settings.Addition);
+        }
+
         public abstract ScheduleDataCalculatorResponse Calculate(ScheduleDataCalculatorRequest request);
     }
 }

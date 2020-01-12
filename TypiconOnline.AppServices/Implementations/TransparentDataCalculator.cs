@@ -59,6 +59,10 @@ namespace TypiconOnline.AppServices.Implementations
                 {
                     FillWorships(settings, settings.Addition, true);
                 }
+
+                //добавялем в цепочку Дополнений вычисленные здесь настройки
+                var lastAddition = GetLastAddition(result.Settings);
+                lastAddition.Addition = settings;
             }
 
 
