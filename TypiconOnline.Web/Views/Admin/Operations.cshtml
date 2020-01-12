@@ -1,0 +1,81 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="index">Главная</a></li>
+                <li class="active">Операции Администратора</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12"><h1>Уставы</h1></div>
+    </div>
+    <div class="row">
+        <div class="form-group col-12">
+            <form id="exportBooksForm" asp-controller="Admin" asp-action="ExportBooks">
+                <btn id="exportBooksBtn" class="btn btn-success"><i id="expSpinner" class="fas fa-file-export"></i> Экспортировать богослужебные книги</btn>
+            </form>
+            <div class="col-xs-12" id="progressTxt" hidden></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function base64ToArrayBuffer(base64) {
+            var binaryString = window.atob(base64);
+            var binaryLen = binaryString.length;
+            var bytes = new Uint8Array(binaryLen);
+            for (var i = 0; i < binaryLen; i++) {
+               var ascii = binaryString.charCodeAt(i);
+               bytes[i] = ascii;
+            }
+            return bytes;
+        }
+
+        $(document).ready(function ()
+        {
+            $("#exportBooksBtn").on("click", function () {
+                var form = $("#exportBooksForm");
+                var url = form.attr("action");
+
+                $("#exportBooksBtn").attr("disabled", "disabled");
+
+                var expSpinner = $("#expSpinner");
+                var exp = expSpinner.attr("class", "fa fa-spinner fa-spin");
+                $("#progressTxt").removeAttr("hidden");
+                $("#progressTxt").text("Отправлен запрос на сервер...");
+
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    //data: form.serialize(), // serializes the form's elements.
+                    success: function (data) {
+                        var arr = data.file;
+                        var byteArray = base64ToArrayBuffer(arr);
+                        var a = window.document.createElement('a');
+
+                        a.href = window.URL.createObjectURL(new Blob([byteArray], { type: data.type }));
+                        a.download = data.filename;
+
+                        // Append anchor to body.
+                        document.body.appendChild(a)
+                        a.click();
+                
+                        // Remove anchor from body
+                        document.body.removeChild(a);
+
+                        $("#exportBooksBtn").removeAttr("disabled");
+                        expSpinner.attr("class", exp);
+                        $("#progressTxt").attr("hidden", "hidden");
+                    }
+                });
+            });
+        });
+
+    </script>
+
+
+}
+

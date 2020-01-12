@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace TypiconOnline.AppServices.Interfaces
 {
-    public interface IMigrationManager
+    public interface IImportManager
     {
         void Import();
-        void Export();
     }
 }

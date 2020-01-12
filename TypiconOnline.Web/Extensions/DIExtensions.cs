@@ -11,6 +11,7 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Jobs;
 using TypiconOnline.AppServices.Jobs.Scheduled;
 using TypiconOnline.AppServices.Messaging.Common;
+using TypiconOnline.AppServices.Migration.Books;
 using TypiconOnline.AppServices.Migration.Typicon;
 using TypiconOnline.AppServices.Viewers;
 using TypiconOnline.Domain.Command;
@@ -85,6 +86,8 @@ namespace TypiconOnline.Web
             container.Register<ITypiconImportManager, TypiconXmlImportManager>();
             container.Register<IProjector<TypiconVersion, TypiconVersionProjection>, TypiconExportProjector>();
             container.Register<IProjector<TypiconVersionProjection, TypiconEntity>, TypiconImportProjector>();
+
+            container.Register<IBooksExportManager, BooksXmlExportManager>();
 
             //регистрируем просто ScheduleHandler - будет формировать только расписание, без последовательностей
             //но зато повыситься производительность

@@ -29,7 +29,7 @@ namespace TypiconMigrationTool
             if (string.IsNullOrEmpty(folderPath)) throw new ArgumentNullException("folderPath");
 
             _folderPath = folderPath;
-            _fileReader = new FileReader(_folderPath);
+            _fileReader = new SimpleFileReader(_folderPath);
         }
 
         public void Initialize(ScheduleDBDataSet.MineinikRow mineinikRow)

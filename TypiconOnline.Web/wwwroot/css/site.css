@@ -33,3 +33,10 @@
         display: none;
     }
 }
+
+.navbar-nav button.signout {
+    border-style: none !important;
+    width: 100%;
+    text-align: left;
+    padding: 3px 20px;
+}

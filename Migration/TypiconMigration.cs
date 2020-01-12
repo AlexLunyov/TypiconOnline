@@ -329,7 +329,7 @@ namespace TypiconMigrationTool
 
             ITheotokionAppFactory factory = new TheotokionAppFactory();
 
-            IMigrationManager manager = new TheotokionAppMigrationManager(factory, reader, service);
+            IImportManager manager = new TheotokionAppMigrationManager(factory, reader, service);
 
             manager.Import();
         }
@@ -346,7 +346,7 @@ namespace TypiconMigrationTool
 
             IOktoikhDayFactory factory = new OktoikhDayFactory();
 
-            IMigrationManager manager = new OktoikhDayMigrationManager(factory, reader, service);
+            IImportManager manager = new OktoikhDayMigrationManager(factory, reader, service);
 
             manager.Import();
         }
@@ -359,7 +359,7 @@ namespace TypiconMigrationTool
 
             IKatavasiaFactory factory = new KatavasiaFactory();
 
-            IMigrationManager manager = new KatavasiaMigrationManager(factory, fileReader, service);
+            IImportManager manager = new KatavasiaMigrationManager(factory, fileReader, service);
 
             manager.Import();
         }
@@ -372,7 +372,7 @@ namespace TypiconMigrationTool
 
             var factory = new WeekDayAppFactory();
 
-            IMigrationManager manager = new WeekDayAppMigrationManager(factory, fileReader, service);
+            IImportManager manager = new WeekDayAppMigrationManager(factory, fileReader, service);
 
             manager.Import();
         }

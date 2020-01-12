@@ -4,7 +4,7 @@ using TypiconOnline.AppServices.Messaging.Books;
 
 namespace TypiconOnline.AppServices.Migration
 {
-    public class WeekDayAppMigrationManager : IMigrationManager
+    public class WeekDayAppMigrationManager : IImportManager
     {
         public IWeekDayAppFactory Factory { get; private set; }
         public IFileReader FileReader { get; private set; }
@@ -29,11 +29,6 @@ namespace TypiconOnline.AppServices.Migration
 
                 Service.Insert(request);
             }
-        }
-
-        public void Export()
-        {
-            throw new NotImplementedException();
         }
     }
 }

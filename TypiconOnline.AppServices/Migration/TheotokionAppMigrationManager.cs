@@ -8,7 +8,7 @@ namespace TypiconOnline.AppServices.Migration
     /// <summary>
     /// Реализует миграцию Богородичных Ирмология
     /// </summary>
-    public class TheotokionAppMigrationManager : IMigrationManager
+    public class TheotokionAppMigrationManager : IImportManager
     {
         public ITheotokionAppFactory Factory { get; private set; }
         public ITheotokionAppFileReader FileReader { get; private set; }
@@ -58,11 +58,6 @@ namespace TypiconOnline.AppServices.Migration
 
                 Service.Add(request);
             }
-        }
-
-        public void Export()
-        {
-            throw new NotImplementedException();
         }
     }
 }

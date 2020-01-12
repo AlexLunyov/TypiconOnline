@@ -4,7 +4,7 @@ using TypiconOnline.AppServices.Messaging.Books;
 
 namespace TypiconOnline.AppServices.Migration
 {
-    public class OktoikhDayMigrationManager : IMigrationManager
+    public class OktoikhDayMigrationManager : IImportManager
     {
         public IOktoikhDayFactory Factory { get; private set; }
         public IOktoikhDayFileReader FileReader { get; private set; }
@@ -43,11 +43,6 @@ namespace TypiconOnline.AppServices.Migration
             };
 
             Service.Add(request);
-        }
-
-        public void Export()
-        {
-            throw new NotImplementedException();
         }
     }
 }
