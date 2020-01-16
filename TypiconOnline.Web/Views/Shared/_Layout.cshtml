@@ -36,7 +36,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded
-               || (await AuthorizationService.AuthorizeAsync(User, "RequireEditorRole")).Succeeded)
+              || (await AuthorizationService.AuthorizeAsync(User, "RequireEditorRole")).Succeeded)
                     {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -48,7 +48,7 @@
                         </li>
                     }
                     @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded
-             || (await AuthorizationService.AuthorizeAsync(User, "RequireTypesetterRole")).Succeeded)
+                     || (await AuthorizationService.AuthorizeAsync(User, "RequireTypesetterRole")).Succeeded)
                     {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -72,6 +72,14 @@
                             </ul>
                         </li>
                     }
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Инфо <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://typicononline.readthedocs.io/ru/latest/">Документация проекта</a></li>
+                            <li><a href="https://typicononline.readthedocs.io/ru/latest/faq.html">FAQ</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
              </div>
@@ -84,7 +92,7 @@
         <footer>
             <div class="row col-sm-12">
                 <hr />
-                <p>&copy; 2019 - Typicon.Online</p>
+                <p>&copy; 2019-2020 - Typicon.Online</p>
             </div>
         </footer>
     </div>

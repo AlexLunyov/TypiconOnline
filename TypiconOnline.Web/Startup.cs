@@ -11,6 +11,7 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using SimpleInjector;
 //using SmartBreadcrumbs.Extensions;
 using System;
+using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Identity;
 using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Web.Services;

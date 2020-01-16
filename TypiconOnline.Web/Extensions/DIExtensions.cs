@@ -44,6 +44,9 @@ namespace TypiconOnline.Web
         public static void AddWebDI(this Container container, IConfiguration configuration
             , IWebHostEnvironment hostingEnv)
         {
+            //Email
+            container.Register<IEmailSender, EmailSender>();
+
             //Queries and Commands
             //container.Register(typeof(IQuery<>), typeof(QueryProcessor).Assembly);
             container.Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);

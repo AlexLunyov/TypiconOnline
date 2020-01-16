@@ -1,12 +1,13 @@
 ﻿@model TypiconOnline.Web.Models.ScheduleViewModels.ScheduleViewModel
 
 @{
-    ViewData["Title"] = $"Устав {Model.Name}";
+    ViewData["Title"] = $"Устав - {Model.Name}";
 }
 
 <section>
     <div class="clearfix"></div>
     <div class="row col-sm-12"><h1>Расписание</h1></div>
+    <div class="row col-sm-12"><h2>@ViewData["Title"]</h2></div>
     <form id="formSchedule" method="post" class="form-inline" asp-controller="Schedule">
         <div class="form-group">
             <div class="row">

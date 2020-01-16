@@ -27,7 +27,7 @@ namespace TypiconOnline.Web.Models.AccountViewModels
 
         [DataType(DataType.Password)]
         [Display(Name = "Подтверждение пароля")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "Проль и его подтверждение не совпадают.")]
         public string ConfirmPassword { get; set; }
     }
 }

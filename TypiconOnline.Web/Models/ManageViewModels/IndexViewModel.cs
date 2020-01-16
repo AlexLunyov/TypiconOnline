@@ -8,7 +8,7 @@ namespace TypiconOnline.Web.Models.ManageViewModels
 {
     public class IndexViewModel
     {
-        public string Username { get; set; }
+        public string FullName { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
 

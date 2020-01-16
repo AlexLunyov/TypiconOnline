@@ -63,7 +63,7 @@ namespace TypiconOnline.Web.Controllers
 
             var model = new IndexViewModel
             {
-                Username = user.UserName,
+                FullName = user.FullName,
                 Email = user.Email,
                 //PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
@@ -85,16 +85,27 @@ namespace TypiconOnline.Web.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                throw new ApplicationException($"Пользователь с ID '{_userManager.GetUserId(User)}' не был найден.");
             }
 
+            if (user.FullName != model.FullName)
+            {
+                user.FullName = model.FullName;
+
+                var updResult = await _userManager.UpdateAsync(user);
+                if (!updResult.Succeeded)
+                {
+                    throw new ApplicationException($"Возникла непредвиденная ошибка при обновлении имени пользователя с Id '{user.Id}'.");
+                }
+            }
+            
             var email = user.Email;
             if (model.Email != email)
             {
                 var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
                 if (!setEmailResult.Succeeded)
                 {
-                    throw new ApplicationException($"Unexpected error occurred setting email for user with ID '{user.Id}'.");
+                    throw new ApplicationException($"Возникла непредвиденная ошибка при обновлении электронной почты для пользователя с ID '{user.Id}'.");
                 }
             }
 

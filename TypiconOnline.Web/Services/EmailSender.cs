@@ -1,7 +1,7 @@
 ﻿using MimeKit;
 using MailKit.Net.Smtp;
 using System;
-using System.Collections.Generic;
+using TypiconOnline.AppServices.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
 

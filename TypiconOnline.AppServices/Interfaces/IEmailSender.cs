@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TypiconOnline.Web.Services
+namespace TypiconOnline.AppServices.Interfaces
 {
     public interface IEmailSender
     {

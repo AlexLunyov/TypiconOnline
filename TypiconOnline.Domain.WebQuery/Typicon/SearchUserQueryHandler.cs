@@ -33,7 +33,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                             || EF.Functions.Like(s.Email, $"%{query.Search}%")
                             || EF.Functions.Like(s.UserName, $"%{query.Search}%"))
                             && s.UserRoles.Any(c => c.Role.Name == RoleConstants.EditorsRole))
-                        select new SearchUserModel() { Id = s.Id, Name = s.FullName };
+                        select new SearchUserModel() { Id = s.Id, Name = $"{s.FullName} ({s.Email})" };
 
             return found.ToList();
         }

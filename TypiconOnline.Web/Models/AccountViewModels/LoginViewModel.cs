@@ -10,7 +10,7 @@ namespace TypiconOnline.Web.Models.AccountViewModels
     {
         [Required]
         [EmailAddress]
-        public string UserName { get; set; }
+        public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
