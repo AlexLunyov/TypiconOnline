@@ -169,7 +169,7 @@ namespace TypiconOnline.Web.Controllers
         }
 
         /// <summary>
-        /// Возвращает Json с расписанием
+        /// Возвращает Json с расписанием на указанное количество недель
         /// </summary>
         /// <param name="id">Is Устава</param>
         /// <param name="date">Дата</param>
@@ -178,7 +178,7 @@ namespace TypiconOnline.Web.Controllers
         /// <returns></returns>
         [HttpGet]
         [EnableCors("GetSchedulePolicy")]
-        public IActionResult Json(string id, DateTime date, int? weeksCount, string language = DEFAULT_LANGUAGE)
+        public IActionResult Week(string id, DateTime date, int? weeksCount, string language = DEFAULT_LANGUAGE)
         {
             if (date == null || date == DateTime.MinValue)
             {
@@ -285,6 +285,34 @@ namespace TypiconOnline.Web.Controllers
                 return Result.Fail<List<Result<(int Id, FilteredOutputWeek Week)>>>(
                     @"Произошла ошибка в формировании расписания. <a ref=""mailto:admin@typicon.online"">Обратитесь</a> к администратору сайта.");
             }
+        }
+
+        /// <summary>
+        /// Возвращает json с расписанием на указанный день
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="date"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
+        public IActionResult Day(string id, DateTime date, string language = DEFAULT_LANGUAGE)
+        {
+            if (date == null || date == DateTime.MinValue)
+            {
+                date = DateTime.Now;
+            }
+
+            var dayResult = _queryProcessor.Process(new OutputDayBySystemNameQuery(id, date, new OutputFilter() { Language = language }));
+
+            object result = null;
+
+            dayResult.OnSuccess(() =>
+            {
+                //Json
+                result = new { day = dayResult.Value };
+            })
+            .OnFailure(err => result = new { err });
+
+            return Json(result);
         }
     }
 }

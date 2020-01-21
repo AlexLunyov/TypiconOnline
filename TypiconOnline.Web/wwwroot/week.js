@@ -27,7 +27,7 @@ args = getScriptArgs(script)
 const id = args['id']
 const weeks = args['count']
 
-const url = 'https://typicon.online/Schedule/json?id=' + id + '&weekscount=' + weeks
+const url = 'https://typicon.online/Schedule/week?id=' + id + '&weekscount=' + weeks
 
 let scheduleDiv = document.createElement('div')
 scheduleDiv.setAttribute('class', "schedule")
@@ -71,7 +71,7 @@ success = function (response) {
         jsonResp.schedule.forEach(function (week) {
             const nameDiv = scheduleDiv.appendChild(document.createElement('div'))
             nameDiv.setAttribute('id', 'sched_sedmica_name')
-            const h2nameDiv = nameDiv.appendChild(document.createElement('h4'))
+            const h2nameDiv = nameDiv.appendChild(document.createElement('h2'))
             h2nameDiv.setAttribute('class', week.Name.Language)
             h2nameDiv.innerHTML = week.Name.Text
 
