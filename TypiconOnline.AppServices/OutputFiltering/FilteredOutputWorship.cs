@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.WebQuery.OutputFiltering
         public int Id { get; set; }
         public string Time { get; set; }
         public FilteredParagraph Name { get; set; }
-        public ItemTextUnit AdditionalName { get; set; }
+        public FilteredParagraph AdditionalName { get; set; }
         public bool HasSequence { get; set; }
     }
 }

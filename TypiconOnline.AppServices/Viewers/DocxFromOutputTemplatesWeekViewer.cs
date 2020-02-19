@@ -231,8 +231,10 @@ namespace TypiconOnline.AppServices.Viewers
             {
                 var r = row.CloneNode(true);
 
+                //time
                 r.ReplaceElementsByText(OutputTemplateConstants.Time, w.Time);
-                r.ReplaceElementsByText(OutputTemplateConstants.WorshipName, w.Name.Text.Text);
+                //worship
+                r.ReplaceElementsByWorship(OutputTemplateConstants.WorshipName, w);
 
                 row.InsertBeforeSelf(r);
             }

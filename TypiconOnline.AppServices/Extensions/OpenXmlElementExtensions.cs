@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using DocumentFormat.OpenXml.Wordprocessing;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
+using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.Domain.ItemTypes;
+using System.Linq;
 
 namespace TypiconOnline.AppServices.Extensions
 {
@@ -62,6 +65,45 @@ namespace TypiconOnline.AppServices.Extensions
             return (found) ? Result.Ok() : Result.Fail($"Поле для заполнения {search} не было найдено в шаблоне дня.");
         }
 
+        public static Result ReplaceElementsByWorship(this OpenXmlElement element, string search, FilteredOutputWorship p)
+        {
+            bool found = false;
+            foreach (var child in element.ChildElements)
+            {
+                if (child is Run run && run.InnerText.Contains(search))
+                {
+                    //AdditionalName
+                    if (p.AdditionalName.Text != null)
+                    {
+                        //клонируем элемент
+                        var runAdd = run.CloneNode(true) as Run;
+
+                        //находим текст и задаем его
+                        var t = runAdd.ChildElements.First(c => c is Text) as Text;
+                        t.Text = p.AdditionalName.Text.Text;
+                        t.Space = SpaceProcessingModeValues.Preserve;
+
+                        //применяем стили
+                        runAdd.ApplyStyle(p.AdditionalName.Style);
+
+                        //вставляем после текста шаблона
+                        child.InsertAfterSelf(runAdd);
+                    }
+                    
+
+                    //Name
+                    run.ReplaceElementsByText(search, p.Name.Text.Text);
+                    run.ApplyStyle(p.Name.Style);
+
+                    found = true;
+                }
+
+                found = found || child.ReplaceElementsByWorship(search, p).Success;
+            }
+
+            return (found) ? Result.Ok() : Result.Fail($"Поле для заполнения {search} не было найдено в шаблоне дня.");
+        }
+
         public static Result ReplaceElementsByText(this IEnumerable<OpenXmlElement> elements, string search, string replace)
         {
             bool found = false;
@@ -84,6 +126,17 @@ namespace TypiconOnline.AppServices.Extensions
             }
 
             return result;
+        }
+
+        public static void ApplyStyle(this Run run, TextStyle style)
+        {
+            //RunStyle
+
+            run.RunProperties.Bold = (style.IsBold) ? new Bold() : null;
+
+            run.RunProperties.Color = (style.IsRed) ? new Color() { Val = "FF0000" } : null;
+
+            run.RunProperties.Italic = (style.IsItalic) ? new Italic() : null;
         }
     }
 }

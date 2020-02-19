@@ -202,7 +202,7 @@ namespace TypiconOnline.AppServices.Viewers
                     //additionalName
                     if (service.AdditionalName != null)
                     {
-                        AppendTextToCell(tdSName, service.AdditionalName.Text, true, false);
+                        AppendTextToCell(tdSName, service.AdditionalName.Text.Text, true, false);
                     }
 
                     //tr.ChildElements[1].InnerXml = dayNode.SelectSingleNode("time").InnerText;

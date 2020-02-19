@@ -294,6 +294,8 @@ namespace TypiconOnline.Web.Controllers
         /// <param name="date"></param>
         /// <param name="language"></param>
         /// <returns></returns>
+        [HttpGet]
+        [EnableCors("GetSchedulePolicy")]
         public IActionResult Day(string id, DateTime date, string language = DEFAULT_LANGUAGE)
         {
             if (date == null || date == DateTime.MinValue)

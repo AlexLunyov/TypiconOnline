@@ -25,7 +25,7 @@ namespace TypiconOnline.Domain.Typicon.Output
         public virtual OutputDay OutputDay { get; set; }
         public string Time { get; set; }
         public virtual ItemTextStyled Name { get; set; }
-        public virtual ItemText AdditionalName { get; set; }
+        public virtual ItemTextStyled AdditionalName { get; set; }
 
         public virtual string Definition { get; set; }
     }

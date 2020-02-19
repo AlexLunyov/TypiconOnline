@@ -7,12 +7,12 @@ function GetSchedule(id, weeks) {
     
 }
 
-const MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября',
+const MONTHS_DAY = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября',
     'ноября', 'декабря',]
 
-const DAYS = ['ВОСКРЕСЕНЬЕ', 'ПОНЕДЕЛЬНИК', 'ВТОРНИК', 'СРЕДА', 'ЧЕТВЕРГ', 'ПЯТНИЦА', 'СУББОТА']
+const DAYS_DAY = ['ВОСКРЕСЕНЬЕ', 'ПОНЕДЕЛЬНИК', 'ВТОРНИК', 'СРЕДА', 'ЧЕТВЕРГ', 'ПЯТНИЦА', 'СУББОТА']
 
-const SCHED_ERROR = "Ссылка на скрипт должна быть определена в теле документа, чтобы загрузить расписание"
+const SCHED_ERROR_DAY = "Ссылка на скрипт должна быть определена в теле документа, чтобы загрузить расписание"
 
 const script = document.scripts[document.scripts.length - 1]
 if (script.parentElement.localName == 'head') {
@@ -71,9 +71,9 @@ success = function (response) {
 
         const wDate = new Date(day.Date)
 
-        const wDayOfWeek = DAYS[wDate.getDay()]
+        const wDayOfWeek = DAYS_DAY[wDate.getDay()]
 
-        const wDateFormatted = wDate.getDate() + " " + MONTHS[wDate.getMonth()] + " " + wDate.getFullYear() + " г."
+        const wDateFormatted = wDate.getDate() + " " + MONTHS_DAY[wDate.getMonth()] + " " + wDate.getFullYear() + " г."
 
         const dayDateDiv = scheduleDiv.appendChild(document.createElement('strong'))
 

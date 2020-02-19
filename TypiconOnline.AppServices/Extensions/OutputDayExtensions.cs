@@ -20,8 +20,8 @@ namespace TypiconOnline.AppServices.Extensions
                 Time = worshipModel.Time,
                 Name = new ItemTextStyled(worshipModel.Name),
                 AdditionalName = (worshipModel.AdditionalName != null) 
-                    ? new ItemText(worshipModel.AdditionalName) 
-                    : new ItemText(),
+                    ? new ItemTextStyled(worshipModel.AdditionalName) 
+                    : new ItemTextStyled(),
                 Definition = (worshipModel.ChildElements.Any()) 
                     ? typiconSerializer.Serialize(worshipModel.ChildElements)
                     : string.Empty
