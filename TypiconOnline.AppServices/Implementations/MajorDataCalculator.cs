@@ -41,7 +41,7 @@ namespace TypiconOnline.AppServices.Implementations
             var oktoikhDay = _queryProcessor.Process(new OktoikhDayQuery(req.Date)) ?? throw new NullReferenceException("OktoikhDay");
 
             //вычисляем приоритеты, находим главное правило
-            (DayRule MajorRule, IEnumerable<DayWorship> Menologies, IEnumerable<DayWorship> Triodions) r;
+            (DayRule MajorRule, IEnumerable<DayWorship> Menologies, IEnumerable<DayWorship> Triodions, bool ModifiedIsUsed) r;
 
             if (modifiedRule != null || triodionRule?.IsTransparent == false)
             {
@@ -53,6 +53,7 @@ namespace TypiconOnline.AppServices.Implementations
                 r.MajorRule = menologyRule;
                 r.Menologies = menologyRule.DayWorships;
                 r.Triodions = new List<DayWorship>();
+                r.ModifiedIsUsed = false;
             }
 
             var settings = _settingsFactory.CreateRecursive(new CreateRuleSettingsRequest(req)
@@ -61,7 +62,9 @@ namespace TypiconOnline.AppServices.Implementations
                 Menologies = r.Menologies,
                 Triodions = r.Triodions,
                 OktoikhDay = oktoikhDay,
-                PrintDayTemplate = modifiedRule?.PrintDayTemplate
+                PrintDayTemplate = r.ModifiedIsUsed
+                    ? modifiedRule?.PrintDayTemplate
+                    : null//r.MajorRule.PrintDayTemplate
             });
 
             //теперь дублируем тексты служб на Additions, вычисленные для данных настроек
@@ -81,12 +84,17 @@ namespace TypiconOnline.AppServices.Implementations
         /// <param name="menologyRule"></param>
         /// <param name="triodionRule"></param>
         /// <returns>Правило для обработки, список текстов богослужений</returns>
-        private (DayRule MajorRule, IEnumerable<DayWorship> Menologies, IEnumerable<DayWorship> Triodions) CalculatePriorities(ModifiedRule modifiedRule, MenologyRule menologyRule, TriodionRule triodionRule)
-        {
+        private (DayRule MajorRule, IEnumerable<DayWorship> Menologies, IEnumerable<DayWorship> Triodions, bool ModifiedIsUsed) CalculatePriorities(ModifiedRule modifiedRule, MenologyRule menologyRule, TriodionRule triodionRule)
+        {            
             //Приоритет Минеи
-            IDayRule menologyToCompare = SetValues(menologyRule, out int menologyPriority, TypeEqualsOrSubclassOf<MenologyRule>.Is(modifiedRule?.DayRule));
+            IDayRule menologyToCompare = SetValues(menologyRule
+                , out int menologyPriority
+                , TypeEqualsOrSubclassOf<MenologyRule>.Is(modifiedRule?.DayRule));
+
             //Приоритет Триоди
-            IDayRule triodionToCompare = SetValues(triodionRule, out int triodionPriority, TypeEqualsOrSubclassOf<TriodionRule>.Is(modifiedRule?.DayRule));
+            IDayRule triodionToCompare = SetValues(triodionRule
+                , out int triodionPriority
+                , TypeEqualsOrSubclassOf<TriodionRule>.Is(modifiedRule?.DayRule));
 
             IDayRule SetValues(DayRule dr, out int p, bool typeEqualsOrSubclassOf)
             {
@@ -148,13 +156,18 @@ namespace TypiconOnline.AppServices.Implementations
                     break;
             }
 
+            //Вводим переменную для того, чтобы затем обнулить ссылку на ModifiedRule
+            bool modifiedRuleIsUsed = false;
+
             //если это измененное правило, то возвращаем правило, на которое оно указывает
             if (majorRule is ModifiedRule mr)
             {
                 majorRule = mr.DayRule;
+
+                modifiedRuleIsUsed = true;
             }
 
-            return (majorRule as DayRule, menologies, triodions);
+            return (majorRule as DayRule, menologies, triodions, modifiedRuleIsUsed);
         }
     }
 }

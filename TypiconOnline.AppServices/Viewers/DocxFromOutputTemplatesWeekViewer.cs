@@ -9,6 +9,7 @@ using System.Text;
 using TypiconOnline.AppServices.Extensions;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Common;
+using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Query.Books;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.WebQuery.OutputFiltering;
@@ -85,11 +86,14 @@ namespace TypiconOnline.AppServices.Viewers
                     {
                         foreach (var day in week.Days)
                         {
-                            var dayElements = GetFilledDayElements(dayRep, typiconId, day);
+                            var modDayTemplate = GetFilledDayElements(dayRep, typiconId, day);
 
-                            if (dayElements.Success)
+                            if (modDayTemplate.Success)
                             {
-                                foreach (var ins in dayElements.Value)
+                                //добавляем в конечный документ ссылочные объекты (изображения)
+                                CopyRelativeElements(weekDoc, modDayTemplate.Value);
+
+                                foreach (var ins in modDayTemplate.Value.XmlElements)
                                 {
                                     placeToPasteSchedule.InsertBeforeSelf(ins);
                                 }
@@ -104,17 +108,45 @@ namespace TypiconOnline.AppServices.Viewers
                             }
                             else
                             {
-                                errors.AppendLine(dayElements.Error);
+                                errors.AppendLine(modDayTemplate.Error);
                             }
                         }
                     }
 
                     placeToPasteSchedule.Parent.RemoveChild(placeToPasteSchedule);
+
+                    weekDoc.Close();
                 }
 
                 return (errors.Length == 0)
                         ? Result.Ok(stream.ToArray())
                         : Result.Fail<byte[]>(errors.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Копирует в <paramref name="weekDoc"/> объекты, на которые ссылается шаблон дня
+        /// </summary>
+        /// <param name="weekDoc"></param>
+        /// <param name="modDayTemplate"></param>
+        private void CopyRelativeElements(WordprocessingDocument weekDoc, GetDayTemplateResponse modDayTemplate)
+        {
+            foreach (var element in modDayTemplate.XmlElements) 
+            {
+                //images
+                element.Descendants<DocumentFormat.OpenXml.Drawing.Blip>().ToList()
+                    .ForEach(blip =>
+                    {
+                        var newRelation = weekDoc.CopyPart(blip.Embed, modDayTemplate.DocumentPart);
+                        blip.Embed = newRelation;
+                    });
+
+                element.Descendants<DocumentFormat.OpenXml.Vml.ImageData>().ToList()
+                    .ForEach(imageData =>
+                    {
+                        var newRelation = weekDoc.CopyPart(imageData.RelationshipId, modDayTemplate.DocumentPart);
+                        imageData.RelationshipId = newRelation;
+                    });
             }
         }
 
@@ -152,32 +184,32 @@ namespace TypiconOnline.AppServices.Viewers
         }
 
         /// <summary>
-        /// Возвращает заполненный шаблон дня
+        /// Возвращает заполненный шаблон дня и список используемых картинок для вставки в итоговый документ
         /// </summary>
         /// <param name="dayRep"></param>
         /// <param name="typiconId"></param>
         /// <param name="day"></param>
         /// <returns></returns>
-        private Result<IEnumerable<OpenXmlElement>> GetFilledDayElements(PrintTemplateRepository dayRep, int typiconId, FilteredOutputDay day)
+        private Result<GetDayTemplateResponse> GetFilledDayElements(PrintTemplateRepository dayRep, int typiconId, FilteredOutputDay day)
         {
-            var templateElements = dayRep.GetDayTemplate(typiconId, day.SignNumber);
+            var dayTemplate = dayRep.GetDayTemplate(typiconId, day.SignNumber);
 
-            if (templateElements == null)
+            if (dayTemplate == null)
             {
-                return Result.Fail<IEnumerable<OpenXmlElement>>($"Ошибка: печатный шаблон дня для номера {day.SignNumber} не был найден");
+                return Result.Fail<GetDayTemplateResponse>($"Ошибка: печатный шаблон дня для номера {day.SignNumber} не был найден");
             }
 
             //заменяем дату
-            var dateReplacement = templateElements.ReplaceElementsByText(OutputTemplateConstants.Date, day.Date.ToString("dd MMMM yyyy г."));
+            var dateReplacement = dayTemplate.XmlElements.ReplaceElementsByText(OutputTemplateConstants.Date, day.Date.ToString("dd MMMM yyyy г."));
 
             //заменяем день недели
-            var dayOfWeekReplacement = templateElements.ReplaceElementsByText(OutputTemplateConstants.DayOfWeek, day.Date.ToString("dddd"));
+            var dayOfWeekReplacement = dayTemplate.XmlElements.ReplaceElementsByText(OutputTemplateConstants.DayOfWeek, day.Date.ToString("dddd"));
 
             //заменяем имя дня
-            var dayNameReplacement = templateElements.ReplaceElementsByText(OutputTemplateConstants.DayName, day.Name.Text);
+            var dayNameReplacement = dayTemplate.XmlElements.ReplaceElementsByText(OutputTemplateConstants.DayName, day.Name.Text);
 
             //вставляем службы
-            var worshipsAppending = AppendWorships(templateElements, day.Worships);
+            var worshipsAppending = AppendWorships(dayTemplate.XmlElements, day.Worships);
 
             var res = Result.Combine(dateReplacement
                                     , dayOfWeekReplacement
@@ -185,8 +217,8 @@ namespace TypiconOnline.AppServices.Viewers
                                     , worshipsAppending);
 
             return (res.Success) 
-                ? Result.Ok(templateElements) 
-                : Result.Fail<IEnumerable<OpenXmlElement>>(res.Error);
+                ? Result.Ok(dayTemplate) 
+                : Result.Fail<GetDayTemplateResponse>(res.Error);
         }
 
         /// <summary>

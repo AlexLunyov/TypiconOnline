@@ -155,7 +155,7 @@ function getHtml(jsonResp) {
                 if (worship.AdditionalName.Text != null) {
                     text = container.appendChild(document.createElement('span'))
                     text.setAttribute('class', getClass(worship.AdditionalName))
-                    text.innerHTML = worship.AdditionalName.Text.Text
+                    text.innerHTML = " " + worship.AdditionalName.Text.Text
                 }
             });
         })

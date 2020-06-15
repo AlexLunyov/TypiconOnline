@@ -8,30 +8,33 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using TypiconOnline.AppServices.Extensions;
 using TypiconOnline.AppServices.Interfaces;
+using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.AppServices.Viewers
 {
-    public class PrintTemplateRepository : IPrintTemplateRepository
+    public class PrintTemplateRepository : IPrintTemplateRepository, IDisposable
     {
         private readonly IQueryProcessor _queryProcessor;
 
-        private readonly Dictionary<int, IEnumerable<OpenXmlElement>> _dayTemplates = new Dictionary<int, IEnumerable<OpenXmlElement>>();
+        private readonly Dictionary<int, (WordprocessingDocument doc, MemoryStream stream)> _docs = new Dictionary<int, (WordprocessingDocument, MemoryStream)>();
+
+        private readonly Dictionary<int, GetDayTemplateResponse> _dayTemplates = new Dictionary<int, GetDayTemplateResponse>();
 
         public PrintTemplateRepository(IQueryProcessor queryProcessor)
         {
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
         }
 
-        public IEnumerable<OpenXmlElement> GetDayTemplate(int typiconId, int number)
+        public GetDayTemplateResponse GetDayTemplate(int typiconId, int number)
         {
-            IEnumerable<OpenXmlElement> result;
+            WordprocessingDocument doc;
 
             //если уже обращались, возвращаем сохраненный вариант
             if (_dayTemplates.ContainsKey(number))
             {
-                result = _dayTemplates[number];
+                doc = _docs[number].doc;
             }
             else
             {
@@ -40,25 +43,23 @@ namespace TypiconOnline.AppServices.Viewers
 
                 if (day != null)
                 {
-                    using (MemoryStream stream = new MemoryStream())
-                    {
-                        stream.Write(day.PrintFile, 0, day.PrintFile.Length);
+                    var stream = new MemoryStream();
 
-                        using (var doc = WordprocessingDocument.Open(stream, false))
-                        {
-                            result = GetCleanTemplate(doc.MainDocumentPart.Document.Body.Elements().DeepClone());
+                    stream.Write(day.PrintFile, 0, day.PrintFile.Length);
 
-                            _dayTemplates[number] = result;
-                        }
-                    }
+                    doc = WordprocessingDocument.Open(stream, false);
+
+                    _docs[number] = (doc, stream);
                 }
                 else
                 {
                     return default;
                 }
             }
-            
-            return result.DeepClone();
+
+            var xmlElements = GetCleanTemplate(doc.MainDocumentPart.Document.Body.Elements().DeepClone());
+
+            return new GetDayTemplateResponse(xmlElements, doc.MainDocumentPart);
         }
 
         /// <summary>
@@ -86,7 +87,11 @@ namespace TypiconOnline.AppServices.Viewers
         /// </summary>
         public void Dispose()
         {
-            //ничего не осталось
+            foreach (var element in _docs)
+            {
+                element.Value.doc.Dispose();
+                element.Value.stream.Dispose();
+            }
         }
     }
 }

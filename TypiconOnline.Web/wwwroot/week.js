@@ -117,29 +117,14 @@ success = function (response) {
                     }
 
                     var text = container.appendChild(document.createElement('span'))
-                    var cls = worship.Name.Text.Language
 
-                    if (worship.Name.Style != null) {
-                        if (worship.Name.Style.IsRed) {
-                            cls = cls + " red"
-                        }
-                        if (worship.Name.Style.IsBold) {
-                            cls = cls + " bold"
-                        }
-                        if (worship.Name.Style.IsItalic) {
-                            cls = cls + " italic"
-                        }
-                        if (worship.Name.Style.Header != "0") {
-                            cls = cls + " h" + worship.Name.Style.Header
-                        }
-                    }
-                    text.setAttribute('class', cls)
+                    text.setAttribute('class', getClass(worship.Name))
                     text.innerHTML = worship.Name.Text.Text
 
-                    if (worship.AdditionalName != null) {
+                    if (worship.AdditionalName.Text != null) {
                         text = container.appendChild(document.createElement('span'))
-                        text.setAttribute('class', worship.AdditionalName.Language)
-                        text.innerHTML = worship.AdditionalName.Text
+                        text.setAttribute('class', getClass(worship.AdditionalName))
+                        text.innerHTML = " " + worship.AdditionalName.Text.Text
                     }
                 });
             })
@@ -168,4 +153,25 @@ function getScriptArgs(script_id) {
     }
 
     return args
+}
+
+function getClass(name) {
+    var cls = name.Text.Language
+
+    if (name.Style != null) {
+        if (name.Style.IsRed) {
+            cls = cls + " red"
+        }
+        if (name.Style.IsBold) {
+            cls = cls + " bold"
+        }
+        if (name.Style.IsItalic) {
+            cls = cls + " italic"
+        }
+        if (name.Style.Header != "0") {
+            cls = cls + " h" + name.Style.Header
+        }
+    }
+
+    return cls
 }

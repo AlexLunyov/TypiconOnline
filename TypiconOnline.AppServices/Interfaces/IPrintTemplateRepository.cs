@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TypiconOnline.AppServices.Messaging.Schedule;
 
 namespace TypiconOnline.AppServices.Interfaces
 {
     public interface IPrintTemplateRepository : IDisposable
     {
-        IEnumerable<OpenXmlElement> GetDayTemplate(int typiconId, int number);
+        GetDayTemplateResponse GetDayTemplate(int typiconId, int number);
     }
 }

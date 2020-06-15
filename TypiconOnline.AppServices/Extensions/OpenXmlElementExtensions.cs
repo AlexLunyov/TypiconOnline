@@ -7,6 +7,7 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Domain.WebQuery.OutputFiltering;
 using TypiconOnline.Domain.ItemTypes;
 using System.Linq;
+using DocumentFormat.OpenXml.Packaging;
 
 namespace TypiconOnline.AppServices.Extensions
 {
@@ -137,6 +138,14 @@ namespace TypiconOnline.AppServices.Extensions
             run.RunProperties.Color = (style.IsRed) ? new Color() { Val = "FF0000" } : null;
 
             run.RunProperties.Italic = (style.IsItalic) ? new Italic() : null;
+        }
+
+        public static string CopyPart(this WordprocessingDocument newDoc, string relId, MainDocumentPart mainDocumentPart)
+        {
+            var p = mainDocumentPart.GetPartById(relId) as ImagePart;
+            var newPart = newDoc.MainDocumentPart.AddPart(p);
+            newPart.FeedData(p.GetStream());
+            return newDoc.MainDocumentPart.GetIdOfPart(newPart);
         }
     }
 }
