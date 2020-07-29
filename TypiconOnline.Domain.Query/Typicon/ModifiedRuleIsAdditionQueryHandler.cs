@@ -18,7 +18,7 @@ namespace TypiconOnline.Domain.Query.Typicon
         {
             var found = DbContext.Set<ModifiedRule>()
                 .Where(c => c.Parent.TypiconVersionId == query.TypiconVersionId 
-                        && c.Date.Date == query.Date
+                        && c.Date.Date == query.Date.Date
                         && c.IsAddition)
                 .ToList();
 

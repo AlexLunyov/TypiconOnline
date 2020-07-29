@@ -18,8 +18,11 @@ namespace TypiconOnline.AppServices.Implementations
         /// <returns>Самый последний Addition у <see cref="own"/></returns>
         protected RuleHandlerSettings FillWorships(RuleHandlerSettings own, RuleHandlerSettings external, bool oktoikhMode)
         {
-            external.Menologies.InsertRange(0, own.Menologies);
-            external.Triodions.InsertRange(0, own.Triodions);
+            external.Menologies.AddRange(own.Menologies);
+            external.Triodions.AddRange(own.Triodions);
+
+            //external.Menologies.InsertRange(0, own.Menologies);
+            //external.Triodions.InsertRange(0, own.Triodions);
 
             if (oktoikhMode)
             {

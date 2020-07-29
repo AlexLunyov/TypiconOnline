@@ -24,6 +24,8 @@ namespace TypiconOnline.Domain.Typicon.Modifications
 
         public virtual bool IsLastName { get; set; }
 
+        //public virtual NameQueueMode NameQueueMode { get; set; }
+
         public virtual bool IsAddition { get; set; }
 
         public virtual bool UseFullName { get; set; }
@@ -138,6 +140,16 @@ namespace TypiconOnline.Domain.Typicon.Modifications
                 return 0;
             else return 1;
         }
+    }
+
+    /// <summary>
+    /// Очередность использования имени правздника в формировании расписания
+    /// </summary>
+    public enum NameQueueMode
+    {
+        First = 0,
+        Common = 1,
+        Last = 2
     }
 }
 
