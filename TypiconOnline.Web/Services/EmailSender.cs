@@ -4,6 +4,7 @@ using System;
 using TypiconOnline.AppServices.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
+using MailKit.Security;
 
 namespace TypiconOnline.Web.Services
 {
@@ -25,7 +26,17 @@ namespace TypiconOnline.Web.Services
 
             using (var client = new SmtpClient())
             {
-                await client.ConnectAsync("typicon.online", 25, false);
+                try
+                {
+                    client.CheckCertificateRevocation = true;
+                    await client.ConnectAsync("typicon.online", 25, SecureSocketOptions.None);
+                }
+                catch (SslHandshakeException ex)
+                {
+                    client.CheckCertificateRevocation = false;
+                    await client.ConnectAsync("typicon.online", 25, false);
+                }
+                
                 await client.AuthenticateAsync("admin@typicon.online", "&Q.n*8qc");
                 await client.SendAsync(emailMessage);
 
