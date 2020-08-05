@@ -31,6 +31,7 @@
     <ProjectReference Include="..\TypiconOnline.Domain.WebQuery\TypiconOnline.Domain.WebQuery.csproj" />
     <ProjectReference Include="..\TypiconOnline.Domain\TypiconOnline.Domain.csproj" />
     <ProjectReference Include="..\TypiconOnline.Repository.EFCore\TypiconOnline.Repository.EFCore.csproj" />
+    <ProjectReference Include="..\TypiconOnline.Repository.Versioned\TypiconOnline.Repository.Versioned.csproj" />
     <ProjectReference Include="..\TypiconOnline.WebServices\TypiconOnline.WebServices.csproj" />
   </ItemGroup>
 

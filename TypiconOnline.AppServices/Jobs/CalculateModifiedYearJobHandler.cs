@@ -72,19 +72,17 @@ namespace TypiconOnline.AppServices.Jobs
 
             //MenologyRules
 
-            var menologyRules = _dbContext.GetAllMenologyRules(modifiedYear.TypiconVersionId);
+            //находим все правила с ModRuleDefinition
+            var menologyRules = _dbContext.GetAllModMenologyRules(modifiedYear.TypiconVersionId);
 
-            EachDayPerYear.Perform(modifiedYear.Year, date =>
+            foreach (var menologyRule in menologyRules)
             {
-                //находим правило для конкретного дня Минеи
-                var menologyRule = menologyRules.GetMenologyRule(date);
-
-                InterpretRule(menologyRule, date, handler);
-            });
+                InterpretRule(menologyRule, menologyRule.GetCurrentDate(modifiedYear.Year), handler);
+            }
 
             //теперь обрабатываем переходящие минейные праздники
             //у них не должны быть определены даты. так их и найдем
-            var rules = menologyRules.GetAllMovableRules();
+            var rules = _dbContext.GetAllMovableMenologyRules(modifiedYear.TypiconVersionId);
 
             var firstJanuary = new DateTime(modifiedYear.Year, 1, 1);
 

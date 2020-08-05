@@ -42,6 +42,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TypiconOnline.AppServices\TypiconOnline.AppServices.csproj" />
     <ProjectReference Include="..\TypiconOnline.Repository.EFCore\TypiconOnline.Repository.EFCore.csproj" />
+    <ProjectReference Include="..\TypiconOnline.Repository.Versioned\TypiconOnline.Repository.Versioned.csproj" />
   </ItemGroup>
 
   <ItemGroup>

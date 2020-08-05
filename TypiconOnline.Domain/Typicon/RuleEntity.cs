@@ -92,11 +92,11 @@ namespace TypiconOnline.Domain.Typicon
                 var element = GetRule<IRuleElement>(serializerRoot);
                 if (element == null)
                 {
-                    AddBrokenConstraint(new BusinessConstraint("Правило заполнено с неопределяемыми системой ошибками.", "RuleDefinition"));
+                    AddBrokenConstraint(new BusinessConstraint("Правило заполнено с неопределяемыми системой ошибками.", nameof(RuleDefinition)));
                 }
                 else if (!element.IsValid)
                 {
-                    AppendAllBrokenConstraints(element.GetBrokenConstraints(), "RuleDefinition");
+                    AppendAllBrokenConstraints(element.GetBrokenConstraints(), nameof(RuleDefinition));
                 }
             }
         }

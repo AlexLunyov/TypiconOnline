@@ -18,10 +18,10 @@ namespace TypiconOnline.Domain.Rules.Extensions
         public static bool AsAdditionHandled(this IAsAdditionElement element, IRuleHandler handler)
         {
             bool result = false;
-            if (handler.Settings.Addition?.RuleContainer is ExecContainer container)
+            if (handler.Settings.Addition?.RuleContainer is RootContainer container)
             {
                 //ищем элемент(ы) для замены
-                var foundItems = container.GetAsAdditionChildElements(handler.Settings.Addition, element,
+                var foundItems = container.GetAsAdditionChildElements(handler, handler.Settings.Addition, element,
                         c => (c.AsAdditionMode == AsAdditionMode.Rewrite 
                            || c.AsAdditionMode == AsAdditionMode.Remove
                            || c.AsAdditionMode == AsAdditionMode.RewriteValues));

@@ -87,21 +87,7 @@ namespace TypiconOnline.Domain.Rules.Executables
             return (predicate != null) ? result.Where(predicate).ToList() : result;
         }
 
-        public IReadOnlyList<IAsAdditionElement> GetAsAdditionChildElements(RuleHandlerSettings settings, IAsAdditionElement element, Func<IAsAdditionElement, bool> predicate = null)
-        {
-            //используем специальный обработчик
-            //чтобы найти все дочерние элементы по искомым признакам
-            var childrenHandler = new AsAdditionElementHandler(element, predicate) { Settings = settings };
-
-            //Interpret(childrenHandler);
-
-            foreach (RuleElementBase elem in ChildElements)
-            {
-                elem.Interpret(childrenHandler);
-            }
-
-            return childrenHandler.GetResult();
-        }
+        
 
         /// <summary>
         /// Добавляет к текущему элементу все дочерние элементы из дополнения, помеченные как append

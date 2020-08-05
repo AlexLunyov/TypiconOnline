@@ -16,14 +16,28 @@ namespace TypiconOnline.AppServices.Extensions
             return menologyRules.FirstOrDefault(c => c.GetCurrentDate(date.Year).Date == date.Date);
         }
 
-        public static IEnumerable<MenologyRule> GetAllMovableRules(this IEnumerable<MenologyRule> menologyRules)
+        public static IEnumerable<MenologyRule> GetAllMovableMenologyRules(this TypiconDBContext dbContext, int typiconVersionId)
         {
-            return menologyRules.Where(c => c.Date.IsEmpty && c.LeapDate.IsEmpty);
+            return dbContext.Set<MenologyRule>()
+                .Where(c => c.TypiconVersionId == typiconVersionId
+                            && c.ModRuleDefinition != string.Empty)
+                .ToList()
+                .Where(c => c.Date.IsEmpty && c.LeapDate.IsEmpty);
         }
 
-        public static IEnumerable<MenologyRule> GetAllMenologyRules(this TypiconDBContext dbContext, int typiconVersionId)
+        /// <summary>
+        /// Возвращает все непереходящие праздники
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <param name="typiconVersionId"></param>
+        /// <returns></returns>
+        public static IEnumerable<MenologyRule> GetAllModMenologyRules(this TypiconDBContext dbContext, int typiconVersionId)
         {
-            return dbContext.Set<MenologyRule>().Where(c => c.TypiconVersionId == typiconVersionId).ToList();
+            return dbContext.Set<MenologyRule>()
+                .Where(c => c.TypiconVersionId == typiconVersionId
+                            && c.ModRuleDefinition != string.Empty)
+                .ToList()
+                .Where(c => !c.LeapDate.IsEmpty);
         }
 
         public static MenologyRule GetMenologyRule(this TypiconDBContext dbContext, int typiconVersionId, DateTime date)
