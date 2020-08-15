@@ -12,9 +12,9 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.AppServices.Implementations
 {
-    class OutputDayInfo
+    public class OutputDayInfo
     {
-        private readonly List<DayWorship> _dayWorships = new List<DayWorship>();
+        private /*readonly*/ List<DayWorship> _dayWorships = new List<DayWorship>();
 
         public OutputDayInfo(OutputDay day, IEnumerable<DayWorship> dayWorships
             , ScheduleResults scheduleResults, IEnumerable<BusinessConstraint> constraints)
@@ -59,6 +59,9 @@ namespace TypiconOnline.AppServices.Implementations
             Day.AddWorships(dayInfo.ScheduleResults.DayBefore, typiconSerializer);
 
             _dayWorships.AddRange(dayInfo.DayWorships);
+
+            //удаляем возможные дубликаты ссылок на тексты служб
+            _dayWorships = _dayWorships.Distinct().ToList();
 
             //TODO: BrokenConstaints??
         }

@@ -11,6 +11,7 @@ using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.Domain.Typicon.Output;
 
 namespace TypiconOnline.AppServices.Extensions
 {
@@ -20,7 +21,8 @@ namespace TypiconOnline.AppServices.Extensions
         {
             lock (dbContext)
             {
-                return dbContext.Set<ModifiedYear>().Any(c => c.TypiconVersionId == typiconVersionId && c.Year == year);
+                return dbContext.Set<ModifiedYear>().Any(c => c.TypiconVersionId == typiconVersionId 
+                                                           && c.Year == year);
             }
         }
 
@@ -73,6 +75,13 @@ namespace TypiconOnline.AppServices.Extensions
             }
 
             return Result.Fail<TypiconClaim>($"Заявка на создание Устава с заданным Id={id} не была найдена.");
+        }
+
+        public static bool IsOutputDayExists(this TypiconDBContext dbContext, int typiconId, DateTime date)
+        {
+            var found = dbContext.Set<OutputDay>().FirstOrDefault(c => c.TypiconId == typiconId && c.Date.Date == date.Date);
+
+            return (found != null);
         }
     }
 }

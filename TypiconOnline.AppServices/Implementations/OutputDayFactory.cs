@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using TypiconOnline.AppServices.Extensions;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
+using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules;
 using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
-using TypiconOnline.Domain.Rules.Interfaces;
 using TypiconOnline.Domain.Typicon.Output;
-using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.AppServices.Common;
-using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Domain;
-using TypiconOnline.Domain.Rules.Output;
-using TypiconOnline.AppServices.Extensions;
-using TypiconOnline.Domain.Common;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -91,14 +84,17 @@ namespace TypiconOnline.AppServices.Implementations
                 dayReq.Date = date;
 
                 var output = InnerCreate(dayReq, ref dayInfo, _dataCalculator);
-
-                result.Add(output.Day);
+                
+                if (output != null)
+                {
+                    result.Add(output.Day);
+                }
             });
 
             return result;
         }
 
-        private CreateOutputDayResponse InnerCreate(CreateOutputDayRequest req, ref OutputDayInfo dayInfo, IScheduleDataCalculator dataCalculator)
+        protected virtual CreateOutputDayResponse InnerCreate(CreateOutputDayRequest req, ref OutputDayInfo dayInfo, IScheduleDataCalculator dataCalculator)
         {
             if (dayInfo == null)
             {

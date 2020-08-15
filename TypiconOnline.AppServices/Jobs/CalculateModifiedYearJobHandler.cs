@@ -30,13 +30,17 @@ namespace TypiconOnline.AppServices.Jobs
 
         public virtual async Task<Result> ExecuteAsync(CalculateModifiedYearJob job)
         {
-            //if (_dbContext.IsModifiedYearExists(job.TypiconVersionId, job.Year))
-            //{
-            //    //Значит год уже был сформирован или формируется в настоящий момент асинхронно
-            //    return;
-            //}
-
             _jobs.Start(job);
+
+            if (_dbContext.IsModifiedYearExists(job.TypiconVersionId, job.Year))
+            {
+                //Значит год уже был сформирован или формируется в настоящий момент асинхронно
+                string msg = $"Год {job.Year} для версии Устава={job.TypiconVersionId} уже был сформирован или формируется в настоящий момент асинхронно.";
+                
+                _jobs.Fail(job, msg);
+                
+                return Result.Fail(msg);
+            }
 
             var modifiedYear = InnerCreate(job.TypiconVersionId, job.Year);
 
@@ -72,17 +76,19 @@ namespace TypiconOnline.AppServices.Jobs
 
             //MenologyRules
 
-            //находим все правила с ModRuleDefinition
-            var menologyRules = _dbContext.GetAllModMenologyRules(modifiedYear.TypiconVersionId);
+            var menologyRules = _dbContext.GetAllMenologyRules(modifiedYear.TypiconVersionId);
 
-            foreach (var menologyRule in menologyRules)
+            EachDayPerYear.Perform(modifiedYear.Year, date =>
             {
-                InterpretRule(menologyRule, menologyRule.GetCurrentDate(modifiedYear.Year), handler);
-            }
+                //находим правило для конкретного дня Минеи
+                var menologyRule = menologyRules.GetMenologyRule(date);
+
+                InterpretRule(menologyRule, date, handler);
+            });
 
             //теперь обрабатываем переходящие минейные праздники
             //у них не должны быть определены даты. так их и найдем
-            var rules = _dbContext.GetAllMovableMenologyRules(modifiedYear.TypiconVersionId);
+            var rules = menologyRules.GetAllMovableRules();
 
             var firstJanuary = new DateTime(modifiedYear.Year, 1, 1);
 

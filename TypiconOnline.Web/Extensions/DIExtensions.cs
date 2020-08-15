@@ -78,7 +78,7 @@ namespace TypiconOnline.Web
             container.Register<VariablesCollectorSerializerRoot>(); 
 
             //container.Register<IOutputForms, OutputForms>();
-            container.Register<IOutputDayFactory, OutputDayFactory>();
+            container.Register<IOutputDayFactory, NonexistedOutputDayFactory>();
             container.Register<IScheduleDayViewer<string>, HtmlScheduleDayViewer>(); 
             container.Register<IScheduleWeekViewer<string>, HtmlSimpleScheduleWeekViewer>(); 
             //container.Register<IScheduleWeekViewer<Result<FileDownloadResponse>>, DocxToStreamWeekViewer>();

@@ -73,7 +73,9 @@ namespace TypiconOnline.AppServices.Jobs
             {
                 TypiconId = job.TypiconId,
                 TypiconVersionId = job.TypiconVersionId,
-                Date = job.Date
+                Date = job.Date,
+                //вычисляем только несуществующие дни
+                RecalculateAllDays = false
             });
 
             foreach (var day in week)

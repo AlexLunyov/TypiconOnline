@@ -16,6 +16,18 @@ namespace TypiconOnline.AppServices.Extensions
             return menologyRules.FirstOrDefault(c => c.GetCurrentDate(date.Year).Date == date.Date);
         }
 
+        public static IEnumerable<MenologyRule> GetAllMovableRules(this IEnumerable<MenologyRule> menologyRules)
+        {
+            return menologyRules.Where(c => c.Date.IsEmpty && c.LeapDate.IsEmpty);
+        }
+
+        public static IEnumerable<MenologyRule> GetAllMenologyRules(this TypiconDBContext dbContext, int typiconVersionId)
+        {
+            return dbContext.Set<MenologyRule>().Where(c => c.TypiconVersionId == typiconVersionId).ToList();
+        }
+
+        #region не используемое
+
         public static IEnumerable<MenologyRule> GetAllMovableMenologyRules(this TypiconDBContext dbContext, int typiconVersionId)
         {
             return dbContext.Set<MenologyRule>()
@@ -39,6 +51,8 @@ namespace TypiconOnline.AppServices.Extensions
                 .ToList()
                 .Where(c => !c.LeapDate.IsEmpty);
         }
+
+        #endregion
 
         public static MenologyRule GetMenologyRule(this TypiconDBContext dbContext, int typiconVersionId, DateTime date)
         {
