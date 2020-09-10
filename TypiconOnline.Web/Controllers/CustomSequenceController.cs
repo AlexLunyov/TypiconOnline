@@ -29,7 +29,7 @@ namespace TypiconOnline.Web.Controllers
         private readonly IOutputDayFactory _outputFormFactory;
         private readonly CustomScheduleDataCalculator _dataCalculator;
 
-        public CustomSequenceController(IQueryProcessor queryProcessor, IOutputDayFactory outputFormFactory
+        public CustomSequenceController(IQueryProcessor queryProcessor, OutputDayFactory outputFormFactory
             , CustomScheduleDataCalculator dataCalculator)
         {
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));

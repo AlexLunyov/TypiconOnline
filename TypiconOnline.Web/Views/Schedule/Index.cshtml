@@ -46,79 +46,20 @@
     </div>
 </section>
 
+<div class="modal fade editvar-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div id="modalWindow" class="modal-dialog modal-lg">
+    </div>
+</div>
+
 @section Scripts {
-    
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="~/css/itemtext.css" />
+    <link rel="stylesheet" href="~/css/schedule.css" />
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
+
     <script src="/lib/momentjs/moment-with-locales.js"></script>
     <script src="/lib/bootstrap/dist/js/bootstrap-datetimepicker.min.js"></script>
     <script src="~/js/schedule.js"></script>
-
-    <script type="text/javascript">
-        @*Perform('@Model.Date.ToString("yyyy-MM-dd")');
-        $('#datepicker').datetimepicker({
-            locale: 'ru',
-            format: 'DD MMMM YYYY года',
-            defaultDate: moment('@Model.Date.ToString("yyyy-MM-dd")').format("YYYY-MM-DD")
-        })
-        .on('dp.change', function (e) {
-            if (e.date != null) {
-                $('#dtp_date').attr("value", moment(e.date).format("YYYY-MM-DD"));
-            }
-            else {
-                $('#dtp_date').attr("value", "");
-            }
-        });
-
-        var picker = $('#datepicker').data("DateTimePicker");
-
-        var btnPrev = $("#btnPrev");
-        var btnNext = $("#btnNext");
-        var btnView = $("#btnView");
-        var btnDownload = $("#btnDownload");
-
-        btnNext.on('click', function () {
-            var date = picker.date();
-            date = date.add(7, 'days');
-            picker.date(date);
-
-            btnView.removeAttr("disabled");
-            btnDownload.attr("disabled", "disabled");
-        });
-
-        btnPrev.on('click', function () {
-            var date = picker.date();
-            date = date.add(-7, 'days');
-            picker.date(date);
-
-            btnView.removeAttr("disabled");
-            btnDownload.attr("disabled", "disabled");
-        });
-
-        btnView.on('click', function () {
-            //var url = "schedule/view";
-            //var postData = new FormData($("formSchedule"));
-
-            btnView.attr("disabled", "disabled");
-            btnDownload.attr("disabled", "disabled");
-
-            var spanView = $("#spanView");
-            var sp = spanView.attr("class", "fa fa-spinner fa-spin");
-
-            var url = "schedule/view?id="+$("#typId").val()+"&date="+$("#dtp_date").val()+"language="+$("#language").val();
-            $.ajax({
-                type: "GET",
-                url: url,
-                data: null, // serializes the form's elements.
-                processData: false,  // tell jQuery not to process the data
-                contentType: false,  // tell jQuery not to set contentType
-                success: function (data) {
-                    btnDownload.removeAttr("disabled");
-
-                    spanView.attr("class", sp);
-
-                    $("#week").html(data);
-                }
-            });
-        });*@
-
-    </script>
+    <script src="~/js/itemtext.js"></script>
 }

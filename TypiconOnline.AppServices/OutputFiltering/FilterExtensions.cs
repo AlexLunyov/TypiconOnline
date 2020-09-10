@@ -83,7 +83,8 @@ namespace TypiconOnline.Domain.WebQuery.OutputFiltering
                 Time = worship.Time,
                 Name = worship.Name?.FilterOut(filter),
                 AdditionalName = worship.AdditionalName?.FilterOut(filter),
-                HasSequence = !string.IsNullOrEmpty(worship.Definition) 
+                HasSequence = !string.IsNullOrEmpty(worship.Definition),
+                ModifiedDate = worship.ModifiedDate
             };
 
         public static List<FilteredOutputWorship> FilterOut(this List<OutputWorship> collection, OutputFilter filter)
@@ -103,16 +104,18 @@ namespace TypiconOnline.Domain.WebQuery.OutputFiltering
         public static FilteredOutputDay FilterOut(this OutputDay day, OutputFilter filter)
          => new FilteredOutputDay()
             {
+                Id = day.Id,
                 Name = day.Name.FilterOut(filter),
                 Date = day.Date,
-                SignName = day.PredefinedSign.SignName.FilterOut(filter),
+                SignName = day.PredefinedSign?.SignName.FilterOut(filter),
                 SignNumber = day.PrintDayTemplate.Number,
                 Icon = day.PrintDayTemplate.Icon,
                 IsRed = day.PrintDayTemplate.IsRed,
                 Worships = day.Worships
                             .OrderBy(c => c.Order)
                             .ToList()
-                            .FilterOut(filter)
+                            .FilterOut(filter),
+                ModifiedDate = day.ModifiedDate
          };
     }
 }

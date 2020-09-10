@@ -17,6 +17,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
         public bool IsTemplate { get; set; }
         public bool HasVariables { get; set; }
         public bool HasEmptyPrintTemplates { get; set; }
+        public bool DeleteModifiedOutputDays { get; set; } = false;
         /// <summary>
         /// Список Id И Имен редакторов Устава
         /// </summary>

@@ -79,7 +79,7 @@ namespace TypiconOnline.AppServices.Jobs
                     version.BDate = DateTime.Now;
 
                     //outputforms
-                    await _dbContext.ClearOutputFormsAsync(job.TypiconId);
+                    await _dbContext.ClearOutputFormsAsync(job.TypiconId, job.DeleteModifiedOutputDays);
 
                     //TODO: SendMessage to Owner and sender
 

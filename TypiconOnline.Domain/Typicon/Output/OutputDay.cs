@@ -60,5 +60,10 @@ namespace TypiconOnline.Domain.Typicon.Output
         /// Службы с последовательностями богослужений, относящиеся к Дню
         /// </summary>
         public virtual List<OutputWorship> Worships { get; set; } = new List<OutputWorship>();
+
+        /// <summary>
+        /// Дата внесения изменений в выходную форму "вручную"
+        /// </summary>
+        public DateTime? ModifiedDate { get; set; }
     }
 }

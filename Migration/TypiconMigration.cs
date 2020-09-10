@@ -89,7 +89,7 @@ namespace TypiconMigrationTool
         {
             var handler = new PublishTypiconJobHandler(_dbContext, new JobRepository());
 
-            handler.ExecuteAsync(new PublishTypiconJob(typicon.Id));
+            handler.ExecuteAsync(new PublishTypiconJob(typicon.Id, true));
         }
 
         private void CreateUsers()

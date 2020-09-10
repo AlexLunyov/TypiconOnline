@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -32,6 +33,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Web.Models.TypiconViewModels;
 using TypiconOnline.Web.Services;
+using TypiconOnline.WebServices.Authorization;
 using TypiconOnline.WebServices.Hosting;
 
 namespace TypiconOnline.Web
@@ -52,12 +54,27 @@ namespace TypiconOnline.Web
             container.Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
             container.Register<IQueryProcessor, DataQueryProcessor>();
 
+            //authorization handler
+            //Декорируем только те запросы, у которых есть реализация IAuthorizedAccess
+            container.RegisterDecorator(
+                typeof(IQueryHandler<,>),
+                typeof(AuthorizationQueryHandler<,>),
+                context => typeof(IHasAuthorizedAccess).IsAssignableFrom(
+                    context.ServiceType.GetGenericArguments()[0]));
+
             container.Register(typeof(ICommandHandler<>), typeof(CommandProcessor).Assembly, typeof(ScheduleDataCalculator).Assembly);
 
             //events handler
             container.RegisterDecorator(
                 typeof(ICommandHandler<>),
                 typeof(EventsCommandHandler<>));
+
+            //authorization handler
+            container.RegisterDecorator(
+                typeof(ICommandHandler<>),
+                typeof(AuthorizationCommandHandler<>),
+                context => typeof(IHasAuthorizedAccess).IsAssignableFrom(
+                    context.ServiceType.GetGenericArguments()[0]));
 
             container.RegisterConditional<ICommandProcessor, AsyncCommandProcessor>(
                 c => c.Consumer.ImplementationType == typeof(JobExecutor));
@@ -114,6 +131,7 @@ namespace TypiconOnline.Web
 
             //CustomSequence Controller
             container.Register<CustomScheduleDataCalculator>();
+            container.Register<OutputDayFactory>();
 
             //Configuration
             container.Register<IConfigurationRepository>(() => new ConfigurationRepository(configuration));
@@ -179,6 +197,12 @@ namespace TypiconOnline.Web
             #endregion
 
             #region AuthorizationHandlers
+
+            //container.Register(typeof(AuthorizationHandler<,>), typeof(DefaultAuthorization).Assembly);
+
+            container.Collection.Register(typeof(IAuthorizationHandler), (typeof(OutputDayCanEditAuthorization).Assembly));
+            //container.Register<OutputDayCanEditAuthorization>();
+            //container.Register<TypiconCanEditAuthorizationHandler>();
 
             #endregion
         }

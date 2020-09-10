@@ -13,6 +13,9 @@ namespace TypiconOnline.WebServices.Authorization
           new OperationAuthorizationRequirement { Name = AuthorizationConstants.EditTypiconName };
         public static OperationAuthorizationRequirement Delete =
           new OperationAuthorizationRequirement { Name = AuthorizationConstants.DeleteTypiconName };
+
+        public static OperationAuthorizationRequirement Default =
+          new OperationAuthorizationRequirement { Name = AuthorizationConstants.DefaultTypiconName };
     }
 
     

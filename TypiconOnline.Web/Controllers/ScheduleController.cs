@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -10,11 +11,16 @@ using Microsoft.AspNetCore.Mvc;
 //using SmartBreadcrumbs.Attributes;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Common;
+using TypiconOnline.Domain.Command.Typicon;
+using TypiconOnline.Domain.Query.Typicon;
+using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Domain.WebQuery.OutputFiltering;
 using TypiconOnline.Domain.WebQuery.Typicon;
+using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Web.Models.ScheduleViewModels;
+using TypiconOnline.WebServices.Authorization;
 
 namespace TypiconOnline.Web.Controllers
 {
@@ -31,18 +37,24 @@ namespace TypiconOnline.Web.Controllers
         private const string JSON = "json";
 
         private readonly IQueryProcessor _queryProcessor;
+        private readonly ICommandProcessor _commandProcessor;
         private readonly IScheduleWeekViewer<string> _weekViewer;
         private readonly IScheduleWeekViewer<Result<FileDownloadResponse>> _weekDownloadViewer;
+        private readonly IAuthorizationService _authorizationService;
         //private readonly IScheduleDayViewer<string> dayViewer;
 
         public ScheduleController(IQueryProcessor queryProcessor
+            , ICommandProcessor commandProcessor
             //, IScheduleDayViewer<string> dayViewer
             , IScheduleWeekViewer<string> weekViewer
-            , IScheduleWeekViewer<Result<FileDownloadResponse>> weekDownloadViewer)
+            , IScheduleWeekViewer<Result<FileDownloadResponse>> weekDownloadViewer
+            , IAuthorizationService authorizationService)
         {
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
+            _commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
             _weekViewer = weekViewer ?? throw new ArgumentNullException(nameof(weekViewer));
             _weekDownloadViewer = weekDownloadViewer ?? throw new ArgumentNullException(nameof(weekDownloadViewer));
+            _authorizationService = authorizationService ?? throw new ArgumentNullException(nameof(authorizationService));
             //this.dayViewer = dayViewer ?? throw new ArgumentNullException("dayViewer in ScheduleController");
         }
 
@@ -90,6 +102,20 @@ namespace TypiconOnline.Web.Controllers
         [HttpGet]
         public IActionResult View(int id, DateTime date, string language = DEFAULT_LANGUAGE)
         {
+            //является ли редактором
+            bool canEdit = false;
+            try
+            {
+                var typiconEntity = _queryProcessor.Process(new TypiconEntityQuery(id));
+
+                canEdit = _authorizationService.AuthorizeAsync(
+                                                           User, typiconEntity,
+                                                           TypiconOperations.Edit)
+                                               .Result
+                                               .Succeeded;
+            }
+            catch { }
+
             var weekResult = _queryProcessor.Process(new OutputWeekQuery(id, date, new OutputFilter() { Language = language }));
 
             object result = null;
@@ -98,6 +124,7 @@ namespace TypiconOnline.Web.Controllers
                 {
                     result = new
                     {
+                        isEditor = canEdit,
                         schedule = weekResult.Value
                     };
                 })
@@ -315,6 +342,92 @@ namespace TypiconOnline.Web.Controllers
             .OnFailure(err => result = new { err });
 
             return Json(result);
+        }
+
+        /// <summary>
+        /// Редактирование выходной фомы дня
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [EnableCors("GetSchedulePolicy")]
+        public IActionResult EditDay(int id)
+        {
+            try
+            {
+                var dayResult = _queryProcessor.Process(new OutputDayEditQuery(id));
+
+                return PartialView("_EditDayPartial", dayResult.Value);
+            }
+            catch (SecurityException)
+            {
+                return Unauthorized();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditDay(OutputDayEditModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var command = new EditOutputDayCommand(model.Id, model.Name);
+
+                    var result = await _commandProcessor.ExecuteAsync(command);
+
+                    return Json(data: result.Error);
+                }
+
+                return Json(data: ModelState.Values);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Редактирование выходной формы службы
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [EnableCors("GetSchedulePolicy")]
+        public IActionResult EditWorship(int id)
+        {
+            try
+            {
+                var result = _queryProcessor.Process(new OutputWorshipEditQuery(id));
+
+                return PartialView("_EditWorshipPartial", result.Value);
+            }
+            catch (SecurityException)
+            {
+                return Unauthorized();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditWorship(OutputWorshipEditModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var command = new EditOutputWorshipCommand(model.Id, model.Name, model.AdditionalName, model.Time);
+
+                    var result = await _commandProcessor.ExecuteAsync(command);
+
+                    return Json(data: result.Error);
+                }
+
+                return Json(data: ModelState.Values);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

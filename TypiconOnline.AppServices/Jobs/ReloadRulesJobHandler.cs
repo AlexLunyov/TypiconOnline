@@ -58,7 +58,7 @@ namespace TypiconOnline.AppServices.Jobs
 
                     await _dbContext.ClearModifiedYearsAsync(version.Value.Id);
 
-                    await _dbContext.ClearOutputFormsAsync(version.Value.TypiconId);
+                    await _dbContext.ClearOutputFormsAsync(version.Value.TypiconId, true);
 
                     _jobs.Finish(job, string.Empty);
                 })

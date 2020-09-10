@@ -40,3 +40,12 @@
     text-align: left;
     padding: 3px 20px;
 }
+
+/* Класс для кнопока редактирования */
+.btn-edit {
+    color: #FFC107;
+}
+
+.btn-edit:hover, .btn-edit:focus {
+    color: #A67D02;
+}

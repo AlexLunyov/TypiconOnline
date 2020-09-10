@@ -59,6 +59,7 @@
     <Compile Include="Events\IDomainEventHandler.cs" />
     <Compile Include="Events\IEventDispatcher.cs" />
     <Compile Include="Events\IHasDomainEvents.cs" />
+    <Compile Include="Interfaces\IAuthorizeKey.cs" />
     <Compile Include="Interfaces\ICacheStorage.cs" />
     <Compile Include="Domain\BusinessConstraint.cs" />
     <Compile Include="Domain\IAggregateRoot.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Domain\ValueObjectBaseT.cs" />
     <Compile Include="Interfaces\IConfigurationRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Interfaces\IHasAuthorizedAccess.cs" />
     <Compile Include="Query\IQuery.cs" />
     <Compile Include="Query\IQueryHandler.cs" />
     <Compile Include="Query\IQueryProcessor.cs" />

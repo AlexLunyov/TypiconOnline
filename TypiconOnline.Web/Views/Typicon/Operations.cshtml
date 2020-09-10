@@ -5,46 +5,64 @@
     <div class="container">
         @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.Operations })
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-sm-12">
                 <h2>Операции</h2>
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-sm-8">
-                @{
-                    var pblDisabled = !Model.IsModified 
-                        || (!Model.IsTemplate && (Model.HasVariables || Model.HasEmptyPrintTemplates));
-                }
-                <a class="btn btn-primary" asp-action="Publish" asp-route-id="@Model.Id" disabled="@(pblDisabled ? " disabled" : null)">Опубликовать черновик Устава</a>
+            <div class="col-sm-12">
+                <h3>Публикация изменений в Уставе</h3>
             </div>
         </div>
-        <div class="row">
-            <div class="form-group col-sm-8">
-            @if (pblDisabled)
-            {
-                <div class="panel panel-danger">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Публикация не доступна по следующим причинам</h3>
-                    </div>
-                    <div class="panel-body">
-                        @if (!Model.IsModified)
-                        {
-                            <div class="clearfix"></div>
-                            <div class="form-group col-md-6">Не было внесено изменений в черновик Устава.</div>
-                        }
-                        @if (!Model.IsTemplate && Model.HasVariables)
-                        {
-                            <div class="clearfix"></div>
-                            <div class="form-group col-md-6">Устав должен быть либо определен как Шаблон, либо всем Переменным должны быть заданы значения.</div>
-                        }
-                        @if (!Model.IsTemplate && Model.HasEmptyPrintTemplates)
-                        {
-                            <div class="clearfix"></div>
-                            <div class="form-group col-md-6">Устав должен быть либо определен как Шаблон, либо все Печатные шаблоны должны иметь загруженные файлы.</div>
-                        }
-                    </div>
+        <form class="row" asp-action="Publish" asp-route-id="@Model.Id" method="post">
+            <div class="row">
+                <div class="form-group col-sm-8">
+                    <label asp-for="DeleteModifiedOutputDays">Измененные вручную выходные формы расписания</label>
+                    <p>
+                        Выберите действие при публикации Устава с измененными вручную выходными формами расписания:
+                    </p>
+                    <input type="radio" asp-for="DeleteModifiedOutputDays" value="true" id="DeleteModifiedOutputDaysTrue" /> <text class="red">Удалить</text><br />
+                    <input type="radio" asp-for="DeleteModifiedOutputDays" value="false" id="DeleteModifiedOutputDaysFalse" /> Оставить<br />
+                    <span asp-validation-for="DeleteModifiedOutputDays" class="text-danger"></span>
                 </div>
-            }
             </div>
-        </div>
+            <div class="row">
+                <div class="form-group col-sm-8">
+                    @{
+                        var pblDisabled = !Model.IsModified
+                            || (!Model.IsTemplate && (Model.HasVariables || Model.HasEmptyPrintTemplates));
+                    }
+                    <button class="btn btn-primary" disabled="@(pblDisabled ? " disabled" : null)">Опубликовать</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-8">
+                    @if (pblDisabled)
+                    {
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Публикация не доступна по следующим причинам</h3>
+                            </div>
+                            <div class="panel-body">
+                                @if (!Model.IsModified)
+                                {
+                                    <div class="clearfix"></div>
+                                    <div class="form-group col-md-6">Не было внесено изменений в черновик Устава.</div>
+                                }
+                                @if (!Model.IsTemplate && Model.HasVariables)
+                                {
+                                    <div class="clearfix"></div>
+                                    <div class="form-group col-md-6">Устав должен быть либо определен как Шаблон, либо всем Переменным должны быть заданы значения.</div>
+                                }
+                                @if (!Model.IsTemplate && Model.HasEmptyPrintTemplates)
+                                {
+                                    <div class="clearfix"></div>
+                                    <div class="form-group col-md-6">Устав должен быть либо определен как Шаблон, либо все Печатные шаблоны должны иметь загруженные файлы.</div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </form>
     </div>

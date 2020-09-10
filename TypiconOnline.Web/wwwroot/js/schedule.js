@@ -87,6 +87,8 @@ function getSchedule() {
             }
 
             getHtml(data);
+
+            assignEvents();
         }
     });
 }
@@ -124,7 +126,23 @@ function getHtml(jsonResp) {
             const dayNameDiv = scheduleDiv.appendChild(document.createElement('h4'))
             dayNameDiv.setAttribute('id', 'sched_day_name')
             dayNameDiv.setAttribute('class', day.Name.Language)
-            dayNameDiv.innerHTML = day.Name.Text
+            dayNameDiv.innerHTML = withModified(jsonResp.isEditor, day.ModifiedDate, day.Name.Text) + "&nbsp;"
+
+            if (jsonResp.isEditor) {
+                var elem = dayNameDiv.appendChild(document.createElement('a'))
+                elem.setAttribute('class', 'btn-edit')
+                elem.setAttribute('data-toggle', 'tooltip')
+                elem.setAttribute('data-original-title', 'Редактировать наименование дня')
+                elem.setAttribute('href', '#')
+
+                elem = elem.appendChild(document.createElement('i'))
+                elem.setAttribute('class', 'fas fa-pen')
+
+                const dayIdHdn = dayNameDiv.appendChild(document.createElement('input'))
+                dayIdHdn.setAttribute('id', 'dayIdHdn')
+                dayIdHdn.setAttribute("type", "hidden")
+                dayIdHdn.setAttribute("value", day.Id);
+            }
 
             const daySignDiv = scheduleDiv.appendChild(document.createElement('label'))
             daySignDiv.setAttribute('id', 'sched_day_sign')
@@ -137,9 +155,11 @@ function getHtml(jsonResp) {
                 const tr = tbl.appendChild(document.createElement('tr'))
 
                 var container = tr.appendChild(document.createElement('td'))
-                container.innerHTML = worship.Time + "&nbsp;"
+                container.innerHTML = withModified(jsonResp.isEditor, worship.ModifiedDate, worship.Time) + "&nbsp;"
 
                 container = tr.appendChild(document.createElement('td'))
+
+                const td = container
 
                 if (worship.HasSequence) {
                     container = container.appendChild(document.createElement('a'))
@@ -150,16 +170,35 @@ function getHtml(jsonResp) {
                 var text = container.appendChild(document.createElement('span'))
 
                 text.setAttribute('class', getClass(worship.Name))
-                text.innerHTML = worship.Name.Text.Text
+                text.innerHTML = withModified(jsonResp.isEditor, worship.ModifiedDate, worship.Name.Text.Text) + "&nbsp;"
 
                 if (worship.AdditionalName.Text != null) {
                     text = container.appendChild(document.createElement('span'))
                     text.setAttribute('class', getClass(worship.AdditionalName))
-                    text.innerHTML = " " + worship.AdditionalName.Text.Text
+                    text.innerHTML = withModified(jsonResp.isEditor, worship.ModifiedDate, worship.AdditionalName.Text.Text) + "&nbsp;"
                 }
-            });
+
+                if (jsonResp.isEditor) {
+                    container = td.appendChild(document.createElement('a'))
+                    container.setAttribute('class', 'btn-edit')
+                    container.setAttribute('data-toggle', 'tooltip')
+                    container.setAttribute('data-original-title', 'Редактировать службу')
+                    container.setAttribute('href', '#')
+
+                    container = container.appendChild(document.createElement('i'))
+                    container.setAttribute('class', 'fas fa-pen')
+
+                    container = container.appendChild(document.createElement('input'))
+                    container.setAttribute('id', 'wIdHdn')
+                    container.setAttribute("type", "hidden")
+                    container.setAttribute("value", worship.Id)
+                }
+                
+            })
         })
     }
+
+    $('[data-toggle="tooltip"]').tooltip()
 }
 
 function getClass(name) {
@@ -181,5 +220,100 @@ function getClass(name) {
     }
 
     return cls
+}
+
+function assignEvents() {
+    //var scheduleDiv = document.getElementById()
+
+    //outputday
+    $("#week").on('click', 'h4 .btn-edit', function () {
+        var id = $(this).parent().find('#dayIdHdn').val()
+
+        // AJAX request
+        $.ajax({
+            url: '/Schedule/EditDay',
+            type: 'get',
+            data: { id: id },
+            success: function (response) {
+                // Add response in Modal body
+                $("#modalWindow").html(response);
+
+                // Display Modal
+                $(".editvar-modal").modal('show');
+
+                createItemTextTable("#nameTable", "Name", "#addNameBtn");
+
+                $("#editOutputForm").submit(submitForm);
+            }
+        });
+    });
+
+    //outputworship
+    $("#week").on('click', 'td .btn-edit', function () {
+        var id = $(this).parent().find('#wIdHdn').val()
+
+        // AJAX request
+        $.ajax({
+            url: '/Schedule/EditWorship',
+            type: 'get',
+            data: { id: id },
+            success: function (response) {
+                // Add response in Modal body
+                $("#modalWindow").html(response);
+
+                // Display Modal
+                $(".editvar-modal").modal('show');
+
+                createItemTextTable("#nameTable", "Name", "#addNameBtn");
+                createItemTextTable("#additionalNameTable", "AdditionalName", "#addAdditionalNameBtn");
+
+                $('#time').datetimepicker({
+                    format: 'HH.mm'
+                });
+
+                $("#editOutputForm").submit( submitForm );
+            }
+        });
+    });
+}
+
+function submitForm(e) {
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+
+    var form = $("#editOutputForm");
+    var url = form.attr("action");
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: form.serialize(), // serializes the form's elements.
+        success: function (data) {
+            if (data == null) {
+
+                getSchedule();
+
+                $(".editvar-modal").modal('hide');
+            }
+            else {
+                alert(data);
+            }
+        }
+    });
+
+    return false;
+}
+
+function withModified(isEditor, date, text) {
+    if (isEditor && date != null) {
+        var mark = document.createElement('mark')
+        mark.setAttribute('data-toggle', 'tooltip')
+        mark.setAttribute('data-original-title', '<em>Последнее редактирование:</em> ' + moment(date).format("DD.MM.YYYY г. HH:mm:ss"))
+        mark.setAttribute('data-html', 'true')
+        mark.innerHTML = text
+
+        text = mark.outerHTML
+    }
+
+    return '<text>' + text + '</text>'
 }
 

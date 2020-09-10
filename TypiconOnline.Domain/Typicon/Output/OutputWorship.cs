@@ -27,6 +27,11 @@ namespace TypiconOnline.Domain.Typicon.Output
         public virtual ItemTextStyled Name { get; set; }
         public virtual ItemTextStyled AdditionalName { get; set; }
 
+        /// <summary>
+        /// Дата внесения изменений в выходную форму "вручную"
+        /// </summary>
+        public DateTime? ModifiedDate { get; set; }
+
         public virtual string Definition { get; set; }
     }
 }

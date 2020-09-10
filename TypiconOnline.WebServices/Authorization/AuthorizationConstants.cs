@@ -9,5 +9,7 @@ namespace TypiconOnline.WebServices.Authorization
         public const string CreateTypiconName = "Create";
         public const string EditTypiconName = "Edit";
         public const string DeleteTypiconName = "Delete";
+
+        public const string DefaultTypiconName = "Default";
     }
 }

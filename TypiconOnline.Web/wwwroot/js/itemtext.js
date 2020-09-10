@@ -3,7 +3,7 @@
     //var actions = $(itemTextId + " td:last-child").html();
     var actions = getActionsCell(itemTextName);
     // Append table with add row form on add new button click
-    $(addbtnId).click(function () {
+    $(addbtnId).on("click", function () {
         $(this).attr("disabled", "disabled");
         var index = $(itemTextId + " tbody tr:last-child").index();
         var row = '<tr>' +

@@ -6,12 +6,18 @@ namespace TypiconOnline.AppServices.Jobs
 {
     public class PublishTypiconJob : IJob
     {
-        public PublishTypiconJob(int typiconId)
+        public PublishTypiconJob(int typiconId, bool deleteModifiedOutputDays)
         {
             TypiconId = typiconId;
+            DeleteModifiedOutputDays = deleteModifiedOutputDays;
         }
 
         public int TypiconId { get; }
+
+        /// <summary>
+        /// Признак, удалять ли измененные вручную выходные формы расписания
+        /// </summary>
+        public bool DeleteModifiedOutputDays { get; }
 
         public bool Equals(IJob other)
         {

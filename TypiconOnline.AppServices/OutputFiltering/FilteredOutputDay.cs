@@ -9,6 +9,7 @@ namespace TypiconOnline.Domain.WebQuery.OutputFiltering
 {
     public class FilteredOutputDay
     {
+        public int Id { get; set; }
         public ItemTextUnit Name { get; set; }
         public virtual DateTime Date { get; set; }
         public int SignNumber { get; set; }
@@ -29,5 +30,6 @@ namespace TypiconOnline.Domain.WebQuery.OutputFiltering
         /// Коллекция элементов расписания, которые являются контейнерами для последовательностей боослужений
         /// </summary>
         public List<FilteredOutputWorship> Worships { get; set; } = new List<FilteredOutputWorship>();
+        public DateTime? ModifiedDate { get; set; }
     }
 }

@@ -312,11 +312,11 @@ namespace TypiconOnline.Web.Controllers
         }
 
         //[HttpPost]
-        public IActionResult Publish(int id)
+        public IActionResult Publish(TypiconEntityEditModel model)
         {
-            if (IsAuthorizedToEdit(id))
+            if (IsAuthorizedToEdit(model.Id))
             {
-                _jobs.Create(new PublishTypiconJob(id));
+                _jobs.Create(new PublishTypiconJob(model.Id, model.DeleteModifiedOutputDays));
             }
             
 

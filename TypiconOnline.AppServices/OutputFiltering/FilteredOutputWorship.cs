@@ -16,5 +16,6 @@ namespace TypiconOnline.Domain.WebQuery.OutputFiltering
         public FilteredParagraph Name { get; set; }
         public FilteredParagraph AdditionalName { get; set; }
         public bool HasSequence { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }

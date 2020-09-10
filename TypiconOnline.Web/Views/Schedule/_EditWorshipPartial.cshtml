@@ -1,0 +1,121 @@
+﻿@model OutputWorshipEditModel
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Редактирование наименования богослужебного дня</h4>
+    </div>
+    <div class="modal-body">
+        @if (Model == null)
+        {
+            <div class="row">
+                <h4>Произошла ошибка доступа</h4>
+            </div>
+        }
+        else
+        {
+            <form id="editOutputForm" asp-controller="Schedule" asp-action="EditWorship" asp-route-id="@Model.Id">
+                <div class="row">
+                    <div class="col-sm-12"><label asp-for="Time">Время богослужения</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-3">
+                        <div class="form-group input-group date" id="time">
+                            <input type="text" class="form-control" asp-for="Time" />
+                            <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12"><label asp-for="@Model.Name">Наименование</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-sm-3"><input type="checkbox" asp-for="Name.IsBold" /> <b>Жирный</b></div>
+                                <div class="col-sm-3"><input type="checkbox" asp-for="Name.IsItalic" /> <i>Курсивом</i></div>
+                                <div class="col-sm-3"><input type="checkbox" asp-for="Name.IsRed" /> Красным</div>
+                                <div class="col-sm-3 text-right">
+                                    <button type="button" id="addNameBtn" class="btn btn-info add-new btn-xs"><i class="fa fa-plus"></i> Добавить</button>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="nameTable" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Язык</th>
+                                    <th>Значение</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Name.Items.Count; i++)
+                                {
+                                    <tr>
+                                        <td class="language">@Model.Name.Items[i].Language</td>
+                                        <td class="text">@Model.Name.Items[i].Text</td>
+                                        <td>
+                                            <input class="language" type="hidden" asp-for="@Model.Name.Items[i].Language" />
+                                            <input class="text" type="hidden" asp-for="@Model.Name.Items[i].Text" />
+                                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12"><label asp-for="AdditionalName">Дополнительное наименование</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-sm-3"><input type="checkbox" asp-for="AdditionalName.IsBold" /> <b>Жирный</b></div>
+                                <div class="col-sm-3"><input type="checkbox" asp-for="AdditionalName.IsItalic" /> <i>Курсивом</i></div>
+                                <div class="col-sm-3"><input type="checkbox" asp-for="AdditionalName.IsRed" /> Красным</div>
+                                <div class="col-sm-3 text-right">
+                                    <button type="button" id="addAdditionalNameBtn" class="btn btn-info add-new btn-xs"><i class="fa fa-plus"></i> Добавить</button>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="additionalNameTable" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Язык</th>
+                                    <th>Значение</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.AdditionalName != null)
+                                {
+                                    for (int i = 0; i < Model.AdditionalName.Items.Count; i++)
+                                    {
+                                        <tr>
+                                            <td class="language">@Model.AdditionalName.Items[i].Language</td>
+                                            <td class="text">@Model.AdditionalName.Items[i].Text</td>
+                                            <td>
+                                                <input class="language" type="hidden" asp-for="@Model.AdditionalName.Items[i].Language" />
+                                                <input class="text" type="hidden" asp-for="@Model.AdditionalName.Items[i].Text" />
+                                                <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                                                <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                                <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-xs-12"><button id="editWorshipBtn" class="btn btn-primary">Сохранить</button></div>
+            </form>
+        }
+
+    </div>
+</div>

@@ -11,6 +11,11 @@ namespace TypiconOnline.Infrastructure.Common.ErrorHandling
     {
         public string Error { get; }
 
+        /// <summary>
+        /// Код ошибки
+        /// </summary>
+        public int ErrorCode { get; }
+
         public bool Success => Error == null;
         public bool Failure => !Success;
 
@@ -24,11 +29,20 @@ namespace TypiconOnline.Infrastructure.Common.ErrorHandling
             Error = message;
         }
 
+        protected Result(int errorCode, string message = "") : this(message)
+        {
+            ErrorCode = errorCode;
+        }
+
         public static Result Fail(string message) => new Result(message);
+
+        public static Result Fail(int errorCode, string message) => new Result(errorCode, message);
 
         public static Result Ok() => new Result();
 
         public static Result<T> Fail<T>(string message) => new Result<T>(default, message);
+
+        public static Result<T> Fail<T>(int errorCode, string message) => new Result<T>(default, errorCode, message);
 
         public static Result<T> Ok<T>(T value) => new Result<T>(value);
 
@@ -74,6 +88,14 @@ namespace TypiconOnline.Infrastructure.Common.ErrorHandling
 
         protected internal Result(T value, string error)
             : base(error)
+        {
+            Contract.Requires(value != null || !string.IsNullOrEmpty(error));
+
+            Value = value;
+        }
+
+        protected internal Result(T value, int errorCode, string error)
+            : base(errorCode, error)
         {
             Contract.Requires(value != null || !string.IsNullOrEmpty(error));
 

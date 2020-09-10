@@ -74,8 +74,10 @@ namespace TypiconOnline.Web
 
             #region Authorization handlers
 
-            services.AddScoped<IAuthorizationHandler,
-                                  TypiconCanEditAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationHandler>(new SimpleInjectorAuthorizationHandler(container));
+
+            //services.AddScoped<IAuthorizationHandler, TypiconCanEditAuthorizationHandler>();
+            //services.AddScoped<IAuthorizationHandler, DefaultAuthorization>();
 
             #endregion
 
