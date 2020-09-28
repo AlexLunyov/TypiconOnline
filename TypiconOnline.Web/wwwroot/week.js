@@ -84,20 +84,22 @@ success = function (response) {
 
                 const dayDateDiv = scheduleDiv.appendChild(document.createElement('strong'))
 
-                var nameCls = day.Name.Language
-                if (day.IsRed == true) {
-                    nameCls = nameCls + " red"
-                }
+                if (day.Header != null) {
+                    var nameCls = day.Header.Name.Language
+                    if (day.Header.IsRed == true) {
+                        nameCls = nameCls + " red"
+                    }
 
-                dayDateDiv.setAttribute('class', nameCls)
+                    dayDateDiv.setAttribute('class', nameCls)
 
-                dayDateDiv.setAttribute('id', 'sched_date')
-                dayDateDiv.innerHTML = wDayOfWeek + "<br/>" + wDateFormatted + "<br/>" + day.Name.Text
+                    dayDateDiv.setAttribute('id', 'sched_date')
+                    dayDateDiv.innerHTML = wDayOfWeek + "<br/>" + wDateFormatted + "<br/>" + day.Header.Name.Text
 
-                if (day.SignNumber > 0 && day.SignNumber < 6) {
-                    const img = document.createElement('img')
-                    img.setAttribute("src", "http://typicon.online/images/sign/" + day.SignNumber + ".png")
-                    dayDateDiv.innerHTML = img.outerHTML + " " + dayDateDiv.innerHTML
+                    if (day.Header.SignNumber > 0 && day.Header.SignNumber < 6) {
+                        const img = document.createElement('img')
+                        img.setAttribute("src", "http://typicon.online/images/sign/" + day.Header.SignNumber + ".png")
+                        dayDateDiv.innerHTML = img.outerHTML + " " + dayDateDiv.innerHTML
+                    }
                 }
 
                 const tbl = scheduleDiv.appendChild(document.createElement('table'))

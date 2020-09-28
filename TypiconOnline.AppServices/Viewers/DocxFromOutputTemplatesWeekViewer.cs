@@ -81,32 +81,35 @@ namespace TypiconOnline.AppServices.Viewers
                     }
                     //находим элемент, после которого можно вставлять шаблоны дней
                     var parentToPasteSchedule = GetParentToPasteSchedule(placeToPasteSchedule);
+                    /*var */parentToPasteSchedule = weekDoc.MainDocumentPart.Document.Body.LastChild;
 
-                    int i = weekTemplate.DaysPerPage;
+                    int d = week.Days.Count % weekTemplate.DaysPerPage;
 
                     using (var dayRep = new PrintTemplateRepository(_queryProcessor))
                     {
-                        foreach (var day in week.Days)
+                        for (int i = week.Days.Count - 1; i >= 0; i--)
                         {
+                            var day = week.Days[i];
+
                             var modDayTemplate = GetFilledDayElements(dayRep, typiconId, day);
 
                             if (modDayTemplate.Success)
                             {
+                                //добавляем в конечный документ ссылочные объекты (изображения)
+                                CopyRelativeElements(weekDoc, modDayTemplate.Value.DocumentPart, modDayTemplate.Value.XmlElements);
+
                                 foreach (var ins in modDayTemplate.Value.XmlElements)
                                 {
-                                    parentToPasteSchedule.InsertBeforeSelf(ins);
-                                    ins.CopyRelativeElements(weekDoc, modDayTemplate.Value.DocumentPart);
+                                    parentToPasteSchedule.InsertAfterSelf(ins);
+                                    //ins.CopyRelativeElements(weekDoc, modDayTemplate.Value.DocumentPart);
                                 }
 
-                                //добавляем в конечный документ ссылочные объекты (изображения)
-                                //CopyRelativeElements(weekDoc, modDayTemplate.Value);
-
-                                i--;
-                                if (i == 0)
+                                d--;
+                                if (d == 0 && i > 0)
                                 {
                                     //вставляем разрыв страницы
-                                    parentToPasteSchedule.InsertBeforeSelf(PageBreak);
-                                    i = weekTemplate.DaysPerPage;
+                                    parentToPasteSchedule.InsertAfterSelf(PageBreak);
+                                    d = weekTemplate.DaysPerPage;
                                 }
                             }
                             else
@@ -116,7 +119,9 @@ namespace TypiconOnline.AppServices.Viewers
                         }
                     }
 
-                    placeToPasteSchedule.Parent.RemoveChild(placeToPasteSchedule);
+                    RemovePlaceToPaste(placeToPasteSchedule);
+
+                    weekDoc.MainDocumentPart.Document.Save();
 
                     weekDoc.Close();
                 }
@@ -125,6 +130,20 @@ namespace TypiconOnline.AppServices.Viewers
                         ? Result.Ok(stream.ToArray())
                         : Result.Fail<byte[]>(errors.ToString());
             }
+        }
+
+        /// <summary>
+        /// Если параграф содержит только место замены - удаляем и его
+        /// </summary>
+        /// <param name="placeToPasteSchedule"></param>
+        private void RemovePlaceToPaste(OpenXmlElement placeToPasteSchedule)
+        {
+            if (placeToPasteSchedule.Parent is Paragraph p && p.InnerText == OutputTemplateConstants.DaysPlacement)
+            {
+                placeToPasteSchedule = placeToPasteSchedule.Parent;
+            }
+
+            placeToPasteSchedule.Parent.RemoveChild(placeToPasteSchedule);
         }
 
         /// <summary>
@@ -142,23 +161,27 @@ namespace TypiconOnline.AppServices.Viewers
         /// </summary>
         /// <param name="weekDoc"></param>
         /// <param name="modDayTemplate"></param>
-        private void CopyRelativeElements(WordprocessingDocument weekDoc, GetDayTemplateResponse modDayTemplate)
+        private void CopyRelativeElements(WordprocessingDocument weekDoc, MainDocumentPart documentPart, IEnumerable<OpenXmlElement> elements)
         {
-            foreach (var element in modDayTemplate.XmlElements) 
+            foreach (var oldPart in documentPart.ImageParts)
             {
-                //images
-                element.Descendants<DocumentFormat.OpenXml.Drawing.Blip>().ToList()
+                var newPart = weekDoc.MainDocumentPart.AddImagePart(oldPart.ContentType);
+                newPart.FeedData(oldPart.GetStream(FileMode.Open, FileAccess.Read));
+
+                ReplaceRelationShips(elements, documentPart.GetIdOfPart(oldPart), weekDoc.MainDocumentPart.GetIdOfPart(newPart));
+            }
+        }
+
+        private void ReplaceRelationShips(IEnumerable<OpenXmlElement> elements, string oldId, string newId)
+        {
+            foreach (var element in elements)
+            {
+                element.Descendants<DocumentFormat.OpenXml.Drawing.Blip>()
+                    .Where(c => c.Embed == oldId)
+                    .ToList()
                     .ForEach(blip =>
                     {
-                        var newRelation = weekDoc.CopyImagePart(blip.Embed, modDayTemplate.DocumentPart);
-                        blip.Embed = newRelation;
-                    });
-
-                element.Descendants<DocumentFormat.OpenXml.Vml.ImageData>().ToList()
-                    .ForEach(imageData =>
-                    {
-                        var newRelation = weekDoc.CopyImagePart(imageData.RelationshipId, modDayTemplate.DocumentPart);
-                        imageData.RelationshipId = newRelation;
+                        blip.Embed = newId;
                     });
             }
         }
