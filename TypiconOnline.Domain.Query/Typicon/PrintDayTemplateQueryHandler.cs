@@ -21,10 +21,21 @@ namespace TypiconOnline.Domain.Query.Typicon
         public PrintDayTemplate Handle([NotNull] PrintDayTemplateQuery query)
         {
             //возвращаем из опубликованной версии
-            return DbContext.Set<PrintDayTemplate>()
-                .FirstOrDefault(c => c.TypiconVersion.TypiconId == query.TypiconId 
+            if (query.Number.HasValue)
+            {
+                return DbContext.Set<PrintDayTemplate>()
+                .FirstOrDefault(c => c.TypiconVersion.TypiconId == query.TypiconId
                     && c.TypiconVersion.BDate != null && c.TypiconVersion.EDate == null
                     && c.Number == query.Number);
+            }
+            else
+            {
+                //возвращаем шаблон по умолчанию
+                return DbContext.Set<TypiconVersion>()
+                    .Where(TypiconVersion.IsPublished)
+                    .FirstOrDefault(c => c.TypiconId == query.TypiconId)
+                    .PrintDayDefaultTemplate;
+            }
         }
     }
 }

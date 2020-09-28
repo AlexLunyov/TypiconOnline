@@ -55,10 +55,4 @@
     <Folder Include="data\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="data\SQLiteDB.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

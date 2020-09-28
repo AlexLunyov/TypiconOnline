@@ -7,6 +7,7 @@ using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.AppServices.Implementations
@@ -29,11 +30,11 @@ namespace TypiconOnline.AppServices.Implementations
             _settingsFactory = settingsFactory ?? throw new ArgumentNullException(nameof(settingsFactory));
         }
 
-        public override ScheduleDataCalculatorResponse Calculate(ScheduleDataCalculatorRequest request)
+        public override Result<ScheduleDataCalculatorResponse> Calculate(ScheduleDataCalculatorRequest request)
         {
             var result = _innerCalculator.Calculate(request);
 
-            if (result.Exception != null)
+            if (result.Failure)
             {
                 return result;
             }
@@ -46,41 +47,43 @@ namespace TypiconOnline.AppServices.Implementations
                 //создаем первый объект, который в дальнейшем станет ссылкой Addition у выбранного правила
                 var dayRule = modifiedRule.DayRule;
 
-                var settings = _settingsFactory.CreateRecursive(new CreateRuleSettingsRequest(request)
+                var create = _settingsFactory.CreateRecursive(new CreateRuleSettingsRequest(request)
                 {
                     Rule = dayRule
                 });
 
-                //задаем номер знака, если он был отдельно задан в ModifiedRule
-                result.Settings.PrintDayTemplate = modifiedRule.PrintDayTemplate;
-
-                //добавляем DayWorships
-                if (TypeEqualsOrSubclassOf<MenologyRule>.Is(modifiedRule.DayRule))
+                if (create.Success && create.Value is RuleHandlerSettings settings)
                 {
-                    settings.Menologies.AddRange(modifiedRule.DayWorships);
+                    //задаем номер знака, если он был отдельно задан в ModifiedRule
+                    result.Value.Settings.PrintDayTemplate = modifiedRule.PrintDayTemplate;
+
+                    //добавляем DayWorships
+                    if (TypeEqualsOrSubclassOf<MenologyRule>.Is(modifiedRule.DayRule))
+                    {
+                        settings.Menologies.AddRange(modifiedRule.DayWorships);
+                    }
+                    else
+                    {
+                        settings.Triodions.AddRange(modifiedRule.DayWorships);
+                    }
+
+                    //вставляем тексты служб в полученные ранее настройки
+                    var lastAdditionSettings = FillWorships(settings, result.Value.Settings, false);
+
+                    //и задаем результат у последнего найденного Addition
+                    settings.Menologies = lastAdditionSettings.Menologies;
+                    settings.Triodions = lastAdditionSettings.Triodions;
+                    settings.OktoikhDay = lastAdditionSettings.OktoikhDay;
+
+                    //теперь дублируем тексты служб на Additions, вычисленные для данных настроек
+                    if (settings.Addition != null)
+                    {
+                        FillWorships(settings, settings.Addition, true);
+                    }
+
+                    //замыкаем цепочку
+                    lastAdditionSettings.Addition = settings;
                 }
-                else
-                {
-                    settings.Triodions.AddRange(modifiedRule.DayWorships);
-                }
-
-                //вставляем тексты служб в полученные ранее настройки
-                var lastAdditionSettings = FillWorships(settings, result.Settings, false);
-
-                //и задаем результат у последнего найденного Addition
-                settings.Menologies = lastAdditionSettings.Menologies;
-                settings.Triodions = lastAdditionSettings.Triodions;
-                settings.OktoikhDay = lastAdditionSettings.OktoikhDay;
-
-                //теперь дублируем тексты служб на Additions, вычисленные для данных настроек
-                if (settings.Addition != null)
-                {
-                    FillWorships(settings, settings.Addition, true);
-                }
-
-                //замыкаем цепочку
-                lastAdditionSettings.Addition = settings;
-
             }
 
             return result;

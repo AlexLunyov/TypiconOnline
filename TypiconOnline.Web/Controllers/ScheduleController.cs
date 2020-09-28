@@ -14,13 +14,14 @@ using TypiconOnline.AppServices.Messaging.Common;
 using TypiconOnline.Domain.Command.Typicon;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.WebQuery.Models;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Web.Models.ScheduleViewModels;
 using TypiconOnline.WebServices.Authorization;
+using TypiconOnline.Web.Extensions;
 
 namespace TypiconOnline.Web.Controllers
 {
@@ -70,19 +71,10 @@ namespace TypiconOnline.Web.Controllers
 
             if (typicon.Success)
             {
-                //ViewBag.TypiconName = typicon.Value.Name;
-                //ViewBag.Id = typicon.Value.Id;
-
                 if (date == null || date == DateTime.MinValue)
                 {
                     date = DateTime.Now;
                 }
-
-                //ViewBag.Date = date;
-
-                var weekResult = _queryProcessor.Process(new OutputWeekQuery(id.Value, date, new OutputFilter() { Language = language }));
-
-                //ViewBag.Week = weekResult;
 
                 return View(new ScheduleViewModel()
                 {
@@ -90,7 +82,6 @@ namespace TypiconOnline.Web.Controllers
                     Date = date,
                     Language = language,
                     Name = typicon.Value.Name,
-                    Week = weekResult
                 });
             }
             else
@@ -357,6 +348,11 @@ namespace TypiconOnline.Web.Controllers
             {
                 var dayResult = _queryProcessor.Process(new OutputDayEditQuery(id));
 
+                if (dayResult.Success)
+                {
+                    ViewBag.PrintTemplates = _queryProcessor.GetPrintTemplates(dayResult.Value.TypiconId, forDraft: false);
+                }
+
                 return PartialView("_EditDayPartial", dayResult.Value);
             }
             catch (SecurityException)
@@ -372,7 +368,7 @@ namespace TypiconOnline.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var command = new EditOutputDayCommand(model.Id, model.Name);
+                    var command = new EditOutputDayCommand(model.Id, model.Name, model.PrintTemplateId);
 
                     var result = await _commandProcessor.ExecuteAsync(command);
 

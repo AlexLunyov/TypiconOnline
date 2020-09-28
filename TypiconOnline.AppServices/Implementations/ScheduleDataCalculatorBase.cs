@@ -4,6 +4,7 @@ using System.Text;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -49,6 +50,6 @@ namespace TypiconOnline.AppServices.Implementations
                 settings : GetLastAddition(settings.Addition);
         }
 
-        public abstract ScheduleDataCalculatorResponse Calculate(ScheduleDataCalculatorRequest request);
+        public abstract Result<ScheduleDataCalculatorResponse> Calculate(ScheduleDataCalculatorRequest request);
     }
 }

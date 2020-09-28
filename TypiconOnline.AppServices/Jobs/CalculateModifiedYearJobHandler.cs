@@ -119,7 +119,7 @@ namespace TypiconOnline.AppServices.Jobs
                 {
                     h.ProcessingDayRule = rule;
 
-                    h.Settings = _settingsFactory.CreateRecursive(new CreateRuleSettingsRequest()
+                    var r = _settingsFactory.CreateRecursive(new CreateRuleSettingsRequest()
                     {
                         TypiconVersionId = modifiedYear.TypiconVersionId,
                         Rule = rule,
@@ -127,8 +127,13 @@ namespace TypiconOnline.AppServices.Jobs
                         RuleMode = RuleMode.ModRule
                     });
 
-                    //выполняем его
-                    h.Settings?.RuleContainer.Interpret(h);
+                    if (r.Success)
+                    {
+                        h.Settings = r.Value;
+
+                        //выполняем его
+                        h.Settings?.RuleContainer.Interpret(h);
+                    }
                 }
             }
         }

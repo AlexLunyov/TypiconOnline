@@ -10,6 +10,7 @@ using TypiconOnline.Domain.Query.Books;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.AppServices.Implementations
@@ -26,7 +27,7 @@ namespace TypiconOnline.AppServices.Implementations
             _settingsFactory = settingsFactory ?? throw new ArgumentNullException(nameof(settingsFactory));
         }
 
-        public override ScheduleDataCalculatorResponse Calculate(ScheduleDataCalculatorRequest req)
+        public override Result<ScheduleDataCalculatorResponse> Calculate(ScheduleDataCalculatorRequest req)
         {
             //находим MenologyRule - не может быть null
             var menologyRule = _queryProcessor.Process(new MenologyRuleQuery(req.TypiconVersionId, req.Date)) ?? throw new NullReferenceException("MenologyRule");
@@ -67,13 +68,21 @@ namespace TypiconOnline.AppServices.Implementations
                     : null//r.MajorRule.PrintDayTemplate
             });
 
-            //теперь дублируем тексты служб на Additions, вычисленные для данных настроек
-            if (settings.Addition != null)
+            if (settings.Success)
             {
-                FillWorships(settings, settings.Addition, true);
-            }
+                //теперь дублируем тексты служб на Additions, вычисленные для данных настроек
+                if (settings.Value.Addition != null)
+                {
+                    FillWorships(settings.Value, settings.Value.Addition, true);
+                }
 
-            return new ScheduleDataCalculatorResponse() { Rule = r.MajorRule, Settings = settings };
+                return Result.Ok(new ScheduleDataCalculatorResponse() { Rule = r.MajorRule, Settings = settings.Value });
+            }
+            else
+            {
+                return Result.Fail<ScheduleDataCalculatorResponse>(settings.ErrorCode, settings.Error);
+            }
+            
         }
 
         /// <summary>

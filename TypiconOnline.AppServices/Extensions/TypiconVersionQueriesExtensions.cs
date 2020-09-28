@@ -62,5 +62,79 @@ namespace TypiconOnline.AppServices.Extensions
                 ? Result.Ok(version)
                 : Result.Fail<TypiconVersion>("Указанный Устав либо не существует, либо не существует его опубликованная версия.");
         }
+
+        /// <summary>
+        /// Возвращает указанную версию Устава (опубликованную или черновик).
+        /// </summary>
+        /// <param name="typiconVersionId"></param>
+        /// <returns></returns>
+        public static Result<TypiconVersion> GetDraftTypiconVersion(this TypiconDBContext dbContext, int typiconId)
+        {
+            var version = dbContext.Set<TypiconVersion>()
+                .Where(TypiconVersion.IsDraft)
+                .FirstOrDefault(c => c.TypiconId == typiconId);
+
+            return (version != null)
+                ? Result.Ok(version)
+                : Result.Fail<TypiconVersion>("Указанный Устав либо не существует, либо не существует его опубликованная версия.");
+        }
+
+        public static IEnumerable<string> Validate(this TypiconVersion version)
+        {
+            var err = new List<string>();
+
+            //Проверяем Статус
+            if (version.Typicon.Status == TypiconStatus.Approving
+                || version.Typicon.Status == TypiconStatus.Publishing
+                || version.Typicon.Status == TypiconStatus.Validating)
+            {
+                err.Add("Устав находится в состоянии, не подлежащем для публикации. ");
+            }
+
+            bool hasVariables = version.TypiconVariables.Any();
+            bool hasEmptyPrintTemplates = version.PrintDayTemplates
+                            .Any(c => c.PrintFile == null
+                                   || c.PrintFile.Length == 0);
+
+            //Не Шаблон и есть переменные или пустые печатные шаблоны - так нельзя публиковать
+            if (!version.IsTemplate && (hasVariables || hasEmptyPrintTemplates))
+            {
+                if (hasVariables)
+                {
+                    err.Add("Устав должен быть либо определен как Шаблон, либо всем Переменным должны быть заданы значения. ");
+                }
+
+                if (hasEmptyPrintTemplates)
+                {
+                    err.Add("Устав должен быть либо определен как Шаблон, либо все Печатные шаблоны должны иметь загруженные файлы. ");
+                }
+            }
+
+            /*
+                - не шаблон
+			    - Служба совершается не каждый день(не все дни недели)
+                - Отсутствует печатного шаблона "по умолчанию"
+             */
+            if (!version.IsTemplate
+               && version.ScheduleSettings == null)
+            {
+                err.Add("Устав должен быть определен как Шаблон, либо должен быть определен график богослужений. ");
+            }
+
+            /*
+                - не шаблон
+			    - Служба совершается не каждый день(не все дни недели)
+                - Отсутствует печатного шаблона "по умолчанию"
+             */
+            if (!version.IsTemplate
+               && !version.ScheduleSettings?.IsEveryday == false
+               && version.PrintDayDefaultTemplate == null)
+            {
+                err.Add("Устав должен быть определен как Шаблон, либо должен быть определен Печатный шаблон по умолчанию. ");
+            }
+
+
+            return err;
+        }
     }
 }

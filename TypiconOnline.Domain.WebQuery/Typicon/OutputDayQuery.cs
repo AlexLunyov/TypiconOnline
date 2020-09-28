@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 

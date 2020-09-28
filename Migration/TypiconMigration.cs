@@ -216,7 +216,17 @@ namespace TypiconMigrationTool
                     Items = new List<ItemTextUnit>() { new ItemTextUnit("cs-ru", "Описание Устава Типикон") }
                 },
                 VersionNumber = 1,
-                IsModified = true
+                IsModified = true,
+                ScheduleSettings = new ScheduleSettings()
+                {
+                    IsMonday = true,
+                    IsTuesday = true,
+                    IsWednesday = true,
+                    IsThursday = true,
+                    IsFriday = true,
+                    IsSaturday = true,
+                    IsSunday = true
+                }
                 //Делаем сразу опубликованную версию
                 //BDate = DateTime.Now
             };
@@ -253,6 +263,12 @@ namespace TypiconMigrationTool
                     .Any(c => c.Number == signMigrator.Number.Value))
                 {
                     var day = printImporter.GetDay(signMigrator.Number.Value, signMigrator.Icon, signMigrator.IsRed, signMigrator.Name, typiconEntity);
+
+                    //задаем первому шаблону значение шаблона по умолчанию
+                    if (typiconEntity.PrintDayDefaultTemplate == null)
+                    {
+                        typiconEntity.PrintDayDefaultTemplate = day;
+                    }
 
                     typiconEntity.PrintDayTemplates.Add(day);
 

@@ -25,22 +25,7 @@ namespace TypiconOnline.Domain.Typicon.Output
         /// </summary>
         public DateTime Date { get; set; }
 
-        /// <summary>
-        /// Наименование дня
-        /// </summary>
-        public virtual ItemText Name { get; set; }
-
-        public int PredefinedSignId { get; set; }
-        /// <summary>
-        /// Ссылка на предустановленный Знак службы
-        /// </summary>
-        public virtual Sign PredefinedSign { get; set; }
-
-        public int PrintDayTemplateId { get; set; }
-        /// <summary>
-        /// Номер предустановленного знака для отображения в расписании (может отличаться от указанного в <see cref="PredefinedSign"/>)
-        /// </summary>
-        public virtual PrintDayTemplate PrintDayTemplate { get; set; }
+        public virtual OutputDayHeader Header { get; set; }
 
         //Добавить ссылки на тексты служб
         public virtual List<OutputDayWorship> OutputFormDayWorships { get; set; }
@@ -65,5 +50,28 @@ namespace TypiconOnline.Domain.Typicon.Output
         /// Дата внесения изменений в выходную форму "вручную"
         /// </summary>
         public DateTime? ModifiedDate { get; set; }
+    }
+
+    /// <summary>
+    /// Заголовок выходной формы дня
+    /// </summary>
+    public class OutputDayHeader
+    {
+        /// <summary>
+        /// Наименование дня
+        /// </summary>
+        public virtual ItemText Name { get; set; }
+
+        public int PredefinedSignId { get; set; }
+        /// <summary>
+        /// Ссылка на предустановленный Знак службы
+        /// </summary>
+        public virtual Sign PredefinedSign { get; set; }
+
+        public int PrintDayTemplateId { get; set; }
+        /// <summary>
+        /// Номер предустановленного знака для отображения в расписании (может отличаться от указанного в <see cref="PredefinedSign"/>)
+        /// </summary>
+        public virtual PrintDayTemplate PrintDayTemplate { get; set; }
     }
 }

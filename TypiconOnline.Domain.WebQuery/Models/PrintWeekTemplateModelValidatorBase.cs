@@ -57,22 +57,16 @@ namespace TypiconOnline.Domain.WebQuery.Models
                     using (WordprocessingDocument weekDoc = WordprocessingDocument.Open(model.File.OpenReadStream(), false))
                     {
                         //[таблица]
-                        var datePlacements = weekDoc.MainDocumentPart.Document.Body
+                        var daysPlacements = weekDoc.MainDocumentPart.Document.Body
                             .FindElementsByText(OutputTemplateConstants.DaysPlacement);
 
-                        Text datePlacement = null;
-
-                        if (datePlacements.Count() == 0)
+                        if (daysPlacements.Count() == 0)
                         {
                             errors.Add(new ValidationResult($"Поле {OutputTemplateConstants.DaysPlacement} отсутствует в определении шаблона", new List<string>() { "File" }));
                         }
-                        else if (datePlacements.Count() > 1)
+                        else if (daysPlacements.Count() > 1)
                         {
                             errors.Add(new ValidationResult($"Поле {OutputTemplateConstants.DaysPlacement} должно быть определено единожды в шаблоне", new List<string>() { "File" }));
-                        }
-                        else
-                        {
-                            datePlacement = datePlacements.First();
                         }
                     }
                 }

@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 
-namespace TypiconOnline.Domain.WebQuery.OutputFiltering
+namespace TypiconOnline.AppServices.OutputFiltering
 {
     /// <summary>
     /// Фильтрованная и локализованная служба вместе с последовательностью

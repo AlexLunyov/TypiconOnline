@@ -41,7 +41,7 @@ namespace TypiconOnline.AppServices.Viewers
         /// <param name="timePlacement"></param>
         /// <param name="worshipNamePlacement"></param>
         /// <returns>Если не найден общий родитель, возвращает null</returns>
-        public static OpenXmlElement FindCommonParent<T>(Text timePlacement, Text worshipNamePlacement) where T : OpenXmlElement
+        public static OpenXmlElement FindCommonParent<T>(Run timePlacement, Run worshipNamePlacement) where T : OpenXmlElement
         {
             var parentTime = FindParent<T>(timePlacement);
 

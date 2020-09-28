@@ -75,6 +75,24 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 
             builder.HasMany(c => c.Kathismas)
                 .WithOne(d => d.TypiconVersion);
+
+            //builder.HasMany(c => c.PrintDayTemplates)
+            //   .WithOne(d => d.TypiconVersion)
+            //   .HasForeignKey(d => d.TypiconVersionId);
+
+            //builder.Property<int>("PrintDayDefaultTemplateId");
+
+            builder.HasOne(c => c.PrintDayDefaultTemplate)
+                .WithOne()
+                .HasForeignKey<TypiconVersion>("PrintDayDefaultTemplateId")
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.HasOne(c => c.ScheduleSettings)
+                .WithOne(d => d.TypiconVersion)
+                .HasForeignKey<ScheduleSettings>(e => e.TypiconVersionId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

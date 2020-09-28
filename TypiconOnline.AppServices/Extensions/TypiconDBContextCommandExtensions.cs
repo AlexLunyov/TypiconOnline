@@ -63,5 +63,10 @@ namespace TypiconOnline.AppServices.Extensions
             await dbContext.Set<TypiconVersionError>().AddRangeAsync(errors);
             await dbContext.SaveChangesAsync();
         }
+
+        public static async Task UpdateTypiconEntityStatusAsync(this TypiconDBContext dbContext, int typiconId, TypiconStatus status)
+        {
+            await dbContext.Database.ExecuteSqlRawAsync($"UPDATE {nameof(TypiconEntity)} SET `Status` = '{(int) status}' WHERE (`Id` = '{typiconId}');");
+        }
     }
 }

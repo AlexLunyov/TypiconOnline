@@ -8,7 +8,7 @@ using TypiconOnline.AppServices.Implementations;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Jobs;
 using TypiconOnline.Domain.Rules.Handlers;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Tests.Common;
@@ -77,7 +77,7 @@ namespace TypiconOnline.AppServices.Tests.Jobs
 
             var settingsFactory = new RuleHandlerSettingsFactory(serializerRoot);
 
-            var outputFormFactory = new OutputDayFactory(new ScheduleDataCalculator(query, settingsFactory)
+            var outputFormFactory = new OutputDayFactory(new MajorDataCalculator(query, settingsFactory)
                 , new ScheduleDayNameComposer(query)
                 , serializerRoot.TypiconSerializer
                 , new ServiceSequenceHandler());

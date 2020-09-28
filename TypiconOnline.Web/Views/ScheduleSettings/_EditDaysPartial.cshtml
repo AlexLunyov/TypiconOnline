@@ -1,0 +1,46 @@
+﻿@model ScheduleSettingsWeekDaysModel
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Редактирование графика дней богослужений</h4>
+    </div>
+    <div class="modal-body">
+        @if (Model == null)
+        {
+            <div class="row">
+                <h4>Произошла ошибка доступа</h4>
+            </div>
+        }
+        else
+        {
+            <form id="editDaysForm" asp-controller="ScheduleSettings" asp-action="EditDays" asp-route-TypiconId="@Model.TypiconId">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input type="checkbox" asp-for="IsMonday" /> Понедельник
+                    </div>
+                    <div class="col-sm-12">
+                        <input type="checkbox" asp-for="IsTuesday" /> Вторник
+                    </div>
+                    <div class="col-sm-12">
+                        <input type="checkbox" asp-for="IsWednesday" /> Среда
+                    </div>
+                    <div class="col-sm-12">
+                        <input type="checkbox" asp-for="IsThursday" /> Четверг
+                    </div>
+                    <div class="col-sm-12">
+                        <input type="checkbox" asp-for="IsFriday" /> Пятница
+                    </div>
+                    <div class="col-sm-12">
+                        <input type="checkbox" asp-for="IsSaturday" /> Суббота
+                    </div>
+                    <div class="col-sm-12">
+                        <input type="checkbox" asp-for="IsSunday" /> Воскресенье
+                    </div>
+                    <div class="col-xs-12"><button id="editDaysBtn" class="btn btn-primary">Сохранить</button></div>
+                </div>
+            </form>
+        }
+
+    </div>
+</div>

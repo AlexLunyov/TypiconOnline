@@ -2,7 +2,7 @@
 using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Query.Books;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Repository.EFCore.DataBase;
@@ -37,7 +37,12 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                     return Result.Fail<FilteredOutputWeek>(dayResult.Error);
                 }
 
-                week.Days.Add(dayResult.Value);
+                //доблавяем только день, у которого есть богослужения
+                if (dayResult.Value.Worships.Count > 0)
+                {
+                    week.Days.Add(dayResult.Value);
+                }
+
                 date = date.AddDays(1);
                 i++;
             }

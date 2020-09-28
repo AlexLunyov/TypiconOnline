@@ -123,32 +123,33 @@ function getHtml(jsonResp) {
             dayDateDiv.setAttribute('id', 'sched_date')
             dayDateDiv.innerHTML = wDayOfWeek + ", " + wDateFormatted
 
-            const dayNameDiv = scheduleDiv.appendChild(document.createElement('h4'))
-            dayNameDiv.setAttribute('id', 'sched_day_name')
-            dayNameDiv.setAttribute('class', day.Name.Language)
-            dayNameDiv.innerHTML = withModified(jsonResp.isEditor, day.ModifiedDate, day.Name.Text) + "&nbsp;"
+            if (day.Header != null) {
+                const dayNameDiv = scheduleDiv.appendChild(document.createElement('h4'))
+                dayNameDiv.setAttribute('id', 'sched_day_name')
+                dayNameDiv.setAttribute('class', day.Header.Name.Language)
+                dayNameDiv.innerHTML = withModified(jsonResp.isEditor, day.ModifiedDate, day.Header.Name.Text) + "&nbsp;"
 
-            if (jsonResp.isEditor) {
-                var elem = dayNameDiv.appendChild(document.createElement('a'))
-                elem.setAttribute('class', 'btn-edit')
-                elem.setAttribute('data-toggle', 'tooltip')
-                elem.setAttribute('data-original-title', 'Редактировать наименование дня')
-                elem.setAttribute('href', '#')
+                if (jsonResp.isEditor) {
+                    var elem = dayNameDiv.appendChild(document.createElement('a'))
+                    elem.setAttribute('class', 'btn-edit')
+                    elem.setAttribute('data-toggle', 'tooltip')
+                    elem.setAttribute('data-original-title', 'Редактировать наименование дня')
+                    elem.setAttribute('href', '#')
 
-                elem = elem.appendChild(document.createElement('i'))
-                elem.setAttribute('class', 'fas fa-pen')
+                    elem = elem.appendChild(document.createElement('i'))
+                    elem.setAttribute('class', 'fas fa-pen')
 
-                const dayIdHdn = dayNameDiv.appendChild(document.createElement('input'))
-                dayIdHdn.setAttribute('id', 'dayIdHdn')
-                dayIdHdn.setAttribute("type", "hidden")
-                dayIdHdn.setAttribute("value", day.Id);
+                    const dayIdHdn = dayNameDiv.appendChild(document.createElement('input'))
+                    dayIdHdn.setAttribute('id', 'dayIdHdn')
+                    dayIdHdn.setAttribute("type", "hidden")
+                    dayIdHdn.setAttribute("value", day.Id);
+                }
+
+                const daySignDiv = scheduleDiv.appendChild(document.createElement('label'))
+                daySignDiv.setAttribute('id', 'sched_day_sign')
+                daySignDiv.innerHTML = 'Знак службы: ' + day.Header.SignName
             }
-
-            const daySignDiv = scheduleDiv.appendChild(document.createElement('label'))
-            daySignDiv.setAttribute('id', 'sched_day_sign')
-            daySignDiv.setAttribute('class', day.SignName.Language)
-            daySignDiv.innerHTML = 'Знак службы: ' + day.SignName.Text
-
+            
             const tbl = scheduleDiv.appendChild(document.createElement('table'))
 
             day.Worships.forEach(function (worship) {

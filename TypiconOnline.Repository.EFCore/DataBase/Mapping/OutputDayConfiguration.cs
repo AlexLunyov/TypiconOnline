@@ -20,23 +20,11 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
                 .WithMany()
                 .HasForeignKey(c => c.TypiconId);
 
-
-            builder.OwnsOne(c => c.Name, name =>
-            {
-                name.OwnsMany(c => c.Items, items =>
-                {
-                    items.Property<int>("NameId");
-                    items.WithOwner().HasForeignKey("NameId");
-                    items.Property<int>("Id");
-                    items.HasKey("Id");
-                    items.ToTable("OutputDayNameItems");
-                });
-                //.ToTable("SignName");
-            });
-
-            builder.HasOne(c => c.PredefinedSign)
-                .WithMany()
-                .HasForeignKey(c => c.PredefinedSignId);
+            builder.HasOne(c => c.Header)
+                .WithOne()
+                .HasPrincipalKey<OutputDay>(c => c.Id)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Ignore(c => c.DayWorshipLinks);
         }

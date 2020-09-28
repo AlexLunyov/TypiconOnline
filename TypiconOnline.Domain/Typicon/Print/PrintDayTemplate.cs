@@ -38,6 +38,11 @@ namespace TypiconOnline.Domain.Typicon.Print
         public bool IsRed { get; set; }
 
         /// <summary>
+        /// Признак шаблона по умолчанию
+        /// </summary>
+        //public bool ByDefault { get; set; }
+
+        /// <summary>
         /// Word-документ с определенными в нем полями для отображения дня Выходной формы
         /// </summary>
         public byte[] PrintFile { get; set; }

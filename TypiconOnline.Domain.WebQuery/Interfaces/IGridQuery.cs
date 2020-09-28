@@ -9,6 +9,7 @@ namespace TypiconOnline.Domain.WebQuery.Interfaces
 {
     public interface IGridQuery<T> : IQuery<Result<IQueryable<T>>> where T: IGridModel
     {
+        //string Search { get; set; }
         string GetKey();
     }
 }

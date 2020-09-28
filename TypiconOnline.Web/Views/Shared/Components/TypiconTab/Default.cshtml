@@ -90,6 +90,14 @@
             {
                 <li><a asp-controller="Typicon" asp-action="Edit" asp-route-id="@Model.TypiconId">Свойства</a></li>
             }
+            @if (Model.Tab == TypiconTab.ScheduleSettings)
+            {
+                <li class="active"><a href="#">График богослужений</a></li>
+            }
+            else
+            {
+                <li><a asp-controller="ScheduleSettings" asp-action="Index" asp-route-id="@Model.TypiconId">График богослужений</a></li>
+            }
             @if (Model.Tab == TypiconTab.Operations)
             {
                 <li class="active"><a href="#">Операции</a></li>
@@ -118,7 +126,7 @@
                         {
                             <span id="varCountSpan" class="label label-@((!Model.IsTemplate && Model.EmptyPrintTemplatesCount > 0) ? "danger" : "default")"
                                   title="Количество печатных шаблонов без загруженных файлов">@Model.EmptyPrintTemplatesCount</span>
-                        }
+                            }
                     </a>
                 </li>
             }
@@ -129,9 +137,9 @@
                         Печатные шаблоны
                         @if (Model.EmptyPrintTemplatesCount > 0)
                         {
-                        <span id="varCountSpan" class="label label-@((!Model.IsTemplate && Model.EmptyPrintTemplatesCount > 0) ? "danger" : "default")"
-                                title="Количество печатных шаблонов без загруженных файлов">@Model.EmptyPrintTemplatesCount</span>
-                        }
+                            <span id="varCountSpan" class="label label-@((!Model.IsTemplate && Model.EmptyPrintTemplatesCount > 0) ? "danger" : "default")"
+                                  title="Количество печатных шаблонов без загруженных файлов">@Model.EmptyPrintTemplatesCount</span>
+                            }
                     </a>
                 </li>
             }
@@ -144,7 +152,7 @@
                         {
                             <span id="varCountSpan" class="label label-@((!Model.IsTemplate && Model.VariablesCount > 0) ? "danger" : "default")"
                                   title="Количество переменных">@Model.VariablesCount</span>
-                        }
+                            }
                     </a>
                 </li>
             }
@@ -157,7 +165,7 @@
                         {
                             <span id="varCountSpan" class="label label-@((!Model.IsTemplate && Model.VariablesCount > 0) ? "danger" : "default")"
                                   title="Количество переменных">@Model.VariablesCount</span>
-                        }
+                            }
                     </a>
                 </li>
             }

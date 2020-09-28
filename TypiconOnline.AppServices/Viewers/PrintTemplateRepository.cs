@@ -27,9 +27,17 @@ namespace TypiconOnline.AppServices.Viewers
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
         }
 
-        public GetDayTemplateResponse GetDayTemplate(int typiconId, int number)
+        public GetDayTemplateResponse GetDayTemplate(int typiconId, int? numberNull)
         {
             WordprocessingDocument doc;
+
+            //Получаем ненулевой номер шаблона
+            int number = int.MinValue;
+
+            if (numberNull.HasValue)
+            {
+                number = numberNull.Value;
+            }
 
             //если уже обращались, возвращаем сохраненный вариант
             if (_dayTemplates.ContainsKey(number))
@@ -39,7 +47,7 @@ namespace TypiconOnline.AppServices.Viewers
             else
             {
                 //иначе получаем новый
-                var day = _queryProcessor.Process(new PrintDayTemplateQuery(typiconId, number));
+                var day = _queryProcessor.Process(new PrintDayTemplateQuery(typiconId, numberNull));
 
                 if (day != null)
                 {
@@ -49,7 +57,14 @@ namespace TypiconOnline.AppServices.Viewers
 
                     doc = WordprocessingDocument.Open(stream, false);
 
-                    _docs[number] = (doc, stream);
+                    //сохраняем
+                    _docs[day.Number] = (doc, stream);
+
+                    //дополнительно сохраняем, если обращение было к шаблону по умолчанию
+                    if (!numberNull.HasValue)
+                    {
+                        _docs[number] = (doc, stream);
+                    }
                 }
                 else
                 {
@@ -69,9 +84,14 @@ namespace TypiconOnline.AppServices.Viewers
         /// <returns></returns>
         private IEnumerable<OpenXmlElement> GetCleanTemplate(IEnumerable<OpenXmlElement> elements)
         {
-            var list = elements.ToList();
+            var list = elements
+                //не копируем настройки секции документа, а также закладки
+                .Where(c => !(c is SectionProperties))
+                .ToList();
 
-            if (list.Count == 3
+            list.ClearFromErrorElements();
+
+            if (list.Count == 2
                 && list.OfType<Table>().Count() == 1
                 && list.OfType<Paragraph>().FirstOrDefault() is Paragraph p
                 && string.IsNullOrEmpty(p.InnerText))

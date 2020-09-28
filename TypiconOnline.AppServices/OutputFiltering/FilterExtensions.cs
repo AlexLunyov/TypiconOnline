@@ -7,7 +7,7 @@ using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Domain.Typicon.Output;
 //using TypiconOnline.Domain.Rules.Output;
 
-namespace TypiconOnline.Domain.WebQuery.OutputFiltering
+namespace TypiconOnline.AppServices.OutputFiltering
 {
     public static class FilterExtensions
     {
@@ -105,17 +105,23 @@ namespace TypiconOnline.Domain.WebQuery.OutputFiltering
          => new FilteredOutputDay()
             {
                 Id = day.Id,
-                Name = day.Name.FilterOut(filter),
                 Date = day.Date,
-                SignName = day.PredefinedSign?.SignName.FilterOut(filter),
-                SignNumber = day.PrintDayTemplate.Number,
-                Icon = day.PrintDayTemplate.Icon,
-                IsRed = day.PrintDayTemplate.IsRed,
-                Worships = day.Worships
+                 Header = day.Header?.FilterOut(filter),
+                 Worships = day.Worships
                             .OrderBy(c => c.Order)
                             .ToList()
                             .FilterOut(filter),
                 ModifiedDate = day.ModifiedDate
+         };
+
+        public static FilteredOutputDayHeader FilterOut(this OutputDayHeader header, OutputFilter filter)
+         => new FilteredOutputDayHeader()
+         {
+             Name = header.Name.FilterOut(filter),
+             SignName = header.PrintDayTemplate.Name,
+             SignNumber = header.PrintDayTemplate.Number,
+             Icon = header.PrintDayTemplate.Icon,
+             IsRed = header.PrintDayTemplate.IsRed,
          };
     }
 }

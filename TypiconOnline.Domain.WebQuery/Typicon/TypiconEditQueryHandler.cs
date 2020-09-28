@@ -2,6 +2,7 @@
 using Mapster;
 using System;
 using System.Linq;
+using TypiconOnline.AppServices.Extensions;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Typicon;
@@ -38,13 +39,14 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                     Description = draft.Description,
                     SystemName = typicon.SystemName,
                     DefaultLanguage = typicon.DefaultLanguage,
-                    IsModified =  draft.IsModified,
+                    IsModified = draft.IsModified,
                     IsTemplate = draft.IsTemplate,
                     HasVariables = draft.TypiconVariables.Any(),
                     HasEmptyPrintTemplates = draft.PrintDayTemplates
                                                     .Any(c => c.PrintFile == null || c.PrintFile.Length == 0),
-                    Editors = typicon.Editors.Select(c => (c.Id, c.FullName))
-                });
+                    Editors = typicon.Editors.Select(c => (c.Id, c.FullName)),
+                    PublishErrors = draft.Validate()
+                }); ;
             }
             else
             {

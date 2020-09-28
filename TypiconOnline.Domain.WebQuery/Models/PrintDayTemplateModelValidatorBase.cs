@@ -77,21 +77,23 @@ namespace TypiconOnline.Domain.WebQuery.Models
                             errors.Add(new ValidationResult($"Поле {OutputTemplateConstants.Date} отсутствует в определении шаблона", new List<string>() { "File" }));
                         }
 
-                        //[имядня]
-                        var dayNamePlacement = weekDoc.MainDocumentPart.Document.Body
-                            .FindElementsByText(OutputTemplateConstants.DayName)
-                            .FirstOrDefault();
+                        //[имядня] 
+                        //22.09.2020 теперь - НЕ обязательно
 
-                        if (dayNamePlacement == null)
-                        {
-                            errors.Add(new ValidationResult($"Поле {OutputTemplateConstants.DayName} отсутствует в определении шаблона", new List<string>() { "File" }));
-                        }
+                        //var dayNamePlacement = weekDoc.MainDocumentPart.Document.Body
+                        //    .FindElementsByText(OutputTemplateConstants.DayName)
+                        //    .FirstOrDefault();
+
+                        //if (dayNamePlacement == null)
+                        //{
+                        //    errors.Add(new ValidationResult($"Поле {OutputTemplateConstants.DayName} отсутствует в определении шаблона", new List<string>() { "File" }));
+                        //}
 
                         //[время] [имяслужбы]
                         var timePlacements = weekDoc.MainDocumentPart.Document.Body
                             .FindElementsByText(OutputTemplateConstants.Time);
 
-                        Text timePlacement = null;
+                        Run timePlacement = null;
 
                         if (timePlacements.Count() == 0)
                         {
@@ -109,7 +111,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
                         var worshipNamePlacements = weekDoc.MainDocumentPart.Document.Body
                             .FindElementsByText(OutputTemplateConstants.WorshipName);
 
-                        Text worshipNamePlacement = null;
+                        Run worshipNamePlacement = null;
 
                         if (worshipNamePlacements.Count() == 0)
                         {

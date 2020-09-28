@@ -19,6 +19,10 @@ namespace TypiconOnline.Domain.WebQuery.Models
         public bool HasEmptyPrintTemplates { get; set; }
         public bool DeleteModifiedOutputDays { get; set; } = false;
         /// <summary>
+        /// Описание причин, почему Устав не может быть опубликован
+        /// </summary>
+        public IEnumerable<string> PublishErrors { get; set; }
+        /// <summary>
         /// Список Id И Имен редакторов Устава
         /// </summary>
         public IEnumerable<(int, string)> Editors { get; set; }

@@ -13,5 +13,6 @@ namespace TypiconOnline.Domain.WebQuery.Models
         public string Name { get; set; }
         public int? Icon { get; set; }
         public bool Deletable { get; set; }
+        public bool IsDefault { get; set; }
     }
 }

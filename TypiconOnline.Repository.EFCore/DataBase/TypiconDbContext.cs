@@ -150,9 +150,10 @@ namespace TypiconOnline.Repository.EFCore.DataBase
             modelBuilder.Entity<TriodionRule>();
             //modelBuilder.ApplyConfiguration(new TriodionRuleConfiguration());
 
-            modelBuilder.ApplyConfiguration(new ExplicitAddRuleConfiguration());
+            modelBuilder.ApplyConfiguration(new ExplicitAddRuleConfiguration()); 
 
             modelBuilder.ApplyConfiguration(new OutputDayConfiguration());
+            modelBuilder.ApplyConfiguration(new OutputDayHeaderConfiguration());
             modelBuilder.ApplyConfiguration(new OutputWorshipConfiguration());
             modelBuilder.ApplyConfiguration(new OutputFormDayWorshipConfiguration()); 
 
@@ -217,7 +218,29 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 
             #endregion
 
+            #region Schedule settings
+            
+            modelBuilder.ApplyConfiguration(new ScheduleSettingsConfiguration());
 
+            modelBuilder.Entity<ModRuleEntitySchedule<Sign>>(c =>
+            {
+                c.HasKey(d => new { d.ScheduleSettingsId, d.RuleId });
+                c.ToTable("SignSchedule");
+            });
+
+            modelBuilder.Entity<ModRuleEntitySchedule<MenologyRule>>(c =>
+            {
+                c.HasKey(d => new { d.ScheduleSettingsId, d.RuleId });
+                c.ToTable("MenologyRuleSchedule");
+            });
+
+            modelBuilder.Entity<ModRuleEntitySchedule<TriodionRule>>(c =>
+            {
+                c.HasKey(d => new { d.ScheduleSettingsId, d.RuleId });
+                c.ToTable("TriodionRuleSchedule");
+            });
+
+            #endregion
 
             modelBuilder.ApplyConfiguration(new TypiconVersionErrorConfiguration());
 

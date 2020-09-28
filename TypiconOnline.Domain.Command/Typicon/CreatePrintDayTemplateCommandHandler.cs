@@ -39,6 +39,11 @@ namespace TypiconOnline.Domain.Command.Typicon
                 TypiconVersion = typiconVersion
             };
 
+            if (c.IsDefault)
+            {
+                typiconVersion.PrintDayDefaultTemplate = entity;
+            }
+
             return entity;
         }
     }

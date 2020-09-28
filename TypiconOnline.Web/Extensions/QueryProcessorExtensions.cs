@@ -31,9 +31,9 @@ namespace TypiconOnline.Web.Extensions
             }
         }
 
-        public static IEnumerable<SelectListItem> GetPrintTemplates(this IQueryProcessor queryProcessor, int typiconId)
+        public static IEnumerable<SelectListItem> GetPrintTemplates(this IQueryProcessor queryProcessor, int typiconId, bool forDraft = true)
         {
-            var signs = queryProcessor.Process(new AllPrintDayTemplatesQuery(typiconId));
+            var signs = queryProcessor.Process(new AllPrintDayTemplatesQuery(typiconId, forDraft));
 
             if (signs.Success)
             {

@@ -1,0 +1,139 @@
+﻿@model ScheduleSettingsWeekDaysModel
+
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+
+<div class="container">
+    @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.ScheduleSettings })
+    <div class="row">
+        <div class="col-12"><h1>График богослужений</h1></div>
+    </div>
+    <div class="row">
+        <div class="col-12"><h3>Дни недели</h3> <button id="editDays" class="btn btn-primary" data-id="@ViewContext.RouteData.Values["id"]">Редактировать</button></div>
+    </div>
+    <div class="row">
+        <div id="daysContainer" class="col-12">@await Html.PartialAsync("_ViewDaysPartial", Model)</div>
+    </div>
+    <div class="row">
+        <div class="col-12"><h3>Знаки служб</h3> <button id="addSign" class="btn btn-primary" data-id="@ViewContext.RouteData.Values["id"]">Добавить Знак службы</button></div>
+    </div>
+    <div class="row">
+        <div class="form-group col-12">
+            <div class="justify-content-center align-content-center">
+                <table id="signGrid" class="table table-striped table-bordered" style="width:100%">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>TemplateName</th>
+                            <th>IsAddition</th>
+                            <th>Number</th>
+                            <th>Priority</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12"><h3>Минея</h3> <button id="addMenology" class="btn btn-primary" data-id="@ViewContext.RouteData.Values["id"]">Добавить Минею</button></div>
+    </div>
+    <div class="row">
+        <div class="form-group col-12">
+            <div class="justify-content-center align-content-center">
+                <table id="menologyGrid" class="table table-striped table-bordered" style="width:100%">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>TemplateName</th>
+                            <th>IsAddition</th>
+                            <th>Date</th>
+                            <th>LeapDate</th>
+                            <th>HasModRule</th>
+                            <th>HasRule</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12"><h3>Триодь</h3> <button id="addTriodion" class="btn btn-primary" data-id="@ViewContext.RouteData.Values["id"]">Добавить Триодь</button></div>
+    </div>
+    <div class="row">
+        <div class="form-group col-12">
+            <div class="justify-content-center align-content-center">
+                <table id="triodionGrid" class="table table-striped table-bordered" style="width:100%">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Id</th>
+                            <th>Наименование</th>
+                            <th>Знак службы</th>
+                            <th>Дней от Пасхи</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    @*<div class="row">
+            <div class="col-12"><h3>Включенные даты</h3></div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <label>Добавить Включенную дату</label>
+                <div class="input-group date" id="addInclude">
+                    <input type="text" class="form-control">
+                    <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+                </div>
+                <input type="hidden" id="addInclude_date" value=""/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12">
+                <div class="justify-content-center align-content-center">
+                    <table id="includeGrid" class="table table-striped table-bordered" style="width:100%">
+                        <thead class="text-center">
+                            <tr>
+                                <th>Дата</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>*@
+</div>
+
+<div class="modal fade edit-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div id="modalWindow" class="modal-dialog modal-lg">
+    </div>
+</div>
+@*<div class="modal fade edit-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div id="modalDatesWindow" class="modal-dialog modal-sm">
+
+        </div>
+    </div>*@
+
+
+@section Scripts {
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/js/schedulesettings.js"></script>
+
+    <script src="~/lib/momentjs/moment-with-locales.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.min.js"></script>
+
+    @*<script>
+            var includedDates = @Html.Raw(Json.Serialize(Model.IncludedDates));
+            var excludedDates = @Html.Raw(Json.Serialize(Model.ExcludedDates));
+        </script>*@
+}
+

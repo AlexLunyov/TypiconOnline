@@ -9,38 +9,47 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
 namespace TypiconOnline.AppServices.Implementations
 {
     /// <summary>
     /// Наследник базового класса. Переопределяет правило для исполнения
     /// </summary>
-    public class CustomScheduleDataCalculator : ScheduleDataCalculator
+    public class CustomScheduleDataCalculator : IScheduleDataCalculator
     {
         public CustomScheduleDataCalculator(IRuleSerializerRoot ruleSerializer
-            , IRuleHandlerSettingsFactory settingsFactory) 
-            : base(ruleSerializer.QueryProcessor, settingsFactory)
+            , IRuleHandlerSettingsFactory settingsFactor
+            , IScheduleDataCalculator decoratee) 
         {
             RuleSerializer = ruleSerializer ?? throw new ArgumentNullException(nameof(ruleSerializer));
+            Decoratee = decoratee ?? throw new ArgumentNullException(nameof(decoratee));
         }
 
         public string CustomRule { get; set; }
 
         protected IRuleSerializerRoot RuleSerializer { get; }
 
+        protected IScheduleDataCalculator Decoratee { get; }
+
         /// <summary>
         /// Переопределяет правило для исполнения
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public override ScheduleDataCalculatorResponse Calculate(ScheduleDataCalculatorRequest request)
+        public Result<ScheduleDataCalculatorResponse> Calculate(ScheduleDataCalculatorRequest request)
         {
-            var response = base.Calculate(request);
+            var response = Decoratee.Calculate(request);
 
-            response.Settings.RuleContainer = RuleSerializer.Container<RootContainer>().Deserialize(CustomRule);
+            if (response.Failure)
+            {
+                return response;
+            }
+
+            response.Value.Settings.RuleContainer = RuleSerializer.Container<RootContainer>().Deserialize(CustomRule);
 
             //обнуляем добавления?
-            response.Settings.Addition = null;
+            response.Value.Settings.Addition = null;
 
             return response;
         }

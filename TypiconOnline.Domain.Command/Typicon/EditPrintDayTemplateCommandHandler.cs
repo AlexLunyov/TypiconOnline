@@ -44,6 +44,11 @@ namespace TypiconOnline.Domain.Command.Typicon
                 entity.PrintFileName = c.PrintFileName;
             }
 
+            if (c.IsDefault)
+            {
+                entity.TypiconVersion.PrintDayDefaultTemplate = entity;
+            }
+
             return Result.Ok();
         }
     }

@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Typicon\SignSchedule.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Books\Menology\" />
   </ItemGroup>
 

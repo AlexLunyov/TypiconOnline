@@ -5,6 +5,7 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.AppServices.Implementations
@@ -24,11 +25,11 @@ namespace TypiconOnline.AppServices.Implementations
             _settingsFactory = settingsFactory ?? throw new ArgumentNullException(nameof(settingsFactory));
         }
 
-        public override ScheduleDataCalculatorResponse Calculate(ScheduleDataCalculatorRequest request)
+        public override Result<ScheduleDataCalculatorResponse> Calculate(ScheduleDataCalculatorRequest request)
         {
             var result = _innerCalculator.Calculate(request);
 
-            if (result.Exception != null)
+            if (result.Failure)
             {
                 return result;
             }
@@ -38,19 +39,22 @@ namespace TypiconOnline.AppServices.Implementations
 
             if (explicitAddRule != null)
             {
-                var settings = _settingsFactory.CreateExplicit(new CreateExplicitRuleSettingsRequest(request)
+                var create = _settingsFactory.CreateExplicit(new CreateExplicitRuleSettingsRequest(request)
                 {
                     Rule = explicitAddRule
                 });
 
-                var lastAddition = GetLastAddition(result.Settings);
+                if (create.Success && create.Value is RuleHandlerSettings settings)
+                {
+                    var lastAddition = GetLastAddition(result.Value.Settings);
 
-                //и задаем результат у последнего найденного Addition
-                settings.Menologies = lastAddition.Menologies;
-                settings.Triodions = lastAddition.Triodions;
-                settings.OktoikhDay = lastAddition.OktoikhDay;
+                    //и задаем результат у последнего найденного Addition
+                    settings.Menologies = lastAddition.Menologies;
+                    settings.Triodions = lastAddition.Triodions;
+                    settings.OktoikhDay = lastAddition.OktoikhDay;
 
-                lastAddition.Addition = settings;
+                    lastAddition.Addition = settings;
+                }
             }
 
             return result;

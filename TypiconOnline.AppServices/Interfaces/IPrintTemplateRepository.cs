@@ -8,6 +8,6 @@ namespace TypiconOnline.AppServices.Interfaces
 {
     public interface IPrintTemplateRepository : IDisposable
     {
-        GetDayTemplateResponse GetDayTemplate(int typiconId, int number);
+        GetDayTemplateResponse GetDayTemplate(int typiconId, int? number);
     }
 }

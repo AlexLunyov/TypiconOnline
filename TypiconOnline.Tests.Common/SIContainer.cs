@@ -42,7 +42,7 @@ namespace TypiconOnline.Tests.Common
             Register(typeof(IQueryHandler<,>), typeof(QueryProcessor).Assembly, typeof(TypiconEntityModel).Assembly);
             Register<IQueryProcessor, DataQueryProcessor>();
 
-            Register(typeof(ICommandHandler<>), typeof(CommandProcessor).Assembly, typeof(ScheduleDataCalculator).Assembly);
+            Register(typeof(ICommandHandler<>), typeof(CommandProcessor).Assembly, typeof(MajorDataCalculator).Assembly);
 
             RegisterConditional<ICommandProcessor, AsyncCommandProcessor>(
                 c => c.Consumer.ImplementationType == typeof(JobExecutor));

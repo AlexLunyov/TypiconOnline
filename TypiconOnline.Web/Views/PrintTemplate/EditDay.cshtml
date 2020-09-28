@@ -68,6 +68,13 @@
             </div>
         </div>
         <div class="row">
+            <div class="checkbox col-sm-8">
+                <label>
+                    <input type="checkbox" asp-for="IsDefault" disabled="@(Model.IsDefault ? " disabled" : null)"/> <b>Является печатным шаблоном по умолчанию</b>
+                </label>
+            </div>
+        </div>
+        <div class="row">
             <div class="form-group col-md-8">
                 <div class="validation" asp-validation-summary="ModelOnly"></div>
             </div>

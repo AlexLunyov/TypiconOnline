@@ -12,9 +12,65 @@ namespace TypiconOnline.Domain.Extensions
 {
     public static class CloneExtensions
     {
+        /// <summary>
+        /// Копирует дочерние коллекции и свойство PrintDayDefaultTemplate в указанный объект
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="version"></param>
+        public static void CopyChildrenTo(this TypiconVersion source, TypiconVersion version)
+        {
+            CloneTypiconVariables(version, source.TypiconVariables);
+
+            ClonePrintTemplates(version, source);
+
+            CloneCommonRules(version, source.CommonRules);
+            CloneExplicitAddRules(version, source.ExplicitAddRules);
+            CloneKathismas(version, source.Kathismas);
+
+            CloneScheduleSettings(version, source.ScheduleSettings);
+
+            CloneSignsAndDayRules(version, source);
+        }
+
+        /// <summary>
+        /// Копирует данный объект в указанный
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="version"></param>
+        public static void CopyTo(this TypiconVersion source, TypiconVersion version)
+        {
+            version.BDate = source.BDate;
+            version.CDate = DateTime.Now;
+            version.EDate = source.EDate;
+            version.IsModified = source.IsModified;
+            version.IsTemplate = source.IsTemplate;
+            version.ValidationStatus = source.ValidationStatus;
+            version.Name = new ItemText(source.Name);
+            version.Description = new ItemText(source.Description);
+            version.VersionNumber = source.VersionNumber;
+            version.PrevVersionId = source.Id;
+
+            CloneTypiconVariables(version, source.TypiconVariables);
+
+            ClonePrintTemplates(version, source);
+
+            CloneCommonRules(version, source.CommonRules);
+            CloneExplicitAddRules(version, source.ExplicitAddRules);
+            CloneKathismas(version, source.Kathismas);
+
+            CloneScheduleSettings(version, source.ScheduleSettings);
+
+            CloneSignsAndDayRules(version, source);
+        }
+
+        /// <summary>
+        /// Возвращает клонированную копию объекта без вложенных коллекций
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static TypiconVersion Clone(this TypiconVersion source)
         {
-            var version = new TypiconVersion()
+            return new TypiconVersion()
             {
                 BDate = source.BDate,
                 CDate = DateTime.Now,
@@ -27,17 +83,26 @@ namespace TypiconOnline.Domain.Extensions
                 VersionNumber = source.VersionNumber,
                 PrevVersionId = source.Id
             };
+        }
 
-            CloneTypiconVariables(version, source.TypiconVariables);
+        private static void CloneScheduleSettings(TypiconVersion version, ScheduleSettings scheduleSettings)
+        {
+            if (scheduleSettings != null)
+            {
+                version.ScheduleSettings = new ScheduleSettings()
+                {
+                    IsMonday = scheduleSettings.IsMonday,
+                    IsTuesday = scheduleSettings.IsTuesday,
+                    IsWednesday = scheduleSettings.IsWednesday,
+                    IsThursday = scheduleSettings.IsThursday,
+                    IsFriday = scheduleSettings.IsFriday,
+                    IsSaturday = scheduleSettings.IsSaturday,
+                    IsSunday = scheduleSettings.IsSunday
+                };
 
-            ClonePrintTemplates(version, source);
-
-            CloneCommonRules(version, source.CommonRules);
-            CloneExplicitAddRules(version, source.ExplicitAddRules);
-            CloneKathismas(version, source.Kathismas);
-            CloneSignsAndDayRules(version, source);
-
-            return version;
+                version.ScheduleSettings.IncludedDates.AddRange(scheduleSettings.IncludedDates);
+                version.ScheduleSettings.ExcludedDates.AddRange(scheduleSettings.ExcludedDates);
+            }
         }
 
         private static void ClonePrintTemplates(TypiconVersion version, TypiconVersion source)
@@ -56,15 +121,25 @@ namespace TypiconOnline.Domain.Extensions
             //days
             version.PrintDayTemplates
                 .AddRange(source.PrintDayTemplates
-                    .Select(c => new PrintDayTemplate()
+                    .Select(c =>
                     {
-                        Name = c.Name,
-                        Number = c.Number,
-                        PrintFile = c.PrintFile,
-                        PrintFileName = c.PrintFileName,
-                        Icon = c.Icon,
-                        IsRed = c.IsRed,
-                        TypiconVersion = version
+                        var r = new PrintDayTemplate()
+                        {
+                            Name = c.Name,
+                            Number = c.Number,
+                            PrintFile = c.PrintFile,
+                            PrintFileName = c.PrintFileName,
+                            Icon = c.Icon,
+                            IsRed = c.IsRed,
+                            TypiconVersion = version
+                        };
+                        //default
+                        if (source.PrintDayDefaultTemplate == c)
+                        {
+                            version.PrintDayDefaultTemplate = r;
+                        }
+
+                        return r;
                     }));
         }
 
@@ -79,11 +154,11 @@ namespace TypiconOnline.Domain.Extensions
                 {
                     IsAddition = sign.IsAddition,
                     ModRuleDefinition = sign.ModRuleDefinition,
-                    
+
                     PrintTemplate = (sign.PrintTemplate != null)
                         ? versionTo.PrintDayTemplates.First(c => c.Number == sign.PrintTemplate.Number)
                         : default,
-                    
+
                     Priority = sign.Priority,
                     RuleDefinition = sign.RuleDefinition,
                     SignName = new ItemText(sign.SignName),
@@ -100,6 +175,13 @@ namespace TypiconOnline.Domain.Extensions
 
                 //PrintTemplateLinks
                 sign.PrintTemplateLinks.ClonePrintTemplateLinks(versionTo, newSign);
+
+                //ScheduleSettings
+                CloneScheduleRules(sign
+                        , newSign
+                        , versionFrom.ScheduleSettings.Signs
+                        , versionTo.ScheduleSettings.Signs
+                        , versionTo.ScheduleSettings);
             }
 
             //находим MenologyRules
@@ -135,6 +217,16 @@ namespace TypiconOnline.Domain.Extensions
 
                 //PrintTemplateLinks
                 oldMenology.PrintTemplateLinks.ClonePrintTemplateLinks(versionTo, newMenology);
+
+                //ScheduleSettings
+                if (versionFrom.ScheduleSettings != null)
+                {
+                    CloneScheduleRules(oldMenology
+                        , newMenology
+                        , versionFrom.ScheduleSettings.MenologyRules
+                        , versionTo.ScheduleSettings.MenologyRules
+                        , versionTo.ScheduleSettings);
+                }
             }
 
             //находим TriodionRules
@@ -170,6 +262,13 @@ namespace TypiconOnline.Domain.Extensions
 
                 //PrintTemplateLinks
                 oldTriodion.PrintTemplateLinks.ClonePrintTemplateLinks(versionTo, newTriodion);
+
+                //ScheduleSettings
+                CloneScheduleRules(oldTriodion
+                        , newTriodion
+                        , versionFrom.ScheduleSettings.TriodionRules
+                        , versionTo.ScheduleSettings.TriodionRules
+                        , versionTo.ScheduleSettings);
             }
         }
 
@@ -184,7 +283,7 @@ namespace TypiconOnline.Domain.Extensions
                     TypiconVersion = version
                 };
 
-                c.SlavaElements.ForEach(s => 
+                c.SlavaElements.ForEach(s =>
                 {
                     var slavaElement = new SlavaElement();
 
@@ -258,7 +357,7 @@ namespace TypiconOnline.Domain.Extensions
             });
         }
 
-        private static void CloneVariableRuleLinks<T>(this List<VariableRuleLink<T>> links, TypiconVersion version, T rule) where T: RuleEntity, new()
+        private static void CloneVariableRuleLinks<T>(this List<VariableRuleLink<T>> links, TypiconVersion version, T rule) where T : RuleEntity, new()
         {
             links.ForEach(link =>
             {
@@ -292,5 +391,27 @@ namespace TypiconOnline.Domain.Extensions
                 newPrintTemplate.AddLink(rule);
             });
         }
+
+        /// <summary>
+        /// клонирует связанные элементы для графика богослужений ScheduleSettings
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="rule"></param>
+        /// <param name=""></param>
+        private static void CloneScheduleRules<T>(this T oldRule
+            , T newRule
+            , List<ModRuleEntitySchedule<T>> oldList
+            , List<ModRuleEntitySchedule<T>> newList
+            , ScheduleSettings newSettings) where T : ModRuleEntity, new()
+        {
+            if (newSettings != null)
+            {
+                if (oldList.Any(c => c.RuleId == oldRule.Id))
+                {
+                    newList.Add(new ModRuleEntitySchedule<T>() { Rule = newRule, ScheduleSettings = newSettings });
+                }
+            }
+        }
+
     }
 }

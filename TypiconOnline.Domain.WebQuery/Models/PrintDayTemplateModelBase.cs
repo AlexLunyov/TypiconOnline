@@ -13,5 +13,6 @@ namespace TypiconOnline.Domain.WebQuery.Models
         public bool IsRed { get; set; }
         public string Name { get; set; }
         public IFormFile File { get; set; }
+        public bool IsDefault { get; set; }
     }
 }

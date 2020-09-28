@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
 namespace TypiconOnline.AppServices.Interfaces
 {
@@ -15,12 +16,12 @@ namespace TypiconOnline.AppServices.Interfaces
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        RuleHandlerSettings CreateRecursive(CreateRuleSettingsRequest request);
+        Result<RuleHandlerSettings> CreateRecursive(CreateRuleSettingsRequest request);
         /// <summary>
         /// Создает настройки из ExplicitAddRule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        RuleHandlerSettings CreateExplicit(CreateExplicitRuleSettingsRequest request);
+        Result<RuleHandlerSettings> CreateExplicit(CreateExplicitRuleSettingsRequest request);
     }
 }

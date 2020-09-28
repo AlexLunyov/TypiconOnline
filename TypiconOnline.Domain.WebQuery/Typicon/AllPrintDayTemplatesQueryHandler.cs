@@ -28,17 +28,21 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
         public Result<IQueryable<PrintDayTemplateGridModel>> Handle([NotNull] AllPrintDayTemplatesQuery query)
         {
-            var draft = DbContext.Set<TypiconVersion>()
-                            .Where(c => c.TypiconId == query.TypiconId && c.BDate == null && c.EDate == null)
-                            .FirstOrDefault();
+            var v = DbContext.Set<TypiconVersion>()
+                            .Where(c => c.TypiconId == query.TypiconId);
+            v = (query.ForDraft)
+                ? v.Where(TypiconVersion.IsDraft)
+                : v.Where(TypiconVersion.IsPublished);
 
-            if (draft == null)
+            var version = v.FirstOrDefault();
+
+            if (version == null)
             {
                 return Result.Fail<IQueryable<PrintDayTemplateGridModel>>($"Черновик для Устава с Id={query.TypiconId} не был найден.");
             }
 
             var entities = DbContext.Set<PrintDayTemplate>()
-                .Where(c => c.TypiconVersionId == draft.Id);
+                .Where(c => c.TypiconVersionId == version.Id);
 
             var result = entities.Select(c => new PrintDayTemplateGridModel()
                 {
@@ -50,7 +54,8 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                     Deletable = c.SignLinks.Count == 0
                              && c.SignPrintLinks.Count == 0
                              && c.MenologyPrintLinks.Count == 0
-                             && c.TriodionPrintLinks.Count == 0
+                             && c.TriodionPrintLinks.Count == 0,
+                    IsDefault = c == version.PrintDayDefaultTemplate
             });
 
             //ужасная мера

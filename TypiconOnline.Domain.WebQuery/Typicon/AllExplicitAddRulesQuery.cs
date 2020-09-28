@@ -16,6 +16,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
             TypiconId = typiconId;
         }
         public int TypiconId { get; }
+        //public string Search { get; set; }
 
         public string GetKey() => $"{nameof(AllExplicitAddRulesQuery)}.{TypiconId}";
     }

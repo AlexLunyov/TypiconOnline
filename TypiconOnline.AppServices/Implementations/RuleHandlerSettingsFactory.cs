@@ -9,6 +9,7 @@ using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Rules.Executables;
 using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -25,20 +26,18 @@ namespace TypiconOnline.AppServices.Implementations
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public virtual RuleHandlerSettings CreateRecursive(CreateRuleSettingsRequest req)
+        public virtual Result<RuleHandlerSettings> CreateRecursive(CreateRuleSettingsRequest req)
         {
             if (req == null)
             {
                 throw new ArgumentNullException(nameof(req));
             }
 
-            RuleHandlerSettings settings = null;
-
             (ITemplateHavingEntity existingRule, RootContainer container) = GetFirstExistingRule(req.Rule, req.RuleMode);
 
             if (existingRule != null)
             {
-                settings = InnerCreate(req, container);
+                var settings = InnerCreate(req, container);
 
                 if (existingRule.IsAddition && existingRule.Template != null)
                 {
@@ -46,9 +45,11 @@ namespace TypiconOnline.AppServices.Implementations
 
                     settings = CreateRecursive(req);
                 }
+
+                return settings;
             }
 
-            return settings;
+           return Result.Fail<RuleHandlerSettings>("");
         }
 
         /// <summary>
@@ -56,7 +57,7 @@ namespace TypiconOnline.AppServices.Implementations
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public RuleHandlerSettings CreateExplicit(CreateExplicitRuleSettingsRequest req)
+        public Result<RuleHandlerSettings> CreateExplicit(CreateExplicitRuleSettingsRequest req)
         {
             if (req == null)
             {
@@ -94,7 +95,7 @@ namespace TypiconOnline.AppServices.Implementations
             return (r, cont);
         }
 
-        private RuleHandlerSettings InnerCreate(CreateRuleSettingsRequest req, RootContainer container)
+        private Result<RuleHandlerSettings> InnerCreate(CreateRuleSettingsRequest req, RootContainer container)
         {
             var settings = new RuleHandlerSettings()
             {
@@ -118,19 +119,20 @@ namespace TypiconOnline.AppServices.Implementations
                 settings.Triodions = req.Triodions.ToList();
             }
 
-            return settings;
+            return Result.Ok(settings);
         }
 
-        private RuleHandlerSettings InnerCreate(CreateExplicitRuleSettingsRequest req, RootContainer container)
+        private Result<RuleHandlerSettings> InnerCreate(CreateExplicitRuleSettingsRequest req, RootContainer container)
         {
-            return new RuleHandlerSettings()
-            {
-                TypiconVersionId = req.TypiconVersionId,
-                Date = req.Date,
-                RuleContainer = container,
-                ApplyParameters = req.ApplyParameters,
-                CheckParameters = req.CheckParameters
-            };
+            return Result.Ok(
+                new RuleHandlerSettings()
+                {
+                    TypiconVersionId = req.TypiconVersionId,
+                    Date = req.Date,
+                    RuleContainer = container,
+                    ApplyParameters = req.ApplyParameters,
+                    CheckParameters = req.CheckParameters
+                });
         }
     }
 }

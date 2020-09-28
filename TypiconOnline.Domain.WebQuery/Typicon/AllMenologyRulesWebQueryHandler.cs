@@ -28,8 +28,8 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         public Result<IQueryable<MenologyRuleGridModel>> Handle([NotNull] AllMenologyRulesWebQuery query)
         {
             var draft = DbContext.Set<TypiconVersion>()
-                            .Where(c => c.TypiconId == query.TypiconId 
-                                    && c.BDate == null && c.EDate == null)
+                            .Where(c => c.TypiconId == query.TypiconId)
+                            .Where(TypiconVersion.IsDraft)
                             .FirstOrDefault();
 
             if (draft == null)

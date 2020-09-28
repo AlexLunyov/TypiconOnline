@@ -17,6 +17,8 @@ namespace TypiconOnline.Domain.WebQuery.Books
         }
         //public string Language { get; }
 
+        //public string Search { get; set; }
+
         public string GetKey() => nameof(AllOktoikhDaysQuery);
         //public string GetKey() => $"{nameof(AllOktoikhDaysQuery)}.{Language}";
     }

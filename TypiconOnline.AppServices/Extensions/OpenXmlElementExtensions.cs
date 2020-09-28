@@ -4,28 +4,29 @@ using System.Collections.Generic;
 using System.Text;
 using DocumentFormat.OpenXml.Wordprocessing;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
 using TypiconOnline.Domain.ItemTypes;
 using System.Linq;
 using DocumentFormat.OpenXml.Packaging;
+using TypiconOnline.AppServices.OutputFiltering;
+using System.IO;
 
 namespace TypiconOnline.AppServices.Extensions
 {
     public static class OpenXmlElementExtensions
     {
         /// <summary>
-        /// Возвращает список элементов, содержащих искомый текст
+        /// Возвращает список элементов Run, содержащих искомый текст
         /// </summary>
         /// <param name="element"></param>
         /// <param name="search"></param>
         /// <returns></returns>
-        public static IEnumerable<Text> FindElementsByText(this OpenXmlElement element, string search)
+        public static IEnumerable<Run> FindElementsByText(this OpenXmlElement element, string search)
         {
-            var result = new List<Text>();
+            var result = new List<Run>();
 
             foreach (var child in element.ChildElements)
             {
-                if (child is Text t && t.Text.Contains(search))
+                if (child is Run t && t.InnerText.Contains(search))
                 {
                     result.Add(t);
                 }
@@ -36,9 +37,9 @@ namespace TypiconOnline.AppServices.Extensions
             return result;
         }
 
-        public static IEnumerable<Text> FindElementsByText(this IEnumerable<OpenXmlElement> elements, string search)
+        public static IEnumerable<Run> FindElementsByText(this IEnumerable<OpenXmlElement> elements, string search)
         {
-            var result = new List<Text>();
+            var result = new List<Run>();
 
             foreach (var child in elements)
             {
@@ -53,10 +54,11 @@ namespace TypiconOnline.AppServices.Extensions
             bool found = false;
             foreach (var child in element.ChildElements)
             {
-                if (child is Text t && t.Text.Contains(search))
+                //проходим несколько раз, потому что может быть сразу несколько замен
+                while (child is Run r && r.InnerText.Contains(search))
                 {
-                    t.Text = t.Text.Replace(search, replace);
-
+                    //заменяем текст
+                    r.ReplaceText(search, replace);
                     found = true;
                 }
 
@@ -66,6 +68,30 @@ namespace TypiconOnline.AppServices.Extensions
             return (found) ? Result.Ok() : Result.Fail($"Поле для заполнения {search} не было найдено в шаблоне дня.");
         }
 
+        public static void ReplaceText(this Run run, string search, string replace)
+        {
+            //находим первый Text, в котором находятся фрагменты искомого 
+            Text text = run.ChildElements.First(c => (c is Text t) && search.Contains(t.Text)) as Text;
+            
+            string result = text.Text;
+            //задаем ему новое значение
+            text.Text = replace;
+
+            text = text.NextSibling() as Text;
+
+            //удаляем все последующие Text, пока не соберется полное значение search
+            while (result != search || text != null)
+            {
+                result += text.Text;
+
+                var toRemove = text;
+
+                text = text.NextSibling() as Text;
+
+                toRemove.Remove();
+            }
+        }
+
         public static Result ReplaceElementsByWorship(this OpenXmlElement element, string search, FilteredOutputWorship p)
         {
             bool found = false;
@@ -73,6 +99,10 @@ namespace TypiconOnline.AppServices.Extensions
             {
                 if (child is Run run && run.InnerText.Contains(search))
                 {
+                    //Name
+                    run.ReplaceText(search, p.Name.Text.Text);
+                    run.ApplyStyle(p.Name.Style);
+
                     //AdditionalName
                     if (p.AdditionalName.Text != null)
                     {
@@ -80,21 +110,14 @@ namespace TypiconOnline.AppServices.Extensions
                         var runAdd = run.CloneNode(true) as Run;
 
                         //находим текст и задаем его
-                        var t = runAdd.ChildElements.First(c => c is Text) as Text;
-                        t.Text = p.AdditionalName.Text.Text;
-                        t.Space = SpaceProcessingModeValues.Preserve;
+                        runAdd.ReplaceText(p.Name.Text.Text, " " + p.AdditionalName.Text.Text);
 
                         //применяем стили
                         runAdd.ApplyStyle(p.AdditionalName.Style);
 
                         //вставляем после текста шаблона
-                        child.InsertAfterSelf(runAdd);
+                        run.InsertAfterSelf(runAdd);
                     }
-                    
-
-                    //Name
-                    run.ReplaceElementsByText(search, p.Name.Text.Text);
-                    run.ApplyStyle(p.Name.Style);
 
                     found = true;
                 }
@@ -140,12 +163,50 @@ namespace TypiconOnline.AppServices.Extensions
             run.RunProperties.Italic = (style.IsItalic) ? new Italic() : null;
         }
 
-        public static string CopyPart(this WordprocessingDocument newDoc, string relId, MainDocumentPart mainDocumentPart)
+        public static string CopyImagePart(this WordprocessingDocument newDoc, string relId, MainDocumentPart mainDocumentPart)
         {
             var p = mainDocumentPart.GetPartById(relId) as ImagePart;
-            var newPart = newDoc.MainDocumentPart.AddPart(p);
-            newPart.FeedData(p.GetStream());
-            return newDoc.MainDocumentPart.GetIdOfPart(newPart);
+            var newPart = newDoc.MainDocumentPart.AddImagePart(p.ContentType);
+            newPart.FeedData(p.GetStream(FileMode.Open, FileAccess.Read));
+            return newDoc.MainDocumentPart.CreateRelationshipToPart(newPart);
+            //return newDoc.MainDocumentPart.GetIdOfPart(newPart);
+        }
+
+        /// <summary>
+        /// Очищает все элементы и их 
+        /// </summary>
+        /// <param name="elements"></param>
+        public static void ClearFromErrorElements(this IEnumerable<OpenXmlElement> elements)
+        {
+            foreach (var element in elements)
+            {
+                element.ChildElements
+                .Where(c => c is SectionProperties
+                         || c is BookmarkStart
+                         || c is BookmarkEnd)
+                .ToList()
+                .ForEach(c => c.Remove());
+
+                element.ChildElements.ClearFromErrorElements();
+            }
+        }
+
+        public static void CopyRelativeElements(this OpenXmlElement element, WordprocessingDocument weekDoc, MainDocumentPart fromPart)
+        {
+            //images
+            element.Descendants<DocumentFormat.OpenXml.Drawing.Blip>().ToList()
+                .ForEach(blip =>
+                {
+                    var newRelation = weekDoc.CopyImagePart(blip.Embed, fromPart);
+                    blip.Embed = newRelation;
+                });
+
+            element.Descendants<DocumentFormat.OpenXml.Vml.ImageData>().ToList()
+                .ForEach(imageData =>
+                {
+                    var newRelation = weekDoc.CopyImagePart(imageData.RelationshipId, fromPart);
+                    imageData.RelationshipId = newRelation;
+                });
         }
     }
 }

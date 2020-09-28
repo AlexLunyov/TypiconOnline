@@ -58,14 +58,14 @@ namespace TypiconOnline.Tests.Common
 
             container.Register<ITypiconSerializer, TypiconSerializer>();
 
-            container.Register(typeof(ICommandHandler<>), typeof(ScheduleDataCalculator).Assembly);
+            container.Register(typeof(ICommandHandler<>), typeof(MajorDataCalculator).Assembly);
             container.Register<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
             container.Register<IScheduleDayNameComposer, ScheduleDayNameComposer>();
             container.Register<IRuleSerializerRoot, RuleSerializerRoot>();
             //container.Register<IOutputForms, OutputForms>();
             container.Register<IOutputDayFactory, OutputDayFactory>();
 
-            container.Register<IScheduleDataCalculator, ScheduleDataCalculator>();
+            container.Register<IScheduleDataCalculator, MajorDataCalculator>();
             container.RegisterDecorator(
                 typeof(IScheduleDataCalculator),
                 typeof(TransparentDataCalculator));

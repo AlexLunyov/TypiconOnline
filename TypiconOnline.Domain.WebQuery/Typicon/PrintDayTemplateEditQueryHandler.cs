@@ -37,7 +37,8 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                     OldFileName = found.PrintFileName,
                     Name = found.Name,
                     Icon = found.Icon,
-                    IsRed = found.IsRed
+                    IsRed = found.IsRed,
+                    IsDefault = found == found.TypiconVersion.PrintDayDefaultTemplate
                 });
             }
             else

@@ -9,8 +9,12 @@
     @foreach (var day in Model.Value.Days)
     {
         <h3>@day.Date.ToString("dd MMMM yyyy г.")</h3>
-        <h3 class="@day.Name.Language">@day.Name.Text</h3>
-        <h4 class="@day.SignName.Language">Знак службы: @day.SignName.Text</h4>
+        if (day.Header != null)
+        {
+            <h3 class="@day.Header.Name.Language">@day.Header.Name</h3>
+            <h4>Знак службы: @day.Header.SignName</h4>
+        }
+
         <table>
             @{int i = 0;}
             @foreach (var worship in day.Worships)

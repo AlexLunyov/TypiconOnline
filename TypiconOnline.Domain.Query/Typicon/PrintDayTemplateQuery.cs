@@ -7,13 +7,13 @@ namespace TypiconOnline.Domain.Query.Typicon
 {
     public class PrintDayTemplateQuery : IQuery<PrintDayTemplate>
     {
-        public PrintDayTemplateQuery(int typiconId, int number)
+        public PrintDayTemplateQuery(int typiconId, int? number)
         {
             TypiconId = typiconId;
             Number = number;
         }
 
         public int TypiconId { get; }
-        public int Number { get; }
+        public int? Number { get; }
     }
 }

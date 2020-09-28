@@ -12,7 +12,7 @@ using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.AppServices.Common;
 using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Domain.ItemTypes;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 
 namespace TypiconOnline.AppServices.Viewers
 {
@@ -159,14 +159,15 @@ namespace TypiconOnline.AppServices.Viewers
 
             try
             {
+                int signNumber = (day.Header != null) ? day.Header.SignNumber : 0;
                 //в зависимости от того, какой знак дня - берем для заполнения шаблона соответствующую таблицу в templateTables
-                Table dayTemplateTable = templateTables[day.SignNumber + 1] ?? templateTables[1];
+                Table dayTemplateTable = templateTables[signNumber + 1] ?? templateTables[1];
 
                 TableRow tr = (TableRow)dayTemplateTable.ChildElements[2].Clone();
                 TableCell tdDayofweek = (TableCell)tr.ChildElements[2];
                 TableCell tdName = (TableCell)tr.ChildElements[3];
                 string sDayofweek = day.Date.ToString("dddd").ToUpper();
-                string sName = day.Name.Text;
+                string sName = (day.Header != null) ? day.Header.Name.Text : string.Empty;
                 //TODO: реализовать функционал
                 bool bIsNameBold = false;//(dayNode.SelectSingleNode("name").Attributes["isbold"] != null);
 

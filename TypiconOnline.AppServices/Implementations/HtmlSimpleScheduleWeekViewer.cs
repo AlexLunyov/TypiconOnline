@@ -7,7 +7,7 @@ using TypiconOnline.AppServices.Common;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Output;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -25,23 +25,28 @@ namespace TypiconOnline.AppServices.Implementations
             //теперь начинаем наполнять дни
             foreach (var day in week.Days)
             {
+                
                 _resultString += "<div style=\"margin - top:10px; \">";
 
                 //Sign
-                if (day.Icon.HasValue)
+                if (day.Header?.Icon.HasValue == true)
                 {
-                    _resultString += "<img src=\"http://www.typicon.online/images/sign/" + day.Icon + ".png\"/>";
+                    _resultString += "<img src=\"http://www.typicon.online/images/sign/" + day.Header.Icon + ".png\"/>";
                 }
                 
                 //если бдение или бдение с литией или воскресный день - красим в красный цвет
-                if (day.IsRed)
+                if (day.Header?.IsRed == true)
                     _resultString += "<span style=\"color: #ff0000;\">";
 
                 _resultString += "<strong>" + day.Date.ToString("dd MMMM yyyy г.") + "<br/>";
                 _resultString += day.Date.ToString("dddd").ToUpper() + "<br/>";
-                _resultString += day.Name.Text + "</strong>";
 
-                if (day.IsRed)
+                if (day.Header != null)
+                {
+                    _resultString += day.Header.Name + "</strong>";
+                }
+
+                if (day.Header?.IsRed == true)
                     _resultString += "</span>";
 
                 _resultString += "</div>";

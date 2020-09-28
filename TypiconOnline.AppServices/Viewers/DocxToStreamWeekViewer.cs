@@ -7,7 +7,7 @@ using TypiconOnline.AppServices.Messaging.Common;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Query.Books;
 using TypiconOnline.Domain.Rules.Output;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;

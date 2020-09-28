@@ -238,7 +238,8 @@ namespace TypiconOnline.Web.Controllers
                     , icon: model.Icon
                     , isRed: model.IsRed
                     , file: data
-                    , fileName: fileName);
+                    , fileName: fileName
+                    , isDefault: model.IsDefault);
 
                 await CommandProcessor.ExecuteAsync(command);
 
@@ -308,7 +309,8 @@ namespace TypiconOnline.Web.Controllers
                     , icon: model.Icon
                     , isRed: model.IsRed
                     , file: data
-                    , fileName: fileName);
+                    , fileName: fileName
+                    , isDefault:model.IsDefault);
 
                 await CommandProcessor.ExecuteAsync(command);
 

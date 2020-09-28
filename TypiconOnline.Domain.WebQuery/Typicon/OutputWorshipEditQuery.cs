@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TypiconOnline.Domain.AuthorizeKeys;
 using TypiconOnline.Domain.WebQuery.Models;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;

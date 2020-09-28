@@ -20,6 +20,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         public int TypiconId { get; }
         public string Language { get; }
         public int? ExceptSignId { get; }
+        //public string Search { get; set; }
 
         public string GetKey() => $"{nameof(AllSignsQuery)}.{TypiconId}.{Language}.{ExceptSignId}";
     }

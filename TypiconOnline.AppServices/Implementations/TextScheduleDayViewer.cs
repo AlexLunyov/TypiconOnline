@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Output;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 
 namespace TypiconOnline.AppServices.Implementations
 {
@@ -21,8 +21,13 @@ namespace TypiconOnline.AppServices.Implementations
             _resultStringBuilder.Clear();
 
             _resultStringBuilder.AppendLine(day.Date.ToShortDateString());
-            _resultStringBuilder.AppendLine(day.Name.Text);
-            _resultStringBuilder.AppendLine($"Знак службы: {day.SignName.Text}");
+
+            if (day.Header != null)
+            {
+                _resultStringBuilder.AppendLine(day.Header.Name.Text);
+                _resultStringBuilder.AppendLine($"Знак службы: {day.Header.SignName}");
+            }
+            
 
             foreach (var element in day.Worships)
             {

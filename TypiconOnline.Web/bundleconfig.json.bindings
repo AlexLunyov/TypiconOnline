@@ -1,1 +1,1 @@
-﻿///<binding BeforeBuild='wwwroot/lib/bootstrap/dist/css/bootstrap.min.css, wwwroot/css/site.min.css' />
+﻿///<binding BeforeBuild='wwwroot/lib/bootstrap/dist/css/bootstrap.min.css, wwwroot/css/site.min.css, Update all files' ProjectOpened='Update all files' />

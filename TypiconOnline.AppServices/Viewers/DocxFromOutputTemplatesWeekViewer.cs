@@ -12,7 +12,7 @@ using TypiconOnline.AppServices.Messaging.Common;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Query.Books;
 using TypiconOnline.Domain.Query.Typicon;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 
@@ -79,6 +79,8 @@ namespace TypiconOnline.AppServices.Viewers
                     {
                         return Result.Fail<byte[]>("Ошибка: в шаблоне седмицы не определено место для вставки дней.");
                     }
+                    //находим элемент, после которого можно вставлять шаблоны дней
+                    var parentToPasteSchedule = GetParentToPasteSchedule(placeToPasteSchedule);
 
                     int i = weekTemplate.DaysPerPage;
 
@@ -90,19 +92,20 @@ namespace TypiconOnline.AppServices.Viewers
 
                             if (modDayTemplate.Success)
                             {
-                                //добавляем в конечный документ ссылочные объекты (изображения)
-                                CopyRelativeElements(weekDoc, modDayTemplate.Value);
-
                                 foreach (var ins in modDayTemplate.Value.XmlElements)
                                 {
-                                    placeToPasteSchedule.InsertBeforeSelf(ins);
+                                    parentToPasteSchedule.InsertBeforeSelf(ins);
+                                    ins.CopyRelativeElements(weekDoc, modDayTemplate.Value.DocumentPart);
                                 }
+
+                                //добавляем в конечный документ ссылочные объекты (изображения)
+                                //CopyRelativeElements(weekDoc, modDayTemplate.Value);
 
                                 i--;
                                 if (i == 0)
                                 {
                                     //вставляем разрыв страницы
-                                    placeToPasteSchedule.InsertBeforeSelf(GetPageBreak());
+                                    parentToPasteSchedule.InsertBeforeSelf(PageBreak);
                                     i = weekTemplate.DaysPerPage;
                                 }
                             }
@@ -125,6 +128,16 @@ namespace TypiconOnline.AppServices.Viewers
         }
 
         /// <summary>
+        /// Возвращает предкорневой элемент документа
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        private OpenXmlElement GetParentToPasteSchedule(OpenXmlElement element)
+        {
+            return (element.Parent is Body) ? element : GetParentToPasteSchedule(element.Parent);
+        }
+
+        /// <summary>
         /// Копирует в <paramref name="weekDoc"/> объекты, на которые ссылается шаблон дня
         /// </summary>
         /// <param name="weekDoc"></param>
@@ -137,14 +150,14 @@ namespace TypiconOnline.AppServices.Viewers
                 element.Descendants<DocumentFormat.OpenXml.Drawing.Blip>().ToList()
                     .ForEach(blip =>
                     {
-                        var newRelation = weekDoc.CopyPart(blip.Embed, modDayTemplate.DocumentPart);
+                        var newRelation = weekDoc.CopyImagePart(blip.Embed, modDayTemplate.DocumentPart);
                         blip.Embed = newRelation;
                     });
 
                 element.Descendants<DocumentFormat.OpenXml.Vml.ImageData>().ToList()
                     .ForEach(imageData =>
                     {
-                        var newRelation = weekDoc.CopyPart(imageData.RelationshipId, modDayTemplate.DocumentPart);
+                        var newRelation = weekDoc.CopyImagePart(imageData.RelationshipId, modDayTemplate.DocumentPart);
                         imageData.RelationshipId = newRelation;
                     });
             }
@@ -160,7 +173,7 @@ namespace TypiconOnline.AppServices.Viewers
             //находим место для вставки
 
             //документ
-            List<Text> places = weekDoc.MainDocumentPart.Document.Body
+            List<Run> places = weekDoc.MainDocumentPart.Document.Body
                 .FindElementsByText(OutputTemplateConstants.WeekName)
                 .ToList();
 
@@ -177,10 +190,7 @@ namespace TypiconOnline.AppServices.Viewers
             }
 
             //заменям значения
-            foreach (var place in places)
-            {
-                place.Text = week.Name.Text;
-            }
+            places.ForEach(c => c.ReplaceText(OutputTemplateConstants.WeekName, week.Name.Text));
         }
 
         /// <summary>
@@ -192,28 +202,29 @@ namespace TypiconOnline.AppServices.Viewers
         /// <returns></returns>
         private Result<GetDayTemplateResponse> GetFilledDayElements(PrintTemplateRepository dayRep, int typiconId, FilteredOutputDay day)
         {
-            var dayTemplate = dayRep.GetDayTemplate(typiconId, day.SignNumber);
+            var dayTemplate = dayRep.GetDayTemplate(typiconId, day.Header?.SignNumber);
 
             if (dayTemplate == null)
             {
-                return Result.Fail<GetDayTemplateResponse>($"Ошибка: печатный шаблон дня для номера {day.SignNumber} не был найден");
+                return Result.Fail<GetDayTemplateResponse>($"Ошибка: печатный шаблон дня не был найден");
             }
 
-            //заменяем дату
+            //заменяем дату - обязательно
             var dateReplacement = dayTemplate.XmlElements.ReplaceElementsByText(OutputTemplateConstants.Date, day.Date.ToString("dd MMMM yyyy г."));
 
-            //заменяем день недели
+            //заменяем день недели - не обязательно
             var dayOfWeekReplacement = dayTemplate.XmlElements.ReplaceElementsByText(OutputTemplateConstants.DayOfWeek, day.Date.ToString("dddd"));
 
-            //заменяем имя дня
-            var dayNameReplacement = dayTemplate.XmlElements.ReplaceElementsByText(OutputTemplateConstants.DayName, day.Name.Text);
+            //заменяем имя дня - не обязательно
+            string dayName = (day.Header != null) ? day.Header.Name.Text : string.Empty;
+            var dayNameReplacement = dayTemplate.XmlElements.ReplaceElementsByText(OutputTemplateConstants.DayName, dayName);
 
             //вставляем службы
             var worshipsAppending = AppendWorships(dayTemplate.XmlElements, day.Worships);
 
             var res = Result.Combine(dateReplacement
-                                    , dayOfWeekReplacement
-                                    , dayNameReplacement
+                                    //, dayOfWeekReplacement
+                                    //, dayNameReplacement
                                     , worshipsAppending);
 
             return (res.Success) 
@@ -283,13 +294,9 @@ namespace TypiconOnline.AppServices.Viewers
             return $"{FILE_START} {date.ToString("yyyy-MM-dd")} {date.AddDays(6).ToString("yyyy-MM-dd")} {weekName}.docx";
         }
 
-        private Paragraph GetPageBreak()
-        {
-            Paragraph paragraph232 = new Paragraph(
-              new Run(
-                new Break() { Type = BreakValues.Page }));
-
-            return paragraph232;
-        }
+        private Paragraph PageBreak
+            => new Paragraph(
+                  new Run(
+                    new Break() { Type = BreakValues.Page }));
     }
 }

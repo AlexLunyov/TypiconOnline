@@ -18,7 +18,7 @@ using TypiconOnline.Web.Models.CustomSequenceModels;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Web.Extensions;
 using TypiconOnline.Domain.Identity;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 
 namespace TypiconOnline.Web.Controllers
 {

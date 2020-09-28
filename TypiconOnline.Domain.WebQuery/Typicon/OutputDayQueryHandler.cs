@@ -9,7 +9,7 @@ using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Output;
 using TypiconOnline.Domain.WebQuery.Models;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;

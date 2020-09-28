@@ -156,24 +156,6 @@
             createTextArea("rule", '@Model.RuleDefinition');
 
             //dayworships
-
-            $('.add-worship').on('click', function () {
-
-                //задаем значение полю
-                var days = $("daysFE_val").val();
-                if (days == null) {
-                    days = 0;
-                }
-                $("daysFE").val(days);
-
-                //задаем значение таблице
-                table.ajax.url('/TriodionRule/GetDayWorships/' + days).load();
-
-                $(".dayworships-modal").modal('show');
-            });
-
-            
-
             var table = $("#trwGrid").DataTable(
             {
                 processing: true, // for show progress bar
@@ -210,6 +192,26 @@
                         Orderable: false
                     },
                 ]
+                });
+
+            $('.add-worship').on('click', function () {
+
+                //задаем значение полю
+                var days = $("#daysFE_val").val();
+                if (days == null) {
+                    days = 0;
+                }
+                $("daysFE").val(days);
+
+                //задаем значение таблице
+                table.ajax.url('/TriodionRule/GetDayWorships/' + days).load();
+
+                $(".dayworships-modal").modal('show');
+
+                $("#daysFE_val").change(function () {
+                    var d = $(this).val();
+                    table.ajax.url('/TriodionRule/GetDayWorships/' + d).load();
+                });
             });
 
             //добавляет службу в таблицу

@@ -10,7 +10,7 @@ using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Output;
 using TypiconOnline.Domain.WebQuery.Models;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
@@ -32,7 +32,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         {
             var entity = DbContext.Set<OutputDay>().FirstOrDefault(c => c.Id == query.Id);
 
-            if (entity == null)
+            if (entity == null || entity.Header == null)
             {
                 return Result.Fail<OutputDayEditModel>(404, "Выходная форма дня не найдена");
             }
@@ -40,7 +40,9 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
             return Result.Ok(new OutputDayEditModel()
             { 
                 Id = entity.Id,
-                Name = new ItemTextStyled(entity.Name)
+                TypiconId = entity.TypiconId,
+                Name = new ItemTextStyled(entity.Header.Name),
+                PrintTemplateId = entity.Header.PrintDayTemplateId
             });
         }
     }

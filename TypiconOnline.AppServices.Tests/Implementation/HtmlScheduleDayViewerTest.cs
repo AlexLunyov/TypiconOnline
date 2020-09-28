@@ -11,7 +11,7 @@ using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Rules.Handlers;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Typicon;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Tests.Common;

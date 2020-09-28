@@ -4,7 +4,7 @@ using System.Text;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Output;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 
 namespace TypiconOnline.AppServices.Implementations
 {

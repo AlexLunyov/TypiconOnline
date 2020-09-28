@@ -62,7 +62,7 @@ namespace TypiconOnline.Web
                 context => typeof(IHasAuthorizedAccess).IsAssignableFrom(
                     context.ServiceType.GetGenericArguments()[0]));
 
-            container.Register(typeof(ICommandHandler<>), typeof(CommandProcessor).Assembly, typeof(ScheduleDataCalculator).Assembly);
+            container.Register(typeof(ICommandHandler<>), typeof(CommandProcessor).Assembly, typeof(MajorDataCalculator).Assembly);
 
             //events handler
             container.RegisterDecorator(
@@ -87,7 +87,12 @@ namespace TypiconOnline.Web
             container.Collection.Register(typeof(IDomainEventHandler<>), assemblies);
 
             //OutputForms
-            container.Register<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
+            //Для фильтрации выходных форм согласно графику богослужений
+            container.RegisterConditional<IRuleHandlerSettingsFactory, ScheduleSettingsDependingFactory>(
+                c => c.Consumer.ImplementationType == typeof(MajorDataCalculator));
+            container.RegisterConditional<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>(c => !c.Handled);
+            //container.Register<IRuleHandlerSettingsFactory, RuleHandlerSettingsFactory>();
+
             container.Register<IScheduleDayNameComposer, ScheduleDayNameComposer>();
             container.Register<IRuleSerializerRoot, RuleSerializerRoot>();
             container.Register<ITypiconSerializer, TypiconSerializer>();
@@ -201,7 +206,16 @@ namespace TypiconOnline.Web
             //container.Register(typeof(AuthorizationHandler<,>), typeof(DefaultAuthorization).Assembly);
 
             container.Collection.Register(typeof(IAuthorizationHandler), (typeof(OutputDayCanEditAuthorization).Assembly));
-            //container.Register<OutputDayCanEditAuthorization>();
+
+            //container.Collection
+            //    .Register<IAuthorizationHandler>(
+            //        typeof(TypiconByRuleCanEditAuthorization<Sign>)
+            //        , typeof(TypiconByRuleCanEditAuthorization<MenologyRule>)
+            //        , typeof(TypiconByRuleCanEditAuthorization<TriodionRule>)
+            //        , typeof(TypiconByRuleCanEditAuthorization<CommonRule>)
+            //        , typeof(TypiconByRuleCanEditAuthorization<ExplicitAddRule>));
+
+
             //container.Register<TypiconCanEditAuthorizationHandler>();
 
             #endregion

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using TypiconOnline.AppServices.Viewers;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Output;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Tests.Common;
 
@@ -38,7 +38,10 @@ namespace TypiconOnline.AppServices.Tests.Viewers
                     new FilteredOutputDay()
                     {
                         Date = DateTime.Today,
-                        Name = new ItemTextUnit("cs-ru", "Торжество Православия"),
+                        Header = new FilteredOutputDayHeader()
+                        {
+                            Name = new ItemTextUnit("cs-ru", "Торжество Православия")
+                        },
                         Worships = new List<FilteredOutputWorship>()
                         {
                             new FilteredOutputWorship()

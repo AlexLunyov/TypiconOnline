@@ -8,7 +8,7 @@ using TypiconOnline.AppServices.Viewers;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Serialization;
 using TypiconOnline.Domain.Typicon.Print;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Tests.Common;
@@ -58,13 +58,17 @@ namespace TypiconOnline.AppServices.Tests.OutputForm
             Assert.IsTrue(result.Success);
         }
 
-        private PrintDayTemplate GetDayWeekTemplate(int number)
+        private PrintDayTemplate GetDayWeekTemplate(int? number)
         {
+            if (!number.HasValue)
+            {
+                number = 0;
+            }
             byte[] arr = File.ReadAllBytes(GetPath($"{number}.docx"));
 
             return new PrintDayTemplate()
             {
-                Number = number,
+                Number = number.Value,
                 PrintFile = arr
             };
         }

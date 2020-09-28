@@ -11,7 +11,7 @@ using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Output;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 
 namespace TypiconOnline.AppServices.Implementations

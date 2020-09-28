@@ -20,6 +20,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         public int UserId { get; set; }
 
         public string Language { get; } = "cs-ru";
+        //public string Search { get; set; }
 
         public string GetKey() => $"{nameof(AllTypiconsFilteredQuery)}.{UserId}.{Language}";
     }

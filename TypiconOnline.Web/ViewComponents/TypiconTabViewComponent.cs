@@ -41,7 +41,8 @@ namespace TypiconOnline.Web.ViewComponents
                         VariablesCount = draft.Value.TypiconVariables.Count,
                         EmptyPrintTemplatesCount = draft.Value
                             .PrintDayTemplates
-                            .Count(c => c.PrintFile == null || c.PrintFile.Length == 0)
+                            .Count(c => c.PrintFile == null || c.PrintFile.Length == 0),
+                        ScheduleSettingsExist = draft.Value.ScheduleSettings != null
                     });
                 }
             }

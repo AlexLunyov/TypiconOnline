@@ -11,7 +11,7 @@ using TypiconOnline.Infrastructure.Common.Domain;
 
 namespace TypiconOnline.AppServices.Messaging.Schedule
 {
-    public class ScheduleDataCalculatorResponse : ServiceResponseBase
+    public class ScheduleDataCalculatorResponse// : ServiceResponseBase
     {
         public DayRule Rule { get; set; }
         public RuleHandlerSettings Settings { get; set; }

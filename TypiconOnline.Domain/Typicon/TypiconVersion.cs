@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.ItemTypes;
@@ -56,6 +57,12 @@ namespace TypiconOnline.Domain.Typicon
         public virtual ItemText Name { get; set; }
         public virtual ItemText Description { get; set; }
 
+        public int? ScheduleSettingsId { get; set; }
+        /// <summary>
+        /// Настройки дней, когда совершаются богослужения
+        /// </summary>
+        public virtual ScheduleSettings ScheduleSettings { get; set; }
+
         /// <summary>
         /// Номер Версии Устава. При создании новых версий, номер увеличивается на единицу
         /// </summary>
@@ -97,6 +104,13 @@ namespace TypiconOnline.Domain.Typicon
         /// Печатный шаблон седмицы. Используется в формировани печатной версии Расписания на неделю
         /// </summary>
         public virtual PrintWeekTemplate PrintWeekTemplate { get; set; }
+
+        /// <summary>
+        /// Печатный шаблон по умолчанию.
+        /// Используется, когда богослужения совершаются не ежедневно.
+        /// Используется для отображения вечерних богослужений тех дней, в которые утром не совершалось богослужение.
+        /// </summary>
+        public virtual PrintDayTemplate PrintDayDefaultTemplate { get; set; }
         /// <summary>
         /// Печатные шаблоны дней. Используются в формировани печатной версии Расписания на неделю
         /// </summary>
@@ -142,6 +156,9 @@ namespace TypiconOnline.Domain.Typicon
 
         #region Lambdas
 
+        public static Expression<Func<TypiconVersion, bool>> IsPublished = c => c.BDate != null && c.EDate == null;
+        public static Expression<Func<TypiconVersion, bool>> IsDraft = c => c.BDate == null && c.EDate == null;
+        
         //public bool IsPublished => BDate != null && EDate == null;
         //public bool IsDraft => BDate == null && EDate == null;
         #endregion
@@ -179,6 +196,11 @@ namespace TypiconOnline.Domain.Typicon
             ValidateChildCollection(ExplicitAddRules.Cast<RuleEntity>(), ruleSerializer, ErrorConstants.ExplicitAddRule);
             //Kathismas
             ValidateKathismas(ruleSerializer.TypiconSerializer);
+
+            if (ScheduleSettings == null || ScheduleSettingsId == 0)
+            {
+                AddError("Версия Устава должна иметь Настройки дней богослужений");
+            }
         }
 
         private void ValidateMenologyRules(IRuleSerializerRoot ruleSerializer)

@@ -1,0 +1,52 @@
+﻿@model ScheduleSettingsWeekDaysModel
+
+@GetDays(Model)
+
+@{
+    string GetDays(ScheduleSettingsWeekDaysModel model)
+    {
+        var arr = new List<string>();
+
+        if (model.IsMonday)
+        {
+            arr.Add("Понедельник");
+        }
+        if (model.IsTuesday)
+        {
+            arr.Add("Вторник");
+        }
+        if (model.IsWednesday)
+        {
+            arr.Add("Среда");
+        }
+        if (model.IsThursday)
+        {
+            arr.Add("Четверг");
+        }
+        if (model.IsFriday)
+        {
+            arr.Add("Пятница");
+        }
+        if (model.IsSaturday)
+        {
+            arr.Add("Суббота");
+        }
+        if (model.IsSunday)
+        {
+            arr.Add("Воскресенье");
+        }
+
+        var result = string.Join(", ", arr);
+
+        if (string.IsNullOrEmpty(result))
+        {
+            result = "Ни один день недели не отмечен";
+        }
+        else if (arr.Count == 7)
+        {
+            result = "Богослужения совершаются каждый день";
+        }
+
+        return result;
+    }
+}

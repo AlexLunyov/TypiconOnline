@@ -31,11 +31,11 @@ namespace TypiconOnline.AppServices.Jobs
 
         protected override async Task<Result> DoTheJob(ApproveTypiconClaimJob job)
         {
-            var claim = _dbContext.GetTypiconClaim(job.TypiconId);
+            var r = _dbContext.GetTypiconClaim(job.TypiconId);
 
-            if (claim.Success)
+            if (r.Value is TypiconClaim claim)
             {
-                if (!claim.Value.TemplateId.HasValue)
+                if (!claim.TemplateId.HasValue)
                 {
                     var err = $"Шаблон Устава не указан. Копирование Версии Устава не возможно.";
 
@@ -43,16 +43,16 @@ namespace TypiconOnline.AppServices.Jobs
 
                     return Fail(job, err);
                 }
-                else if (claim.Value.Status == TypiconClaimStatus.WatingForReview)
+                else if (claim.Status == TypiconClaimStatus.WatingForReview)
                 {
                     try
                     {
                         //TypiconClaim
-                        claim.Value.Status = TypiconClaimStatus.InProcess;
+                        claim.Status = TypiconClaimStatus.InProcess;
 
-                        await _dbContext.UpdateTypiconClaimAsync(claim.Value);
+                        await _dbContext.UpdateTypiconClaimAsync(claim);
 
-                        int templateId = claim.Value.TemplateId.Value;
+                        int templateId = claim.TemplateId.Value;
 
                         var version = _dbContext.GetPublishedVersion(templateId);
 
@@ -61,8 +61,8 @@ namespace TypiconOnline.AppServices.Jobs
                             //TypiconVersion
                             var clone = version.Value.Clone();
 
-                            clone.Name = new ItemText(claim.Value.Name);
-                            clone.Description = new ItemText(claim.Value.Description);
+                            clone.Name = new ItemText(claim.Name);
+                            clone.Description = new ItemText(claim.Description);
 
                             //Ставим статус "черновик"
                             clone.BDate = null;
@@ -72,26 +72,28 @@ namespace TypiconOnline.AppServices.Jobs
                             clone.IsModified = true;
 
                             //new TypiconEntity
-
                             var entity = new TypiconEntity()
                             {
-                                SystemName = claim.Value.SystemName,
-                                DefaultLanguage = claim.Value.DefaultLanguage,
-                                OwnerId = claim.Value.OwnerId,
+                                SystemName = claim.SystemName,
+                                DefaultLanguage = claim.DefaultLanguage,
+                                OwnerId = claim.OwnerId,
                                 Status = TypiconStatus.Approving,
-                                TemplateId = claim.Value.TemplateId
+                                TemplateId = claim.TemplateId
                             };
-
                             entity.Versions.Add(clone);
-
+                            //добавляем Устав и его первую пустую версию
                             await _dbContext.AddTypiconEntityAsync(entity);
+
+                            //добавляем вложенные коллекции в версию
+                            version.Value.CopyChildrenTo(clone);
+                            await _dbContext.UpdateTypiconVersionAsync(clone);
 
                             //TypiconEntity
                             entity.Status = TypiconStatus.Draft;
                             await _dbContext.UpdateTypiconEntityAsync(entity);
 
                             //remove claim
-                            await _dbContext.RemoveTypiconClaimAsync(claim.Value);
+                            await _dbContext.RemoveTypiconClaimAsync(claim);
 
                             //SendMessage to Owner and sender
                             //nothing yet...
@@ -104,14 +106,14 @@ namespace TypiconOnline.AppServices.Jobs
 
                             //SendMessage to Owner and sender
 
-                            await FailClaimAsync(claim.Value, err);
+                            await FailClaimAsync(claim, err);
 
                             return Fail(job, err);
                         }
                     }
                     catch (DbUpdateException ex)
                     {
-                        await FailClaimAsync(claim.Value, "при сохранении в БД");
+                        await FailClaimAsync(claim, "при сохранении в БД");
 
                         return Fail(job, ex.Message);
                     }
@@ -120,7 +122,7 @@ namespace TypiconOnline.AppServices.Jobs
                 {
                     var err = $"Статус Устава Id={job.TypiconId} не находится в состоянии ожидания на утверждение.";
 
-                    await FailClaimAsync(claim.Value, err);
+                    await FailClaimAsync(claim, err);
 
                     //SendMessage to Owner and sender
 
@@ -131,7 +133,7 @@ namespace TypiconOnline.AppServices.Jobs
             {
                 //SendMessage to Owner and sender
 
-                return Fail(job, claim.Error);
+                return Fail(job, r.Error);
             };
         }
 

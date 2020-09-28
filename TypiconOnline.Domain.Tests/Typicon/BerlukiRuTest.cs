@@ -10,7 +10,7 @@ using TypiconOnline.Domain.Rules.Handlers.CustomParameters;
 using TypiconOnline.Tests.Common;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.WebQuery.Typicon;
-using TypiconOnline.Domain.WebQuery.OutputFiltering;
+using TypiconOnline.AppServices.OutputFiltering;
 
 namespace TypiconOnline.Domain.Tests.Typicon
 {

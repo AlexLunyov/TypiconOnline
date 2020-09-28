@@ -42,11 +42,11 @@ namespace TypiconOnline.AppServices.Jobs
 
             var version = found.Value;
 
-            var errMsg = Validate(version);
+            var errMsg = version.Validate();
 
-            if (!string.IsNullOrEmpty(errMsg))
+            if (errMsg.Count() > 0)
             {
-                return Fail(job, errMsg);
+                return Fail(job, string.Join("", "Ошибка: ", errMsg));
             }
 
             var prevStatus = version.Typicon.Status;
@@ -63,9 +63,15 @@ namespace TypiconOnline.AppServices.Jobs
 
                     //new draft
                     var clone = version.Clone();
+                    //задаем доп значения
                     clone.TypiconId = job.TypiconId;
                     clone.VersionNumber = version.VersionNumber + 1;
                     clone.BDate = null;
+                    //Сохраняем, чтобы не было конфликта цикличных зависимостей
+                    await _dbContext.UpdateTypiconVersionAsync(clone);
+                    //копируем вложенные коллекции
+                    version.CopyChildrenTo(clone);
+                    //сохраняем
                     await _dbContext.UpdateTypiconVersionAsync(clone);
 
                     //old publish
@@ -97,9 +103,9 @@ namespace TypiconOnline.AppServices.Jobs
                 {
                     transaction.Rollback();
 
-                    version.Typicon.Status = prevStatus;
-                    version.IsModified = true;
-                    await _dbContext.UpdateTypiconEntityAsync(version.Typicon);
+                    //version.Typicon.Status = prevStatus;
+                    //version.IsModified = true;
+                    await _dbContext.UpdateTypiconEntityStatusAsync(version.TypiconId, prevStatus);
 
                     return Fail(job, ex.Message);
                 }
@@ -137,7 +143,20 @@ namespace TypiconOnline.AppServices.Jobs
                 }
             }
 
+            /*
+                - не шаблон
+			    - Служба совершается не каждый день(не все дни недели)
+                - Отсутствует печатного шаблона "по умолчанию"
+             */
+             if (!version.IsTemplate
+                && !version.ScheduleSettings?.IsEveryday == false
+                && version.PrintDayDefaultTemplate == null)
+            {
+                err += "Устав должен быть определен как Шаблон, либо должен быть определен Печатный шаблон по умолчанию. ";
+            }
+
+
             return (!string.IsNullOrEmpty(err)) ? $"Ошибка: {err}" : err;
-        }
+        }       
     }
 }

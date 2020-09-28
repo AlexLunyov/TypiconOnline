@@ -48,6 +48,12 @@ namespace TypiconOnline.AppServices.Implementations
             return InnerCreate(req, ref dayInfo, _dataCalculator);
         }
 
+        /// <summary>
+        /// Используется для формирования customsequence
+        /// </summary>
+        /// <param name="dataCalculator"></param>
+        /// <param name="req"></param>
+        /// <returns></returns>
         public CreateOutputDayResponse Create(IScheduleDataCalculator dataCalculator, CreateOutputDayRequest req)
         {
             if (dataCalculator == null)
@@ -155,32 +161,56 @@ namespace TypiconOnline.AppServices.Implementations
             //Формируем данные для обработки
             var response = dataCalculator.Calculate(request);
 
-            var settings = response.Settings;
-
-            var brokenConstraints = GetBrokenConstraints(settings);
-
-            _handler.Settings = settings;
-
-            _handler.ClearResult();
-
-            settings.RuleContainer.Interpret(_handler);
-
-            var results = _handler.GetResults();
-
-            var sign = response.Rule.Template.GetPredefinedTemplate();
-
-            var scheduleDay = new OutputDay
+            var outputDay = new OutputDay()
             {
                 TypiconId = request.TypiconId,
-                //задаем имя дню
-                Name = _nameComposer.Compose(request.Date, response.Rule.Template.Priority, settings.AllWorships),
-                Date = request.Date,
-                PredefinedSignId = sign.Id,
-                //Если settings.PrintDayTemplate определен в ModifiedRule, то назначаем его
-                PrintDayTemplate = settings.PrintDayTemplate ?? sign.PrintTemplate
+                Date = request.Date
             };
 
-            return new OutputDayInfo(scheduleDay, settings.AllWorships, results, brokenConstraints);
+            if (response.Success)
+            {
+                //все удачно - собираем информацию
+
+                var settings = response.Value.Settings;
+
+                var brokenConstraints = GetBrokenConstraints(settings);
+
+                _handler.Settings = settings;
+
+                _handler.ClearResult();
+
+                settings.RuleContainer.Interpret(_handler);
+
+                var results = _handler.GetResults();
+
+                var sign = response.Value.Rule.Template.GetPredefinedTemplate();
+
+                outputDay.Header = new OutputDayHeader()
+                {
+                    //задаем имя дню
+                    Name = _nameComposer.Compose(request.Date, response.Value.Rule.Template.Priority, settings.AllWorships),
+
+                    PredefinedSignId = sign.Id,
+                    //Если settings.PrintDayTemplate определен в ModifiedRule, то назначаем его
+                    PrintDayTemplate = settings.PrintDayTemplate ?? sign.PrintTemplate
+                };
+
+                return new OutputDayInfo(
+                    outputDay, 
+                    settings.AllWorships, 
+                    results, 
+                    brokenConstraints);
+            }
+            else
+            {
+                //если response возвращается неудачный, то возвращаем "пустую" информацию
+                return new OutputDayInfo(
+                    outputDay, 
+                    default, 
+                    new ScheduleResults(), 
+                    default);
+            }
+            
         }
 
         private IEnumerable<BusinessConstraint> GetBrokenConstraints(RuleHandlerSettings settings)

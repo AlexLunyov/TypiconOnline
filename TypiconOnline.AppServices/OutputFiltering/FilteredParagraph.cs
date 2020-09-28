@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Rules.Output;
 
-namespace TypiconOnline.Domain.WebQuery.OutputFiltering
+namespace TypiconOnline.AppServices.OutputFiltering
 {
     /// <summary>
     /// Выходная модель для параграфа с определением стиля

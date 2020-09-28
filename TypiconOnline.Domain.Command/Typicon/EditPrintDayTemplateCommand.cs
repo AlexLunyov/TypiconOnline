@@ -10,7 +10,8 @@ namespace TypiconOnline.Domain.Command.Typicon
             , int? icon
             , bool isRed
             , byte[] file
-            , string fileName) : base(id)
+            , string fileName
+            , bool isDefault) : base(id)
         {
             Number = number;
             Name = name;
@@ -18,6 +19,7 @@ namespace TypiconOnline.Domain.Command.Typicon
             IsRed = isRed;
             PrintFile = file;
             PrintFileName = fileName;
+            IsDefault = isDefault;
 
         }
         public int Number { get; set; }
@@ -37,5 +39,9 @@ namespace TypiconOnline.Domain.Command.Typicon
         /// Имя загруженного файла
         /// </summary>
         public string PrintFileName { get; set; }
+        /// <summary>
+        /// Признак Шаблона по умолчанию
+        /// </summary>
+        public bool IsDefault { get; set; }
     }
 }

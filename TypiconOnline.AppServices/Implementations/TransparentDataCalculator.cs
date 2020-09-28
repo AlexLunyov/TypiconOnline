@@ -4,6 +4,8 @@ using System.Text;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.AppServices.Messaging.Schedule;
 using TypiconOnline.Domain.Query.Typicon;
+using TypiconOnline.Domain.Rules.Handlers;
+using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.AppServices.Implementations
@@ -26,11 +28,11 @@ namespace TypiconOnline.AppServices.Implementations
             _settingsFactory = settingsFactory ?? throw new ArgumentNullException(nameof(settingsFactory));
         }
 
-        public override ScheduleDataCalculatorResponse Calculate(ScheduleDataCalculatorRequest req)
+        public override Result<ScheduleDataCalculatorResponse> Calculate(ScheduleDataCalculatorRequest req)
         {
             var result = _innerCalculator.Calculate(req);
 
-            if (result.Exception != null)
+            if (result.Failure)
             {
                 return result;
             }
@@ -44,27 +46,29 @@ namespace TypiconOnline.AppServices.Implementations
             //формируем, если нет ModifiedRule или оно отмечено как дополнение
             if ((modifiedRule == null || modifiedRule.IsAddition) && triodionRule?.IsTransparent == true)
             {
-                var settings = _settingsFactory.CreateRecursive(new CreateRuleSettingsRequest(req)
+                var create = _settingsFactory.CreateRecursive(new CreateRuleSettingsRequest(req)
                 {
                     Rule = triodionRule,
                     Triodions = triodionRule.DayWorships
                 });
 
-                //задаем результат из ранее вычисленного правила, кроме Triodions
-                settings.Menologies = result.Settings.Menologies;
-                settings.OktoikhDay = result.Settings.OktoikhDay;
-
-                //теперь дублируем тексты служб на Additions, вычисленные для данных настроек
-                if (settings.Addition != null)
+                if (create.Success && create.Value is RuleHandlerSettings settings)
                 {
-                    FillWorships(settings, settings.Addition, true);
+                    //задаем результат из ранее вычисленного правила, кроме Triodions
+                    settings.Menologies = result.Value.Settings.Menologies;
+                    settings.OktoikhDay = result.Value.Settings.OktoikhDay;
+
+                    //теперь дублируем тексты служб на Additions, вычисленные для данных настроек
+                    if (settings.Addition != null)
+                    {
+                        FillWorships(settings, settings.Addition, true);
+                    }
+
+                    //добавялем в цепочку Дополнений вычисленные здесь настройки
+                    var lastAddition = GetLastAddition(result.Value.Settings);
+                    lastAddition.Addition = settings;
                 }
-
-                //добавялем в цепочку Дополнений вычисленные здесь настройки
-                var lastAddition = GetLastAddition(result.Settings);
-                lastAddition.Addition = settings;
             }
-
 
             return result;
         }

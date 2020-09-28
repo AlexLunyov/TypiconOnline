@@ -25,12 +25,13 @@ namespace TypiconOnline.Domain.Command.Typicon
         {
             var found = DbContext.Set<OutputDay>().FirstOrDefault(c => c.Id == command.Id);
 
-            if (found == null)
+            if (found == null || found.Header == null)
             {
                 return Task.FromResult(Result.Fail($"Объект с Id {command.Id} не найден."));
             }
 
-            found.Name = command.Name;
+            found.Header.Name = command.Name;
+            found.Header.PrintDayTemplateId = command.PrintDayTemplateId;
 
             //фиксируем изменения
             found.ModifiedDate = DateTime.Now;

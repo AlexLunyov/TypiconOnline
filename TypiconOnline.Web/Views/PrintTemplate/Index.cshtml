@@ -96,7 +96,17 @@
                     { "data": "Id", "name": "Id", "autoWidth": true },
                     { "data": "Number", "name": "Number", "autoWidth": true },
                     { "data": "HasFile", "name": "HasFile", "autoWidth": true },
-                    { "data": "Name", "name": "Name", "autoWidth": true },
+                    {
+                        data: "Name", name: "Name", autoWidth: true,
+                        render: function (data, type, row)
+                        {
+                            var str = data;
+                            if (row.IsDefault) {
+                                str += ' <b>(По умолчанию)</b>';
+                            }
+                            return str;
+                        }
+                    },
                     {
                         data: "Icon", name: "Знак", autoWidth: true,
                         render: function (data)
