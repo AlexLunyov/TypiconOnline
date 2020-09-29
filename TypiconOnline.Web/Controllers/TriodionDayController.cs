@@ -18,7 +18,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 namespace TypiconOnline.Web.Controllers
 {
     [Authorize(Roles = RoleConstants.AdminAndTypesetterRoles)]
-    public class TriodionDayController : TextBaseController<TriodionDayModel>
+    public class TriodionDayController : TextBaseController<TriodionDayGridModel>
     {
         public TriodionDayController(IQueryProcessor queryProcessor
             , ICommandProcessor commandProcessor) : base(queryProcessor, commandProcessor)
@@ -120,9 +120,9 @@ namespace TypiconOnline.Web.Controllers
             }
         }
 
-        protected override IGridQuery<TriodionDayModel> GetQuery() => new AllTriodionDaysQuery(DEFAULT_LANGUAGE);
+        protected override IGridQuery<TriodionDayGridModel> GetQuery() => new AllTriodionDaysQuery(DEFAULT_LANGUAGE);
 
-        protected override Expression<Func<TriodionDayModel, bool>> BuildExpression(string searchValue)
+        protected override Expression<Func<TriodionDayGridModel, bool>> BuildExpression(string searchValue)
         {
             return m => m.Name == searchValue
                     || m.ShortName == searchValue

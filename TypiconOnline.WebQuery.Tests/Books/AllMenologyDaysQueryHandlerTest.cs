@@ -8,7 +8,7 @@ using TypiconOnline.Tests.Common;
 
 namespace TypiconOnline.WebQuery.Tests.Books
 {
-    public class AllMenologyDaysQueryHandlerTest
+    public class AllMenologyRulesQueryHandlerTest
     {
         [Test]
         public void AllMenologyDaysQuery_Test()

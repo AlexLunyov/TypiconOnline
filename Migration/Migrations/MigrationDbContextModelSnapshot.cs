@@ -450,36 +450,6 @@ namespace MigrationTool.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("DayRule");
                 });
 
-            modelBuilder.Entity("TypiconOnline.Domain.Typicon.DayRuleSchedule<TypiconOnline.Domain.Typicon.MenologyRule>", b =>
-                {
-                    b.Property<int>("ScheduleSettingsId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RuleId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ScheduleSettingsId", "RuleId");
-
-                    b.HasIndex("RuleId");
-
-                    b.ToTable("MenologyRuleSchedule");
-                });
-
-            modelBuilder.Entity("TypiconOnline.Domain.Typicon.DayRuleSchedule<TypiconOnline.Domain.Typicon.TriodionRule>", b =>
-                {
-                    b.Property<int>("ScheduleSettingsId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RuleId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ScheduleSettingsId", "RuleId");
-
-                    b.HasIndex("RuleId");
-
-                    b.ToTable("TriodionRuleSchedule");
-                });
-
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.ExplicitAddRule", b =>
                 {
                     b.Property<int>("Id")
@@ -500,6 +470,51 @@ namespace MigrationTool.Migrations
                     b.HasIndex("TypiconVersionId");
 
                     b.ToTable("ExplicitAddRule");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.ModRuleEntitySchedule<TypiconOnline.Domain.Typicon.MenologyRule>", b =>
+                {
+                    b.Property<int>("ScheduleSettingsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RuleId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ScheduleSettingsId", "RuleId");
+
+                    b.HasIndex("RuleId");
+
+                    b.ToTable("MenologyRuleSchedule");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.ModRuleEntitySchedule<TypiconOnline.Domain.Typicon.Sign>", b =>
+                {
+                    b.Property<int>("ScheduleSettingsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RuleId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ScheduleSettingsId", "RuleId");
+
+                    b.HasIndex("RuleId");
+
+                    b.ToTable("SignSchedule");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.ModRuleEntitySchedule<TypiconOnline.Domain.Typicon.TriodionRule>", b =>
+                {
+                    b.Property<int>("ScheduleSettingsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RuleId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ScheduleSettingsId", "RuleId");
+
+                    b.HasIndex("RuleId");
+
+                    b.ToTable("TriodionRuleSchedule");
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Modifications.DayWorshipsFilter", b =>
@@ -602,13 +617,25 @@ namespace MigrationTool.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("TypiconId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypiconId");
+
+                    b.ToTable("OutputDay");
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Output.OutputDayHeader", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("PredefinedSignId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("PrintDayTemplateId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TypiconId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -617,9 +644,7 @@ namespace MigrationTool.Migrations
 
                     b.HasIndex("PrintDayTemplateId");
 
-                    b.HasIndex("TypiconId");
-
-                    b.ToTable("OutputDay");
+                    b.ToTable("OutputDayHeader");
                 });
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Output.OutputDayWorship", b =>
@@ -919,21 +944,6 @@ namespace MigrationTool.Migrations
                     b.ToTable("Sign");
                 });
 
-            modelBuilder.Entity("TypiconOnline.Domain.Typicon.SignSchedule", b =>
-                {
-                    b.Property<int>("ScheduleSettingsId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SignId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ScheduleSettingsId", "SignId");
-
-                    b.HasIndex("SignId");
-
-                    b.ToTable("SignSchedule");
-                });
-
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.TypiconClaim", b =>
                 {
                     b.Property<int>("Id")
@@ -1030,6 +1040,9 @@ namespace MigrationTool.Migrations
                     b.Property<int?>("PrevVersionId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("PrintDayDefaultTemplateId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("ScheduleSettingsId")
                         .HasColumnType("INTEGER");
 
@@ -1045,6 +1058,9 @@ namespace MigrationTool.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PrevVersionId");
+
+                    b.HasIndex("PrintDayDefaultTemplateId")
+                        .IsUnique();
 
                     b.HasIndex("TypiconId");
 
@@ -1303,22 +1319,16 @@ namespace MigrationTool.Migrations
 
                             b1.OwnsMany("TypiconOnline.Domain.ItemTypes.ItemTextUnit", "Items", b2 =>
                                 {
-                                    b2.Property<int>("Id")
-                                        .ValueGeneratedOnAdd()
+                                    b2.Property<int>("NameId")
                                         .HasColumnType("INTEGER");
 
                                     b2.Property<string>("Language")
                                         .HasColumnType("TEXT");
 
-                                    b2.Property<int>("NameId")
-                                        .HasColumnType("INTEGER");
-
                                     b2.Property<string>("Text")
                                         .HasColumnType("TEXT");
 
-                                    b2.HasKey("Id");
-
-                                    b2.HasIndex("NameId");
+                                    b2.HasKey("NameId", "Language");
 
                                     b2.ToTable("DayWorshipShortNameItems");
 
@@ -1350,22 +1360,16 @@ namespace MigrationTool.Migrations
 
                             b1.OwnsMany("TypiconOnline.Domain.ItemTypes.ItemTextUnit", "Items", b2 =>
                                 {
-                                    b2.Property<int>("Id")
-                                        .ValueGeneratedOnAdd()
+                                    b2.Property<int>("NameId")
                                         .HasColumnType("INTEGER");
 
                                     b2.Property<string>("Language")
                                         .HasColumnType("TEXT");
 
-                                    b2.Property<int>("NameId")
-                                        .HasColumnType("INTEGER");
-
                                     b2.Property<string>("Text")
                                         .HasColumnType("TEXT");
 
-                                    b2.HasKey("Id");
-
-                                    b2.HasIndex("NameId");
+                                    b2.HasKey("NameId", "Language");
 
                                     b2.ToTable("DayWorshipNameItems");
 
@@ -1423,7 +1427,16 @@ namespace MigrationTool.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TypiconOnline.Domain.Typicon.DayRuleSchedule<TypiconOnline.Domain.Typicon.MenologyRule>", b =>
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.ExplicitAddRule", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
+                        .WithMany("ExplicitAddRules")
+                        .HasForeignKey("TypiconVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.ModRuleEntitySchedule<TypiconOnline.Domain.Typicon.MenologyRule>", b =>
                 {
                     b.HasOne("TypiconOnline.Domain.Typicon.MenologyRule", "Rule")
                         .WithMany()
@@ -1438,7 +1451,22 @@ namespace MigrationTool.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TypiconOnline.Domain.Typicon.DayRuleSchedule<TypiconOnline.Domain.Typicon.TriodionRule>", b =>
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.ModRuleEntitySchedule<TypiconOnline.Domain.Typicon.Sign>", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.Sign", "Rule")
+                        .WithMany()
+                        .HasForeignKey("RuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TypiconOnline.Domain.Typicon.ScheduleSettings", "ScheduleSettings")
+                        .WithMany("Signs")
+                        .HasForeignKey("ScheduleSettingsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.ModRuleEntitySchedule<TypiconOnline.Domain.Typicon.TriodionRule>", b =>
                 {
                     b.HasOne("TypiconOnline.Domain.Typicon.TriodionRule", "Rule")
                         .WithMany()
@@ -1449,15 +1477,6 @@ namespace MigrationTool.Migrations
                     b.HasOne("TypiconOnline.Domain.Typicon.ScheduleSettings", "ScheduleSettings")
                         .WithMany("TriodionRules")
                         .HasForeignKey("ScheduleSettingsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TypiconOnline.Domain.Typicon.ExplicitAddRule", b =>
-                {
-                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconVersion", "TypiconVersion")
-                        .WithMany("ExplicitAddRules")
-                        .HasForeignKey("TypiconVersionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1507,22 +1526,16 @@ namespace MigrationTool.Migrations
 
                             b1.OwnsMany("TypiconOnline.Domain.ItemTypes.ItemTextUnit", "Items", b2 =>
                                 {
-                                    b2.Property<int>("Id")
-                                        .ValueGeneratedOnAdd()
+                                    b2.Property<int>("NameId")
                                         .HasColumnType("INTEGER");
 
                                     b2.Property<string>("Language")
                                         .HasColumnType("TEXT");
 
-                                    b2.Property<int>("NameId")
-                                        .HasColumnType("INTEGER");
-
                                     b2.Property<string>("Text")
                                         .HasColumnType("TEXT");
 
-                                    b2.HasKey("Id");
-
-                                    b2.HasIndex("NameId");
+                                    b2.HasKey("NameId", "Language");
 
                                     b2.ToTable("ModifiedRuleShortNameItems");
 
@@ -1543,6 +1556,20 @@ namespace MigrationTool.Migrations
 
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.Output.OutputDay", b =>
                 {
+                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconEntity", "Typicon")
+                        .WithMany()
+                        .HasForeignKey("TypiconId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TypiconOnline.Domain.Typicon.Output.OutputDayHeader", b =>
+                {
+                    b.HasOne("TypiconOnline.Domain.Typicon.Output.OutputDay", null)
+                        .WithOne("Header")
+                        .HasForeignKey("TypiconOnline.Domain.Typicon.Output.OutputDayHeader", "Id")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("TypiconOnline.Domain.Typicon.Sign", "PredefinedSign")
                         .WithMany()
                         .HasForeignKey("PredefinedSignId")
@@ -1555,23 +1582,17 @@ namespace MigrationTool.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TypiconOnline.Domain.Typicon.TypiconEntity", "Typicon")
-                        .WithMany()
-                        .HasForeignKey("TypiconId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.OwnsOne("TypiconOnline.Domain.ItemTypes.ItemText", "Name", b1 =>
                         {
-                            b1.Property<int>("OutputDayId")
+                            b1.Property<int?>("OutputDayHeaderTempId1")
                                 .HasColumnType("INTEGER");
 
-                            b1.HasKey("OutputDayId");
+                            b1.HasKey("OutputDayHeaderTempId1");
 
-                            b1.ToTable("OutputDay");
+                            b1.ToTable("OutputDayHeader");
 
                             b1.WithOwner()
-                                .HasForeignKey("OutputDayId");
+                                .HasForeignKey("OutputDayHeaderTempId1");
 
                             b1.OwnsMany("TypiconOnline.Domain.ItemTypes.ItemTextUnit", "Items", b2 =>
                                 {
@@ -1592,7 +1613,7 @@ namespace MigrationTool.Migrations
 
                                     b2.HasIndex("NameId");
 
-                                    b2.ToTable("OutputDayNameItems");
+                                    b2.ToTable("OutputDayHeaderNameItems");
 
                                     b2.WithOwner()
                                         .HasForeignKey("NameId");
@@ -1803,22 +1824,16 @@ namespace MigrationTool.Migrations
 
                             b1.OwnsMany("TypiconOnline.Domain.ItemTypes.ItemTextUnit", "Items", b2 =>
                                 {
-                                    b2.Property<int>("Id")
-                                        .ValueGeneratedOnAdd()
+                                    b2.Property<int>("NameId")
                                         .HasColumnType("INTEGER");
 
                                     b2.Property<string>("Language")
                                         .HasColumnType("TEXT");
 
-                                    b2.Property<int>("NameId")
-                                        .HasColumnType("INTEGER");
-
                                     b2.Property<string>("Text")
                                         .HasColumnType("TEXT");
 
-                                    b2.HasKey("Id");
-
-                                    b2.HasIndex("NameId");
+                                    b2.HasKey("NameId", "Language");
 
                                     b2.ToTable("KathismaNumberNameItems");
 
@@ -1919,21 +1934,6 @@ namespace MigrationTool.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TypiconOnline.Domain.Typicon.SignSchedule", b =>
-                {
-                    b.HasOne("TypiconOnline.Domain.Typicon.ScheduleSettings", "ScheduleSettings")
-                        .WithMany("Signs")
-                        .HasForeignKey("ScheduleSettingsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TypiconOnline.Domain.Typicon.Sign", "Sign")
-                        .WithMany()
-                        .HasForeignKey("SignId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("TypiconOnline.Domain.Typicon.TypiconClaim", b =>
                 {
                     b.HasOne("TypiconOnline.Domain.Identity.User", "Owner")
@@ -1960,10 +1960,6 @@ namespace MigrationTool.Migrations
 
                             b1.OwnsMany("TypiconOnline.Domain.ItemTypes.ItemTextUnit", "Items", b2 =>
                                 {
-                                    b2.Property<int>("Id")
-                                        .ValueGeneratedOnAdd()
-                                        .HasColumnType("INTEGER");
-
                                     b2.Property<int>("DescriptionId")
                                         .HasColumnType("INTEGER");
 
@@ -1973,9 +1969,7 @@ namespace MigrationTool.Migrations
                                     b2.Property<string>("Text")
                                         .HasColumnType("TEXT");
 
-                                    b2.HasKey("Id");
-
-                                    b2.HasIndex("DescriptionId");
+                                    b2.HasKey("DescriptionId", "Language");
 
                                     b2.ToTable("TypiconClaimDescriptionItems");
 
@@ -1998,22 +1992,16 @@ namespace MigrationTool.Migrations
 
                             b1.OwnsMany("TypiconOnline.Domain.ItemTypes.ItemTextUnit", "Items", b2 =>
                                 {
-                                    b2.Property<int>("Id")
-                                        .ValueGeneratedOnAdd()
+                                    b2.Property<int>("NameId")
                                         .HasColumnType("INTEGER");
 
                                     b2.Property<string>("Language")
                                         .HasColumnType("TEXT");
 
-                                    b2.Property<int>("NameId")
-                                        .HasColumnType("INTEGER");
-
                                     b2.Property<string>("Text")
                                         .HasColumnType("TEXT");
 
-                                    b2.HasKey("Id");
-
-                                    b2.HasIndex("NameId");
+                                    b2.HasKey("NameId", "Language");
 
                                     b2.ToTable("TypiconClaimNameItems");
 
@@ -2043,6 +2031,11 @@ namespace MigrationTool.Migrations
                         .HasForeignKey("PrevVersionId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.HasOne("TypiconOnline.Domain.Typicon.Print.PrintDayTemplate", "PrintDayDefaultTemplate")
+                        .WithOne()
+                        .HasForeignKey("TypiconOnline.Domain.Typicon.TypiconVersion", "PrintDayDefaultTemplateId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("TypiconOnline.Domain.Typicon.TypiconEntity", "Typicon")
                         .WithMany("Versions")
                         .HasForeignKey("TypiconId")
@@ -2063,10 +2056,6 @@ namespace MigrationTool.Migrations
 
                             b1.OwnsMany("TypiconOnline.Domain.ItemTypes.ItemTextUnit", "Items", b2 =>
                                 {
-                                    b2.Property<int>("Id")
-                                        .ValueGeneratedOnAdd()
-                                        .HasColumnType("INTEGER");
-
                                     b2.Property<int>("DescriptionId")
                                         .HasColumnType("INTEGER");
 
@@ -2076,9 +2065,7 @@ namespace MigrationTool.Migrations
                                     b2.Property<string>("Text")
                                         .HasColumnType("TEXT");
 
-                                    b2.HasKey("Id");
-
-                                    b2.HasIndex("DescriptionId");
+                                    b2.HasKey("DescriptionId", "Language");
 
                                     b2.ToTable("TypiconDescriptionItems");
 
@@ -2101,22 +2088,16 @@ namespace MigrationTool.Migrations
 
                             b1.OwnsMany("TypiconOnline.Domain.ItemTypes.ItemTextUnit", "Items", b2 =>
                                 {
-                                    b2.Property<int>("Id")
-                                        .ValueGeneratedOnAdd()
+                                    b2.Property<int>("NameId")
                                         .HasColumnType("INTEGER");
 
                                     b2.Property<string>("Language")
                                         .HasColumnType("TEXT");
 
-                                    b2.Property<int>("NameId")
-                                        .HasColumnType("INTEGER");
-
                                     b2.Property<string>("Text")
                                         .HasColumnType("TEXT");
 
-                                    b2.HasKey("Id");
-
-                                    b2.HasIndex("NameId");
+                                    b2.HasKey("NameId", "Language");
 
                                     b2.ToTable("TypiconNameItems");
 

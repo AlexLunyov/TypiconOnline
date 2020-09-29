@@ -9,7 +9,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.WebQuery.Books
 {
-    public class AllTriodionDaysQuery : IGridQuery<TriodionDayModel>
+    public class AllTriodionDaysQuery : IGridQuery<TriodionDayGridModel>
     {
         public AllTriodionDaysQuery(string language)
         {

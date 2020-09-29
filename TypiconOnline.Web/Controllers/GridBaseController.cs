@@ -91,26 +91,28 @@ namespace TypiconOnline.Web.Controllers
 
         protected abstract Expression<Func<T, bool>> BuildExpression(string searchValue);
 
-        private Result<IQueryable<T>> LoadStoredData(IGridQuery<T> query)
-        {
-            if (HttpContext.Session.Keys.Contains(query.GetKey()))
-            {
-                return Result.Ok(HttpContext.Session.Get<List<T>>(query.GetKey()).AsQueryable());
-            }
-            else
-            {
-                var request = QueryProcessor.Process(query);
-                if (request.Success)
-                {
-                    var col = request.Value.ToList();
-                    HttpContext.Session.Set(query.GetKey(), col);
+        //private Result<IQueryable<T>> LoadStoredData(IGridQuery<T> query)
+        //{
+        //    if (HttpContext.Session.Keys.Contains(query.GetKey()))
+        //    {
+        //        return Result.Ok(HttpContext.Session.Get<List<T>>(query.GetKey()).AsQueryable());
+        //    }
+        //    else
+        //    {
+        //        var request = QueryProcessor.Process(query);
+        //        if (request.Success)
+        //        {
+        //            var col = request.Value.ToList();
+        //            HttpContext.Session.Set(query.GetKey(), col);
 
-                    return Result.Ok(col.AsQueryable());
-                }
+        //            return Result.Ok(col.AsQueryable());
+        //        }
 
-                return request;
-            }
-        }
+        //        return request;
+        //    }
+        //}
+        private Result<IQueryable<T>> LoadStoredData(IGridQuery<T> query) => QueryProcessor.Process(query);
+
 
         protected void ClearStoredData(IGridQuery<T> query)
         {

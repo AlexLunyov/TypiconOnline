@@ -24,6 +24,7 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Events;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
+using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.WebServices.Hosting;
 
 namespace TypiconOnline.Tests.Common
@@ -92,9 +93,14 @@ namespace TypiconOnline.Tests.Common
 
             RegisterSingleton<IJobRepository>(() => new JobRepository());
 
-            //RegisterInstance((withEvents) 
-            //    ? TypiconDbContextFactory.CreateWithEvents()
-            //    : TypiconDbContextFactory.Create());
+            /* 
+             * DbContexts
+             */
+            RegisterInstance((withEvents)
+                ? TypiconDbContextFactory.CreateWithEvents()
+                : TypiconDbContextFactory.Create());
+
+            RegisterInstance(WebDbContextFactory.Create());
 
             /*
              * Events
@@ -103,6 +109,9 @@ namespace TypiconOnline.Tests.Common
 
             var assemblies = new[] { typeof(DomainEventDispatcher).Assembly };
             Collection.Register(typeof(IDomainEventHandler<>), assemblies);
+
+            
+            
         }
     }
 }

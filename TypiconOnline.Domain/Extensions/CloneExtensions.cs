@@ -68,9 +68,9 @@ namespace TypiconOnline.Domain.Extensions
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static TypiconVersion Clone(this TypiconVersion source)
+        public static TypiconVersion Clone(this TypiconVersion source, bool deep = false)
         {
-            return new TypiconVersion()
+            var t = new TypiconVersion()
             {
                 BDate = source.BDate,
                 CDate = DateTime.Now,
@@ -83,6 +83,13 @@ namespace TypiconOnline.Domain.Extensions
                 VersionNumber = source.VersionNumber,
                 PrevVersionId = source.Id
             };
+
+            if (deep)
+            {
+                source.CopyChildrenTo(t);
+            }
+
+            return t;
         }
 
         private static void CloneScheduleSettings(TypiconVersion version, ScheduleSettings scheduleSettings)

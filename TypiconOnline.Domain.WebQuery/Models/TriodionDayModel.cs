@@ -8,7 +8,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
     /// <summary>
     /// 
     /// </summary>
-    public class TriodionDayModel : IGridModel
+    public class TriodionDayGridModel : IGridModel
     {
         public int Id { get; set; }
         public int DaysFromEaster { get; set; }

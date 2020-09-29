@@ -22,8 +22,8 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
                 {
                     a.Property<int>("NameId");
                     a.WithOwner().HasForeignKey("NameId");
-                    a.Property<int>("Id");
-                    a.HasKey("Id");
+                    //a.Property<int>("Id");
+                    a.HasKey("NameId", "Language");
                     a.ToTable("DayWorshipNameItems");
                 });
                 //.ToTable("DayWorshipName");
@@ -35,8 +35,8 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
                 {
                     a.Property<int>("NameId");
                     a.WithOwner().HasForeignKey("NameId");
-                    a.Property<int>("Id");
-                    a.HasKey("Id");
+                    //a.Property<int>("Id");
+                    a.HasKey("NameId", "Language");
                     a.ToTable("DayWorshipShortNameItems");
                 })
                 .ToTable("DayWorshipShortName");

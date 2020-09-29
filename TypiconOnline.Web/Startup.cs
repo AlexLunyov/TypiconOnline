@@ -13,6 +13,7 @@ using SimpleInjector;
 using System;
 using TypiconOnline.AppServices.Interfaces;
 using TypiconOnline.Domain.Identity;
+using TypiconOnline.Domain.WebQuery.Context;
 using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Web.Services;
 using TypiconOnline.WebServices.Authorization;
@@ -84,6 +85,27 @@ namespace TypiconOnline.Web
             #region DbContext
 
             services.AddDbContext<TypiconDBContext>(optionsBuilder =>
+            {
+                //SqlServer
+                //var connectionString = configuration.GetConnectionString("MSSql");
+                //optionsBuilder.UseSqlServer(connectionString);
+
+                //SQLite
+                //var connectionString = configuration.GetConnectionString("DBTypicon");
+                //optionsBuilder.UseSqlite(connectionString);
+
+                //MySQL
+                optionsBuilder.UseMySql(Configuration.GetConnectionString("MySql"),
+                        mySqlOptions =>
+                        {
+                            mySqlOptions.ServerVersion(new Version(5, 6, 43), ServerType.MySql);
+                        });
+
+                //PostgreSQL
+                //optionsBuilder.UseNpgsql(configuration.GetConnectionString("Postgre"));
+            });
+
+            services.AddDbContext<WebDbContext>(optionsBuilder =>
             {
                 //SqlServer
                 //var connectionString = configuration.GetConnectionString("MSSql");

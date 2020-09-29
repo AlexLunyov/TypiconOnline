@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Identity;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.WebQuery.Context;
 using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
@@ -20,9 +21,11 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
     /// </summary>
     public class AllTriodionRulesWebQueryHandler : DbContextQueryBase, IQueryHandler<AllTriodionRulesWebQuery, Result<IQueryable<TriodionRuleGridModel>>>
     {
-        public AllTriodionRulesWebQueryHandler(TypiconDBContext dbContext) : base(dbContext)
+        private readonly WebDbContext _webDbContext;
+
+        public AllTriodionRulesWebQueryHandler(TypiconDBContext dbContext, WebDbContext webDbContext) : base(dbContext)
         {
-            
+            _webDbContext = webDbContext ?? throw new ArgumentNullException(nameof(webDbContext));
         }
 
         public Result<IQueryable<TriodionRuleGridModel>> Handle([NotNull] AllTriodionRulesWebQuery query)
@@ -37,36 +40,8 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 return Result.Fail<IQueryable<TriodionRuleGridModel>>($"Черновик для Устава с Id={query.TypiconId} не был найден.");
             }
 
-            var entities = DbContext.Set<TriodionRule>()
-                .Include(c => c.DayRuleWorships)
-                    .ThenInclude(c => c.DayWorship)
-                        .ThenInclude(c => c.WorshipName)
-                            .ThenInclude(c => c.Items)
-                .Include(c => c.DayRuleWorships)
-                    .ThenInclude(c => c.DayWorship)
-                        .ThenInclude(c => c.WorshipShortName)
-                            .ThenInclude(c => c.Items)
-                .Include(c => c.Template)
-                    .ThenInclude(c => c.SignName)
-                        .ThenInclude(c => c.Items)
+            var result = _webDbContext.TriodionRules
                 .Where(c => c.TypiconVersionId == draft.Id);
-                //.ToList();
-
-            var result = entities.Select(c => new TriodionRuleGridModel()
-            {
-                Id = c.Id,
-                Name = c.GetNameByLanguage(query.Language),
-                DaysFromEaster = c.DaysFromEaster,
-                IsTransparent = c.IsTransparent,
-                HasModRuleDefinition = !string.IsNullOrEmpty(c.ModRuleDefinition),
-                HasRuleDefinition = !string.IsNullOrEmpty(c.RuleDefinition),
-                TemplateName = c.Template.GetNameByLanguage(query.Language)
-            });
-
-            //ужасная мера
-            //result = result
-            //    .ToList()
-            //    .AsQueryable();
 
             return Result.Ok(result);
         }
