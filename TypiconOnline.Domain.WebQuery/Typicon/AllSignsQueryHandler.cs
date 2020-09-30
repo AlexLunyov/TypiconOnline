@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TypiconOnline.Domain.Identity;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.WebQuery.Context;
 using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
@@ -20,9 +21,10 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
     /// </summary>
     public class AllSignsQueryHandler : DbContextQueryBase, IQueryHandler<AllSignsQuery, Result<IQueryable<SignGridModel>>>
     {
-        public AllSignsQueryHandler(TypiconDBContext dbContext) : base(dbContext)
+        private readonly WebDbContext _webDbContext;
+        public AllSignsQueryHandler(TypiconDBContext dbContext, WebDbContext webDbContext) : base(dbContext)
         {
-            
+            _webDbContext = webDbContext ?? throw new ArgumentNullException(nameof(webDbContext));
         }
 
         public Result<IQueryable<SignGridModel>> Handle([NotNull] AllSignsQuery query)
@@ -36,29 +38,13 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 return Result.Fail<IQueryable<SignGridModel>>($"Черновик для Устава с Id={query.TypiconId} не был найден.");
             }
 
-            var signs = DbContext.Set<Sign>()
+            var result = _webDbContext.Signs
                 .Where(c => c.TypiconVersionId == draft.Id);
 
             if (query.ExceptSignId != null)
             {
-                signs = signs.Where(c => c.Id != query.ExceptSignId.Value);
+                result = result.Where(c => c.Id != query.ExceptSignId.Value);
             }
-
-            var result = signs.Select(c => new SignGridModel()
-                {
-                    Id = c.Id,
-                    IsAddition = c.IsAddition,
-                    Name = c.GetNameByLanguage(query.Language),
-                    Number = (c.PrintTemplate != null) ? c.PrintTemplate.Number : default,
-                    Priority = c.Priority,
-                    TemplateName = (c.Template != null) ? c.Template.GetNameByLanguage(query.Language) : string.Empty
-                });
-
-            //ужасная мера
-            //result = result
-            //    .ToList()
-            //    .AsQueryable();
-
 
             return Result.Ok(result);
         }

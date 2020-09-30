@@ -5,6 +5,14 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-12">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="index">Главная</a></li>
+                <li class="active">Тексты минейных служб</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-12"><h1>Тексты минейных служб</h1></div>
     </div>
     <div class="row">
@@ -17,11 +25,11 @@
                     <thead class="text-center">
                         <tr>
                             <th>Id</th>
-                            <th>Date</th>
-                            <th>LeapDate</th>
-                            <th>Name</th>
-                            <th>ShortName</th>
-                            <th>IsCelebrating</th>
+                            <th>Дата</th>
+                            <th>Дата (високосный год)</th>
+                            <th>Наименование</th>
+                            <th>Краткое наим.</th>
+                            <th>Праздник</th>
                             <th></th>
                         </tr>
                     </thead>

@@ -2,43 +2,37 @@
 @{
     ViewData["Title"] = "Создание Явного правила";
 }
-<div class="row">
-    <div class="col-12">
+    <div class="container">
         @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.CreateExplicit })
-        <div class="tab-content">
-            <div class="tab-pane fade in active">
-                <div class="col-md-8">
-                    <h2>Создание Явного правила</h2>
+        <div class="row">
+            <div class="col-12"><h2>Создание Явного правила</h2></div>
+        </div>
+        <div class="row">
+            <form class="row" asp-action="Create" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <label asp-for="Date">Дата:</label>
+                        <div class="input-group date" id="date">
+                            <input type="text" class="form-control" />
+                            <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+                        </div>
+                        <input type="hidden" id="dtp_date" value="@Model.Date.ToString("yyyy-MM-dd")" name="Date" />
+                    </div>
                 </div>
                 <div class="clearfix"></div>
-                <form asp-action="Create" method="post">
-                    <div asp-validation-summary="All" class="text-danger"></div>
-
-                    <div class="form-group">
-                        <div class="col-sm-8">
-                            <label asp-for="Date">Дата:</label>
-                            <div class="input-group date" id="date">
-                                <input type="text" class="form-control" />
-                                <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
-                            </div>
-                            <input type="hidden" id="dtp_date" value="@Model.Date.ToString("yyyy-MM-dd")" name="Date" />
-                        </div>
+                <div class="form-group col-xs-12">
+                    <label asp-for="RuleDefinition">Правило для последовательности:</label>
+                    <div>
+                        <textarea id="rule" class="form-control rounded-0" rows="30" asp-for="RuleDefinition"></textarea>
+                        <span asp-validation-for="RuleDefinition" class="text-danger"></span>
                     </div>
-                    <div class="clearfix"></div>
-                    <div class="form-group col-xs-12">
-                        <label asp-for="RuleDefinition">Правило для последовательности:</label>
-                        <div>
-                            <textarea id="rule" class="form-control rounded-0" rows="30" asp-for="RuleDefinition"></textarea>
-                            <span asp-validation-for="RuleDefinition" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="form-group"><div class="validation" asp-validation-summary="ModelOnly"></div></div>
-                    <div class="col-xs-12"><button class="btn btn-primary" asp-action="Create">Создать</button></div>
-                </form>
-            </div>
+                </div>
+                <div class="form-group"><div class="validation" asp-validation-summary="ModelOnly"></div></div>
+                <div class="col-xs-12"><button class="btn btn-primary" asp-action="Create">Создать</button></div>
+            </form>
         </div>
     </div>
-</div>
 @section Scripts
     {
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">

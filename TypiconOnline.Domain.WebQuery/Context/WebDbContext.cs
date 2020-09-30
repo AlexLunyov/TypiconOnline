@@ -20,6 +20,7 @@ namespace TypiconOnline.Domain.WebQuery.Context
         public DbSet<TriodionRuleGridModel> TriodionRules { get; set; }
         public DbSet<MenologyDayGridModel> MenologyDays { get; set; }
         public DbSet<TriodionDayGridModel> TriodionDays { get; set; }
+        public DbSet<SignGridModel> Signs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,6 +46,12 @@ namespace TypiconOnline.Domain.WebQuery.Context
             {
                 pc.HasNoKey();
                 pc.ToView("View_TriodionDayGrid");
+            }));
+
+            modelBuilder.Entity<SignGridModel>((pc =>
+            {
+                pc.HasNoKey();
+                pc.ToView("View_SignGrid");
             }));
         }
     }

@@ -2,145 +2,157 @@
 @{
     ViewData["Title"] = "Редактирование Текста Минейной службы";
 }
-<div class="row">
-    <div class="col-12">
-        <div class="col-md-8">
-            <h2>Редактирование свойств Текста Минейной службы</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <ol class="breadcrumb">
+                    <li><a asp-controller="Home" asp-action="index">Главная</a></li>
+                    <li><a asp-controller="MenologyDay" asp-action="index">Тексты минейных служб</a></li>
+                    <li class="active">Редактирование Текста Минейной службы</li>
+                </ol>
+            </div>
         </div>
-        <div class="clearfix"></div>
-        <form asp-action="Edit" method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="col-md-8">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-9"><label asp-for="Name">Наименование</label></div>
-                        <div class="col-sm-3 text-right">
-                            <button type="button" id="addNameBtn" class="btn btn-info add-new btn-xs"><i class="fa fa-plus"></i> Добавить</button>
+        <div class="row">
+            <div class="col-12">
+                <h2>Редактирование Текста Минейной службы</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <form class="row" asp-action="Edit" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="col-md-8">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-sm-9"><label asp-for="Name">Наименование</label></div>
+                                <div class="col-sm-3 text-right">
+                                    <button type="button" id="addNameBtn" class="btn btn-info add-new btn-xs"><i class="fa fa-plus"></i> Добавить</button>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="nameTable" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Язык</th>
+                                    <th>Значение</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Name.Items.Count; i++)
+                                {
+                                    <tr>
+                                        <td class="language">@Model.Name.Items[i].Language</td>
+                                        <td class="text">@Model.Name.Items[i].Text</td>
+                                        <td>
+                                            <input class="language" type="hidden" asp-for="@Model.Name.Items[i].Language" />
+                                            <input class="text" type="hidden" asp-for="@Model.Name.Items[i].Text" />
+                                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-sm-9"><label asp-for="ShortName">Краткое наименование</label></div>
+                                <div class="col-sm-3 text-right">
+                                    <button type="button" id="addShortNameBtn" class="btn btn-info add-new btn-xs"><i class="fa fa-plus"></i> Добавить</button>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="shortNameTable" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Язык</th>
+                                    <th>Значение</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.ShortName.Items.Count; i++)
+                                {
+                                    <tr>
+                                        <td class="language">@Model.ShortName.Items[i].Language</td>
+                                        <td class="text">@Model.ShortName.Items[i].Text</td>
+                                        <td>
+                                            <input class="language" type="hidden" asp-for="@Model.ShortName.Items[i].Language" />
+                                            <input class="text" type="hidden" asp-for="@Model.ShortName.Items[i].Text" />
+                                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <label asp-for="LeapDate">Дата (високосный год):</label>
+                            <div class="input-group date" id="leapdate">
+                                <input type="text" class="form-control" />
+                                <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+                            </div>
+                            <input type="hidden" id="dtp_leapdate" value="@Model.LeapDate?.ToString("yyyy-MM-dd")" name="LeapDate" />
                         </div>
                     </div>
-                </div>
-                <table id="nameTable" class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Язык</th>
-                            <th>Значение</th>
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (int i = 0; i < Model.Name.Items.Count; i++)
-                        {
-                            <tr>
-                                <td class="language">@Model.Name.Items[i].Language</td>
-                                <td class="text">@Model.Name.Items[i].Text</td>
-                                <td>
-                                    <input class="language" type="hidden" asp-for="@Model.Name.Items[i].Language" />
-                                    <input class="text" type="hidden" asp-for="@Model.Name.Items[i].Text" />
-                                    <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-8">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-9"><label asp-for="ShortName">Краткое наименование</label></div>
-                        <div class="col-sm-3 text-right">
-                            <button type="button" id="addShortNameBtn" class="btn btn-info add-new btn-xs"><i class="fa fa-plus"></i> Добавить</button>
+                    <div class="clearfix"></div>
+                    <div class="checkbox col-sm-8">
+                        <label>
+                            <input type="checkbox" asp-for="IsCelebrating" /> <b>Признак Господского или Богородичного праздника, его предпразднества или попразднества</b>
+                        </label>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="checkbox col-sm-8">
+                        <label>
+                            <input type="checkbox" asp-for="UseFullName" /> <b>Признак, использовать ли полное имя при составлении расписания. Например, имеет значение true для праздника Недели по Рождестве</b>
+                        </label>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group col-xs-12">
+                        <label asp-for="Definition">Определение текста службы:</label>
+                        <div>
+                            <textarea id="definition" class="form-control rounded-0" rows="30" asp-for="Definition"></textarea>
+                            <span asp-validation-for="Definition" class="text-danger"></span>
                         </div>
                     </div>
-                </div>
-                <table id="shortNameTable" class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Язык</th>
-                            <th>Значение</th>
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (int i = 0; i < Model.ShortName.Items.Count; i++)
-                        {
-                            <tr>
-                                <td class="language">@Model.ShortName.Items[i].Language</td>
-                                <td class="text">@Model.ShortName.Items[i].Text</td>
-                                <td>
-                                    <input class="language" type="hidden" asp-for="@Model.ShortName.Items[i].Language" />
-                                    <input class="text" type="hidden" asp-for="@Model.ShortName.Items[i].Text" />
-                                    <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                    <div class="form-group"><div class="validation" asp-validation-summary="ModelOnly"></div></div>
+                    <div class="col-xs-12"><button class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Сохранить</button></div>
+                </form>
             </div>
-            <div class="clearfix"></div>
-            <div class="form-group">
-                <div class="col-sm-8">
-                    <label asp-for="LeapDate">Дата (високосный год):</label>
-                    <div class="input-group date" id="leapdate">
-                        <input type="text" class="form-control" />
-                        <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
-                    </div>
-                    <input type="hidden" id="dtp_leapdate" value="@Model.LeapDate?.ToString("yyyy-MM-dd")" name="LeapDate" />
-                </div>
-            </div>
-            <div class="clearfix"></div>
-            <div class="checkbox col-sm-8">
-                <label>
-                    <input type="checkbox" asp-for="IsCelebrating" /> <b>Признак Господского или Богородичного праздника, его предпразднества или попразднества</b>
-                </label>
-            </div>
-            <div class="clearfix"></div>
-            <div class="checkbox col-sm-8">
-                <label>
-                    <input type="checkbox" asp-for="UseFullName" /> <b>Признак, использовать ли полное имя при составлении расписания. Например, имеет значение true для праздника Недели по Рождестве</b>
-                </label>
-            </div>
-            <div class="clearfix"></div>
-            <div class="form-group col-xs-12">
-                <label asp-for="Definition">Определение текста службы:</label>
-                <div>
-                    <textarea id="definition" class="form-control rounded-0" rows="30" asp-for="Definition"></textarea>
-                    <span asp-validation-for="Definition" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group"><div class="validation" asp-validation-summary="ModelOnly"></div></div>
-            <div class="col-xs-12"><button class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Сохранить</button></div>
-        </form>
+        </div>
     </div>
-</div>
-@section Scripts
+        @section Scripts
     {
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="~/css/itemtext.css" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+            <link rel="stylesheet" href="~/css/itemtext.css" />
 
-    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
+            <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
 
-    <script src="~/lib/codemirror/codemirror.js"></script>
-    <link rel="stylesheet" href="~/lib/codemirror/codemirror.css">
-    <link rel="stylesheet" href="~/lib/codemirror/show-hint.css">
-    <link rel="stylesheet" href="~/lib/codemirror/xq-light.css">
-    <script src="~/lib/codemirror/xml.js"></script>
-    <script src="~/lib/codemirror/show-hint.js"></script>
-    <script src="~/lib/codemirror/xml-hint.js"></script>
-    <script src="~/js/textarea.js"></script>
-    <script src="~/js/itemtext.js"></script>
+            <script src="~/lib/codemirror/codemirror.js"></script>
+            <link rel="stylesheet" href="~/lib/codemirror/codemirror.css">
+            <link rel="stylesheet" href="~/lib/codemirror/show-hint.css">
+            <link rel="stylesheet" href="~/lib/codemirror/xq-light.css">
+            <script src="~/lib/codemirror/xml.js"></script>
+            <script src="~/lib/codemirror/show-hint.js"></script>
+            <script src="~/lib/codemirror/xml-hint.js"></script>
+            <script src="~/js/textarea.js"></script>
+            <script src="~/js/itemtext.js"></script>
 
-    <script src="~/lib/momentjs/moment-with-locales.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.min.js"></script>
+            <script src="~/lib/momentjs/moment-with-locales.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.min.js"></script>
 
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+            <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
 
 
-    <script type="text/javascript">
+            <script type="text/javascript">
 
         $(document).ready(function () {
             createTextArea("definition", '@Model.Definition');
@@ -178,5 +190,5 @@
             };
         });
 
-    </script>
-}
+            </script>
+        }

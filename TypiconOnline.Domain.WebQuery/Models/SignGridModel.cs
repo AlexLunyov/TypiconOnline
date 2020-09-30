@@ -8,6 +8,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
     public class SignGridModel : IGridModel
     {
         public int Id { get; set; }
+        public int TypiconVersionId { get; set; }
         public string Name { get; set; }
         public string TemplateName { get; set; }
         public bool IsAddition { get; set; }
