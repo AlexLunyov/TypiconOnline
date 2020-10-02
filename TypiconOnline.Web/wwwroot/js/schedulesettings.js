@@ -53,6 +53,9 @@ function CreateSignTable(id) {
             "serverSide": true, // for process server side
             "filter": true, // this is for disable filter (search box)
             "orderMulti": false, // for disable multiple column at once
+            "language": {
+                "url": "/lib/datatables/russian.json"
+            },
             "ajax": {
                 "url": "/ScheduleSettings/LoadSigns/",
                 "type": "POST",
@@ -67,11 +70,11 @@ function CreateSignTable(id) {
                 }],
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": true },
-                { "data": "Name", "name": "Name", "autoWidth": true },
-                { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
-                { "data": "IsAddition", "name": "IsAddition", "autoWidth": true },
-                { "data": "Number", "name": "Number", "autoWidth": true },
-                { "data": "Priority", "name": "Priority", "autoWidth": true },
+                { "data": "Name", "name": "Наименование", "autoWidth": true },
+                { "data": "TemplateName", "name": "Знак службы", "autoWidth": true },
+                { "data": "IsAddition", "name": "Дополнение", "autoWidth": true },
+                { "data": "Number", "name": "Номер", "autoWidth": true },
+                { "data": "Priority", "name": "Приоритет", "autoWidth": true },
                 {
                     data: null, render: function (data, type, row) {
                         return '<a href="#" class="icon btn-delete" data-toggle="tooltip" data-original-title="Удалить"><i class="fas fa-trash"></i></a>';
@@ -120,6 +123,9 @@ function CreateSignTable(id) {
                         "serverSide": true, // for process server side
                         "filter": true, // this is for disable filter (search box)
                         "orderMulti": false, // for disable multiple column at once
+                        "language": {
+                            "url": "/lib/datatables/russian.json"
+                        },
                         "ajax": {
                             "url": "/ScheduleSettings/LoadAddSignGrid/",
                             "type": "POST",
@@ -134,11 +140,7 @@ function CreateSignTable(id) {
                             }],
                         "columns": [
                             { "data": "Id", "name": "Id", "autoWidth": true },
-                            { "data": "Name", "name": "Name", "autoWidth": true },
-                            { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
-                            { "data": "IsAddition", "name": "IsAddition", "autoWidth": true },
-                            { "data": "Number", "name": "Number", "autoWidth": true },
-                            { "data": "Priority", "name": "Priority", "autoWidth": true },
+                            { "data": "Name", "name": "Наименование", "autoWidth": true },
                             {
                                 data: null, render: function (data, type, row) {
                                     return '<a href="#" class="btn-add" data-toggle="tooltip" data-original-title="Добавить"><i class="fas fa-plus-circle"></i></a>';
@@ -177,6 +179,9 @@ function CreateMenologyTable(id) {
             "serverSide": true, // for process server side
             "filter": true, // this is for disable filter (search box)
             "orderMulti": false, // for disable multiple column at once
+            "language": {
+                "url": "/lib/datatables/russian.json"
+            },
             "ajax": {
                 "url": "/ScheduleSettings/LoadMenology/",
                 "type": "POST",
@@ -191,13 +196,13 @@ function CreateMenologyTable(id) {
                 }],
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": true },
-                { "data": "Name", "name": "Name", "autoWidth": true },
-                { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
-                { "data": "IsAddition", "name": "IsAddition", "autoWidth": true },
-                { "data": "Date", "name": "Date", "autoWidth": true },
-                { "data": "LeapDate", "name": "LeapDate", "autoWidth": true },
-                { "data": "HasModRuleDefinition", "name": "HasModRuleDefinition", "autoWidth": true },
-                { "data": "HasRuleDefinition", "name": "HasRuleDefinition", "autoWidth": true },
+                { "data": "Name", "name": "Наименование", "autoWidth": true },
+                { "data": "TemplateName", "name": "Знак службы", "autoWidth": true },
+                { "data": "IsAddition", "name": "Как дополнение", "autoWidth": true },
+                { "data": "Date", "name": "Дата", "autoWidth": true },
+                { "data": "LeapDate", "name": "Дата (вис. год)", "autoWidth": true },
+                { "data": "HasModRuleDefinition", "name": "Переход. правило", "autoWidth": true },
+                { "data": "HasRuleDefinition", "name": "Последовательность", "autoWidth": true },
                 {
                     data: null, render: function (data, type, row) {
                         return '<a href="#" class="icon btn-delete" data-toggle="tooltip" data-original-title="Удалить"><i class="fas fa-trash"></i></a>';
@@ -274,6 +279,9 @@ function CreateMenologyTable(id) {
                         "serverSide": true, // for process server side
                         "filter": true, // this is for disable filter (search box)
                         "orderMulti": false, // for disable multiple column at once
+                        "language": {
+                            "url": "/lib/datatables/russian.json"
+                        },
                         "ajax": {
                             "url": "/ScheduleSettings/LoadMenologyToAddGrid/" + id + "/" + defaultDate,
                             "type": "POST",
@@ -287,11 +295,10 @@ function CreateMenologyTable(id) {
                             }],
                         "columns": [
                             { "data": "Id", "name": "Id", "autoWidth": true },
-                            { "data": "Name", "name": "Name", "autoWidth": true },
-                            { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
-                            { "data": "IsAddition", "name": "IsAddition", "autoWidth": true },
-                            { "data": "Date", "name": "Date", "autoWidth": true },
-                            { "data": "LeapDate", "name": "LeapDate", "autoWidth": true },
+                            { "data": "Name", "name": "Наименование", "autoWidth": true },
+                            { "data": "TemplateName", "name": "Знак службы", "autoWidth": true },
+                            { "data": "Date", "name": "Дата", "autoWidth": true },
+                            { "data": "LeapDate", "name": "Дата (вис. год)", "autoWidth": true },
                             {
                                 data: null, render: function (data, type, row) {
                                     return '<a href="#" class="btn-add" data-toggle="tooltip" data-original-title="Добавить"><i class="fas fa-plus-circle"></i></a>';
@@ -330,6 +337,9 @@ function CreateTriodionTable(id) {
             "serverSide": true, // for process server side
             "filter": true, // this is for disable filter (search box)
             "orderMulti": false, // for disable multiple column at once
+            "language": {
+                "url": "/lib/datatables/russian.json"
+            },
             "ajax": {
                 "url": "/ScheduleSettings/LoadTriodion/",
                 "type": "POST",
@@ -344,9 +354,9 @@ function CreateTriodionTable(id) {
                 }],
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": true },
-                { "data": "Name", "name": "Name", "autoWidth": true },
-                { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
-                { "data": "DaysFromEaster", "name": "DaysFromEaster", "autoWidth": true },
+                { "data": "Name", "name": "Наименование", "autoWidth": true },
+                { "data": "TemplateName", "name": "Знак службы", "autoWidth": true },
+                { "data": "DaysFromEaster", "name": "Дней от Пасхи", "autoWidth": true },
                 {
                     data: null, render: function (data, type, row) {
                         return '<a href="#" class="icon btn-delete" data-toggle="tooltip" data-original-title="Удалить"><i class="fas fa-trash"></i></a>';
@@ -358,7 +368,6 @@ function CreateTriodionTable(id) {
     );
 
     table.on('click', 'tbody tr td .btn-delete', function () {
-        //var table = $('#signGrid').DataTable();
         var row = table.row($(this).parents('tr'));
         var data = row.data();
 
@@ -411,6 +420,9 @@ function CreateTriodionTable(id) {
                         "serverSide": true, // for process server side
                         "filter": true, // this is for disable filter (search box)
                         "orderMulti": false, // for disable multiple column at once
+                        "language": {
+                            "url": "/lib/datatables/russian.json"
+                        },
                         "ajax": {
                             "url": "/ScheduleSettings/LoadTriodionToAddGrid/" + id + "/" + days,
                             "type": "POST",
@@ -424,9 +436,9 @@ function CreateTriodionTable(id) {
                             }],
                         "columns": [
                             { "data": "Id", "name": "Id", "autoWidth": true },
-                            { "data": "Name", "name": "Name", "autoWidth": true },
-                            { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
-                            { "data": "DaysFromEaster", "name": "DaysFromEaster", "autoWidth": true },
+                            { "data": "Name", "name": "Наименование", "autoWidth": true },
+                            { "data": "TemplateName", "name": "Знак службы", "autoWidth": true },
+                            { "data": "DaysFromEaster", "name": "Дней от Пасхи", "autoWidth": true },
                             {
                                 data: null, render: function (data, type, row) {
                                     return '<a href="#" class="btn-add" data-toggle="tooltip" data-original-title="Добавить"><i class="fas fa-plus-circle"></i></a>';
@@ -465,6 +477,9 @@ function CreateIncludeTable(id) {
             "serverSide": true, // for process server side
             "filter": true, // this is for disable filter (search box)
             "orderMulti": false, // for disable multiple column at once
+            "language": {
+                "url": "/lib/datatables/russian.json"
+            },
             "data": includedDates,
             "columns": [
                 {
@@ -484,7 +499,6 @@ function CreateIncludeTable(id) {
     );
 
     table.on('click', 'tbody tr td .btn-delete', function () {
-        //var table = $('#signGrid').DataTable();
         var row = table.row($(this).parents('tr'));
         var data = row.data();
 

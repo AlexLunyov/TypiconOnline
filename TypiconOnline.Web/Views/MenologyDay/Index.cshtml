@@ -26,7 +26,7 @@
                         <tr>
                             <th>Id</th>
                             <th>Дата</th>
-                            <th>Дата (високосный год)</th>
+                            <th>Дата (вис. год)</th>
                             <th>Наименование</th>
                             <th>Краткое наим.</th>
                             <th>Праздник</th>
@@ -56,6 +56,9 @@
                 "serverSide": true, // for process server side
                 "filter": true, // this is for disable filter (search box)
                 "orderMulti": false, // for disable multiple column at once
+                "language": {
+                    "url": "/lib/datatables/russian.json"
+                },
                 "ajax": {
                     "url": "/MenologyDay/LoadData",
                     "type": "POST",
@@ -69,11 +72,11 @@
                 }],
                 "columns": [
                     { "data": "Id", "name": "Id", "autoWidth": true },
-                    { "data": "Date", "name": "Date", "autoWidth": true },
-                    { "data": "LeapDate", "name": "LeapDate", "autoWidth": true },
-                    { "data": "Name", "name": "Name", "autoWidth": true },
-                    { "data": "ShortName", "name": "ShortName", "autoWidth": true },
-                    { "data": "IsCelebrating", "name": "IsCelebrating", "autoWidth": true },
+                    { "data": "Date", "name": "Дата", "autoWidth": true },
+                    { "data": "LeapDate", "name": "Дата (вис. год)", "autoWidth": true },
+                    { "data": "Name", "name": "Наименование", "autoWidth": true },
+                    { "data": "ShortName", "name": "Краткое наим.", "autoWidth": true },
+                    { "data": "IsCelebrating", "name": "Праздник", "autoWidth": true },
                     {
                         data: null, render: function (data, type, row)
                         {

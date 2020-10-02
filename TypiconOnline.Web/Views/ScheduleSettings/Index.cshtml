@@ -10,13 +10,13 @@
         <div class="col-12"><h1>График богослужений</h1></div>
     </div>
     <div class="row">
-        <div class="col-12"><h3>Дни недели</h3> <button id="editDays" class="btn btn-primary" data-id="@ViewContext.RouteData.Values["id"]">Редактировать</button></div>
+        <div class="col-12"><h3>Дни недели</h3> <p><button id="editDays" class="btn btn-primary" data-id="@ViewContext.RouteData.Values["id"]">Редактировать</button></div></p>
     </div>
     <div class="row">
-        <div id="daysContainer" class="col-12">@await Html.PartialAsync("_ViewDaysPartial", Model)</div>
+        <div id="daysContainer" class="col-sm-12 col-md-6 col-lg-4">@await Html.PartialAsync("_ViewDaysPartial", Model)</div>
     </div>
     <div class="row">
-        <div class="col-12"><h3>Знаки служб</h3> <button id="addSign" class="btn btn-primary" data-id="@ViewContext.RouteData.Values["id"]">Добавить Знак службы</button></div>
+        <div class="col-12"><h3>Знаки служб</h3> </p><button id="addSign" class="btn btn-primary" data-id="@ViewContext.RouteData.Values["id"]">Добавить Знак службы</button></p></div>
     </div>
     <div class="row">
         <div class="form-group col-12">
@@ -25,11 +25,11 @@
                     <thead class="text-center">
                         <tr>
                             <th>Id</th>
-                            <th>Name</th>
-                            <th>TemplateName</th>
-                            <th>IsAddition</th>
-                            <th>Number</th>
-                            <th>Priority</th>
+                            <th>Наименование</th>
+                            <th>Шаблон</th>
+                            <th>Как дополнение</th>
+                            <th>Номер</th>
+                            <th>Приоритет</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12"><h3>Минея</h3> <button id="addMenology" class="btn btn-primary" data-id="@ViewContext.RouteData.Values["id"]">Добавить Минею</button></div>
+        <div class="col-12"><h3>Минея</h3> </p><button id="addMenology" class="btn btn-primary" data-id="@ViewContext.RouteData.Values["id"]">Добавить Минею</button></p></div>
     </div>
     <div class="row">
         <div class="form-group col-12">
@@ -47,13 +47,13 @@
                     <thead class="text-center">
                         <tr>
                             <th>Id</th>
-                            <th>Name</th>
-                            <th>TemplateName</th>
-                            <th>IsAddition</th>
-                            <th>Date</th>
-                            <th>LeapDate</th>
-                            <th>HasModRule</th>
-                            <th>HasRule</th>
+                            <th>Наименование</th>
+                            <th>Знак службы</th>
+                            <th>Как дополнение</th>
+                            <th>Дата</th>
+                            <th>Дата (вис. год)</th>
+                            <th>Переход. правило</th>
+                            <th>Последовательность</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -62,7 +62,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12"><h3>Триодь</h3> <button id="addTriodion" class="btn btn-primary" data-id="@ViewContext.RouteData.Values["id"]">Добавить Триодь</button></div>
+        <div class="col-12"><h3>Триодь</h3> </p><button id="addTriodion" class="btn btn-primary" data-id="@ViewContext.RouteData.Values["id"]">Добавить Триодь</button></p></div>
     </div>
     <div class="row">
         <div class="form-group col-12">

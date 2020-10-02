@@ -18,12 +18,12 @@
                     <thead class="text-center">
                         <tr>
                             <th>Id</th>
-                            <th>Name</th>
-                            <th>TemplateName</th>
-                            <th>DaysFromEaster</th>
-                            <th>IsTransparent</th>
-                            <th>HasModRule</th>
-                            <th>HasRule</th>
+                            <th>Наименование</th>
+                            <th>Знак службы</th>
+                            <th>Дней от Пасхи</th>
+                            <th>Празрачно</th>
+                            <th>Имеет переход. правило</th>
+                            <th>Имеет последовательность</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -50,6 +50,9 @@
                 "serverSide": true, // for process server side
                 "filter": true, // this is for disable filter (search box)
                 "orderMulti": false, // for disable multiple column at once
+                "language": {
+                    "url": "/lib/datatables/russian.json"
+                },
                 "ajax": {
                     "url": "/TriodionRule/LoadData/@ViewContext.RouteData.Values["id"]",
                     "type": "POST",
@@ -63,12 +66,12 @@
                 }],
                 "columns": [
                     { "data": "Id", "name": "Id", "autoWidth": true },
-                    { "data": "Name", "name": "Name", "autoWidth": true },
-                    { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
-                    { "data": "DaysFromEaster", "name": "DaysFromEaster", "autoWidth": true },
-                    { "data": "IsTransparent", "name": "IsTransparent", "autoWidth": true },
-                    { "data": "HasModRuleDefinition", "name": "HasModRuleDefinition", "autoWidth": true },
-                    { "data": "HasRuleDefinition", "name": "HasRuleDefinition", "autoWidth": true },
+                    { "data": "Name", "name": "Наименование", "autoWidth": true },
+                    { "data": "TemplateName", "name": "Знак службы", "autoWidth": true },
+                    { "data": "DaysFromEaster", "name": "Дней от Пасхи", "autoWidth": true },
+                    { "data": "IsTransparent", "name": "Прозрачно", "autoWidth": true },
+                    { "data": "HasModRuleDefinition", "name": "Имеет переход. правило", "autoWidth": true },
+                    { "data": "HasRuleDefinition", "name": "Имеет последовательность", "autoWidth": true },
                     {
                         data: null, render: function (data, type, row)
                         {

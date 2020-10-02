@@ -2,8 +2,7 @@
     var table = $("#typiconGrid").DataTable(
         {
             language: {
-                processing: "Загрузка данных...",
-                zeroRecords: "Не найдено ни одного совпадения."
+                "url": "/lib/datatables/russian.json"
             },
             processing: false, // for show progress bar
             serverSide: true, // for process server side

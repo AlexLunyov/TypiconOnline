@@ -22,8 +22,8 @@
                             <th>Как дополнение</th>
                             <th>Дата</th>
                             <th>Дата (високосный год)</th>
-                            <th>Имеет правило для переноса служб</th>
-                            <th>Имеет правило для последовательности</th>
+                            <th>Переход. правило</th>
+                            <th>Последовательность</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -50,6 +50,9 @@
                 "serverSide": true, // for process server side
                 "filter": true, // this is for disable filter (search box)
                 "orderMulti": false, // for disable multiple column at once
+                "language": {
+                    "url": "/lib/datatables/russian.json"
+                },
                 "ajax": {
                     "url": "/MenologyRule/LoadData/@ViewContext.RouteData.Values["id"]",
                     "type": "POST",
@@ -63,13 +66,13 @@
                 }],
                 "columns": [
                     { "data": "Id", "name": "Id", "autoWidth": true },
-                    { "data": "Name", "name": "Name", "autoWidth": true },
-                    { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
-                    { "data": "IsAddition", "name": "IsAddition", "autoWidth": true },
-                    { "data": "Date", "name": "Date", "autoWidth": true },
-                    { "data": "LeapDate", "name": "LeapDate", "autoWidth": true },
-                    { "data": "HasModRuleDefinition", "name": "HasModRuleDefinition", "autoWidth": true },
-                    { "data": "HasRuleDefinition", "name": "HasRuleDefinition", "autoWidth": true },
+                    { "data": "Name", "name": "Наименование", "autoWidth": true },
+                    { "data": "TemplateName", "name": "Знак службы", "autoWidth": true },
+                    { "data": "IsAddition", "name": "Как дополнение", "autoWidth": true },
+                    { "data": "Date", "name": "Дата", "autoWidth": true },
+                    { "data": "LeapDate", "name": "Дата (вис. год)", "autoWidth": true },
+                    { "data": "HasModRuleDefinition", "name": "Переход. правило", "autoWidth": true },
+                    { "data": "HasRuleDefinition", "name": "Последовательность", "autoWidth": true },
                     {
                         data: null, render: function (data, type, row)
                         {

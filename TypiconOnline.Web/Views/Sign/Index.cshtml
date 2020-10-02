@@ -20,7 +20,7 @@
                             <th>Id</th>
                             <th>Наименование</th>
                             <th>Шаблон</th>
-                            <th>Является дополнением</th>
+                            <th>Как дополнение</th>
                             <th>Номер</th>
                             <th>Приоритет</th>
                             <th></th>
@@ -46,6 +46,9 @@
                 "serverSide": true, // for process server side
                 "filter": true, // this is for disable filter (search box)
                 "orderMulti": false, // for disable multiple column at once
+                "language": {
+                    "url": "/lib/datatables/russian.json"
+                },
                 "ajax": {
                     "url": "/Sign/LoadData/@ViewContext.RouteData.Values["id"]",
                     "type": "POST",
@@ -59,11 +62,11 @@
                 }],
                 "columns": [
                     { "data": "Id", "name": "Id", "autoWidth": true },
-                    { "data": "Name", "name": "Name", "autoWidth": true },
-                    { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
-                    { "data": "IsAddition", "name": "IsAddition", "autoWidth": true },
-                    { "data": "Number", "name": "Number", "autoWidth": true },
-                    { "data": "Priority", "name": "Priority", "autoWidth": true },
+                    { "data": "Name", "name": "Наименование", "autoWidth": true },
+                    { "data": "TemplateName", "name": "Шаблон", "autoWidth": true },
+                    { "data": "IsAddition", "name": "Как дополнение", "autoWidth": true },
+                    { "data": "Number", "name": "Номер", "autoWidth": true },
+                    { "data": "Priority", "name": "Приоритет", "autoWidth": true },
                     {
                         data: null, render: function (data, type, row)
                         {

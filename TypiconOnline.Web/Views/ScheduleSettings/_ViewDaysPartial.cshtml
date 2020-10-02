@@ -1,9 +1,14 @@
 ﻿@model ScheduleSettingsWeekDaysModel
 
-@GetDays(Model)
+    <ul class="row list-group">
+        @foreach (var elem in GetDays(Model))
+        {
+        <li class="list-group-item">@Html.Raw(elem)</li>
+        }
+    </ul>
 
 @{
-    string GetDays(ScheduleSettingsWeekDaysModel model)
+    IEnumerable<string> GetDays(ScheduleSettingsWeekDaysModel model)
     {
         var arr = new List<string>();
 
@@ -36,17 +41,16 @@
             arr.Add("Воскресенье");
         }
 
-        var result = string.Join(", ", arr);
-
-        if (string.IsNullOrEmpty(result))
+        if (arr.Count == 0)
         {
-            result = "Ни один день недели не отмечен";
+            arr.Add("<i class='fas fa-times icon-btn-danger'></i> Ни один день недели не отмечен");
         }
         else if (arr.Count == 7)
         {
-            result = "Богослужения совершаются каждый день";
+            arr.Clear();
+            arr.Add("<i class='fas fa-check icon-btn-success'></i> Богослужения совершаются каждый день");
         }
 
-        return result;
+        return arr;
     }
 }

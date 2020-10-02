@@ -81,6 +81,9 @@
                 "serverSide": true, // for process server side
                 "filter": true, // this is for disable filter (search box)
                 "orderMulti": false, // for disable multiple column at once
+                "language": {
+                    "url": "/lib/datatables/russian.json"
+                },
                 "ajax": {
                     "url": "/PrintTemplate/LoadData/@ViewContext.RouteData.Values["id"]",
                     "type": "POST",
@@ -94,10 +97,10 @@
                 }],
                 "columns": [
                     { "data": "Id", "name": "Id", "autoWidth": true },
-                    { "data": "Number", "name": "Number", "autoWidth": true },
-                    { "data": "HasFile", "name": "HasFile", "autoWidth": true },
+                    { "data": "Number", "name": "Номер", "autoWidth": true },
+                    { "data": "HasFile", "name": "Наличие файла", "autoWidth": true },
                     {
-                        data: "Name", name: "Name", autoWidth: true,
+                        data: "Name", name: "Наименование", autoWidth: true,
                         render: function (data, type, row)
                         {
                             var str = data;

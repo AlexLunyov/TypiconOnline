@@ -6,6 +6,9 @@
             "serverSide": true, // for process server side
             "filter": true, // this is for disable filter (search box)
             "orderMulti": false, // for disable multiple column at once
+            "language": {
+                "url": "/lib/datatables/russian.json"
+            },
             "ajax": {
                 "url": "/TypiconVariables/LoadData/" + id,
                 "type": "POST",
@@ -19,9 +22,9 @@
                 }],
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": true },
-                { "data": "Name", "name": "Name", "autoWidth": true },
-                { "data": "Type", "name": "Type", "autoWidth": true },
-                { "data": "Count", "name": "Count", "autoWidth": true },
+                { "data": "Name", "name": "Наименование", "autoWidth": true },
+                { "data": "Type", "name": "Тип", "autoWidth": true },
+                { "data": "Count", "name": "Связанных правил", "autoWidth": true },
                 {
                     data: null, render: function (data, type, row) {
                         return '<a class="edit" href="#" title="Редактировать описание" data-toggle="tooltip"><i class="material-icons">chat_bubble</i></a> ' +

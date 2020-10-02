@@ -18,7 +18,7 @@
                     <thead class="text-center">
                         <tr>
                             <th>Id</th>
-                            <th>Name</th>
+                            <th>Наименование</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -42,6 +42,9 @@
                 "serverSide": true, // for process server side
                 "filter": true, // this is for disable filter (search box)
                 "orderMulti": false, // for disable multiple column at once
+                "language": {
+                    "url": "/lib/datatables/russian.json"
+                },
                 "ajax": {
                     "url": "/CommonRule/LoadData/@ViewContext.RouteData.Values["id"]",
                     "type": "POST",
@@ -55,7 +58,7 @@
                 }],
                 "columns": [
                     { "data": "Id", "name": "Id", "autoWidth": true },
-                    { "data": "Name", "name": "Name", "autoWidth": true },
+                    { "data": "Name", "name": "Наименование", "autoWidth": true },
                     {
                         data: null, render: function (data, type, row)
                         {

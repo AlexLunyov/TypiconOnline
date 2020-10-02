@@ -25,10 +25,10 @@
                     <thead class="text-center">
                         <tr>
                             <th>Id</th>
-                            <th>DaysFromEaster</th>
-                            <th>Name</th>
-                            <th>ShortName</th>
-                            <th>IsCelebrating</th>
+                            <th>Дней от Пасхи</th>
+                            <th>Наименование</th>
+                            <th>Краткое наим.</th>
+                            <th>Праздник</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -55,6 +55,9 @@
                 "serverSide": true, // for process server side
                 "filter": true, // this is for disable filter (search box)
                 "orderMulti": false, // for disable multiple column at once
+                "language": {
+                    "url": "/lib/datatables/russian.json"
+                },
                 "ajax": {
                     "url": "/TriodionDay/LoadData",
                     "type": "POST",
@@ -68,10 +71,10 @@
                 }],
                 "columns": [
                     { "data": "Id", "name": "Id", "autoWidth": true },
-                    { "data": "DaysFromEaster", "name": "DaysFromEaster", "autoWidth": true },
-                    { "data": "Name", "name": "Name", "autoWidth": true },
-                    { "data": "ShortName", "name": "ShortName", "autoWidth": true },
-                    { "data": "IsCelebrating", "name": "IsCelebrating", "autoWidth": true },
+                    { "data": "DaysFromEaster", "name": "Дней от Пасхи", "autoWidth": true },
+                    { "data": "Name", "name": "Наименование", "autoWidth": true },
+                    { "data": "ShortName", "name": "Краткое наим.", "autoWidth": true },
+                    { "data": "IsCelebrating", "name": "Праздник", "autoWidth": true },
                     {
                         data: null, render: function (data, type, row)
                         {

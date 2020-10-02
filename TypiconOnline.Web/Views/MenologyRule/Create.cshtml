@@ -107,7 +107,7 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Наименование</th>
-                                    <th>Краткое наименование</th>
+                                    <th>Краткое наим.</th>
                                     <th>Праздник</th>
                                     <th>Действия</th>
                                 </tr>
@@ -175,6 +175,9 @@
                 OrderMulti: false, // for disable multiple column at once
                 autoWidth: true,
                 rowId: "WorshipId",
+                language: {
+                    "url": "/lib/datatables/russian.json"
+                },
                 ajax: {
                     "url": "/MenologyRule/GetDayWorships/",
                     "type": "GET",
@@ -189,7 +192,7 @@
                 columns: [
                     { data: "WorshipId", name: "Id", autoWidth: true },
                     { data: "Name", name: "Наименование", autoWidth: true },
-                    { data: "ShortName", name: "Краткое наименование", autoWidth: true },
+                    { data: "ShortName", name: "Краткое наим.", autoWidth: true },
                     { data: "IsCelebrating", name: "Праздник", autoWidth: true },
                     {
                         data: null, render: function ()
