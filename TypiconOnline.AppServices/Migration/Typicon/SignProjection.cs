@@ -8,10 +8,6 @@ namespace TypiconOnline.AppServices.Migration.Typicon
     public class SignProjection: TemplateHavingRuleProjection
     {
         public SignProjection() { }
-        /// <summary>
-        /// Сериализуем Id, т.к. на него будут ссылаться другие Правила
-        /// </summary>
-        public int Id { get; set; }
         public bool IsAddition { get; set; }
         public int? Number { get; set; }
         public int Priority { get; set; }

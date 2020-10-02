@@ -37,22 +37,21 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 return Result.Fail<IQueryable<TypiconVariableModel>>($"Черновик для Устава с Id={query.TypiconId} не был найден.");
             }
 
-            var signs = DbContext.Set<TypiconVariable>()
+            var entities = DbContext.Set<TypiconVariable>()
                 .Where(c => c.TypiconVersionId == draft.Id);
 
-            var result = signs.Select(c => new TypiconVariableModel()
+            var result = entities.Select(c => new TypiconVariableModel()
                 {
                     Id = c.Id,
                     Name = c.Name,
                     Type = c.Type,
                     //TODO: Count
+                    Count = c.SignLinks.Count 
+                          + c.MenologyRuleLinks.Count
+                          + c.TriodionRuleLinks.Count
+                          + c.CommonRuleLinks.Count
+                          + c.ExplicitAddRuleLinks.Count
                 });
-
-            //ужасная мера
-            //result = result
-            //    .ToList()
-            //    .AsQueryable();
-
 
             return Result.Ok(result);
         }

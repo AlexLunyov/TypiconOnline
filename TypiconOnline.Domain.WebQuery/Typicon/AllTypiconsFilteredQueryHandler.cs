@@ -54,6 +54,8 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                                     || typ.Typicon.Status == TypiconStatus.Validating
                                     || typ.Typicon.Status == TypiconStatus.Publishing;
 
+                    var editable = typ.Typicon.Status != TypiconStatus.WaitingApprovement && !inProcess;
+
                     var dto = new TypiconEntityFilteredModel()
                     {
                         Id = typ.TypiconId,
@@ -61,11 +63,13 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                         Name = typ.Name.FirstOrDefault(query.Language).Text,
                         SystemName = typ.Typicon.SystemName,
                         Status = typ.Typicon.Status.ToString(),
-                        Editable = typ.Typicon.Status != TypiconStatus.WaitingApprovement && !inProcess,
+                        IsTemplate = typ.IsTemplate,
+                        Editable = editable,
                         DeleteLink = ((isAdmin || typ.Typicon.OwnerId == query.UserId) && !inProcess)
                             ? "Delete"
                             : default,
-                        Reviewable = false //уже все рассмотрены и одобрены
+                        Reviewable = false, //уже все рассмотрены и одобрены
+                        Exportable = isAdmin && editable
                     };
 
                     result.Add(dto);
@@ -75,7 +79,8 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
                 #region TypiconClaims
 
-                IQueryable<TypiconClaim> claimsResult = DbContext.Set<TypiconClaim>();
+                IQueryable<TypiconClaim> claimsResult = DbContext.Set<TypiconClaim>()
+                    .Where(c => c.Status != TypiconClaimStatus.InProcess);
 
                 //if not admin
                 if (!isAdmin)
@@ -85,8 +90,6 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
                 foreach (var claim in claimsResult)
                 {
-                    var inProcess = claim.Status == TypiconClaimStatus.InProcess;
-
                     var dto = new TypiconEntityFilteredModel()
                     {
                         Id = claim.Id,
@@ -94,7 +97,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                         SystemName = claim.SystemName,
                         Status = claim.Status.ToString(),
                         Editable = false,
-                        DeleteLink = ((isAdmin || claim.OwnerId == query.UserId) && !inProcess)
+                        DeleteLink = (isAdmin || claim.OwnerId == query.UserId)
                             ? "DeleteClaim"
                             : default,
                         Reviewable = isAdmin && claim.Status == TypiconClaimStatus.WatingForReview

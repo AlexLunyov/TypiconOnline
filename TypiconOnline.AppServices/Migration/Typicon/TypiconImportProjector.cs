@@ -57,7 +57,17 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                     Name = projection.Name,
                     Description = projection.Description,
                     VersionNumber = 1,
-                    IsModified = true
+                    IsModified = true,
+                    ScheduleSettings = new ScheduleSettings()
+                    {
+                        IsMonday = projection.ScheduleSettings.IsMonday,
+                        IsTuesday = projection.ScheduleSettings.IsTuesday,
+                        IsWednesday = projection.ScheduleSettings.IsWednesday,
+                        IsThursday = projection.ScheduleSettings.IsThursday,
+                        IsFriday = projection.ScheduleSettings.IsFriday,
+                        IsSaturday = projection.ScheduleSettings.IsSaturday,
+                        IsSunday = projection.ScheduleSettings.IsSunday,
+                    }
                 };
 
                 ImportVariables(version, projection);
@@ -202,7 +212,7 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                 {
                     IsAddition = sign.IsAddition,
                     ModRuleDefinition = sign.ModRuleDefinition,
-                    
+
                     PrintTemplate = (sign.Number.HasValue) 
                         ? version.PrintDayTemplates.First(c => c.Number == sign.Number) 
                         : default,
@@ -219,6 +229,16 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                 //Синхронизируем Переменные Устава
                 newSign.SyncRuleVariables(_serializerRoot);
                 newSign.SyncModRuleVariables(_serializerRoot);
+
+                //Синхронизируем График богослужения ScheduleSettings
+                if (projection.ScheduleSettings.Signs.Contains(sign.Id))
+                {
+                    version.ScheduleSettings.Signs.Add(new ModRuleEntitySchedule<Sign>()
+                    {
+                        ScheduleSettings = version.ScheduleSettings,
+                        Rule = newSign
+                    });
+                }
 
                 //запускаем рекурсивно тот же метод для тех правил, у кого шаблоном является sign
                 ImportSignsAndDayRules(version, projection, newSign, sign.Id);
@@ -255,6 +275,16 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                 //Синхронизируем Переменные Устава
                 newMenology.SyncRuleVariables(_serializerRoot);
                 newMenology.SyncModRuleVariables(_serializerRoot);
+
+                //Синхронизируем График богослужения ScheduleSettings
+                if (projection.ScheduleSettings.MenologyRules.Contains(oldMenology.Id))
+                {
+                    version.ScheduleSettings.MenologyRules.Add(new ModRuleEntitySchedule<MenologyRule>()
+                    {
+                        ScheduleSettings = version.ScheduleSettings,
+                        Rule = newMenology
+                    });
+                }
             }
 
             //находим Triodion Projections
@@ -288,6 +318,16 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                 //Синхронизируем Переменные Устава
                 newTriodion.SyncRuleVariables(_serializerRoot);
                 newTriodion.SyncModRuleVariables(_serializerRoot);
+
+                //Синхронизируем График богослужения ScheduleSettings
+                if (projection.ScheduleSettings.TriodionRules.Contains(oldTriodion.Id))
+                {
+                    version.ScheduleSettings.TriodionRules.Add(new ModRuleEntitySchedule<TriodionRule>()
+                    {
+                        ScheduleSettings = version.ScheduleSettings,
+                        Rule = newTriodion
+                    });
+                }
             }
         }
 

@@ -39,7 +39,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
 
             builder.HasOne(e => e.PrintTemplate).
                 WithMany()
-                .OnDelete(DeleteBehavior.SetNull)
+                //.OnDelete(DeleteBehavior.SetNull)
                 .HasForeignKey(c => c.PrintTemplateId)
                 .IsRequired(false)
                 ;

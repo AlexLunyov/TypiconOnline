@@ -32,7 +32,7 @@ namespace TypiconOnline.Repository.EFCore.DataBase
 
         public TypiconDBContext(DbContextOptions<TypiconDBContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

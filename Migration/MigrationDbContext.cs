@@ -22,16 +22,47 @@ namespace TypiconMigrationTool
                 .Build();
 
             //MSSql
-            //DbOptions.CofigureMsSql(optionsBuilder);
+            //DbOptions.ConfigureMsSql(optionsBuilder);
 
             //Sqlite
             DbOptions.ConfigureSqlite(optionsBuilder, config);
 
             //PostgreSQL
-            //DbOptions.CofigurePostgre(optionsBuilder);
+            //DbOptions.ConfigurePostgre(optionsBuilder);
 
             //MySQL
-            //DbOptions.CofigureMySql(optionsBuilder);
+            //DbOptions.ConfigureMySql(optionsBuilder, config);
+
+            return optionsBuilder.Options;
+        }
+    }
+
+    /// <summary>
+    /// Контекст для миграций MySql бд
+    /// </summary>
+    public class MigrationMySqlDbContext : TypiconDBContext
+    {
+        public MigrationMySqlDbContext() : base(CreateOptions()) { }
+
+        private static DbContextOptions<TypiconDBContext> CreateOptions()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<TypiconDBContext>();
+
+            IConfiguration config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", true, true)
+                .Build();
+
+            //MSSql
+            //DbOptions.ConfigureMsSql(optionsBuilder);
+
+            //Sqlite
+            //DbOptions.ConfigureSqlite(optionsBuilder, config);
+
+            //PostgreSQL
+            //DbOptions.ConfigurePostgre(optionsBuilder);
+
+            //MySQL
+            DbOptions.ConfigureMySql(optionsBuilder, config);
 
             return optionsBuilder.Options;
         }

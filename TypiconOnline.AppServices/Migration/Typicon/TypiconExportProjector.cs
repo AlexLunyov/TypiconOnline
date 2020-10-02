@@ -51,6 +51,7 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                     }).ToList(),
                     MenologyRules = entity.MenologyRules.Select(c => new MenologyRuleProjection()
                     {
+                        Id = c.Id,
                         TemplateId = c.TemplateId,
                         Date = c.Date.ToString(),
                         LeapDate = c.LeapDate.ToString(),
@@ -62,6 +63,7 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                     }).ToList(),
                     TriodionRules = entity.TriodionRules.Select(c => new TriodionRuleProjection()
                     {
+                        Id = c.Id,
                         TemplateId = c.TemplateId,
                         DaysFromEaster = c.DaysFromEaster,
                         IsAddition = c.IsAddition,
@@ -92,7 +94,7 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                         Description = c.Description,
                         Type = c.Type
                     }).ToList(),
-                    PrintWeekTemplate = (entity.PrintWeekTemplate != null) 
+                    PrintWeekTemplate = (entity.PrintWeekTemplate != null)
                         ? new PrintWeekTemplateProjection()
                         {
                             DaysPerPage = entity.PrintWeekTemplate.DaysPerPage,
@@ -108,7 +110,24 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                         PrintFile = c.PrintFile,
                         PrintFileName = c.PrintFileName,
                         Icon = c.Icon
-                    }).ToList()
+                    }).ToList(),
+                    ScheduleSettings = (entity.ScheduleSettings is ScheduleSettings schedule)
+                    ? new ScheduleSettingsProjection() 
+                    {
+                        IsMonday = schedule.IsMonday,
+                        IsTuesday = schedule.IsTuesday,
+                        IsWednesday = schedule.IsWednesday,
+                        IsThursday = schedule.IsThursday,
+                        IsFriday = schedule.IsFriday,
+                        IsSaturday = schedule.IsSaturday,
+                        IsSunday = schedule.IsSunday,
+                        Signs = schedule.Signs.Select(c => c.RuleId).ToList(),
+                        MenologyRules = schedule.MenologyRules.Select(c => c.RuleId).ToList(),
+                        TriodionRules = schedule.TriodionRules.Select(c => c.RuleId).ToList(),
+                        IncludedDates = schedule.IncludedDates.ToList(),
+                        ExcludedDates = schedule.ExcludedDates.ToList()
+                    }
+                    : null
                 };
 
                 return Result.Ok(projection);

@@ -84,6 +84,10 @@ success = function (response) {
 
                 const dayDateDiv = scheduleDiv.appendChild(document.createElement('strong'))
 
+                dayDateDiv.setAttribute('id', 'sched_date')
+
+                dayDateDiv.innerHTML = wDayOfWeek + "<br/>" + wDateFormatted
+
                 if (day.Header != null) {
                     var nameCls = day.Header.Name.Language
                     if (day.Header.IsRed == true) {
@@ -91,9 +95,8 @@ success = function (response) {
                     }
 
                     dayDateDiv.setAttribute('class', nameCls)
-
-                    dayDateDiv.setAttribute('id', 'sched_date')
-                    dayDateDiv.innerHTML = wDayOfWeek + "<br/>" + wDateFormatted + "<br/>" + day.Header.Name.Text
+                    
+                    dayDateDiv.innerHTML += "<br/>" + day.Header.Name.Text
 
                     if (day.Header.SignNumber > 0 && day.Header.SignNumber < 6) {
                         const img = document.createElement('img')

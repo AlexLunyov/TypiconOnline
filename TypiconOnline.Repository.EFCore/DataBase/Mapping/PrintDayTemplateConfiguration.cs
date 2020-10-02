@@ -21,6 +21,10 @@ namespace TypiconOnline.Repository.EFCore.DataBase.Mapping
             builder.HasOne(c => c.TypiconVersion)
                .WithMany(d => d.PrintDayTemplates)
                .HasForeignKey(d => d.TypiconVersionId);
+
+            builder.HasMany(c => c.SignLinks).
+                WithOne(d => d.PrintTemplate)
+                .HasForeignKey(d => d.PrintTemplateId);
         }
     }
 }

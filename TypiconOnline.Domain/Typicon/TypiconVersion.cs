@@ -57,7 +57,6 @@ namespace TypiconOnline.Domain.Typicon
         public virtual ItemText Name { get; set; }
         public virtual ItemText Description { get; set; }
 
-        public int? ScheduleSettingsId { get; set; }
         /// <summary>
         /// Настройки дней, когда совершаются богослужения
         /// </summary>
@@ -197,7 +196,7 @@ namespace TypiconOnline.Domain.Typicon
             //Kathismas
             ValidateKathismas(ruleSerializer.TypiconSerializer);
 
-            if (ScheduleSettings == null || ScheduleSettingsId == 0)
+            if (ScheduleSettings == null)
             {
                 AddError("Версия Устава должна иметь Настройки дней богослужений");
             }

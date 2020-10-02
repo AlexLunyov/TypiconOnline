@@ -42,5 +42,7 @@ namespace TypiconOnline.AppServices.Migration.Typicon
         [XmlArray("PrintDayTemplates")]
         [XmlArrayItem("PrintDayTemplate")]
         public virtual List<PrintDayTemplateProjection> PrintDayTemplates { get; set; }
+        [XmlElement("ScheduleSettings")]
+        public virtual ScheduleSettingsProjection ScheduleSettings { get; set; }
     }
 }

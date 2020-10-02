@@ -72,5 +72,33 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
             return Result.Fail<IQueryable<MenologyRuleGridModel>>("Настройки не заданы");
         }
+
+        //public Result<IQueryable<MenologyRuleGridModel>> Handle([NotNull] AllScheduleMenologyQuery query)
+        //{
+        //    var draft = DbContext.Set<TypiconVersion>()
+        //                    .Where(c => c.TypiconId == query.TypiconId)
+        //                    .Where(TypiconVersion.IsDraft)
+        //                    .FirstOrDefault();
+
+        //    if (draft == null || draft.ScheduleSettings == null)
+        //    {
+        //        return Result.Fail<IQueryable<MenologyRuleGridModel>>($"Черновик для Устава или настройки графика богослужений с Id={query.TypiconId} не был найден.");
+        //    }
+
+        //    var links = draft.ScheduleSettings
+        //        .MenologyRules
+        //        .Select(c => c.RuleId)
+        //        .ToArray();
+
+        //    var menologies = _webDbContext.MenologyRules
+        //        .Where(c => c.TypiconVersionId == draft.Id);
+
+        //    var rules = from c in menologies
+        //                join link in links
+        //                on c.Id equals link
+        //                select c;
+
+        //    return Result.Ok(rules);
+        //}
     }
 }
