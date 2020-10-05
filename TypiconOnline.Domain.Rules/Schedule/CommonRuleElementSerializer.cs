@@ -4,9 +4,9 @@ using TypiconOnline.Domain.Serialization;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
-    public class CommonRuleElementSerializer : ExecContainerSerializer, IRuleSerializer<CommonRuleElement>
+    public class VariableWorshipRuleSerializer : ExecContainerSerializer, IRuleSerializer<CommonRuleElement>
     {
-        public CommonRuleElementSerializer(IRuleSerializerRoot root) : base(root)
+        public VariableWorshipRuleSerializer(IRuleSerializerRoot root) : base(root)
         {
             ElementNames = new string[] { RuleConstants.CommonRuleNode };
         }

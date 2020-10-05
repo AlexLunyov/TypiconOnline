@@ -4,6 +4,7 @@ using TypiconOnline.Domain.Rules.Output;
 using TypiconOnline.Domain.Rules.Schedule;
 using TypiconOnline.Domain.Rules.Interfaces;
 using System.Linq;
+using TypiconOnline.Domain.Rules.Variables;
 
 namespace TypiconOnline.Domain.Rules.Handlers
 {
@@ -16,7 +17,8 @@ namespace TypiconOnline.Domain.Rules.Handlers
             AuthorizedTypes = new List<Type>()
             {
                 typeof(WorshipRule),
-                typeof(Notice)
+                typeof(Notice),
+                typeof(VariableWorshipRule)
             };
 
         }

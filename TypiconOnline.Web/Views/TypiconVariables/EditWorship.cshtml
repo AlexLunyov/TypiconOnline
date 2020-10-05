@@ -1,0 +1,203 @@
+﻿@model VariableEditWorshipModel
+@{
+    ViewData["Title"] = "Редактирование переменной Устава";
+}
+
+<div class="container">
+    @await Component.InvokeAsync("TypiconTab", new { typiconId = Model.TypiconId.ToString(), tab = TypiconTab.EditVariable })
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <h2>Редактирование переменной Устава</h2>
+        </div>
+    </div>
+    <form class="row" id="saveWorshipForm" asp-action="EditWorship" method="post" asp-route-id="@Model.Id" asp-route-TypiconId="@Model.TypiconId">
+        <div class="row">
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12 col-md-8">
+                <label asp-for="Name">Наименование</label>
+                <input asp-for="Name" class="form-control" readonly />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12 col-md-8">
+                <label asp-for="Description">Описание:</label>
+                <div class="form-group">
+                    <textarea class="form-control rounded-0" rows="5" asp-for="Description" disabled="@(!Model.IsTemplate ? " disabled" : null)"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <div class="justify-content-center align-content-center">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-9"><label asp-for="Value">Значение</label></div>
+                            <div class="col-sm-3 text-right">
+                                <button type="button" class="btn btn-info add-worship" title="Добавить службу"><i class="fa fa-plus"></i> Добавить</button>
+                            </div>
+                        </div>
+                    </div>
+                    <table id="worshipsGrid" class="table table-striped table-bordered" style="width:100%">
+                        <thead class="text-center">
+                            <tr>
+                                <th>Время</th>
+                                <th>Место</th>
+                                <th>Наименование</th>
+                                <th>Дополн. наим.</th>
+                                <th class="dayworships"></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12 col-md-8">
+                <div class="accordion" id="linksAcc">
+                    <div class="panel panel-default">
+                        <div class="panel-heading collapsed" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            <a href="#">Ссылки на Правила, в которых определена данная Переменная </a><span class="badge badge-light">@Model.Count</span>
+                        </div>
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#linksAcc" aria-expanded="true" style="">
+                            <div class="panel-body">
+                                @foreach (var link in Model.Links)
+                                {
+                                    <p><a asp-controller="@link.EntityName" asp-action="Edit" asp-route-id="@link.EntityId">@link.EntityName (@link.DefinitionType.ToString())</a></p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group"><div class="validation" asp-validation-summary="ModelOnly"></div></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <button class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade edit-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div id="modalWindow" class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Редактирование наименования богослужебного дня</h4>
+            </div>
+            <div class="modal-body">
+                <form id="editWorship">
+                    <div class="row">
+                        <div class="col-sm-12"><label name="Time">Время богослужения</label></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-3">
+                            <div class="form-group input-group date" id="time">
+                                <input id="wTime" type="text" class="form-control" name="Time" />
+                                <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12"><label name="Mode">Место</label></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <select class="form-control" id="wMode">
+                                <option value="0">Накануне</option>
+                                <option value="1">В самый день</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12"><label name="Name">Наименование</label></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="table-title">
+                                <div class="row">
+                                    <div class="col-sm-3"><input type="checkbox" id="wNameIsBold" name="Name.IsBold" /> <b>Жирный</b></div>
+                                    <div class="col-sm-3"><input type="checkbox" id="wNameIsItalic" name="Name.IsItalic" /> <i>Курсивом</i></div>
+                                    <div class="col-sm-3"><input type="checkbox" id="wNameIsRed" name="Name.IsRed" /> Красным</div>
+                                    <div class="col-sm-3 text-right">
+                                        <button type="button" id="addwNameBtn" class="btn btn-info add-new btn-xs"><i class="fa fa-plus"></i> Добавить</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="wNameTable" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Язык</th>
+                                        <th>Значение</th>
+                                        <th>Действия</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12"><label name="AdditionalName">Дополнительное наименование</label></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="table-title">
+                                <div class="row">
+                                    <div class="col-sm-3"><input type="checkbox" id="wAddNameIsBold" name="AdditionalName.IsBold" /> <b>Жирный</b></div>
+                                    <div class="col-sm-3"><input type="checkbox" id="wAddNameIsItalic" name="AdditionalName.IsItalic" /> <i>Курсивом</i></div>
+                                    <div class="col-sm-3"><input type="checkbox" id="wAddNameIsRed" name="AdditionalName.IsRed" /> Красным</div>
+                                    <div class="col-sm-3 text-right">
+                                        <button type="button" id="addwAddNameBtn" class="btn btn-info add-new btn-xs"><i class="fa fa-plus"></i> Добавить</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="wAddNameTable" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Язык</th>
+                                        <th>Значение</th>
+                                        <th>Действия</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12"><button id="editWorshipBtn" class="btn btn-primary">Сохранить</button></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="~/css/itemtext.css" />
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <script src="~/lib/momentjs/moment-with-locales.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script src="~/js/editworship.js"></script>
+    <script src="~/js/itemtext.js"></script>
+    <script src="~/js/dayworships.js"></script>
+
+    <script type="text/javascript">
+
+        var worshipsData = @Html.Raw(Model.Value);
+
+    </script>
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

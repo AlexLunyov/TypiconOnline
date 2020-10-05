@@ -12,5 +12,6 @@ namespace TypiconOnline.Domain.WebQuery.Models
         public string Name { get; set; }
         public VariableType Type { get; set; }
         public int Count { get; set; }
+        public bool HasValue { get; set; }
     }
 }

@@ -26,6 +26,11 @@ args = getScriptArgs(script)
 
 const id = args['id']
 const weeks = args['count']
+const redcolor = args['redcolor']
+
+if (weeks == null) {
+    weeks = 2
+}
 
 const url = 'https://typicon.online/Schedule/week?id=' + id + '&weekscount=' + weeks
 
@@ -95,6 +100,7 @@ success = function (response) {
                     }
 
                     dayDateDiv.setAttribute('class', nameCls)
+                    setStyle(dayDateDiv, day.Header)
                     
                     dayDateDiv.innerHTML += "<br/>" + day.Header.Name.Text
 
@@ -124,11 +130,13 @@ success = function (response) {
                     var text = container.appendChild(document.createElement('span'))
 
                     text.setAttribute('class', getClass(worship.Name))
+                    setStyle(text, worship.Name.Style)
                     text.innerHTML = worship.Name.Text.Text
 
                     if (worship.AdditionalName.Text != null) {
                         text = container.appendChild(document.createElement('span'))
                         text.setAttribute('class', getClass(worship.AdditionalName))
+                        setStyle(text, worship.AdditionalName.Style)
                         text.innerHTML = " " + worship.AdditionalName.Text.Text
                     }
                 });
@@ -179,4 +187,28 @@ function getClass(name) {
     }
 
     return cls
+}
+
+function setStyle(text, elementStyle) {
+    var stl = ""
+
+    if (elementStyle != null) {
+        if (elementStyle.IsRed
+            && redcolor != null) {
+            stl = stl + " color: #ff0000;"
+        }
+        //if (name.Style.IsBold) {
+        //    cls = cls + " bold"
+        //}
+        //if (name.Style.IsItalic) {
+        //    cls = cls + " italic"
+        //}
+        //if (name.Style.Header != "0") {
+        //    cls = cls + " h" + name.Style.Header
+        //}
+    }
+
+    if (stl != "") {
+        text.setAttribute('style', stl)
+    }
 }

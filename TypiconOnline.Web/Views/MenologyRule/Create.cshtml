@@ -42,9 +42,9 @@
                                     <td>
                                         <input class="WorshipId" type="hidden" asp-for="@Model.DayWorships[i].WorshipId" />
                                         <input class="Order" type="hidden" asp-for="@Model.DayWorships[i].Order" />
-                                        <a class="down" title="Переместить вниз" data-toggle="tooltip"><i class="material-icons">arrow_drop_down</i></a>
-                                        <a class="up" title="Переместить вверх" data-toggle="tooltip"><i class="material-icons">arrow_drop_up</i></a>
-                                        <a class="delete" title="Удалить" data-toggle="tooltip"><i class="material-icons">delete</i></a>
+                                        <a class="down" title="Переместить вниз" data-toggle="tooltip"><i class="fas fa-sort-down"></i></a>
+                                        <a class="up" title="Переместить вверх" data-toggle="tooltip"><i class="fas fa-sort-up"></i></a>
+                                        <a class="delete" title="Удалить" data-toggle="tooltip"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             }
@@ -219,9 +219,7 @@
 
                 var btns = '<input class="WorshipId" type="hidden" name="DayWorships[' + (order - 1) + '].WorshipId" value="' + data.WorshipId +'">' +
                     '<input class="Order" type = "hidden" name = "DayWorships[' + (order - 1) + '].Order" value="' + (order - 1) +'">' +
-                    '<a class="down" title="" data-toggle="tooltip" data-original-title="Переместить вниз" style="display: none;"><i class="material-icons">arrow_drop_down</i></a>' +
-                    '<a class="up" title="" data-toggle="tooltip" data-original-title="Переместить вверх" style="display: none;"><i class="material-icons">arrow_drop_up</i></a>' +
-                    '<a class="delete" title="" data-toggle="tooltip" data-original-title="Удалить"><i class="material-icons">delete</i></a>';
+                    getUdDownDeleteBtns();
 
                 var tr = '<tr>' +
                     '<td><b>' + order + '</b></td>' +

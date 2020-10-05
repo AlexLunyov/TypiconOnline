@@ -1,9 +1,5 @@
 ﻿@model ScheduleSettingsWeekDaysModel
 
-<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
-
-
 <div class="container">
     @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.ScheduleSettings })
     <div class="row">
@@ -123,6 +119,8 @@
 
 @section Scripts {
     <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
+    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
 
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>

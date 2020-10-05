@@ -61,11 +61,13 @@
 }
 
 //вычисляем кнопки вверх и вниз
-function calcBtns(tableId) {
+function calcBtns(tableId, withDelete = true) {
     $(tableId + " tbody tr:not(:first-child, :last-child)").each(function () {
         $(this).find("td:last-child a.up").show();
         $(this).find("td:last-child a.down").show();
-        $(this).find("td:last-child a.delete").show();
+        if (withDelete) {
+            $(this).find("td:last-child a.delete").show();
+        }        
     });
 
     if ($(tableId + " tbody tr").length > 1) {
@@ -75,8 +77,10 @@ function calcBtns(tableId) {
         $(tableId + " tbody tr:last-child td:last-child a.up").show();
         $(tableId + " tbody tr:last-child td:last-child a.down").hide();
 
-        $(tableId + " tbody tr:first-child td:last-child a.delete").show();
-        $(tableId + " tbody tr:last-child td:last-child a.delete").show();
+        if (withDelete) {
+            $(tableId + " tbody tr:first-child td:last-child a.delete").show();
+            $(tableId + " tbody tr:last-child td:last-child a.delete").show();
+        }
     }
     else {
         $(tableId + " tbody tr:first-child td:last-child a.up").hide();
@@ -98,7 +102,11 @@ function calcAddBtn(tableId, btn) {
 function getWorshipActionsCell(name) {
     return '<input class="WorshipId" type="hidden" asp-for="' + name + '.DayWorships[i].WorshipId" />' +
             '<input class="Order" type = "hidden" asp -for= "' + name + '.DayWorships[i].Order" />' +
-            '<a class="down" title="Переместить вниз" data-toggle="tooltip"><i class="material-icons">arrow_drop_down</i></a>' +
-            '<a class="up" title="Переместить вверх" data-toggle="tooltip"><i class="material-icons">arrow_drop_up</i></a>' +
-            '<a class="delete" title="Удалить" data-toggle="tooltip"><i class="material-icons">delete</i></a>';
+            getUdDownDeleteBtns();
+}
+
+function getUdDownDeleteBtns() {
+    return '<a class="down" title="Переместить вниз" data-toggle="tooltip"><i class="fas fa-sort-down"></i></a>' +
+        '<a class="up" title="Переместить вверх" data-toggle="tooltip"><i class="fas fa-sort-up"></i></a>' +
+        '<a class="delete" title="Удалить" data-toggle="tooltip"><i class="fas fa-trash"></i></a>'
 }

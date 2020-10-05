@@ -38,7 +38,7 @@ namespace TypiconOnline.Web.ViewComponents
                         Tab = tab,
                         UserIsAuthor = await IsTypiconsAuthor(draft.Value.Typicon),
                         IsTemplate = draft.Value.IsTemplate,
-                        VariablesCount = draft.Value.TypiconVariables.Count,
+                        VariablesCount = draft.Value.TypiconVariables.Count(c => string.IsNullOrEmpty(c.Value)),
                         EmptyPrintTemplatesCount = draft.Value
                             .PrintDayTemplates
                             .Count(c => c.PrintFile == null || c.PrintFile.Length == 0),

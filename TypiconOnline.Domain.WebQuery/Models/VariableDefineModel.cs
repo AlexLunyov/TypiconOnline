@@ -4,11 +4,11 @@ using System.Text;
 
 namespace TypiconOnline.Domain.WebQuery.Models
 {
-    public class VariableDefineModel: VariableEditModel
+    public class VariableDefineModel: VariableEditModelBase
     {
         public VariableDefineModel() { }
 
-        public VariableDefineModel(VariableEditModel model)
+        public VariableDefineModel(VariableEditModelBase model)
         {
             Id = model.Id;
             Name = model.Name;

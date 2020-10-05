@@ -22,6 +22,11 @@ namespace TypiconOnline.Domain.Typicon.Variable
 
         public VariableType Type { get; set; }
 
+        /// <summary>
+        /// Значение переменной для применения во всех правилах, где она используется
+        /// </summary>
+        public string Value { get; set; }
+
         public virtual List<VariableRuleLink<CommonRule>> CommonRuleLinks { get; set; } = new List<VariableRuleLink<CommonRule>>();
         public virtual List<VariableModRuleLink<Sign>> SignLinks { get; set; } = new List<VariableModRuleLink<Sign>>();
         public virtual List<VariableModRuleLink<MenologyRule>> MenologyRuleLinks { get; set; } = new List<VariableModRuleLink<MenologyRule>>();

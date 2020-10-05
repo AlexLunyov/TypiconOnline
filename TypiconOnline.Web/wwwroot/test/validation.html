@@ -1,0 +1,303 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>&#x420;&#x435;&#x434;&#x430;&#x43A;&#x442;&#x438;&#x440;&#x43E;&#x432;&#x430;&#x43D;&#x438;&#x435; &#x43F;&#x435;&#x440;&#x435;&#x43C;&#x435;&#x43D;&#x43D;&#x43E;&#x439; &#x423;&#x441;&#x442;&#x430;&#x432;&#x430; - Typicon.Online</title>
+
+
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="../css/site.min.css" />
+    <link rel="stylesheet" href="../lib/twitter-bootstrap/css/all.min.css">
+
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Typicon.Online</a>
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Уставщик <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Typicon">Уставы</a></li>
+                            <li><a href="/CustomSequence">Custom sequence</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Тексты служб <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/MenologyDay">Минея</a></li>
+                            <li><a href="/TriodionDay">Триодь</a></li>
+                            <li><a href="/OktoikhDay">Октоих</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Администратор <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Users">Пользователи</a></li>
+                            <li><a href="/Roles">Роли</a></li>
+                            <li><a href="/Admin/Operations">Операции</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Инфо <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://typicononline.readthedocs.io/ru/latest/">Документация проекта</a></li>
+                            <li><a href="https://typicononline.readthedocs.io/ru/latest/faq.html">FAQ</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+
+                <form method="post" id="logoutForm" class="navbar-right" action="/Account/Logout">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false"><i class="fas fa-user"></i> &#x410;&#x434;&#x43C;&#x438;&#x43D;&#x438;&#x441;&#x442;&#x440;&#x430;&#x442;&#x43E;&#x440; <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a title="Редактировать профиль" href="/Manage/Index">Профиль</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <button type="submit" class="btn btn-default navbar-btn signout"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8GL2Qv6BvM5IiO8tZ4FbXPuzkPbMzxNnhpMy_3Zwli8zWJt2CLwB5HxEuGAun2h6F36qK6ujGWDOybvLhuKQtcegceqyEzG7hgI3MOhyqOP-s7Y8Hui-EOGbR3VOtFwQJzV12mc9j9PHvs2QHJfVUjRTaSMZ8-VCsdkOy33h_6JonyKMuQw3agYuBmT00gOUrw" />
+                </form>
+
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-12">
+                    <ol class="breadcrumb">
+                        <li><a href="/">Главная</a></li>
+                        <li><a href="/Typicon">Уставы</a></li>
+                    </ol>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h1>Редактирование Устава</h1>
+                </div>
+            </div>
+            <div class="row">
+                <ul class="nav nav-tabs">
+                    <li><a href="/Typicon/Edit/3">Свойства</a></li>
+                    <li><a href="/ScheduleSettings/Index/3">График богослужений</a></li>
+                    <li><a href="/Typicon/Operations/3">Операции</a></li>
+                    <li><a href="/Typicon/Editors/3">Редакторы</a></li>
+                    <li>
+                        <a href="/PrintTemplate/Index/3">
+                            Печатные шаблоны
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/TypiconVariables/Index/3">
+                            Переменные
+                            <span id="varCountSpan" class="label label-danger"
+                                  title="Количество переменных">27</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            Редактирование Правил
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Sign/Index/3">Знаки служб</a></li>
+                            <li><a href="/MenologyRule/Index/3">Минея</a></li>
+                            <li><a href="/TriodionRule/Index/3">Триодь</a></li>
+                            <li><a href="/CommonRule/Index/3">Общие</a></li>
+                            <li><a href="/ExplicitAddRule/Index/3">Явные</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-8">
+                    <h2>Редактирование переменной Устава</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12"><h2>Редактирование свойств Общего правила</h2></div>
+            </div>
+            <div class="row">
+                <form class="row" method="post" action="/CommonRule/Edit/35">
+                    <div class="text-danger validation-summary-valid" data-valmsg-summary="true">
+                        <ul>
+                            <li style="display:none"></li>
+                        </ul>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <label for="Name">Наименование:</label>
+                            <input class="form-control" type="text" id="Name" name="Name" data-val="true" data-val-required="Поле обязательно для заполнения"/>
+                            <span class="text-danger field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    
+                    <div class="form-group"></div>
+                    <div class="col-xs-12"><button class="btn btn-primary" formaction="/CommonRule/Edit/35">Сохранить</button></div>
+                    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8GzlTFSQgEdPjDmvb5jbmfGahP6Qg6cHtfMnbQZG_Lf_kcVYL1hZgYd438ewSM-5E5C97xxaJ8_bFvi5-oNLaxypSWRyeZ6WCXpvy50lFjoColP4osWAKT7-Z_hUgmrS9HgIal9NV6ZdqxI-Pn4ecB2Oi8valude4jxx6vGPTyFWj_fJ15HhOlJBN9hPJGxC5A" />
+                </form>
+            </div>
+        </div>
+
+        <div class="modal fade edit-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div id="modalWindow" class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Редактирование наименования богослужебного дня</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editWorship">
+                            <div class="row">
+                                <div class="col-sm-12"><label name="Time">Время богослужения</label></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3">
+                                    <div class="form-group input-group date" id="time">
+                                        <input id="wTime" type="text" class="form-control" name="Time" />
+                                        <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12"><label name="Mode">Место</label></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <select class="form-control" id="wMode">
+                                        <option value="0">Накануне</option>
+                                        <option value="1">В самый день</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12"><label name="Name">Наименование</label></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="table-title">
+                                        <div class="row">
+                                            <div class="col-sm-3"><input type="checkbox" id="wNameIsBold" name="Name.IsBold" /> <b>Жирный</b></div>
+                                            <div class="col-sm-3"><input type="checkbox" id="wNameIsItalic" name="Name.IsItalic" /> <i>Курсивом</i></div>
+                                            <div class="col-sm-3"><input type="checkbox" id="wNameIsRed" name="Name.IsRed" /> Красным</div>
+                                            <div class="col-sm-3 text-right">
+                                                <button type="button" id="addwNameBtn" class="btn btn-info add-new btn-xs"><i class="fa fa-plus"></i> Добавить</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="wNameTable" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Язык</th>
+                                                <th>Значение</th>
+                                                <th>Действия</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12"><label name="AdditionalName">Дополнительное наименование</label></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="table-title">
+                                        <div class="row">
+                                            <div class="col-sm-3"><input type="checkbox" id="wAddNameIsBold" name="AdditionalName.IsBold" /> <b>Жирный</b></div>
+                                            <div class="col-sm-3"><input type="checkbox" id="wAddNameIsItalic" name="AdditionalName.IsItalic" /> <i>Курсивом</i></div>
+                                            <div class="col-sm-3"><input type="checkbox" id="wAddNameIsRed" name="AdditionalName.IsRed" /> Красным</div>
+                                            <div class="col-sm-3 text-right">
+                                                <button type="button" id="addwAddNameBtn" class="btn btn-info add-new btn-xs"><i class="fa fa-plus"></i> Добавить</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="wAddNameTable" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Язык</th>
+                                                <th>Значение</th>
+                                                <th>Действия</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-xs-12"><button id="editWorshipBtn" class="btn btn-primary">Сохранить</button></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Нажмите, чтобы вернуться на начало страницы" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
+
+        <footer>
+            <div class="row col-sm-12">
+                <hr />
+                <p>&copy; 2019-2020 - Typicon.Online</p>
+            </div>
+        </footer>
+    </div>
+
+
+    <script src="../lib/jquery/dist/jquery.js"></script>
+    <script src="../lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="../lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../js/site.js?v=IZwgSlBUoWXEDkycsYc7zQkkgqYTmGGGrNb1taP-YtI"></script>
+
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="..//css/itemtext.css" />
+
+    <!--<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>-->
+    <script src="../lib/momentjs/moment-with-locales.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script src="../js/editworship.js"></script>
+    <script src="../js/dayworships.js"></script>
+    <script src="../js/itemtext.js"></script>
+    <script src="../js/move.js"></script>
+
+    <script type="text/javascript">
+
+        var worshipsData = [{ "Time": "16.00", "Mode": 0, "Name": { "IsBold": false, "IsItalic": false, "IsRed": false, "Items": [{ "Language": "cs-ru", "Text": "Вечернее" }], "IsEmpty": false, "Languages": ["cs-ru"], "IsValid": true }, "AdditionalName": null }, { "Time": "08.40", "Mode": 1, "Name": { "IsBold": false, "IsItalic": false, "IsRed": false, "Items": [{ "Language": "cs-ru", "Text": "Часы" }], "IsEmpty": false, "Languages": ["cs-ru"], "IsValid": true }, "AdditionalName": null }, { "Time": "09.00", "Mode": 1, "Name": { "IsBold": false, "IsItalic": false, "IsRed": false, "Items": [{ "Language": "cs-ru", "Text": "Утренне" }], "IsEmpty": false, "Languages": ["cs-ru"], "IsValid": true }, "AdditionalName": null }];
+
+    </script>
+
+</body>
+</html>

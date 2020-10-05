@@ -11,6 +11,7 @@ using TypiconOnline.Domain.Identity;
 using TypiconOnline.Domain.Interfaces;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Output;
+using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Repository.EFCore.DataBase;
 
@@ -81,6 +82,13 @@ namespace TypiconOnline.WebServices.Authorization
     public class SignTypAuth : TypiconByRuleCanEditAuthorization<Sign>
     {
         public SignTypAuth(UserManager<User> userManager, TypiconDBContext dbContext) : base(userManager, dbContext)
+        {
+        }
+    }
+
+    public class VariableTypAuth : TypiconByRuleCanEditAuthorization<TypiconVariable>
+    {
+        public VariableTypAuth(UserManager<User> userManager, TypiconDBContext dbContext) : base(userManager, dbContext)
         {
         }
     }

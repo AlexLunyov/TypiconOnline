@@ -1,0 +1,88 @@
+﻿@model VariableEditTimeModel
+@{
+    ViewData["Title"] = "Редактирование переменной Устава";
+}
+
+<div class="container">
+    @await Component.InvokeAsync("TypiconTab", new { typiconId = Model.TypiconId.ToString(), tab = TypiconTab.EditVariable })
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <h2>Редактирование переменной Устава</h2>
+        </div>
+    </div>
+    <form class="row" asp-action="EditTime" method="post" asp-route-id="@Model.Id" asp-route-TypiconId="@Model.TypiconId">
+        <div class="row">
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12 col-md-8">
+                <label asp-for="Name">Наименование</label>
+                <input asp-for="Name" class="form-control" readonly />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12 col-md-8">
+                <label asp-for="Description">Описание:</label>
+                <div class="form-group">
+                    <textarea class="form-control rounded-0" rows="5" asp-for="Description" disabled="@(!Model.IsTemplate ? " disabled" : null)"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12 col-md-8">
+                <label asp-for="Value">Значение:</label>
+                <div class="form-group input-group date" id="time">
+                    <input class="form-control" asp-for="Value" />
+                    <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12 col-md-8">
+                <div class="accordion" id="linksAcc">
+                    <div class="panel panel-default">
+                        <div class="panel-heading collapsed" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            <a href="#">Ссылки на Правила, в которых определена данная Переменная </a><span class="badge badge-light">@Model.Count</span>
+                        </div>
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#linksAcc" aria-expanded="true" style="">
+                            <div class="panel-body">
+                                @foreach (var link in Model.Links)
+                                {
+                                    <p><a asp-controller="@link.EntityName" asp-action="Edit" asp-route-id="@link.EntityId">@link.EntityName (@link.DefinitionType.ToString())</a></p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group"><div class="validation" asp-validation-summary="ModelOnly"></div></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <button class="btn btn-primary" type="submit">Сохранить</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts
+{
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
+
+    <script src="~/lib/momentjs/moment-with-locales.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            $('#time').datetimepicker({
+                format: 'HH.mm'
+            });
+        });
+
+    </script>
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

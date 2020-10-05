@@ -22,13 +22,43 @@
                 }],
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": true },
-                { "data": "Name", "name": "Наименование", "autoWidth": true },
-                { "data": "Type", "name": "Тип", "autoWidth": true },
-                { "data": "Count", "name": "Связанных правил", "autoWidth": true },
+                { "data": "Name", "name": "Name", "autoWidth": true },
+                {
+                    "data": "Type", "name": "Type", "autoWidth": true,
+                    "render": function (data, type, row) {
+                        switch (data) {
+                            case 0:
+                                return "Дата";
+                            case 1:
+                                return "Время";
+                            case 2:
+                                return "Целочисленное";
+                            case 3:
+                                return "Строка";
+                            case 4:
+                                return "Многоязыковая строка";
+                            case 5:
+                                return "Службы";
+                            default:
+                                return "Переменная";
+                        }
+                    }
+                },
+                { "data": "Count", "name": "Count", "autoWidth": true },
+                {
+                    "data": "HasValue", "name": "HasValue", "autoWidth": true,
+                    "render": function (data, type, row) {
+                        if (data) {
+                            return '<i class="fas fa-check icon-btn-success"></i>';
+                        }
+                        else {
+                            return '<i class="fas fa-times icon-btn-danger"></i>';
+                        }
+                    }
+                },
                 {
                     data: null, render: function (data, type, row) {
-                        return '<a class="edit" href="#" title="Редактировать описание" data-toggle="tooltip"><i class="material-icons">chat_bubble</i></a> ' +
-                            '<a class="define" href="#" title="Задать значение Переменной" data-toggle="tooltip"><i class="material-icons">low_priority</i></a></a>';
+                        return '<a class="btn btn-primary" title="Редактировать" href="/TypiconVariables/Edit/' + row['Id'] + '">Редактировать</a>';
                     },
                     orderable: false
                 },
@@ -36,35 +66,35 @@
         }
     );
 
-    table.on('click', 'tbody tr td .edit', function () {
-        var row = table.row($(this).parents('tr'));
-        var data = row.data();
+    //table.on('click', 'tbody tr td .edit', function () {
+    //    var row = table.row($(this).parents('tr'));
+    //    var data = row.data();
 
-        $("#modalWindow").load("/TypiconVariables/Edit/" + data.Id);
+    //    $("#modalWindow").load("/TypiconVariables/Edit/" + data.Id);
 
-        $(".editvar-modal").modal('show');
-    });
+    //    $(".editvar-modal").modal('show');
+    //});
 
-    table.on('click', 'tbody tr td .define', function () {
-        var row = table.row($(this).parents('tr'));
-        var data = row.data();
+    //table.on('click', 'tbody tr td .define', function () {
+    //    var row = table.row($(this).parents('tr'));
+    //    var data = row.data();
 
-        $("#modalWindow").load("/TypiconVariables/Define/" + data.Id);
+    //    $("#modalWindow").load("/TypiconVariables/Define/" + data.Id);
 
-        $(".editvar-modal").modal('show');
-    });
+    //    $(".editvar-modal").modal('show');
+    //});
 
     table.on('draw', function () {
         //redraw VariablesCount
-        var count = table.page.info().recordsTotal;
-        var span = $('#varCountSpan');
-        if (!count || count == 0) {
-            span.hide();
-        }
-        else {
-            span.html(count);
-            span.show();
-        }
+        //var count = table.page.info().recordsTotal;
+        //var span = $('#varCountSpan');
+        //if (!count || count == 0) {
+        //    span.hide();
+        //}
+        //else {
+        //    span.html(count);
+        //    span.show();
+        //}
     });
 });
 

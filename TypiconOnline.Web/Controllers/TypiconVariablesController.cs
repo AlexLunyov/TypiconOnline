@@ -19,31 +19,41 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Web.Extensions;
 using TypiconOnline.Web.Models;
+using TypiconOnline.Web.Services;
 using TypiconOnline.WebServices.Authorization;
 
 namespace TypiconOnline.Web.Controllers
 {
     //[Authorize(Roles = RoleConstants.AdminAndEditorRoles)]
-    public class TypiconVariablesController : TypiconBaseController<TypiconVariableModel>
+    public class TypiconVariablesController : BaseController
     {
         private const string DEFAULT_LANGUAGE = "cs-ru";
         //private readonly IDataQueryProcessor _queryProcessor;
         //private readonly IAuthorizationService _authorizationService;
 
+        private readonly GridStore<TypiconVariableModel> variableStore;
 
         public TypiconVariablesController(
             IQueryProcessor queryProcessor,
-            IAuthorizationService authorizationService,
-            ICommandProcessor commandProcessor) : base(queryProcessor, authorizationService, commandProcessor)
+            ICommandProcessor commandProcessor) : base(queryProcessor, commandProcessor)
         {
+            variableStore = new GridStore<TypiconVariableModel>(queryProcessor
+                , commandProcessor
+                , this
+                , (m, s) =>
+                {
+                    return m.Name == s
+                    || m.Type.ToString() == s
+                    || m.Count.ToString() == s;
+                });
         }
 
         public IActionResult Index(int id)
         {
-            ClearStoredData(new AllVariablesQuery(id));
-
             return View();
         }
+
+        public IActionResult LoadData(int id) => variableStore.LoadGridData(new AllVariablesQuery(id));
 
         /// <summary>
         /// 
@@ -53,129 +63,140 @@ namespace TypiconOnline.Web.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            if (id < 1)
+            var result = QueryProcessor.Process(new VariableEditQuery(id));
+
+            if (result.Success)
             {
-                return NotFound();
-            }
-
-            var typiconEntity = QueryProcessor.Process(new TypiconEntityByVariableQuery(id));
-
-            if (typiconEntity.Success
-                && IsAuthorizedToEdit(typiconEntity.Value))
-            {
-                ViewBag.TypiconId = typiconEntity.Value.Id;
-
-                var found = QueryProcessor.Process(new VariableEditQuery(id));
-
-                if (found.Success)
+                switch (result.Value.Type)
                 {
-                    return PartialView("_EditPartial", found.Value);
+                    case VariableType.Time:
+                        {
+                            return View("EditTime", result.Value);
+                        }
+                    case VariableType.Worship:
+                        {
+                            return View("EditWorship", result.Value);
+                        }
+                    default:
+                        {
+                            //TODO: по умолчанию долно быть другое значение
+                            return View("EditTime", result.Value);
+                        }
                 }
             }
-
-            return NotFound();
+            else
+            {
+                return Fail(result.ErrorCode);
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(VariableEditModel model)
-        {
-            try
-            {
-                var typiconEntity = QueryProcessor.Process(new TypiconEntityByVariableQuery(model.Id));
-
-                if (ModelState.IsValid
-                    && typiconEntity.Success
-                    && IsAuthorizedToEdit(typiconEntity.Value))
-                {
-                    var command = new EditTypiconVariableCommand(model.Id, model.Description);
-
-                    var result = await CommandProcessor.ExecuteAsync(command);
-
-                    if (result.Success)
-                    {
-                        ClearStoredData(new AllVariablesQuery(typiconEntity.Value.Id));
-                    }
-
-                    return Json(data: result.Error);
-                }
-
-                return Json(data: typiconEntity.Error);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        [HttpGet]
-        public IActionResult Define(int id)
-        {
-            if (id < 1)
-            {
-                return NotFound();
-            }
-
-            var typiconEntity = QueryProcessor.Process(new TypiconEntityByVariableQuery(id));
-
-            if (typiconEntity.Success
-                && IsAuthorizedToEdit(typiconEntity.Value))
-            {
-                ViewBag.TypiconId = typiconEntity.Value.Id;
-
-                var found = QueryProcessor.Process(new VariableEditQuery(id));
-
-                if (found.Success)
-                {
-                    return PartialView("_DefinePartial", new VariableDefineModel(found.Value));
-                }
-            }
-
-            return NotFound();
-        }
+        public IActionResult EditTime(VariableEditTimeModel model)
+            => Perform(() => CommandProcessor.Execute(new EditTypiconTimeVariableCommand
+                                 (model.Id
+                                 , model.Description
+                                 , model.Value?.ToString() ?? string.Empty)),
+                       () => RedirectToAction(nameof(Index), new { id = model.TypiconId }));
 
         [HttpPost]
-        public async Task<IActionResult> Define(VariableDefineModel model)
-        {
-            try
-            {
-                var typiconEntity = QueryProcessor.Process(new TypiconEntityByVariableQuery(model.Id));
+        public IActionResult EditWorship(VariableEditWorshipModel model)
+            => Perform(() => CommandProcessor.Execute(new EditTypiconWorshipVariableCommand
+                                 (model.Id
+                                 , model.Description
+                                 , model.Value)),
+                       () => RedirectToAction(nameof(Index), new { id = model.TypiconId }));
 
-                if (ModelState.IsValid
-                    && typiconEntity.Success
-                    && IsAuthorizedToEdit(typiconEntity.Value))
-                {
-                    var command = new DefineTypiconVariableCommand(model.Id, model.Value);
+        //[HttpPost]
+        //public async Task<IActionResult> Edit(VariableEditModel model)
+        //{
+        //    try
+        //    {
+        //        var typiconEntity = QueryProcessor.Process(new TypiconEntityByVariableQuery(model.Id));
 
-                    var result = await CommandProcessor.ExecuteAsync(command);
+        //        if (ModelState.IsValid
+        //            && typiconEntity.Success
+        //            && IsAuthorizedToEdit(typiconEntity.Value))
+        //        {
+        //            var command = new EditTypiconTimeVariableCommand(model.Id, model.Description);
 
-                    if (result.Success)
-                    {
-                        ClearStoredData(new AllVariablesQuery(typiconEntity.Value.Id));
-                    }
+        //            var result = await CommandProcessor.ExecuteAsync(command);
 
-                    return Json(data: result.Error);
-                }
+        //            if (result.Success)
+        //            {
+        //                ClearStoredData(new AllVariablesQuery(typiconEntity.Value.Id));
+        //            }
 
-                return Json(data: typiconEntity.Error);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //            return Json(data: result.Error);
+        //        }
 
-        public IActionResult LoadData(int id)
-        {
-            return LoadGridData(new AllVariablesQuery(id), id);
-        }
+        //        return Json(data: typiconEntity.Error);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
 
-        #region Overrides
+        //[HttpGet]
+        //public IActionResult Define(int id)
+        //{
+        //    if (id < 1)
+        //    {
+        //        return NotFound();
+        //    }
 
-        protected override Expression<Func<TypiconVariableModel, bool>> BuildExpression(string searchValue)
-        {
-            return m => m.Name == searchValue || m.Type.ToString() == searchValue || m.Count.ToString() == searchValue;
-        }
+        //    var typiconEntity = QueryProcessor.Process(new TypiconEntityByVariableQuery(id));
 
-        #endregion
+        //    if (typiconEntity.Success
+        //        && IsAuthorizedToEdit(typiconEntity.Value))
+        //    {
+        //        ViewBag.TypiconId = typiconEntity.Value.Id;
+
+        //        var found = QueryProcessor.Process(new VariableEditQuery(id));
+
+        //        if (found.Success)
+        //        {
+        //            return PartialView("_DefinePartial", new VariableDefineModel(found.Value));
+        //        }
+        //    }
+
+        //    return NotFound();
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> Define(VariableDefineModel model)
+        //{
+        //    try
+        //    {
+        //        var typiconEntity = QueryProcessor.Process(new TypiconEntityByVariableQuery(model.Id));
+
+        //        if (ModelState.IsValid
+        //            && typiconEntity.Success
+        //            && IsAuthorizedToEdit(typiconEntity.Value))
+        //        {
+        //            var command = new DefineTypiconVariableCommand(model.Id, model.Value);
+
+        //            var result = await CommandProcessor.ExecuteAsync(command);
+
+        //            if (result.Success)
+        //            {
+        //                ClearStoredData(new AllVariablesQuery(typiconEntity.Value.Id));
+        //            }
+
+        //            return Json(data: result.Error);
+        //        }
+
+        //        return Json(data: typiconEntity.Error);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+
+        //public IActionResult LoadData(int id)
+        //{
+        //    return LoadGridData(new AllVariablesQuery(id), id);
+        //}
     }
 }

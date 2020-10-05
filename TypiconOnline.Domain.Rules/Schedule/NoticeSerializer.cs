@@ -13,7 +13,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override IRuleElement CreateObject(CreateObjectRequest req)
         {
-            return new Notice(req.Descriptor.GetElementName(), req.Parent);
+            return new Notice(req.Descriptor.GetElementName(), req.Parent, SerializerRoot.QueryProcessor);
         }
     }
 }

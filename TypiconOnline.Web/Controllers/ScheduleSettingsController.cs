@@ -18,7 +18,7 @@ using TypiconOnline.Web.Services;
 namespace TypiconOnline.Web.Controllers
 {
     [Authorize(Roles = RoleConstants.AdminAndEditorRoles)]
-    public class ScheduleSettingsController : Controller
+    public class ScheduleSettingsController : BaseController
     {
         private readonly GridStore<SignGridModel> signStore;
         private readonly GridStore<MenologyRuleGridModel> menologyStore;
@@ -28,10 +28,8 @@ namespace TypiconOnline.Web.Controllers
         public ScheduleSettingsController(
             IQueryProcessor queryProcessor,
             ICommandProcessor commandProcessor)
+            : base(queryProcessor, commandProcessor)
         {
-            QueryProcessor = queryProcessor;
-            CommandProcessor = commandProcessor;
-
             signStore = new GridStore<SignGridModel>(queryProcessor
                 , commandProcessor
                 , this
@@ -75,9 +73,6 @@ namespace TypiconOnline.Web.Controllers
                 });
         }
 
-        protected IQueryProcessor QueryProcessor { get; }
-        protected ICommandProcessor CommandProcessor { get; }
-
         // GET: /<controller>/
         public IActionResult Index(int id)
         {
@@ -85,8 +80,6 @@ namespace TypiconOnline.Web.Controllers
 
             if (result.Success)
             {
-
-
                 return View(result.Value);
             }
             else
@@ -267,26 +260,6 @@ namespace TypiconOnline.Web.Controllers
 
         //#endregion
 
-        protected IActionResult Perform(Func<Result> action, Func<IActionResult> result)
-        {
-            var r = action();
-
-            if (r.Success)
-            {
-                return result();
-            }
-            else
-            {
-                switch (r.ErrorCode)
-                {
-                    case 403:
-                        return Unauthorized(r.Error);
-                    case 404:
-                        return NotFound(r.Error);
-                    default:
-                        return BadRequest(r.Error);
-                }
-            }
-        }
+        
     }
 }

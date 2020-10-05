@@ -45,12 +45,12 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                     Id = c.Id,
                     Name = c.Name,
                     Type = c.Type,
-                    //TODO: Count
                     Count = c.SignLinks.Count 
                           + c.MenologyRuleLinks.Count
                           + c.TriodionRuleLinks.Count
                           + c.CommonRuleLinks.Count
-                          + c.ExplicitAddRuleLinks.Count
+                          + c.ExplicitAddRuleLinks.Count,
+                    HasValue = !string.IsNullOrEmpty(c.Value)
                 });
 
             return Result.Ok(result);

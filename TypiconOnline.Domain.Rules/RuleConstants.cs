@@ -60,6 +60,12 @@ namespace TypiconOnline.Domain.Rules
         public const string WorshipRuleAdditionalNameNode = "additionalname";
         public const string WorshipRuleSequenceNode = "sequence";
 
+        /*
+         * WorshipRuleVariable
+         */
+        public const string WorshipRuleVariableNode = "variableworship";
+        public const string WorshipRuleVariableNameAttr = "name";
+
         public const string NoticeNodeName = "notice";
 
         public const string GetDayOfWeekNodeName = "getdayofweek";

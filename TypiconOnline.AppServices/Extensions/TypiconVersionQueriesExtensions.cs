@@ -91,15 +91,15 @@ namespace TypiconOnline.AppServices.Extensions
                 err.Add("Устав находится в состоянии, не подлежащем для публикации. ");
             }
 
-            bool hasVariables = version.TypiconVariables.Any();
+            bool hasEmptyVariables = version.TypiconVariables.Any(c => string.IsNullOrEmpty(c.Value));
             bool hasEmptyPrintTemplates = version.PrintDayTemplates
                             .Any(c => c.PrintFile == null
                                    || c.PrintFile.Length == 0);
 
             //Не Шаблон и есть переменные или пустые печатные шаблоны - так нельзя публиковать
-            if (!version.IsTemplate && (hasVariables || hasEmptyPrintTemplates))
+            if (!version.IsTemplate && (hasEmptyVariables || hasEmptyPrintTemplates))
             {
-                if (hasVariables)
+                if (hasEmptyVariables)
                 {
                     err.Add("Устав должен быть либо определен как Шаблон, либо всем Переменным должны быть заданы значения. ");
                 }

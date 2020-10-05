@@ -26,41 +26,41 @@ namespace TypiconOnline.Domain.Command.Typicon
         {
             var c = command as DefineTypiconVariableCommand;
 
-            StringBuilder strBuilder = new StringBuilder(); 
+            StringBuilder errBuilder = new StringBuilder(); 
 
             //проходимся по всем Links и заменяем Переменную на значение
             ReplaceVariable(found.CommonRuleLinks, found.GetShortCode(), c.Value)
                 .OnFailure(err =>
                 {
-                    strBuilder.AppendLine(err);
+                    errBuilder.AppendLine(err);
                 });
 
             ReplaceVariable(found.ExplicitAddRuleLinks, found.GetShortCode(), c.Value)
                 .OnFailure(err =>
                 {
-                    strBuilder.AppendLine(err);
+                    errBuilder.AppendLine(err);
                 });
 
             ReplaceModVariable(found.SignLinks, found.GetShortCode(), c.Value)
                 .OnFailure(err =>
                 {
-                    strBuilder.AppendLine(err);
+                    errBuilder.AppendLine(err);
                 });
 
             ReplaceModVariable(found.MenologyRuleLinks, found.GetShortCode(), c.Value)
                 .OnFailure(err =>
                 {
-                    strBuilder.AppendLine(err);
+                    errBuilder.AppendLine(err);
                 });
 
             ReplaceModVariable(found.TriodionRuleLinks, found.GetShortCode(), c.Value)
                 .OnFailure(err =>
                 {
-                    strBuilder.AppendLine(err);
+                    errBuilder.AppendLine(err);
                 });
 
-            return (strBuilder.Length > 0) 
-                ? Result.Fail(strBuilder.ToString())
+            return (errBuilder.Length > 0) 
+                ? Result.Fail(errBuilder.ToString())
                 : Result.Ok();
         }
 

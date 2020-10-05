@@ -357,7 +357,8 @@ namespace TypiconOnline.Domain.Extensions
                     Name = c.Name,
                     Type = c.Type,
                     Description = c.Description,
-                    TypiconVersion = version
+                    TypiconVersion = version,
+                    Value = c.Value
                 };
 
                 version.TypiconVariables.Add(entity);

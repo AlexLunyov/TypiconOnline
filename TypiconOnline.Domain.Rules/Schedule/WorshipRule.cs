@@ -8,6 +8,7 @@ using TypiconOnline.Domain.Rules.Interfaces;
 using TypiconOnline.Domain.Rules.Variables;
 using TypiconOnline.Domain.Typicon.Variable;
 using TypiconOnline.Infrastructure.Common.Domain;
+using TypiconOnline.Infrastructure.Common.Query;
 
 namespace TypiconOnline.Domain.Rules.Schedule
 {
@@ -19,12 +20,17 @@ namespace TypiconOnline.Domain.Rules.Schedule
     {
         private ItemTextStyled _name = new ItemTextStyled();
 
-        public WorshipRule(string name, IAsAdditionElement parent) : base(name)
+        public WorshipRule(string name, IAsAdditionElement parent, IQueryProcessor queryProcessor) : base(name)
         {
             Parent = parent;
+
+            QueryProcessor = queryProcessor;
         }
 
         #region Properties
+
+        private IQueryProcessor QueryProcessor { get; }
+
         /// <summary>
         /// Идентификатор для поиска (используется в переопределении правил AsAddition)
         /// </summary>
@@ -132,6 +138,12 @@ namespace TypiconOnline.Domain.Rules.Schedule
         {
             if (handler.IsTypeAuthorized(this) && !this.AsAdditionHandled(handler))
             {
+                //попробуем взять значение из переменных Устава
+                if (!Time.HasValue)
+                {
+                    Time = new VariableItemTime(Time.TryGetValue(handler.Settings.TypiconVersionId, QueryProcessor));
+                }
+
                 handler.Execute(this);
 
                 Sequence?.Interpret(handler);

@@ -25,7 +25,7 @@ namespace TypiconOnline.Domain.Rules.Schedule
 
         protected override IRuleElement CreateObject(CreateObjectRequest req)
         {
-            return new WorshipRule(req.Descriptor.GetElementName(), req.Parent);
+            return new WorshipRule(req.Descriptor.GetElementName(), req.Parent, SerializerRoot.QueryProcessor);
         }
 
         protected override void FillObject(FillObjectRequest req)

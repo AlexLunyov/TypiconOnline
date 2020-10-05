@@ -16,20 +16,26 @@ using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.Command.Typicon
 {
-    public class EditTypiconVariableCommandHandler : EditRuleCommandHandlerBase<TypiconVariable>, ICommandHandler<EditTypiconVariableCommand>
+    public class EditTypiconTimeVariableCommandHandler : EditRuleCommandHandlerBase<TypiconVariable>, ICommandHandler<EditTypiconTimeVariableCommand>
     {
-        public EditTypiconVariableCommandHandler(TypiconDBContext dbContext, CollectorSerializerRoot serializerRoot) : base(dbContext, serializerRoot) { }
+        public EditTypiconTimeVariableCommandHandler(TypiconDBContext dbContext, CollectorSerializerRoot serializerRoot) : base(dbContext, serializerRoot) { }
 
-        public Task<Result> ExecuteAsync(EditTypiconVariableCommand command)
+        public Task<Result> ExecuteAsync(EditTypiconTimeVariableCommand command)
         {
             return Task.FromResult(Execute(command));
         }
 
         protected override Result UpdateValues(TypiconVariable entity, EditRuleCommandBase<TypiconVariable> command)
         {
-            var c = command as EditTypiconVariableCommand;
+            var c = command as EditTypiconTimeVariableCommand;
 
-            entity.Description = c.Description;
+            //редактируем только если Устав является Шаблоном
+            if (entity.TypiconVersion.IsTemplate)
+            {
+                entity.Description = c.Description;
+            }
+
+            entity.Value = c.Value;
 
             return Result.Ok();
         }

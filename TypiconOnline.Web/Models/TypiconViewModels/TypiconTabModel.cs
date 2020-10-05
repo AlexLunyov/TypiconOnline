@@ -45,6 +45,7 @@ namespace TypiconOnline.Web.Models.TypiconViewModels
         EditExplicit,
         EditKathizma,
         CreatePrintTemplate,
-        EditPrintTemplate
+        EditPrintTemplate,
+        EditVariable
     }
 }

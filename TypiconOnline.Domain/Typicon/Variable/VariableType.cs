@@ -12,6 +12,10 @@ namespace TypiconOnline.Domain.Typicon.Variable
         Date = 0,
         Time = 1,
         Integer = 2,
-        String = 3
+        String = 3,
+        //Многоязыковая строка
+        ItemText = 4,
+        //Описание службы
+        Worship = 5
     }
 }

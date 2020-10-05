@@ -97,12 +97,12 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         public void IAsAdditionElement_IsMatchContinue()
         {
             // rule/worship
-            var worship = new WorshipRule("worship", new RootContainer("rule"));
+            var worship = new WorshipRule("worship", new RootContainer("rule"), TestRuleSerializer.Create().QueryProcessor);
 
             // rule/worship/kanonasrule/odi
             var kanonasRule = new KanonasRule("kanonasrule"
                 , new KanonasRuleVMFactory(TestRuleSerializer.Create())
-                , new WorshipRule("worship", new RootContainer("rule")));
+                , new WorshipRule("worship", new RootContainer("rule"), TestRuleSerializer.Create().QueryProcessor));
             kanonasRule.ChildElements.Add(new KOdiRule("odi", kanonasRule));
 
             var result = kanonasRule.IsMatch(worship);
@@ -114,10 +114,10 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         public void IAsAdditionElement_IsMatchSuccess()
         {
             // rule/worship
-            var worship = new WorshipRule("worship", new RootContainer("rule"));
+            var worship = new WorshipRule("worship", new RootContainer("rule"), TestRuleSerializer.Create().QueryProcessor);
 
             // rule/worship
-            var toMatch = new WorshipRule("worship", new RootContainer("rule"));
+            var toMatch = new WorshipRule("worship", new RootContainer("rule"), TestRuleSerializer.Create().QueryProcessor);
 
             var result = worship.IsMatch(toMatch);
 
@@ -128,10 +128,10 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
         public void IAsAdditionElement_IsMatchFail()
         {
             // rule/worship
-            var worship = new WorshipRule("worship", new RootContainer("rule"));
+            var worship = new WorshipRule("worship", new RootContainer("rule"), TestRuleSerializer.Create().QueryProcessor);
 
             // rule/worship?id=someId
-            var toMatch = new WorshipRule("worship", new RootContainer("rule"))
+            var toMatch = new WorshipRule("worship", new RootContainer("rule"), TestRuleSerializer.Create().QueryProcessor)
             {
                 Id = "someId"
             };
@@ -147,7 +147,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             // rule/worship/kanonasrule/odi
             var element = new KanonasRule("kanonasrule"
                 , new KanonasRuleVMFactory(TestRuleSerializer.Create())
-                , new WorshipRule("worship", new RootContainer("rule")));
+                , new WorshipRule("worship", new RootContainer("rule"), TestRuleSerializer.Create().QueryProcessor));
 
             var odi = new KOdiRule("odi", element);
             element.ChildElements.Add(odi);
@@ -155,7 +155,7 @@ namespace TypiconOnline.Domain.Tests.Rules.Schedule
             // rule/worship/kanonasrule/after
             var toMatch = new KanonasRule("kanonasrule"
                 , new KanonasRuleVMFactory(TestRuleSerializer.Create())
-                , new WorshipRule("worship", new RootContainer("rule")));
+                , new WorshipRule("worship", new RootContainer("rule"), TestRuleSerializer.Create().QueryProcessor));
             var after = new KAfterRule("after", element);
             element.ChildElements.Add(after);
 

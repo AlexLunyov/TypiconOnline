@@ -65,12 +65,12 @@
                             <li class="active">Явное правило</li>
                         </text>
                         break;
-                    case TypiconTab.EditKathizma:
+                    @*case TypiconTab.EditKathizma:
                         <text>
                             <li><a asp-controller="Kathizma" asp-action="index" asp-route-id="@Model.TypiconId">Устав</a></li>
                             <li class="active">Кафизма</li>
                         </text>
-                        break;
+                        break;*@
                 }
             </ol>
         </div>
@@ -148,10 +148,10 @@
                 <li class="active">
                     <a href="#">
                         Переменные
-                        @if (Model.VariablesCount > 0)
+                        @if (!Model.IsTemplate && Model.VariablesCount > 0)
                         {
-                            <span id="varCountSpan" class="label label-@((!Model.IsTemplate && Model.VariablesCount > 0) ? "danger" : "default")"
-                                  title="Количество переменных">@Model.VariablesCount</span>
+                            <span id="varCountSpan" class="label label-danger"
+                                  title="Количество переменных без определения">@Model.VariablesCount</span>
                             }
                     </a>
                 </li>
@@ -215,14 +215,14 @@
                     {
                         <li><a asp-controller="ExplicitAddRule" asp-action="Index" asp-route-id="@Model.TypiconId">Явные</a></li>
                     }
-                    @if (Model.Tab == TypiconTab.Kathizma)
+                    @*@if (Model.Tab == TypiconTab.Kathizma)
                     {
                         <li class="active"><a href="#">Кафизмы</a></li>
                     }
                     else
                     {
                         <li><a asp-controller="Kathisma" asp-action="Index" asp-route-id="@Model.TypiconId">Кафизмы</a></li>
-                    }
+                    }*@
                 </ul>
             </li>
         </ul>
