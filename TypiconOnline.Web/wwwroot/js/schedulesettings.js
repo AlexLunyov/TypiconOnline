@@ -67,17 +67,19 @@ function CreateSignTable(id) {
                     "targets": [0],
                     "visible": false,
                     "searchable": false
+                },
+                {
+                    targets: -1,
+                    className: 'dt-align-right'
                 }],
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": true },
-                { "data": "Name", "name": "Наименование", "autoWidth": true },
-                { "data": "TemplateName", "name": "Знак службы", "autoWidth": true },
-                { "data": "IsAddition", "name": "Дополнение", "autoWidth": true },
-                { "data": "Number", "name": "Номер", "autoWidth": true },
-                { "data": "Priority", "name": "Приоритет", "autoWidth": true },
+                { "data": "Name", "name": "Name", "autoWidth": true },
+                { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
                 {
-                    data: null, render: function (data, type, row) {
-                        return '<a href="#" class="icon btn-delete" data-toggle="tooltip" data-original-title="Удалить"><i class="fas fa-trash"></i></a>';
+                    data: null, "width": "25%", render: function (data, type, row) {
+                        return '<a href="/Sign/Edit/' + row.Id + '" target="_blank" class="btn btn-info" data-toggle="tooltip" data-original-title="Редактировать"><i class="fas fa-pen"></i> Редактировать</a>'
+                            + ' <a href="#" class="btn btn-danger sign-delete" data-toggle="tooltip" data-original-title="Исключить"><i class="fas fa-trash"></i> Исключить</a>';
                     },
                     orderable: false
                 },
@@ -85,12 +87,12 @@ function CreateSignTable(id) {
         }
     );
 
-    table.on('click', 'tbody tr td .btn-delete', function () {
+    table.on('click', 'tbody tr td .sign-delete', function () {
         //var table = $('#signGrid').DataTable();
         var row = table.row($(this).parents('tr'));
         var data = row.data();
 
-        if (confirm('Вы действительно хотите удалить Знак службы "' + data.Name + '"?')) {
+        if (confirm('Вы действительно хотите исключить Знак службы "' + data.Name + '"?')) {
 
             $.post("/ScheduleSettings/DeleteSign/" + data.Id, function (result) {
                 if (result == "") {
@@ -140,7 +142,7 @@ function CreateSignTable(id) {
                             }],
                         "columns": [
                             { "data": "Id", "name": "Id", "autoWidth": true },
-                            { "data": "Name", "name": "Наименование", "autoWidth": true },
+                            { "data": "Name", "name": "Name", "autoWidth": true },
                             {
                                 data: null, render: function (data, type, row) {
                                     return '<a href="#" class="btn-add" data-toggle="tooltip" data-original-title="Добавить"><i class="fas fa-plus-circle"></i></a>';
@@ -193,19 +195,21 @@ function CreateMenologyTable(id) {
                     "targets": [0],
                     "visible": false,
                     "searchable": false
+                },
+                {
+                    targets: -1,
+                    className: 'dt-align-right'
                 }],
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": true },
-                { "data": "Name", "name": "Наименование", "autoWidth": true },
-                { "data": "TemplateName", "name": "Знак службы", "autoWidth": true },
-                { "data": "IsAddition", "name": "Как дополнение", "autoWidth": true },
-                { "data": "Date", "name": "Дата", "autoWidth": true },
-                { "data": "LeapDate", "name": "Дата (вис. год)", "autoWidth": true },
-                { "data": "HasModRuleDefinition", "name": "Переход. правило", "autoWidth": true },
-                { "data": "HasRuleDefinition", "name": "Последовательность", "autoWidth": true },
+                { "data": "Name", "name": "Name", "autoWidth": true },
+                { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
+                { "data": "Date", "name": "Date", "autoWidth": true },
+                { "data": "LeapDate", "name": "LeapDate", "autoWidth": true },
                 {
-                    data: null, render: function (data, type, row) {
-                        return '<a href="#" class="icon btn-delete" data-toggle="tooltip" data-original-title="Удалить"><i class="fas fa-trash"></i></a>';
+                    data: null, "width": "25%", render: function (data, type, row) {
+                        return '<a href="/MenologyRule/Edit/' + row.Id + '" target="_blank" class="btn btn-info" data-toggle="tooltip" data-original-title="Редактировать"><i class="fas fa-pen"></i> Редактировать</a>'
+                            + ' <a href="#" class="btn btn-danger menology-delete" data-toggle="tooltip" data-original-title="Исключить"><i class="fas fa-trash"></i> Исключить</a>';
                     },
                     orderable: false
                 },
@@ -213,12 +217,12 @@ function CreateMenologyTable(id) {
         }
     );
 
-    table.on('click', 'tbody tr td .btn-delete', function () {
+    table.on('click', 'tbody tr td .menology-delete', function () {
         //var table = $('#signGrid').DataTable();
         var row = table.row($(this).parents('tr'));
         var data = row.data();
 
-        if (confirm('Вы действительно хотите удалить Минею "' + data.Name + '"?')) {
+        if (confirm('Вы действительно хотите исключить Минею "' + data.Name + '"?')) {
 
             $.post("/ScheduleSettings/DeleteMenology/" + data.Id, function (result) {
                 if (result == "") {
@@ -295,10 +299,10 @@ function CreateMenologyTable(id) {
                             }],
                         "columns": [
                             { "data": "Id", "name": "Id", "autoWidth": true },
-                            { "data": "Name", "name": "Наименование", "autoWidth": true },
-                            { "data": "TemplateName", "name": "Знак службы", "autoWidth": true },
-                            { "data": "Date", "name": "Дата", "autoWidth": true },
-                            { "data": "LeapDate", "name": "Дата (вис. год)", "autoWidth": true },
+                            { "data": "Name", "name": "Name", "autoWidth": true },
+                            { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
+                            { "data": "Date", "name": "Date", "autoWidth": true },
+                            { "data": "LeapDate", "name": "LeapDate", "autoWidth": true },
                             {
                                 data: null, render: function (data, type, row) {
                                     return '<a href="#" class="btn-add" data-toggle="tooltip" data-original-title="Добавить"><i class="fas fa-plus-circle"></i></a>';
@@ -351,15 +355,20 @@ function CreateTriodionTable(id) {
                     "targets": [0],
                     "visible": false,
                     "searchable": false
+                },
+                {
+                    targets: -1,
+                    className: 'dt-align-right'
                 }],
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": true },
-                { "data": "Name", "name": "Наименование", "autoWidth": true },
-                { "data": "TemplateName", "name": "Знак службы", "autoWidth": true },
-                { "data": "DaysFromEaster", "name": "Дней от Пасхи", "autoWidth": true },
+                { "data": "Name", "name": "Name", "autoWidth": true },
+                { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
+                { "data": "DaysFromEaster", "name": "DaysFromEaster", "autoWidth": true },
                 {
-                    data: null, render: function (data, type, row) {
-                        return '<a href="#" class="icon btn-delete" data-toggle="tooltip" data-original-title="Удалить"><i class="fas fa-trash"></i></a>';
+                    data: null, "width": "25%", render: function (data, type, row) {
+                        return '<a href="/TriodionRule/Edit/' + row.Id + '" target="_blank" class="btn btn-info" data-toggle="tooltip" data-original-title="Редактировать"><i class="fas fa-pen"></i> Редактировать</a>'
+                            + ' <a href="#" class="btn btn-danger triodion-delete" data-toggle="tooltip" data-original-title="Исключить"><i class="fas fa-trash"></i> Исключить</a>';
                     },
                     orderable: false
                 },
@@ -367,7 +376,7 @@ function CreateTriodionTable(id) {
         }
     );
 
-    table.on('click', 'tbody tr td .btn-delete', function () {
+    table.on('click', 'tbody tr td .triodion-delete', function () {
         var row = table.row($(this).parents('tr'));
         var data = row.data();
 
@@ -436,9 +445,9 @@ function CreateTriodionTable(id) {
                             }],
                         "columns": [
                             { "data": "Id", "name": "Id", "autoWidth": true },
-                            { "data": "Name", "name": "Наименование", "autoWidth": true },
-                            { "data": "TemplateName", "name": "Знак службы", "autoWidth": true },
-                            { "data": "DaysFromEaster", "name": "Дней от Пасхи", "autoWidth": true },
+                            { "data": "Name", "name": "Name", "autoWidth": true },
+                            { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
+                            { "data": "DaysFromEaster", "name": "DaysFromEaster", "autoWidth": true },
                             {
                                 data: null, render: function (data, type, row) {
                                     return '<a href="#" class="btn-add" data-toggle="tooltip" data-original-title="Добавить"><i class="fas fa-plus-circle"></i></a>';

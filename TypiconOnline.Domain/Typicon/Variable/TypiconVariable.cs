@@ -18,6 +18,13 @@ namespace TypiconOnline.Domain.Typicon.Variable
         public virtual TypiconVersion TypiconVersion { get; set; }
 
         public string Name { get; set; }
+        /// <summary>
+        /// Заголовок для публичного отображения Переменной
+        /// </summary>
+        public string Header { get; set; }
+        /// <summary>
+        /// Описание переменной
+        /// </summary>
         public string Description { get; set; }
 
         public VariableType Type { get; set; }

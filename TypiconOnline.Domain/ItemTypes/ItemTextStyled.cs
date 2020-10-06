@@ -14,7 +14,7 @@ namespace TypiconOnline.Domain.ItemTypes
         //public ItemTextStyled(string exp) : base(exp) { }
 
         //public ItemTextStyled(string exp, string rootName) : base(exp, rootName) { }
-
+        public ItemTextStyled(params ItemTextUnit[] items) : base(items) { }
         public ItemTextStyled(ItemText source) : base(source) { }
 
         public ItemTextStyled(ItemTextStyled source) : base(source)

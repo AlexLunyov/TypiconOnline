@@ -10,6 +10,7 @@
                 {
                     case TypiconTab.Properties:
                     case TypiconTab.Operations:
+                    case TypiconTab.ScheduleSettings:
                     case TypiconTab.Editors:
                     case TypiconTab.PrintTemplate:
                     case TypiconTab.Variables:
@@ -65,19 +66,25 @@
                             <li class="active">Явное правило</li>
                         </text>
                         break;
-                    @*case TypiconTab.EditKathizma:
+                    case TypiconTab.EditVariable:
                         <text>
-                            <li><a asp-controller="Kathizma" asp-action="index" asp-route-id="@Model.TypiconId">Устав</a></li>
-                            <li class="active">Кафизма</li>
+                            <li><a asp-controller="TypiconVariables" asp-action="index" asp-route-id="@Model.TypiconId">Устав</a></li>
+                            <li class="active">Переменная Устава</li>
                         </text>
-                        break;*@
+                        break;
+                        @*case TypiconTab.EditKathizma:
+                <text>
+                    <li><a asp-controller="Kathizma" asp-action="index" asp-route-id="@Model.TypiconId">Устав</a></li>
+                    <li class="active">Кафизма</li>
+                </text>
+                break;*@
                 }
             </ol>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <h1>Редактирование Устава</h1>
+            <h1>Редактирование Устава - @Model.Name</h1>
         </div>
     </div>
     <div class="row">
@@ -161,10 +168,10 @@
                 <li>
                     <a asp-controller="TypiconVariables" asp-action="Index" asp-route-id="@Model.TypiconId">
                         Переменные
-                        @if (Model.VariablesCount > 0)
+                        @if (!Model.IsTemplate && Model.VariablesCount > 0)
                         {
-                            <span id="varCountSpan" class="label label-@((!Model.IsTemplate && Model.VariablesCount > 0) ? "danger" : "default")"
-                                  title="Количество переменных">@Model.VariablesCount</span>
+                            <span id="varCountSpan" class="label label-danger"
+                                  title="Количество переменных без определения">@Model.VariablesCount</span>
                             }
                     </a>
                 </li>

@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Infrastructure.Common.Query;
@@ -36,6 +37,7 @@ namespace TypiconOnline.Web.ViewComponents
                     {
                         TypiconId = id,
                         Tab = tab,
+                        Name = draft.Value.Name.FirstOrDefault(CommonConstants.DefaultLanguage).Text,
                         UserIsAuthor = await IsTypiconsAuthor(draft.Value.Typicon),
                         IsTemplate = draft.Value.IsTemplate,
                         VariablesCount = draft.Value.TypiconVariables.Count(c => string.IsNullOrEmpty(c.Value)),

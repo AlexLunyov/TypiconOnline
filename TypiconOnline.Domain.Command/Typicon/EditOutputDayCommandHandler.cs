@@ -14,6 +14,7 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Repository.EFCore.DataBase;
 using TypiconOnline.Domain.Typicon.Print;
 using TypiconOnline.Domain.Typicon.Output;
+using TypiconOnline.Domain.Common;
 
 namespace TypiconOnline.Domain.Command.Typicon
 {
@@ -30,7 +31,13 @@ namespace TypiconOnline.Domain.Command.Typicon
                 return Task.FromResult(Result.Fail($"Объект с Id {command.Id} не найден."));
             }
 
-            found.Header.Name = command.Name;
+            found.Header.Name = new ItemTextStyled(new ItemTextUnit(CommonConstants.DefaultLanguage, command.Name))
+            {
+                IsBold = command.NameStyle.IsBold,
+                IsItalic = command.NameStyle.IsItalic,
+                IsRed = command.NameStyle.IsRed
+            };
+
             found.Header.PrintDayTemplateId = command.PrintDayTemplateId;
 
             //фиксируем изменения

@@ -35,14 +35,15 @@ namespace TypiconOnline.Web.Controllers
             ICommandProcessor commandProcessor) : base(queryProcessor, authorizationService, commandProcessor)
         {
         }
-                
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id">MenologyRuleId</param>
+        /// <param name="fromSchedule">Признак того, что пришли из графика богослужений</param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int id, bool fromSchedule = false)
         {
             if (id < 1)
             {
@@ -56,6 +57,8 @@ namespace TypiconOnline.Web.Controllers
             {
                 ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Value.Id, DEFAULT_LANGUAGE);
                 ViewBag.TypiconId = typiconEntity.Value.Id.ToString();
+
+                ViewBag.IsFromSchedule = fromSchedule;
 
                 var found = QueryProcessor.Process(new MenologyRuleEditQuery(id, DEFAULT_LANGUAGE));
 
@@ -86,7 +89,9 @@ namespace TypiconOnline.Web.Controllers
 
                 await CommandProcessor.ExecuteAsync(command);
 
-                return RedirectToAction(nameof(Index), new { id = typiconEntity.Value.Id });
+                return (ViewBag.IsFromSchedule is bool b == true)
+                                ? RedirectToAction(nameof(ScheduleSettingsController.Index), "ScheduleSettings", new { id = typiconEntity.Value.Id })
+                                : RedirectToAction(nameof(Index), new { id = typiconEntity.Value.Id });
             }
 
             ViewBag.Signs = QueryProcessor.GetSigns(typiconEntity.Value.Id, DEFAULT_LANGUAGE);
@@ -159,13 +164,12 @@ namespace TypiconOnline.Web.Controllers
 
         #region Overrides
 
-        protected override Expression<Func<MenologyRuleGridModel, bool>> BuildExpression(string searchValue)
-        {
-            return m => m.Name == searchValue
-                    || m.TemplateName == searchValue
-                    || m.Date == searchValue
-                    || m.LeapDate == searchValue;
-        }
+        protected override Func<MenologyRuleGridModel, string, bool> BuildExpression 
+            => (m, searchValue)
+                 => m.Name == searchValue
+                 || m.TemplateName == searchValue
+                 || m.Date == searchValue
+                 || m.LeapDate == searchValue;
 
         protected override IGridQuery<MenologyRuleGridModel> GetQuery(int id) => new AllMenologyRulesWebQuery(id, DEFAULT_LANGUAGE);
 

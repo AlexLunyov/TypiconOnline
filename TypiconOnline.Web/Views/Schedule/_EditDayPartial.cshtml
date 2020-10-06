@@ -21,40 +21,12 @@
                     <div class="col-sm-4"><input type="checkbox" asp-for="Name.IsRed" /> Красным</div>
                 </div>*/}
                 <div class="row">
-                    <div class="col-sm-12">
-                        <div class="table-title">
-                            <div class="row">
-                                <div class="col-sm-9"><label asp-for="@Model.Name">Наименование</label></div>
-                                <div class="col-sm-3 text-right">
-                                    <button type="button" id="addNameBtn" class="btn btn-info add-new btn-xs"><i class="fa fa-plus"></i> Добавить</button>
-                                </div>
-                            </div>
-                        </div>
-                        <table id="nameTable" class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Язык</th>
-                                    <th>Значение</th>
-                                    <th>Действия</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for (int i = 0; i < Model.Name.Items.Count; i++)
-                                {
-                                    <tr>
-                                        <td class="language">@Model.Name.Items[i].Language</td>
-                                        <td class="text">@Model.Name.Items[i].Text</td>
-                                        <td>
-                                            <input class="language" type="hidden" asp-for="@Model.Name.Items[i].Language" />
-                                            <input class="text" type="hidden" asp-for="@Model.Name.Items[i].Text" />
-                                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                    <div class="form-group col-sm-12">
+                        <label asp-for="Name">Наименование:</label>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group col-sm-12">
                         <label>Печатный шаблон:</label>

@@ -1,10 +1,13 @@
 ﻿<link href="~/css/datatables.min.css" rel="stylesheet" />
 <link href="~/lib/bootstrap/dist/css/responsive.bootstrap.min.css" rel="stylesheet" />
+@{
+    ViewData["Title"] = "Переменные";
+}
 
 <div class="container">
     @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.Variables })
     <div class="row">
-        <div class="col-12"><h2>Переменные</h2></div>
+        <div class="col-12"><h2>@ViewData["Title"]</h2></div>
     </div>
     <div class="row">
         <div class="form-group col-12">

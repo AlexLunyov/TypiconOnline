@@ -6,9 +6,7 @@
 <div class="container">
     @await Component.InvokeAsync("TypiconTab", new { typiconId = Model.TypiconId.ToString(), tab = TypiconTab.EditVariable })
     <div class="row">
-        <div class="col-sm-12 col-md-8">
-            <h2>Редактирование переменной Устава</h2>
-        </div>
+        <div class="col-12"><h2>@ViewData["Title"]</h2></div>
     </div>
     <form class="row" asp-action="EditTime" method="post" asp-route-id="@Model.Id" asp-route-TypiconId="@Model.TypiconId">
         <div class="row">
@@ -18,6 +16,12 @@
             <div class="form-group col-sm-12 col-md-8">
                 <label asp-for="Name">Наименование</label>
                 <input asp-for="Name" class="form-control" readonly />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12 col-md-8">
+                <label asp-for="Header">Заголовок</label>
+                <input asp-for="Header" class="form-control" readonly="@(!Model.IsTemplate ? " disabled" : null)" />
             </div>
         </div>
         <div class="row">

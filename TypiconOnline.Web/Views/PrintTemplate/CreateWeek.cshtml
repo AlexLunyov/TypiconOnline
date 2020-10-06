@@ -7,7 +7,7 @@
         @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.CreatePrintTemplate })
         <div class="row">
             <div class="col-md-8">
-                <h2>Создание печатного шаблона</h2>
+                <h2>@ViewData["Title"]</h2>
             </div>
             <div class="clearfix"></div>
             <form asp-action="CreateWeek" method="post" enctype="multipart/form-data">
@@ -33,3 +33,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

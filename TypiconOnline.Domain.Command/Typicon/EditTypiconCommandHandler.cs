@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
@@ -43,8 +44,8 @@ namespace TypiconOnline.Domain.Command.Typicon
 
             //не возможно просто присвоить значение, потому как ef core 
             //будет думать, что TypiconEntity удалена
-            draft.Name.ReplaceValues(command.Name);
-            draft.Description.ReplaceValues(command.Description);
+            draft.Name.ReplaceValues(new ItemText(new ItemTextUnit(CommonConstants.DefaultLanguage, command.Name)));
+            draft.Description.ReplaceValues(new ItemText(new ItemTextUnit(CommonConstants.DefaultLanguage, command.Description)));
 
             //считаем, что существует версия Черновика Устава
             //Находим его и выставлем значение свойства IsTemplate

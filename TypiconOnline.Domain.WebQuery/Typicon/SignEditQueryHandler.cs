@@ -2,6 +2,7 @@
 using Mapster;
 using System;
 using System.Linq;
+using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Typicon;
@@ -32,7 +33,8 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 return Result.Ok(new SignCreateEditModel()
                 {
                     Id = found.Id,
-                    Name = found.SignName,
+                    TypiconId = found.TypiconVersion.TypiconId,
+                    Name = found.SignName.FirstOrDefault(CommonConstants.DefaultLanguage)?.Text,
                     IsAddition = found.IsAddition,
                     PrintTemplateId = found.PrintTemplateId,
                     Priority = found.Priority,

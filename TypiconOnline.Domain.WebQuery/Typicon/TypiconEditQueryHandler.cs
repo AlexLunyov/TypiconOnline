@@ -3,6 +3,7 @@ using Mapster;
 using System;
 using System.Linq;
 using TypiconOnline.AppServices.Extensions;
+using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Typicon;
@@ -35,8 +36,8 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 return Result.Ok(new TypiconEntityEditModel()
                 {
                     Id = typicon.Id,
-                    Name = draft.Name,
-                    Description = draft.Description,
+                    Name = draft.Name?.FirstOrDefault(CommonConstants.DefaultLanguage)?.Text,
+                    Description = draft.Description?.FirstOrDefault(CommonConstants.DefaultLanguage)?.Text,
                     SystemName = typicon.SystemName,
                     DefaultLanguage = typicon.DefaultLanguage,
                     IsModified = draft.IsModified,

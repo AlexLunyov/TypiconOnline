@@ -10,12 +10,16 @@ namespace TypiconOnline.Domain.Command.Typicon
     public class EditTypiconWorshipVariableCommand : EditRuleCommandBase<TypiconVariable>
     {
         public EditTypiconWorshipVariableCommand(int id
-            , string description, string value) : base(id)
+            , string header
+            , string description
+            , string value) : base(id)
         {
+            Header = header;
             Description = description;
             Value = value;
         }
-        
+
+        public string Header { get; }
         public string Description { get; }
 
         /// <summary>

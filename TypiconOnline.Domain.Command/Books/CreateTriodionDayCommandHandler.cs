@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
@@ -24,8 +25,8 @@ namespace TypiconOnline.Domain.Command.Books
             var obj = new DayWorship()
             {
                 Parent = parent,
-                WorshipName = command.Name,
-                WorshipShortName = command.ShortName,
+                WorshipName = new ItemTextStyled(new ItemTextUnit(CommonConstants.DefaultLanguage, command.Name)),
+                WorshipShortName = new ItemText(new ItemTextUnit(CommonConstants.DefaultLanguage, command.ShortName)),
                 IsCelebrating = command.IsCelebrating,
                 UseFullName = command.UseFullName,
                 Definition = command.Definition

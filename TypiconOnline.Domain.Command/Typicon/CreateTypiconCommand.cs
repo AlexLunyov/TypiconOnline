@@ -8,7 +8,7 @@ namespace TypiconOnline.Domain.Command.Typicon
 {
     public class CreateTypiconCommand : ICommand
     {
-        public CreateTypiconCommand(ItemText name, ItemText description, string systemName, string defaultLanguage, int templateId, int ownerId)
+        public CreateTypiconCommand(string name, string description, string systemName, string defaultLanguage, int templateId, int ownerId)
         {
             Name = name;
             Description = description;
@@ -18,8 +18,8 @@ namespace TypiconOnline.Domain.Command.Typicon
             OwnerId = ownerId;
         }
 
-        public ItemText Name { get; }
-        public ItemText Description { get; }
+        public string Name { get; }
+        public string Description { get; }
         public string SystemName { get; }
         public string DefaultLanguage { get; }
         public int TemplateId { get; }

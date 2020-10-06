@@ -10,7 +10,7 @@ namespace TypiconOnline.Domain.Command.Typicon
     public class EditSignCommand : EditRuleCommandBase<Sign>
     {
         public EditSignCommand(int id
-            , ItemText name
+            , string name
             , int? templateId
             , bool isAddition
             , int? printTemplateId
@@ -26,7 +26,7 @@ namespace TypiconOnline.Domain.Command.Typicon
             RuleDefinition = ruleDefinition;
             ModRuleDefinition = modRuleDefinition;
         }
-        public ItemText Name { get; }
+        public string Name { get; }
         public int? TemplateId { get; }
         public bool IsAddition { get; }
         public int? PrintTemplateId { get; }

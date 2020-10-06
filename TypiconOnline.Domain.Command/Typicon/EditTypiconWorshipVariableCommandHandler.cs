@@ -34,6 +34,7 @@ namespace TypiconOnline.Domain.Command.Typicon
             //редактируем только если Устав является Шаблоном
             if (entity.TypiconVersion.IsTemplate)
             {
+                entity.Header = c.Header;
                 entity.Description = c.Description;
             }
 

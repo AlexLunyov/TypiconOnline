@@ -36,6 +36,36 @@ namespace TypiconOnline.Web.Controllers
             }
         }
 
+        protected IActionResult Perform<T>(Func<Result<T>> action, Func<Result<T>, IActionResult> result)
+        {
+            var r = action();
+
+            if (r.Success)
+            {
+                return result(r);
+            }
+            else
+            {
+                return Fail(r.ErrorCode);
+            }
+        }
+
+        protected IActionResult Perform(Func<Result> action
+            , Func<IActionResult> success
+            , Func<IActionResult> fail)
+        {
+            var r = action();
+
+            if (r.Success)
+            {
+                return success();
+            }
+            else
+            {
+                return fail();
+            }
+        }
+
         protected IActionResult Fail(int errCode)
         {
             switch (errCode)

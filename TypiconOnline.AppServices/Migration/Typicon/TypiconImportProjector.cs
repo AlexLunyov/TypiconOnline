@@ -127,6 +127,7 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                     {
                         TypiconVersion = version,
                         Name = c.Name,
+                        Header = c.Header,
                         Description = c.Description,
                         Type = c.Type
                     }));

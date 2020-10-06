@@ -1,11 +1,13 @@
 ﻿<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
 
-
+@{
+    ViewData["Title"] = "Правила Минеи";
+}
 <div class="container">
     @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.Menology })
     <div class="row">
-        <div class="col-12"><h1>Правила Минеи</h1></div>
+        <div class="col-12"><h1>@ViewData["Title"]</h1></div>
     </div>
     <div class="row">
         <div class="form-group col-12">
@@ -34,14 +36,14 @@
 </div>
 
 @section Scripts {
-   
 
 
 
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
 
-<script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
     $(document).ready(function ()
     {
         $("#menologyGrid").DataTable(
@@ -66,19 +68,19 @@
                 }],
                 "columns": [
                     { "data": "Id", "name": "Id", "autoWidth": true },
-                    { "data": "Name", "name": "Наименование", "autoWidth": true },
-                    { "data": "TemplateName", "name": "Знак службы", "autoWidth": true },
-                    { "data": "IsAddition", "name": "Как дополнение", "autoWidth": true },
-                    { "data": "Date", "name": "Дата", "autoWidth": true },
-                    { "data": "LeapDate", "name": "Дата (вис. год)", "autoWidth": true },
-                    { "data": "HasModRuleDefinition", "name": "Переход. правило", "autoWidth": true },
-                    { "data": "HasRuleDefinition", "name": "Последовательность", "autoWidth": true },
+                    { "data": "Name", "name": "Name", "autoWidth": true },
+                    { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
+                    { "data": "IsAddition", "name": "IsAddition", "autoWidth": true },
+                    { "data": "Date", "name": "Date", "autoWidth": true },
+                    { "data": "LeapDate", "name": "LeapDate", "autoWidth": true },
+                    { "data": "HasModRuleDefinition", "name": "HasModRuleDefinition", "autoWidth": true },
+                    { "data": "HasRuleDefinition", "name": "HasRuleDefinition", "autoWidth": true },
                     {
                         data: null, render: function (data, type, row)
                         {
-                            var str = '<a class="btn btn-info" href="/MenologyRule/Edit/' + row.Id + '">Edit</a> ';
+                            var str = '<a class="btn btn-info" href="/MenologyRule/Edit/' + row.Id + '">Редактировать</a> ';
                             if (row.Date == "" && row.LeapDate == "") {
-                                str += '<a href="#" class="btn btn-danger btn-delete">Delete</a>';
+                                str += '<a href="#" class="btn btn-danger btn-delete">Удалить</a>';
                             }
                             return str;
                         },
@@ -116,6 +118,6 @@
     });
 
 
-</script>
+    </script>
 }
 

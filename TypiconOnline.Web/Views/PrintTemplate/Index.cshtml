@@ -3,11 +3,13 @@
 <link href="~/css/datatables.min.css" rel="stylesheet" />
 <link href="~/lib/bootstrap/dist/css/responsive.bootstrap.min.css" rel="stylesheet" />
 
-
+@{
+    ViewData["Title"] = "Печатные шаблоны";
+}
 <div class="container">
     @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.PrintTemplate })
     <div class="row">
-        <div class="col-12"><h2>Печатный шаблон седмицы</h2></div>
+        <div class="col-12"><h2>@ViewData["Title"]</h2></div>
     </div>
     <div class="row">
         <div class="form-group col-12" id="weekview">
@@ -97,8 +99,8 @@
                 }],
                 "columns": [
                     { "data": "Id", "name": "Id", "autoWidth": true },
-                    { "data": "Number", "name": "Номер", "autoWidth": true },
-                    { "data": "HasFile", "name": "Наличие файла", "autoWidth": true },
+                    { "data": "Number", "name": "Number", "autoWidth": true },
+                    { "data": "HasFile", "name": "HasFile", "autoWidth": true },
                     {
                         data: "Name", name: "Наименование", autoWidth: true,
                         render: function (data, type, row)

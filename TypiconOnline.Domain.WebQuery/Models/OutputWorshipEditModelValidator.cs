@@ -12,9 +12,21 @@ namespace TypiconOnline.Domain.WebQuery.Models
         {
             List<ValidationResult> errors = new List<ValidationResult>();
 
-            model.Name.ValidateRequired(nameof(model.Name), "Наименование", errors);
+            if (string.IsNullOrEmpty(model.Name))
+            {
+                errors.Add(new ValidationResult($"Наименование обязательно для заполнения", new List<string>() { nameof(model.Name) }));
+            }
 
-            model.AdditionalName.ValidateNotRequired(nameof(model.AdditionalName), "Наименование", errors);
+            if (model.NameStyle == null)
+            {
+                errors.Add(new ValidationResult($"Стиль отображения службы не определен", new List<string>() { nameof(model.NameStyle) }));
+            }
+
+            if (!string.IsNullOrEmpty(model.AdditionalName)
+                && model.AdditionalNameStyle == null)
+            {
+                errors.Add(new ValidationResult($"Стиль отображения дополнительного наименования службы не определен", new List<string>() { nameof(model.AdditionalNameStyle) }));
+            }
 
             var time = new ItemTime(model.Time);
 

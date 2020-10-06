@@ -15,6 +15,7 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.Domain.Common;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
@@ -41,7 +42,13 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
             { 
                 Id = entity.Id,
                 TypiconId = entity.TypiconId,
-                Name = new ItemTextStyled(entity.Header.Name),
+                Name = entity.Header.Name.FirstOrDefault(CommonConstants.DefaultLanguage).Text,
+                NameStyle = new TextStyle()
+                {
+                    //IsBold = entity.Header.Name.IsBold,
+                    //IsItalic = entity.Header.Name.IsItalic,
+                    //IsRed = entityHeader.Name.IsRed
+                },
                 PrintTemplateId = entity.Header.PrintDayTemplateId
             });
         }

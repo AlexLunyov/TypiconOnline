@@ -16,3 +16,14 @@
             integrity="sha384-JrXK+k53HACyavUKOsL+NkmSesD2P+73eDMrbTtTk0h4RmOF8hF8apPlkp26JlyH">
     </script>
 </environment>
+
+<script>
+    var settings = {
+        validClass: "has-success",
+        errorClass: "has-error"
+    //validClass: "is-valid",
+    //errorClass: "is-invalid"
+    }; 
+    $.validator.setDefaults(settings);
+    $.validator.unobtrusive.options = settings;
+</script>

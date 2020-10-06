@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.ItemTypes;
 
 namespace TypiconOnline.Domain.WebQuery.Models
@@ -9,10 +10,10 @@ namespace TypiconOnline.Domain.WebQuery.Models
     public class TypiconEntityEditModel
     {
         public int Id { get; set; }
-        public ItemText Name { get; set; } = new ItemText();
-        public ItemText Description { get; set; } = new ItemText();
+        public string Name { get; set; }
+        public string Description { get; set; }
         public string SystemName { get; set; }
-        public string DefaultLanguage { get; set; }
+        public string DefaultLanguage { get; set; } = CommonConstants.DefaultLanguage;
         public bool IsModified { get; set; }
         public bool IsTemplate { get; set; }
         public bool HasVariables { get; set; }

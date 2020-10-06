@@ -23,15 +23,12 @@ namespace TypiconOnline.Web.Controllers
         // GET: <controller>
         public ActionResult Index()
         {
-            ClearStoredData(GetQuery());
+            //ClearStoredData(GetQuery());
             return View();
         }
 
         // GET: MenologyDay/LoadData
-        public IActionResult LoadData()
-        {
-            return LoadGridData(GetQuery());
-        }
+        public IActionResult LoadData() => LoadGridData(GetQuery());
 
         protected abstract IGridQuery<TGridModel> GetQuery();
     }

@@ -112,10 +112,9 @@ namespace TypiconOnline.Web.Controllers
 
         protected override IGridQuery<OktoikhDayGridModel> GetQuery() => new AllOktoikhDaysQuery();
 
-        protected override Expression<Func<OktoikhDayGridModel, bool>> BuildExpression(string searchValue)
-        {
-            return m => m.Ihos.ToString() == searchValue
-                    || m.DayOfWeek == searchValue;
-        }
+        protected override Func<OktoikhDayGridModel, string, bool> BuildExpression
+            => (m, searchValue)
+                => m.Ihos.ToString() == searchValue
+                || m.DayOfWeek == searchValue;
     }
 }

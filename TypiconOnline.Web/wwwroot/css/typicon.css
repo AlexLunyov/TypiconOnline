@@ -46,3 +46,9 @@
 .btn-add {
     color: #5cb85c;
 }
+
+/* Классы для DataTables*/
+
+.dt-align-right {
+    text-align: right;
+}

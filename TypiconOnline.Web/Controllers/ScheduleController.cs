@@ -368,7 +368,10 @@ namespace TypiconOnline.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var command = new EditOutputDayCommand(model.Id, model.Name, model.PrintTemplateId);
+                    var command = new EditOutputDayCommand(model.Id
+                        , model.Name
+                        , model.NameStyle
+                        , model.PrintTemplateId);
 
                     var result = await _commandProcessor.ExecuteAsync(command);
 
@@ -411,7 +414,12 @@ namespace TypiconOnline.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var command = new EditOutputWorshipCommand(model.Id, model.Name, model.AdditionalName, model.Time);
+                    var command = new EditOutputWorshipCommand(model.Id
+                        , model.Name
+                        , model.AdditionalName
+                        , model.Time
+                        , model.NameStyle
+                        , model.AdditionalNameStyle);
 
                     var result = await _commandProcessor.ExecuteAsync(command);
 

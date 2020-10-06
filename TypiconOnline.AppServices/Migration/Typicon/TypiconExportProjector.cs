@@ -91,8 +91,10 @@ namespace TypiconOnline.AppServices.Migration.Typicon
                     {
                         Id = c.Id,
                         Name = c.Name,
+                        Header = c.Header,
                         Description = c.Description,
-                        Type = c.Type
+                        Type = c.Type,
+                        Value = c.Value
                     }).ToList(),
                     PrintWeekTemplate = (entity.PrintWeekTemplate != null)
                         ? new PrintWeekTemplateProjection()

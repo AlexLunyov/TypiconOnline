@@ -2,7 +2,9 @@
 <link href="~/css/datatables.min.css" rel="stylesheet" />
 <link href="~/lib/bootstrap/dist/css/responsive.bootstrap.min.css" rel="stylesheet" />
 
-
+@{
+    ViewData["Title"] = "Тексты служб Триоди";
+}
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -13,7 +15,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12"><h1>Тексты служб Триоди</h1></div>
+        <div class="col-12"><h2>@ViewData["Title"]</h2></div>
     </div>
     <div class="row">
         <div class="form-group col-12">
@@ -39,75 +41,73 @@
 </div>
 
 @section Scripts {
-   
 
 
 
-<script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
-<script src="~/lib/datatables/js/dataTables.bootstrap.min.js"></script>
 
-<script>
-    $(document).ready(function ()
-    {
-        $("#tdGrid").DataTable(
-            {
-                "processing": true, // for show progress bar
-                "serverSide": true, // for process server side
-                "filter": true, // this is for disable filter (search box)
-                "orderMulti": false, // for disable multiple column at once
-                "language": {
-                    "url": "/lib/datatables/russian.json"
-                },
-                "ajax": {
-                    "url": "/TriodionDay/LoadData",
-                    "type": "POST",
-                    "datatype": "json"
-                },
-                "columnDefs":
-                [{
-                    "targets": [0],
-                    "visible": false,
-                    "searchable": false
-                }],
-                "columns": [
-                    { "data": "Id", "name": "Id", "autoWidth": true },
-                    { "data": "DaysFromEaster", "name": "Дней от Пасхи", "autoWidth": true },
-                    { "data": "Name", "name": "Наименование", "autoWidth": true },
-                    { "data": "ShortName", "name": "Краткое наим.", "autoWidth": true },
-                    { "data": "IsCelebrating", "name": "Праздник", "autoWidth": true },
-                    {
-                        data: null, render: function (data, type, row)
-                        {
-                            return '<a class="btn btn-info" href="/TriodionDay/Edit/' + row.Id + '">Edit</a> <a href="#" class="btn btn-danger btn-delete">Delete</a>';
-                        },
-                        orderable: false
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#tdGrid").DataTable(
+                {
+                    "processing": true, // for show progress bar
+                    "serverSide": true, // for process server side
+                    "filter": true, // this is for disable filter (search box)
+                    "orderMulti": false, // for disable multiple column at once
+                    "language": {
+                        "url": "/lib/datatables/russian.json"
                     },
-                ]
+                    "ajax": {
+                        "url": "/TriodionDay/LoadData",
+                        "type": "POST",
+                        "datatype": "json"
+                    },
+                    "columnDefs":
+                        [{
+                            "targets": [0],
+                            "visible": false,
+                            "searchable": false
+                        }],
+                    "columns": [
+                        { "data": "Id", "name": "Id", "autoWidth": true },
+                        { "data": "DaysFromEaster", "name": "DaysFromEaster", "autoWidth": true },
+                        { "data": "Name", "name": "Name", "autoWidth": true },
+                        { "data": "ShortName", "name": "ShortName", "autoWidth": true },
+                        { "data": "IsCelebrating", "name": "IsCelebrating", "autoWidth": true },
+                        {
+                            data: null, render: function (data, type, row) {
+                                return '<a class="btn btn-info" href="/TriodionDay/Edit/' + row.Id + '">Редактировать</a> <a href="#" class="btn btn-danger btn-delete">Удалить</a>';
+                            },
+                            orderable: false
+                        },
+                    ]
+                }
+            );
+        });
+
+
+        $('#tdGrid').on('click', 'tbody tr td .btn-delete', function () {
+            var table = $('#tdGrid').DataTable();
+            var row = table.row($(this).parents('tr'));
+            var data = row.data();
+            if (confirm('Вы действительно хотите удалить Службу Триоди "' + data.Name + '"?')) {
+
+                $.post("/TriodionDay/Delete/" + data.Id, function (result) {
+                    if (result) {
+                        row.remove();
+                    }
+                    else {
+                        alert("Что-то пошло не так.");
+                    }
+                    table.draw(false);
+                });
             }
-        );
-    });
-
-
-    $('#tdGrid').on('click', 'tbody tr td .btn-delete', function () {
-        var table = $('#tdGrid').DataTable();
-        var row = table.row($(this).parents('tr'));
-        var data = row.data();
-        if (confirm('Вы действительно хотите удалить Службу Триоди "' + data.Name + '"?')) {
-
-            $.post("/TriodionDay/Delete/"+ data.Id, function (result) {
-                if (result) {
-                    row.remove();
-                }
-                else {
-                    alert("Что-то пошло не так.");
-                }
-                table.draw(false);
-            });
-        }
-        else {
-            return false;
-        }
-    });
-</script>
+            else {
+                return false;
+            }
+        });
+    </script>
 }
 

@@ -9,6 +9,7 @@ namespace TypiconOnline.Web.Models.TypiconViewModels
     {
         public int TypiconId { get; set; }
         public TypiconTab Tab { get; set; }
+        public string Name { get; set; }
         public int VariablesCount { get; set; }
         public int EmptyPrintTemplatesCount { get; set; }
         public bool UserIsAuthor { get; set; }

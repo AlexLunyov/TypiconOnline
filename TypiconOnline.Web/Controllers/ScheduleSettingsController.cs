@@ -75,49 +75,13 @@ namespace TypiconOnline.Web.Controllers
 
         // GET: /<controller>/
         public IActionResult Index(int id)
-        {
-            var result = QueryProcessor.Process(new ScheduleWeekSettingsQuery(id));
-
-            if (result.Success)
-            {
-                return View(result.Value);
-            }
-            else
-            {
-                switch (result.ErrorCode)
-                {
-                    case 403:
-                        return Unauthorized();
-                    case 404:
-                        return NotFound();
-                    default:
-                        return BadRequest();
-                }
-            }
-        }
+            => Perform(() => QueryProcessor.Process(new ScheduleWeekSettingsQuery(id)),
+                       c => View(c.Value));
 
         [HttpGet]
         public IActionResult EditDays(int id)
-        {
-            var result = QueryProcessor.Process(new ScheduleWeekSettingsQuery(id));
-
-            if (result.Success)
-            {
-                return PartialView("_EditDaysPartial", result.Value);
-            }
-            else
-            {
-                switch (result.ErrorCode)
-                {
-                    case 403:
-                        return Unauthorized();
-                    case 404:
-                        return NotFound();
-                    default:
-                        return BadRequest();
-                }
-            }
-        }
+            => Perform(() => QueryProcessor.Process(new ScheduleWeekSettingsQuery(id)),
+                       c => PartialView("_EditDaysPartial", c.Value));
 
         [HttpPost]
         public IActionResult EditDays(ScheduleSettingsWeekDaysModel model)

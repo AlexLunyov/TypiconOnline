@@ -2,47 +2,51 @@
 @{
     ViewData["Title"] = "Редактирование печатного шаблона седмицы";
 }
-    <div class="container">
-        @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewBag.TypiconId, tab = TypiconTab.EditPrintTemplate })
+<div class="container">
+    @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewBag.TypiconId, tab = TypiconTab.EditPrintTemplate })
+    <div class="row">
+        <div class="col-8">
+            <h2>@ViewData["Title"]</h2>
+        </div>
+    </div>
+    <form class="row" asp-action="EditWeek" method="post" enctype="multipart/form-data">
         <div class="row">
-            <div class="col-8">
-                <h2>Редактирование печатного шаблона седмицы</h2>
+            <div class="form-group col-sm-8">
+                <div asp-validation-summary="All" class="text-danger"></div>
             </div>
         </div>
-        <form class="row" asp-action="EditWeek" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label asp-for="DaysPerPage">Количество дней на страницу:</label>
+                <input asp-for="DaysPerPage" class="form-control" />
+                <span asp-validation-for="DaysPerPage" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label asp-for="File">Файл:</label>
+                <input id="importFile" asp-for="File" type="file" class="form-control" accept="text/docx" />
+                <span asp-validation-for="File" class="text-danger"></span>
+            </div>
+        </div>
+        @if (!string.IsNullOrEmpty(Model.OldFileName))
+        {
             <div class="row">
                 <div class="form-group col-sm-8">
-                    <div asp-validation-summary="All" class="text-danger"></div>
+                    @Model.OldFileName <a class="btn btn-default" asp-controller="PrintTemplate" asp-action="DownloadWeek" asp-route-id="@Model.Id" title="Скачать" data-toggle="tooltip"><i class="fas fa-file-search"></i> Скачать</a>
                 </div>
+                <input type="hidden" asp-for="OldFileName" />
             </div>
-            <div class="row">
-                <div class="form-group col-sm-8">
-                    <label asp-for="DaysPerPage">Количество дней на страницу:</label>
-                    <input asp-for="DaysPerPage" class="form-control" />
-                    <span asp-validation-for="DaysPerPage" class="text-danger"></span>
-                </div>
+        }
+        <div class="row">
+            <div class="form-group col-md-8">
+                <div class="validation" asp-validation-summary="ModelOnly"></div>
             </div>
-            <div class="row">
-                <div class="form-group col-sm-8">
-                    <label asp-for="File">Файл:</label>
-                    <input id="importFile" asp-for="File" type="file" class="form-control" accept="text/docx" />
-                    <span asp-validation-for="File" class="text-danger"></span>
-                </div>
-            </div>
-            @if (!string.IsNullOrEmpty(Model.OldFileName))
-            {
-                <div class="row">
-                    <div class="form-group col-sm-8">
-                        @Model.OldFileName <a class="btn btn-default" asp-controller="PrintTemplate" asp-action="DownloadWeek" asp-route-id="@Model.Id" title="Скачать" data-toggle="tooltip"><i class="fas fa-file-search"></i> Скачать</a>
-                    </div>
-                    <input type="hidden" asp-for="OldFileName" />
-                </div>
-            }
-            <div class="row">
-                <div class="form-group col-md-8">
-                    <div class="validation" asp-validation-summary="ModelOnly"></div>
-                </div>
-            </div>
-            <div class="row"><div class="form-group col-xs-12"><button class="btn btn-primary" asp-action="EditWeek">Сохранить</button></div></div>
-        </form>
-    </div>
+        </div>
+        <div class="row"><div class="form-group col-xs-12"><button class="btn btn-primary" asp-action="EditWeek">Сохранить</button></div></div>
+    </form>
+</div>
+
+@section Scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

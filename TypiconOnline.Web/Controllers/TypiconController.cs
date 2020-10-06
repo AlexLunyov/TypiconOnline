@@ -69,11 +69,7 @@ namespace TypiconOnline.Web.Controllers
         {
             ViewBag.Typicons = QueryProcessor.GetTypicons();
 
-            return View(new CreateTypiconModel()
-            {
-                Name = new ItemText(new ItemText(new ItemTextUnit("cs-ru", "[Новое значение]"))),
-                Description = new ItemText(new ItemText(new ItemTextUnit("cs-ru", "[Новое значение]")))
-            });
+            return View(new CreateTypiconModel());
         }
 
         [HttpPost]
@@ -305,11 +301,10 @@ namespace TypiconOnline.Web.Controllers
         [HttpGet]
         public IActionResult Editors(int id) => Edit(id);
 
-        protected override Expression<Func<TypiconEntityFilteredModel, bool>> BuildExpression(string searchValue)
-        {
-            return m => m.Name == searchValue
+        protected override Func<TypiconEntityFilteredModel, string, bool> BuildExpression
+            => (m, searchValue)
+                => m.Name == searchValue
                 || m.SystemName == searchValue;
-        }
 
         //[HttpPost]
         public IActionResult Publish(TypiconEntityEditModel model)
@@ -384,6 +379,19 @@ namespace TypiconOnline.Web.Controllers
             }
 
             return QueryProcessor.Process(new TypiconEditQuery(typiconId));
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        //[Route("[controller]/[action]/{systemName}")]
+        public IActionResult IsNameUnique(string systemName)
+        {
+            var isUnique = QueryProcessor.Process(new IsNameUniqueQuery(systemName));
+            if (!isUnique.Success)
+            {
+                return Json($"Наименование '{systemName}' уже занято.");
+            }
+
+            return Json(true);
         }
     }
 }

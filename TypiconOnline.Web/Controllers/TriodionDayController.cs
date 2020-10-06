@@ -76,8 +76,8 @@ namespace TypiconOnline.Web.Controllers
         {
             return View(new TriodionDayEditModel()
             {
-                Name = new ItemTextStyled(new ItemText(new ItemTextUnit("cs-ru", "[Новое значение]"))),
-                ShortName = new ItemText(new ItemTextUnit("cs-ru", "[Новое значение]"))
+                //Name = new ItemTextStyled(new ItemText(new ItemTextUnit("cs-ru", "[Новое значение]"))),
+                //ShortName = new ItemText(new ItemTextUnit("cs-ru", "[Новое значение]"))
             });
         }
 
@@ -122,12 +122,11 @@ namespace TypiconOnline.Web.Controllers
 
         protected override IGridQuery<TriodionDayGridModel> GetQuery() => new AllTriodionDaysQuery(DEFAULT_LANGUAGE);
 
-        protected override Expression<Func<TriodionDayGridModel, bool>> BuildExpression(string searchValue)
-        {
-            return m => m.Name == searchValue
+        protected override Func<TriodionDayGridModel, string, bool> BuildExpression
+             => (m, searchValue) 
+                => m.Name == searchValue
                     || m.ShortName == searchValue
                     || m.DaysFromEaster.ToString() == searchValue
                     || m.IsCelebrating.ToString() == searchValue;
-        }
     }
 }

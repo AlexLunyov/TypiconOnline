@@ -2,11 +2,13 @@
 <link href="~/css/datatables.min.css" rel="stylesheet" />
 <link href="~/lib/bootstrap/dist/css/responsive.bootstrap.min.css" rel="stylesheet" />
 
-
+@{
+    ViewData["Title"] = "Знаки служб";
+}
 <div class="container">
     @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.Sign })
     <div class="row">
-        <div class="col-12"><h2>Знаки служб</h2></div>
+        <div class="col-12"><h2>@ViewData["Title"]</h2></div>
     </div>
     <div class="row">
         <div class="form-group col-12">
@@ -34,10 +36,10 @@
 
 @section Scripts {
 
-<script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
-<script src="~/lib/datatables/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap.min.js"></script>
 
-<script>
+    <script>
     $(document).ready(function ()
     {
         $("#signGrid").DataTable(
@@ -62,15 +64,15 @@
                 }],
                 "columns": [
                     { "data": "Id", "name": "Id", "autoWidth": true },
-                    { "data": "Name", "name": "Наименование", "autoWidth": true },
-                    { "data": "TemplateName", "name": "Шаблон", "autoWidth": true },
-                    { "data": "IsAddition", "name": "Как дополнение", "autoWidth": true },
-                    { "data": "Number", "name": "Номер", "autoWidth": true },
-                    { "data": "Priority", "name": "Приоритет", "autoWidth": true },
+                    { "data": "Name", "name": "Name", "autoWidth": true },
+                    { "data": "TemplateName", "name": "TemplateName", "autoWidth": true },
+                    { "data": "IsAddition", "name": "IsAddition", "autoWidth": true },
+                    { "data": "Number", "name": "Number", "autoWidth": true },
+                    { "data": "Priority", "name": "Priority", "autoWidth": true },
                     {
                         data: null, render: function (data, type, row)
                         {
-                            return '<a class="btn btn-info" href="/Sign/Edit/' + row.Id + '">Edit</a> <a href="#" class="btn btn-danger btn-delete">Delete</a>';
+                            return '<a class="btn btn-info" href="/Sign/Edit/' + row.Id + '">Редактировать</a> <a href="#" class="btn btn-danger btn-delete">Удалить</a>';
                         },
                         orderable: false
                     },
@@ -101,6 +103,6 @@
             return false;
         }
     });
-</script>
+    </script>
 }
 

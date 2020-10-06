@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
 using TypiconOnline.Domain.Typicon.Modifications;
@@ -29,8 +30,8 @@ namespace TypiconOnline.Domain.Command.Typicon
         {
             return new TypiconClaim()
             {
-                Name = new ItemText(command.Name),
-                Description = new ItemText(command.Description),
+                Name = new ItemText(new ItemTextUnit(CommonConstants.DefaultLanguage, command.Name)),
+                Description = new ItemText(new ItemTextUnit(CommonConstants.DefaultLanguage, command.Description)),
                 SystemName = command.SystemName.ToLower(),
                 DefaultLanguage = command.DefaultLanguage,
                 TemplateId = command.TemplateId,

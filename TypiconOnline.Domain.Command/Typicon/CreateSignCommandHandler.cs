@@ -11,6 +11,7 @@ using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.Domain.Common;
 
 namespace TypiconOnline.Domain.Command.Typicon
 {
@@ -31,7 +32,7 @@ namespace TypiconOnline.Domain.Command.Typicon
             {
                 IsAddition = c.IsAddition,
                 ModRuleDefinition = c.ModRuleDefinition,
-                SignName = c.Name,
+                SignName = new ItemText(new ItemTextUnit(CommonConstants.DefaultLanguage, c.Name)),
                 PrintTemplateId = c.PrintTemplateId,
                 Priority = c.Priority,
                 RuleDefinition = c.RuleDefinition,

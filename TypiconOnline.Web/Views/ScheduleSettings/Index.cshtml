@@ -1,9 +1,11 @@
 ﻿@model ScheduleSettingsWeekDaysModel
-
+@{
+    ViewData["Title"] = "График богослужений";
+}
 <div class="container">
     @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.ScheduleSettings })
     <div class="row">
-        <div class="col-12"><h1>График богослужений</h1></div>
+        <div class="col-12"><h1>@ViewData["Title"]</h1></div>
     </div>
     <div class="row">
         <div class="col-12"><h3>Дни недели</h3> <p><button id="editDays" class="btn btn-primary" data-id="@ViewContext.RouteData.Values["id"]">Редактировать</button></div></p>
@@ -23,9 +25,6 @@
                             <th>Id</th>
                             <th>Наименование</th>
                             <th>Шаблон</th>
-                            <th>Как дополнение</th>
-                            <th>Номер</th>
-                            <th>Приоритет</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -45,11 +44,8 @@
                             <th>Id</th>
                             <th>Наименование</th>
                             <th>Знак службы</th>
-                            <th>Как дополнение</th>
                             <th>Дата</th>
                             <th>Дата (вис. год)</th>
-                            <th>Переход. правило</th>
-                            <th>Последовательность</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -121,9 +117,11 @@
     <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
     <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/itemtext.css"/>
 
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>    
     <script src="~/js/schedulesettings.js"></script>
 
     <script src="~/lib/momentjs/moment-with-locales.js"></script>
@@ -133,5 +131,7 @@
             var includedDates = @Html.Raw(Json.Serialize(Model.IncludedDates));
             var excludedDates = @Html.Raw(Json.Serialize(Model.ExcludedDates));
         </script>*@
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }
 

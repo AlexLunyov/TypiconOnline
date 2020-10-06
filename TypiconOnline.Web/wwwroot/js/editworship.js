@@ -8,13 +8,8 @@ $(document).ready(function () {
 
     FillTable();
 
-    createItemTextTable("#wNameTable", "Name", "#addwNameBtn");
-    createItemTextTable("#wAddNameTable", "AdditionalName", "#addwAddNameBtn");
-
     $('.add-worship').on('click', function () {
         ClearForm();
-
-        $("#wNameTable tbody").append(DefaultItemTextValue('Name'));
 
         $(".edit-modal").modal('show');
     }); 
@@ -62,6 +57,8 @@ $(document).ready(function () {
         FillTable();
 
         $(".edit-modal").modal('hide');
+
+        return false;
     });
 });
 
@@ -177,26 +174,13 @@ $(document).on("click", ".edit-worship", function () {
 });
 
 function ClearForm() {
-    ClearTable("#wName");
-    ClearTable("#wAddName");
+    $("#wTime").val("");
+    $("#wMode").val("");
+
+    SetNameData("#wName", null);
+    SetNameData("#wAddName", null);
 
     $("#editWorship").removeAttr("worship-id");
-}
-
-function ClearTable(idPrefix) {
-    $(idPrefix + "Table tbody").empty();
-
-    $(idPrefix + "IsRed").attr('checked', false);
-    $(idPrefix + "IsBold").attr('checked', false);
-    $(idPrefix + "IsItalic").attr('checked', false);
-}
-
-function DefaultItemTextValue(name) {
-    return "<tr>"
-            + '<td class="language">cs-ru</td>'
-            + '<td class="text">Время богослужения</td>'
-            + '<td class="text">' + getActionsCell(name) + '</td>'
-            + "</tr>";
 }
 
 function FillForm(index) {
@@ -213,42 +197,38 @@ function FillForm(index) {
 }
 
 function GetNameData(idPrefix) {
-    if ($(idPrefix + "Table tbody tr").length > 0) {
+    var text = $(idPrefix).val();
+    if (text != "") {
         var d = new Object();
 
-        d.Items = [];
+        d.Items = [{ Language: "cs-ru", Text: text }];
 
-        $.each($(idPrefix + "Table tbody tr"), function () {
-            var item = new Object();
-            item.Language = $(this).children().eq(0).html();
-            item.Text = $(this).children().eq(1).html();
-            d.Items.push(item);
-        });
         d.IsRed = $(idPrefix + "IsRed").is(":checked");
         d.IsBold = $(idPrefix + "IsBold").is(":checked");
         d.IsItalic = $(idPrefix + "IsItalic").is(":checked");
 
         return d;
     }
-    
+
     return null;
 }
 
 function SetNameData(idPrefix, sData) {
     if (sData != null) {
-        $.each(sData.Items, function (i) {
-            var tr = "<tr>"
-                + '<td class="language">'+ this.Language+'</td>'
-                + '<td class="text">' + this.Text + '</td>'
-                + '<td class="text">' + getActionsCell(idPrefix) + '</td>'
-                + "</tr>";
+        const s = sData.Items[0];
 
-            $(idPrefix + "Table tbody").append(tr);
-        });
+        $(idPrefix).val(s.Text);
 
         $(idPrefix + "IsRed")[0].checked = sData.IsRed;
         $(idPrefix + "IsBold")[0].checked = sData.IsBold;
         $(idPrefix + "IsItalic")[0].checked = sData.IsItalic;
+    }
+    else {
+        $(idPrefix).val("");
+
+        $(idPrefix + "IsRed")[0].checked = false;
+        $(idPrefix + "IsBold")[0].checked = false;
+        $(idPrefix + "IsItalic")[0].checked = false;
     }
 }
 

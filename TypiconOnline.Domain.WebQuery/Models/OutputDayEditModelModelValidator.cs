@@ -21,7 +21,15 @@ namespace TypiconOnline.Domain.WebQuery.Models
         {
             List<ValidationResult> errors = new List<ValidationResult>();
 
-            model.Name.ValidateRequired(nameof(model.Name), "Наименование", errors);
+            if (string.IsNullOrEmpty(model.Name))
+            {
+                errors.Add(new ValidationResult($"Наименование обязательно для заполнения", new List<string>() { nameof(model.Name) }));
+            }
+
+            if (model.NameStyle == null)
+            {
+                errors.Add(new ValidationResult($"Стиль отображения дня не определен", new List<string>() { nameof(model.NameStyle) }));
+            }
 
             return errors;
         }

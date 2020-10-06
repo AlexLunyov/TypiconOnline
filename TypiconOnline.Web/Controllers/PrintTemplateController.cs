@@ -377,11 +377,10 @@ namespace TypiconOnline.Web.Controllers
 
         #region Overrides
 
-        protected override Expression<Func<PrintDayTemplateGridModel, bool>> BuildExpression(string searchValue)
-        {
-            return m => m.Name == searchValue
-                    || m.Number.ToString() == searchValue;
-        }
+        protected override Func<PrintDayTemplateGridModel, string, bool> BuildExpression
+            => (m, searchValue)
+                => m.Name == searchValue
+                || m.Number.ToString() == searchValue;
 
         protected override IGridQuery<PrintDayTemplateGridModel> GetQuery(int id) => new AllPrintDayTemplatesQuery(id);
 

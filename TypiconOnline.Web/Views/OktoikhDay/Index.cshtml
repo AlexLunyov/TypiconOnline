@@ -2,18 +2,20 @@
 <link href="~/css/datatables.min.css" rel="stylesheet" />
 <link href="~/lib/bootstrap/dist/css/responsive.bootstrap.min.css" rel="stylesheet" />
 
-
+@{
+    ViewData["Title"] = "Тексты служб Октоиха";
+}
 <div class="container">
     <div class="row">
         <div class="col-12">
             <ol class="breadcrumb">
                 <li><a asp-controller="Home" asp-action="index">Главная</a></li>
-                <li class="active">Тексты служб Октоиха</li>
+                <li class="active">Октоих</li>
             </ol>
         </div>
     </div>
     <div class="row">
-        <div class="col-12"><h1>Тексты служб Октоиха</h1></div>
+        <div class="col-12"><h1>@ViewData["Title"]</h1></div>
     </div>
     <div class="row">
         @*<div class="form-group col-12">
@@ -37,47 +39,45 @@
 </div>
 
 @section Scripts {
-<script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
-<script src="~/lib/datatables/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap.min.js"></script>
 
-<script>
-    $(document).ready(function ()
-    {
-        $("#odGrid").DataTable(
-            {
-                "processing": true, // for show progress bar
-                "serverSide": true, // for process server side
-                "filter": true, // this is for disable filter (search box)
-                "orderMulti": false, // for disable multiple column at once
-                "language": {
-                    "url": "/lib/datatables/russian.json"
-                },
-                "ajax": {
-                    "url": "/OktoikhDay/LoadData",
-                    "type": "POST",
-                    "datatype": "json"
-                },
-                "columnDefs":
-                [{
-                    "targets": [0],
-                    "visible": false,
-                    "searchable": false
-                }],
-                "columns": [
-                    { "data": "Id", "name": "Id", "autoWidth": true },
-                    { "data": "Ihos", "name": "Глас", "autoWidth": true },
-                    { "data": "DayOfWeek", "name": "День недели", "autoWidth": true },
-                    {
-                        data: null, render: function (data, type, row)
-                        {
-                            return '<a class="btn btn-info" href="/OktoikhDay/Edit/' + row.Id + '">Edit</a>';
-                        },
-                        orderable: false
+    <script>
+        $(document).ready(function () {
+            $("#odGrid").DataTable(
+                {
+                    "processing": true, // for show progress bar
+                    "serverSide": true, // for process server side
+                    "filter": true, // this is for disable filter (search box)
+                    "orderMulti": false, // for disable multiple column at once
+                    "language": {
+                        "url": "/lib/datatables/russian.json"
                     },
-                ]
-            }
-        );
-    });
-</script>
+                    "ajax": {
+                        "url": "/OktoikhDay/LoadData",
+                        "type": "POST",
+                        "datatype": "json"
+                    },
+                    "columnDefs":
+                        [{
+                            "targets": [0],
+                            "visible": false,
+                            "searchable": false
+                        }],
+                    "columns": [
+                        { "data": "Id", "name": "Id", "autoWidth": true },
+                        { "data": "Ihos", "name": "Глас", "autoWidth": true },
+                        { "data": "DayOfWeek", "name": "День недели", "autoWidth": true },
+                        {
+                            data: null, render: function (data, type, row) {
+                                return '<a class="btn btn-info" href="/OktoikhDay/Edit/' + row.Id + '">Редактировать</a>';
+                            },
+                            orderable: false
+                        },
+                    ]
+                }
+            );
+        });
+    </script>
 }
 

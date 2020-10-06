@@ -239,10 +239,10 @@ function assignEvents() {
                 // Add response in Modal body
                 $("#modalWindow").html(response);
 
+                $.validator.unobtrusive.parse($("#editOutputForm"));
+
                 // Display Modal
                 $(".editvar-modal").modal('show');
-
-                createItemTextTable("#nameTable", "Name", "#addNameBtn");
 
                 $("#editOutputForm").submit(submitForm);
             }
@@ -262,11 +262,10 @@ function assignEvents() {
                 // Add response in Modal body
                 $("#modalWindow").html(response);
 
+                $.validator.unobtrusive.parse($("#editOutputForm"));
+
                 // Display Modal
                 $(".editvar-modal").modal('show');
-
-                createItemTextTable("#nameTable", "Name", "#addNameBtn");
-                createItemTextTable("#additionalNameTable", "AdditionalName", "#addAdditionalNameBtn");
 
                 $('#time').datetimepicker({
                     format: 'HH.mm'
@@ -280,6 +279,10 @@ function assignEvents() {
 
 function submitForm(e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
+
+    if (!$(this).valid()) {
+        return false;
+    }
 
     var form = $("#editOutputForm");
     var url = form.attr("action");
@@ -300,8 +303,6 @@ function submitForm(e) {
             }
         }
     });
-
-    return false;
 }
 
 function withModified(isEditor, date, text) {

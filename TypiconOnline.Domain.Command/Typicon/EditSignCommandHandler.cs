@@ -12,6 +12,7 @@ using TypiconOnline.Domain.Typicon.Modifications;
 using TypiconOnline.Infrastructure.Common.Command;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.Domain.Common;
 
 namespace TypiconOnline.Domain.Command.Typicon
 {
@@ -42,7 +43,7 @@ namespace TypiconOnline.Domain.Command.Typicon
 
             //не возможно просто присвоить значение, потому как ef core 
             //будет думать, что TypiconEntity удалена
-            entity.SignName.ReplaceValues(c.Name);
+            entity.SignName.ReplaceValues(new ItemText(new ItemTextUnit(CommonConstants.DefaultLanguage, c.Name)));
 
             entity.TemplateId = (c.TemplateId > 0) ? c.TemplateId : null;
             entity.IsAddition = c.IsAddition;

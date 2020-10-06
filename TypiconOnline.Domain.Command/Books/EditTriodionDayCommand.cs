@@ -11,8 +11,8 @@ namespace TypiconOnline.Domain.Command.Books
     {
         public EditTriodionDayCommand(int id
             , int daysFromEaster
-            , ItemTextStyled name
-            , ItemText shortName
+            , string name
+            , string shortName
             , bool isCelebrating
             , bool useFullName
             , string definition) 
@@ -28,8 +28,8 @@ namespace TypiconOnline.Domain.Command.Books
         }
         public int Id { get; }
         public int DaysFromEaster { get; }
-        public ItemTextStyled Name { get; }
-        public ItemText ShortName { get; }
+        public string Name { get; }
+        public string ShortName { get; }
         public bool IsCelebrating { get; }
         public bool UseFullName { get; }
         public string Definition { get; }

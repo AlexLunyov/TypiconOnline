@@ -19,10 +19,14 @@ namespace TypiconOnline.Domain.WebQuery.Models
             var errors = ValidateBook(model);
 
             //Name
-            model.Name.ValidateRequired(nameof(model.Name), "Наименование", errors);
+            //model.Name.ValidateRequired(nameof(model.Name), "Наименование", errors);
+            if (string.IsNullOrEmpty(model.Name))
+            {
+                errors.Add(new ValidationResult($"Наименование обязательно для заполнения", new List<string>() { nameof(model.Name) }));
+            }
 
             //ShortName
-            model.ShortName.ValidateNotRequired(nameof(model.Name), "Краткое наименование", errors);
+            //model.ShortName.ValidateNotRequired(nameof(model.Name), "Краткое наименование", errors);
 
             return errors;
         }

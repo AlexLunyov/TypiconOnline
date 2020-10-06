@@ -15,6 +15,7 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Infrastructure.Common.UnitOfWork;
 using TypiconOnline.Repository.EFCore.DataBase;
+using TypiconOnline.Domain.Common;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
@@ -40,8 +41,22 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
             return Result.Ok(new OutputWorshipEditModel()
             { 
                 Id = entity.Id,
-                Name = new ItemTextStyled(entity.Name),
-                AdditionalName = (entity.AdditionalName != null) ? new ItemTextStyled(entity.AdditionalName) : default,
+                Name = entity.Name.FirstOrDefault(CommonConstants.DefaultLanguage).Text,
+                NameStyle = new TextStyle()
+                {
+                    IsBold = entity.Name.IsBold,
+                    IsItalic = entity.Name.IsItalic,
+                    IsRed = entity.Name.IsRed
+                },
+                AdditionalName = entity.AdditionalName?.FirstOrDefault(CommonConstants.DefaultLanguage)?.Text,
+                AdditionalNameStyle = (entity.AdditionalName != null)
+                    ? new TextStyle()
+                    {
+                        IsBold = entity.AdditionalName.IsBold,
+                        IsItalic = entity.AdditionalName.IsItalic,
+                        IsRed = entity.AdditionalName.IsRed
+                    }
+                    : default,
                 Time = entity.Time
             });
         }

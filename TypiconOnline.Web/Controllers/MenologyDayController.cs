@@ -76,8 +76,8 @@ namespace TypiconOnline.Web.Controllers
         {
             return View(new MenologyDayEditModel()
             {
-                Name = new ItemTextStyled(new ItemText(new ItemTextUnit("cs-ru", "[Новое значение]"))),
-                ShortName = new ItemText(new ItemTextUnit("cs-ru", "[Новое значение]"))
+                //Name = new ItemTextStyled(new ItemText(new ItemTextUnit("cs-ru", "[Новое значение]"))),
+                //ShortName = new ItemText(new ItemTextUnit("cs-ru", "[Новое значение]"))
             });
         }
 
@@ -122,13 +122,12 @@ namespace TypiconOnline.Web.Controllers
 
         protected override IGridQuery<MenologyDayGridModel> GetQuery() => new AllMenologyDaysQuery(DEFAULT_LANGUAGE);
 
-        protected override Expression<Func<MenologyDayGridModel, bool>> BuildExpression(string searchValue)
-        {
-            return m => m.Name == searchValue
+        protected override Func<MenologyDayGridModel, string, bool> BuildExpression 
+            => (m, searchValue) 
+                    => m.Name == searchValue
                     || m.ShortName == searchValue
                     || m.Date == searchValue
                     || m.LeapDate == searchValue
                     || m.IsCelebrating.ToString() == searchValue;
-        }
     }
 }

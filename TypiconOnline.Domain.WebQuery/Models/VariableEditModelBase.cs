@@ -12,6 +12,7 @@ namespace TypiconOnline.Domain.WebQuery.Models
         public bool IsTemplate { get; set; }
         public string Name { get; set; }
         public VariableType Type { get; set; }
+        public string Header { get; set; }
         public string Description { get; set; }
         public int Count { get; set; }
         

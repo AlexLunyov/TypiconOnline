@@ -8,7 +8,7 @@ namespace TypiconOnline.Domain.Command.Typicon
 {
     public class EditTypiconCommand : ICommand
     {
-        public EditTypiconCommand(int id, ItemText name, ItemText description, bool isTemplate, string defaultLanguage)
+        public EditTypiconCommand(int id, string name, string description, bool isTemplate, string defaultLanguage)
         {
             Name = name;
             Description = description;
@@ -17,8 +17,8 @@ namespace TypiconOnline.Domain.Command.Typicon
             Id = id;
         }
         public int Id { get; }
-        public ItemText Name { get; }
-        public ItemText Description { get; }
+        public string Name { get; }
+        public string Description { get; }
         public bool IsTemplate { get; }
         public string DefaultLanguage { get; }
     }

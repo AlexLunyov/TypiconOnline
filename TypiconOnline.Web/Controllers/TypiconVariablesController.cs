@@ -94,6 +94,7 @@ namespace TypiconOnline.Web.Controllers
         public IActionResult EditTime(VariableEditTimeModel model)
             => Perform(() => CommandProcessor.Execute(new EditTypiconTimeVariableCommand
                                  (model.Id
+                                 , model.Header
                                  , model.Description
                                  , model.Value?.ToString() ?? string.Empty)),
                        () => RedirectToAction(nameof(Index), new { id = model.TypiconId }));
@@ -102,6 +103,7 @@ namespace TypiconOnline.Web.Controllers
         public IActionResult EditWorship(VariableEditWorshipModel model)
             => Perform(() => CommandProcessor.Execute(new EditTypiconWorshipVariableCommand
                                  (model.Id
+                                 , model.Header
                                  , model.Description
                                  , model.Value)),
                        () => RedirectToAction(nameof(Index), new { id = model.TypiconId }));

@@ -1,12 +1,12 @@
 ﻿@model PrintDayTemplateEditModel
 @{
-    ViewData["Title"] = "Редактирование печатного шаблона";
+    ViewData["Title"] = "Редактирование печатного шаблона дня";
 }
 <div class="container">
     @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewBag.TypiconId, tab = TypiconTab.EditPrintTemplate })
     <div class="row">
         <div class="col-8">
-            <h2>Редактирование печатного шаблона</h2>
+            <h2>@ViewData["Title"]</h2>
         </div>
     </div>
     <form class="row" asp-action="EditDay" method="post" enctype="multipart/form-data">
@@ -70,7 +70,7 @@
         <div class="row">
             <div class="checkbox col-sm-8">
                 <label>
-                    <input type="checkbox" asp-for="IsDefault" disabled="@(Model.IsDefault ? " disabled" : null)"/> <b>Является печатным шаблоном по умолчанию</b>
+                    <input type="checkbox" asp-for="IsDefault" disabled="@(Model.IsDefault ? " disabled" : null)" /> <b>Является печатным шаблоном по умолчанию</b>
                 </label>
             </div>
         </div>
@@ -97,4 +97,6 @@
 
 
     </script>
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

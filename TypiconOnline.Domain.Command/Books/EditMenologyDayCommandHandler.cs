@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.ItemTypes;
 using TypiconOnline.Domain.Typicon;
@@ -26,8 +27,10 @@ namespace TypiconOnline.Domain.Command.Books
                 return Result.Fail($"Объект с Id {command.Id} не найден.");
             }
 
-            found.WorshipName.ReplaceValues(command.Name);
-            found.WorshipShortName.ReplaceValues(command.ShortName);
+            //found.WorshipName.ReplaceValues(command.Name);
+            //found.WorshipShortName.ReplaceValues(command.ShortName);
+            found.WorshipName.ReplaceValues(new ItemText(new ItemTextUnit(CommonConstants.DefaultLanguage, command.Name)));
+            found.WorshipShortName.ReplaceValues(new ItemText(new ItemTextUnit(CommonConstants.DefaultLanguage, command.ShortName)));
 
             //LeapDate
             EditParent(found, command.LeapDate);

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Typicon;
@@ -36,8 +37,8 @@ namespace TypiconOnline.Domain.WebQuery.Books
                 var model = new MenologyDayEditModel()
                 {
                     Id = found.Id,
-                    Name = found.WorshipName,
-                    ShortName = found.WorshipShortName,
+                    Name = found.WorshipName.FirstOrDefault(CommonConstants.DefaultLanguage)?.Text,
+                    ShortName = found.WorshipShortName?.FirstOrDefault(CommonConstants.DefaultLanguage)?.Text,
                     IsCelebrating = found.IsCelebrating,
                     UseFullName = found.UseFullName,
                     Definition = found.Definition

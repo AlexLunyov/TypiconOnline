@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using TypiconOnline.Domain.AuthorizeKeys;
 using TypiconOnline.Domain.Identity;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Typicon;
@@ -34,11 +35,9 @@ namespace TypiconOnline.Web.Controllers
 
         protected bool IsAuthorizedToEdit(int id)
         {
-            var request = QueryProcessor.Process(new TypiconEntityQuery(id));
-
             var result = AuthorizationService.AuthorizeAsync(
-                                                       User, request,
-                                                       TypiconOperations.Edit);
+                                                       User, new TypiconEntityCanEditKey(id),
+                                                       new DefaultAuthorizationRequirement());
             return result.Result.Succeeded;
         }
 

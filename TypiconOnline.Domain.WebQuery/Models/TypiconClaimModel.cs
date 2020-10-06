@@ -9,8 +9,8 @@ namespace TypiconOnline.Domain.WebQuery.Models
     public class TypiconClaimModel
     {
         public int Id { get; set; }
-        public ItemText Name { get; set; }
-        public ItemText Description { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
         [Required(ErrorMessage = "Поле обязательно для заполнения")]
         [StringLength(20, MinimumLength = 4, ErrorMessage = "Длина поля не должна превышать 20 символов")]
         [RegularExpression(@"^[A-Za-z0-9._%+-]*$", ErrorMessage = "Поле может содержать только латинские символы")]

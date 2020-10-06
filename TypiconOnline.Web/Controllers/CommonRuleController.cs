@@ -140,11 +140,8 @@ namespace TypiconOnline.Web.Controllers
 
         #region Overrides
 
-        protected override Expression<Func<CommonRuleGridModel, bool>> BuildExpression(string searchValue)
-        {
-            return m => m.Name == searchValue;
-        }
-
+        protected override Func<CommonRuleGridModel, string, bool> BuildExpression => (m, s) => m.Name == s;
+        
         protected override IGridQuery<CommonRuleGridModel> GetQuery(int id) => new AllCommonRulesQuery(id);
 
         protected override TypiconEntityByChildQuery<CommonRule> GetTypiconEntityByChildQuery(int id) 

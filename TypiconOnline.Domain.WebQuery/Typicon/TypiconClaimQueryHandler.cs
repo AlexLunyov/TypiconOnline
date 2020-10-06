@@ -2,6 +2,7 @@
 using Mapster;
 using System;
 using System.Linq;
+using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Query.Typicon;
 using TypiconOnline.Domain.Typicon;
@@ -40,14 +41,14 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
             if (pubVersion == null)
             {
-                return Result.Fail<TypiconClaimModel>($"Отсутствует опубликованная версия Устава с Id={found.TemplateId} не найдена.");
+                return Result.Fail<TypiconClaimModel>($"Отсутствует опубликованная версия Устава с Id={found.TemplateId}.");
             }
 
             return Result.Ok(new TypiconClaimModel()
             {
                 Id = found.Id,
-                Name = found.Name,
-                Description = found.Description,
+                Name = found.Name?.FirstOrDefault(CommonConstants.DefaultLanguage)?.Text,
+                Description = found.Description?.FirstOrDefault(CommonConstants.DefaultLanguage)?.Text,
                 SystemName = found.SystemName,
                 DefaultLanguage = found.DefaultLanguage,
                 Template = pubVersion.Name.FirstOrDefault(DefaultLanguage)?.Text

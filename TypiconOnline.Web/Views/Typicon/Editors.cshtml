@@ -1,13 +1,13 @@
 ﻿@model TypiconEntityEditModel
 @{
-    ViewData["Title"] = "Редактирование Устава";
+    ViewData["Title"] = "Редакторы Устава";
 }
 
     <div class="container">
         @await Component.InvokeAsync("TypiconTab", new { typiconId = ViewContext.RouteData.Values["id"], tab = TypiconTab.Editors })
         <div class="row">
             <div class="col-md-8">
-                <h2>Редакторы</h2>
+                <h2>@ViewData["Title"]</h2>
             </div>
         </div>
         <div class="row">

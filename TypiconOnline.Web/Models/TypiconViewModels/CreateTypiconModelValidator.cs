@@ -27,24 +27,15 @@ namespace TypiconOnline.Web.Models.TypiconViewModels
             var errors = new List<ValidationResult>();
 
             //Name
-            if (model.Name == null
-                || !model.Name.Languages.Contains(DefaultLanguage))
+            if (string.IsNullOrEmpty(model.Name))
             {
-                errors.Add(new ValidationResult($"Наименование должно быть определено на языке \"{DefaultLanguage}\"", new List<string>() { "Name" }));
-            }
-            if (model.Name?.IsValid == false)
-            {
-                errors.Add(new ValidationResult($"Наименование заполнено с неверным определением языка", new List<string>() { "Name" }));
+                errors.Add(new ValidationResult($"Наименование обязательно для заполнения", new List<string>() { nameof(model.Name) }));
             }
 
-            if (model.Description == null
-                || !model.Description.Languages.Contains(DefaultLanguage))
+            //Description
+            if (string.IsNullOrEmpty(model.Description))
             {
-                errors.Add(new ValidationResult($"Описание должно быть определено на языке \"{DefaultLanguage}\"", new List<string>() { "Description" }));
-            }
-            if (model.Description?.IsValid == false)
-            {
-                errors.Add(new ValidationResult($"Описание заполнено с неверным определением языка", new List<string>() { "Description" }));
+                errors.Add(new ValidationResult($"Описание обязательно для заполнения", new List<string>() { nameof(model.Description) }));
             }
 
             if (!string.IsNullOrEmpty(model.SystemName))

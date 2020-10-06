@@ -356,6 +356,7 @@ namespace TypiconOnline.Domain.Extensions
                 {
                     Name = c.Name,
                     Type = c.Type,
+                    Header = c.Header,
                     Description = c.Description,
                     TypiconVersion = version,
                     Value = c.Value

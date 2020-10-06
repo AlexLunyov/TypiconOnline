@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Days;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Typicon;
@@ -34,8 +35,8 @@ namespace TypiconOnline.Domain.WebQuery.Books
                 {
                     Id = found.Id,
                     DaysFromEaster = (found.Parent as TriodionDay).DaysFromEaster,
-                    Name = found.WorshipName,
-                    ShortName = found.WorshipShortName,
+                    Name = found.WorshipName.FirstOrDefault(CommonConstants.DefaultLanguage)?.Text,
+                    ShortName = found.WorshipShortName?.FirstOrDefault(CommonConstants.DefaultLanguage)?.Text,
                     IsCelebrating = found.IsCelebrating,
                     UseFullName = found.UseFullName,
                     Definition = found.Definition
