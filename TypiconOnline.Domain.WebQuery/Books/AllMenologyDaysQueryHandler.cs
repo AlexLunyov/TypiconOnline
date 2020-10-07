@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.WebQuery.Books
 
         public Result<IQueryable<MenologyDayGridModel>> Handle([NotNull] AllMenologyDaysQuery query)
         {
-            var result = _webDbContext.MenologyDays;
+            var result = _webDbContext.MenologyDayModels;
 
             return Result.Ok(result.AsQueryable());
         }

@@ -27,16 +27,10 @@ namespace TypiconOnline.Domain.WebQuery.Books
         /// <param name="searchValue"></param>
         /// <returns></returns>
         public Expression<Func<OktoikhDayGridModel, bool>>[] Search(string searchValue)
-        {
-            var s = $"%{searchValue}%";
-
-            var list = new Expression<Func<OktoikhDayGridModel, bool>>[]
+            => new Expression<Func<OktoikhDayGridModel, bool>>[]
             {
                 m => EF.Functions.Like(m.Ihos.ToString(), searchValue),
                 m => EF.Functions.Like(m.DayOfWeek, searchValue),
             };
-
-            return list;
-        }
     }
 }

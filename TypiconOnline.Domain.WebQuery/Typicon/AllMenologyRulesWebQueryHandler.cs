@@ -40,7 +40,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 return Result.Fail<IQueryable<MenologyRuleGridModel>>($"Черновик для Устава с Id={query.TypiconId} не был найден.");
             }
 
-            var result = _webDbContext.MenologyRules
+            var result = _webDbContext.MenologyRuleModels
                 .Where(c => c.TypiconVersionId == draft.Id);
 
             return Result.Ok(result);

@@ -40,7 +40,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
                 return Result.Fail<IQueryable<TriodionRuleGridModel>>($"Черновик для Устава с Id={query.TypiconId} не был найден.");
             }
 
-            var result = _webDbContext.TriodionRules
+            var result = _webDbContext.TriodionRuleModels
                 .Where(c => c.TypiconVersionId == draft.Id);
 
             return Result.Ok(result);

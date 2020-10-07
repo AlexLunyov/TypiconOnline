@@ -27,17 +27,11 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         /// <param name="searchValue"></param>
         /// <returns></returns>
         public Expression<Func<TypiconVariableModel, bool>>[] Search(string searchValue)
-        {
-            var s = $"%{searchValue}%";
-
-            var list = new Expression<Func<TypiconVariableModel, bool>>[]
+            => new Expression<Func<TypiconVariableModel, bool>>[]
             {
                 m => EF.Functions.Like(m.Name, searchValue),
                 m => EF.Functions.Like(m.Type.ToString(), searchValue),
                 m => EF.Functions.Like(m.Count.ToString(), searchValue)
             };
-
-            return list;
-        }
     }
 }

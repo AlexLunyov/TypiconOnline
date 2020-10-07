@@ -28,18 +28,12 @@ namespace TypiconOnline.Domain.WebQuery.Books
         /// <param name="searchValue"></param>
         /// <returns></returns>
         public Expression<Func<TriodionDayGridModel, bool>>[] Search(string searchValue)
-        {
-            var s = $"%{searchValue}%";
-
-            var list = new Expression<Func<TriodionDayGridModel, bool>>[]
+            => new Expression<Func<TriodionDayGridModel, bool>>[]
             {
                 m => EF.Functions.Like(m.Name, searchValue),
                 m => EF.Functions.Like(m.ShortName, searchValue),
                 m => EF.Functions.Like(m.DaysFromEaster.ToString(), searchValue),
                 m => EF.Functions.Like(m.IsCelebrating.ToString(), searchValue)
             };
-
-            return list;
-        }
     }
 }

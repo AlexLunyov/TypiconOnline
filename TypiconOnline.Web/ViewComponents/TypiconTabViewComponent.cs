@@ -44,7 +44,8 @@ namespace TypiconOnline.Web.ViewComponents
                         EmptyPrintTemplatesCount = draft.Value
                             .PrintDayTemplates
                             .Count(c => c.PrintFile == null || c.PrintFile.Length == 0),
-                        ScheduleSettingsExist = draft.Value.ScheduleSettings != null
+                        ScheduleSettingsExist = draft.Value.ScheduleSettings != null,
+                        IsModified = draft.Value.IsModified
                     });
                 }
             }

@@ -15,6 +15,8 @@ namespace TypiconOnline.Web.Models.TypiconViewModels
         public bool UserIsAuthor { get; set; }
         public bool IsTemplate { get; set; }
         public bool ScheduleSettingsExist { get; set; }
+
+        public bool IsModified { get; set; }
     }
 
     public enum TypiconTab

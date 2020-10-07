@@ -27,15 +27,9 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         /// <param name="searchValue"></param>
         /// <returns></returns>
         public Expression<Func<ExplicitAddRuleGridModel, bool>>[] Search(string searchValue)
-        {
-            var s = $"%{searchValue}%";
-
-            var list = new Expression<Func<ExplicitAddRuleGridModel, bool>>[]
+            => new Expression<Func<ExplicitAddRuleGridModel, bool>>[]
             {
                 m => EF.Functions.Like(m.Date, searchValue)
             };
-
-            return list;
-        }
     }
 }

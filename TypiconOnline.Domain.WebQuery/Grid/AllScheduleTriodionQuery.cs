@@ -11,7 +11,7 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
 
-namespace TypiconOnline.Domain.WebQuery.Typicon
+namespace TypiconOnline.Domain.WebQuery.Grid
 {
     public class AllScheduleTriodionQuery : IGridQuery<TriodionRuleGridModel>, IHasAuthorizedAccess
     {
@@ -32,17 +32,11 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         /// <param name="searchValue"></param>
         /// <returns></returns>
         public Expression<Func<TriodionRuleGridModel, bool>>[] Search(string searchValue)
-        {
-            var s = $"%{searchValue}%";
-
-            var list = new Expression<Func<TriodionRuleGridModel, bool>>[]
+            => new Expression<Func<TriodionRuleGridModel, bool>>[]
             {
                 m => EF.Functions.Like(m.Name, searchValue),
                 m => EF.Functions.Like(m.DaysFromEaster.ToString(), searchValue),
                 m => EF.Functions.Like(m.TemplateName, searchValue)
             };
-
-            return list;
-        }
     }
 }

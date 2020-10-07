@@ -35,6 +35,10 @@ namespace TypiconOnline.Repository.EFCore.DataBase
             //Database.EnsureCreated();
         }
 
+        protected TypiconDBContext(DbContextOptions options) : base(options)
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //Включаем ленивую загрузку всех связанных свойств

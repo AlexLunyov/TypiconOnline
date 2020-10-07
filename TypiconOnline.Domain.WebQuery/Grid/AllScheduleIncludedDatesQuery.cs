@@ -12,7 +12,7 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
 
-namespace TypiconOnline.Domain.WebQuery.Typicon
+namespace TypiconOnline.Domain.WebQuery.Grid
 {
     public class AllScheduleIncludedDatesQuery : IGridQuery<DateGridItem>, IHasAuthorizedAccess
     {
@@ -33,15 +33,9 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         /// <param name="searchValue"></param>
         /// <returns></returns>
         public Expression<Func<DateGridItem, bool>>[] Search(string searchValue)
-        {
-            var s = $"%{searchValue}%";
-
-            var list = new Expression<Func<DateGridItem, bool>>[]
+            => new Expression<Func<DateGridItem, bool>>[]
             {
                 m => EF.Functions.Like(m.Date.ToString(CommonConstants.DateFormat), searchValue)
             };
-
-            return list;
-        }
     }
 }

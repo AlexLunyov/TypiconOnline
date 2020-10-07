@@ -80,7 +80,7 @@ namespace TypiconOnline.Web.Services
                 //Search
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    signData = signData.WhereAny(query.Search(searchValue));
+                    signData = signData.WhereAny(query.Search($"%{searchValue}%"));
                 }
 
                 //Paging 
@@ -117,16 +117,8 @@ namespace TypiconOnline.Web.Services
                     if (StoreToSession)
                     {
                         //если сохраняем в сессию
-                        
                         Controller.HttpContext.Session.Set(query.GetCacheKey(), col);
-
-                        Result.Ok(col.AsQueryable());
                     }
-
-                    //иначе выдаем чистый результат
-
-                    Result.Ok(col.AsQueryable());
-                    //return Result.Ok(request.Value);
                 }
 
                 return request;

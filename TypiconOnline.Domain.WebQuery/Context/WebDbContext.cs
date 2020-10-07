@@ -3,27 +3,30 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TypiconOnline.Domain.WebQuery.Models;
+using TypiconOnline.Repository.EFCore.DataBase;
 
 namespace TypiconOnline.Domain.WebQuery.Context
 {
     /// <summary>
     /// Контекст для исполнения веб-азпросов
     /// </summary>
-    public class WebDbContext: DbContext
+    public class WebDbContext: TypiconDBContext
     {
         public WebDbContext(DbContextOptions<WebDbContext> options) : base(options)
         {
             //Database.EnsureCreated();
         }
 
-        public DbSet<MenologyRuleGridModel> MenologyRules { get; set; }
-        public DbSet<TriodionRuleGridModel> TriodionRules { get; set; }
-        public DbSet<MenologyDayGridModel> MenologyDays { get; set; }
-        public DbSet<TriodionDayGridModel> TriodionDays { get; set; }
+        public DbSet<MenologyRuleGridModel> MenologyRuleModels { get; set; }
+        public DbSet<TriodionRuleGridModel> TriodionRuleModels { get; set; }
+        public DbSet<MenologyDayGridModel> MenologyDayModels { get; set; }
+        public DbSet<TriodionDayGridModel> TriodionDayModels { get; set; }
         public DbSet<SignGridModel> Signs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<MenologyRuleGridModel>((pc =>
             {
                 pc.HasNoKey();

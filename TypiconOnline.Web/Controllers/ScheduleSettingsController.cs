@@ -12,6 +12,7 @@ using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Domain.Command.Typicon;
 using TypiconOnline.Web.Services;
+using TypiconOnline.Domain.WebQuery.Grid;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -38,13 +39,13 @@ namespace TypiconOnline.Web.Controllers
                 , commandProcessor
                 , this
                 //храним в сессии
-                , storeToSession: true );
+                , storeToSession: false );
 
             triodionStore = new GridStore<TriodionRuleGridModel>(queryProcessor
                 , commandProcessor
                 , this
                 //храним в сессии
-                , storeToSession: true);
+                , storeToSession: false);
 
             includedStore = new GridStore<DateGridItem>(queryProcessor
                 , commandProcessor

@@ -14,7 +14,7 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Repository.EFCore.DataBase;
 
-namespace TypiconOnline.Domain.WebQuery.Typicon
+namespace TypiconOnline.Domain.WebQuery.Grid
 {
     /// <summary>
     /// Возвращает все Знаки служб у черновика Сущности Устава
@@ -36,18 +36,6 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
             if (settings != null)
             {
-                //var result = settings.Signs.Select(c => c.Sign)
-                //    .Select(c => new SignGridModel()
-                //    {
-                //        Id = c.Id,
-                //        IsAddition = c.IsAddition,
-                //        Name = c.SignName.Items.Single(d => d.Language == CommonConstants.DefaultLanguage).Text,
-                //        Number = (c.PrintTemplate != null) ? c.PrintTemplate.Number : default,
-                //        Priority = c.Priority,
-                //        TemplateName = (c.Template != null) ? c.Template.SignName.Items.Single(d => d.Language == CommonConstants.DefaultLanguage).Text : string.Empty
-                //    })
-                //    .AsQueryable();
-
                 var s = from sign in DbContext.Set<Sign>()
                         join schedule in DbContext.Set<ModRuleEntitySchedule<Sign>>()
                             on sign.Id equals schedule.RuleId

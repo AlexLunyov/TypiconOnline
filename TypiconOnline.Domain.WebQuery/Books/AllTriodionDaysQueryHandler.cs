@@ -30,7 +30,7 @@ namespace TypiconOnline.Domain.WebQuery.Books
 
         public Result<IQueryable<TriodionDayGridModel>> Handle([NotNull] AllTriodionDaysQuery query)
         {
-            var result = _webDbContext.TriodionDays;
+            var result = _webDbContext.TriodionDayModels;
 
             return Result.Ok(result.AsQueryable());
         }

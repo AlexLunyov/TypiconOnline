@@ -29,18 +29,12 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         /// <param name="searchValue"></param>
         /// <returns></returns>
         public Expression<Func<MenologyRuleGridModel, bool>>[] Search(string searchValue)
-        {
-            var s = $"%{searchValue}%";
-
-            var list = new Expression<Func<MenologyRuleGridModel, bool>>[]
+            => new Expression<Func<MenologyRuleGridModel, bool>>[]
             {
                 m => EF.Functions.Like(m.Name, searchValue),
                 m => EF.Functions.Like(m.TemplateName, searchValue),
                 m => EF.Functions.Like(m.Date, searchValue),
                 m => EF.Functions.Like(m.LeapDate, searchValue)
             };
-
-            return list;
-        }
     }
 }

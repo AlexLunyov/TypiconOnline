@@ -175,7 +175,7 @@ $(document).on("click", ".edit-worship", function () {
 
 function ClearForm() {
     $("#wTime").val("");
-    $("#wMode").val("");
+    $("#wMode").val("0");
 
     SetNameData("#wName", null);
     SetNameData("#wAddName", null);

@@ -84,7 +84,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <h1>Редактирование Устава - @Model.Name</h1>
+            <h1>Устав - @Model.Name</h1>
         </div>
     </div>
     <div class="row">
@@ -105,9 +105,35 @@
             {
                 <li><a asp-controller="ScheduleSettings" asp-action="Index" asp-route-id="@Model.TypiconId">График богослужений</a></li>
             }
+            @if (Model.Tab == TypiconTab.Variables)
+            {
+                <li class="active">
+                    <a href="#">
+                        Переменные
+                        @if (!Model.IsTemplate && Model.VariablesCount > 0)
+                        {
+                            <span id="varCountSpan" class="label label-danger"
+                                  title="Количество переменных без определения">@Model.VariablesCount</span>
+                            }
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a asp-controller="TypiconVariables" asp-action="Index" asp-route-id="@Model.TypiconId">
+                        Переменные
+                        @if (!Model.IsTemplate && Model.VariablesCount > 0)
+                        {
+                            <span id="varCountSpan" class="label label-danger"
+                                  title="Количество переменных без определения">@Model.VariablesCount</span>
+                            }
+                    </a>
+                </li>
+            }
             @if (Model.Tab == TypiconTab.Operations)
             {
-                <li class="active"><a href="#">Операции</a></li>
+                <li class="active"><a href="#">Операции @((!Model.IsModified) ? "<span id=\"varCountSpan\" class=\"label label-warning\" title=\"Есть неопубликованные изменения в Уставе\">*</span>" : "")</a></li>
             }
             else
             {
@@ -150,35 +176,9 @@
                     </a>
                 </li>
             }
-            @if (Model.Tab == TypiconTab.Variables)
-            {
-                <li class="active">
-                    <a href="#">
-                        Переменные
-                        @if (!Model.IsTemplate && Model.VariablesCount > 0)
-                        {
-                            <span id="varCountSpan" class="label label-danger"
-                                  title="Количество переменных без определения">@Model.VariablesCount</span>
-                            }
-                    </a>
-                </li>
-            }
-            else
-            {
-                <li>
-                    <a asp-controller="TypiconVariables" asp-action="Index" asp-route-id="@Model.TypiconId">
-                        Переменные
-                        @if (!Model.IsTemplate && Model.VariablesCount > 0)
-                        {
-                            <span id="varCountSpan" class="label label-danger"
-                                  title="Количество переменных без определения">@Model.VariablesCount</span>
-                            }
-                    </a>
-                </li>
-            }
             <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                    Редактирование Правил
+                    Правила
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
@@ -223,13 +223,13 @@
                         <li><a asp-controller="ExplicitAddRule" asp-action="Index" asp-route-id="@Model.TypiconId">Явные</a></li>
                     }
                     @*@if (Model.Tab == TypiconTab.Kathizma)
-                    {
-                        <li class="active"><a href="#">Кафизмы</a></li>
-                    }
-                    else
-                    {
-                        <li><a asp-controller="Kathisma" asp-action="Index" asp-route-id="@Model.TypiconId">Кафизмы</a></li>
-                    }*@
+                {
+                    <li class="active"><a href="#">Кафизмы</a></li>
+                }
+                else
+                {
+                    <li><a asp-controller="Kathisma" asp-action="Index" asp-route-id="@Model.TypiconId">Кафизмы</a></li>
+                }*@
                 </ul>
             </li>
         </ul>

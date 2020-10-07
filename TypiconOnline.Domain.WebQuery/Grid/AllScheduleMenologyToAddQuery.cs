@@ -11,22 +11,24 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
 
-namespace TypiconOnline.Domain.WebQuery.Typicon
+namespace TypiconOnline.Domain.WebQuery.Grid
 {
-    public class AllScheduleMenologyQuery : IGridQuery<MenologyRuleGridModel>, IHasAuthorizedAccess
+    public class AllScheduleMenologyToAddQuery : IGridQuery<MenologyRuleGridModel>, IHasAuthorizedAccess
     {
-        public AllScheduleMenologyQuery(int typiconId)
+        public AllScheduleMenologyToAddQuery(int typiconId, DateTime? date)
         {
             TypiconId = typiconId;
+            Date = date;
             Key = new TypiconEntityCanEditKey(TypiconId);
         }
         public int TypiconId { get; }
+        public DateTime? Date { get; }
 
         public IAuthorizeKey Key { get; }
 
         //public string Search { get; set; }
 
-        public string GetCacheKey() => $"{nameof(AllScheduleMenologyQuery)}.{TypiconId}";
+        public string GetCacheKey() => $"{nameof(AllScheduleMenologyToAddQuery)}.{TypiconId}";
 
         /// <summary>
         /// Реализация поиска по модели в гриде
@@ -34,18 +36,12 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         /// <param name="searchValue"></param>
         /// <returns></returns>
         public Expression<Func<MenologyRuleGridModel, bool>>[] Search(string searchValue)
-        {
-            var s = $"%{searchValue}%";
-
-            var list = new Expression<Func<MenologyRuleGridModel, bool>>[]
+            => new Expression<Func<MenologyRuleGridModel, bool>>[]
             {
                 m => EF.Functions.Like(m.Name, searchValue),
                 m => EF.Functions.Like(m.TemplateName, searchValue),
                 m => EF.Functions.Like(m.Date, searchValue),
                 m => EF.Functions.Like(m.LeapDate, searchValue)
             };
-
-            return list;
-        }
     }
 }

@@ -27,10 +27,7 @@ namespace TypiconOnline.Domain.WebQuery.Books
         /// <param name="searchValue"></param>
         /// <returns></returns>
         public Expression<Func<MenologyDayGridModel, bool>>[] Search(string searchValue)
-        {
-            var s = $"%{searchValue}%";
-
-            var list = new Expression<Func<MenologyDayGridModel, bool>>[]
+            => new Expression<Func<MenologyDayGridModel, bool>>[]
             {
                 m => EF.Functions.Like(m.Name, searchValue),
                 m => EF.Functions.Like(m.ShortName, searchValue),
@@ -38,8 +35,5 @@ namespace TypiconOnline.Domain.WebQuery.Books
                 m => EF.Functions.Like(m.LeapDate, searchValue),
                 m => EF.Functions.Like(m.IsCelebrating.ToString(), searchValue)
             };
-
-            return list;
-        }
     }
 }

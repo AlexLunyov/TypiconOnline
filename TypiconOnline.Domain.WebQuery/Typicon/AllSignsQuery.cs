@@ -38,18 +38,12 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         /// <param name="searchValue"></param>
         /// <returns></returns>
         public Expression<Func<SignGridModel, bool>>[] Search(string searchValue)
-        {
-            var s = $"%{searchValue}%";
-
-            var list = new Expression<Func<SignGridModel, bool>>[]
+            => new Expression<Func<SignGridModel, bool>>[]
             {
                 m => EF.Functions.Like(m.Name, searchValue),
                 m => EF.Functions.Like(m.Number.ToString(), searchValue),
                 m => EF.Functions.Like(m.Priority.ToString(), searchValue),
                 m => EF.Functions.Like(m.TemplateName, searchValue)
             };
-
-            return list;
-        }
     }
 }

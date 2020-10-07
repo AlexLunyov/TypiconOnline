@@ -1,10 +1,15 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using TypiconOnline.Domain.WebQuery.Books;
+using TypiconOnline.Domain.WebQuery.Models;
+using TypiconOnline.Domain.WebQuery.Typicon;
 using TypiconOnline.Tests.Common;
+using TypiconOnline.Web.Extensions;
 
 namespace TypiconOnline.WebQuery.Tests.Typicon
 {
@@ -27,7 +32,7 @@ namespace TypiconOnline.WebQuery.Tests.Typicon
         {
             var dbContext = WebDbContextFactory.Create();
 
-            var result = dbContext.MenologyRules.ToList();
+            var result = dbContext.MenologyRuleModels.ToList();
 
             Assert.IsTrue(result.Count > 0);
         }
@@ -37,7 +42,7 @@ namespace TypiconOnline.WebQuery.Tests.Typicon
         {
             var dbContext = WebDbContextFactory.Create();
 
-            var result = dbContext.TriodionRules.ToList();
+            var result = dbContext.TriodionRuleModels.ToList();
 
             Assert.IsTrue(result.Count > 0);
         }
@@ -47,7 +52,7 @@ namespace TypiconOnline.WebQuery.Tests.Typicon
         {
             var dbContext = WebDbContextFactory.Create();
 
-            var result = dbContext.MenologyDays.ToList();
+            var result = dbContext.MenologyDayModels.ToList();
 
             Assert.IsTrue(result.Count > 0);
         }
@@ -57,9 +62,29 @@ namespace TypiconOnline.WebQuery.Tests.Typicon
         {
             var dbContext = WebDbContextFactory.Create();
 
-            var result = dbContext.TriodionDays.ToList();
+            var result = dbContext.TriodionDayModels.ToList();
 
             Assert.IsTrue(result.Count > 0);
+        }
+
+        [Test]
+        public void WebDbContext_Like_Test()
+        {
+            var dbContext = WebDbContextFactory.Create();
+
+            var searchValue = "%С%";
+
+            //var filters = new Expression<Func<MenologyRuleGridModel, bool>>[]
+            //{
+            //    m => EF.Functions.Like(m.Name, searchValue),
+            //    m => EF.Functions.Like(m.DaysFromEaster, searchValue),
+            //};
+
+            var query = new AllMenologyRulesWebQuery(1, "");
+
+            var result = dbContext.MenologyRuleModels.WhereAny(query.Search(searchValue));
+
+            Assert.IsTrue(result.Count() > 0);
         }
     }
 }

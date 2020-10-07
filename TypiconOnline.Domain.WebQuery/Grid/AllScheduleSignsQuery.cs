@@ -11,11 +11,11 @@ using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
 
-namespace TypiconOnline.Domain.WebQuery.Typicon
+namespace TypiconOnline.Domain.WebQuery.Grid
 {
-    public class AllScheduleSignsToLoadQuery : IGridQuery<SignGridModel>, IHasAuthorizedAccess
+    public class AllScheduleSignsQuery : IGridQuery<SignGridModel>, IHasAuthorizedAccess
     {
-        public AllScheduleSignsToLoadQuery(int typiconId)
+        public AllScheduleSignsQuery(int typiconId)
         {
             TypiconId = typiconId;
             Key = new TypiconEntityCanEditKey(TypiconId);
@@ -26,7 +26,7 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
         //public string Search { get; set; }
 
-        public string GetCacheKey() => $"{nameof(AllScheduleSignsToLoadQuery)}.{TypiconId}";
+        public string GetCacheKey() => $"{nameof(AllScheduleSignsQuery)}.{TypiconId}";
 
         /// <summary>
         /// Реализация поиска по модели в гриде
@@ -34,18 +34,12 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         /// <param name="searchValue"></param>
         /// <returns></returns>
         public Expression<Func<SignGridModel, bool>>[] Search(string searchValue)
-        {
-            var s = $"%{searchValue}%";
-
-            var list = new Expression<Func<SignGridModel, bool>>[]
+            => new Expression<Func<SignGridModel, bool>>[]
             {
                 m => EF.Functions.Like(m.Name, searchValue),
                 m => EF.Functions.Like(m.Number.ToString(), searchValue),
                 m => EF.Functions.Like(m.Priority.ToString(), searchValue),
                 m => EF.Functions.Like(m.TemplateName, searchValue)
             };
-
-            return list;
-        }
     }
 }

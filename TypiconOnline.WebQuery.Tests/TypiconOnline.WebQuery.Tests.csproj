@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TypiconOnline.Tests.Common\TypiconOnline.Tests.Common.csproj" />
+    <ProjectReference Include="..\TypiconOnline.Web\TypiconOnline.Web.csproj" />
   </ItemGroup>
 
 </Project>

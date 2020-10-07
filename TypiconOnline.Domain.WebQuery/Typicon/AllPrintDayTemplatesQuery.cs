@@ -30,16 +30,10 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         /// <param name="searchValue"></param>
         /// <returns></returns>
         public Expression<Func<PrintDayTemplateGridModel, bool>>[] Search(string searchValue)
-        {
-            var s = $"%{searchValue}%";
-
-            var list = new Expression<Func<PrintDayTemplateGridModel, bool>>[]
+            => new Expression<Func<PrintDayTemplateGridModel, bool>>[]
             {
                 m => EF.Functions.Like(m.Name, searchValue),
                 m => EF.Functions.Like(m.Number.ToString(), searchValue)
             };
-
-            return list;
-        }
     }
 }

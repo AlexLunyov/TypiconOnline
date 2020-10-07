@@ -9,19 +9,20 @@ using TypiconOnline.Domain.Common;
 using TypiconOnline.Domain.Identity;
 using TypiconOnline.Domain.Query;
 using TypiconOnline.Domain.Typicon;
+using TypiconOnline.Domain.WebQuery.Context;
 using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
 using TypiconOnline.Repository.EFCore.DataBase;
 
-namespace TypiconOnline.Domain.WebQuery.Typicon
+namespace TypiconOnline.Domain.WebQuery.Grid
 {
     /// <summary>
     /// 
     /// </summary>
-    public class AllScheduleMenologyQueryHandler : DbContextQueryBase, IQueryHandler<AllScheduleMenologyQuery, Result<IQueryable<MenologyRuleGridModel>>>
+    public class AllScheduleMenologyQueryHandler : WebDbContextQueryBase, IQueryHandler<AllScheduleMenologyQuery, Result<IQueryable<MenologyRuleGridModel>>>
     {
-        public AllScheduleMenologyQueryHandler(TypiconDBContext dbContext) : base(dbContext)
+        public AllScheduleMenologyQueryHandler(WebDbContext dbContext) : base(dbContext)
         {
             
         }
@@ -36,36 +37,36 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
             if (settings != null)
             {
-                var s = from c in DbContext.Set<MenologyRule>()
+                var models = from c in DbContext.MenologyRuleModels
                         join schedule in DbContext.Set<ModRuleEntitySchedule<MenologyRule>>()
                             on c.Id equals schedule.RuleId
                         where schedule.ScheduleSettingsId == settings.Id
                         select c;
 
-                s = s
-                .Include(c => c.DayRuleWorships)
-                    .ThenInclude(c => c.DayWorship)
-                        .ThenInclude(c => c.WorshipName)
-                            .ThenInclude(c => c.Items)
-                .Include(c => c.DayRuleWorships)
-                    .ThenInclude(c => c.DayWorship)
-                        .ThenInclude(c => c.WorshipShortName)
-                            .ThenInclude(c => c.Items)
-                .Include(c => c.Template)
-                    .ThenInclude(c => c.SignName)
-                        .ThenInclude(c => c.Items);
+                //s = s
+                //.Include(c => c.DayRuleWorships)
+                //    .ThenInclude(c => c.DayWorship)
+                //        .ThenInclude(c => c.WorshipName)
+                //            .ThenInclude(c => c.Items)
+                //.Include(c => c.DayRuleWorships)
+                //    .ThenInclude(c => c.DayWorship)
+                //        .ThenInclude(c => c.WorshipShortName)
+                //            .ThenInclude(c => c.Items)
+                //.Include(c => c.Template)
+                //    .ThenInclude(c => c.SignName)
+                //        .ThenInclude(c => c.Items);
 
-                var models = s.Select(c => new MenologyRuleGridModel()
-                {
-                    Id = c.Id,
-                    IsAddition = c.IsAddition,
-                    Name = c.GetNameByLanguage(CommonConstants.DefaultLanguage),
-                    Date = (!c.Date.IsEmpty) ? c.Date.ToString() : string.Empty,
-                    LeapDate = (!c.LeapDate.IsEmpty) ? c.LeapDate.ToString() : string.Empty,
-                    HasModRuleDefinition = !string.IsNullOrEmpty(c.ModRuleDefinition),
-                    HasRuleDefinition = !string.IsNullOrEmpty(c.RuleDefinition),
-                    TemplateName = c.Template.GetNameByLanguage(CommonConstants.DefaultLanguage)
-                });
+                //var models = s.Select(c => new MenologyRuleGridModel()
+                //{
+                //    Id = c.Id,
+                //    IsAddition = c.IsAddition,
+                //    Name = c.Name,
+                //    Date = c.Date.ToString() : string.Empty,
+                //    LeapDate = (!c.LeapDate.IsEmpty) ? c.LeapDate.ToString() : string.Empty,
+                //    HasModRuleDefinition = !string.IsNullOrEmpty(c.ModRuleDefinition),
+                //    HasRuleDefinition = !string.IsNullOrEmpty(c.RuleDefinition),
+                //    TemplateName = c.Template.GetNameByLanguage(CommonConstants.DefaultLanguage)
+                //});
 
                 return Result.Ok(models);
             }
