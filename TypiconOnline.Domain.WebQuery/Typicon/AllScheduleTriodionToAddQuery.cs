@@ -8,6 +8,8 @@ using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Interfaces;
 using TypiconOnline.Infrastructure.Common.Query;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
@@ -24,8 +26,25 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 
         public IAuthorizeKey Key { get; }
 
-        //public string Search { get; set; }
+        public string GetCacheKey() => $"{nameof(AllScheduleTriodionToAddQuery)}.{TypiconId}.{DaysFormEaster}";
 
-        public string GetKey() => $"{nameof(AllScheduleTriodionToAddQuery)}.{TypiconId}.{DaysFormEaster}";
+        /// <summary>
+        /// Реализация поиска по модели в гриде
+        /// </summary>
+        /// <param name="searchValue"></param>
+        /// <returns></returns>
+        public Expression<Func<TriodionRuleGridModel, bool>>[] Search(string searchValue)
+        {
+            var s = $"%{searchValue}%";
+
+            var list = new Expression<Func<TriodionRuleGridModel, bool>>[]
+            {
+                m => EF.Functions.Like(m.Name, searchValue),
+                m => EF.Functions.Like(m.DaysFromEaster.ToString(), searchValue),
+                m => EF.Functions.Like(m.TemplateName, searchValue)
+            };
+
+            return list;
+        }
     }
 }

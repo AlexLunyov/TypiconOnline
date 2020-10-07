@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using TypiconOnline.Domain.WebQuery.Interfaces;
 using TypiconOnline.Domain.WebQuery.Models;
@@ -19,6 +21,26 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         public int TypiconId { get; }
         public string Language { get; }
 
-        public string GetKey() => $"{nameof(AllMenologyRulesWebQuery)}.{TypiconId}.{Language}";
+        public string GetCacheKey() => $"{nameof(AllMenologyRulesWebQuery)}.{TypiconId}.{Language}";
+
+        /// <summary>
+        /// Реализация поиска по модели в гриде
+        /// </summary>
+        /// <param name="searchValue"></param>
+        /// <returns></returns>
+        public Expression<Func<MenologyRuleGridModel, bool>>[] Search(string searchValue)
+        {
+            var s = $"%{searchValue}%";
+
+            var list = new Expression<Func<MenologyRuleGridModel, bool>>[]
+            {
+                m => EF.Functions.Like(m.Name, searchValue),
+                m => EF.Functions.Like(m.TemplateName, searchValue),
+                m => EF.Functions.Like(m.Date, searchValue),
+                m => EF.Functions.Like(m.LeapDate, searchValue)
+            };
+
+            return list;
+        }
     }
 }

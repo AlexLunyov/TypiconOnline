@@ -178,13 +178,6 @@ namespace TypiconOnline.Web.Controllers
         }
 
         #region Overrides
-
-        protected override Func<TriodionRuleGridModel, string, bool> BuildExpression
-            => (m, searchValue) 
-                => m.Name == searchValue
-                || m.TemplateName == searchValue
-                || m.DaysFromEaster.ToString() == searchValue;
-
         protected override IGridQuery<TriodionRuleGridModel> GetQuery(int id) => new AllTriodionRulesWebQuery(id, DEFAULT_LANGUAGE);
 
         protected override TypiconEntityByChildQuery<TriodionRule> GetTypiconEntityByChildQuery(int id)

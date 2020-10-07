@@ -112,11 +112,6 @@ namespace TypiconOnline.Web.Controllers
         }
 
         #region Overrides
-
-        protected override Func<SignGridModel, string, bool> BuildExpression
-            => (m, searchValue)
-                => m.Name == searchValue || m.TemplateName == searchValue;
-
         protected override IGridQuery<SignGridModel> GetQuery(int id) => new AllSignsQuery(id, DEFAULT_LANGUAGE);
 
         protected override TypiconEntityByChildQuery<Sign> GetTypiconEntityByChildQuery(int id) 

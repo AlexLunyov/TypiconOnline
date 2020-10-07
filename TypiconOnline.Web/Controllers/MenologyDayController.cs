@@ -121,13 +121,5 @@ namespace TypiconOnline.Web.Controllers
         }
 
         protected override IGridQuery<MenologyDayGridModel> GetQuery() => new AllMenologyDaysQuery(DEFAULT_LANGUAGE);
-
-        protected override Func<MenologyDayGridModel, string, bool> BuildExpression 
-            => (m, searchValue) 
-                    => m.Name == searchValue
-                    || m.ShortName == searchValue
-                    || m.Date == searchValue
-                    || m.LeapDate == searchValue
-                    || m.IsCelebrating.ToString() == searchValue;
     }
 }

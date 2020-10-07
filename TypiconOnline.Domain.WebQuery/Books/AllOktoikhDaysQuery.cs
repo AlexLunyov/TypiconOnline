@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using TypiconOnline.Domain.WebQuery.Interfaces;
 using TypiconOnline.Domain.WebQuery.Models;
@@ -17,9 +19,24 @@ namespace TypiconOnline.Domain.WebQuery.Books
         }
         //public string Language { get; }
 
-        //public string Search { get; set; }
+        public string GetCacheKey() => nameof(AllOktoikhDaysQuery);
 
-        public string GetKey() => nameof(AllOktoikhDaysQuery);
-        //public string GetKey() => $"{nameof(AllOktoikhDaysQuery)}.{Language}";
+        /// <summary>
+        /// Реализация поиска по модели в гриде
+        /// </summary>
+        /// <param name="searchValue"></param>
+        /// <returns></returns>
+        public Expression<Func<OktoikhDayGridModel, bool>>[] Search(string searchValue)
+        {
+            var s = $"%{searchValue}%";
+
+            var list = new Expression<Func<OktoikhDayGridModel, bool>>[]
+            {
+                m => EF.Functions.Like(m.Ihos.ToString(), searchValue),
+                m => EF.Functions.Like(m.DayOfWeek, searchValue),
+            };
+
+            return list;
+        }
     }
 }

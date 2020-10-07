@@ -12,7 +12,7 @@
     </div>
     <div class="row">
         <div class="form-group col-12">
-            <a class="btn btn-primary" asp-controller="CommonRule" asp-action="Create" asp-route-id="@ViewContext.RouteData.Values["id"]">Новое общее правило</a>
+            <a class="btn btn-info" asp-controller="CommonRule" asp-action="Create" asp-route-id="@ViewContext.RouteData.Values["id"]"><i class="fa fa-plus"></i> Новое общее правило</a>
         </div>
         <div class="form-group col-12">
             <div class="justify-content-center align-content-center">
@@ -64,7 +64,7 @@
                     {
                         data: null, render: function (data, type, row)
                         {
-                            return '<a class="btn btn-info" href="/CommonRule/Edit/' + row.Id + '">Редактировать</a> <a href="#" class="btn btn-danger btn-delete">Удалить</a>';
+                            return '<a class="btn btn-primary" href="/CommonRule/Edit/' + row.Id + '">Редактировать</a> <a href="#" class="btn btn-danger btn-delete">Удалить</a>';
                         },
                         orderable: false
                     },

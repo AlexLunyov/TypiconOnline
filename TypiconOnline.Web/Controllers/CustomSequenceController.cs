@@ -41,7 +41,7 @@ namespace TypiconOnline.Web.Controllers
         [HttpGet]
         public IActionResult Index(CompleteSequenceViewModel model)
         {
-            ViewBag.Typicons = _queryProcessor.GetTypicons();
+            ViewBag.Typicons = _queryProcessor.GetPublicTypicons();
 
             if (model == null)
             {
@@ -55,7 +55,7 @@ namespace TypiconOnline.Web.Controllers
         [HttpPost]
         public IActionResult Index(GetCustomSequenceViewModel model)
         {
-            ViewBag.Typicons = _queryProcessor.GetTypicons();
+            ViewBag.Typicons = _queryProcessor.GetPublicTypicons();
 
             var outputModel = new CompleteSequenceViewModel(model);
 

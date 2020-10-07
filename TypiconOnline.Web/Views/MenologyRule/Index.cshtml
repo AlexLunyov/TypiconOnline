@@ -11,7 +11,7 @@
     </div>
     <div class="row">
         <div class="form-group col-12">
-            <a class="btn btn-primary" asp-controller="MenologyRule" asp-action="Create" asp-route-id="@ViewContext.RouteData.Values["id"]">Новое Правило Минеи</a>
+            <a class="btn btn-info" asp-controller="MenologyRule" asp-action="Create" asp-route-id="@ViewContext.RouteData.Values["id"]"><i class="fa fa-plus"></i> Новое Правило Минеи</a>
         </div>
         <div class="form-group col-12">
             <div class="justify-content-center align-content-center">
@@ -78,7 +78,7 @@
                     {
                         data: null, render: function (data, type, row)
                         {
-                            var str = '<a class="btn btn-info" href="/MenologyRule/Edit/' + row.Id + '">Редактировать</a> ';
+                            var str = '<a class="btn btn-primary" href="/MenologyRule/Edit/' + row.Id + '">Редактировать</a> ';
                             if (row.Date == "" && row.LeapDate == "") {
                                 str += '<a href="#" class="btn btn-danger btn-delete">Удалить</a>';
                             }

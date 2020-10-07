@@ -10,9 +10,9 @@ namespace TypiconOnline.Web.Extensions
 {
     public static class QueryProcessorExtensions
     {
-        public static IEnumerable<SelectListItem> GetTypicons(this IQueryProcessor queryProcessor)
+        public static IEnumerable<SelectListItem> GetPublicTypicons(this IQueryProcessor queryProcessor, bool withTemplates = false)
         {
-            var typicons = queryProcessor.Process(new AllTypiconsQuery());
+            var typicons = queryProcessor.Process(new AllTypiconsQuery(withTemplates));
 
             return typicons.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString() });
         }

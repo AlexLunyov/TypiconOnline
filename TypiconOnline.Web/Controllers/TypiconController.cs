@@ -67,7 +67,7 @@ namespace TypiconOnline.Web.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Typicons = QueryProcessor.GetTypicons();
+            ViewBag.Typicons = QueryProcessor.GetPublicTypicons(withTemplates: true);
 
             return View(new CreateTypiconModel());
         }
@@ -90,7 +90,7 @@ namespace TypiconOnline.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.Typicons = QueryProcessor.GetTypicons();
+            ViewBag.Typicons = QueryProcessor.GetPublicTypicons(withTemplates: true);
 
             return View(model);
         }
@@ -300,11 +300,6 @@ namespace TypiconOnline.Web.Controllers
 
         [HttpGet]
         public IActionResult Editors(int id) => Edit(id);
-
-        protected override Func<TypiconEntityFilteredModel, string, bool> BuildExpression
-            => (m, searchValue)
-                => m.Name == searchValue
-                || m.SystemName == searchValue;
 
         //[HttpPost]
         public IActionResult Publish(TypiconEntityEditModel model)

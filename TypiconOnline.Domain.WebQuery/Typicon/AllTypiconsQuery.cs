@@ -6,13 +6,12 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
 {
     public class AllTypiconsQuery : IQuery<IEnumerable<TypiconEntityModel>>
     {
-        public AllTypiconsQuery() { }
-
-        public AllTypiconsQuery(string language)
+        public AllTypiconsQuery(bool withTemplates = false, string language = "cs-ru") 
         {
-            Language = language;
+            WithTemplates = withTemplates;
         }
 
-        public string Language { get; } = "cs-ru";
+        public string Language { get; }
+        public bool WithTemplates { get; }
     }
 }

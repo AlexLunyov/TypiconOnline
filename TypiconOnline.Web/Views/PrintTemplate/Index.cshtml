@@ -15,7 +15,7 @@
         <div class="form-group col-12" id="weekview">
             @if (Model == null)
             {
-                <a class="btn btn-primary" asp-controller="PrintTemplate" asp-action="CreateWeek" asp-route-id="@ViewContext.RouteData.Values["id"]">Создать</a>
+                <a class="btn btn-info" asp-controller="PrintTemplate" asp-action="CreateWeek" asp-route-id="@ViewContext.RouteData.Values["id"]"><i class="fa fa-plus"></i> Создать</a>
             }
             else
             {
@@ -33,7 +33,7 @@
                                 <td>@Model.DaysPerPage</td>
                                 <td>@Model.PrintFileName</td>
                                 <td>
-                                    <a class="btn btn-info" asp-controller="PrintTemplate" asp-action="EditWeek" asp-route-id="@Model.Id"><i class="fas fa-file-edit"></i> Редактировать</a>
+                                    <a class="btn btn-primary" asp-controller="PrintTemplate" asp-action="EditWeek" asp-route-id="@Model.Id"><i class="fas fa-file-edit"></i> Редактировать</a>
                                     <a class="btn btn-default" asp-controller="PrintTemplate" asp-action="DownLoadWeek" asp-route-id="@Model.Id"><i class="fas fa-file-download"></i> Скачать</a>
                                 </td>
                             </tr>

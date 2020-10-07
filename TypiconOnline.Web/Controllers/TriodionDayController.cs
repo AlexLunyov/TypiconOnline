@@ -121,12 +121,5 @@ namespace TypiconOnline.Web.Controllers
         }
 
         protected override IGridQuery<TriodionDayGridModel> GetQuery() => new AllTriodionDaysQuery(DEFAULT_LANGUAGE);
-
-        protected override Func<TriodionDayGridModel, string, bool> BuildExpression
-             => (m, searchValue) 
-                => m.Name == searchValue
-                    || m.ShortName == searchValue
-                    || m.DaysFromEaster.ToString() == searchValue
-                    || m.IsCelebrating.ToString() == searchValue;
     }
 }

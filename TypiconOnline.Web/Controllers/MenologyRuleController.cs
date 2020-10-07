@@ -163,14 +163,7 @@ namespace TypiconOnline.Web.Controllers
         }
 
         #region Overrides
-
-        protected override Func<MenologyRuleGridModel, string, bool> BuildExpression 
-            => (m, searchValue)
-                 => m.Name == searchValue
-                 || m.TemplateName == searchValue
-                 || m.Date == searchValue
-                 || m.LeapDate == searchValue;
-
+        
         protected override IGridQuery<MenologyRuleGridModel> GetQuery(int id) => new AllMenologyRulesWebQuery(id, DEFAULT_LANGUAGE);
 
         protected override TypiconEntityByChildQuery<MenologyRule> GetTypiconEntityByChildQuery(int id)

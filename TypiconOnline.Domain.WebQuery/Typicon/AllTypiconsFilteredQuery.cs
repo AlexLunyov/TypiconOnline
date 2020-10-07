@@ -4,6 +4,9 @@ using TypiconOnline.Domain.WebQuery.Interfaces;
 using TypiconOnline.Domain.WebQuery.Models;
 using TypiconOnline.Infrastructure.Common.ErrorHandling;
 using TypiconOnline.Infrastructure.Common.Query;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using System;
 
 namespace TypiconOnline.Domain.WebQuery.Typicon
 {
@@ -22,6 +25,24 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         public string Language { get; } = "cs-ru";
         //public string Search { get; set; }
 
-        public string GetKey() => $"{nameof(AllTypiconsFilteredQuery)}.{UserId}.{Language}";
+        public string GetCacheKey() => $"{nameof(AllTypiconsFilteredQuery)}.{UserId}.{Language}";
+
+        /// <summary>
+        /// Реализация поиска по модели в гриде
+        /// </summary>
+        /// <param name="searchValue"></param>
+        /// <returns></returns>
+        public Expression<Func<TypiconEntityFilteredModel, bool>>[] Search(string searchValue)
+        {
+            var s = $"%{searchValue}%";
+
+            var list = new Expression<Func<TypiconEntityFilteredModel, bool>>[]
+            {
+                m => EF.Functions.Like(m.Name, searchValue),
+                m => EF.Functions.Like(m.SystemName.ToString(), searchValue)
+            };
+
+            return list;
+        }
     }
 }

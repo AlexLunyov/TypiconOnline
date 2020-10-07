@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using TypiconOnline.Domain.WebQuery.Interfaces;
 using TypiconOnline.Domain.WebQuery.Models;
@@ -16,8 +18,24 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
             TypiconId = typiconId;
         }
         public int TypiconId { get; }
-        //public string Search { get; set; }
 
-        public string GetKey() => $"{nameof(AllExplicitAddRulesQuery)}.{TypiconId}";
+        public string GetCacheKey() => $"{nameof(AllExplicitAddRulesQuery)}.{TypiconId}";
+
+        /// <summary>
+        /// Реализация поиска по модели в гриде
+        /// </summary>
+        /// <param name="searchValue"></param>
+        /// <returns></returns>
+        public Expression<Func<ExplicitAddRuleGridModel, bool>>[] Search(string searchValue)
+        {
+            var s = $"%{searchValue}%";
+
+            var list = new Expression<Func<ExplicitAddRuleGridModel, bool>>[]
+            {
+                m => EF.Functions.Like(m.Date, searchValue)
+            };
+
+            return list;
+        }
     }
 }

@@ -26,8 +26,7 @@ namespace TypiconOnline.Web.Controllers
         {
             _gridStore = new GridStore<T>(queryProcessor
                 , commandProcessor
-                , this
-                , BuildExpression);
+                , this);
         }
 
         /// <summary>
@@ -36,8 +35,6 @@ namespace TypiconOnline.Web.Controllers
         /// <param name="query"></param>
         /// <returns></returns>
         protected IActionResult LoadGridData(IGridQuery<T> query) => _gridStore.LoadGridData(query);
-
-        protected abstract Func<T, string, bool> BuildExpression { get; }
 
         protected void ClearStoredData(IGridQuery<T> query)
         {

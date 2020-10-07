@@ -140,8 +140,6 @@ namespace TypiconOnline.Web.Controllers
 
         #region Overrides
 
-        protected override Func<ExplicitAddRuleGridModel, string, bool> BuildExpression => (m, s) => m.Date == s;
-
         protected override IGridQuery<ExplicitAddRuleGridModel> GetQuery(int id) => new AllExplicitAddRulesQuery(id);
 
         protected override TypiconEntityByChildQuery<ExplicitAddRule> GetTypiconEntityByChildQuery(int id) 

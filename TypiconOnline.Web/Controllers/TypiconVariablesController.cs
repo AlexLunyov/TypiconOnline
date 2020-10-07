@@ -39,13 +39,7 @@ namespace TypiconOnline.Web.Controllers
         {
             variableStore = new GridStore<TypiconVariableModel>(queryProcessor
                 , commandProcessor
-                , this
-                , (m, s) =>
-                {
-                    return m.Name == s
-                    || m.Type.ToString() == s
-                    || m.Count.ToString() == s;
-                });
+                , this);
         }
 
         public IActionResult Index(int id)

@@ -32,45 +32,23 @@ namespace TypiconOnline.Web.Controllers
         {
             signStore = new GridStore<SignGridModel>(queryProcessor
                 , commandProcessor
-                , this
-                , (m, s) =>
-                {
-                    return m.Name == s
-                    || m.Number.ToString() == s
-                    || m.Priority.ToString() == s
-                    || m.TemplateName == s;
-                });
+                , this);
 
             menologyStore = new GridStore<MenologyRuleGridModel>(queryProcessor
                 , commandProcessor
                 , this
-                , (m, s) =>
-                {
-                    return m.Name == s
-                    || m.Date == s
-                    || m.LeapDate == s
-                    || m.TemplateName == s;
-                },
-                //не храним в сессии
-                false);
+                //храним в сессии
+                , storeToSession: true );
 
             triodionStore = new GridStore<TriodionRuleGridModel>(queryProcessor
                 , commandProcessor
                 , this
-                , (m, s) =>
-                {
-                    return m.Name == s
-                    || m.DaysFromEaster.ToString() == s
-                    || m.TemplateName == s;
-                });
+                //храним в сессии
+                , storeToSession: true);
 
             includedStore = new GridStore<DateGridItem>(queryProcessor
                 , commandProcessor
-                , this
-                , (m, s) =>
-                {
-                    return m.Date.ToString() == s;
-                });
+                , this);
         }
 
         // GET: /<controller>/

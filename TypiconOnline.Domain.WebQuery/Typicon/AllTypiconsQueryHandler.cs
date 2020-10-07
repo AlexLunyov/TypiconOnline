@@ -18,37 +18,19 @@ namespace TypiconOnline.Domain.WebQuery.Typicon
         {
             var versions = DbContext.Set<TypiconVersion>()
                 .AsNoTracking()
-                .Where(c => c.BDate != null && c.EDate == null)
-                .Where(c => !c.IsTemplate)
-                //.Where(c => c.IsPublished)
-                //.AsEnumerable()
-                .Select(c => new TypiconEntityModel()
-                {
-                    Id = c.TypiconId,
-                    Name = c.Name.FirstOrDefault(query.Language).Text,
-                    SystemName = c.Typicon.SystemName
-                });
+                .Where(TypiconVersion.IsPublished);
 
-            //var result = new List<TypiconEntityModel>();
+            if (!query.WithTemplates)
+            {
+                versions = versions.Where(c => !c.IsTemplate);
+            }
 
-            //foreach (var vrs in versions)
-            //{
-            //    var dto = new TypiconEntityModel()
-            //    {
-            //        Id = vrs.TypiconId,
-            //        Name = vrs.Typicon.Name.FirstOrDefault(query.Language).Text,
-            //    };
-
-            //    result.Add(dto);
-            //}
-
-            return versions.AsEnumerable();
-
-            //TypeAdapterConfig<TypiconVersion, TypiconDTO>
-            //        .NewConfig()
-            //        .Map(dest => dest.Id, src => src.TypiconId)
-            //        .Map(dest => dest.Name, src => src.Name.FirstOrDefault(query.Language).Text);
-            //return versions.ProjectToType<TypiconDTO>().AsEnumerable();
+            return versions.Select(c => new TypiconEntityModel()
+            {
+                Id = c.TypiconId,
+                Name = c.Name.FirstOrDefault(query.Language).Text,
+                SystemName = c.Typicon.SystemName
+            });
         }
     }
 }

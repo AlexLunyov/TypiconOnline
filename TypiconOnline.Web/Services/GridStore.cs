@@ -24,13 +24,11 @@ namespace TypiconOnline.Web.Services
             IQueryProcessor queryProcessor,
             ICommandProcessor commandProcessor,
             Controller controller,
-            Func<T, string, bool> search,
             bool storeToSession = false)
         {
             QueryProcessor = queryProcessor;
             CommandProcessor = commandProcessor;
             Controller = controller;
-            Search = search;
             StoreToSession = storeToSession;
         }
 
@@ -38,8 +36,6 @@ namespace TypiconOnline.Web.Services
         protected ICommandProcessor CommandProcessor { get; }
 
         protected Controller Controller { get; }
-
-        protected Func<T, string, bool> Search { get; }
 
         public bool StoreToSession { get; }
 
@@ -84,7 +80,7 @@ namespace TypiconOnline.Web.Services
                 //Search
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    signData = signData.Where(c => Search(c, searchValue));
+                    signData = signData.WhereAny(query.Search(searchValue));
                 }
 
                 //Paging 
@@ -107,9 +103,9 @@ namespace TypiconOnline.Web.Services
 
         private Result<IQueryable<T>> LoadStoredData(IGridQuery<T> query)
         {
-            if (StoreToSession && Controller.HttpContext.Session.Keys.Contains(query.GetKey()))
+            if (StoreToSession && Controller.HttpContext.Session.Keys.Contains(query.GetCacheKey()))
             {
-                return Result.Ok(Controller.HttpContext.Session.Get<List<T>>(query.GetKey()).AsQueryable());
+                return Result.Ok(Controller.HttpContext.Session.Get<List<T>>(query.GetCacheKey()).AsQueryable());
             }
             else
             {
@@ -122,7 +118,7 @@ namespace TypiconOnline.Web.Services
                     {
                         //если сохраняем в сессию
                         
-                        Controller.HttpContext.Session.Set(query.GetKey(), col);
+                        Controller.HttpContext.Session.Set(query.GetCacheKey(), col);
 
                         Result.Ok(col.AsQueryable());
                     }
@@ -139,9 +135,9 @@ namespace TypiconOnline.Web.Services
 
         public void ClearStoredData(IGridQuery<T> query)
         {
-            if (Controller.HttpContext.Session.Keys.Contains(query.GetKey()))
+            if (Controller.HttpContext.Session.Keys.Contains(query.GetCacheKey()))
             {
-                Controller.HttpContext.Session.Remove(query.GetKey());
+                Controller.HttpContext.Session.Remove(query.GetCacheKey());
             }
         }
     }

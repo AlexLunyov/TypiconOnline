@@ -310,7 +310,7 @@ namespace TypiconOnline.Web.Controllers
                     , isRed: model.IsRed
                     , file: data
                     , fileName: fileName
-                    , isDefault:model.IsDefault);
+                    , isDefault: model.IsDefault);
 
                 await CommandProcessor.ExecuteAsync(command);
 
@@ -376,11 +376,6 @@ namespace TypiconOnline.Web.Controllers
         //}
 
         #region Overrides
-
-        protected override Func<PrintDayTemplateGridModel, string, bool> BuildExpression
-            => (m, searchValue)
-                => m.Name == searchValue
-                || m.Number.ToString() == searchValue;
 
         protected override IGridQuery<PrintDayTemplateGridModel> GetQuery(int id) => new AllPrintDayTemplatesQuery(id);
 
